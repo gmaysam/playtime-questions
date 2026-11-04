@@ -208,6 +208,8 @@ body{background:#fff}
 .prset .pt{display:flex;align-items:center;gap:8px;font-weight:800}
 .prset .pt .e{font-size:28px}
 .prset .est{font-size:13px;font-weight:700;color:var(--ink-soft);margin:4px 0 0}
+.pop.up{transform-origin:var(--ax) 100%}
+.pop.up::before{top:auto;bottom:-8px}
 .months{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
 '''
 
@@ -407,6 +409,11 @@ function showPop(i){
   popEl.onclick=e=>e.stopPropagation();
   const b=popEl.querySelector(".btn");if(b)b.onclick=()=>{closePop();sfx.tap();openMound(i)};
   landEl.appendChild(popEl);
+  /* near the bottom of the land: open the card above the mound so its button stays on screen */
+  const top0=pt.y-landEl.offsetTop+20,h=popEl.offsetHeight;
+  if(top0+h>landEl.offsetHeight-8){popEl.classList.add("up");popEl.style.top=Math.max(8,pt.y-landEl.offsetTop-62-h)+"px"}
+  const map=$("map"),r=popEl.getBoundingClientRect(),mr=map.getBoundingClientRect();
+  if(r.bottom>mr.bottom-8||r.top<mr.top+70)map.scrollBy({top:r.bottom>mr.bottom-8?r.bottom-mr.bottom+20:r.top-mr.top-80,behavior:"smooth"});
 }
 $("map").addEventListener("click",closePop);
 
