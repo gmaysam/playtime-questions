@@ -64,7 +64,7 @@ def item_bytes(q, voice_dir, with_voice=True):
 
 def pick(day_index, qs):
     """deterministic: a shuffled order of the bank, PER_DAY at a time; young/old balanced"""
-    order = qs[:]
+    order = [q for q in qs if q["id"] not in getattr(bank, "RETIRED", ())]   # retired questions are never sent
     random.Random(1234).shuffle(order)
     young = [q for q in order if q["age"][0] <= 5]
     old = [q for q in order if q["age"][0] > 5]

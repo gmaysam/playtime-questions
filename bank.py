@@ -12,6 +12,9 @@ def C(id, topic, age, en, opts, answer, explain, fa, fa_explain, pic=None):
     QUESTIONS.append(dict(id=id, kind="choice", topic=topic, age=(age, 8), q=en, opts=opts, answer=answer, explain=explain,
                           fa_q=fa, fa_e=fa_explain, **({"pic": pic} if pic else {})))
 
+# taken out after the November 2026 check: not true for every case (some snowflakes are needles or columns)
+RETIRED = {"s12"}
+
 def check():
     ids = set()
     for q in QUESTIONS:
@@ -62,7 +65,7 @@ C("a15", "animals", 3, "Which animal has a long trunk?", ["Lion", "Elephant", "B
   "کدوم حیوون خرطومِ بلند داره؟ Lion، Elephant یا Bear؟", "فیل از خرطومش مثلِ دست و نِی استفاده می‌کنه.")
 T("a16", "animals", 3, "Bats sleep upside down.", True, "Bats hang upside down by their feet to sleep.",
   "خفاش‌ها سر و ته می‌خوابن.", "خفاش‌ها با پاهاشون آویزون می‌شن و سر و ته می‌خوابن.", W["bat"])
-C("a17", "animals", 6, "A caterpillar grows into a...", ["Butterfly", "Bee", "Bird"], 0, "A caterpillar makes a cocoon, then comes out as a butterfly!",
+C("a17", "animals", 6, "A caterpillar grows into a...", ["Butterfly", "Bee", "Bird"], 0, "A caterpillar makes a chrysalis, then comes out as a butterfly!",
   "کرمِ پروانه بزرگ می‌شه و می‌شه چی؟ Butterfly، Bee یا Bird؟", "کرم یه پیله درست می‌کنه، بعد پروانه می‌شه و بیرون میاد!", W["caterpillar"])
 T("a18", "animals", 6, "A whale is a fish.", False, "Whales live in the sea but they breathe air, like us. They are mammals.",
   "نهنگ یه ماهیه.", "نهنگ توی دریا زندگی می‌کنه ولی مثلِ ما هوا نفس می‌کشه. نهنگ پستانداره.")
@@ -256,8 +259,8 @@ C("m01", "math", 3, "How many sides does a triangle have?", ["3", "4", "5"], 0, 
   "مثلث چند تا ضلع داره؟ three، four یا five؟", "مثلث سه تا ضلع داره.", SHAPE["triangle"])
 C("m02", "math", 3, "What comes after 4?", ["3", "5", "6"], 1, "1, 2, 3, 4, 5!",
   "بعد از four چی میاد؟ three، five یا six؟", "one, two, three, four, five!")
-C("m03", "math", 3, "Which shape is round?", ["Circle", "Square", "Triangle"], 0, "A circle is round, like a ball or a plate.",
-  "کدوم شکل گِرده؟ Circle، Square یا Triangle؟", "دایره گِرده، مثلِ توپ یا بشقاب.", SHAPE["circle"])
+C("m03", "math", 3, "Which shape is round?", ["Circle", "Square", "Triangle"], 0, "A circle is round, like a plate or a coin.",
+  "کدوم شکل گِرده؟ Circle، Square یا Triangle؟", "دایره گِرده، مثلِ بشقاب یا سکه.", SHAPE["circle"])
 C("m04", "math", 3, "2 + 1 = ?", ["2", "3", "4"], 1, "Two and one more make three.",
   "two plus one می‌شه چند؟ two، three یا four؟", "دو تا و یکی دیگه می‌شه سه تا.")
 T("m05", "math", 3, "A square has four sides.", True, "A square has four sides, all the same length.",
