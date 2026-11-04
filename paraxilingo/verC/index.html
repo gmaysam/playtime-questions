@@ -647,6 +647,153 @@ body{background:#fff}
 .pop.up{transform-origin:var(--ax) 100%}
 .pop.up::before{top:auto;bottom:-8px}
 .months{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+
+/* ===================== verC question pages: "Candy Meadow" palette =====================
+   Soft sky-to-cream background, white cards, four pastel answer tints (lilac, mint, peach, sky),
+   sunshine-yellow speaker, mint for right, gentle coral for "try again" (never harsh red). */
+:root{
+  --q-ink:#26334D;--q-soft:#6B7890;--q-card:#FFFFFF;
+  --q-sun:#FFC93C;--q-sun-d:#E7A400;
+  --q-mint:#3DBE86;--q-mint-d:#2A9A6A;--q-mint-t:#E2F7EC;
+  --q-sky:#4E9BEA;--q-sky-d:#3878C4;--q-sky-t:#E6F1FF;
+  --q-coral:#FF8C82;--q-coral-t:#FFF0EE;
+  --q-lilac:#8E7CF0;
+}
+.lesson.q2{background:linear-gradient(180deg,#E6F3FF 0%,#F4F8FF 38%,#FFF7EC 100%);color:var(--q-ink)}
+.lesson.q2 .lhead{display:flex;align-items:center;gap:12px;padding:12px 16px 4px}
+.lesson.q2 .lclose{width:40px;height:40px;border-radius:50%;background:#fff;color:var(--q-soft);border:0;box-shadow:0 3px 10px rgba(38,51,77,.10);display:grid;place-items:center;flex:none}
+.lesson.q2 .lclose svg{width:18px;height:18px}
+.qdots{flex:1;display:flex;gap:6px;justify-content:center;flex-wrap:wrap}
+.qdots i{width:14px;height:14px;border-radius:50%;background:#fff;box-shadow:inset 0 0 0 2.5px #D5DEEC;transition:.3s}
+.qdots i.on{background:var(--q-mint);box-shadow:0 0 0 3px #C9F0DD;transform:scale(1.1)}
+.qbody{flex:1;overflow-y:auto;padding:6px 18px 120px;display:flex;flex-direction:column;justify-content:center;gap:18px}
+.qbody.in>*{animation:qin .45s cubic-bezier(.3,1.4,.5,1) both}
+.qbody.in>*:nth-child(2){animation-delay:.06s}.qbody.in>*:nth-child(3){animation-delay:.12s}
+@keyframes qin{from{opacity:0;transform:translateY(16px) scale(.97)}}
+.qtop{display:flex;align-items:center;gap:12px;justify-content:center;min-height:76px}
+.qspk{position:relative;width:76px;height:76px;border-radius:50%;border:0;flex:none;color:#5A3B00;
+  background:radial-gradient(circle at 35% 30%,#FFE58A,var(--q-sun) 60%);box-shadow:0 6px 0 var(--q-sun-d),0 10px 22px rgba(231,164,0,.35);display:grid;place-items:center}
+.qspk svg{width:38px;height:38px}
+.qspk:active{transform:translateY(4px);box-shadow:0 2px 0 var(--q-sun-d)}
+.qspk::after{content:"";position:absolute;inset:-8px;border-radius:50%;border:4px solid var(--q-sun);opacity:0}
+.qspk.talking::after{animation:ring 1.2s ease-out infinite}
+@keyframes ring{from{opacity:.9;transform:scale(.92)}to{opacity:0;transform:scale(1.35)}}
+.qtop .cap{font-weight:800;font-size:15px;color:var(--q-soft);max-width:220px;line-height:1.3}
+.qvis{background:var(--q-card);border-radius:28px;box-shadow:0 10px 28px rgba(38,51,77,.08);padding:20px 14px;min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;position:relative}
+.qvis .clk{width:170px;height:170px}
+.qvis .clk.hintclk line:last-of-type{stroke:#FF8C82;filter:drop-shadow(0 0 4px #FF8C82)}
+.bignum{font-family:var(--f-display);font-weight:700;font-size:96px;line-height:1;color:var(--q-lilac);text-shadow:0 5px 0 #E4DEFF}
+.bignum.sm{font-size:72px}
+.bignum.q{color:#C3CCDB;text-shadow:0 5px 0 #EEF2F8}
+.seq{display:flex;align-items:center;gap:14px}.seq .arr{font-size:34px;color:#B9C3D3}
+.bigemo{font-size:88px;line-height:1}.bigemo.soft{opacity:.85;font-size:64px}
+.listen{width:120px;height:120px;border-radius:50%;background:linear-gradient(160deg,#F1ECFF,#E6F1FF);display:grid;place-items:center;font-size:66px;box-shadow:inset 0 -6px 0 rgba(142,124,240,.12)}
+.listen.radio{background:linear-gradient(160deg,#FFF0E6,#FFF7D6)}
+.domisays{display:flex;align-items:flex-end;gap:6px}
+.domisays .bub{background:var(--q-sky-t);border-radius:24px 24px 24px 6px;padding:14px 18px;font-family:var(--f-display);font-size:34px;color:var(--q-ink)}
+.domisays.big .pe{font-size:84px;line-height:1;display:block}
+.grp{display:flex;flex-wrap:wrap;gap:2px 4px;justify-content:center;max-width:220px}
+.grp .ob{font-style:normal;font-size:30px;line-height:1.1;position:relative;transition:transform .2s}
+.qvis .grp .ob{font-size:38px}
+.ob.gone{opacity:.25;filter:grayscale(1);transform:translateY(-6px) rotate(-12deg)}
+.ob.counted{transform:scale(1.15)}
+.ob.counted::after{content:attr(data-n);position:absolute;top:-10px;right:-8px;min-width:20px;height:20px;border-radius:10px;background:var(--q-sky);color:#fff;font:700 12px/20px var(--f-display);text-align:center;font-style:normal;box-shadow:0 2px 0 var(--q-sky-d)}
+.ob.dot{font-size:14px;color:var(--q-lilac)}
+.story2{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center}
+.story2 .op{font-family:var(--f-display);font-size:40px;color:var(--q-sun-d)}
+.story2 .gift{font-family:var(--f-display);font-size:26px;background:var(--q-coral-t);border-radius:16px;padding:4px 10px;color:#C2554B}
+.qvis .eq{display:flex;flex-direction:row;background:none;padding:0;border:0;box-shadow:none;width:auto;align-items:flex-start;gap:10px;font-family:var(--f-display);font-weight:700;font-size:64px;line-height:1}
+.qvis .eq>span{display:flex;flex-direction:column;align-items:center;gap:6px}
+.qvis .eq>b{color:var(--q-sun-d);font-weight:700}
+.qvis .eq .q{color:#C3CCDB}
+.dots{font-size:11px;letter-spacing:2px;color:var(--q-lilac);max-width:70px;line-height:1.2;text-align:center;word-break:break-all;font-family:system-ui}
+.coinname{font-family:var(--f-display);font-size:24px;color:var(--q-soft)}
+.ctag{font:700 14px var(--f-display);background:var(--q-sun);color:#5A3B00;border-radius:999px;padding:1px 8px;margin:-8px 2px 0}
+.nline{display:flex;gap:6px;margin-top:6px}
+.nline span{width:34px;height:34px;border-radius:10px;background:#F2F5FA;display:grid;place-items:center;font:700 17px var(--f-display);color:var(--q-soft)}
+.nline span.hi{background:var(--q-sky);color:#fff}
+/* answers */
+.qopts{display:grid;gap:12px}
+.qopts.row3{grid-template-columns:repeat(3,1fr)}
+.qopts.row,.qopts.yn{grid-template-columns:1fr 1fr}
+.qopts.grid{grid-template-columns:1fr 1fr}
+.qopts.col{grid-template-columns:1fr}
+.qo{--bg:#fff;--bd:#E2E8F2;--sh:#C9D3E3;--ink:var(--q-ink);position:relative;border:3px solid var(--bd);background:var(--bg);color:var(--ink);border-radius:24px;box-shadow:0 6px 0 var(--sh);min-height:108px;padding:10px 6px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;transition:transform .12s,box-shadow .12s,opacity .3s,filter .3s;font-family:var(--f-display)}
+.qo:active{transform:translateY(4px);box-shadow:0 2px 0 var(--sh)}
+.qo.t0{--bg:#F3EFFF;--bd:#CFC2FF;--sh:#A898F5;--ink:#4B3A99}
+.qo.t1{--bg:#E8F9F1;--bd:#A6E6C9;--sh:#5BC796;--ink:#1E6B4D}
+.qo.t2{--bg:#FFF2E9;--bd:#FFCDB0;--sh:#F3A274;--ink:#8A4423}
+.qo.t3{--bg:#EAF4FF;--bd:#B3D5FF;--sh:#6EA8EC;--ink:#23528F}
+.qo .num{font-size:46px;line-height:1;font-weight:700}
+.qo .num.t{font-size:30px}
+.qo .yn{font-size:52px;line-height:1}
+.qo .oe{font-size:44px;line-height:1}
+.qo small{font:700 14px var(--f-body,inherit);opacity:.85}
+.qo .grp .ob{font-size:26px}
+.qopts.col .qo{min-height:72px;flex-direction:row}
+.qo.right{--bg:var(--q-mint-t);--bd:var(--q-mint);--sh:var(--q-mint-d);animation:pop .4s}
+.qo.right::after,.qo.show::after{content:"✓";position:absolute;top:-10px;right:-8px;width:30px;height:30px;border-radius:50%;background:var(--q-mint);color:#fff;font:700 18px/30px var(--f-display);text-align:center;box-shadow:0 3px 0 var(--q-mint-d)}
+.qo.show{--bg:var(--q-mint-t);--bd:var(--q-mint);--sh:var(--q-mint-d);animation:glowq 1.2s ease-in-out infinite}
+.qo.wrong{--bd:var(--q-coral);animation:shake .4s}
+.qo.faded{opacity:.35;filter:grayscale(.6);pointer-events:none}
+@keyframes pop{50%{transform:scale(1.08)}}
+@keyframes glowq{50%{box-shadow:0 6px 0 var(--q-mint-d),0 0 0 8px rgba(61,190,134,.25)}}
+@keyframes shake{20%,60%{transform:translateX(-7px)}40%,80%{transform:translateX(7px)}}
+.qhint{position:absolute;left:50%;top:76px;transform:translateX(-50%);z-index:30;background:#fff;color:var(--q-ink);font-weight:800;border-radius:999px;padding:10px 18px;box-shadow:0 8px 24px rgba(38,51,77,.18);white-space:nowrap;animation:qin .35s both}
+/* bottom sheet */
+.qsheet{position:absolute;left:0;right:0;bottom:0;z-index:25;padding:16px 16px calc(18px + env(safe-area-inset-bottom,0px));border-radius:28px 28px 0 0;transform:translateY(110%);transition:transform .35s cubic-bezier(.3,1.3,.5,1);box-shadow:0 -8px 30px rgba(38,51,77,.12)}
+.qsheet.show{transform:none}
+.qsheet.good{background:#E3F8EE}.qsheet.learn{background:#E8F2FF}
+.qsrow{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.qsrow .qsf{width:62px;height:62px;border-radius:50%;background:#fff;display:grid;place-items:center;flex:none;overflow:hidden}
+.qsrow b{display:block;font-family:var(--f-display);font-size:26px;line-height:1.1}
+.qsheet.good b{color:#1F8A5B}.qsheet.learn b{color:#2D62B5}
+.qsrow span span{display:block;font-weight:800;font-size:17px;color:var(--q-ink);margin-top:3px;line-height:1.35}
+.qbtn{width:100%;border:0;border-radius:20px;min-height:56px;font:700 20px var(--f-display);color:#fff;letter-spacing:.3px;transition:transform .1s,box-shadow .1s}
+.qbtn:active{transform:translateY(4px)}
+.qbtn.good{background:var(--q-mint);box-shadow:0 5px 0 var(--q-mint-d)}
+.qbtn.learn,.qbtn.sky{background:var(--q-sky);box-shadow:0 5px 0 var(--q-sky-d)}
+.qbtn:disabled{background:#D7DEE9;box-shadow:0 5px 0 #BCC6D6}
+.qbtn.big{min-height:62px;font-size:22px}
+.qbtn.pulse{animation:pop 1s ease-in-out infinite}
+/* radio */
+.radio{display:flex;flex-direction:column;align-items:center;gap:16px;padding-top:10px}
+.rbox{position:relative;width:170px;height:170px;border-radius:40px;background:linear-gradient(160deg,#FFE7D1,#FFD3B0);display:grid;place-items:center;box-shadow:0 8px 0 #F3A274,0 16px 30px rgba(243,162,116,.35)}
+.rbox .remo{font-size:96px}
+.rbox .rwave{position:absolute;inset:-12px;border-radius:50px;border:5px solid #FFB98A;opacity:0}
+.rbox.on .rwave{animation:wavec 1.4s ease-out infinite}.rbox.on .r2{animation-delay:.7s}
+@keyframes wavec{from{transform:scale(.9);opacity:.9}to{transform:scale(1.3);opacity:0}}
+.rtitle{font-family:var(--f-display);font-size:28px;color:var(--q-ink)}
+.rbtns{display:grid;grid-template-columns:1fr 1.4fr;gap:12px;width:100%;max-width:340px}
+/* praise dance */
+.dance{position:absolute;inset:0;z-index:28;display:grid;place-items:center;pointer-events:none}
+.dance .bv{animation:dancea .45s ease-in-out 4 alternate}
+.dance .tx{position:absolute;bottom:30%;font-family:var(--f-display);font-weight:700;font-size:32px;color:#F29A00;text-shadow:0 3px 0 #fff}
+@keyframes dancea{from{transform:rotate(-12deg) translateY(0)}to{transform:rotate(12deg) translateY(-24px)}}
+/* end of a mound: always a party, never a score */
+.qresult{position:absolute;inset:0;z-index:40;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:24px;text-align:center;background:linear-gradient(180deg,#FFF6DA,#FFE9F1 60%,#E9F1FF);overflow:hidden}
+.qresult .rs-sun{position:absolute;top:8%;width:420px;height:420px;border-radius:50%;background:repeating-conic-gradient(rgba(255,201,60,.35) 0 10deg,transparent 10deg 24deg);animation:spin 14s linear infinite}
+.qresult .dm{position:relative;animation:dancea .5s ease-in-out 6 alternate}
+.qresult h2{position:relative;margin:0;font-family:var(--f-display);font-size:38px;color:#F29A00;text-shadow:0 3px 0 #fff}
+.qresult p{position:relative;margin:0;font-weight:800;font-size:18px;color:var(--q-soft)}
+.gains{position:relative;display:flex;gap:10px;margin:6px 0 10px}
+.gn{font-family:var(--f-display);font-size:28px;background:#fff;border-radius:20px;padding:8px 18px;box-shadow:0 5px 0 rgba(38,51,77,.08)}
+.qresult .qbtn{position:relative;max-width:320px}
+/* top bar and intro, softer */
+.topbar{background:#fff;box-shadow:0 4px 16px rgba(38,51,77,.06);border-bottom:0}
+.stat{background:#FFF4E2;border-radius:999px;padding:5px 12px 5px 8px}
+.stat#sWood{background:#F4EBE2}
+.tbtn{border:0;background:#F3F6FB;box-shadow:0 3px 0 #DCE3EE}
+.introC{background:linear-gradient(180deg,#E6F3FF 0%,#FFF7EC 100%)}
+.introC .mcard{background:#fff;border:0;box-shadow:0 10px 28px rgba(38,51,77,.08);border-radius:28px}
+.introC .mcard b{color:var(--q-ink)}
+.introC .mcard .mm{color:var(--q-lilac)}
+.introC .btn.green{background:var(--q-mint);box-shadow:0 5px 0 var(--q-mint-d);border-radius:20px}
+.introC .talk{animation:floaty 3.5s ease-in-out infinite}
+
+.domisays .bub.q{font-size:64px;color:var(--q-lilac);padding:6px 26px}
+.tgrp{display:flex;gap:10px;align-items:center;margin-top:6px}
+.tgrp .op{font:700 28px var(--f-display);color:var(--q-sun-d)}
 </style>
 
 <div class="stage">
@@ -674,15 +821,14 @@ body{background:#fff}
   <section class="panel" id="pPrizes" hidden></section>
   <section class="panel" id="pSettings" hidden></section>
 
-  <section class="lesson over" id="lesson" aria-hidden="true">
+  <section class="lesson over q2" id="lesson" aria-hidden="true">
     <div class="lhead">
       <button class="lclose" id="lClose" aria-label="Back to the map"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
-      <div class="lbar" aria-hidden="true"><i id="lBar"></i><span class="combo" id="combo"></span></div>
+      <div class="qdots" id="qDots" aria-hidden="true"></div><span style="width:40px"></span>
     </div>
-    <div class="lbody" id="lBody"></div>
-    <div class="lfoot" id="lFoot" hidden><button class="btn ghost" id="lSkip">Skip</button><button class="btn green" id="lCheck" disabled>Check</button></div>
-    <div class="fb" id="fb"><div class="fbtop"><span class="face" id="fbFace"></span><span class="fbt"><b id="fbTitle"></b><span class="t" id="fbSub"></span></span><button class="flag" id="fbFlag" aria-label="Report a problem">⚑</button></div><button class="btn" id="fbBtn">Continue</button></div>
-    <div class="result" id="result" hidden></div>
+    <div class="qbody" id="qBody"></div>
+    <div class="qsheet" id="qSheet"></div>
+    <div class="qresult" id="qResult" hidden></div>
   </section>
 
   <div class="modal" id="modal"><div class="card" id="mCard"></div></div>
@@ -1007,49 +1153,291 @@ function rollWeek(){
 }
 
 
-
-/* ================= Watcher questions, radio, praise ================= */
+/* ================= question engine (verC): spoken, picture-first, always positive ================= */
+/* Every question is read aloud by Lulu (Farsi). Clips come from the Watcher Device library (audio/w/). */
 const WQ=[{"i":"a01","k":"c","t":"animals","a":3,"q":"Which animal says moo?","o":["Cow","Duck","Cat"],"n":0,"x":"Cows say moo, and they give us milk.","p":"cow"},{"i":"a02","k":"c","t":"animals","a":3,"q":"Which animal can fly?","o":["Pig","Bird","Dog"],"n":1,"x":"Birds fly with their wings.","p":"bird"},{"i":"a03","k":"tf","t":"animals","a":3,"q":"Fish live in water.","o":[],"n":0,"x":"Fish breathe in water with their gills.","p":"fish"},{"i":"a04","k":"tf","t":"animals","a":3,"q":"A frog can jump.","o":[],"n":0,"x":"Frogs have long strong back legs for jumping.","p":"frog"},{"i":"a05","k":"c","t":"animals","a":3,"q":"Who makes honey?","o":["Bee","Fox","Duck"],"n":0,"x":"Bees make honey from the sweet juice of flowers.","p":"bee"},{"i":"a06","k":"tf","t":"animals","a":3,"q":"A cat has wings.","o":[],"n":1,"x":"Cats have four legs and a tail, but no wings.","p":"cat"},{"i":"a07","k":"c","t":"animals","a":3,"q":"How many legs does a dog have?","o":["2","4","6"],"n":1,"x":"Dogs walk on four legs.","p":"dog"},{"i":"a08","k":"c","t":"animals","a":3,"q":"Where does a bird sleep?","o":["Nest","Hive","Pond"],"n":0,"x":"Birds build nests from twigs and grass.","p":"nest"},{"i":"a09","k":"tf","t":"animals","a":3,"q":"A baby cat is called a kitten.","o":[],"n":0,"x":"Baby cats are kittens and baby dogs are puppies.","p":"cat"},{"i":"a10","k":"c","t":"animals","a":3,"q":"Which animal is the biggest?","o":["Mouse","Elephant","Cat"],"n":1,"x":"Elephants are the biggest animals that live on land.","p":""},{"i":"a11","k":"tf","t":"animals","a":3,"q":"Ducks can swim.","o":[],"n":0,"x":"Ducks have webbed feet that work like paddles.","p":"duck"},{"i":"a12","k":"c","t":"animals","a":3,"q":"Which one lays eggs?","o":["Hen","Cow","Dog"],"n":0,"x":"Hens lay eggs. Chicks hatch out of them.","p":"hen"},{"i":"a13","k":"tf","t":"animals","a":3,"q":"A snake has legs.","o":[],"n":1,"x":"Snakes have no legs. They slide on their bellies.","p":"snake"},{"i":"a14","k":"c","t":"animals","a":3,"q":"What does a cow eat?","o":["Grass","Fish","Bones"],"n":0,"x":"Cows eat grass all day long.","p":"grass"},{"i":"a15","k":"c","t":"animals","a":3,"q":"Which animal has a long trunk?","o":["Lion","Elephant","Bear"],"n":1,"x":"An elephant uses its trunk like a hand and a straw.","p":""},{"i":"a16","k":"tf","t":"animals","a":3,"q":"Bats sleep upside down.","o":[],"n":0,"x":"Bats hang upside down by their feet to sleep.","p":"bat"},{"i":"a17","k":"c","t":"animals","a":6,"q":"A caterpillar grows into a...","o":["Butterfly","Bee","Bird"],"n":0,"x":"A caterpillar makes a cocoon, then comes out as a butterfly!","p":"caterpillar"},{"i":"a18","k":"tf","t":"animals","a":6,"q":"A whale is a fish.","o":[],"n":1,"x":"Whales live in the sea but they breathe air, like us. They are mammals.","p":""},{"i":"a19","k":"c","t":"animals","a":6,"q":"How many legs does a spider have?","o":["6","8","10"],"n":1,"x":"Spiders have 8 legs. Insects have 6.","p":"web"},{"i":"a20","k":"tf","t":"animals","a":6,"q":"Penguins can fly.","o":[],"n":1,"x":"Penguins cannot fly, but they are amazing swimmers.","p":""},{"i":"a21","k":"c","t":"animals","a":6,"q":"Which animal is the fastest runner?","o":["Cheetah","Turtle","Cow"],"n":0,"x":"A cheetah can run as fast as a car on the highway.","p":""},{"i":"a22","k":"tf","t":"animals","a":6,"q":"A frog starts life as a tadpole.","o":[],"n":0,"x":"Tadpoles live in water and slowly grow legs.","p":"frog"},{"i":"a23","k":"c","t":"animals","a":6,"q":"Which animal sleeps all winter?","o":["Bear","Hen","Cow"],"n":0,"x":"Many bears sleep through the cold winter. This is called hibernation.","p":""},{"i":"a24","k":"tf","t":"animals","a":6,"q":"Bees help flowers make fruit.","o":[],"n":0,"x":"Bees carry pollen from flower to flower, and that helps fruit grow.","p":"bee"},{"i":"a25","k":"c","t":"animals","a":6,"q":"Where does a shark live?","o":["Sea","Cave","Barn"],"n":0,"x":"Sharks swim in the sea. They have been around longer than dinosaurs!","p":"shark"},{"i":"a26","k":"tf","t":"animals","a":6,"q":"A giraffe has a very short neck.","o":[],"n":1,"x":"Giraffes have the longest necks of all animals, to reach high leaves.","p":""},{"i":"a27","k":"c","t":"animals","a":6,"q":"Which is an insect?","o":["Ant","Fish","Frog"],"n":0,"x":"Ants are insects: six legs and three body parts.","p":""},{"i":"a28","k":"tf","t":"animals","a":6,"q":"An octopus has eight arms.","o":[],"n":0,"x":"Octo means eight. An octopus has eight arms and three hearts!","p":""},{"i":"b01","k":"c","t":"body","a":3,"q":"What do we see with?","o":["Eyes","Ears","Nose"],"n":0,"x":"We see with our eyes and hear with our ears.","p":""},{"i":"b02","k":"c","t":"body","a":3,"q":"What do we hear with?","o":["Hands","Ears","Feet"],"n":1,"x":"Our ears catch sounds.","p":""},{"i":"b03","k":"tf","t":"body","a":3,"q":"We should wash our hands before we eat.","o":[],"n":0,"x":"Washing with soap takes the germs away.","p":""},{"i":"b04","k":"c","t":"body","a":3,"q":"How many fingers are on one hand?","o":["4","5","10"],"n":1,"x":"Five fingers on each hand: ten in all!","p":""},{"i":"b05","k":"tf","t":"body","a":3,"q":"Sleeping helps you grow.","o":[],"n":0,"x":"Your body grows and rests while you sleep.","p":"bed"},{"i":"b06","k":"c","t":"body","a":3,"q":"What do we smell with?","o":["Nose","Knee","Hair"],"n":0,"x":"Our nose smells flowers, cake and everything else.","p":""},{"i":"b07","k":"tf","t":"body","a":3,"q":"Brushing teeth keeps them healthy.","o":[],"n":0,"x":"Brush in the morning and before bed.","p":""},{"i":"b08","k":"c","t":"body","a":3,"q":"Which food is good for you?","o":["Candy","Apple","Chips"],"n":1,"x":"Fruit and vegetables help your body stay strong.","p":"apples"},{"i":"b09","k":"tf","t":"body","a":6,"q":"Your heart is a muscle.","o":[],"n":0,"x":"Your heart is a strong muscle that pumps blood all day and night.","p":""},{"i":"b10","k":"c","t":"body","a":6,"q":"What do our lungs do?","o":["Breathe","Think","Walk"],"n":0,"x":"Lungs take in air when we breathe in.","p":""},{"i":"b11","k":"tf","t":"body","a":6,"q":"Babies have more bones than grown-ups.","o":[],"n":0,"x":"Babies have about 300 bones. Some join together as they grow, so adults have 206.","p":"baby"},{"i":"b12","k":"c","t":"body","a":6,"q":"Which part of you thinks?","o":["Brain","Elbow","Toe"],"n":0,"x":"Your brain thinks, remembers and tells your body what to do.","p":""},{"i":"b13","k":"tf","t":"body","a":6,"q":"Drinking water is good for your body.","o":[],"n":0,"x":"More than half of your body is water!","p":""},{"i":"b14","k":"c","t":"body","a":6,"q":"How many teeth does a grown-up have?","o":["12","32","100"],"n":1,"x":"Children have 20 baby teeth; grown-ups have 32.","p":""},{"i":"n01","k":"c","t":"nature","a":3,"q":"What do plants need to grow?","o":["Water","Toys","Shoes"],"n":0,"x":"Plants need water, sunlight and soil.","p":"tree"},{"i":"n02","k":"tf","t":"nature","a":3,"q":"Trees have roots.","o":[],"n":0,"x":"Roots hold the tree in the ground and drink water.","p":"tree"},{"i":"n03","k":"c","t":"nature","a":3,"q":"What colour are most leaves?","o":["Green","Blue","Purple"],"n":0,"x":"Leaves are green because of a helper called chlorophyll.","p":"leaves"},{"i":"n04","k":"tf","t":"nature","a":3,"q":"Apples grow on trees.","o":[],"n":0,"x":"Apples grow on apple trees, from flowers in spring.","p":"apples"},{"i":"n05","k":"c","t":"nature","a":3,"q":"In autumn, leaves often turn...","o":["Orange","Blue","White"],"n":0,"x":"In autumn many leaves turn yellow, orange and red, then fall.","p":"leaves"},{"i":"n06","k":"tf","t":"nature","a":3,"q":"Flowers can grow from seeds.","o":[],"n":0,"x":"A tiny seed in the soil can grow into a big flower.","p":"seeds"},{"i":"n07","k":"c","t":"nature","a":3,"q":"Which season is the coldest?","o":["Summer","Winter","Spring"],"n":1,"x":"Winter is the coldest season. Sometimes it snows!","p":"snow"},{"i":"n08","k":"tf","t":"nature","a":3,"q":"Ice is frozen water.","o":[],"n":0,"x":"When water gets very cold, it turns into ice.","p":"snow"},{"i":"n09","k":"c","t":"nature","a":6,"q":"What do bees take from flowers?","o":["Nectar","Sand","Milk"],"n":0,"x":"Bees drink nectar from flowers and turn it into honey.","p":"bee"},{"i":"n10","k":"tf","t":"nature","a":6,"q":"Plants make their own food from sunlight.","o":[],"n":0,"x":"Leaves use sunlight, air and water to make food. This is called photosynthesis.","p":"leaves"},{"i":"n11","k":"c","t":"nature","a":6,"q":"Which tree stays green all winter?","o":["Pine","Apple","Maple"],"n":0,"x":"Pine trees keep their needles all year long.","p":"tree"},{"i":"n12","k":"tf","t":"nature","a":6,"q":"A cactus needs lots of rain.","o":[],"n":1,"x":"Cactuses live in deserts and store water inside.","p":""},{"i":"n13","k":"c","t":"nature","a":6,"q":"What is a forest full of?","o":["Trees","Cars","Shops"],"n":0,"x":"Forests are full of trees, and many animals live there.","p":"tree"},{"i":"n14","k":"tf","t":"nature","a":6,"q":"Mushrooms are plants.","o":[],"n":1,"x":"Mushrooms are not plants. They are fungi.","p":""},{"i":"s01","k":"c","t":"sky","a":3,"q":"Where does rain come from?","o":["Clouds","Trees","Rocks"],"n":0,"x":"Clouds are made of tiny drops. When they get heavy, they fall as rain.","p":"rain"},{"i":"s02","k":"tf","t":"sky","a":3,"q":"The Sun is hot.","o":[],"n":0,"x":"The Sun is a giant hot star. It warms the Earth.","p":"sun"},{"i":"s03","k":"c","t":"sky","a":3,"q":"What do we see after rain and sun?","o":["Rainbow","Snow","Moon"],"n":0,"x":"Sunlight shining through raindrops makes a rainbow.","p":"rainbow"},{"i":"s04","k":"tf","t":"sky","a":3,"q":"We can see stars at night.","o":[],"n":0,"x":"Stars are there in the day too, but the Sun is too bright to see them.","p":"star"},{"i":"s05","k":"c","t":"sky","a":3,"q":"What do we wear when it rains?","o":["Raincoat","Swimsuit","Crown"],"n":0,"x":"A raincoat and boots keep us dry.","p":"rain"},{"i":"s06","k":"tf","t":"sky","a":3,"q":"Snow is warm.","o":[],"n":1,"x":"Snow is very cold. It is made of tiny pieces of ice.","p":"snow"},{"i":"s07","k":"c","t":"sky","a":3,"q":"What shines in the sky in the day?","o":["Sun","Moon","Comet"],"n":0,"x":"The Sun gives us daylight.","p":"sun"},{"i":"s08","k":"tf","t":"sky","a":3,"q":"The wind can move clouds.","o":[],"n":0,"x":"Wind pushes the clouds across the sky.","p":"cloud"},{"i":"s09","k":"c","t":"sky","a":6,"q":"What comes first?","o":["Lightning","Thunder"],"n":0,"x":"Light is faster than sound, so we see lightning before we hear thunder.","p":"lightning"},{"i":"s10","k":"tf","t":"sky","a":6,"q":"A rainbow has seven colours.","o":[],"n":0,"x":"Red, orange, yellow, green, blue, indigo and violet.","p":"rainbow"},{"i":"s11","k":"c","t":"sky","a":6,"q":"What is fog?","o":["A low cloud","Smoke","Snow"],"n":0,"x":"Fog is a cloud that sits close to the ground.","p":"cloud"},{"i":"s12","k":"tf","t":"sky","a":6,"q":"Every snowflake has six sides.","o":[],"n":0,"x":"Snowflakes have six arms, and no two look exactly the same.","p":"snow"},{"i":"s13","k":"c","t":"sky","a":6,"q":"Which season comes after winter?","o":["Spring","Autumn","Summer"],"n":0,"x":"Winter, spring, summer, autumn - and around again.","p":""},{"i":"s14","k":"tf","t":"sky","a":6,"q":"The Sun goes around the Earth.","o":[],"n":1,"x":"The Earth goes around the Sun. It takes one year.","p":"sun"},{"i":"p01","k":"c","t":"space","a":3,"q":"Who goes to space in a rocket?","o":["Astronaut","Farmer","Baker"],"n":0,"x":"Astronauts travel to space in rockets.","p":"astronaut"},{"i":"p02","k":"tf","t":"space","a":3,"q":"We live on planet Earth.","o":[],"n":0,"x":"Earth is our home planet, with land, sea and air.","p":"earth"},{"i":"p03","k":"c","t":"space","a":3,"q":"Which planet has big rings?","o":["Saturn","Earth","Mars"],"n":0,"x":"Saturn's rings are made of ice and rock.","p":"saturn"},{"i":"p04","k":"tf","t":"space","a":3,"q":"The Moon is shaped like a ball.","o":[],"n":0,"x":"The Moon is round like a ball. We just see different parts of it lit up.","p":"fullmoon"},{"i":"p05","k":"c","t":"space","a":3,"q":"Which planet is red?","o":["Mars","Neptune","Earth"],"n":0,"x":"Mars is called the red planet because of its red dust.","p":"mars"},{"i":"p06","k":"tf","t":"space","a":3,"q":"You can breathe on the Moon without a helmet.","o":[],"n":1,"x":"There is no air on the Moon, so astronauts wear space suits.","p":"astronaut"},{"i":"p07","k":"c","t":"space","a":6,"q":"Which is the biggest planet?","o":["Jupiter","Mars","Venus"],"n":0,"x":"Jupiter is so big that more than 1000 Earths could fit inside.","p":"jupiter"},{"i":"p08","k":"tf","t":"space","a":6,"q":"The Sun is a star.","o":[],"n":0,"x":"The Sun is our closest star. Other stars are much farther away.","p":"sun"},{"i":"p09","k":"c","t":"space","a":6,"q":"How many planets go around our Sun?","o":["5","8","20"],"n":1,"x":"Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus and Neptune.","p":"planet"},{"i":"p10","k":"tf","t":"space","a":6,"q":"Our galaxy is called the Milky Way.","o":[],"n":0,"x":"The Milky Way has billions of stars. Our Sun is one of them.","p":"galaxy"},{"i":"p11","k":"c","t":"space","a":6,"q":"What do we look at stars with?","o":["Telescope","Spoon","Ladder"],"n":0,"x":"A telescope makes faraway things look big and close.","p":"telescope"},{"i":"p12","k":"tf","t":"space","a":6,"q":"The Moon makes its own light.","o":[],"n":1,"x":"The Moon shines because sunlight bounces off it.","p":"moon"},{"i":"p13","k":"c","t":"space","a":6,"q":"Which planet is closest to the Sun?","o":["Mercury","Neptune","Earth"],"n":0,"x":"Mercury is closest to the Sun, and Neptune is the farthest.","p":"mercury"},{"i":"p14","k":"tf","t":"space","a":6,"q":"A satellite goes around the Earth.","o":[],"n":0,"x":"Satellites help with phones, TV, maps and weather.","p":"satellite"},{"i":"e01","k":"c","t":"earth","a":3,"q":"What is the sea full of?","o":["Water","Sand","Milk"],"n":0,"x":"Seas and oceans are full of salty water.","p":"sea"},{"i":"e02","k":"tf","t":"earth","a":3,"q":"Sea water is salty.","o":[],"n":0,"x":"Sea water has salt in it, so we should not drink it.","p":"sea"},{"i":"e03","k":"c","t":"earth","a":3,"q":"Where is it very hot and sandy?","o":["Desert","Pond","Snow"],"n":0,"x":"Deserts are dry, sandy and often very hot.","p":""},{"i":"e04","k":"tf","t":"earth","a":3,"q":"Mountains are very tall.","o":[],"n":0,"x":"Some mountains are so tall that they have snow on top all year.","p":""},{"i":"e05","k":"c","t":"earth","a":6,"q":"Which is the biggest?","o":["Ocean","Lake","Pond"],"n":0,"x":"Oceans are the biggest bodies of water. They cover most of the Earth.","p":"sea"},{"i":"e06","k":"tf","t":"earth","a":6,"q":"Most of the Earth is covered by water.","o":[],"n":0,"x":"About seven tenths of the Earth is ocean.","p":"earth"},{"i":"e07","k":"c","t":"earth","a":6,"q":"What comes out of a volcano?","o":["Lava","Snow","Juice"],"n":0,"x":"Lava is melted rock, so hot that it glows.","p":""},{"i":"e08","k":"tf","t":"earth","a":6,"q":"The Earth spins around once every day.","o":[],"n":0,"x":"When our side faces the Sun it is day; when it turns away it is night.","p":"earth"},{"i":"e09","k":"c","t":"earth","a":6,"q":"Where is it always very cold?","o":["North Pole","Desert","Beach"],"n":0,"x":"The North and South Poles are covered in ice.","p":"snow"},{"i":"e10","k":"tf","t":"earth","a":6,"q":"Rivers flow into the sea.","o":[],"n":0,"x":"Most rivers start in the mountains and end in the sea.","p":""},{"i":"f01","k":"c","t":"food","a":3,"q":"Which one is a fruit?","o":["Banana","Bread","Cheese"],"n":0,"x":"Bananas are fruit. They grow in bunches.","p":""},{"i":"f02","k":"tf","t":"food","a":3,"q":"Milk comes from cows.","o":[],"n":0,"x":"Cows, goats and sheep give milk.","p":"cow"},{"i":"f03","k":"c","t":"food","a":3,"q":"What colour is a banana?","o":["Yellow","Blue","Black"],"n":0,"x":"Ripe bananas are yellow.","p":""},{"i":"f04","k":"tf","t":"food","a":3,"q":"Carrots grow under the ground.","o":[],"n":0,"x":"We eat the carrot root that grows in the soil.","p":""},{"i":"f05","k":"c","t":"food","a":3,"q":"What do we make bread from?","o":["Flour","Stones","Paper"],"n":0,"x":"Flour is made from wheat, and bread is baked from flour.","p":""},{"i":"f06","k":"tf","t":"food","a":3,"q":"Eggs come from hens.","o":[],"n":0,"x":"Hens lay the eggs we eat.","p":"eggs"},{"i":"f07","k":"c","t":"food","a":6,"q":"Popcorn is made from...","o":["Corn","Rice","Beans"],"n":0,"x":"Corn kernels pop when they get hot.","p":"corn"},{"i":"f08","k":"tf","t":"food","a":6,"q":"A tomato is a fruit.","o":[],"n":0,"x":"Tomatoes have seeds inside, so they are fruit, even though we use them like vegetables.","p":""},{"i":"f09","k":"c","t":"food","a":6,"q":"Cheese is made from...","o":["Milk","Apples","Rice"],"n":0,"x":"Cheese is made from milk.","p":""},{"i":"f10","k":"tf","t":"food","a":6,"q":"Honey can stay good for a very long time.","o":[],"n":0,"x":"Honey does not go bad. Bees made it to keep for winter.","p":"honey"},{"i":"m01","k":"c","t":"math","a":3,"q":"How many sides does a triangle have?","o":["3","4","5"],"n":0,"x":"Tri means three: a triangle has 3 sides.","p":"triangle"},{"i":"m02","k":"c","t":"math","a":3,"q":"What comes after 4?","o":["3","5","6"],"n":1,"x":"1, 2, 3, 4, 5!","p":""},{"i":"m03","k":"c","t":"math","a":3,"q":"Which shape is round?","o":["Circle","Square","Triangle"],"n":0,"x":"A circle is round, like a ball or a plate.","p":"circle"},{"i":"m04","k":"c","t":"math","a":3,"q":"2 + 1 = ?","o":["2","3","4"],"n":1,"x":"Two and one more make three.","p":""},{"i":"m05","k":"tf","t":"math","a":3,"q":"A square has four sides.","o":[],"n":0,"x":"A square has four sides, all the same length.","p":"square"},{"i":"m06","k":"c","t":"math","a":3,"q":"Which number is bigger?","o":["7","3"],"n":0,"x":"7 is bigger than 3.","p":""},{"i":"m07","k":"c","t":"math","a":6,"q":"5 + 5 = ?","o":["10","11","55"],"n":0,"x":"Five and five make ten - like your two hands!","p":""},{"i":"m08","k":"c","t":"math","a":6,"q":"How many days are in a week?","o":["5","7","10"],"n":1,"x":"Seven days: Monday to Sunday.","p":""},{"i":"m09","k":"c","t":"math","a":6,"q":"10 - 3 = ?","o":["6","7","13"],"n":1,"x":"Take 3 away from 10 and 7 are left.","p":""},{"i":"m10","k":"tf","t":"math","a":6,"q":"A hexagon has six sides.","o":[],"n":0,"x":"Hexa means six. Bees build hexagons in their hives!","p":"hexagon"},{"i":"m11","k":"c","t":"math","a":6,"q":"Which is an even number?","o":["4","5","7"],"n":0,"x":"Even numbers can be shared into two equal groups: 2, 4, 6, 8...","p":""},{"i":"m12","k":"c","t":"math","a":6,"q":"How many minutes are in an hour?","o":["30","60","100"],"n":1,"x":"An hour has 60 minutes.","p":""},{"i":"m13","k":"c","t":"math","a":6,"q":"3 x 2 = ?","o":["5","6","32"],"n":1,"x":"Three twice: 3 + 3 = 6.","p":""},{"i":"m14","k":"tf","t":"math","a":6,"q":"A ball is a sphere.","o":[],"n":0,"x":"A sphere is perfectly round in every direction.","p":"sphere"},{"i":"w01","k":"c","t":"words","a":3,"q":"What is this?","o":["Cat","Dog","Pig"],"n":0,"x":"Cat - C, A, T.","p":"cat"},{"i":"w02","k":"c","t":"words","a":3,"q":"What is this?","o":["Bus","Car","Ship"],"n":2,"x":"Ship - S, H, I, P.","p":"ship"},{"i":"w03","k":"c","t":"words","a":3,"q":"What is this?","o":["Hat","Bed","Key"],"n":2,"x":"Key - K, E, Y.","p":"key"},{"i":"w04","k":"c","t":"words","a":3,"q":"Which word starts with B?","o":["Ball","Sun","Map"],"n":0,"x":"Ball starts with the sound b.","p":""},{"i":"w05","k":"c","t":"words","a":6,"q":"What is the opposite of hot?","o":["Cold","Big","Fast"],"n":0,"x":"Hot and cold are opposites.","p":""},{"i":"w06","k":"c","t":"words","a":6,"q":"What is the opposite of up?","o":["Down","In","On"],"n":0,"x":"Up and down are opposites.","p":""},{"i":"w07","k":"c","t":"words","a":6,"q":"Which word rhymes with cat?","o":["Hat","Dog","Sun"],"n":0,"x":"Cat and hat both end with -at.","p":"hat"},{"i":"w08","k":"c","t":"words","a":6,"q":"How many letters are in DOG?","o":["2","3","4"],"n":1,"x":"D, O, G: three letters.","p":"dog"},{"i":"l01","k":"c","t":"life","a":3,"q":"What colour means stop?","o":["Red","Green","Blue"],"n":0,"x":"Red means stop, green means go.","p":""},{"i":"l02","k":"tf","t":"life","a":3,"q":"We look both ways before crossing the road.","o":[],"n":0,"x":"Look left, look right, and hold a grown-up's hand.","p":"car"},{"i":"l03","k":"c","t":"life","a":3,"q":"Who helps when we are sick?","o":["Doctor","Pilot","Chef"],"n":0,"x":"Doctors and nurses help us get better.","p":""},{"i":"l04","k":"tf","t":"life","a":3,"q":"Sharing toys is kind.","o":[],"n":0,"x":"Sharing makes playing more fun for everyone.","p":""},{"i":"l05","k":"c","t":"life","a":6,"q":"Who flies a plane?","o":["Pilot","Farmer","Dentist"],"n":0,"x":"A pilot flies the plane.","p":"jet"},{"i":"l06","k":"tf","t":"life","a":6,"q":"Paper can be recycled.","o":[],"n":0,"x":"Old paper can be made into new paper. That saves trees!","p":""},{"i":"l07","k":"c","t":"life","a":6,"q":"What do we use to tell the time?","o":["Clock","Fork","Brush"],"n":0,"x":"A clock or a watch tells us the time.","p":""},{"i":"l08","k":"tf","t":"life","a":6,"q":"Nowruz is the Persian New Year, on the first day of spring.","o":[],"n":0,"x":"Nowruz means new day. Families set the Haft-sin table.","p":""},{"i":"x01","k":"c","t":"science","a":3,"q":"What does a magnet pick up?","o":["Nails","Paper","Leaves"],"n":0,"x":"Magnets pull things made of iron, like nails.","p":""},{"i":"x02","k":"tf","t":"science","a":3,"q":"Ice melts when it gets warm.","o":[],"n":0,"x":"Warm ice turns back into water.","p":""},{"i":"x03","k":"c","t":"science","a":3,"q":"What floats on water?","o":["Boat","Rock","Key"],"n":0,"x":"Boats float. Rocks and keys sink.","p":"ship"},{"i":"x04","k":"tf","t":"science","a":3,"q":"We need light to see.","o":[],"n":0,"x":"Without light, everything looks dark.","p":""},{"i":"x05","k":"c","t":"science","a":6,"q":"What happens to water when it boils?","o":["It steams","It freezes"],"n":0,"x":"Boiling water turns into steam.","p":""},{"i":"x06","k":"tf","t":"science","a":6,"q":"Sound can travel through water.","o":[],"n":0,"x":"Whales and dolphins talk to each other with sounds under water.","p":""},{"i":"x07","k":"c","t":"science","a":6,"q":"What makes a shadow?","o":["Blocking sun","Rain","Wind"],"n":0,"x":"When something blocks the light, it makes a shadow behind it.","p":"sun"},{"i":"x08","k":"tf","t":"science","a":6,"q":"Heavy things always fall faster.","o":[],"n":1,"x":"Without air in the way, a feather and a hammer fall together. Astronauts tried it on the Moon!","p":""}];
+const VOICED=new Set(["a01", "a02", "a03", "a04", "a05", "a06", "a07", "a08", "a09", "a10", "a11", "a12", "a13", "a14", "a15", "a16", "a17", "a18", "a19", "a20", "a21", "a22", "a23", "a24", "a25", "a26", "a27", "a28", "b01", "b02", "b03", "b04", "b05", "b06", "b07", "b08", "b09", "b10", "b11", "b12", "b13", "b14", "n01", "n02", "n03", "n04", "n05", "n06", "n07", "n08", "n09", "n10", "n11", "n12", "n13", "n14", "p01", "p02", "p03", "p04", "p05", "p06", "p07", "p08", "s01", "s02", "s03", "s04", "s05", "s06", "s07", "s08", "s09", "s10", "s11", "s12", "s13", "s14"]);
 const PIC_E={apples:"🍎",astronaut:"🧑‍🚀",baby:"👶",bat:"🦇",bed:"🛏️",bee:"🐝",bird:"🐦",car:"🚗",cat:"🐱",caterpillar:"🐛",circle:"⚪",cloud:"☁️",corn:"🌽",cow:"🐄",dog:"🐶",duck:"🦆",earth:"🌍",eggs:"🥚",fish:"🐟",frog:"🐸",fullmoon:"🌕",galaxy:"🌌",grass:"🌿",hat:"🎩",hen:"🐔",hexagon:"⬢",honey:"🍯",jet:"✈️",jupiter:"🪐",key:"🔑",leaves:"🍂",lightning:"⚡",mars:"🔴",mercury:"🌑",moon:"🌙",nest:"🪺",planet:"🪐",rain:"🌧️",rainbow:"🌈",satellite:"🛰️",saturn:"🪐",sea:"🌊",seeds:"🌱",shark:"🦈",ship:"🚢",snake:"🐍",snow:"❄️",sphere:"🔵",square:"🟥",star:"⭐",sun:"☀️",telescope:"🔭",tree:"🌳",triangle:"🔺",web:"🕸️"};
 const WORD_E={ant:"🐜",apple:"🍎",apples:"🍎",astronaut:"🧑‍🚀",autumn:"🍂",baker:"🧑‍🍳",ball:"⚽",banana:"🍌",barn:"🛖",beach:"🏖️",beans:"🫘",bear:"🐻",bed:"🛏️",bee:"🐝",big:"🐘",bird:"🐦",black:"⚫",blue:"🔵",boat:"⛵",bones:"🦴",brain:"🧠",bread:"🍞",breathe:"🌬️",brush:"🪥",bus:"🚌",butterfly:"🦋",candy:"🍬",car:"🚗",cars:"🚗",cat:"🐱",cave:"🕳️",cheese:"🧀",cheetah:"🐆",chef:"🧑‍🍳",chips:"🍟",circle:"⚪",clock:"🕒",clouds:"☁️",cold:"🥶",comet:"☄️",corn:"🌽",cow:"🐄",crown:"👑",dentist:"🦷",desert:"🏜️",doctor:"🧑‍⚕️",dog:"🐶",down:"⬇️",duck:"🦆",ears:"👂",earth:"🌍",elbow:"💪",elephant:"🐘",eyes:"👀",farmer:"🧑‍🌾",fast:"💨",feet:"🦶",fish:"🐟",flour:"🌾",fork:"🍴",fox:"🦊",frog:"🐸",grass:"🌿",green:"🟢",hair:"💇",hands:"👐",hat:"🎩",hen:"🐔",hive:"🐝",in:"📥",juice:"🧃",jupiter:"🪐",key:"🔑",knee:"🦵",ladder:"🪜",lake:"🏞️",lava:"🌋",leaves:"🍂",lightning:"⚡",lion:"🦁",map:"🗺️",maple:"🍁",mars:"🔴",mercury:"🌑",milk:"🥛",moon:"🌙",mouse:"🐭",nails:"💅",nectar:"🌸",neptune:"🔵",nest:"🪺",nose:"👃",ocean:"🌊",on:"🔛",orange:"🟠",paper:"📄",pig:"🐷",pilot:"🧑‍✈️",pine:"🌲",pond:"🦆",purple:"🟣",rain:"🌧️",rainbow:"🌈",raincoat:"🧥",red:"🔴",rice:"🍚",rock:"🪨",rocks:"🪨",sand:"⏳",saturn:"🪐",sea:"🌊",ship:"🚢",shoes:"👟",shops:"🏪",smoke:"💨",snow:"❄️",spoon:"🥄",spring:"🌸",square:"🟥",stones:"🪨",summer:"☀️",sun:"☀️",swimsuit:"🩱",telescope:"🔭",think:"🤔",thunder:"⛈️",toe:"🦶",toys:"🧸",trees:"🌳",triangle:"🔺",turtle:"🐢",venus:"🟡",walk:"🚶",water:"💧",white:"⚪",wind:"🌬️",winter:"⛄",yellow:"🟡","north pole":"🧊","it freezes":"🧊","it steams":"♨️","a low cloud":"🌫️","blocking sun":"🌑"};
-const TEXT_E=[["whale","🐋"],["penguin","🐧"],["giraffe","🦒"],["octopus","🐙"],["hands","🧼"],["teeth","🪥"],["heart","❤️"],["water","💧"],["cactus","🌵"],["mushroom","🍄"],["mountain","⛰️"],["river","🏞️"],["carrot","🥕"],["tomato","🍅"],["toys","🧸"],["paper","📄"],["nowruz","🌸"],["ice","🧊"],["light","💡"],["sound","🔊"],["heavy","🪨"],["elephant","🐘"],["spider","🕷️"],["cheetah","🐆"],["bear","🐻"],["rain","🌧️"],["volcano","🌋"],["moon","🌙"],["sun","☀️"],["plant","🌱"],["milk","🥛"],["bread","🍞"],["egg","🥚"],["bone","🦴"],["eye","👀"],["nose","👃"],["ear","👂"],["shape","🔷"],["clock","🕒"],["number","🔢"]];
-function wEmoji(w){if(w.p&&PIC_E[w.p])return PIC_E[w.p];const t=w.q.toLowerCase();for(const [k,e] of TEXT_E)if(t.includes(k))return e;return w.k==="tf"?"🤔":"❓"}
-const optEmoji=o=>WORD_E[o.toLowerCase()]||(/^\d+$/.test(o)?"":"");
-function pickWatcher(easy){
-  const age=Math.min(8,S.age),pool=WQ.filter(w=>w.a<=Math.max(3,age)&&(!easy||w.a<=3));
-  let left=pool.filter(w=>!S.seenW.includes(w.i));
-  if(!left.length){S.seenW=[];left=pool}
-  const w=pickOne(left);if(!w)return null;S.seenW.push(w.i);return w;
+const N=n=>n>=0&&n<=20?"w/LULU_N"+n:null;
+const PRAISE_CLIPS=["w/LULU_PR_A","w/LULU_PR_B","w/LULU_PR_C","w/LULU_PR_D","w/LULU_PR_E","w/LULU_PR_F","w/LULU_PRAISE1","w/LULU_PRAISE2","w/LULU_PRAISE3","w/LULU_PRAISE4","w/LULU_BD_RIGHT","praise1","praise2","praise3","praise4"];
+const PRAISE_T=["Yay!","Super!","Woohoo!","Amazing!","Brilliant!","You're a star!","Fantastic!","Hooray!","So smart!","Wow!"];
+const OBJ=["🍎","🐟","⭐","🦆","🌸","🍓","🐞","🎈","🍪","🐣","🧁","🦋"];
+const sh=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const lvl=()=>Math.max(3,Math.min(10,S.age+(S.diff-1)));
+
+/* ---------- sound: play a list of clips one after another ---------- */
+let seqId=0;
+function speaking(on){const b=$("qSpk");if(b)b.classList.toggle("talking",on)}
+function sayseq(list,onEnd){
+  const id=++seqId,l=list.filter(Boolean);let i=0;
+  const next=()=>{if(id!==seqId)return;if(i>=l.length){speaking(false);onEnd&&onEnd();return}say(l[i++],next)};
+  speaking(true);next();
 }
-const RADIO=[
- {clip:"story1",title:"Domi and the apples 🍎",qs:[{clip:"rq1a",q:"How many apples?",opts:[["🍎🍎","Two"],["🍎🍎🍎","Three"],["🍎🍎🍎🍎","Four"]],ans:1},{clip:"rq1b",q:"Who got an apple?",opts:[["🦆","Duck"],["🐱","Cat"],["🐶","Dog"]],ans:0}]},
- {clip:"story2",title:"Domi in the rain ☔",qs:[{clip:"rq2a",q:"What colour was the umbrella?",opts:[["🟡","Yellow"],["🔴","Red"],["🔵","Blue"]],ans:0},{clip:"rq2b",q:"Who did Domi see?",opts:[["🐸","Frog"],["🐟","Fish"],["🐦","Bird"]],ans:0}]},
- {clip:"story3",title:"Domi and the stars ⭐",qs:[{clip:"rq3a",q:"How many stars?",opts:[["⭐⭐⭐","Three"],["⭐⭐⭐⭐⭐","Five"],["⭐⭐⭐⭐⭐⭐⭐","Seven"]],ans:1},{clip:"rq3b",q:"What did Domi do at the end?",opts:[["😴","Slept"],["🍽️","Ate"],["⚽","Played"]],ans:0}]},
+function hush(){seqId++;if(voice){voice.onended=null;voice.onerror=null;voice.pause();voice=null}speaking(false)}
+sfx.oops=()=>tone([[392,0,.12,"triangle",.1],[330,.1,.18,"triangle",.1]]);
+
+/* ---------- pictures ---------- */
+const grp=(n,e,cls="")=>`<span class="grp ${cls}">${Array.from({length:n},()=>`<i class="ob">${e}</i>`).join("")}</span>`;
+const dots=n=>n<=10?`<span class="dots">${"●".repeat(n)}</span>`:"";
+const numOpt=n=>({h:`<b class="num">${n}</b>${dots(n)}`,say:N(n)});
+function numOpts(right,cands,k=3){const w=sh([...new Set(cands.filter(x=>x!==right&&x>=0))]).slice(0,k-1),o=sh([right,...w]);return {opts:o.map(numOpt),ans:o.indexOf(right)}}
+const near=n=>[n-1,n+1,n+2,n-2,n+3];
+
+/* ---------- categories: each mound of the day is one category; a day never repeats one in a row ---------- */
+const CATS=[
+ {id:"count",topic:"math",e:"🔢",name:"Counting"},
+ {id:"add",topic:"math",e:"➕",name:"Adding & taking away"},
+ {id:"clock",topic:"clock",e:"🕒",name:"Clock & time"},
+ {id:"money",topic:"money",e:"🪙",name:"Coins"},
+ {id:"animals",topic:"watcher",e:"🐾",name:"Animals"},
+ {id:"world",topic:"watcher",e:"🌳",name:"Our world"},
+ {id:"sky",topic:"watcher",e:"🌙",name:"Sky & space"},
+ {id:"story",topic:"radio",e:"📻",name:"Domi's Radio"},
 ];
-const CLIPS=new Set(["ageup", "c_day", "c_dur", "c_read", "c_routine", "c_season", "calm", "chest", "daydone", "finish", "hole", "m_change", "m_count", "m_name", "m_same", "m_value", "praise1", "praise2", "praise3", "praise4", "q_bank", "q_choose", "q_fill", "q_key", "q_match", "q_pic", "q_repeat", "q_say", "q_speak", "q_teach", "quest", "rep1", "rep2", "rep3", "rep4", "rep5", "rep6", "retry1", "retry2", "retry3", "reward", "story", "streak", "t_burrow", "t_missions", "t_parents", "unlock", "welcome", "wrong", "z1", "z10", "z11", "z12", "z2", "z3", "z4", "z5", "z6", "z7", "z8", "z9", "zonedone"]);
-const PRAISE_T=["Yay! You got it!","Super smart!","Woohoo!","Amazing!","Brilliant!","You're a star!","Fantastic!","Domi is dancing!"];
-function setupRadio(ex){
-  const R=RADIO[ex.r],box=$("rBox"),done=$("rDone");
-  const enable=()=>{done.disabled=false;box.classList.remove("on")};
-  $("rPlay").onclick=()=>{sfx.tap();box.classList.add("on");say("radio",()=>say(R.clip,enable))};
-  done.onclick=()=>{sfx.tap();if(voice){voice.onended=null;voice.pause();voice=null}box.classList.remove("on");ex.locked=true;nextExercise(200)};
-  setTimeout(()=>{if(L&&L.ex===ex)$("rPlay").click()},400);
-  setTimeout(enable,25000);
-  $("lFoot").hidden=true;
+const catById=id=>CATS.find(c=>c.id===id);
+
+/* what a child of each age can do (US Common Core K-2 + Minnesota grade 1 benchmarks):
+   5: count to 10, add/take away within 5, o'clock, pennies
+   6: count to 20, add/take away within 10, o'clock + half past, penny/nickel/dime values, small coin sums
+   7: add/take away within 20, quarter past/to, quarter, coin sums to 50¢, same amount two ways
+   8+: within 100, 5-minute times, change from $1 */
+function kindsFor(cat){
+  const a=lvl();
+  if(cat==="count")return a<=4?["find","more","less"]:a<=6?["find","more","less","after","before"]:["after","before","find","more"];
+  if(cat==="add")return a<=4?["addPic","subPic","teach"]:a<=7?["addPic","subPic","sum","teach","minus"]:["sum","minus","teach","big"];
+  if(cat==="clock")return a<=5?["routine","oclock"]:a<=6?["routine","oclock","half","season"]:a<=7?["half","quarter","season","oclock"]:["quarter","minutes","half"];
+  if(cat==="money")return a<=5?["pennies","value"]:a<=6?["pennies","value","count"]:a<=7?["value","count","same"]:["count","same","change"];
+  return ["w"];
+}
+const MAXN=()=>{const a=lvl();return a<=4?5:a<=6?10:a<=7?20:100};
+
+/* ---------- builders ---------- */
+function qCount(k){
+  const mx=Math.min(MAXN(),20),e=pickOne(OBJ);
+  if(k==="find"){const n=ri(2,Math.min(mx,10)),c=sh([n,...sh(near(n).filter(x=>x>=1&&x<=12&&x!==n)).slice(0,2)]);
+    return {voice:["w/LULU_C_FIND",N(n)],cap:`Find ${n}`,visual:`<div class="bignum">${n}</div>`,opts:c.map(x=>({h:grp(x,e),say:null})),ans:c.indexOf(n),layout:"col",hint:"elim",exp:{t:`${n}`,v:["w/LULU_ANS_IS"]}}}
+  if(k==="more"||k==="less"){let a=ri(1,Math.min(mx,9)),b;do{b=ri(1,Math.min(mx,9))}while(b===a||Math.abs(a-b)>4);const o=[a,b],r=k==="more"?Math.max(a,b):Math.min(a,b);
+    return {voice:[k==="more"?"w/LULU_CP_MORE":"w/LULU_CP_LESS"],cap:k==="more"?"Which has more?":"Which has less?",visual:`<div class="domisays">${bv(84)}<div class="bub q">⚖️</div></div>`,opts:o.map(x=>({h:grp(x,e)})),ans:o.indexOf(r),layout:"row",hint:"count",exp:{t:`${r}`,v:["w/LULU_ANS_IS"]}}}
+  if(k==="after"){const n=ri(1,Math.min(mx,19)-1);return Object.assign({voice:["w/LULU_C_AFTER1",N(n)],cap:`${n} → ?`,visual:`<div class="seq"><b class="bignum sm">${n}</b><span class="arr">➜</span><b class="bignum sm q">?</b></div>`,layout:"row3",hint:"line",line:[n,n+1],exp:{t:`${n} → ${n+1}`,v:["w/LULU_ANS_IS"]}},numOpts(n+1,[n,n+2,n-1,n+3]))}
+  const n=ri(2,Math.min(mx,20));return Object.assign({voice:["w/LULU_C_BEFORE1",N(n)],cap:`? → ${n}`,visual:`<div class="seq"><b class="bignum sm q">?</b><span class="arr">➜</span><b class="bignum sm">${n}</b></div>`,layout:"row3",hint:"line",line:[n-1,n],exp:{t:`${n-1} → ${n}`,v:["w/LULU_ANS_IS"]}},numOpts(n-1,[n,n+1,n-2]));
+}
+function qAdd(k){
+  const mx=MAXN(),e=pickOne(OBJ),pm=Math.min(mx,10);
+  if(k==="addPic"){const s=ri(2,pm),a=ri(1,s-1),b=s-a;
+    return Object.assign({voice:["w/LULU_WP_IF",N(a),"w/LULU_WP_HAVE",N(b),"w/LULU_WP_MORE"],cap:`${a} + ${b}`,visual:`<div class="story2">${grp(a,e)}<span class="op">+</span>${grp(b,e)}</div>`,layout:"row3",hint:"count",exp:{t:`${a} + ${b} = ${s}`,v:[N(a),"w/LULU_PLUS",N(b),"w/LULU_EQUALS",N(s)]}},numOpts(s,near(s)))}
+  if(k==="subPic"){const a=ri(2,pm),b=ri(1,a-1),r=a-b;
+    return Object.assign({voice:["w/LULU_WP_IF",N(a),"w/LULU_WP_HAVE",N(b),"w/LULU_WP_GIVE"],cap:`${a} − ${b}`,visual:`<div class="story2"><span class="grp">${Array.from({length:a},(x,i)=>`<i class="ob ${i>=r?"gone":""}">${e}</i>`).join("")}</span><span class="gift">👋 ${b}</span></div>`,layout:"row3",hint:"count",countSel:".ob:not(.gone)",exp:{t:`${a} − ${b} = ${r}`,v:[N(a),"w/LULU_MINUS",N(b),"w/LULU_EQUALS",N(r)]}},numOpts(r,near(r)))}
+  let a,b,op;
+  if(k==="big"){const p=makeProb(skillFor(S.age,S.diff));a=p.a;b=p.b;op=p.op}
+  else if(k==="minus"){a=ri(2,Math.min(mx,20));b=ri(1,a-1);op="−"}
+  else{const s=ri(2,Math.min(mx,20));a=ri(1,s-1);b=s-a;op="+"}
+  const r=calc(a,op,b),spoken=r<=20&&a<=20&&b<=20&&(op==="+"||op==="−");
+  const eq=`<div class="eq"><span>${a}${dots(a)}</span><b>${op}</b><span>${b}${dots(b)}</span><b>=</b><span class="q">?</span></div>`;
+  if(k==="teach"){const shown=Math.random()<.5?r:r+pickOne([1,-1,2]);const ok=shown===r;
+    return {voice:spoken?[N(a),op==="+"?"w/LULU_PLUS":"w/LULU_MINUS",N(b),"w/LULU_EQUALS",N(shown),"q_teach"]:["q_teach"],cap:"Is Domi right?",
+      visual:`<div class="domisays">${bv(78)}<div class="bub"><b>${a} ${op} ${b} = ${shown}</b></div></div>`,opts:[{h:"<span class='yn'>✅</span>"},{h:"<span class='yn'>❌</span>"}],ans:ok?0:1,layout:"yn",hint:"dots",a,b,
+      exp:{t:`${a} ${op} ${b} = ${r}`,v:[N(a),op==="+"?"w/LULU_PLUS":"w/LULU_MINUS",N(b),"w/LULU_EQUALS",N(r)]}}}
+  return Object.assign({voice:spoken?[N(a),op==="+"?"w/LULU_PLUS":"w/LULU_MINUS",N(b),"w/LULU_EQUALS"]:["q_choose"],cap:"",visual:eq,layout:"row3",hint:spoken&&r<=10?"dots":"elim",
+    exp:{t:`${a} ${op} ${b} = ${r}`,v:spoken?[N(a),op==="+"?"w/LULU_PLUS":"w/LULU_MINUS",N(b),"w/LULU_EQUALS",N(r)]:["w/LULU_ANS_IS"]}},numOpts(r,near(r).concat([r+10,r-10])));
+}
+const dig=(h,m)=>`${h}:${String(m).padStart(2,"0")}`;
+function qClock(k){
+  if(k==="routine"){const r=pickOne(ROUTINES);return {voice:["c_routine"],cap:"Morning or night?",visual:`<div class="bigemo">${r[0]}</div>`,opts:[{h:"<span class='yn'>☀️</span><small>Morning</small>"},{h:"<span class='yn'>🌙</span><small>Night</small>"}],ans:r[2],layout:"yn",hint:"elim",exp:{t:r[2]?"Night 🌙":"Morning ☀️",v:["w/LULU_ANS_IS"]}}}
+  if(k==="season"){const sz=pickOne(SEASONS),SE={Winter:"⛄",Spring:"🌸",Summer:"☀️",Autumn:"🍂"},o=sh(["Winter","Spring","Summer","Autumn"]);
+    return {voice:["c_season"],cap:"Which season?",visual:`<div class="bigemo">${sz[0]}</div>`,opts:o.map(x=>({h:`<span class="oe">${SE[x]}</span><small>${x}</small>`})),ans:o.indexOf(sz[2]),layout:"grid",hint:"elim",exp:{t:sz[2],v:["w/LULU_ANS_IS"]}}}
+  const h=ri(1,12),m=k==="oclock"?0:k==="half"?30:k==="quarter"?pickOne([15,45]):ri(1,11)*5;
+  const w=[dig(hh(h+1),m),dig(hh(h-1),m),dig(h,m===30?0:30),dig(h,(m+15)%60)];
+  const o=sh([dig(h,m),...sh([...new Set(w.filter(x=>x!==dig(h,m)))]).slice(0,2)]);
+  return {voice:["c_read"],cap:"What time is it?",visual:clockSVG(h,m),opts:o.map(x=>({h:`<b class="num t">${x}</b>`})),ans:o.indexOf(dig(h,m)),layout:"row3",hint:"clock",exp:{t:`${dig(h,m)}  (${tName(h,m)})`,v:["w/LULU_ANS_IS"]}};
+}
+function qMoney(k){
+  const a=lvl();
+  if(k==="pennies"){const n=ri(2,a<=5?5:9);return Object.assign({voice:["m_count"],cap:"How many cents?",visual:coinsHTML(Array(n).fill("p"),false),layout:"row3",hint:"coins",exp:{t:`${n}¢`,v:["w/LULU_ANS_IS"]}},cents(n,near(n)))}
+  if(k==="value"){const pool=a<=5?["p","n"]:a<=6?["p","n","d"]:["p","n","d","q"],c=pickOne(pool),o=sh(pool.map(x=>COINS[x].v)).slice(0,Math.min(3,pool.length));if(!o.includes(COINS[c].v))o[0]=COINS[c].v;const oo=sh(o);
+    return {voice:["m_value"],cap:COINS[c].name,visual:coinsHTML([c],false).replace(/width="([\d.]+)" height="([\d.]+)"/,(x,w,h)=>`width="${w*1.9}" height="${h*1.9}"`)+`<div class="coinname">${COINS[c].name}</div>`,opts:oo.map(v=>({h:`<b class="num">${v}¢</b>`})),ans:oo.indexOf(COINS[c].v),layout:oo.length===2?"yn":"row3",hint:"elim",exp:{t:`${COINS[c].name} = ${COINS[c].v}¢`,v:["w/LULU_ANS_IS"]}}}
+  if(k==="count"){let ks;const pool=a<=6?["p","n"]:a<=7?["p","n","d"]:["p","n","d","q"],cap=a<=6?20:a<=7?50:99;do{ks=Array.from({length:ri(2,4)},()=>pickOne(pool))}while(sumC(ks)>cap);ks.sort((x,y)=>COINS[y].v-COINS[x].v);const t=sumC(ks);
+    return Object.assign({voice:["m_count"],cap:"How much money?",visual:coinsHTML(ks,false),layout:"row3",hint:"coins",exp:{t:ks.map(x=>COINS[x].v+"¢").join(" + ")+` = ${t}¢`,v:["w/LULU_ANS_IS"]}},cents(t,[t+1,t-1,t+5,t-5,t+10]))}
+  const m=makeMoney();const q={voice:[m.audio],cap:m.title,visual:m.visual,opts:m.opts.map(x=>({h:/<svg/.test(x)?x:`<b class="num">${x}</b>`})),ans:m.ans,layout:m.wide?"col":"row3",hint:"elim",exp:{t:m.answerText||m.opts[m.ans].replace(/<[^>]+>/g,""),v:["w/LULU_ANS_IS"]}};
+  return q;
+}
+function cents(r,c){const w=sh([...new Set(c.filter(x=>x>0&&x!==r))]).slice(0,2),o=sh([r,...w]);return {opts:o.map(x=>({h:`<b class="num">${x}¢</b>`})),ans:o.indexOf(r)}}
+
+/* Watcher Device questions: Lulu reads the question and the explanation */
+const SKY_TF=[1,0,1,0,1,0,1,1,0,1,1,0,1,0,1,0];
+const SKY_TF_E=["☀️","🌙","🌍","⭐","☁️","🌙","🌈","🧑‍🚀","🪐","🌌","⛈️","☀️","🌍","🌙","❄️","☄️"];
+const SKY_TF_T=["The sun is a star.","The moon is a planet.","We live on planet Earth.","Stars are there only at night.","Clouds are made of tiny drops of water.","The moon has its own light.","A rainbow has seven colours.","Astronauts float in space.","Jupiter is smaller than Earth.","Our galaxy is the Milky Way.","Thunder is the loud sound of the sky.","The sun turns off at night.","The Earth goes around the sun.","There is air to breathe on the moon.","Snow is frozen water.","A comet is a real star with a tail."];
+function wPool(cat){
+  const pre={animals:["a"],world:["b","n"],sky:["s","p"]}[cat],young=S.age<=7;
+  return WQ.filter(w=>pre.includes(w.i[0])&&w.a<=Math.max(3,S.age)&&(!young||VOICED.has(w.i)));
+}
+const TEXT_E=[["penguin","🐧"],["whale","🐋"],["giraffe","🦒"],["octopus","🐙"],["elephant","🐘"],["spider","🕷️"],["cheetah","🐆"],["bear","🐻"],["owl","🦉"],["hands","🧼"],["teeth","🦷"],["heart","❤️"],["bones","🦴"],["eyes","👀"],["nose","👃"],["ears","👂"],["sleep","😴"],["water","💧"],["cactus","🌵"],["mushroom","🍄"],["mountain","⛰️"],["river","🏞️"],["volcano","🌋"],["carrot","🥕"],["milk","🥛"],["moon","🌙"],["sun","☀️"],["star","⭐"],["rain","🌧️"],["fog","🌫️"],["wind","🌬️"],["planet","🪐"],["plant","🌱"],["flower","🌸"],["tree","🌳"],["bird","🐦"],["fish","🐟"],["egg","🥚"]];
+const wEmoji=w=>{if(w.p&&PIC_E[w.p])return PIC_E[w.p];const t=w.q.toLowerCase();for(const [k,e] of TEXT_E)if(t.includes(k))return e;return "🤔"};
+const optE=o=>WORD_E[o.toLowerCase()]||"";
+function qWatcher(cat,used){
+  if(cat==="sky"&&Math.random()<.3){const k=sh([...Array(16).keys()]).find(i=>!used.has("tf"+i));if(k!==undefined){used.add("tf"+k);
+    return {voice:["w/LULU_TF"+k],cap:SKY_TF_T[k],visual:`<div class="domisays big">${bv(70)}<div class="bub"><span class="pe">${SKY_TF_E[k]}</span></div></div>`,opts:[{h:"<span class='yn'>✅</span>"},{h:"<span class='yn'>❌</span>"}],ans:SKY_TF[k]?0:1,layout:"yn",hint:"again",exp:{t:SKY_TF_T[k]+(SKY_TF[k]?" ✅ True!":" ❌ Not true."),v:["w/LULU_ANS_IS"]}}}}
+  let pool=wPool(cat).filter(w=>!used.has(w.i)&&!S.seenW.includes(w.i));
+  if(!pool.length){S.seenW=S.seenW.filter(i=>!wPool(cat).some(w=>w.i===i));pool=wPool(cat).filter(w=>!used.has(w.i))}
+  /* avoid two of the same small topic (e.g. body, nature) in one mound */
+  const tops=new Set([...used].map(i=>(WQ.find(w=>w.i===i)||{}).t));const fresh=pool.filter(w=>!tops.has(w.t));const w=pickOne(fresh.length?fresh:pool);
+  if(!w)return qCount("find");
+  used.add(w.i);S.seenW.push(w.i);
+  const v=VOICED.has(w.i),qv=v?[`w/${w.i}_q_lulu`]:["q_choose"],ev=v?[`w/${w.i}_e_lulu`]:["w/LULU_ANS_IS"];
+  if(w.k==="tf")return {voice:qv,cap:w.q,visual:`<div class="domisays big">${bv(70)}<div class="bub"><span class="pe">${wEmoji(w)}</span></div></div>`,opts:[{h:"<span class='yn'>✅</span>"},{h:"<span class='yn'>❌</span>"}],ans:w.n,layout:"yn",hint:"again",exp:{t:(w.n===0?"✅ True! ":"❌ Not true. ")+w.x,v:ev}};
+  return {voice:qv,cap:w.q,visual:`<div class="domisays">${bv(84)}<div class="bub q">?</div></div>`,opts:w.o.map(o=>({h:`<span class="oe">${optE(o)||"🔹"}</span><small>${o}</small>`})),ans:w.n,layout:w.o.length>2?"row3":"yn",hint:"elim",exp:{t:`${w.o[w.n]}: ${w.x}`,v:ev}};
+}
+/* Story time (Domi's Radio): stories and questions from the Watcher Device, 5 voices */
+const STORIES=[
+ {t:"The picnic 🧺",lines:6,q:[["🍎",[2,3,4],1],["🍌",[["🔴","Red"],["🟡","Yellow"],["🔵","Blue"]],1],["🐝",[["🎂","Cake"],["🌸","Flowers"],["🚗","Car"]],1]]},
+ {t:"The rainbow 🌈",lines:5,q:[["🌧️",[["🌳","Tree"],["☁️","Clouds"],["🏠","House"]],1],["🌈",[["🌈","Rainbow"],["🌙","Moon"],["🚗","Car"]],0],["🌈",[3,7,10],1]]},
+ {t:"On the farm 🐄",lines:5,q:[["🐄",[["🐱","Cat"],["🐄","Cow"],["🦆","Duck"]],1],["🥚",[2,4,6],1],["🥚",[["🎂","Cake"],["🍕","Pizza"],["🥗","Salad"]],0]]},
+ {t:"The little house 🏠",lines:5,q:[["🏠",[["⚪","Circle"],["🔺","Triangle"],["🟦","Square"]],1],["🪟",[["⭐","Star"],["🔺","Triangle"],["⚪","Circle"]],2],["🪟",[2,4,5],1]]},
+ {t:"A trip to Japan ✈️",lines:5,q:[["✈️",[["🧑‍🍳","Cook"],["🧑‍✈️","Pilot"],["🧑‍⚕️","Doctor"]],1],["🚩",[["🇨🇦","Canada"],["🇺🇸","USA"],["🇯🇵","Japan"]],2],["💨",[["🚄","Train"],["🐢","Turtle"],["🐌","Snail"]],0]]},
+ {t:"The little seed 🌱",lines:5,q:[["🌱",[["🍬","Candy"],["💧","Water"],["⚽","Ball"]],1],["🌱",[["🟢","Green"],["🟣","Purple"],["🔴","Red"]],0],["🪴",[["🥛","Milk"],["💧","Water"],["🏖️","Beach"]],1]]},
+];
+function qStory(s,k){
+  const [pic,opts,ans]=STORIES[s].q[k],nums=typeof opts[0]==="number";
+  return {voice:[`w/ST_S${s}_Q${k}`],cap:"",visual:`<div class="listen radio">${pic}</div>`,opts:opts.map(o=>nums?numOpt(o):{h:`<span class="oe">${o[0]}</span><small>${o[1]}</small>`}),ans,layout:"row3",hint:"elim",story:s,exp:{t:nums?String(opts[ans]):opts[ans][1],v:["w/LULU_ANS_IS"]}};
+}
+function buildQ(cat,kind,used){
+  if(cat==="count")return qCount(kind);
+  if(cat==="add")return qAdd(kind);
+  if(cat==="clock")return qClock(kind);
+  if(cat==="money")return qMoney(kind);
+  return qWatcher(cat,used);
+}
+
+/* ================= a mound = one round of questions ================= */
+let L=null;
+function openMound(i){
+  closeDrop();
+  const p=dayPlan()[i],cat=p.cat;
+  L={g:i,cat,correct:0,first:0,acorns:0,k:0,t0:Date.now(),queue:[]};
+  if(cat==="story"){const s=p.story;L.queue=[{radio:s},...[0,1,2].map(k=>qStory(s,k))]}
+  else{const ks=kindsFor(cat),used=new Set();let bag=[];let last=null;
+    for(let n=0;n<p.count;n++){if(!bag.length)bag=sh(ks);let k=bag.shift();if(k===last&&bag.length){bag.push(k);k=bag.shift()}last=k;
+      const q=buildQ(cat,k,used);q.cat=cat;q.kind=k;L.queue.push(q)}}
+  L.total=L.queue.filter(q=>!q.radio).length;
+  {const w=wkLog(),t=catById(cat).topic;if(!w.topics.includes(t))w.topics.push(t);S.lastTopic=t;save()}
+  $("qResult").hidden=true;$("qSheet").className="qsheet";
+  $("qDots").innerHTML=L.queue.filter(q=>!q.radio).map(()=>"<i></i>").join("");
+  $("lesson").classList.add("open");$("lesson").setAttribute("aria-hidden","false");
+  setTimeout(nextQ,350);
+}
+function closeLesson(){hush();$("lesson").classList.remove("open");$("lesson").setAttribute("aria-hidden","true");$("qSheet").className="qsheet";setTimeout(()=>{$("qResult").hidden=true},400)}
+$("lClose").onclick=()=>{sfx.tap();closeLesson();L=null};
+function nextQ(){
+  if(!L)return;hush();$("qSheet").className="qsheet";
+  const q=L.queue.shift();if(!q)return moundDone();
+  L.q=q;q.tries=0;q.locked=false;
+  if(q.radio!==undefined)return radioQ(q.radio);
+  const tints=sh([0,1,2,3]);
+  $("qBody").innerHTML=`<div class="qtop"><button class="qspk" id="qSpk" aria-label="Hear the question again"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></button>${q.cap?`<span class="cap">${q.cap}</span>`:""}</div>
+    <div class="qvis">${q.visual}</div>
+    <div class="qopts ${q.layout}">${q.opts.map((o,j)=>`<button class="qo t${tints[j%4]}" data-j="${j}">${o.h}</button>`).join("")}</div>`;
+  $("qSpk").onclick=()=>{sfx.tap();sayseq(q.voice)};
+  $("qBody").querySelectorAll(".qo").forEach(b=>b.onclick=()=>pick(+b.dataset.j,b));
+  $("qBody").classList.remove("in");void $("qBody").offsetWidth;$("qBody").classList.add("in");
+  setTimeout(()=>{if(L&&L.q===q)sayseq(q.voice)},350);
+}
+function setDot(){const d=$("qDots").children[L.k];if(d)d.className="on";L.k++}
+function pick(j,b){
+  const q=L.q;if(!q||q.locked)return;
+  if(j===q.ans){
+    q.locked=true;hush();b.classList.add("right");sfx.good();burstAt(b,40);
+    const n=q.tries?1:2;S.acorns+=n;L.acorns+=n;L.correct++;if(!q.tries)L.first++;S.questions++;
+    {const w=wkLog();w.q++;w.right++}save();renderStats();bump("sAcorns");setDot();
+    L.row=(L.row||0)+1;if(L.row%3===0)dance();
+    sheet("good",pickOne(PRAISE_T),`+${n} 🌰`);
+    let gone=false;const go=()=>{if(!gone){gone=true;nextQ()}};
+    sayseq([pickOne(PRAISE_CLIPS)],()=>setTimeout(go,500));setTimeout(go,3400);
+    $("qNext").onclick=()=>{sfx.tap();go()};
+    return;
+  }
+  q.tries++;L.row=0;sfx.oops();b.classList.add("wrong");setTimeout(()=>{b.classList.remove("wrong");b.classList.add("faded")},450);
+  if(q.tries===1){
+    q.locked=true;hush();toastHint(pickOne(["Almost! Try again 💪","So close! One more try","Let's look again 👀"]));
+    sayseq(["w/LULU_TRY_ONCE"],()=>giveHint(q,()=>{q.locked=false}));
+    return;
+  }
+  /* second miss: Domi shows the answer and explains, then we go on */
+  q.locked=true;hush();S.questions++;{const w=wkLog();w.q++}save();setDot();
+  const rb=$("qBody").querySelectorAll(".qo")[q.ans];rb.classList.add("show");
+  sheet("learn","Let's learn it together!",q.exp.t);
+  let gone=false;const go=()=>{if(!gone){gone=true;nextQ()}};
+  $("qNext").onclick=()=>{sfx.tap();go()};
+  sayseq(q.exp.v,()=>{});
+}
+function toastHint(t){const h=document.createElement("div");h.className="qhint";h.textContent=t;$("lesson").appendChild(h);setTimeout(()=>h.remove(),2300)}
+function giveHint(q,done){
+  const opts=[...$("qBody").querySelectorAll(".qo")];
+  const elim=()=>{const w=opts.filter((b,j)=>j!==q.ans&&!b.classList.contains("faded"));if(opts.length>2&&w.length>1){const x=pickOne(w);x.classList.add("faded");x.disabled=true}};
+  if(q.hint==="dots"&&q.a!==undefined&&q.a+q.b<=12){const e=pickOne(OBJ);$("qBody").querySelector(".qvis").insertAdjacentHTML("beforeend",`<div class="tgrp">${grp(q.a,e)}<span class="op">+</span>${grp(q.b,e)}</div>`);countAlong([...$("qBody").querySelectorAll(".tgrp .ob")],done);return}
+  if(q.hint==="count"||q.hint==="dots"){
+    let els=[...$("qBody").querySelectorAll(q.countSel?".qvis "+q.countSel:".qvis .ob")];
+    if(!els.length)els=[...$("qBody").querySelectorAll(".qvis .dots")].flatMap(d=>{d.innerHTML=[...d.textContent].map(()=>"<i class='ob dot'>●</i>").join("");return [...d.querySelectorAll(".ob")]});
+    if(!els.length&&q.layout==="row")els=[...$("qBody").querySelectorAll(".qo .ob")];
+    if(els.length&&els.length<=20){countAlong(els,done);return}
+  }
+  if(q.hint==="clock"){const s=$("qBody").querySelector(".clk");if(s)s.classList.add("hintclk");elim();sayseq(q.voice,done);return}
+  if(q.hint==="coins"){$("qBody").querySelectorAll(".qvis svg[aria-label]").forEach(sv=>{const c=Object.values(COINS).find(x=>x.name===sv.getAttribute("aria-label"));if(c){const t=document.createElement("span");t.className="ctag";t.textContent=c.v+"¢";sv.after(t)}});sayseq(q.voice,done);return}
+  if(q.hint==="line"){const v=$("qBody").querySelector(".qvis");v.insertAdjacentHTML("beforeend",`<div class="nline">${Array.from({length:7},(x,i)=>q.line[0]-2+i).filter(x=>x>=0).map(x=>`<span class="${q.line.includes(x)?"hi":""}">${x}</span>`).join("")}</div>`);sayseq(q.voice,done);return}
+  if(q.hint==="again"){sayseq(q.voice,done);return}
+  elim();sayseq(q.voice,done);
+}
+function countAlong(els,done){
+  let i=0;const step=()=>{if(!L)return;if(i>=els.length){done();return}const e=els[i];e.classList.add("counted");e.setAttribute("data-n",i+1);sfx.count(i);i++;const c=N(i);if(c)say(c,()=>setTimeout(step,80));else setTimeout(step,450)};
+  step();
+}
+function sheet(kind,title,sub){
+  $("qSheet").innerHTML=`<div class="qsrow"><span class="qsf">${bv(56)}</span><span><b>${title}</b><span>${sub}</span></span></div><button class="qbtn ${kind}" id="qNext">Next ➜</button>`;
+  $("qSheet").className="qsheet show "+kind;
 }
 function dance(){
-  const d=document.createElement("div");d.className="dance";d.innerHTML=`${bv(150)}<div class="tx">${pickOne(["Hop hop hooray!","3 in a row!","You rock!"])}</div>`;
+  const d=document.createElement("div");d.className="dance";d.innerHTML=`${bv(150)}<div class="tx">${pickOne(["Hop hop hooray!","3 in a row!","You rock!","Wow wow wow!"])}</div>`;
   $("lesson").appendChild(d);burst(120);setTimeout(()=>d.remove(),1900);
 }
+/* radio: Domi tells a short story with 5 voices, then asks questions */
+function radioQ(s){
+  const st=STORIES[s];
+  $("qBody").innerHTML=`<div class="radio"><div class="rbox" id="rBox"><span class="rwave"></span><span class="remo">📻</span><span class="rwave r2"></span></div>
+    <div class="rtitle">${st.t}</div>
+    <div class="rbtns"><button class="qbtn sky" id="rPlay">↻ Again</button><button class="qbtn good" id="rDone" disabled>I'm ready! ➜</button></div></div>`;
+  $("qBody").classList.remove("in");void $("qBody").offsetWidth;$("qBody").classList.add("in");
+  const box=$("rBox"),done=$("rDone");
+  const play=()=>{box.classList.add("on");sayseq(["w/LULU_ST_INTRO",...Array.from({length:st.lines},(x,i)=>`w/ST_S${s}_L${i}`)],()=>{box.classList.remove("on");done.disabled=false;done.classList.add("pulse")})};
+  $("rPlay").onclick=()=>{sfx.tap();play()};
+  done.onclick=()=>{sfx.tap();hush();nextQ()};
+  setTimeout(play,400);setTimeout(()=>{done.disabled=false},30000);
+}
+function moundDone(){
+  const i=L.g,first=i===S.day.done;
+  if(first){S.day.done++;S.wood+=1;wkLog().mounds=(wkLog().mounds||0)+1}
+  save();renderStats();
+  const r=$("qResult");sfx.fanfare();burst(160);
+  sayseq([pickOne(["w/LULU_L_END","w/LULU_PR_E","w/LULU_PR_D"])]);
+  r.innerHTML=`<div class="rs-sun"></div><span class="dm">${bv(170)}</span><h2>${pickOne(["You did it!","Amazing job!","Super star!","Hooray!"])}</h2><p>${pickOne(["Domi is so proud of you!","Your brain is growing!","What a great learner!"])}</p>
+    <div class="gains"><span class="gn a">+${L.acorns} 🌰</span>${first?`<span class="gn w">+1 🪵</span>`:""}</div>
+    <button class="qbtn good big" id="resBtn">Continue ➜</button>`;
+  r.hidden=false;
+  const leave=()=>{closeLesson();L=null;setTimeout(()=>{renderMap();placeBeaver(true);setTimeout(()=>{scrollToCurrent(true);if(S.day.done>=HOLES[landIdx()].length&&!S.day.house)setTimeout(openHouse,900);else checkRealPrizes()},700)},420)};
+  let moved=false;const go=()=>{if(!moved){moved=true;leave()}};
+  $("resBtn").onclick=()=>{sfx.tap();go()};
+}
+
 
 /* ================= months and events ================= */
 const MONTHS=["January","February","March","April","May","June","July","August","September","October","November","December"];
 const MONTH_LAND=[7,5,4,6,11,8,9,1,2,10,0,3]; /* which land of the big picture each month uses */
 function eventNow(d=new Date()){
-  const m=d.getMonth()+1,day=d.getDate();
-  if(m===12&&day>=19&&day<=22)return {id:"yalda",e:"🍉",name:"Yalda Night",deco:["🍉","🍎","🕯️"],clip:"ev_yalda"};
-  if((m===3&&day>=19)||(m===4&&day<=2))return {id:"nowruz",e:"🌸",name:"Nowruz",deco:["🌸","🐟","🌱"],clip:"ev_nowruz"};
-  if(m===10&&day>=29||m===11&&day===1)return {id:"halloween",e:"🎃",name:"Halloween",deco:["🎃","🦇","🍬"],clip:"ev_halloween"};
+  const m=d.getMonth()+1,day=d.getDate(),thx=(()=>{const f=new Date(d.getFullYear(),10,1).getDay();return 1+((4-f+7)%7)+21})();
+  if(m===12&&day>=7&&day<=21)return {id:"yalda",e:"🍉",name:"Yalda Night",deco:["🍉","🍎","🕯️"],clip:"w/LULU_EV_YALDA"};
+  if(m===12&&day>=22&&day<=25)return {id:"christmas",e:"🎄",name:"Christmas",deco:["🎄","⭐","🎁"],clip:"w/LULU_EV_CHRISTMAS"};
+  if(m===3&&day>=5&&day<=20)return {id:"nowruz",e:"🌸",name:"Nowruz",deco:["🌸","🐟","🌱"],clip:"w/LULU_EV_NOWRUZ"};
+  if(m===2&&day>=7&&day<=14)return {id:"valentine",e:"💝",name:"Valentine's Day",deco:["💝","🌹","💌"],clip:"w/LULU_EV_VALENTINE"};
+  if(m===11&&day>=thx-7&&day<=thx)return {id:"thanks",e:"🦃",name:"Thanksgiving",deco:["🦃","🥧","🍂"],clip:"w/LULU_EV_THANKSGIVING"};
+  if(m===10&&day>=17)return {id:"halloween",e:"🎃",name:"Halloween",deco:["🎃","🦇","🍬"],clip:"w/LULU_EV_HALLOWEEN"};
   return null;
 }
 const monthIdx=()=>S.mapMonth==="auto"?new Date().getMonth():+S.mapMonth;
@@ -1058,14 +1446,16 @@ const TOPIC_SYM={math:"➕",clock:"🕒",money:"🪙",watcher:"🔎",radio:"📻
 
 /* ================= today's path: the parents' daily questions split over the mounds ================= */
 const activeTopics=()=>S.topics.filter(t=>TOPIC_SYM[t]);
+const activeCats=()=>CATS.filter(c=>activeTopics().includes(c.topic));
 function dayPlan(){
-  if(S.day.d!==today()||!S.day.plan||S.day.land!==landIdx()||S.day.per!==S.perDay||S.day.tops!==activeTopics().join()){
-    const n=HOLES[landIdx()].length,Q=S.perDay,base=Math.floor(Q/n),rem=Q%n,tops=activeTopics().filter(t=>t!=="radio");
-    const t0=tops.length?tops:["math"],off=dayN()%t0.length;
-    const rk=activeTopics().includes("radio")&&n>2?Math.floor(n/2):-1;let j=0;
-    const plan=Array.from({length:n},(x,i)=>i===rk?{count:Math.max(2,base+(i<rem?1:0)),topic:"radio",story:dayN()%RADIO.length}:{count:Math.max(1,base+(i<rem?1:0)),topic:t0[(j++ +off)%t0.length]});
-    const keep=S.day.d===today()&&S.day.land===landIdx();
-    S.day={d:today(),done:keep?Math.min(S.day.done,n):0,house:keep?S.day.house:false,plan,land:landIdx(),per:S.perDay,tops:activeTopics().join()};save();
+  if(S.day.d!==today()||!S.day.plan||S.day.v!==3||S.day.land!==landIdx()||S.day.per!==S.perDay||S.day.tops!==activeTopics().join()){
+    const n=HOLES[landIdx()].length,cats=activeCats(),hasStory=cats.some(c=>c.id==="story")&&n>2;
+    let rest=cats.filter(c=>c.id!=="story").map(c=>c.id);if(!rest.length)rest=["count"];
+    const off=dayN()%rest.length;rest=[...rest.slice(off),...rest.slice(0,off)];
+    const sk=hasStory?Math.floor(n/2):-1,Q=Math.max(n,S.perDay)-(hasStory?3:0),m=n-(hasStory?1:0),base=Math.floor(Q/m),rem=Q%m;let j=0,r=0;
+    const plan=Array.from({length:n},(x,i)=>i===sk?{cat:"story",count:3,story:dayN()%STORIES.length}:{cat:rest[(j++)%rest.length],count:Math.max(1,base+(r++<rem?1:0))});
+    const keep=S.day.d===today()&&S.day.land===landIdx()&&S.day.v===3;
+    S.day={d:today(),done:keep?Math.min(S.day.done,n):0,house:keep?S.day.house:false,plan,land:landIdx(),per:S.perDay,tops:activeTopics().join(),v:3};save();
   }
   return S.day.plan;
 }
@@ -1102,8 +1492,9 @@ function renderMap(){
   $("unit").style.setProperty("--uc",Z.c);
   holeEls.forEach((b,i)=>{
     const p=plan[i],st=i<done?"done":i===done?"current":"future";b.style.setProperty("--dc",Z.c);
-    if(st==="current"){b.className="hole current";b.innerHTML=`<span class="cic">${TOPIC_SYM[p.topic]}</span><span class="tip">${i===0?"START":"GO!"}</span>`}
-    else{b.className="hole sg "+st;b.innerHTML=`<span class="sym">${TOPIC_SYM[p.topic]}</span>`+(st==="done"?`<span class="ok">✓</span>`:"")}
+    const sym=catById(p.cat).e;
+    if(st==="current"){b.className="hole current";b.innerHTML=`<span class="cic">${sym}</span><span class="tip">${i===0?"START":"GO!"}</span>`}
+    else{b.className="hole sg "+st;b.innerHTML=`<span class="sym">${sym}</span>`+(st==="done"?`<span class="ok">✓</span>`:"")}
   });
   const cut=done>=n?-10:HOLES[z][done][1]-4;landEl.style.setProperty("--cut",cut+"%");
   houseEl.classList.toggle("done",S.day.house);
@@ -1142,12 +1533,12 @@ let popEl=null;
 function closePop(){if(popEl){popEl.remove();popEl=null}}
 function showPop(i){
   closePop();sfx.tap();
-  const plan=dayPlan(),p=plan[i],done=S.day.done,c=COURSE.find(x=>x.id===p.topic),pt=moundXY(i),W=250,left=Math.max(12,Math.min(journey.offsetWidth-W-12,pt.x-W/2));
+  const plan=dayPlan(),p=plan[i],done=S.day.done,c=catById(p.cat),pt=moundXY(i),W=250,left=Math.max(12,Math.min(journey.offsetWidth-W-12,pt.x-W/2));
   popEl=document.createElement("div");popEl.className="pop";popEl.style.left=left+"px";popEl.style.top=(pt.y-landEl.offsetTop+20)+"px";popEl.style.setProperty("--ax",(pt.x-left)+"px");
   popEl.style.setProperty("--pc",i<done?"#9AA0A8":i===done?ZONES[landIdx()].c:"#AFAFBA");
-  const cnt=p.topic==="radio"?"a story + 2 questions":`${p.count} ${p.count===1?"question":"questions"}`;
-  popEl.innerHTML=i===done?`<h4>${TOPIC_SYM[p.topic]} ${c?c.name:""}</h4><p>${cnt}</p><button class="btn">Let's go!</button>`
-    :i<done?`<h4>✅ Done!</h4><p>You finished this mound today.</p>`:`<h4>${TOPIC_SYM[p.topic]} ${c?c.name:""}</h4><p>Coming up: ${cnt}</p>`;
+  const cnt=p.cat==="story"?"a story + 3 questions":`${p.count} ${p.count===1?"question":"questions"}`;
+  popEl.innerHTML=i===done?`<h4>${c.e} ${c.name}</h4><p>${cnt}</p><button class="btn">Let's go!</button>`
+    :i<done?`<h4>✅ Done!</h4><p>You finished this mound today.</p>`:`<h4>${c.e} ${c.name}</h4><p>Coming up: ${cnt}</p>`;
   popEl.onclick=e=>e.stopPropagation();
   const b=popEl.querySelector(".btn");if(b)b.onclick=()=>{closePop();sfx.tap();openMound(i)};
   landEl.appendChild(popEl);
@@ -1159,47 +1550,13 @@ function showPop(i){
 }
 $("map").addEventListener("click",closePop);
 
-/* ================= a mound = one set of questions ================= */
-let L=null;
-function openMound(i){
-  closeDrop();
-  const z=landIdx(),p=dayPlan()[i];
-  L={g:i,z,node:"lesson",correct:0,mistakes:0,answered:0,row:0,bestRow:0,t0:Date.now(),acorns:0,topic:p.topic};
-  L.sk=skillFor(S.age,S.diff,0);
-  if(p.topic==="radio")L.queue=[{type:"radio",r:p.story},{type:"rq",r:p.story,qi:0},{type:"rq",r:p.story,qi:1}];
-  else if(p.topic==="clock"||p.topic==="money")L.queue=Array.from({length:p.count},()=>makeMcq(p.topic));
-  else if(p.topic==="watcher")L.queue=Array.from({length:p.count},()=>({type:"wq",w:pickWatcher()})).filter(e=>e.w);
-  else{const start=(dayN()*3+i*2)%TYPES.length;L.queue=Array.from({length:p.count},(x,k)=>newEx(TYPES[(start+k)%TYPES.length]));
-    if(i===dayPlan().findIndex(x=>x.topic==="math")&&L.queue.length>1)L.queue.splice(1,1,newEx("teach"))}
-  L.total=L.queue.filter(e=>e.type!=="radio").length||1;
-  {const w=wkLog();if(!w.topics.includes(p.topic))w.topics.push(p.topic);S.lastTopic=p.topic;save()}
-  $("lBar").style.width="0";$("result").hidden=true;$("combo").className="combo";$("fbFace").innerHTML=bv(60);
-  $("lesson").classList.add("open");$("lesson").setAttribute("aria-hidden","false");
-  nextExercise(380);
-}
-function lessonComplete(){
-  const i=L.g,first=i===S.day.done,stars=L.mistakes===0?3:L.mistakes<=2?2:1,earned=L.acorns||0;
-  if(first){S.day.done++;S.wood+=1;wkLog().mounds=(wkLog().mounds||0)+1}
-  save();renderStats();
-  const r=$("result");$("fb").className="fb";$("lFoot").hidden=true;
-  sfx.fanfare();burst(140);say("mound_done");
-  r.innerHTML=`<span class="dm">${bv(150)}</span><h2>${L.correct===0?"Good try! Mound done!":stars===3?"Perfect! Mound done!":stars===2?"Super job!":"Great work!"}</h2>
-    <div class="bigstars">${STAR+STAR+STAR}</div>
-    <div class="cards3"><div class="c3 xp"><small>Acorns</small><b>+${earned} 🌰</b></div><div class="c3 tm"><small>Wood</small><b>+${first?1:0} 🪵</b></div><div class="c3 ac"><small>Right</small><b>${L.correct}/${L.total}</b></div></div>
-    <button class="btn green" id="resBtn">Continue</button>`;
-  r.hidden=false;
-  r.querySelectorAll(".bigstars svg").forEach((s,k)=>{if(k<stars)setTimeout(()=>{s.classList.add("on");sfx.count(k*3)},350+k*330)});
-  const leave=()=>{closeLesson();L=null;setTimeout(()=>{renderMap();placeBeaver(true);setTimeout(()=>{scrollToCurrent(true);if(S.day.done>=HOLES[landIdx()].length&&!S.day.house)setTimeout(openHouse,900);else checkRealPrizes()},700)},420)};
-  let moved=false;const go=()=>{if(!moved){moved=true;leave()}};
-  $("resBtn").onclick=()=>{sfx.tap();go()};setTimeout(go,7000);
-}
 /* the big house: today's sticker, with an animation */
 function themeItems(){return (REWARDS[S.reward]||REWARDS.unicorn).items}
 function openHouse(){
   if(S.day.house)return;
   const items=themeItems(),e=items[S.stickers.length%items.length];
   S.day.house=true;S.wood+=3;S.stickers.push({e,d:today(),land:landIdx()});save();
-  say("house_open");
+  say("w/LULU_BD_PRIZE_IS");
   reveal(e,"Today's prize!",`A new sticker for your collection, and +3 🪵 wood!`,()=>{renderMap();checkRealPrizes()});
 }
 function reveal(item,title,text,cb,gift="🎁"){
@@ -1212,7 +1569,7 @@ function reveal(item,title,text,cb,gift="🎁"){
 function checkRealPrizes(){
   const ready=S.real.find(r=>S.acorns>=r.a&&S.wood>=r.w&&!S.notified.includes(r.id));
   if(!ready)return;
-  S.notified.push(ready.id);save();say("bigprize");
+  S.notified.push(ready.id);save();say("w/LULU_PRIZE_SHORT");
   reveal(ready.e,`${ready.name} is ready!`,"You earned it! Go and tell a grown-up 🎉",()=>renderStats(),"🎁");
 }
 
@@ -1325,337 +1682,6 @@ $("dim").onclick=closeDrop;
 $("tbCourse").onclick=()=>openDrop();
 function switchPlayer(id){save();P.cur=id;savePlayers();loadState();save();closeDrop();landEl=null;showMap();sfx.fanfare();toast(`Hi, ${curPlayer().name}! 👋`)}
 
-/* ================= lesson engine ================= */
-const prompt=(t,ex)=>`<div class="prompt">${bv(80)}<div class="bubble"><span style="flex:1;min-width:0">${t}</span><button class="speak" aria-label="Hear it again">${SPEAK_SVG}</button></div></div>`;
-const kindLabel={wq:"",radio:"Domi's Radio",rq:"",teach:"Is Domi right?",speak:"Say the answer",choose:"Choose the answer",picture:"Pick the picture",fill:"Fill in the blank",bank:"Build the sum",keypad:"Type the answer",match:"Match the pairs",sayword:"Say the number",repeat:"Repeat after Domi"};
-function sayNum(sk){return sk<=1?ri(1,10):sk<=3?ri(1,20):ri(10,100)}
-function newEx(type){const sk=L.sk;return Object.assign({type},makeProb(sk),{n:sayNum(sk),rep:pickOne(sk<=1?REPS.slice(0,4):REPS)})}
-function dayDoneModal_unused(){
-  say("daydone");sfx.fanfare();
-  modal(`${bv(110)}<h3>All done for today!</h3><p>You answered ${S.perDay} questions today. Domi is proud of you! Come back tomorrow for more.</p>`,[{label:"OK",cls:"green"}]);
-}
-const tag=()=>"";
-
-function nextExercise(delay=150){
-  $("fb").className="fb";
-  if(L.jump!==undefined&&L.mistakes>=3)return jumpDone();
-  if(!L.queue.length)return L.jump!==undefined?jumpDone():lessonComplete();
-  const ex=L.ex=L.queue.shift();ex.locked=false;ex.pending=null;
-  if(MIC_TYPES.includes(ex.type)&&Date.now()<(S.noSpeakUntil||0))ex.type="choose";
-  if(ex.type==="picture"&&(ex.ans<1||ex.ans>10))ex.type="keypad";
-  const z=ZONES[L.z],nm=n=>n===1?z.one:z.many,sum=ex.ans,ops=ex.op==="+"&&ex.ans<=10;
-  const near=(v,n=4)=>{const o=new Set([v]);for(const d of [1,-1,2,10,-2,3,-10,5])if(o.size<n&&v+d>=0)o.add(v+d);return [...o].sort(()=>Math.random()-.5)};
-  const sumHTML=(q="ans")=>`<div class="sum"><span>${ex.a}</span><span>${ex.op}</span>${q==="b"?'<span class="q" id="qMark">?</span>':`<span>${ex.b}</span>`}<span>=</span>${q==="b"?`<span>${sum}</span>`:'<span class="q" id="qMark">?</span>'}</div>`;
-  const numBtns=vals=>`<div class="answers">${vals.map(v=>`<button class="ans" data-v="${v}">${v}</button>`).join("")}</div>`;
-  let h=tag()+`<div class="ltype">${ex.title||kindLabel[ex.type]}</div>`;
-  $("lFoot").hidden=false;$("lSkip").hidden=false;$("lSkip").disabled=false;
-  if(ex.type==="choose"){
-    const grp=n=>`<div class="grp">${Array.from({length:n},()=>`<button class="obj" aria-label="${z.one}">${z.o}</button>`).join("")}</div>`;
-    h+=prompt(ops?`How many ${z.many}?`:`${expr(ex)} = ?`)+`
-      <div class="eq">${ops?`<div class="groups">${grp(ex.a)}<span class="plus">+</span>${grp(ex.b)}</div>`:""}${sumHTML()}
-      ${ops?'<p class="hint">Tap each one to count together!</p>':""}</div>`+numBtns(near(sum));
-  }else if(ex.type==="picture"){
-    const opts=near(sum,3).map(v=>Math.max(1,Math.min(10,v)));const uniq=[...new Set(opts)];while(uniq.length<3){const v=ri(1,10);if(!uniq.includes(v))uniq.push(v)}
-    h+=prompt(`${expr(ex)} = ?`)+`<div class="bigsum">${expr(ex)}</div>
-      <div class="pics">${uniq.sort(()=>Math.random()-.5).map(v=>`<button class="pic" data-v="${v}" aria-label="${v} ${nm(v)}">${z.o.repeat(v)}</button>`).join("")}</div>`;
-  }else if(ex.type==="fill"){
-    h+=prompt("Missing number?")+`<div class="eq">${sumHTML("b")}</div>`+numBtns(near(ex.b).map(v=>v)).replace(/class="ans"/g,'class="ans" data-fill="1"');
-  }else if(ex.type==="bank"){
-    const wrongOp=ex.op==="+"?"−":"+";
-    ex.tiles=[String(ex.a),ex.op,String(ex.b),"=",String(sum),String(sum+1),wrongOp].sort(()=>Math.random()-.5);ex.chosen=[];
-    h+=prompt("Make a true sum!")+`<div class="bankline" id="bankLine"></div>
-      <div class="tiles">${ex.tiles.map((t,i)=>`<button class="tile" data-i="${i}">${t}</button>`).join("")}</div>`;
-  }else if(ex.type==="keypad"){
-    h+=prompt(`${expr(ex)} = ?`)+`<div class="eq">${sumHTML()}</div>
-      <div class="keys">${[1,2,3,4,5,6,7,8,9].map(n=>`<button class="key" data-k="${n}">${n}</button>`).join("")}<span></span><button class="key" data-k="0">0</button><button class="key" data-k="del" aria-label="Delete"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5h11v14H9l-6-7z"/><path d="M12 9l5 6M17 9l-5 6"/></svg></button></div>`;
-    ex.typed="";
-  }else if(ex.type==="speak"){
-    h+=prompt(`Say it! 🎤`)+`<div class="eq">${sumHTML()}</div>`+micHTML(false);
-  }else if(ex.type==="sayword"){
-    h+=`<div class="cardstack"><div class="wcard" id="wcard">${wcardHTML(ex,z)}</div></div>`+micHTML(true);
-  }else if(ex.type==="repeat"){
-    h+=`<div class="repeat"><div class="rb"><button class="speak2" id="repPlay" aria-label="Hear it again">${SPEAK_SVG}</button><span>${ex.rep[1]}</span></div><div class="bvbig">${bv(170)}</div></div>`+micHTML(false,true);
-  }else if(ex.type==="teach"){
-    if(ex.shown===undefined){const w=[sum+1,sum-1,sum+2,sum+10].filter(v=>v>=0&&v!==sum);ex.shown=Math.random()<.5?sum:pickOne(w)}
-    h+=`<div class="teach">${bv(120)}<div class="tb2" id="teachQ"><b>${expr(ex)} = ${ex.shown}</b></div></div>
-      <div class="answers yn2" id="teachBtns"><button class="ans yn yes" data-j="1">✅</button><button class="ans yn no" data-j="0">❌</button></div>`;
-  }else if(ex.type==="wq"){
-    const w=ex.w,pic=wEmoji(w);
-    if(w.k==="tf"){
-      h+=`<div class="teach">${pic?`<div class="wpic">${pic}</div>`:""}<div class="said">${bv(64)}<div class="tb2">${w.q}</div></div></div>
-        <div class="answers yn2"><button class="ans yn yes" data-v="0" aria-label="Right">✅</button><button class="ans yn no" data-v="1" aria-label="Wrong">❌</button></div>`;
-    }else{
-      h+=`<div class="teach">${pic?`<div class="wpic">${pic}</div>`:""}<div class="tb2 q">${w.q}</div></div>
-        <div class="answers ${w.o.length>2?"wide3":""}">${w.o.map((o,i)=>`<button class="ans opt pico" data-v="${i}">${optEmoji(o)?`<span class="oe">${optEmoji(o)}</span>`:""}<span>${o}</span></button>`).join("")}</div>`;
-    }
-  }else if(ex.type==="radio"){
-    const R=RADIO[ex.r];
-    h+=`<div class="radio"><div class="rbox" id="rBox"><span class="rwave"></span><span class="remo">📻</span><span class="rwave r2"></span></div>
-      <div class="said">${bv(70)}<div class="tb2">${R.title}</div></div>
-      <button class="btn blue" id="rPlay">▶︎ Listen</button><button class="btn green" id="rDone" disabled>I'm ready!</button></div>`;
-  }else if(ex.type==="rq"){
-    const R=RADIO[ex.r],q=R.qs[ex.qi];
-    h+=`<div class="teach"><div class="wpic">📻</div><div class="tb2 q">${q.q}</div></div>
-      <div class="answers wide3">${q.opts.map((o,i)=>`<button class="ans opt pico" data-v="${i}"><span class="oe">${o[0]}</span><span>${o[1]}</span></button>`).join("")}</div>`;
-  }else if(ex.type==="mcq"){
-    h+=prompt(ex.prompt)+`<div class="eq mcqv">${ex.visual||""}</div><div class="answers ${ex.wide?"wide":""}">${ex.opts.map((o,i)=>`<button class="ans opt" data-v="${i}">${o}</button>`).join("")}</div>`;
-  }else if(ex.type==="match"){
-    let pairs;
-    if(L.sk<=1){const vs=[1,2,3,4,5].sort(()=>Math.random()-.5).slice(0,3);pairs=vs.map(v=>[String(v),z.o.repeat(v),v,true])}
-    else{const seen=new Set();pairs=[];let guard=0;while(pairs.length<3&&guard++<50){const p=makeProb(L.sk);if(seen.has(p.ans))continue;seen.add(p.ans);pairs.push([expr(p),String(p.ans),p.ans,false])}}
-    ex.left=pairs.length;
-    const Lc=[...pairs].sort(()=>Math.random()-.5),Rc=[...pairs].sort(()=>Math.random()-.5);
-    h+=prompt("Match them!")+`<div class="match"><div class="col">${Lc.map(p=>`<button class="mt ${p[3]?"":"expr"}" data-side="l" data-v="${p[2]}">${p[0]}</button>`).join("")}</div>
-      <div class="col">${Rc.map(p=>`<button class="mt ${p[3]?"pics2":""}" data-side="r" data-v="${p[2]}">${p[1]}</button>`).join("")}</div></div>`;
-  }
-  const body=$("lBody");body.innerHTML=h;body.scrollTop=0;
-  const play=(r)=>ex.type==="repeat"?say(AUDIO.repeat,()=>say(ex.rep[0])):ex.type==="wq"?say(ex.w.k==="tf"?(CLIPS.has("q_tf")?"q_tf":"q_teach"):"q_choose"):ex.type==="rq"?say(RADIO[ex.r].qs[ex.qi].clip):ex.type==="radio"?null:say(ex.audio||AUDIO[ex.type],null,r);
-  if(ex.type==="radio")setupRadio(ex);
-  body.querySelectorAll(".speak").forEach(b=>b.onclick=()=>play());
-  if($("repPlay"))$("repPlay").onclick=()=>say(ex.rep[0]);
-  if(MIC_TYPES.includes(ex.type))setupMic(ex,z);
-  let count=0;
-  body.querySelectorAll(".obj").forEach(b=>b.onclick=()=>{
-    b.classList.remove("tapped");void b.offsetWidth;b.classList.add("tapped");
-    if(!b.querySelector(".c")){count++;b.insertAdjacentHTML("beforeend",`<span class="c">${count}</span>`);sfx.count(count)}else sfx.tap();
-  });
-  ex.pick=b=>{
-    if(ex.type==="mcq"){const v=+b.dataset.v;return answer(v===ex.ans,ex.answerText||ex.opts[ex.ans].replace(/<[^>]+>/g,""),b)}
-    if(ex.type==="wq"){const v=+b.dataset.v,w=ex.w;return answer(v===w.n,w.x,b,false,null,w.k==="tf"?(w.n===0?"✅ Right! "+w.x:"❌ Not true. "+w.x):`${w.o[w.n]}: ${w.x}`)}
-    if(ex.type==="rq"){const v=+b.dataset.v,q=RADIO[ex.r].qs[ex.qi];return answer(v===q.ans,q.opts[q.ans][0]+" "+q.opts[q.ans][1],b)}
-    if(ex.type==="teach"&&b.dataset.j!==undefined){
-      const domiRight=ex.shown===sum,saysRight=b.dataset.j==="1";
-      if(saysRight!==domiRight)return answer(false,`${expr(ex)} = ${sum}`,b);
-      if(domiRight)return answer(true,`${expr(ex)} = ${sum}`,b,false,"You checked Domi's work!");
-      sfx.good();$("teachQ").innerHTML=`Good catch! 🕵️ What is<b>${expr(ex)} = ?</b>`;
-      const box=$("teachBtns");box.className="answers";box.classList.remove("yn2");box.innerHTML=near(sum).map(v=>`<button class="ans" data-v="${v}">${v}</button>`).join("");
-      box.querySelectorAll(".ans").forEach(x=>x.onclick=()=>{if(!ex.locked)ex.pick(x)});return}
-    if(ex.type==="teach"){const v=+b.dataset.v;return answer(v===sum,`${expr(ex)} = ${sum}`,b,false,"You fixed Domi's mistake!")}
-    const v=+b.dataset.v,target=b.dataset.fill?ex.b:ex.type==="sayword"?ex.n:sum,ok=v===target;
-    const m=$("qMark");if(m){m.textContent=ok?target:v;m.classList.add(ok?"ok":"no")}
-    answer(ok,ex.type==="sayword"?`${ex.n} · ${numWord(ex.n)}`:`${expr(ex)} = ${sum}`,b);
-  };
-  body.querySelectorAll(".ans,.pic").forEach(b=>b.onclick=()=>{
-    if(ex.locked)return;
-    if(S.checkMode){body.querySelectorAll(".ans,.pic").forEach(x=>x.classList.remove("sel"));b.classList.add("sel");ex.pending=b;$("lCheck").disabled=false;sfx.tap()}
-    else ex.pick(b);
-  });
-  body.querySelectorAll(".key").forEach(b=>b.onclick=()=>{
-    if(ex.locked)return;sfx.tap();
-    const k=b.dataset.k;ex.typed=k==="del"?ex.typed.slice(0,-1):(ex.typed+k).slice(0,4);
-    const m=$("qMark");m.textContent=ex.typed||"?";m.classList.toggle("typed",!!ex.typed);
-    $("lCheck").disabled=!ex.typed;
-  });
-  body.querySelectorAll(".tile").forEach(b=>b.onclick=()=>{
-    if(ex.locked)return;sfx.tap();b.classList.add("used");ex.chosen.push(+b.dataset.i);drawBank(ex);
-  });
-  let sel=null;
-  body.querySelectorAll(".mt").forEach(b=>b.onclick=()=>{
-    if(ex.locked||b.classList.contains("matched"))return;
-    if(!sel||sel.dataset.side===b.dataset.side){if(sel)sel.classList.remove("sel");sel=b;b.classList.add("sel");sfx.tap();return}
-    const a=sel;sel=null;a.classList.remove("sel");
-    if(a.dataset.v===b.dataset.v){[a,b].forEach(x=>{x.classList.add("right");setTimeout(()=>{x.classList.remove("right");x.classList.add("matched")},350)});sfx.count(4-ex.left);
-      if(--ex.left===0)setTimeout(()=>answer(true,"All pairs matched!",null),420)}
-    else{[a,b].forEach(x=>{x.classList.add("wrong");setTimeout(()=>x.classList.remove("wrong"),450)});sfx.bad()}
-  });
-  $("lCheck").disabled=true;
-  setTimeout(()=>{if(L&&L.ex===ex)play()},delay);
-}
-function wcardHTML(ex,z){const n=ex.n;return n<=10?`<div class="wpic">${z.o.repeat(n)}</div><b>${n}</b><small>${numWord(n)}</small>`:`<b style="font-size:72px">${n}</b><small>${numWord(n)}</small>`}
-
-/* ---------- speaking: Web Speech listens, the child can answer in Farsi (or French) or English ---------- */
-const SRC=window.SpeechRecognition||window.webkitSpeechRecognition;
-let micBlocked=false;
-function micAllowed(){
-  if(!SRC||micBlocked)return false;
-  try{if(document.featurePolicy&&!document.featurePolicy.allowsFeature("microphone"))return false}catch(e){}
-  return true;
-}
-const DOTS="<i></i>".repeat(10);
-const MICOFF='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 11.5 5.3M19 11a7 7 0 0 1-.4 2.3M12 18v3M3 3l18 18"/></svg>';
-const REFRESH='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 0 0-14.3-4.9L4 8"/><path d="M4 3v5h5"/><path d="M4 13a8 8 0 0 0 14.3 4.9L20 16"/><path d="M20 21v-5h-5"/></svg>';
-function micHTML(refresh,english){
-  const nat=S.lang==="fr"?["fr","French"]:["fa","Farsi"],al=english?"en":(S.ansLang||nat[0]);
-  if(!micAllowed())return `<div class="micwrap"><p class="nomic">🎤 Listening needs the iPhone app or Chrome. For now: say it out loud, then tap what you said.</p>
-    ${english?'<div class="saidit"><button class="btn blue" id="saidIt">I said it!</button></div>':`<div id="tapAlt"></div>`}</div><button class="cant" id="cantSpeak">Not now, Domi 🤫</button>`;
-  return `<div class="micwrap"><div class="microw"><button class="micpill" id="micBtn" aria-label="Tap and speak">${DOTS}</button>${refresh?`<button class="refresh" id="cardNew" aria-label="Another card">${REFRESH}</button>`:""}</div>
-    <p class="hint" id="micMsg">Tap the button, then speak</p>
-    ${english?"":`<div class="anslang">I'll answer in <button data-al="${nat[0]}" aria-pressed="${al===nat[0]}">${nat[1]}</button><button data-al="en" aria-pressed="${al==="en"}">English</button></div>`}
-    </div><button class="cant" id="cantSpeak">Not now, Domi 🤫</button>`;
-}
-/* numbers in words: English, Farsi, French; digits in any script. Returns the last number said ("one plus one is two" -> 2) */
-const NUMW={zero:0,one:1,two:2,to:2,too:2,three:3,tree:3,four:4,five:5,six:6,seven:7,eight:8,nine:9,ten:10,eleven:11,twelve:12,thirteen:13,fourteen:14,fifteen:15,sixteen:16,seventeen:17,eighteen:18,nineteen:19,twenty:20,thirty:30,forty:40,fifty:50,sixty:60,seventy:70,eighty:80,ninety:90,
-  "صفر":0,"یک":1,"یه":1,"دو":2,"سه":3,"چهار":4,"پنج":5,"شش":6,"شیش":6,"هفت":7,"هشت":8,"نه":9,"ده":10,"یازده":11,"دوازده":12,"سیزده":13,"چهارده":14,"پانزده":15,"پونزده":15,"شانزده":16,"شونزده":16,"هفده":17,"هیفده":17,"هجده":18,"هیجده":18,"نوزده":19,"بیست":20,"سی":30,"چهل":40,"پنجاه":50,"شصت":60,"هفتاد":70,"هشتاد":80,"نود":90,
-  "zéro":0,"un":1,"une":1,"deux":2,"trois":3,"quatre":4,"cinq":5,"sept":7,"huit":8,"neuf":9,"dix":10,"onze":11,"douze":12,"treize":13,"quatorze":14,"quinze":15,"seize":16,"vingt":20,"trente":30,"quarante":40,"cinquante":50,"soixante":60};
-const HUNDRED={hundred:1,"صد":1,cent:1};
-/* English said while the recogniser listens for Farsi often comes back in Farsi letters */
-const WEAKW={"وان":1,"تو":2,"تری":3,"فور":4,"فایو":5,"سیکس":6,"سون":7,"ایت":8,"ناین":9,"تن":10};
-function heardNumber(text){
-  const t=text.toLowerCase().replace(/[۰-۹]/g,d=>"۰۱۲۳۴۵۶۷۸۹".indexOf(d)).replace(/[٠-٩]/g,d=>"٠١٢٣٤٥٦٧٨٩".indexOf(d)).replace(/(\d),(\d)/g,"$1$2");
-  const words=t.split(/[^0-9a-zà-ÿ\u0600-\u06FF]+/).filter(Boolean);
-  let last=null,cur=null,joinNext=false,weak=null;
-  const flush=()=>{if(cur!==null)last=cur;cur=null};
-  for(const w of words){
-    let v=null;
-    if(/^\d+$/.test(w))v=+w;else if(w in NUMW)v=NUMW[w];
-    if(w in HUNDRED){cur=(cur||1)*100;joinNext=true;continue}
-    if(v===null){if((w==="و"||w==="and"||w==="et")&&cur!==null){joinNext=true;continue}if(w in WEAKW)weak=WEAKW[w];flush();joinNext=false;continue}
-    if(cur!==null&&(joinNext||(cur%10===0&&cur>=20&&v<10))&&v<cur)cur+=v;else{flush();cur=v}
-    joinNext=false;
-  }
-  flush();
-  return last!==null?last:weak;
-}
-const normWords=t=>t.toLowerCase().replace(/[^a-z0-9 ]+/g," ").split(/\s+/).filter(Boolean);
-function setupMic(ex,z){
-  const target=ex.type==="sayword"?ex.n:ex.ans;
-  $("cantSpeak").onclick=()=>{if(ex.locked)return;sfx.tap();ex.locked=true;S.noSpeakUntil=Date.now()+15*60000;save();
-    L.queue.unshift(Object.assign(newEx("choose"),{a:ex.a,b:ex.b,op:ex.op,ans:ex.ans}));toast("No problem! No speaking for 15 minutes.");nextExercise(150)};
-  if($("cardNew"))$("cardNew").onclick=()=>{if(ex.locked)return;sfx.tap();let n;do n=sayNum(L.sk);while(n===ex.n);ex.n=n;const c=$("wcard");c.innerHTML=wcardHTML(ex,z);c.classList.remove("flip");void c.offsetWidth;c.classList.add("flip")};
-  if(!micAllowed()){
-    if($("saidIt"))$("saidIt").onclick=()=>{if(ex.locked)return;answer(true,ex.rep[1],null,false,"Well said!")};
-    if($("tapAlt")){const o=new Set([target]);for(const d of [1,-1,2,-2,10])if(o.size<4&&target+d>=0)o.add(target+d);
-      $("tapAlt").innerHTML=`<div class="answers">${[...o].sort(()=>Math.random()-.5).map(v=>`<button class="ans" data-v="${v}">${v}</button>`).join("")}</div>`;
-      $("tapAlt").querySelectorAll(".ans").forEach(b=>b.onclick=()=>{if(!ex.locked)ex.pick(b)})}
-    return;
-  }
-  const btn=$("micBtn"),msg=$("micMsg"),english=ex.type==="repeat";
-  document.querySelectorAll("[data-al]").forEach(b=>b.onclick=()=>{S.ansLang=b.dataset.al;save();sfx.tap();document.querySelectorAll("[data-al]").forEach(x=>x.setAttribute("aria-pressed",x===b))});
-  let rec=null;
-  const stopUI=()=>{btn.classList.remove("on")};
-  btn.onclick=()=>{
-    if(ex.locked)return;
-    if(rec){rec.stop();return}
-    if(voice){voice.onended=null;voice.onerror=null;voice.pause();voice=null}
-    const al=english?"en":(S.ansLang||(S.lang==="fr"?"fr":"fa"));
-    rec=new SRC();rec.lang={fa:"fa-IR",fr:"fr-FR",en:"en-US"}[al];rec.interimResults=true;rec.maxAlternatives=5;rec.continuous=false;
-    btn.classList.add("on");msg.textContent="Listening…";sfx.tap();
-    rec.onresult=e=>{
-      const r=e.results[e.results.length-1],alts=[...r].map(a=>a.transcript);msg.textContent=`“${alts[0]}”`;
-      if(!r.isFinal)return;
-      if(english){
-        const want=normWords(ex.rep[1]);let best=0;
-        for(const a of alts){const got=new Set(normWords(a).map(w=>NUMW[w]!==undefined?String(NUMW[w]):w)),need=want.map(w=>NUMW[w]!==undefined?String(NUMW[w]):w);best=Math.max(best,need.filter(w=>got.has(w)).length/need.length)}
-        btn.classList.add("idle");
-        return answer(best>=.6,ex.rep[1],null,false,"You said it in English!");
-      }
-      let n=null;for(const a of alts){n=heardNumber(a);if(n!==null)break}
-      if(n===null){msg.textContent=`I heard “${alts[0]}”. Tap and say a number!`;return}
-      btn.classList.add("idle");
-      const m=$("qMark");if(m){m.textContent=n;m.classList.add(n===target?"ok":"no")}
-      answer(n===target,ex.type==="sayword"?`${ex.n} · ${numWord(ex.n)}`:`${expr(ex)} = ${ex.ans}`,null,false,n===target?"You said it!":undefined);
-    };
-    rec.onerror=e=>{
-      if(e.error==="language-not-supported"&&!english&&(S.ansLang||"fa")!=="en"){S.ansLang="en";save();document.querySelectorAll("[data-al]").forEach(x=>x.setAttribute("aria-pressed",x.dataset.al==="en"));msg.textContent="This phone can't listen in that language. Say it in English!";return}
-      if(e.error==="not-allowed"||e.error==="service-not-allowed"){micBlocked=true;L.queue.unshift(Object.assign({},ex,{locked:false}));msg.textContent="The microphone isn't allowed here.";setTimeout(()=>{if(L&&L.ex===ex){ex.locked=true;nextExercise(100)}},900);return}
-      msg.textContent=e.error==="no-speech"?"I didn't hear anything. Tap and try again!":"The microphone had a problem. Try again or tap “Can't speak now”."};
-    rec.onend=()=>{rec=null;stopUI()};
-    try{rec.start()}catch(err){rec=null;stopUI();msg.textContent="The microphone couldn't start. Tap “Can't speak now”."}
-  };
-}
-function drawBank(ex){
-  const line=$("bankLine");
-  line.innerHTML=ex.chosen.map((i,k)=>`<button class="tile" data-k="${k}">${ex.tiles[i]}</button>`).join("");
-  line.querySelectorAll(".tile").forEach(b=>b.onclick=()=>{
-    if(ex.locked)return;sfx.tap();const i=ex.chosen.splice(+b.dataset.k,1)[0];
-    $("lBody").querySelector(`.tiles .tile[data-i="${i}"]`).classList.remove("used");drawBank(ex);
-  });
-  $("lCheck").disabled=!ex.chosen.length;
-}
-$("lCheck").onclick=()=>{
-  const ex=L&&L.ex;if(!ex||ex.locked)return;
-  if(ex.pending){const b=ex.pending;ex.pending=null;b.classList.remove("sel");return ex.pick(b)}
-  if(ex.type==="keypad"&&ex.typed){const v=+ex.typed,ok=v===ex.ans,m=$("qMark");m.classList.remove("typed");m.classList.add(ok?"ok":"no");answer(ok,`${expr(ex)} = ${ex.ans}`,null)}
-  if(ex.type==="bank"&&ex.chosen.length){
-    const s=ex.chosen.map(i=>ex.tiles[i]).join(" "),m=s.match(/^(\d+) ([+−×÷]) (\d+) = (\d+)$/);
-    const ok=!!m&&calc(+m[1],m[2],+m[3])===+m[4];
-    $("bankLine").querySelectorAll(".tile").forEach(t=>t.classList.add(ok?"right":"wrong"));
-    answer(ok,ok?s:`${expr(ex)} = ${ex.ans}`,null);
-  }
-};
-
-function answer(ok,correctText,btn,skipped,goodTitle,explain){
-  const ex=L.ex;if(ex.locked)return;ex.locked=true;
-  /* first slip: Domi gives a hint and the child tries again */
-  if(!ok&&!skipped&&!ex.retried&&ex.type!=="match"&&L.jump===undefined){ex.retried=true;L.mistakes++;return tryAgain(ex,btn)}
-  {const w=wkLog();w.q++;if(ok)w.right++}
-  if(!skipped){qDay().n++;save()}
-  $("lBody").querySelectorAll(".ans,.pic,.key,.tile,.mt").forEach(b=>b.disabled=true);$("lCheck").disabled=true;$("lSkip").disabled=true;
-  if(btn)btn.classList.add(ok?"right":"wrong");
-  L.answered++;$("lBar").style.width=Math.min(100,L.answered/L.total*100)+"%";
-  const lesson=L;let moved=false;
-  const go=()=>{if(moved||L!==lesson||!$("lesson").classList.contains("open"))return;moved=true;nextExercise()};
-  const fbBtn=$("fbBtn");
-  const showFb=(good,title,sub,secs)=>{$("fbTitle").textContent=title;$("fbSub").textContent=sub;
-    fbBtn.className="btn "+(good?"green":"red");fbBtn.innerHTML=`Continue<i class="timer" style="--t:${secs}s"></i>`;$("fb").className="fb "+(good?"good":"bad")+" show"};
-  if(ok){
-    L.correct++;L.row++;L.bestRow=Math.max(L.bestRow,L.row);L.miss=0;
-    {const n=ex.retried?1:2;S.acorns+=n;L.acorns=(L.acorns||0)+n;S.questions++;save();renderStats();bump("sAcorns")}
-
-    if(L.row>=3){const c=$("combo");c.textContent=`⭐ ${L.row} in a row!`;c.className="combo";void c.offsetWidth;c.className="combo show"}
-    sfx.good();burst(45);
-    showFb(true,goodTitle||(L.row>=3?["Domi is so proud!","Hop hop hooray!","You're on a roll!","Unstoppable!"][L.row%4]:PRAISE_T[Math.floor(Math.random()*PRAISE_T.length)]),`+${ex.retried?1:2} 🌰`,3);
-    if(L.row>0&&L.row%3===0)dance();
-    fbBtn.onclick=()=>{sfx.tap();go()};
-    const t0=Date.now();
-    say(L.row>0&&L.row%3===0&&CLIPS.has("praise8")?"praise8":pickOne(["praise1","praise2","praise3","praise4","praise5","praise6","praise7"].filter(c=>CLIPS.has(c))),()=>setTimeout(go,Math.max(150,1300-(Date.now()-t0))));
-    setTimeout(go,3200);
-  }else{
-    L.mistakes++;L.row=0;$("combo").className="combo";
-    S.questions+=skipped?0:1;save();
-    sfx.bad();
-    if(L.jump!==undefined){$("lHearts").querySelector("span").textContent=Math.max(0,3-L.mistakes);bump("lHearts")}
-
-    showFb(false,skipped?"Let's look together":"Here's why:",explain||correctText,6);
-    L.miss=(L.miss||0)+1;
-    const after=go;
-    let done=false;const once=()=>{if(!done){done=true;after()}};
-    fbBtn.onclick=()=>{sfx.tap();once()};
-    say("wrong",()=>setTimeout(once,1200));setTimeout(once,7000);
-  }
-}
-$("lSkip").onclick=()=>{const ex=L&&L.ex;if(!ex||ex.locked||L.story)return;sfx.tap();
-  if(MIC_TYPES.includes(ex.type)&&$("cantSpeak")){$("cantSpeak").click();return}
-  if(ex.type==="radio"){$("rDone").disabled=false;$("rDone").click();return}
-  answer(false,ex.type==="wq"?ex.w.x:ex.type==="rq"?RADIO[ex.r].qs[ex.qi].opts[RADIO[ex.r].qs[ex.qi].ans][1]:ex.type==="match"?"Match each pair":ex.type==="mcq"?(ex.answerText||ex.opts[ex.ans].replace(/<[^>]+>/g,"")):`${expr(ex)} = ${ex.ans}`,null,true)};
-$("fbFlag").onclick=()=>{sfx.tap();toast("Thanks! We'll check this question.")};
-function tryAgain(ex,btn){
-  sfx.bad();say("retry"+(1+Math.floor(Math.random()*3)));
-  if(btn){btn.classList.add("wrong");btn.disabled=!btn.classList.contains("yn")}
-  setTimeout(()=>{if(!L||L.ex!==ex)return;
-    if(btn)btn.classList.remove("wrong");
-    const m=$("qMark");if(m){m.textContent="?";m.className="q"}
-    if(ex.type==="keypad"){ex.typed=""}
-    if(ex.type==="bank"){ex.chosen=[];$("lBody").querySelectorAll(".tiles .tile").forEach(t=>t.classList.remove("used"));drawBank(ex)}
-    if($("micBtn"))$("micBtn").classList.remove("idle");
-    ex.locked=false},700);
-  const h=document.createElement("div");h.className="hint2";h.textContent=pickOne(["🦫 Almost! Try again 💪","🦫 Hmm, look again!","🦫 So close! One more try"]);
-  $("lesson").appendChild(h);setTimeout(()=>h.remove(),2200);
-}
-function easierEx(){
-  if(L.topic==="clock"||L.topic==="money")return makeMcq(L.topic);
-  if(L.topic==="watcher"){const w=pickWatcher(true);if(w)return {type:"wq",w}}
-  return Object.assign({type:"choose"},makeProb(Math.max(0,(L.sk||1)-1)),{n:sayNum(0),rep:REPS[0]});
-}
-/* calm corner: after two misses Domi offers three deep breaths before an easier question */
-function calmCorner(cb){
-  $("fb").className="fb";
-  const c=document.createElement("div");c.className="calm";
-  c.innerHTML=`<div class="breath">${bv(90)}</div><h2>Let's take 3 deep breaths</h2><p id="calmTxt">Breathe in…</p><button class="btn blue" id="calmGo">I'm ready</button>`;
-  $("lesson").appendChild(c);say("calm");
-  let n=0;const t=setInterval(()=>{n++;const e=$("calmTxt");if(e)e.textContent=n%2?"…and breathe out":`Breathe in… (${Math.floor(n/2)+1} of 3)`;if(n>=6)done()},2500);
-  let fin=false;function done(){if(fin)return;fin=true;clearInterval(t);c.remove();cb()}
-  $("calmGo").onclick=()=>{sfx.tap();done()};
-}
-function closeLesson(){
-  if(voice){voice.onended=null;voice.onerror=null;voice.pause();voice=null}
-  $("lesson").classList.remove("open");$("lesson").setAttribute("aria-hidden","true");$("fb").className="fb";
-
-  setTimeout(()=>{$("result").hidden=true},400);
-}
-$("lClose").onclick=()=>{sfx.tap();closeLesson();L=null};
-
-$("lClose").onclick=()=>{sfx.tap();closeLesson();L=null};
 function modal(html,btns){
   $("mCard").innerHTML=html+btns.map((b,k)=>`<button class="btn ${b.cls||""}" data-k="${k}" ${b.disabled?"disabled":""}>${b.label}</button>`).join("");
   $("mCard").querySelectorAll("button[data-k]").forEach(el=>el.onclick=()=>{sfx.tap();$("modal").classList.remove("show");btns[+el.dataset.k].go&&btns[+el.dataset.k].go()});
@@ -1709,10 +1735,10 @@ dayPlan();showMap();
   $("inMonth").textContent=MONTHS[monthIdx()]+(ev?" · "+ev.name+" "+ev.e:"");$("inLand").textContent=`${Z.o} ${Z.name}`;
   const n=HOLES[z].length,left=n-S.day.done;
   $("inText").textContent=S.day.house?"You opened today's prize! You can still look around, or come back tomorrow for a new path.":`A prize is waiting in Domi's big house by the dam. ${left} ${left===1?"mound":"mounds"} to go. Are you ready?`;
-  let spoke=false;const speak=()=>{if(spoke)return;spoke=true;const first=ev?ev.clip:"z"+Z.a;say(first,()=>say("intro_prize"))};
+  let spoke=false;const speak=()=>{if(spoke)return;spoke=true;sayseq([ev?ev.clip:"z"+Z.a,"w/LULU_BD_PRIZE","w/LULU_BD_READY"])};
   setTimeout(speak,500);
   $("introC").addEventListener("pointerdown",()=>{if(!voice||voice.paused){spoke=false;speak()}},{once:true});
-  const go=(start)=>{if(voice){voice.onended=null;voice.pause();voice=null}$("introC").classList.add("gone");setTimeout(()=>$("introC").hidden=true,420);S.seen=true;save();
+  const go=(start)=>{hush();$("introC").classList.add("gone");setTimeout(()=>$("introC").hidden=true,420);S.seen=true;save();
     showMap();if(start){const n2=HOLES[landIdx()].length;setTimeout(()=>{if(S.day.done<n2)showPop(S.day.done)},700)}};
   $("inGo").onclick=e=>{e.stopPropagation();sfx.tap();go(true)};
   $("inSkip").onclick=e=>{e.stopPropagation();sfx.tap();go(false)};
