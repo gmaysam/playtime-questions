@@ -176,7 +176,6 @@ markup = '''
   <div class="drop" id="drop" role="dialog"></div>
 
   <main class="map" id="map" aria-label="Today's path">
-    <div class="monthbar"><div class="unit" id="unit"><span class="ut"><small id="unitK">November</small><b id="unitN">Green Forest</b></span><span class="ev" id="unitE"></span></div></div>
     <div class="journey" id="journey"></div>
   </main>
 
@@ -198,7 +197,7 @@ markup = '''
 
   <div class="introC" id="introC">
     <img class="talk" src="img/beaver_talk.webp" alt="Domi the beaver talking">
-    <div class="mcard"><div class="mm" id="inMonth">November</div><b id="inLand">Green Forest</b><p id="inText">A prize is waiting in Domi's big house by the dam. Are you ready?</p></div>
+    <div class="inev" id="inEv"></div>
     <button class="btn green" id="inGo">I'm ready!</button>
     <button class="skip" id="inSkip">Skip</button>
   </div>
@@ -270,8 +269,7 @@ function buildMap(){
 function renderMap(){
   const z=landIdx(),Z=ZONES[z],plan=dayPlan(),done=S.day.done,n=HOLES[z].length,ev=eventNow();
   if(!landEl||landEl.dataset.z!=String(z)){buildMap();landEl.dataset.z=z}
-  $("unitK").textContent=`${MONTHS[monthIdx()]}${ev?" · "+ev.name:""}`;$("unitN").textContent=Z.name;$("unitE").textContent=ev?ev.e:Z.o;
-  $("unit").style.setProperty("--uc",Z.c);
+
   holeEls.forEach((b,i)=>{
     const p=plan[i],st=i<done?"done":i===done?"current":"future";b.style.setProperty("--dc",Z.c);
     const sym=catById(p.cat).e;
@@ -389,41 +387,39 @@ function showParents(){
   hidePanels();$("map").hidden=true;$("pSettings").hidden=false;
   const pn=curPlayer().name,w=wkLog(),tp=S.lastTopic||"math",dq=(DINNER[tp]||DINNER.math),names=w.topics.map(t=>(COURSE.find(c=>c.id===t)||{}).name).filter(Boolean);
   const sk=skillFor(S.age,S.diff),ex1=makeProb(sk),ex2=makeProb(sk),n=HOLES[landIdx()].length;
+  const SHORT={math:"Numbers",clock:"Clock",money:"Coins",watcher:"World",radio:"Radio"},pct=w.q?Math.round(w.right/w.q*100):0;
+  const ring=(v,max,c,ic)=>{const f=Math.min(1,v/max);return `<span class="pring" style="--f:${f*360}deg;--c:${c}"><i>${ic}</i></span><small class="pnum">${Math.min(v,max)}/${max}</small>`};
+  const sec=(e,t)=>`<div class="psec"><span>${e}</span>${t}</div>`;
   $("pSettings").innerHTML=`<button class="back" id="closeSettings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>Back</button>
-    <div class="ptitle"><span class="pe">👨‍👩‍👧</span><div><h2>Parents</h2><p class="sub" style="margin:0">Settings for ${pn} · switch child from the top-left button</p></div></div>
-    <div class="recap"><b>This week with ${pn}</b>
-      <div class="rn"><div><b>${w.days.length}</b><span>days played</span></div><div><b>${w.q}</b><span>questions</span></div><div><b>${w.q?Math.round(w.right/w.q*100):0}%</b><span>right</span></div></div>
-      <p>📚 Practised: ${names.length?names.join(", "):"nothing yet this week"}</p>
-      <p>🏡 Try this week: ${TRY[tp]||TRY.math}</p>
-      <p>🍽️ Dinner-table question: “${dq[dayN()%dq.length]}”</p></div>
-    <h3>Big prizes</h3>
-    <div class="howto"><b>How rewards work.</b> 🌰 Acorns reward <b>effort on each question</b> (1 per right answer, 2 if right the first time). 🪵 Wood rewards <b>finishing</b> (1 per mound, 3 for reaching the big house each day). A big prize needs both, so it takes good answers <i>and</i> showing up each day.</div>
-    ${S.real.map((r,k)=>{const e=estimate(r),ok=S.acorns>=r.a&&S.wood>=r.w;return `<div class="prset"><div class="pt"><span class="e">${r.e}</span>${r.name}${ok?` <span style="margin-left:auto;color:var(--leaf-deep)">Ready!</span>`:""}</div>
-      <div class="costrow">🌰<button class="stp" data-c="${k}:a:-10">−</button><span>${r.a}</span><button class="stp" data-c="${k}:a:10">+</button>🪵<button class="stp" data-c="${k}:w:-1">−</button><span>${r.w}</span><button class="stp" data-c="${k}:w:1">+</button></div>
-      <p class="est">From zero: about ${e.fromZeroQ} right answers and ${e.fromZeroD} days of play. ${ok?"":`Still needed: about ${e.qa} right answers, ${e.days} ${e.days===1?"day":"days"}.`}</p>
-      ${ok?`<button class="btn green" data-give="${k}" style="margin-top:8px">We gave the ${r.name.replace(/^A |^New /,"").toLowerCase()} ✓ (uses ${r.a} 🌰 + ${r.w} 🪵)</button>`:""}</div>`}).join("")}
-    <h3>Questions per day</h3>
-    <div class="chips">${[10,15,20,30].map(q=>`<button class="chip" data-per="${q}" aria-pressed="${S.perDay===q}">${q}</button>`).join("")}</div>
-    <p class="sub" style="margin:8px 0 0">Today's path has ${n} mounds, so about ${Math.max(1,Math.round(S.perDay/n))} questions each. Reaching the big house opens a sticker.</p>
-    <h3>Course</h3><p class="sub" style="margin:0 0 10px">Each mound takes a topic in turn.</p>
-    ${COURSE.map(c=>`<button class="topic ${c.soon?"soon":""}" ${c.soon?"disabled":`data-topic="${c.id}"`} aria-pressed="${!c.soon&&S.topics.includes(c.id)}"><span class="ti2">${c.e}</span><span>${c.name}<small>${c.soon?"Coming soon":c.desc}</small></span><span class="tk">${c.soon?"":S.topics.includes(c.id)?"✅":"⬜"}</span></button>`).join("")}
-    <h3>How old is ${pn}?</h3>
-    <div class="chips">${[3,4,5,6,7,8,9,10,11,12].map(a=>`<button class="chip" data-age="${a}" aria-pressed="${S.age===a}">${a}</button>`).join("")}</div>
-    <h3>Level</h3>
-    <div class="chips">${[["Easy",0],["Medium",1],["Hard",2]].map(([nm,d])=>`<button class="chip" data-diff="${d}" aria-pressed="${S.diff===d}">${nm}</button>`).join("")}</div>
-    <div class="sample">Math will look like: <b>${expr(ex1)} = ${ex1.ans}</b> · <b>${expr(ex2)} = ${ex2.ans}</b></div>
-    <h3>Map of the month</h3><p class="sub" style="margin:0 0 8px">Each month has its own land. Pick one to preview it.</p>
-    <div class="months"><button class="chip" data-mon="auto" aria-pressed="${S.mapMonth==="auto"}">Auto</button>${MONTHS.map((m,k)=>`<button class="chip" data-mon="${k}" aria-pressed="${S.mapMonth===String(k)}">${m.slice(0,3)}</button>`).join("")}</div>
-    <h3>Sticker theme</h3>
-    <div class="themes">${Object.entries(REWARDS).map(([k,r])=>`<button class="theme" data-rw="${k}" aria-pressed="${S.reward===k}">${r.e}<small>${r.name}</small></button>`).join("")}</div>
-    <h3>Sounds and answers</h3>
-    <div class="setting"><span>Narrator voice<small>Domi speaks Farsi; words on screen are English</small></span><button class="switch" id="swVoice" role="switch" aria-checked="${S.voice}" aria-label="Narrator voice"></button></div>
-    <div class="setting"><span>Game sounds<small>Chimes, pops and fanfares</small></span><button class="switch" id="swFx" role="switch" aria-checked="${S.fx}" aria-label="Game sounds"></button></div>
-    <div style="height:18px"></div>
-    <button class="btn danger" id="btnReset">Start ${pn} over</button>
-    <div id="resetConfirm" hidden style="margin-top:14px;display:grid;gap:12px">
-      <p class="sub" style="margin:0;font-weight:900;color:var(--berry-deep)">This clears acorns, wood, stickers and today's path for ${pn}. Are you sure?</p>
-      <button class="btn red" id="btnResetYes">Yes, clear it</button><button class="btn ghost" id="btnResetNo">No, keep it</button></div>`;
+    <div class="phead"><span class="pav" style="background:${curPlayer().color}">${pn.trim()[0].toUpperCase()}</span><b>${pn}</b><span class="pweek">this week</span></div>
+    <div class="ptiles"><div class="pt1"><i>📅</i><b>${w.days.length}</b><small>days</small></div><div class="pt1"><i>❓</i><b>${w.q}</b><small>questions</small></div><div class="pt1"><i>⭐</i><b>${pct}%</b><small>right</small></div></div>
+    <div class="pchips">${w.topics.map(t=>`<span>${(COURSE.find(c=>c.id===t)||{}).e||""} ${SHORT[t]||t}</span>`).join("")||`<span class="dim">—</span>`}</div>
+    <div class="ptalk"><div>🏡 ${TRY[tp]||TRY.math}</div><div>🍽️ “${dq[dayN()%dq.length]}”</div></div>
+    ${sec("🎁","Big prizes")}
+    <div class="plegend"><span>🌰 = right answers</span><span>🪵 = finished mounds</span></div>
+    ${S.real.map((r,k)=>{const e=estimate(r),ok=S.acorns>=r.a&&S.wood>=r.w;return `<div class="pprize ${ok?"ok":""}">
+      <span class="ppe">${r.e}</span>
+      <div class="ppr">${ring(S.acorns,r.a,"#C8803F","🌰")}<div class="pstep"><button class="stp" data-c="${k}:a:-10">−</button><button class="stp" data-c="${k}:a:10">+</button></div></div>
+      <div class="ppr">${ring(S.wood,r.w,"#7A4A1E","🪵")}<div class="pstep"><button class="stp" data-c="${k}:w:-1">−</button><button class="stp" data-c="${k}:w:1">+</button></div></div>
+      ${ok?`<button class="pgive" data-give="${k}">✓ Given</button>`:`<span class="pdays">⏳ ~${e.days}d</span>`}</div>`}).join("")}
+    ${sec("❓","Questions a day")}
+    <div class="pseg">${[10,15,20,30].map(q=>`<button data-per="${q}" aria-pressed="${S.perDay===q}">${q}</button>`).join("")}</div>
+    ${sec("📚","Topics")}
+    <div class="ptopics">${COURSE.filter(c=>!c.soon).map(c=>`<button data-topic="${c.id}" aria-pressed="${S.topics.includes(c.id)}"><i>${c.e}</i><small>${SHORT[c.id]||c.name}</small></button>`).join("")}</div>
+    ${sec("🎂","Age")}
+    <div class="pages">${[3,4,5,6,7,8,9,10,11,12].map(a=>`<button data-age="${a}" aria-pressed="${S.age===a}">${a}</button>`).join("")}</div>
+    ${sec("📈","Level")}
+    <div class="pseg lv">${[["🐢",0],["🐇",1],["🚀",2]].map(([e,d])=>`<button data-diff="${d}" aria-pressed="${S.diff===d}">${e}</button>`).join("")}</div>
+    <div class="psample">${expr(ex1)} = ${ex1.ans} &nbsp;·&nbsp; ${expr(ex2)} = ${ex2.ans}</div>
+    ${sec("🗺️","Map")}
+    <div class="pmonths"><button data-mon="auto" aria-pressed="${S.mapMonth==="auto"}">✨</button>${MONTHS.map((m,k)=>`<button data-mon="${k}" aria-pressed="${S.mapMonth===String(k)}"><i>${ZONES[MONTH_LAND[k]].o}</i>${m.slice(0,3)}</button>`).join("")}</div>
+    ${sec("🦄","Stickers")}
+    <div class="ptopics">${Object.entries(REWARDS).map(([k,r])=>`<button data-rw="${k}" aria-pressed="${S.reward===k}"><i>${r.e}</i></button>`).join("")}</div>
+    ${sec("🔊","Sound")}
+    <div class="ptopics two"><button id="swVoice" aria-pressed="${S.voice}"><i>🗣️</i><small>Voice</small></button><button id="swFx" aria-pressed="${S.fx}"><i>🔔</i><small>Effects</small></button></div>
+    <div style="height:22px"></div>
+    <button class="preset" id="btnReset">↺ Start ${pn} over</button>
+    <div id="resetConfirm" hidden class="pconf"><b>Clear 🌰 🪵 🦄 ?</b><button class="btn red" id="btnResetYes">Yes</button><button class="btn ghost" id="btnResetNo">No</button></div>`;
   const P$=q=>$("pSettings").querySelectorAll(q);
   const keep=fn=>{const y=$("pSettings").scrollTop;fn();save();sfx.tap();showParents();$("pSettings").scrollTop=y};
   $("closeSettings").onclick=()=>{sfx.tap();showMap();if(S.ageUp)setTimeout(ageUpCeremony,500)};
@@ -435,7 +431,7 @@ function showParents(){
   P$("[data-per]").forEach(b=>b.onclick=()=>keep(()=>{S.perDay=+b.dataset.per}));
   P$("[data-mon]").forEach(b=>b.onclick=()=>keep(()=>{S.mapMonth=b.dataset.mon;landEl=null}));
   P$("[data-rw]").forEach(b=>b.onclick=()=>keep(()=>{S.reward=b.dataset.rw}));
-  [["swVoice","voice"],["swFx","fx"]].forEach(([id,key])=>$(id).onclick=()=>{S[key]=!S[key];$(id).setAttribute("aria-checked",S[key]);save();sfx.tap();if(!S.voice&&voice)voice.pause()});
+  [["swVoice","voice"],["swFx","fx"]].forEach(([id,key])=>$(id).onclick=()=>{S[key]=!S[key];$(id).setAttribute("aria-pressed",S[key]);save();sfx.tap();if(!S.voice&&voice)voice.pause()});
   $("btnReset").onclick=()=>{$("resetConfirm").hidden=false;$("btnReset").hidden=true};
   $("btnResetNo").onclick=()=>{$("resetConfirm").hidden=true;$("btnReset").hidden=false};
   $("btnResetYes").onclick=()=>{const k={voice:S.voice,fx:S.fx,age:S.age,diff:S.diff,perDay:S.perDay,reward:S.reward,topics:S.topics,real:S.real};S=Object.assign(fresh(),k);S.seen=true;save();landEl=null;showMap()};
@@ -467,9 +463,7 @@ const clk=()=>{const d=new Date();$("clock").textContent=d.getHours()+":"+String
 dayPlan();showMap();
 (function intro(){
   const ev=eventNow(),z=landIdx(),Z=ZONES[z];
-  $("inMonth").textContent=MONTHS[monthIdx()]+(ev?" · "+ev.name+" "+ev.e:"");$("inLand").textContent=`${Z.o} ${Z.name}`;
-  const n=HOLES[z].length,left=n-S.day.done;
-  $("inText").textContent=S.day.house?"You opened today's prize! You can still look around, or come back tomorrow for a new path.":`A prize is waiting in Domi's big house by the dam. ${left} ${left===1?"mound":"mounds"} to go. Are you ready?`;
+  $("inEv").textContent=ev?ev.e:"";
   let spoke=false;const speak=()=>{if(spoke)return;spoke=true;sayseq([ev?ev.clip:"z"+Z.a,"w/LULU_BD_PRIZE","w/LULU_BD_READY"])};
   setTimeout(speak,500);
   $("introC").addEventListener("pointerdown",()=>{if(!voice||voice.paused){spoke=false;speak()}},{once:true});
