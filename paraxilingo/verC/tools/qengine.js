@@ -6,7 +6,7 @@ const PIC_E=__PIC_E__;
 const WORD_E=__WORD_E__;
 const N=n=>n>=0&&n<=20?"w/LULU_N"+n:null;
 /* the new, cuter Domi (vector) everywhere */
-bv=function(w){return `<span class="bv" style="width:${w}px;--w:${w}px"><img src="img/domi.svg" alt=""></span>`};
+bv=function(w){return `<span class="bv" style="width:${w}px;--w:${w}px"><img src="${domiSrc()}" alt=""></span>`};
 /* Farsi names of answer words (Watcher clips + Paraxilingo's own PX_FA_* clips) */
 const FA_SAY=__FA_SAY__;
 const PLANET_N=["sun","mercury","venus","earth","mars","jupiter","saturn","uranus","neptune"];
@@ -456,3 +456,13 @@ function qRead(k,used){
   if(k==="flash")return {voice:["w/LULU_RD_FLASH"],cap:"Look! Then find it.",visual:`<div class="flash"><b class="word big">${x.w}</b></div>`,opts:o.map(y=>({h:`<b class="word">${y.w}</b>`})),ans:o.indexOf(x),layout:"row3",hint:"elim",flash:true,exp:{t:x.w,v:["w/LULU_ANS_IS","w/LULU_SIGHT"+x.i]}};
   return {voice:["w/LULU_RD_BALLOON","w/LULU_SIGHT"+x.i],cap:"Pop the balloon!",visual:`<div class="listen">🎈</div>`,opts:o.map(y=>({h:`<span class="balloon"><b class="word">${y.w}</b></span>`})),ans:o.indexOf(x),layout:"row3",hint:"elim",exp:{t:x.w,v:["w/LULU_ANS_IS","w/LULU_SIGHT"+x.i]}};
 }
+
+/* ================= each player picks their own Domi (5 beavers) ================= */
+const DOMIS=[["Button",1],["Honey",2],["Leafy",3],["Mochi",4],["Hello",5]];
+function domiSrc(){let n=1;try{n=(curPlayer().domi)||1}catch(e){}return `img/domi_${n}.svg`}
+function paintDomi(){document.querySelectorAll("img.talk,.bv img").forEach(i=>i.src=domiSrc())}
+function domiPicker(){const cur=(curPlayer().domi)||1;
+  return `<p class="dh">Pick your Domi</p><div class="domis">`+DOMIS.map(([n,i])=>`<button class="dpick ${i===cur?"on":""}" data-domi="${i}" aria-label="Domi ${n}"><img src="img/domi_${i}.svg" alt=""></button>`).join("")+`</div>`}
+function wireDomi(){document.querySelectorAll("[data-domi]").forEach(b=>b.onclick=e=>{e.stopPropagation();const p=curPlayer();p.domi=+b.dataset.domi;savePlayers();sfx.tap();
+  document.querySelectorAll("[data-domi]").forEach(x=>x.classList.toggle("on",x===b));paintDomi()})}
+setTimeout(paintDomi,0);

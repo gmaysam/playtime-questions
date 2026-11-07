@@ -916,6 +916,12 @@ body,.phone,.lesson.q2,.introC,#pSettings,.panel,.map{background:#fff!important}
 .balloon{display:grid;place-items:center;width:84px;height:100px;border-radius:50% 50% 46% 46%;background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.55),transparent 40%),var(--bd);position:relative}
 .balloon::after{content:"";position:absolute;bottom:-14px;left:50%;width:2px;height:14px;background:#B9C3D3}
 @media (min-width:700px){.word{font-size:42px}.word.big{font-size:96px}.sent{font-size:44px}.balloon{width:120px;height:140px}.qo .num.letter{font-size:76px}}
+
+/* Domi picker in the players menu */
+.domis{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin:4px 0 14px}
+.dpick{border:3px solid transparent;border-radius:18px;background:#F6F8FC;padding:4px;aspect-ratio:1;display:grid;place-items:center;cursor:pointer}
+.dpick img{width:100%;height:100%}
+.dpick.on{border-color:var(--q-sun-d,#F5B400);background:#FFF6DA}
 </style>
 
 <div class="stage">
@@ -956,7 +962,7 @@ body,.phone,.lesson.q2,.introC,#pSettings,.panel,.map{background:#fff!important}
   <div class="toast" id="toast"></div>
 
   <div class="introC" id="introC">
-    <img class="talk" src="img/domi.svg" alt="Domi the beaver">
+    <img class="talk" src="img/domi_1.svg" alt="Domi the beaver">
     <div class="inev" id="inEv"></div>
   </div>
 
@@ -1285,7 +1291,7 @@ const PIC_E={apples:"🍎",astronaut:"🧑‍🚀",baby:"👶",bat:"🦇",bed:"�
 const WORD_E={ant:"🐜",apple:"🍎",apples:"🍎",astronaut:"🧑‍🚀",autumn:"🍂",baker:"🧑‍🍳",ball:"⚽",banana:"🍌",barn:"🛖",beach:"🏖️",beans:"🫘",bear:"🐻",bed:"🛏️",bee:"🐝",big:"🐘",bird:"🐦",black:"⚫",blue:"🔵",boat:"⛵",bones:"🦴",brain:"🧠",bread:"🍞",breathe:"🌬️",brush:"🪥",bus:"🚌",butterfly:"🦋",candy:"🍬",car:"🚗",cars:"🚗",cat:"🐱",cave:"🕳️",cheese:"🧀",cheetah:"🐆",chef:"🧑‍🍳",chips:"🍟",circle:"⚪",clock:"🕒",clouds:"☁️",cold:"🥶",comet:"☄️",corn:"🌽",cow:"🐄",crown:"👑",dentist:"🦷",desert:"🏜️",doctor:"🧑‍⚕️",dog:"🐶",down:"⬇️",duck:"🦆",ears:"👂",earth:"🌍",elbow:"💪",elephant:"🐘",eyes:"👀",farmer:"🧑‍🌾",fast:"💨",feet:"🦶",fish:"🐟",flour:"🌾",fork:"🍴",fox:"🦊",frog:"🐸",grass:"🌿",green:"🟢",hair:"💇",hands:"👐",hat:"🎩",hen:"🐔",hive:"🐝",in:"📥",juice:"🧃",jupiter:"🪐",key:"🔑",knee:"🦵",ladder:"🪜",lake:"🏞️",lava:"🌋",leaves:"🍂",lightning:"⚡",lion:"🦁",map:"🗺️",maple:"🍁",mars:"🔴",mercury:"🌑",milk:"🥛",moon:"🌙",mouse:"🐭",nails:"💅",nectar:"🌸",neptune:"🔵",nest:"🪺",nose:"👃",ocean:"🌊",on:"🔛",orange:"🟠",paper:"📄",pig:"🐷",pilot:"🧑‍✈️",pine:"🌲",pond:"🦆",purple:"🟣",rain:"🌧️",rainbow:"🌈",raincoat:"🧥",red:"🔴",rice:"🍚",rock:"🪨",rocks:"🪨",sand:"⏳",saturn:"🪐",sea:"🌊",ship:"🚢",shoes:"👟",shops:"🏪",smoke:"💨",snow:"❄️",spoon:"🥄",spring:"🌸",square:"🟥",stones:"🪨",summer:"☀️",sun:"☀️",swimsuit:"🩱",telescope:"🔭",think:"🤔",thunder:"⛈️",toe:"🦶",toys:"🧸",trees:"🌳",triangle:"🔺",turtle:"🐢",venus:"🟡",walk:"🚶",water:"💧",white:"⚪",wind:"🌬️",winter:"⛄",yellow:"🟡","north pole":"🧊","it freezes":"🧊","it steams":"♨️","a low cloud":"🌫️","blocking sun":"🌑"};
 const N=n=>n>=0&&n<=20?"w/LULU_N"+n:null;
 /* the new, cuter Domi (vector) everywhere */
-bv=function(w){return `<span class="bv" style="width:${w}px;--w:${w}px"><img src="img/domi.svg" alt=""></span>`};
+bv=function(w){return `<span class="bv" style="width:${w}px;--w:${w}px"><img src="${domiSrc()}" alt=""></span>`};
 /* Farsi names of answer words (Watcher clips + Paraxilingo's own PX_FA_* clips) */
 const FA_SAY={"bird": "LULU_FA_AN0", "cow": "LULU_FA_AN1", "duck": "LULU_FA_AN2", "hen": "LULU_FA_AN3", "pig": "LULU_FA_AN4", "shark": "LULU_FA_AN5", "fox": "LULU_FA_AN6", "dog": "LULU_FA_AN7", "frog": "LULU_FA_AN8", "bee": "LULU_FA_AN9", "worm": "LULU_FA_AN10", "cat": "LULU_FA_AN11", "bat": "LULU_FA_AN12", "snake": "LULU_FA_AN13", "grass": "LULU_FA_FOOD1", "seeds": "LULU_FA_FOOD2", "bones": "LULU_FA_FOOD3", "fish": "LULU_FA_FOOD4", "fly": "LULU_FA_FOOD5", "flowers": "LULU_FA_FOOD6", "leaves": "LULU_FA_FOOD7", "mosquito": "LULU_FA_FOOD8", "apple": "LULU_FA_FOOD9", "mouse": "LULU_FA_FOOD10", "eggs": "LULU_FA_FOOD11", "corn": "LULU_FA_FOOD12", "nest": "LULU_FA_HOME0", "barn": "LULU_FA_HOME1", "pond": "LULU_FA_HOME2", "doghouse": "LULU_FA_HOME3", "house": "LULU_FA_HOME4", "hive": "LULU_FA_HOME5", "tree": "LULU_FA_HOME6", "cave": "LULU_FA_HOME7", "burrow": "LULU_FA_HOME8", "sea": "LULU_FA_HOME9", "rocks": "LULU_FA_HOME10", "doctor": "LULU_FA_JOB0", "firefighter": "LULU_FA_JOB1", "police": "LULU_FA_JOB2", "chef": "LULU_FA_JOB3", "farmer": "LULU_FA_JOB4", "teacher": "LULU_FA_JOB5", "pilot": "LULU_FA_JOB6", "astronaut": "LULU_FA_JOB7", "mechanic": "LULU_FA_JOB8", "scientist": "LULU_FA_JOB9", "painter": "LULU_FA_JOB10", "builder": "LULU_FA_JOB11", "iran": "LULU_FA_CTY0", "usa": "LULU_FA_CTY1", "canada": "LULU_FA_CTY2", "mexico": "LULU_FA_CTY3", "brazil": "LULU_FA_CTY4", "england": "LULU_FA_CTY5", "france": "LULU_FA_CTY6", "germany": "LULU_FA_CTY7", "italy": "LULU_FA_CTY8", "china": "LULU_FA_CTY9", "japan": "LULU_FA_CTY10", "india": "LULU_FA_CTY11", "egypt": "LULU_FA_CTY12", "australia": "LULU_FA_CTY13", "sun": "LULU_FA_PL0", "mercury": "LULU_FA_PL1", "venus": "LULU_FA_PL2", "earth": "LULU_FA_PL3", "mars": "LULU_FA_PL4", "jupiter": "LULU_FA_PL5", "saturn": "LULU_FA_PL6", "uranus": "LULU_FA_PL7", "neptune": "LULU_FA_PL8", "moon": "LULU_FA_SKY1", "star": "LULU_FA_SKY2", "clouds": "LULU_FA_SKY3", "rain": "LULU_FA_SKY4", "rainbow": "LULU_FA_SKY5", "lightning": "LULU_FA_SKY6", "snow": "LULU_FA_SKY7", "rocket": "LULU_FA_SKY8", "telescope": "LULU_FA_SKY10", "galaxy": "LULU_FA_SKY11", "comet": "LULU_FA_SKY12", "satellite": "LULU_FA_SKY13", "planet": "LULU_FA_SKY14", "log": "LULU_FAW0", "ten": "LULU_FAW4", "box": "LULU_FAW6", "socks": "LULU_FAW7", "key": "LULU_FAW8", "mug": "LULU_FAW11", "bug": "LULU_FAW12", "hat": "LULU_FAW14", "car": "LULU_FAW17", "cake": "LULU_FAW18", "truck": "LULU_FAW21", "jet": "LULU_FAW22", "net": "LULU_FAW23", "fan": "LULU_FAW24", "can": "LULU_FAW25", "map": "LULU_FAW26", "cap": "LULU_FAW27", "fin": "LULU_FAW28", "pin": "LULU_FAW29", "lip": "LULU_FAW30", "ship": "LULU_FAW31", "cut": "LULU_FAW32", "nut": "LULU_FAW33", "cook": "LULU_FA_JOB3", "flower": "LULU_FA_FOOD6", "leaf": "LULU_FA_FOOD7", "egg": "LULU_FA_FOOD11", "cloud": "LULU_FA_SKY3", "stars": "LULU_FA_SKY2", "thunder": "LULU_FA_SKY6", "spring": "LULU_FA_SEA0", "summer": "LULU_FA_SEA1", "autumn": "LULU_FA_SEA2", "fall": "LULU_FA_SEA2", "winter": "LULU_FA_SEA3", "trees": "LULU_FA_HOME6", "ocean": "LULU_FA_HOME9", "chicken": "LULU_FA_AN3", "caterpillar": "LULU_FA_AN10", "worms": "LULU_FA_FOOD0", "bone": "LULU_FA_FOOD3", "flies": "LULU_FA_FOOD5", "mosquitoes": "LULU_FA_FOOD8", "apples": "LULU_FA_FOOD9", "mice": "LULU_FA_FOOD10", "den": "LULU_FA_HOME8", "milky way": "LULU_FA_SKY11", "police officer": "LULU_FA_JOB2", "artist": "LULU_FA_JOB10", "the united states": "LULU_FA_CTY1", "salt": "PX_FA_SALT", "lemon": "PX_FA_LEMON", "whale": "PX_FA_WHALE", "crab": "PX_FA_CRAB", "books": "PX_FA_BOOKS", "guitar": "PX_FA_GUITAR", "ruler": "PX_FA_RULER", "scales": "PX_FA_SCALES", "alarm clock": "PX_FA_ALARM_CLOCK", "soccer ball": "PX_FA_SOCCER_BALL", "full moon": "PX_FA_FULL_MOON", "dinosaur": "PX_FA_DINOSAUR", "a low cloud": "PX_FA_A_LOW_CLOUD", "ant": "PX_FA_ANT", "baker": "PX_FA_BAKER", "ball": "PX_FA_BALL", "beach": "PX_FA_BEACH", "bear": "PX_FA_BEAR", "black": "PX_FA_BLACK", "blue": "PX_FA_BLUE", "brain": "PX_FA_BRAIN", "breathe": "PX_FA_BREATHE", "brown": "PX_FA_BROWN", "butterfly": "PX_FA_BUTTERFLY", "candy": "PX_FA_CANDY", "cars": "PX_FA_CARS", "cheetah": "PX_FA_CHEETAH", "chips": "PX_FA_CHIPS", "circle": "PX_FA_CIRCLE", "crown": "PX_FA_CROWN", "ears": "PX_FA_EARS", "elbow": "PX_FA_ELBOW", "elephant": "PX_FA_ELEPHANT", "eyes": "PX_FA_EYES", "feet": "PX_FA_FEET", "green": "PX_FA_GREEN", "hair": "PX_FA_HAIR", "hands": "PX_FA_HANDS", "knee": "PX_FA_KNEE", "lion": "PX_FA_LION", "maple": "PX_FA_MAPLE", "milk": "PX_FA_MILK", "morning": "PX_FA_MORNING", "nectar": "PX_FA_NECTAR", "night": "PX_FA_NIGHT", "nose": "PX_FA_NOSE", "orange": "PX_FA_ORANGE", "pine": "PX_FA_PINE", "pink": "PX_FA_PINK", "pizza": "PX_FA_PIZZA", "purple": "PX_FA_PURPLE", "raincoat": "PX_FA_RAINCOAT", "red": "PX_FA_RED", "salad": "PX_FA_SALAD", "sand": "PX_FA_SAND", "shoes": "PX_FA_SHOES", "shops": "PX_FA_SHOPS", "smoke": "PX_FA_SMOKE", "snail": "PX_FA_SNAIL", "square": "PX_FA_SQUARE", "swimsuit": "PX_FA_SWIMSUIT", "think": "PX_FA_THINK", "toe": "PX_FA_TOE", "toys": "PX_FA_TOYS", "train": "PX_FA_TRAIN", "triangle": "PX_FA_TRIANGLE", "turtle": "PX_FA_TURTLE", "walk": "PX_FA_WALK", "water": "PX_FA_WATER", "white": "PX_FA_WHITE", "yellow": "PX_FA_YELLOW"};
 const PLANET_N=["sun","mercury","venus","earth","mars","jupiter","saturn","uranus","neptune"];
@@ -1736,6 +1742,16 @@ function qRead(k,used){
   return {voice:["w/LULU_RD_BALLOON","w/LULU_SIGHT"+x.i],cap:"Pop the balloon!",visual:`<div class="listen">🎈</div>`,opts:o.map(y=>({h:`<span class="balloon"><b class="word">${y.w}</b></span>`})),ans:o.indexOf(x),layout:"row3",hint:"elim",exp:{t:x.w,v:["w/LULU_ANS_IS","w/LULU_SIGHT"+x.i]}};
 }
 
+/* ================= each player picks their own Domi (5 beavers) ================= */
+const DOMIS=[["Button",1],["Honey",2],["Leafy",3],["Mochi",4],["Hello",5]];
+function domiSrc(){let n=1;try{n=(curPlayer().domi)||1}catch(e){}return `img/domi_${n}.svg`}
+function paintDomi(){document.querySelectorAll("img.talk,.bv img").forEach(i=>i.src=domiSrc())}
+function domiPicker(){const cur=(curPlayer().domi)||1;
+  return `<p class="dh">Pick your Domi</p><div class="domis">`+DOMIS.map(([n,i])=>`<button class="dpick ${i===cur?"on":""}" data-domi="${i}" aria-label="Domi ${n}"><img src="img/domi_${i}.svg" alt=""></button>`).join("")+`</div>`}
+function wireDomi(){document.querySelectorAll("[data-domi]").forEach(b=>b.onclick=e=>{e.stopPropagation();const p=curPlayer();p.domi=+b.dataset.domi;savePlayers();sfx.tap();
+  document.querySelectorAll("[data-domi]").forEach(x=>x.classList.toggle("on",x===b));paintDomi()})}
+setTimeout(paintDomi,0);
+
 
 /* ================= months and events ================= */
 const MONTHS=["January","February","March","April","May","June","July","August","September","October","November","December"];
@@ -1978,11 +1994,11 @@ let dropKind=null;
 function closeDrop(){dropKind=null;$("drop").classList.remove("show");$("dim").classList.remove("show");$("tbCourse").setAttribute("aria-expanded","false")}
 function openDrop(){
   if(dropKind)return closeDrop();dropKind="player";sfx.tap();
-  $("drop").innerHTML=`<p class="dh">Players</p><div class="courses">`+P.list.map(p=>{const st=p.id===P.cur?S:peek(p.id);
+  $("drop").innerHTML=domiPicker()+`<p class="dh">Players</p><div class="courses">`+P.list.map(p=>{const st=p.id===P.cur?S:peek(p.id);
     return `<button class="crs ${p.id===P.cur?"on":""}" data-pl="${p.id}"><span class="ci" style="background:${p.color}">${p.name.trim()[0].toUpperCase()}</span><span style="flex:1;min-width:0">${p.name}<small>🌰 ${st.acorns||0} · 🪵 ${st.wood||0} · stickers ${(st.stickers||[]).length}</small></span>${p.id===P.cur?"✓":""}</button>`}).join("")+`</div>
     <div class="addpl"><input id="plName" maxlength="16" placeholder="New player's name" aria-label="New player's name"><button class="btn green" id="plAdd">Add</button></div>`;
   $("drop").classList.add("show");$("dim").classList.add("show");$("tbCourse").setAttribute("aria-expanded","true");
-  $("drop").querySelectorAll("[data-pl]").forEach(b=>b.onclick=()=>{if(b.dataset.pl!==P.cur)switchPlayer(b.dataset.pl)});
+  wireDomi();$("drop").querySelectorAll("[data-pl]").forEach(b=>b.onclick=()=>{if(b.dataset.pl!==P.cur)switchPlayer(b.dataset.pl)});
   $("plAdd").onclick=()=>{const n=$("plName").value.trim();if(!n){$("plName").focus();return}
     const id="p"+Date.now();P.list.push({id,name:n,color:PCOLORS[P.list.length%PCOLORS.length]});savePlayers();
     try{const st=fresh();st.seen=true;localStorage.setItem(keyFor(id),JSON.stringify(st))}catch(e){}
@@ -1990,7 +2006,7 @@ function openDrop(){
 }
 $("dim").onclick=closeDrop;
 $("tbCourse").onclick=()=>openDrop();
-function switchPlayer(id){save();P.cur=id;savePlayers();loadState();save();closeDrop();landEl=null;showMap();sfx.fanfare();toast(`Hi, ${curPlayer().name}! 👋`)}
+function switchPlayer(id){save();P.cur=id;savePlayers();loadState();save();closeDrop();paintDomi();landEl=null;showMap();sfx.fanfare();toast(`Hi, ${curPlayer().name}! 👋`)}
 
 function modal(html,btns){
   $("mCard").innerHTML=html+btns.map((b,k)=>`<button class="btn ${b.cls||""}" data-k="${k}" ${b.disabled?"disabled":""}>${b.label}</button>`).join("");

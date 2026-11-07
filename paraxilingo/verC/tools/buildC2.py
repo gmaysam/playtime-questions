@@ -205,7 +205,7 @@ markup = '''
   <div class="toast" id="toast"></div>
 
   <div class="introC" id="introC">
-    <img class="talk" src="img/domi.svg" alt="Domi the beaver">
+    <img class="talk" src="img/domi_1.svg" alt="Domi the beaver">
     <div class="inev" id="inEv"></div>
   </div>
 
@@ -452,11 +452,11 @@ let dropKind=null;
 function closeDrop(){dropKind=null;$("drop").classList.remove("show");$("dim").classList.remove("show");$("tbCourse").setAttribute("aria-expanded","false")}
 function openDrop(){
   if(dropKind)return closeDrop();dropKind="player";sfx.tap();
-  $("drop").innerHTML=`<p class="dh">Players</p><div class="courses">`+P.list.map(p=>{const st=p.id===P.cur?S:peek(p.id);
+  $("drop").innerHTML=domiPicker()+`<p class="dh">Players</p><div class="courses">`+P.list.map(p=>{const st=p.id===P.cur?S:peek(p.id);
     return `<button class="crs ${p.id===P.cur?"on":""}" data-pl="${p.id}"><span class="ci" style="background:${p.color}">${p.name.trim()[0].toUpperCase()}</span><span style="flex:1;min-width:0">${p.name}<small>🌰 ${st.acorns||0} · 🪵 ${st.wood||0} · stickers ${(st.stickers||[]).length}</small></span>${p.id===P.cur?"✓":""}</button>`}).join("")+`</div>
     <div class="addpl"><input id="plName" maxlength="16" placeholder="New player's name" aria-label="New player's name"><button class="btn green" id="plAdd">Add</button></div>`;
   $("drop").classList.add("show");$("dim").classList.add("show");$("tbCourse").setAttribute("aria-expanded","true");
-  $("drop").querySelectorAll("[data-pl]").forEach(b=>b.onclick=()=>{if(b.dataset.pl!==P.cur)switchPlayer(b.dataset.pl)});
+  wireDomi();$("drop").querySelectorAll("[data-pl]").forEach(b=>b.onclick=()=>{if(b.dataset.pl!==P.cur)switchPlayer(b.dataset.pl)});
   $("plAdd").onclick=()=>{const n=$("plName").value.trim();if(!n){$("plName").focus();return}
     const id="p"+Date.now();P.list.push({id,name:n,color:PCOLORS[P.list.length%PCOLORS.length]});savePlayers();
     try{const st=fresh();st.seen=true;localStorage.setItem(keyFor(id),JSON.stringify(st))}catch(e){}
@@ -464,7 +464,7 @@ function openDrop(){
 }
 $("dim").onclick=closeDrop;
 $("tbCourse").onclick=()=>openDrop();
-function switchPlayer(id){save();P.cur=id;savePlayers();loadState();save();closeDrop();landEl=null;showMap();sfx.fanfare();toast(`Hi, ${curPlayer().name}! 👋`)}
+function switchPlayer(id){save();P.cur=id;savePlayers();loadState();save();closeDrop();paintDomi();landEl=null;showMap();sfx.fanfare();toast(`Hi, ${curPlayer().name}! 👋`)}
 '''
 
 start = r'''
