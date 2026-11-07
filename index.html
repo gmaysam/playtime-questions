@@ -5494,6 +5494,30 @@ body,
     font-size: 76px;
   }
 }
+.domis {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+  margin: 4px 0 14px;
+}
+.dpick {
+  border: 3px solid transparent;
+  border-radius: 18px;
+  background: #F6F8FC;
+  padding: 4px;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+.dpick img {
+  width: 100%;
+  height: 100%;
+}
+.dpick.on {
+  border-color: var(--q-sun-d,#F5B400);
+  background: #FFF6DA;
+}
 .qbody,
 .panel {
   max-width: 680px;
@@ -5545,7 +5569,7 @@ body,
   <div class="toast" id="toast"></div>
 
   <div class="introC" id="introC">
-    <img class="talk" src="img/domi.svg" alt="Domi the beaver">
+    <img class="talk" src="img/domi_1.svg" alt="Domi the beaver">
     <div class="inev" id="inEv"></div>
   </div>
 
@@ -6111,7 +6135,7 @@ body,
   const WORD_E = { ant: "\u{1F41C}", apple: "\u{1F34E}", apples: "\u{1F34E}", astronaut: "\u{1F9D1}\u200D\u{1F680}", autumn: "\u{1F342}", baker: "\u{1F9D1}\u200D\u{1F373}", ball: "\u26BD", banana: "\u{1F34C}", barn: "\u{1F6D6}", beach: "\u{1F3D6}\uFE0F", beans: "\u{1FAD8}", bear: "\u{1F43B}", bed: "\u{1F6CF}\uFE0F", bee: "\u{1F41D}", big: "\u{1F418}", bird: "\u{1F426}", black: "\u26AB", blue: "\u{1F535}", boat: "\u26F5", bones: "\u{1F9B4}", brain: "\u{1F9E0}", bread: "\u{1F35E}", breathe: "\u{1F32C}\uFE0F", brush: "\u{1FAA5}", bus: "\u{1F68C}", butterfly: "\u{1F98B}", candy: "\u{1F36C}", car: "\u{1F697}", cars: "\u{1F697}", cat: "\u{1F431}", cave: "\u{1F573}\uFE0F", cheese: "\u{1F9C0}", cheetah: "\u{1F406}", chef: "\u{1F9D1}\u200D\u{1F373}", chips: "\u{1F35F}", circle: "\u26AA", clock: "\u{1F552}", clouds: "\u2601\uFE0F", cold: "\u{1F976}", comet: "\u2604\uFE0F", corn: "\u{1F33D}", cow: "\u{1F404}", crown: "\u{1F451}", dentist: "\u{1F9B7}", desert: "\u{1F3DC}\uFE0F", doctor: "\u{1F9D1}\u200D\u2695\uFE0F", dog: "\u{1F436}", down: "\u2B07\uFE0F", duck: "\u{1F986}", ears: "\u{1F442}", earth: "\u{1F30D}", elbow: "\u{1F4AA}", elephant: "\u{1F418}", eyes: "\u{1F440}", farmer: "\u{1F9D1}\u200D\u{1F33E}", fast: "\u{1F4A8}", feet: "\u{1F9B6}", fish: "\u{1F41F}", flour: "\u{1F33E}", fork: "\u{1F374}", fox: "\u{1F98A}", frog: "\u{1F438}", grass: "\u{1F33F}", green: "\u{1F7E2}", hair: "\u{1F487}", hands: "\u{1F450}", hat: "\u{1F3A9}", hen: "\u{1F414}", hive: "\u{1F41D}", in: "\u{1F4E5}", juice: "\u{1F9C3}", jupiter: "\u{1FA90}", key: "\u{1F511}", knee: "\u{1F9B5}", ladder: "\u{1FA9C}", lake: "\u{1F3DE}\uFE0F", lava: "\u{1F30B}", leaves: "\u{1F342}", lightning: "\u26A1", lion: "\u{1F981}", map: "\u{1F5FA}\uFE0F", maple: "\u{1F341}", mars: "\u{1F534}", mercury: "\u{1F311}", milk: "\u{1F95B}", moon: "\u{1F319}", mouse: "\u{1F42D}", nails: "\u{1F485}", nectar: "\u{1F338}", neptune: "\u{1F535}", nest: "\u{1FABA}", nose: "\u{1F443}", ocean: "\u{1F30A}", on: "\u{1F51B}", orange: "\u{1F7E0}", paper: "\u{1F4C4}", pig: "\u{1F437}", pilot: "\u{1F9D1}\u200D\u2708\uFE0F", pine: "\u{1F332}", pond: "\u{1F986}", purple: "\u{1F7E3}", rain: "\u{1F327}\uFE0F", rainbow: "\u{1F308}", raincoat: "\u{1F9E5}", red: "\u{1F534}", rice: "\u{1F35A}", rock: "\u{1FAA8}", rocks: "\u{1FAA8}", sand: "\u23F3", saturn: "\u{1FA90}", sea: "\u{1F30A}", ship: "\u{1F6A2}", shoes: "\u{1F45F}", shops: "\u{1F3EA}", smoke: "\u{1F4A8}", snow: "\u2744\uFE0F", spoon: "\u{1F944}", spring: "\u{1F338}", square: "\u{1F7E5}", stones: "\u{1FAA8}", summer: "\u2600\uFE0F", sun: "\u2600\uFE0F", swimsuit: "\u{1FA71}", telescope: "\u{1F52D}", think: "\u{1F914}", thunder: "\u26C8\uFE0F", toe: "\u{1F9B6}", toys: "\u{1F9F8}", trees: "\u{1F333}", triangle: "\u{1F53A}", turtle: "\u{1F422}", venus: "\u{1F7E1}", walk: "\u{1F6B6}", water: "\u{1F4A7}", white: "\u26AA", wind: "\u{1F32C}\uFE0F", winter: "\u26C4", yellow: "\u{1F7E1}", "north pole": "\u{1F9CA}", "it freezes": "\u{1F9CA}", "it steams": "\u2668\uFE0F", "a low cloud": "\u{1F32B}\uFE0F", "blocking sun": "\u{1F311}" };
   const N = (n) => n >= 0 && n <= 20 ? "w/LULU_N" + n : null;
   bv = function(w) {
-    return '<span class="bv" style="width:'.concat(w, "px;--w:").concat(w, 'px"><img src="img/domi.svg" alt=""></span>');
+    return '<span class="bv" style="width:'.concat(w, "px;--w:").concat(w, 'px"><img src="').concat(domiSrc(), '" alt=""></span>');
   };
   const FA_SAY = { "bird": "LULU_FA_AN0", "cow": "LULU_FA_AN1", "duck": "LULU_FA_AN2", "hen": "LULU_FA_AN3", "pig": "LULU_FA_AN4", "shark": "LULU_FA_AN5", "fox": "LULU_FA_AN6", "dog": "LULU_FA_AN7", "frog": "LULU_FA_AN8", "bee": "LULU_FA_AN9", "worm": "LULU_FA_AN10", "cat": "LULU_FA_AN11", "bat": "LULU_FA_AN12", "snake": "LULU_FA_AN13", "grass": "LULU_FA_FOOD1", "seeds": "LULU_FA_FOOD2", "bones": "LULU_FA_FOOD3", "fish": "LULU_FA_FOOD4", "fly": "LULU_FA_FOOD5", "flowers": "LULU_FA_FOOD6", "leaves": "LULU_FA_FOOD7", "mosquito": "LULU_FA_FOOD8", "apple": "LULU_FA_FOOD9", "mouse": "LULU_FA_FOOD10", "eggs": "LULU_FA_FOOD11", "corn": "LULU_FA_FOOD12", "nest": "LULU_FA_HOME0", "barn": "LULU_FA_HOME1", "pond": "LULU_FA_HOME2", "doghouse": "LULU_FA_HOME3", "house": "LULU_FA_HOME4", "hive": "LULU_FA_HOME5", "tree": "LULU_FA_HOME6", "cave": "LULU_FA_HOME7", "burrow": "LULU_FA_HOME8", "sea": "LULU_FA_HOME9", "rocks": "LULU_FA_HOME10", "doctor": "LULU_FA_JOB0", "firefighter": "LULU_FA_JOB1", "police": "LULU_FA_JOB2", "chef": "LULU_FA_JOB3", "farmer": "LULU_FA_JOB4", "teacher": "LULU_FA_JOB5", "pilot": "LULU_FA_JOB6", "astronaut": "LULU_FA_JOB7", "mechanic": "LULU_FA_JOB8", "scientist": "LULU_FA_JOB9", "painter": "LULU_FA_JOB10", "builder": "LULU_FA_JOB11", "iran": "LULU_FA_CTY0", "usa": "LULU_FA_CTY1", "canada": "LULU_FA_CTY2", "mexico": "LULU_FA_CTY3", "brazil": "LULU_FA_CTY4", "england": "LULU_FA_CTY5", "france": "LULU_FA_CTY6", "germany": "LULU_FA_CTY7", "italy": "LULU_FA_CTY8", "china": "LULU_FA_CTY9", "japan": "LULU_FA_CTY10", "india": "LULU_FA_CTY11", "egypt": "LULU_FA_CTY12", "australia": "LULU_FA_CTY13", "sun": "LULU_FA_PL0", "mercury": "LULU_FA_PL1", "venus": "LULU_FA_PL2", "earth": "LULU_FA_PL3", "mars": "LULU_FA_PL4", "jupiter": "LULU_FA_PL5", "saturn": "LULU_FA_PL6", "uranus": "LULU_FA_PL7", "neptune": "LULU_FA_PL8", "moon": "LULU_FA_SKY1", "star": "LULU_FA_SKY2", "clouds": "LULU_FA_SKY3", "rain": "LULU_FA_SKY4", "rainbow": "LULU_FA_SKY5", "lightning": "LULU_FA_SKY6", "snow": "LULU_FA_SKY7", "rocket": "LULU_FA_SKY8", "telescope": "LULU_FA_SKY10", "galaxy": "LULU_FA_SKY11", "comet": "LULU_FA_SKY12", "satellite": "LULU_FA_SKY13", "planet": "LULU_FA_SKY14", "log": "LULU_FAW0", "ten": "LULU_FAW4", "box": "LULU_FAW6", "socks": "LULU_FAW7", "key": "LULU_FAW8", "mug": "LULU_FAW11", "bug": "LULU_FAW12", "hat": "LULU_FAW14", "car": "LULU_FAW17", "cake": "LULU_FAW18", "truck": "LULU_FAW21", "jet": "LULU_FAW22", "net": "LULU_FAW23", "fan": "LULU_FAW24", "can": "LULU_FAW25", "map": "LULU_FAW26", "cap": "LULU_FAW27", "fin": "LULU_FAW28", "pin": "LULU_FAW29", "lip": "LULU_FAW30", "ship": "LULU_FAW31", "cut": "LULU_FAW32", "nut": "LULU_FAW33", "cook": "LULU_FA_JOB3", "flower": "LULU_FA_FOOD6", "leaf": "LULU_FA_FOOD7", "egg": "LULU_FA_FOOD11", "cloud": "LULU_FA_SKY3", "stars": "LULU_FA_SKY2", "thunder": "LULU_FA_SKY6", "spring": "LULU_FA_SEA0", "summer": "LULU_FA_SEA1", "autumn": "LULU_FA_SEA2", "fall": "LULU_FA_SEA2", "winter": "LULU_FA_SEA3", "trees": "LULU_FA_HOME6", "ocean": "LULU_FA_HOME9", "chicken": "LULU_FA_AN3", "caterpillar": "LULU_FA_AN10", "worms": "LULU_FA_FOOD0", "bone": "LULU_FA_FOOD3", "flies": "LULU_FA_FOOD5", "mosquitoes": "LULU_FA_FOOD8", "apples": "LULU_FA_FOOD9", "mice": "LULU_FA_FOOD10", "den": "LULU_FA_HOME8", "milky way": "LULU_FA_SKY11", "police officer": "LULU_FA_JOB2", "artist": "LULU_FA_JOB10", "the united states": "LULU_FA_CTY1", "salt": "PX_FA_SALT", "lemon": "PX_FA_LEMON", "whale": "PX_FA_WHALE", "crab": "PX_FA_CRAB", "books": "PX_FA_BOOKS", "guitar": "PX_FA_GUITAR", "ruler": "PX_FA_RULER", "scales": "PX_FA_SCALES", "alarm clock": "PX_FA_ALARM_CLOCK", "soccer ball": "PX_FA_SOCCER_BALL", "full moon": "PX_FA_FULL_MOON", "dinosaur": "PX_FA_DINOSAUR", "a low cloud": "PX_FA_A_LOW_CLOUD", "ant": "PX_FA_ANT", "baker": "PX_FA_BAKER", "ball": "PX_FA_BALL", "beach": "PX_FA_BEACH", "bear": "PX_FA_BEAR", "black": "PX_FA_BLACK", "blue": "PX_FA_BLUE", "brain": "PX_FA_BRAIN", "breathe": "PX_FA_BREATHE", "brown": "PX_FA_BROWN", "butterfly": "PX_FA_BUTTERFLY", "candy": "PX_FA_CANDY", "cars": "PX_FA_CARS", "cheetah": "PX_FA_CHEETAH", "chips": "PX_FA_CHIPS", "circle": "PX_FA_CIRCLE", "crown": "PX_FA_CROWN", "ears": "PX_FA_EARS", "elbow": "PX_FA_ELBOW", "elephant": "PX_FA_ELEPHANT", "eyes": "PX_FA_EYES", "feet": "PX_FA_FEET", "green": "PX_FA_GREEN", "hair": "PX_FA_HAIR", "hands": "PX_FA_HANDS", "knee": "PX_FA_KNEE", "lion": "PX_FA_LION", "maple": "PX_FA_MAPLE", "milk": "PX_FA_MILK", "morning": "PX_FA_MORNING", "nectar": "PX_FA_NECTAR", "night": "PX_FA_NIGHT", "nose": "PX_FA_NOSE", "orange": "PX_FA_ORANGE", "pine": "PX_FA_PINE", "pink": "PX_FA_PINK", "pizza": "PX_FA_PIZZA", "purple": "PX_FA_PURPLE", "raincoat": "PX_FA_RAINCOAT", "red": "PX_FA_RED", "salad": "PX_FA_SALAD", "sand": "PX_FA_SAND", "shoes": "PX_FA_SHOES", "shops": "PX_FA_SHOPS", "smoke": "PX_FA_SMOKE", "snail": "PX_FA_SNAIL", "square": "PX_FA_SQUARE", "swimsuit": "PX_FA_SWIMSUIT", "think": "PX_FA_THINK", "toe": "PX_FA_TOE", "toys": "PX_FA_TOYS", "train": "PX_FA_TRAIN", "triangle": "PX_FA_TRIANGLE", "turtle": "PX_FA_TURTLE", "walk": "PX_FA_WALK", "water": "PX_FA_WATER", "white": "PX_FA_WHITE", "yellow": "PX_FA_YELLOW" };
   const PLANET_N = ["sun", "mercury", "venus", "earth", "mars", "jupiter", "saturn", "uranus", "neptune"];
@@ -7027,6 +7051,34 @@ body,
     if (k === "flash") return { voice: ["w/LULU_RD_FLASH"], cap: "Look! Then find it.", visual: '<div class="flash"><b class="word big">'.concat(x.w, "</b></div>"), opts: o.map((y) => ({ h: '<b class="word">'.concat(y.w, "</b>") })), ans: o.indexOf(x), layout: "row3", hint: "elim", flash: true, exp: { t: x.w, v: ["w/LULU_ANS_IS", "w/LULU_SIGHT" + x.i] } };
     return { voice: ["w/LULU_RD_BALLOON", "w/LULU_SIGHT" + x.i], cap: "Pop the balloon!", visual: '<div class="listen">\u{1F388}</div>', opts: o.map((y) => ({ h: '<span class="balloon"><b class="word">'.concat(y.w, "</b></span>") })), ans: o.indexOf(x), layout: "row3", hint: "elim", exp: { t: x.w, v: ["w/LULU_ANS_IS", "w/LULU_SIGHT" + x.i] } };
   }
+  const DOMIS = [["Button", 1], ["Honey", 2], ["Leafy", 3], ["Mochi", 4], ["Hello", 5]];
+  function domiSrc() {
+    let n = 1;
+    try {
+      n = curPlayer().domi || 1;
+    } catch (e) {
+    }
+    return "img/domi_".concat(n, ".svg");
+  }
+  function paintDomi() {
+    document.querySelectorAll("img.talk,.bv img").forEach((i) => i.src = domiSrc());
+  }
+  function domiPicker() {
+    const cur = curPlayer().domi || 1;
+    return '<p class="dh">Pick your Domi</p><div class="domis">' + DOMIS.map(([n, i]) => '<button class="dpick '.concat(i === cur ? "on" : "", '" data-domi="').concat(i, '" aria-label="Domi ').concat(n, '"><img src="img/domi_').concat(i, '.svg" alt=""></button>')).join("") + "</div>";
+  }
+  function wireDomi() {
+    document.querySelectorAll("[data-domi]").forEach((b) => b.onclick = (e) => {
+      e.stopPropagation();
+      const p = curPlayer();
+      p.domi = +b.dataset.domi;
+      savePlayers();
+      sfx.tap();
+      document.querySelectorAll("[data-domi]").forEach((x) => x.classList.toggle("on", x === b));
+      paintDomi();
+    });
+  }
+  setTimeout(paintDomi, 0);
   const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   const MONTH_LAND = [7, 5, 4, 6, 11, 8, 9, 1, 2, 10, 0, 3];
   function eventNow(d = /* @__PURE__ */ new Date()) {
@@ -7468,13 +7520,14 @@ body,
     if (dropKind) return closeDrop();
     dropKind = "player";
     sfx.tap();
-    $("drop").innerHTML = '<p class="dh">Players</p><div class="courses">' + P.list.map((p) => {
+    $("drop").innerHTML = domiPicker() + '<p class="dh">Players</p><div class="courses">' + P.list.map((p) => {
       const st = p.id === P.cur ? S : peek(p.id);
       return '<button class="crs '.concat(p.id === P.cur ? "on" : "", '" data-pl="').concat(p.id, '"><span class="ci" style="background:').concat(p.color, '">').concat(p.name.trim()[0].toUpperCase(), '</span><span style="flex:1;min-width:0">').concat(p.name, "<small>\u{1F330} ").concat(st.acorns || 0, " \xB7 \u{1FAB5} ").concat(st.wood || 0, " \xB7 stickers ").concat((st.stickers || []).length, "</small></span>").concat(p.id === P.cur ? "\u2713" : "", "</button>");
     }).join("") + '</div>\n    <div class="addpl"><input id="plName" maxlength="16" placeholder="New player\'s name" aria-label="New player\'s name"><button class="btn green" id="plAdd">Add</button></div>';
     $("drop").classList.add("show");
     $("dim").classList.add("show");
     $("tbCourse").setAttribute("aria-expanded", "true");
+    wireDomi();
     $("drop").querySelectorAll("[data-pl]").forEach((b) => b.onclick = () => {
       if (b.dataset.pl !== P.cur) switchPlayer(b.dataset.pl);
     });
@@ -7505,6 +7558,7 @@ body,
     loadState();
     save();
     closeDrop();
+    paintDomi();
     landEl = null;
     showMap();
     sfx.fanfare();
