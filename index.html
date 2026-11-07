@@ -5225,6 +5225,112 @@ body {
     width: 340px;
   }
 }
+.paint {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+}
+.pcanvas {
+  width: min(100%, 520px);
+  background: #fff;
+  border-radius: 32px;
+  box-shadow: 0 10px 28px rgba(38, 51, 77, .10);
+  padding: 10px;
+}
+.pcanvas svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  touch-action: manipulation;
+}
+.psvg .rg {
+  cursor: pointer;
+  transition: fill .2s;
+}
+.psvg .rg.pop {
+  animation: rgpop .35s;
+}
+@keyframes rgpop {
+  50% {
+    opacity: .75;
+  }
+}
+.ppal {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  width: min(100%, 520px);
+}
+.pot {
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  border: 4px solid #fff;
+  background: var(--c);
+  box-shadow: 0 5px 0 rgba(38, 51, 77, .18), inset 0 -6px 0 rgba(0, 0, 0, .12);
+  transition: transform .15s;
+}
+.pot.on {
+  transform: scale(1.15);
+  box-shadow: 0 0 0 4px var(--q-ink), 0 5px 0 rgba(38, 51, 77, .18);
+}
+.pot[data-n=white] {
+  border-color: #DDE3EC;
+}
+.pbtns {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  gap: 12px;
+  width: min(100%, 520px);
+}
+.pgal {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.pthumb {
+  background: #fff;
+  border-radius: 14px;
+  padding: 4px;
+  box-shadow: 0 3px 10px rgba(38, 51, 77, .08);
+}
+.pthumb svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.pthumb .rg {
+  stroke-width: 7;
+}
+.qo.saying {
+  transform: translateY(-4px) scale(1.04);
+  box-shadow: 0 10px 0 var(--sh), 0 0 0 5px rgba(255, 201, 60, .55);
+}
+.bv img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.introC .talk {
+  animation: hopi 1.6s ease-in-out infinite;
+  filter: drop-shadow(0 14px 16px rgba(38, 51, 77, .18));
+}
+@keyframes hopi {
+  0%, 100% {
+    transform: translateY(0) rotate(-2deg);
+  }
+  50% {
+    transform: translateY(-14px) rotate(2deg);
+  }
+}
+.introC {
+  cursor: pointer;
+}
+.zbg img.gr {
+  filter: saturate(.3) brightness(1.08) contrast(.95);
+}
 .qbody,
 .panel {
   max-width: 680px;
@@ -5276,10 +5382,8 @@ body {
   <div class="toast" id="toast"></div>
 
   <div class="introC" id="introC">
-    <img class="talk" src="img/beaver_talk.webp" alt="Domi the beaver talking">
+    <img class="talk" src="img/domi.svg" alt="Domi the beaver">
     <div class="inev" id="inEv"></div>
-    <button class="btn green" id="inGo">I'm ready!</button>
-    <button class="skip" id="inSkip">Skip</button>
   </div>
 
   <canvas class="fx" id="fx"></canvas>
@@ -5338,6 +5442,7 @@ body {
     { id: "money", e: "\u{1FA99}", name: "Money Market", desc: "Coins, their values, counting money, change from $1" },
     { id: "watcher", e: "\u{1F50E}", name: "Discover the world", desc: "Animals, body, nature, sky, space, food: the Watcher questions" },
     { id: "radio", e: "\u{1F4FB}", name: "Domi's Radio", desc: "Listen to a short story, then answer questions about it" },
+    { id: "paint", e: "\u{1F3A8}", name: "Painting", desc: "Colour a picture, tap by tap" },
     { id: "feel", e: "\u{1F60A}", name: "Feelings & Friends", soon: true },
     { id: "body", e: "\u{1FAC0}", name: "My Body & Senses", soon: true },
     { id: "music", e: "\u{1F3B5}", name: "Music Maker", soon: true },
@@ -5628,9 +5733,11 @@ body {
     qday: { d: "", n: 0 },
     reward: "unicorn",
     ansLang: "",
-    topics: ["math", "clock", "money", "watcher", "radio"],
+    topics: ["math", "clock", "money", "watcher", "radio", "paint"],
     topicsV2: 1,
     topicsV3: 1,
+    topicsV4: 1,
+    paintings: [],
     acorns: 0,
     wood: 0,
     day: { d: "", done: 0, house: false, plan: null },
@@ -5677,6 +5784,11 @@ body {
         S.topics = [.../* @__PURE__ */ new Set([...S.topics, "watcher", "radio"])];
         S.topicsV3 = 1;
       }
+      if (!S.topicsV4) {
+        S.topics = [.../* @__PURE__ */ new Set([...S.topics, "paint"])];
+        S.topicsV4 = 1;
+      }
+      if (!S.paintings) S.paintings = [];
       if (!S.real) S.real = defaultReal();
       if (![10, 15, 20, 30].includes(S.perDay)) S.perDay = 10;
     } catch (e) {
@@ -5816,11 +5928,26 @@ body {
     S.league = { week: w, xp: 0 };
     save();
   }
-  const WQ = [{ "i": "a01", "k": "c", "t": "animals", "a": 3, "q": "Which animal says moo?", "o": ["Cow", "Duck", "Cat"], "n": 0, "x": "Cows say moo, and they give us milk.", "p": "cow" }, { "i": "a02", "k": "c", "t": "animals", "a": 3, "q": "Which animal can fly?", "o": ["Pig", "Bird", "Dog"], "n": 1, "x": "Birds fly with their wings.", "p": "bird" }, { "i": "a03", "k": "tf", "t": "animals", "a": 3, "q": "Fish live in water.", "o": [], "n": 0, "x": "Fish breathe in water with their gills.", "p": "fish" }, { "i": "a04", "k": "tf", "t": "animals", "a": 3, "q": "A frog can jump.", "o": [], "n": 0, "x": "Frogs have long strong back legs for jumping.", "p": "frog" }, { "i": "a05", "k": "c", "t": "animals", "a": 3, "q": "Who makes honey?", "o": ["Bee", "Fox", "Duck"], "n": 0, "x": "Bees make honey from the sweet juice of flowers.", "p": "bee" }, { "i": "a06", "k": "tf", "t": "animals", "a": 3, "q": "A cat has wings.", "o": [], "n": 1, "x": "Cats have four legs and a tail, but no wings.", "p": "cat" }, { "i": "a07", "k": "c", "t": "animals", "a": 3, "q": "How many legs does a dog have?", "o": ["2", "4", "6"], "n": 1, "x": "Dogs walk on four legs.", "p": "dog" }, { "i": "a08", "k": "c", "t": "animals", "a": 3, "q": "Where does a bird sleep?", "o": ["Nest", "Hive", "Pond"], "n": 0, "x": "Birds build nests from twigs and grass.", "p": "nest" }, { "i": "a09", "k": "tf", "t": "animals", "a": 3, "q": "A baby cat is called a kitten.", "o": [], "n": 0, "x": "Baby cats are kittens and baby dogs are puppies.", "p": "cat" }, { "i": "a10", "k": "c", "t": "animals", "a": 3, "q": "Which animal is the biggest?", "o": ["Mouse", "Elephant", "Cat"], "n": 1, "x": "Elephants are the biggest animals that live on land.", "p": "" }, { "i": "a11", "k": "tf", "t": "animals", "a": 3, "q": "Ducks can swim.", "o": [], "n": 0, "x": "Ducks have webbed feet that work like paddles.", "p": "duck" }, { "i": "a12", "k": "c", "t": "animals", "a": 3, "q": "Which one lays eggs?", "o": ["Hen", "Cow", "Dog"], "n": 0, "x": "Hens lay eggs. Chicks hatch out of them.", "p": "hen" }, { "i": "a13", "k": "tf", "t": "animals", "a": 3, "q": "A snake has legs.", "o": [], "n": 1, "x": "Snakes have no legs. They slide on their bellies.", "p": "snake" }, { "i": "a14", "k": "c", "t": "animals", "a": 3, "q": "What does a cow eat?", "o": ["Grass", "Fish", "Bones"], "n": 0, "x": "Cows eat grass all day long.", "p": "grass" }, { "i": "a15", "k": "c", "t": "animals", "a": 3, "q": "Which animal has a long trunk?", "o": ["Lion", "Elephant", "Bear"], "n": 1, "x": "An elephant uses its trunk like a hand and a straw.", "p": "" }, { "i": "a16", "k": "tf", "t": "animals", "a": 3, "q": "Bats sleep upside down.", "o": [], "n": 0, "x": "Bats hang upside down by their feet to sleep.", "p": "bat" }, { "i": "a17", "k": "c", "t": "animals", "a": 6, "q": "A caterpillar grows into a...", "o": ["Butterfly", "Bee", "Bird"], "n": 0, "x": "A caterpillar makes a cocoon, then comes out as a butterfly!", "p": "caterpillar" }, { "i": "a18", "k": "tf", "t": "animals", "a": 6, "q": "A whale is a fish.", "o": [], "n": 1, "x": "Whales live in the sea but they breathe air, like us. They are mammals.", "p": "" }, { "i": "a19", "k": "c", "t": "animals", "a": 6, "q": "How many legs does a spider have?", "o": ["6", "8", "10"], "n": 1, "x": "Spiders have 8 legs. Insects have 6.", "p": "web" }, { "i": "a20", "k": "tf", "t": "animals", "a": 6, "q": "Penguins can fly.", "o": [], "n": 1, "x": "Penguins cannot fly, but they are amazing swimmers.", "p": "" }, { "i": "a21", "k": "c", "t": "animals", "a": 6, "q": "Which animal is the fastest runner?", "o": ["Cheetah", "Turtle", "Cow"], "n": 0, "x": "A cheetah can run as fast as a car on the highway.", "p": "" }, { "i": "a22", "k": "tf", "t": "animals", "a": 6, "q": "A frog starts life as a tadpole.", "o": [], "n": 0, "x": "Tadpoles live in water and slowly grow legs.", "p": "frog" }, { "i": "a23", "k": "c", "t": "animals", "a": 6, "q": "Which animal sleeps all winter?", "o": ["Bear", "Hen", "Cow"], "n": 0, "x": "Many bears sleep through the cold winter. This is called hibernation.", "p": "" }, { "i": "a24", "k": "tf", "t": "animals", "a": 6, "q": "Bees help flowers make fruit.", "o": [], "n": 0, "x": "Bees carry pollen from flower to flower, and that helps fruit grow.", "p": "bee" }, { "i": "a25", "k": "c", "t": "animals", "a": 6, "q": "Where does a shark live?", "o": ["Sea", "Cave", "Barn"], "n": 0, "x": "Sharks swim in the sea. They have been around longer than dinosaurs!", "p": "shark" }, { "i": "a26", "k": "tf", "t": "animals", "a": 6, "q": "A giraffe has a very short neck.", "o": [], "n": 1, "x": "Giraffes have the longest necks of all animals, to reach high leaves.", "p": "" }, { "i": "a27", "k": "c", "t": "animals", "a": 6, "q": "Which is an insect?", "o": ["Ant", "Fish", "Frog"], "n": 0, "x": "Ants are insects: six legs and three body parts.", "p": "" }, { "i": "a28", "k": "tf", "t": "animals", "a": 6, "q": "An octopus has eight arms.", "o": [], "n": 0, "x": "Octo means eight. An octopus has eight arms and three hearts!", "p": "" }, { "i": "b01", "k": "c", "t": "body", "a": 3, "q": "What do we see with?", "o": ["Eyes", "Ears", "Nose"], "n": 0, "x": "We see with our eyes and hear with our ears.", "p": "" }, { "i": "b02", "k": "c", "t": "body", "a": 3, "q": "What do we hear with?", "o": ["Hands", "Ears", "Feet"], "n": 1, "x": "Our ears catch sounds.", "p": "" }, { "i": "b03", "k": "tf", "t": "body", "a": 3, "q": "We should wash our hands before we eat.", "o": [], "n": 0, "x": "Washing with soap takes the germs away.", "p": "" }, { "i": "b04", "k": "c", "t": "body", "a": 3, "q": "How many fingers are on one hand?", "o": ["4", "5", "10"], "n": 1, "x": "Five fingers on each hand: ten in all!", "p": "" }, { "i": "b05", "k": "tf", "t": "body", "a": 3, "q": "Sleeping helps you grow.", "o": [], "n": 0, "x": "Your body grows and rests while you sleep.", "p": "bed" }, { "i": "b06", "k": "c", "t": "body", "a": 3, "q": "What do we smell with?", "o": ["Nose", "Knee", "Hair"], "n": 0, "x": "Our nose smells flowers, cake and everything else.", "p": "" }, { "i": "b07", "k": "tf", "t": "body", "a": 3, "q": "Brushing teeth keeps them healthy.", "o": [], "n": 0, "x": "Brush in the morning and before bed.", "p": "" }, { "i": "b08", "k": "c", "t": "body", "a": 3, "q": "Which food is good for you?", "o": ["Candy", "Apple", "Chips"], "n": 1, "x": "Fruit and vegetables help your body stay strong.", "p": "apples" }, { "i": "b09", "k": "tf", "t": "body", "a": 6, "q": "Your heart is a muscle.", "o": [], "n": 0, "x": "Your heart is a strong muscle that pumps blood all day and night.", "p": "" }, { "i": "b10", "k": "c", "t": "body", "a": 6, "q": "What do our lungs do?", "o": ["Breathe", "Think", "Walk"], "n": 0, "x": "Lungs take in air when we breathe in.", "p": "" }, { "i": "b11", "k": "tf", "t": "body", "a": 6, "q": "Babies have more bones than grown-ups.", "o": [], "n": 0, "x": "Babies have about 300 bones. Some join together as they grow, so adults have 206.", "p": "baby" }, { "i": "b12", "k": "c", "t": "body", "a": 6, "q": "Which part of you thinks?", "o": ["Brain", "Elbow", "Toe"], "n": 0, "x": "Your brain thinks, remembers and tells your body what to do.", "p": "" }, { "i": "b13", "k": "tf", "t": "body", "a": 6, "q": "Drinking water is good for your body.", "o": [], "n": 0, "x": "More than half of your body is water!", "p": "" }, { "i": "b14", "k": "c", "t": "body", "a": 6, "q": "How many teeth does a grown-up have?", "o": ["12", "32", "100"], "n": 1, "x": "Children have 20 baby teeth; grown-ups have 32.", "p": "" }, { "i": "n01", "k": "c", "t": "nature", "a": 3, "q": "What do plants need to grow?", "o": ["Water", "Toys", "Shoes"], "n": 0, "x": "Plants need water, sunlight and soil.", "p": "tree" }, { "i": "n02", "k": "tf", "t": "nature", "a": 3, "q": "Trees have roots.", "o": [], "n": 0, "x": "Roots hold the tree in the ground and drink water.", "p": "tree" }, { "i": "n03", "k": "c", "t": "nature", "a": 3, "q": "What colour are most leaves?", "o": ["Green", "Blue", "Purple"], "n": 0, "x": "Leaves are green because of a helper called chlorophyll.", "p": "leaves" }, { "i": "n04", "k": "tf", "t": "nature", "a": 3, "q": "Apples grow on trees.", "o": [], "n": 0, "x": "Apples grow on apple trees, from flowers in spring.", "p": "apples" }, { "i": "n05", "k": "c", "t": "nature", "a": 3, "q": "In autumn, leaves often turn...", "o": ["Orange", "Blue", "White"], "n": 0, "x": "In autumn many leaves turn yellow, orange and red, then fall.", "p": "leaves" }, { "i": "n06", "k": "tf", "t": "nature", "a": 3, "q": "Flowers can grow from seeds.", "o": [], "n": 0, "x": "A tiny seed in the soil can grow into a big flower.", "p": "seeds" }, { "i": "n07", "k": "c", "t": "nature", "a": 3, "q": "Which season is the coldest?", "o": ["Summer", "Winter", "Spring"], "n": 1, "x": "Winter is the coldest season. Sometimes it snows!", "p": "snow" }, { "i": "n08", "k": "tf", "t": "nature", "a": 3, "q": "Ice is frozen water.", "o": [], "n": 0, "x": "When water gets very cold, it turns into ice.", "p": "snow" }, { "i": "n09", "k": "c", "t": "nature", "a": 6, "q": "What do bees take from flowers?", "o": ["Nectar", "Sand", "Milk"], "n": 0, "x": "Bees drink nectar from flowers and turn it into honey.", "p": "bee" }, { "i": "n10", "k": "tf", "t": "nature", "a": 6, "q": "Plants make their own food from sunlight.", "o": [], "n": 0, "x": "Leaves use sunlight, air and water to make food. This is called photosynthesis.", "p": "leaves" }, { "i": "n11", "k": "c", "t": "nature", "a": 6, "q": "Which tree stays green all winter?", "o": ["Pine", "Apple", "Maple"], "n": 0, "x": "Pine trees keep their needles all year long.", "p": "tree" }, { "i": "n12", "k": "tf", "t": "nature", "a": 6, "q": "A cactus needs lots of rain.", "o": [], "n": 1, "x": "Cactuses live in deserts and store water inside.", "p": "" }, { "i": "n13", "k": "c", "t": "nature", "a": 6, "q": "What is a forest full of?", "o": ["Trees", "Cars", "Shops"], "n": 0, "x": "Forests are full of trees, and many animals live there.", "p": "tree" }, { "i": "n14", "k": "tf", "t": "nature", "a": 6, "q": "Mushrooms are plants.", "o": [], "n": 1, "x": "Mushrooms are not plants. They are fungi.", "p": "" }, { "i": "s01", "k": "c", "t": "sky", "a": 3, "q": "Where does rain come from?", "o": ["Clouds", "Trees", "Rocks"], "n": 0, "x": "Clouds are made of tiny drops. When they get heavy, they fall as rain.", "p": "rain" }, { "i": "s02", "k": "tf", "t": "sky", "a": 3, "q": "The Sun is hot.", "o": [], "n": 0, "x": "The Sun is a giant hot star. It warms the Earth.", "p": "sun" }, { "i": "s03", "k": "c", "t": "sky", "a": 3, "q": "What do we see after rain and sun?", "o": ["Rainbow", "Snow", "Moon"], "n": 0, "x": "Sunlight shining through raindrops makes a rainbow.", "p": "rainbow" }, { "i": "s04", "k": "tf", "t": "sky", "a": 3, "q": "We can see stars at night.", "o": [], "n": 0, "x": "Stars are there in the day too, but the Sun is too bright to see them.", "p": "star" }, { "i": "s05", "k": "c", "t": "sky", "a": 3, "q": "What do we wear when it rains?", "o": ["Raincoat", "Swimsuit", "Crown"], "n": 0, "x": "A raincoat and boots keep us dry.", "p": "rain" }, { "i": "s06", "k": "tf", "t": "sky", "a": 3, "q": "Snow is warm.", "o": [], "n": 1, "x": "Snow is very cold. It is made of tiny pieces of ice.", "p": "snow" }, { "i": "s07", "k": "c", "t": "sky", "a": 3, "q": "What shines in the sky in the day?", "o": ["Sun", "Moon", "Comet"], "n": 0, "x": "The Sun gives us daylight.", "p": "sun" }, { "i": "s08", "k": "tf", "t": "sky", "a": 3, "q": "The wind can move clouds.", "o": [], "n": 0, "x": "Wind pushes the clouds across the sky.", "p": "cloud" }, { "i": "s09", "k": "c", "t": "sky", "a": 6, "q": "What comes first?", "o": ["Lightning", "Thunder"], "n": 0, "x": "Light is faster than sound, so we see lightning before we hear thunder.", "p": "lightning" }, { "i": "s10", "k": "tf", "t": "sky", "a": 6, "q": "A rainbow has seven colours.", "o": [], "n": 0, "x": "Red, orange, yellow, green, blue, indigo and violet.", "p": "rainbow" }, { "i": "s11", "k": "c", "t": "sky", "a": 6, "q": "What is fog?", "o": ["A low cloud", "Smoke", "Snow"], "n": 0, "x": "Fog is a cloud that sits close to the ground.", "p": "cloud" }, { "i": "s12", "k": "tf", "t": "sky", "a": 6, "q": "Every snowflake has six sides.", "o": [], "n": 0, "x": "Snowflakes have six arms, and no two look exactly the same.", "p": "snow" }, { "i": "s13", "k": "c", "t": "sky", "a": 6, "q": "Which season comes after winter?", "o": ["Spring", "Autumn", "Summer"], "n": 0, "x": "Winter, spring, summer, autumn - and around again.", "p": "" }, { "i": "s14", "k": "tf", "t": "sky", "a": 6, "q": "The Sun goes around the Earth.", "o": [], "n": 1, "x": "The Earth goes around the Sun. It takes one year.", "p": "sun" }, { "i": "p01", "k": "c", "t": "space", "a": 3, "q": "Who goes to space in a rocket?", "o": ["Astronaut", "Farmer", "Baker"], "n": 0, "x": "Astronauts travel to space in rockets.", "p": "astronaut" }, { "i": "p02", "k": "tf", "t": "space", "a": 3, "q": "We live on planet Earth.", "o": [], "n": 0, "x": "Earth is our home planet, with land, sea and air.", "p": "earth" }, { "i": "p03", "k": "c", "t": "space", "a": 3, "q": "Which planet has big rings?", "o": ["Saturn", "Earth", "Mars"], "n": 0, "x": "Saturn's rings are made of ice and rock.", "p": "saturn" }, { "i": "p04", "k": "tf", "t": "space", "a": 3, "q": "The Moon is shaped like a ball.", "o": [], "n": 0, "x": "The Moon is round like a ball. We just see different parts of it lit up.", "p": "fullmoon" }, { "i": "p05", "k": "c", "t": "space", "a": 3, "q": "Which planet is red?", "o": ["Mars", "Neptune", "Earth"], "n": 0, "x": "Mars is called the red planet because of its red dust.", "p": "mars" }, { "i": "p06", "k": "tf", "t": "space", "a": 3, "q": "You can breathe on the Moon without a helmet.", "o": [], "n": 1, "x": "There is no air on the Moon, so astronauts wear space suits.", "p": "astronaut" }, { "i": "p07", "k": "c", "t": "space", "a": 6, "q": "Which is the biggest planet?", "o": ["Jupiter", "Mars", "Venus"], "n": 0, "x": "Jupiter is so big that more than 1000 Earths could fit inside.", "p": "jupiter" }, { "i": "p08", "k": "tf", "t": "space", "a": 6, "q": "The Sun is a star.", "o": [], "n": 0, "x": "The Sun is our closest star. Other stars are much farther away.", "p": "sun" }, { "i": "p09", "k": "c", "t": "space", "a": 6, "q": "How many planets go around our Sun?", "o": ["5", "8", "20"], "n": 1, "x": "Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus and Neptune.", "p": "planet" }, { "i": "p10", "k": "tf", "t": "space", "a": 6, "q": "Our galaxy is called the Milky Way.", "o": [], "n": 0, "x": "The Milky Way has billions of stars. Our Sun is one of them.", "p": "galaxy" }, { "i": "p11", "k": "c", "t": "space", "a": 6, "q": "What do we look at stars with?", "o": ["Telescope", "Spoon", "Ladder"], "n": 0, "x": "A telescope makes faraway things look big and close.", "p": "telescope" }, { "i": "p12", "k": "tf", "t": "space", "a": 6, "q": "The Moon makes its own light.", "o": [], "n": 1, "x": "The Moon shines because sunlight bounces off it.", "p": "moon" }, { "i": "p13", "k": "c", "t": "space", "a": 6, "q": "Which planet is closest to the Sun?", "o": ["Mercury", "Neptune", "Earth"], "n": 0, "x": "Mercury is closest to the Sun, and Neptune is the farthest.", "p": "mercury" }, { "i": "p14", "k": "tf", "t": "space", "a": 6, "q": "A satellite goes around the Earth.", "o": [], "n": 0, "x": "Satellites help with phones, TV, maps and weather.", "p": "satellite" }, { "i": "e01", "k": "c", "t": "earth", "a": 3, "q": "What is the sea full of?", "o": ["Water", "Sand", "Milk"], "n": 0, "x": "Seas and oceans are full of salty water.", "p": "sea" }, { "i": "e02", "k": "tf", "t": "earth", "a": 3, "q": "Sea water is salty.", "o": [], "n": 0, "x": "Sea water has salt in it, so we should not drink it.", "p": "sea" }, { "i": "e03", "k": "c", "t": "earth", "a": 3, "q": "Where is it very hot and sandy?", "o": ["Desert", "Pond", "Snow"], "n": 0, "x": "Deserts are dry, sandy and often very hot.", "p": "" }, { "i": "e04", "k": "tf", "t": "earth", "a": 3, "q": "Mountains are very tall.", "o": [], "n": 0, "x": "Some mountains are so tall that they have snow on top all year.", "p": "" }, { "i": "e05", "k": "c", "t": "earth", "a": 6, "q": "Which is the biggest?", "o": ["Ocean", "Lake", "Pond"], "n": 0, "x": "Oceans are the biggest bodies of water. They cover most of the Earth.", "p": "sea" }, { "i": "e06", "k": "tf", "t": "earth", "a": 6, "q": "Most of the Earth is covered by water.", "o": [], "n": 0, "x": "About seven tenths of the Earth is ocean.", "p": "earth" }, { "i": "e07", "k": "c", "t": "earth", "a": 6, "q": "What comes out of a volcano?", "o": ["Lava", "Snow", "Juice"], "n": 0, "x": "Lava is melted rock, so hot that it glows.", "p": "" }, { "i": "e08", "k": "tf", "t": "earth", "a": 6, "q": "The Earth spins around once every day.", "o": [], "n": 0, "x": "When our side faces the Sun it is day; when it turns away it is night.", "p": "earth" }, { "i": "e09", "k": "c", "t": "earth", "a": 6, "q": "Where is it always very cold?", "o": ["North Pole", "Desert", "Beach"], "n": 0, "x": "The North and South Poles are covered in ice.", "p": "snow" }, { "i": "e10", "k": "tf", "t": "earth", "a": 6, "q": "Rivers flow into the sea.", "o": [], "n": 0, "x": "Most rivers start in the mountains and end in the sea.", "p": "" }, { "i": "f01", "k": "c", "t": "food", "a": 3, "q": "Which one is a fruit?", "o": ["Banana", "Bread", "Cheese"], "n": 0, "x": "Bananas are fruit. They grow in bunches.", "p": "" }, { "i": "f02", "k": "tf", "t": "food", "a": 3, "q": "Milk comes from cows.", "o": [], "n": 0, "x": "Cows, goats and sheep give milk.", "p": "cow" }, { "i": "f03", "k": "c", "t": "food", "a": 3, "q": "What colour is a banana?", "o": ["Yellow", "Blue", "Black"], "n": 0, "x": "Ripe bananas are yellow.", "p": "" }, { "i": "f04", "k": "tf", "t": "food", "a": 3, "q": "Carrots grow under the ground.", "o": [], "n": 0, "x": "We eat the carrot root that grows in the soil.", "p": "" }, { "i": "f05", "k": "c", "t": "food", "a": 3, "q": "What do we make bread from?", "o": ["Flour", "Stones", "Paper"], "n": 0, "x": "Flour is made from wheat, and bread is baked from flour.", "p": "" }, { "i": "f06", "k": "tf", "t": "food", "a": 3, "q": "Eggs come from hens.", "o": [], "n": 0, "x": "Hens lay the eggs we eat.", "p": "eggs" }, { "i": "f07", "k": "c", "t": "food", "a": 6, "q": "Popcorn is made from...", "o": ["Corn", "Rice", "Beans"], "n": 0, "x": "Corn kernels pop when they get hot.", "p": "corn" }, { "i": "f08", "k": "tf", "t": "food", "a": 6, "q": "A tomato is a fruit.", "o": [], "n": 0, "x": "Tomatoes have seeds inside, so they are fruit, even though we use them like vegetables.", "p": "" }, { "i": "f09", "k": "c", "t": "food", "a": 6, "q": "Cheese is made from...", "o": ["Milk", "Apples", "Rice"], "n": 0, "x": "Cheese is made from milk.", "p": "" }, { "i": "f10", "k": "tf", "t": "food", "a": 6, "q": "Honey can stay good for a very long time.", "o": [], "n": 0, "x": "Honey does not go bad. Bees made it to keep for winter.", "p": "honey" }, { "i": "m01", "k": "c", "t": "math", "a": 3, "q": "How many sides does a triangle have?", "o": ["3", "4", "5"], "n": 0, "x": "Tri means three: a triangle has 3 sides.", "p": "triangle" }, { "i": "m02", "k": "c", "t": "math", "a": 3, "q": "What comes after 4?", "o": ["3", "5", "6"], "n": 1, "x": "1, 2, 3, 4, 5!", "p": "" }, { "i": "m03", "k": "c", "t": "math", "a": 3, "q": "Which shape is round?", "o": ["Circle", "Square", "Triangle"], "n": 0, "x": "A circle is round, like a ball or a plate.", "p": "circle" }, { "i": "m04", "k": "c", "t": "math", "a": 3, "q": "2 + 1 = ?", "o": ["2", "3", "4"], "n": 1, "x": "Two and one more make three.", "p": "" }, { "i": "m05", "k": "tf", "t": "math", "a": 3, "q": "A square has four sides.", "o": [], "n": 0, "x": "A square has four sides, all the same length.", "p": "square" }, { "i": "m06", "k": "c", "t": "math", "a": 3, "q": "Which number is bigger?", "o": ["7", "3"], "n": 0, "x": "7 is bigger than 3.", "p": "" }, { "i": "m07", "k": "c", "t": "math", "a": 6, "q": "5 + 5 = ?", "o": ["10", "11", "55"], "n": 0, "x": "Five and five make ten - like your two hands!", "p": "" }, { "i": "m08", "k": "c", "t": "math", "a": 6, "q": "How many days are in a week?", "o": ["5", "7", "10"], "n": 1, "x": "Seven days: Monday to Sunday.", "p": "" }, { "i": "m09", "k": "c", "t": "math", "a": 6, "q": "10 - 3 = ?", "o": ["6", "7", "13"], "n": 1, "x": "Take 3 away from 10 and 7 are left.", "p": "" }, { "i": "m10", "k": "tf", "t": "math", "a": 6, "q": "A hexagon has six sides.", "o": [], "n": 0, "x": "Hexa means six. Bees build hexagons in their hives!", "p": "hexagon" }, { "i": "m11", "k": "c", "t": "math", "a": 6, "q": "Which is an even number?", "o": ["4", "5", "7"], "n": 0, "x": "Even numbers can be shared into two equal groups: 2, 4, 6, 8...", "p": "" }, { "i": "m12", "k": "c", "t": "math", "a": 6, "q": "How many minutes are in an hour?", "o": ["30", "60", "100"], "n": 1, "x": "An hour has 60 minutes.", "p": "" }, { "i": "m13", "k": "c", "t": "math", "a": 6, "q": "3 x 2 = ?", "o": ["5", "6", "32"], "n": 1, "x": "Three twice: 3 + 3 = 6.", "p": "" }, { "i": "m14", "k": "tf", "t": "math", "a": 6, "q": "A ball is a sphere.", "o": [], "n": 0, "x": "A sphere is perfectly round in every direction.", "p": "sphere" }, { "i": "w01", "k": "c", "t": "words", "a": 3, "q": "What is this?", "o": ["Cat", "Dog", "Pig"], "n": 0, "x": "Cat - C, A, T.", "p": "cat" }, { "i": "w02", "k": "c", "t": "words", "a": 3, "q": "What is this?", "o": ["Bus", "Car", "Ship"], "n": 2, "x": "Ship - S, H, I, P.", "p": "ship" }, { "i": "w03", "k": "c", "t": "words", "a": 3, "q": "What is this?", "o": ["Hat", "Bed", "Key"], "n": 2, "x": "Key - K, E, Y.", "p": "key" }, { "i": "w04", "k": "c", "t": "words", "a": 3, "q": "Which word starts with B?", "o": ["Ball", "Sun", "Map"], "n": 0, "x": "Ball starts with the sound b.", "p": "" }, { "i": "w05", "k": "c", "t": "words", "a": 6, "q": "What is the opposite of hot?", "o": ["Cold", "Big", "Fast"], "n": 0, "x": "Hot and cold are opposites.", "p": "" }, { "i": "w06", "k": "c", "t": "words", "a": 6, "q": "What is the opposite of up?", "o": ["Down", "In", "On"], "n": 0, "x": "Up and down are opposites.", "p": "" }, { "i": "w07", "k": "c", "t": "words", "a": 6, "q": "Which word rhymes with cat?", "o": ["Hat", "Dog", "Sun"], "n": 0, "x": "Cat and hat both end with -at.", "p": "hat" }, { "i": "w08", "k": "c", "t": "words", "a": 6, "q": "How many letters are in DOG?", "o": ["2", "3", "4"], "n": 1, "x": "D, O, G: three letters.", "p": "dog" }, { "i": "l01", "k": "c", "t": "life", "a": 3, "q": "What colour means stop?", "o": ["Red", "Green", "Blue"], "n": 0, "x": "Red means stop, green means go.", "p": "" }, { "i": "l02", "k": "tf", "t": "life", "a": 3, "q": "We look both ways before crossing the road.", "o": [], "n": 0, "x": "Look left, look right, and hold a grown-up's hand.", "p": "car" }, { "i": "l03", "k": "c", "t": "life", "a": 3, "q": "Who helps when we are sick?", "o": ["Doctor", "Pilot", "Chef"], "n": 0, "x": "Doctors and nurses help us get better.", "p": "" }, { "i": "l04", "k": "tf", "t": "life", "a": 3, "q": "Sharing toys is kind.", "o": [], "n": 0, "x": "Sharing makes playing more fun for everyone.", "p": "" }, { "i": "l05", "k": "c", "t": "life", "a": 6, "q": "Who flies a plane?", "o": ["Pilot", "Farmer", "Dentist"], "n": 0, "x": "A pilot flies the plane.", "p": "jet" }, { "i": "l06", "k": "tf", "t": "life", "a": 6, "q": "Paper can be recycled.", "o": [], "n": 0, "x": "Old paper can be made into new paper. That saves trees!", "p": "" }, { "i": "l07", "k": "c", "t": "life", "a": 6, "q": "What do we use to tell the time?", "o": ["Clock", "Fork", "Brush"], "n": 0, "x": "A clock or a watch tells us the time.", "p": "" }, { "i": "l08", "k": "tf", "t": "life", "a": 6, "q": "Nowruz is the Persian New Year, on the first day of spring.", "o": [], "n": 0, "x": "Nowruz means new day. Families set the Haft-sin table.", "p": "" }, { "i": "x01", "k": "c", "t": "science", "a": 3, "q": "What does a magnet pick up?", "o": ["Nails", "Paper", "Leaves"], "n": 0, "x": "Magnets pull things made of iron, like nails.", "p": "" }, { "i": "x02", "k": "tf", "t": "science", "a": 3, "q": "Ice melts when it gets warm.", "o": [], "n": 0, "x": "Warm ice turns back into water.", "p": "" }, { "i": "x03", "k": "c", "t": "science", "a": 3, "q": "What floats on water?", "o": ["Boat", "Rock", "Key"], "n": 0, "x": "Boats float. Rocks and keys sink.", "p": "ship" }, { "i": "x04", "k": "tf", "t": "science", "a": 3, "q": "We need light to see.", "o": [], "n": 0, "x": "Without light, everything looks dark.", "p": "" }, { "i": "x05", "k": "c", "t": "science", "a": 6, "q": "What happens to water when it boils?", "o": ["It steams", "It freezes"], "n": 0, "x": "Boiling water turns into steam.", "p": "" }, { "i": "x06", "k": "tf", "t": "science", "a": 6, "q": "Sound can travel through water.", "o": [], "n": 0, "x": "Whales and dolphins talk to each other with sounds under water.", "p": "" }, { "i": "x07", "k": "c", "t": "science", "a": 6, "q": "What makes a shadow?", "o": ["Blocking sun", "Rain", "Wind"], "n": 0, "x": "When something blocks the light, it makes a shadow behind it.", "p": "sun" }, { "i": "x08", "k": "tf", "t": "science", "a": 6, "q": "Heavy things always fall faster.", "o": [], "n": 1, "x": "Without air in the way, a feather and a hammer fall together. Astronauts tried it on the Moon!", "p": "" }];
+  const WQ = [{ "i": "a01", "k": "c", "t": "animals", "a": 3, "q": "Which animal says moo?", "o": ["Cow", "Duck", "Cat"], "n": 0, "x": "Cows say moo, and they give us milk.", "p": "cow" }, { "i": "a02", "k": "c", "t": "animals", "a": 3, "q": "Which animal can fly?", "o": ["Pig", "Bird", "Dog"], "n": 1, "x": "Birds fly with their wings.", "p": "bird" }, { "i": "a03", "k": "tf", "t": "animals", "a": 3, "q": "Fish live in water.", "o": [], "n": 0, "x": "Fish breathe in water with their gills.", "p": "fish" }, { "i": "a04", "k": "tf", "t": "animals", "a": 3, "q": "A frog can jump.", "o": [], "n": 0, "x": "Frogs have long strong back legs for jumping.", "p": "frog" }, { "i": "a05", "k": "c", "t": "animals", "a": 3, "q": "Who makes honey?", "o": ["Bee", "Fox", "Duck"], "n": 0, "x": "Bees make honey from the sweet juice of flowers.", "p": "bee" }, { "i": "a06", "k": "tf", "t": "animals", "a": 3, "q": "A cat has wings.", "o": [], "n": 1, "x": "Cats have four legs and a tail, but no wings.", "p": "cat" }, { "i": "a07", "k": "c", "t": "animals", "a": 3, "q": "How many legs does a dog have?", "o": ["2", "4", "6"], "n": 1, "x": "Dogs walk on four legs.", "p": "dog" }, { "i": "a08", "k": "c", "t": "animals", "a": 3, "q": "Where does a bird sleep?", "o": ["Nest", "Hive", "Pond"], "n": 0, "x": "Birds build nests from twigs and grass.", "p": "nest" }, { "i": "a09", "k": "tf", "t": "animals", "a": 3, "q": "A baby cat is called a kitten.", "o": [], "n": 0, "x": "Baby cats are kittens and baby dogs are puppies.", "p": "cat" }, { "i": "a10", "k": "c", "t": "animals", "a": 3, "q": "Which animal is the biggest?", "o": ["Mouse", "Elephant", "Cat"], "n": 1, "x": "Elephants are the biggest animals that live on land.", "p": null }, { "i": "a11", "k": "tf", "t": "animals", "a": 3, "q": "Ducks can swim.", "o": [], "n": 0, "x": "Ducks have webbed feet that work like paddles.", "p": "duck" }, { "i": "a12", "k": "c", "t": "animals", "a": 3, "q": "Which one lays eggs?", "o": ["Hen", "Cow", "Dog"], "n": 0, "x": "Hens lay eggs. Chicks hatch out of them.", "p": "hen" }, { "i": "a13", "k": "tf", "t": "animals", "a": 3, "q": "A snake has legs.", "o": [], "n": 1, "x": "Snakes have no legs. They slide on their bellies.", "p": "snake" }, { "i": "a14", "k": "c", "t": "animals", "a": 3, "q": "What does a cow eat?", "o": ["Grass", "Fish", "Bones"], "n": 0, "x": "Cows eat grass all day long.", "p": "grass" }, { "i": "a15", "k": "c", "t": "animals", "a": 3, "q": "Which animal has a long trunk?", "o": ["Lion", "Elephant", "Bear"], "n": 1, "x": "An elephant uses its trunk like a hand and a straw.", "p": null }, { "i": "a16", "k": "tf", "t": "animals", "a": 3, "q": "Bats sleep upside down.", "o": [], "n": 0, "x": "Bats hang upside down by their feet to sleep.", "p": "bat" }, { "i": "a17", "k": "c", "t": "animals", "a": 6, "q": "A caterpillar grows into a...", "o": ["Butterfly", "Bee", "Bird"], "n": 0, "x": "A caterpillar makes a cocoon, then comes out as a butterfly!", "p": "caterpillar" }, { "i": "a18", "k": "tf", "t": "animals", "a": 6, "q": "A whale is a fish.", "o": [], "n": 1, "x": "Whales live in the sea but they breathe air, like us. They are mammals.", "p": null }, { "i": "a19", "k": "c", "t": "animals", "a": 6, "q": "How many legs does a spider have?", "o": ["6", "8", "10"], "n": 1, "x": "Spiders have 8 legs. Insects have 6.", "p": "web" }, { "i": "a20", "k": "tf", "t": "animals", "a": 6, "q": "Penguins can fly.", "o": [], "n": 1, "x": "Penguins cannot fly, but they are amazing swimmers.", "p": null }, { "i": "a21", "k": "c", "t": "animals", "a": 6, "q": "Which animal is the fastest runner?", "o": ["Cheetah", "Turtle", "Cow"], "n": 0, "x": "A cheetah can run as fast as a car on the highway.", "p": null }, { "i": "a22", "k": "tf", "t": "animals", "a": 6, "q": "A frog starts life as a tadpole.", "o": [], "n": 0, "x": "Tadpoles live in water and slowly grow legs.", "p": "frog" }, { "i": "a23", "k": "c", "t": "animals", "a": 6, "q": "Which animal sleeps all winter?", "o": ["Bear", "Hen", "Cow"], "n": 0, "x": "Many bears sleep through the cold winter. This is called hibernation.", "p": null }, { "i": "a24", "k": "tf", "t": "animals", "a": 6, "q": "Bees help flowers make fruit.", "o": [], "n": 0, "x": "Bees carry pollen from flower to flower, and that helps fruit grow.", "p": "bee" }, { "i": "a25", "k": "c", "t": "animals", "a": 6, "q": "Where does a shark live?", "o": ["Sea", "Cave", "Barn"], "n": 0, "x": "Sharks swim in the sea. They have been around longer than dinosaurs!", "p": "shark" }, { "i": "a26", "k": "tf", "t": "animals", "a": 6, "q": "A giraffe has a very short neck.", "o": [], "n": 1, "x": "Giraffes have the longest necks of all animals, to reach high leaves.", "p": null }, { "i": "a27", "k": "c", "t": "animals", "a": 6, "q": "Which is an insect?", "o": ["Ant", "Fish", "Frog"], "n": 0, "x": "Ants are insects: six legs and three body parts.", "p": null }, { "i": "a28", "k": "tf", "t": "animals", "a": 6, "q": "An octopus has eight arms.", "o": [], "n": 0, "x": "Octo means eight. An octopus has eight arms and three hearts!", "p": null }, { "i": "b01", "k": "c", "t": "body", "a": 3, "q": "What do we see with?", "o": ["Eyes", "Ears", "Nose"], "n": 0, "x": "We see with our eyes and hear with our ears.", "p": null }, { "i": "b02", "k": "c", "t": "body", "a": 3, "q": "What do we hear with?", "o": ["Hands", "Ears", "Feet"], "n": 1, "x": "Our ears catch sounds.", "p": null }, { "i": "b03", "k": "tf", "t": "body", "a": 3, "q": "We should wash our hands before we eat.", "o": [], "n": 0, "x": "Washing with soap takes the germs away.", "p": null }, { "i": "b04", "k": "c", "t": "body", "a": 3, "q": "How many fingers are on one hand?", "o": ["4", "5", "10"], "n": 1, "x": "Five fingers on each hand: ten in all!", "p": null }, { "i": "b05", "k": "tf", "t": "body", "a": 3, "q": "Sleeping helps you grow.", "o": [], "n": 0, "x": "Your body grows and rests while you sleep.", "p": "bed" }, { "i": "b06", "k": "c", "t": "body", "a": 3, "q": "What do we smell with?", "o": ["Nose", "Knee", "Hair"], "n": 0, "x": "Our nose smells flowers, cake and everything else.", "p": null }, { "i": "b07", "k": "tf", "t": "body", "a": 3, "q": "Brushing teeth keeps them healthy.", "o": [], "n": 0, "x": "Brush in the morning and before bed.", "p": null }, { "i": "b08", "k": "c", "t": "body", "a": 3, "q": "Which food is good for you?", "o": ["Candy", "Apple", "Chips"], "n": 1, "x": "Fruit and vegetables help your body stay strong.", "p": "apples" }, { "i": "b09", "k": "tf", "t": "body", "a": 6, "q": "Your heart is a muscle.", "o": [], "n": 0, "x": "Your heart is a strong muscle that pumps blood all day and night.", "p": null }, { "i": "b10", "k": "c", "t": "body", "a": 6, "q": "What do our lungs do?", "o": ["Breathe", "Think", "Walk"], "n": 0, "x": "Lungs take in air when we breathe in.", "p": null }, { "i": "b11", "k": "tf", "t": "body", "a": 6, "q": "Babies have more bones than grown-ups.", "o": [], "n": 0, "x": "Babies have about 300 bones. Some join together as they grow, so adults have 206.", "p": "baby" }, { "i": "b12", "k": "c", "t": "body", "a": 6, "q": "Which part of you thinks?", "o": ["Brain", "Elbow", "Toe"], "n": 0, "x": "Your brain thinks, remembers and tells your body what to do.", "p": null }, { "i": "b13", "k": "tf", "t": "body", "a": 6, "q": "Drinking water is good for your body.", "o": [], "n": 0, "x": "More than half of your body is water!", "p": null }, { "i": "b14", "k": "c", "t": "body", "a": 6, "q": "How many teeth does a grown-up have?", "o": ["12", "32", "100"], "n": 1, "x": "Children have 20 baby teeth; grown-ups have 32.", "p": null }, { "i": "n01", "k": "c", "t": "nature", "a": 3, "q": "What do plants need to grow?", "o": ["Water", "Toys", "Shoes"], "n": 0, "x": "Plants need water, sunlight and soil.", "p": "tree" }, { "i": "n02", "k": "tf", "t": "nature", "a": 3, "q": "Trees have roots.", "o": [], "n": 0, "x": "Roots hold the tree in the ground and drink water.", "p": "tree" }, { "i": "n03", "k": "c", "t": "nature", "a": 3, "q": "What colour are most leaves?", "o": ["Green", "Blue", "Purple"], "n": 0, "x": "Leaves are green because of a helper called chlorophyll.", "p": "leaves" }, { "i": "n04", "k": "tf", "t": "nature", "a": 3, "q": "Apples grow on trees.", "o": [], "n": 0, "x": "Apples grow on apple trees, from flowers in spring.", "p": "apples" }, { "i": "n05", "k": "c", "t": "nature", "a": 3, "q": "In autumn, leaves often turn...", "o": ["Orange", "Blue", "White"], "n": 0, "x": "In autumn many leaves turn yellow, orange and red, then fall.", "p": "leaves" }, { "i": "n06", "k": "tf", "t": "nature", "a": 3, "q": "Flowers can grow from seeds.", "o": [], "n": 0, "x": "A tiny seed in the soil can grow into a big flower.", "p": "seeds" }, { "i": "n07", "k": "c", "t": "nature", "a": 3, "q": "Which season is the coldest?", "o": ["Summer", "Winter", "Spring"], "n": 1, "x": "Winter is the coldest season. Sometimes it snows!", "p": "snow" }, { "i": "n08", "k": "tf", "t": "nature", "a": 3, "q": "Ice is frozen water.", "o": [], "n": 0, "x": "When water gets very cold, it turns into ice.", "p": "snow" }, { "i": "n09", "k": "c", "t": "nature", "a": 6, "q": "What do bees take from flowers?", "o": ["Nectar", "Sand", "Milk"], "n": 0, "x": "Bees drink nectar from flowers and turn it into honey.", "p": "bee" }, { "i": "n10", "k": "tf", "t": "nature", "a": 6, "q": "Plants make their own food from sunlight.", "o": [], "n": 0, "x": "Leaves use sunlight, air and water to make food. This is called photosynthesis.", "p": "leaves" }, { "i": "n11", "k": "c", "t": "nature", "a": 6, "q": "Which tree stays green all winter?", "o": ["Pine", "Apple", "Maple"], "n": 0, "x": "Pine trees keep their needles all year long.", "p": "tree" }, { "i": "n12", "k": "tf", "t": "nature", "a": 6, "q": "A cactus needs lots of rain.", "o": [], "n": 1, "x": "Cactuses live in deserts and store water inside.", "p": null }, { "i": "n13", "k": "c", "t": "nature", "a": 6, "q": "What is a forest full of?", "o": ["Trees", "Cars", "Shops"], "n": 0, "x": "Forests are full of trees, and many animals live there.", "p": "tree" }, { "i": "n14", "k": "tf", "t": "nature", "a": 6, "q": "Mushrooms are plants.", "o": [], "n": 1, "x": "Mushrooms are not plants. They are fungi.", "p": null }, { "i": "s01", "k": "c", "t": "sky", "a": 3, "q": "Where does rain come from?", "o": ["Clouds", "Trees", "Rocks"], "n": 0, "x": "Clouds are made of tiny drops. When they get heavy, they fall as rain.", "p": "rain" }, { "i": "s02", "k": "tf", "t": "sky", "a": 3, "q": "The Sun is hot.", "o": [], "n": 0, "x": "The Sun is a giant hot star. It warms the Earth.", "p": "sun" }, { "i": "s03", "k": "c", "t": "sky", "a": 3, "q": "What do we see after rain and sun?", "o": ["Rainbow", "Snow", "Moon"], "n": 0, "x": "Sunlight shining through raindrops makes a rainbow.", "p": "rainbow" }, { "i": "s04", "k": "tf", "t": "sky", "a": 3, "q": "We can see stars at night.", "o": [], "n": 0, "x": "Stars are there in the day too, but the Sun is too bright to see them.", "p": "star" }, { "i": "s05", "k": "c", "t": "sky", "a": 3, "q": "What do we wear when it rains?", "o": ["Raincoat", "Swimsuit", "Crown"], "n": 0, "x": "A raincoat and boots keep us dry.", "p": "rain" }, { "i": "s06", "k": "tf", "t": "sky", "a": 3, "q": "Snow is warm.", "o": [], "n": 1, "x": "Snow is very cold. It is made of tiny pieces of ice.", "p": "snow" }, { "i": "s07", "k": "c", "t": "sky", "a": 3, "q": "What shines in the sky in the day?", "o": ["Sun", "Moon", "Comet"], "n": 0, "x": "The Sun gives us daylight.", "p": "sun" }, { "i": "s08", "k": "tf", "t": "sky", "a": 3, "q": "The wind can move clouds.", "o": [], "n": 0, "x": "Wind pushes the clouds across the sky.", "p": "cloud" }, { "i": "s09", "k": "c", "t": "sky", "a": 6, "q": "What comes first?", "o": ["Lightning", "Thunder"], "n": 0, "x": "Light is faster than sound, so we see lightning before we hear thunder.", "p": "lightning" }, { "i": "s10", "k": "tf", "t": "sky", "a": 6, "q": "A rainbow has seven colours.", "o": [], "n": 0, "x": "Red, orange, yellow, green, blue, indigo and violet.", "p": "rainbow" }, { "i": "s11", "k": "c", "t": "sky", "a": 6, "q": "What is fog?", "o": ["A low cloud", "Smoke", "Snow"], "n": 0, "x": "Fog is a cloud that sits close to the ground.", "p": "cloud" }, { "i": "s12", "k": "tf", "t": "sky", "a": 6, "q": "Every snowflake has six sides.", "o": [], "n": 0, "x": "Snowflakes have six arms, and no two look exactly the same.", "p": "snow" }, { "i": "s13", "k": "c", "t": "sky", "a": 6, "q": "Which season comes after winter?", "o": ["Spring", "Autumn", "Summer"], "n": 0, "x": "Winter, spring, summer, autumn - and around again.", "p": null }, { "i": "s14", "k": "tf", "t": "sky", "a": 6, "q": "The Sun goes around the Earth.", "o": [], "n": 1, "x": "The Earth goes around the Sun. It takes one year.", "p": "sun" }, { "i": "p01", "k": "c", "t": "space", "a": 3, "q": "Who goes to space in a rocket?", "o": ["Astronaut", "Farmer", "Baker"], "n": 0, "x": "Astronauts travel to space in rockets.", "p": "astronaut" }, { "i": "p02", "k": "tf", "t": "space", "a": 3, "q": "We live on planet Earth.", "o": [], "n": 0, "x": "Earth is our home planet, with land, sea and air.", "p": "earth" }, { "i": "p03", "k": "c", "t": "space", "a": 3, "q": "Which planet has big rings?", "o": ["Saturn", "Earth", "Mars"], "n": 0, "x": "Saturn's rings are made of ice and rock.", "p": "saturn" }, { "i": "p04", "k": "tf", "t": "space", "a": 3, "q": "The Moon is shaped like a ball.", "o": [], "n": 0, "x": "The Moon is round like a ball. We just see different parts of it lit up.", "p": "fullmoon" }, { "i": "p05", "k": "c", "t": "space", "a": 3, "q": "Which planet is red?", "o": ["Mars", "Neptune", "Earth"], "n": 0, "x": "Mars is called the red planet because of its red dust.", "p": "mars" }, { "i": "p06", "k": "tf", "t": "space", "a": 3, "q": "You can breathe on the Moon without a helmet.", "o": [], "n": 1, "x": "There is no air on the Moon, so astronauts wear space suits.", "p": "astronaut" }, { "i": "p07", "k": "c", "t": "space", "a": 6, "q": "Which is the biggest planet?", "o": ["Jupiter", "Mars", "Venus"], "n": 0, "x": "Jupiter is so big that more than 1000 Earths could fit inside.", "p": "jupiter" }, { "i": "p08", "k": "tf", "t": "space", "a": 6, "q": "The Sun is a star.", "o": [], "n": 0, "x": "The Sun is our closest star. Other stars are much farther away.", "p": "sun" }, { "i": "p09", "k": "c", "t": "space", "a": 6, "q": "How many planets go around our Sun?", "o": ["5", "8", "20"], "n": 1, "x": "Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus and Neptune.", "p": "planet" }, { "i": "p10", "k": "tf", "t": "space", "a": 6, "q": "Our galaxy is called the Milky Way.", "o": [], "n": 0, "x": "The Milky Way has billions of stars. Our Sun is one of them.", "p": "galaxy" }, { "i": "p11", "k": "c", "t": "space", "a": 6, "q": "What do we look at stars with?", "o": ["Telescope", "Spoon", "Ladder"], "n": 0, "x": "A telescope makes faraway things look big and close.", "p": "telescope" }, { "i": "p12", "k": "tf", "t": "space", "a": 6, "q": "The Moon makes its own light.", "o": [], "n": 1, "x": "The Moon shines because sunlight bounces off it.", "p": "moon" }, { "i": "p13", "k": "c", "t": "space", "a": 6, "q": "Which planet is closest to the Sun?", "o": ["Mercury", "Neptune", "Earth"], "n": 0, "x": "Mercury is closest to the Sun, and Neptune is the farthest.", "p": "mercury" }, { "i": "p14", "k": "tf", "t": "space", "a": 6, "q": "A satellite goes around the Earth.", "o": [], "n": 0, "x": "Satellites help with phones, TV, maps and weather.", "p": "satellite" }, { "i": "e01", "k": "c", "t": "earth", "a": 3, "q": "What is the sea full of?", "o": ["Water", "Sand", "Milk"], "n": 0, "x": "Seas and oceans are full of salty water.", "p": "sea" }, { "i": "e02", "k": "tf", "t": "earth", "a": 3, "q": "Sea water is salty.", "o": [], "n": 0, "x": "Sea water has salt in it, so we should not drink it.", "p": "sea" }, { "i": "e03", "k": "c", "t": "earth", "a": 3, "q": "Where is it very hot and sandy?", "o": ["Desert", "Pond", "Snow"], "n": 0, "x": "Deserts are dry, sandy and often very hot.", "p": null }, { "i": "e04", "k": "tf", "t": "earth", "a": 3, "q": "Mountains are very tall.", "o": [], "n": 0, "x": "Some mountains are so tall that they have snow on top all year.", "p": null }, { "i": "e05", "k": "c", "t": "earth", "a": 6, "q": "Which is the biggest?", "o": ["Ocean", "Lake", "Pond"], "n": 0, "x": "Oceans are the biggest bodies of water. They cover most of the Earth.", "p": "sea" }, { "i": "e06", "k": "tf", "t": "earth", "a": 6, "q": "Most of the Earth is covered by water.", "o": [], "n": 0, "x": "About seven tenths of the Earth is ocean.", "p": "earth" }, { "i": "e07", "k": "c", "t": "earth", "a": 6, "q": "What comes out of a volcano?", "o": ["Lava", "Snow", "Juice"], "n": 0, "x": "Lava is melted rock, so hot that it glows.", "p": null }, { "i": "e08", "k": "tf", "t": "earth", "a": 6, "q": "The Earth spins around once every day.", "o": [], "n": 0, "x": "When our side faces the Sun it is day; when it turns away it is night.", "p": "earth" }, { "i": "e09", "k": "c", "t": "earth", "a": 6, "q": "Where is it always very cold?", "o": ["North Pole", "Desert", "Beach"], "n": 0, "x": "The North and South Poles are covered in ice.", "p": "snow" }, { "i": "e10", "k": "tf", "t": "earth", "a": 6, "q": "Rivers flow into the sea.", "o": [], "n": 0, "x": "Most rivers start in the mountains and end in the sea.", "p": null }, { "i": "f01", "k": "c", "t": "food", "a": 3, "q": "Which one is a fruit?", "o": ["Banana", "Bread", "Cheese"], "n": 0, "x": "Bananas are fruit. They grow in bunches.", "p": null }, { "i": "f02", "k": "tf", "t": "food", "a": 3, "q": "Milk comes from cows.", "o": [], "n": 0, "x": "Cows, goats and sheep give milk.", "p": "cow" }, { "i": "f03", "k": "c", "t": "food", "a": 3, "q": "What colour is a banana?", "o": ["Yellow", "Blue", "Black"], "n": 0, "x": "Ripe bananas are yellow.", "p": null }, { "i": "f04", "k": "tf", "t": "food", "a": 3, "q": "Carrots grow under the ground.", "o": [], "n": 0, "x": "We eat the carrot root that grows in the soil.", "p": null }, { "i": "f05", "k": "c", "t": "food", "a": 3, "q": "What do we make bread from?", "o": ["Flour", "Stones", "Paper"], "n": 0, "x": "Flour is made from wheat, and bread is baked from flour.", "p": null }, { "i": "f06", "k": "tf", "t": "food", "a": 3, "q": "Eggs come from hens.", "o": [], "n": 0, "x": "Hens lay the eggs we eat.", "p": "eggs" }, { "i": "f07", "k": "c", "t": "food", "a": 6, "q": "Popcorn is made from...", "o": ["Corn", "Rice", "Beans"], "n": 0, "x": "Corn kernels pop when they get hot.", "p": "corn" }, { "i": "f08", "k": "tf", "t": "food", "a": 6, "q": "A tomato is a fruit.", "o": [], "n": 0, "x": "Tomatoes have seeds inside, so they are fruit, even though we use them like vegetables.", "p": null }, { "i": "f09", "k": "c", "t": "food", "a": 6, "q": "Cheese is made from...", "o": ["Milk", "Apples", "Rice"], "n": 0, "x": "Cheese is made from milk.", "p": null }, { "i": "f10", "k": "tf", "t": "food", "a": 6, "q": "Honey can stay good for a very long time.", "o": [], "n": 0, "x": "Honey does not go bad. Bees made it to keep for winter.", "p": "honey" }, { "i": "m01", "k": "c", "t": "math", "a": 3, "q": "How many sides does a triangle have?", "o": ["3", "4", "5"], "n": 0, "x": "Tri means three: a triangle has 3 sides.", "p": "triangle" }, { "i": "m02", "k": "c", "t": "math", "a": 3, "q": "What comes after 4?", "o": ["3", "5", "6"], "n": 1, "x": "1, 2, 3, 4, 5!", "p": null }, { "i": "m03", "k": "c", "t": "math", "a": 3, "q": "Which shape is round?", "o": ["Circle", "Square", "Triangle"], "n": 0, "x": "A circle is round, like a ball or a plate.", "p": "circle" }, { "i": "m04", "k": "c", "t": "math", "a": 3, "q": "2 + 1 = ?", "o": ["2", "3", "4"], "n": 1, "x": "Two and one more make three.", "p": null }, { "i": "m05", "k": "tf", "t": "math", "a": 3, "q": "A square has four sides.", "o": [], "n": 0, "x": "A square has four sides, all the same length.", "p": "square" }, { "i": "m06", "k": "c", "t": "math", "a": 3, "q": "Which number is bigger?", "o": ["7", "3"], "n": 0, "x": "7 is bigger than 3.", "p": null }, { "i": "m07", "k": "c", "t": "math", "a": 6, "q": "5 + 5 = ?", "o": ["10", "11", "55"], "n": 0, "x": "Five and five make ten - like your two hands!", "p": null }, { "i": "m08", "k": "c", "t": "math", "a": 6, "q": "How many days are in a week?", "o": ["5", "7", "10"], "n": 1, "x": "Seven days: Monday to Sunday.", "p": null }, { "i": "m09", "k": "c", "t": "math", "a": 6, "q": "10 - 3 = ?", "o": ["6", "7", "13"], "n": 1, "x": "Take 3 away from 10 and 7 are left.", "p": null }, { "i": "m10", "k": "tf", "t": "math", "a": 6, "q": "A hexagon has six sides.", "o": [], "n": 0, "x": "Hexa means six. Bees build hexagons in their hives!", "p": "hexagon" }, { "i": "m11", "k": "c", "t": "math", "a": 6, "q": "Which is an even number?", "o": ["4", "5", "7"], "n": 0, "x": "Even numbers can be shared into two equal groups: 2, 4, 6, 8...", "p": null }, { "i": "m12", "k": "c", "t": "math", "a": 6, "q": "How many minutes are in an hour?", "o": ["30", "60", "100"], "n": 1, "x": "An hour has 60 minutes.", "p": null }, { "i": "m13", "k": "c", "t": "math", "a": 6, "q": "3 x 2 = ?", "o": ["5", "6", "32"], "n": 1, "x": "Three twice: 3 + 3 = 6.", "p": null }, { "i": "m14", "k": "tf", "t": "math", "a": 6, "q": "A ball is a sphere.", "o": [], "n": 0, "x": "A sphere is perfectly round in every direction.", "p": "sphere" }, { "i": "w01", "k": "c", "t": "words", "a": 3, "q": "What is this?", "o": ["Cat", "Dog", "Pig"], "n": 0, "x": "Cat - C, A, T.", "p": "cat" }, { "i": "w02", "k": "c", "t": "words", "a": 3, "q": "What is this?", "o": ["Bus", "Car", "Ship"], "n": 2, "x": "Ship - S, H, I, P.", "p": "ship" }, { "i": "w03", "k": "c", "t": "words", "a": 3, "q": "What is this?", "o": ["Hat", "Bed", "Key"], "n": 2, "x": "Key - K, E, Y.", "p": "key" }, { "i": "w04", "k": "c", "t": "words", "a": 3, "q": "Which word starts with B?", "o": ["Ball", "Sun", "Map"], "n": 0, "x": "Ball starts with the sound b.", "p": null }, { "i": "w05", "k": "c", "t": "words", "a": 6, "q": "What is the opposite of hot?", "o": ["Cold", "Big", "Fast"], "n": 0, "x": "Hot and cold are opposites.", "p": null }, { "i": "w06", "k": "c", "t": "words", "a": 6, "q": "What is the opposite of up?", "o": ["Down", "In", "On"], "n": 0, "x": "Up and down are opposites.", "p": null }, { "i": "w07", "k": "c", "t": "words", "a": 6, "q": "Which word rhymes with cat?", "o": ["Hat", "Dog", "Sun"], "n": 0, "x": "Cat and hat both end with -at.", "p": "hat" }, { "i": "w08", "k": "c", "t": "words", "a": 6, "q": "How many letters are in DOG?", "o": ["2", "3", "4"], "n": 1, "x": "D, O, G: three letters.", "p": "dog" }, { "i": "l01", "k": "c", "t": "life", "a": 3, "q": "What colour means stop?", "o": ["Red", "Green", "Blue"], "n": 0, "x": "Red means stop, green means go.", "p": null }, { "i": "l02", "k": "tf", "t": "life", "a": 3, "q": "We look both ways before crossing the road.", "o": [], "n": 0, "x": "Look left, look right, and hold a grown-up's hand.", "p": "car" }, { "i": "l03", "k": "c", "t": "life", "a": 3, "q": "Who helps when we are sick?", "o": ["Doctor", "Pilot", "Chef"], "n": 0, "x": "Doctors and nurses help us get better.", "p": null }, { "i": "l04", "k": "tf", "t": "life", "a": 3, "q": "Sharing toys is kind.", "o": [], "n": 0, "x": "Sharing makes playing more fun for everyone.", "p": null }, { "i": "l05", "k": "c", "t": "life", "a": 6, "q": "Who flies a plane?", "o": ["Pilot", "Farmer", "Dentist"], "n": 0, "x": "A pilot flies the plane.", "p": "jet" }, { "i": "l06", "k": "tf", "t": "life", "a": 6, "q": "Paper can be recycled.", "o": [], "n": 0, "x": "Old paper can be made into new paper. That saves trees!", "p": null }, { "i": "l07", "k": "c", "t": "life", "a": 6, "q": "What do we use to tell the time?", "o": ["Clock", "Fork", "Brush"], "n": 0, "x": "A clock or a watch tells us the time.", "p": null }, { "i": "l08", "k": "tf", "t": "life", "a": 6, "q": "Nowruz is the Persian New Year, on the first day of spring.", "o": [], "n": 0, "x": "Nowruz means new day. Families set the Haft-sin table.", "p": null }, { "i": "x01", "k": "c", "t": "science", "a": 3, "q": "What does a magnet pick up?", "o": ["Nails", "Paper", "Leaves"], "n": 0, "x": "Magnets pull things made of iron, like nails.", "p": null }, { "i": "x02", "k": "tf", "t": "science", "a": 3, "q": "Ice melts when it gets warm.", "o": [], "n": 0, "x": "Warm ice turns back into water.", "p": null }, { "i": "x03", "k": "c", "t": "science", "a": 3, "q": "What floats on water?", "o": ["Boat", "Rock", "Key"], "n": 0, "x": "Boats float. Rocks and keys sink.", "p": "ship" }, { "i": "x04", "k": "tf", "t": "science", "a": 3, "q": "We need light to see.", "o": [], "n": 0, "x": "Without light, everything looks dark.", "p": null }, { "i": "x05", "k": "c", "t": "science", "a": 6, "q": "What happens to water when it boils?", "o": ["It steams", "It freezes"], "n": 0, "x": "Boiling water turns into steam.", "p": null }, { "i": "x06", "k": "tf", "t": "science", "a": 6, "q": "Sound can travel through water.", "o": [], "n": 0, "x": "Whales and dolphins talk to each other with sounds under water.", "p": null }, { "i": "x07", "k": "c", "t": "science", "a": 6, "q": "What makes a shadow?", "o": ["Blocking sun", "Rain", "Wind"], "n": 0, "x": "When something blocks the light, it makes a shadow behind it.", "p": "sun" }, { "i": "x08", "k": "tf", "t": "science", "a": 6, "q": "Heavy things always fall faster.", "o": [], "n": 1, "x": "Without air in the way, a feather and a hammer fall together. Astronauts tried it on the Moon!", "p": null }];
   const VOICED = /* @__PURE__ */ new Set(["a01", "a02", "a03", "a04", "a05", "a06", "a07", "a08", "a09", "a10", "a11", "a12", "a13", "a14", "a15", "a16", "a17", "a18", "a19", "a20", "a21", "a22", "a23", "a24", "a25", "a26", "a27", "a28", "b01", "b02", "b03", "b04", "b05", "b06", "b07", "b08", "b09", "b10", "b11", "b12", "b13", "b14", "n01", "n02", "n03", "n04", "n05", "n06", "n07", "n08", "n09", "n10", "n11", "n12", "n13", "n14", "p01", "p02", "p03", "p04", "p05", "p06", "p07", "p08", "s01", "s02", "s03", "s04", "s05", "s06", "s07", "s08", "s09", "s10", "s11", "s12", "s13", "s14"]);
   const PIC_E = { apples: "\u{1F34E}", astronaut: "\u{1F9D1}\u200D\u{1F680}", baby: "\u{1F476}", bat: "\u{1F987}", bed: "\u{1F6CF}\uFE0F", bee: "\u{1F41D}", bird: "\u{1F426}", car: "\u{1F697}", cat: "\u{1F431}", caterpillar: "\u{1F41B}", circle: "\u26AA", cloud: "\u2601\uFE0F", corn: "\u{1F33D}", cow: "\u{1F404}", dog: "\u{1F436}", duck: "\u{1F986}", earth: "\u{1F30D}", eggs: "\u{1F95A}", fish: "\u{1F41F}", frog: "\u{1F438}", fullmoon: "\u{1F315}", galaxy: "\u{1F30C}", grass: "\u{1F33F}", hat: "\u{1F3A9}", hen: "\u{1F414}", hexagon: "\u2B22", honey: "\u{1F36F}", jet: "\u2708\uFE0F", jupiter: "\u{1FA90}", key: "\u{1F511}", leaves: "\u{1F342}", lightning: "\u26A1", mars: "\u{1F534}", mercury: "\u{1F311}", moon: "\u{1F319}", nest: "\u{1FABA}", planet: "\u{1FA90}", rain: "\u{1F327}\uFE0F", rainbow: "\u{1F308}", satellite: "\u{1F6F0}\uFE0F", saturn: "\u{1FA90}", sea: "\u{1F30A}", seeds: "\u{1F331}", shark: "\u{1F988}", ship: "\u{1F6A2}", snake: "\u{1F40D}", snow: "\u2744\uFE0F", sphere: "\u{1F535}", square: "\u{1F7E5}", star: "\u2B50", sun: "\u2600\uFE0F", telescope: "\u{1F52D}", tree: "\u{1F333}", triangle: "\u{1F53A}", web: "\u{1F578}\uFE0F" };
   const WORD_E = { ant: "\u{1F41C}", apple: "\u{1F34E}", apples: "\u{1F34E}", astronaut: "\u{1F9D1}\u200D\u{1F680}", autumn: "\u{1F342}", baker: "\u{1F9D1}\u200D\u{1F373}", ball: "\u26BD", banana: "\u{1F34C}", barn: "\u{1F6D6}", beach: "\u{1F3D6}\uFE0F", beans: "\u{1FAD8}", bear: "\u{1F43B}", bed: "\u{1F6CF}\uFE0F", bee: "\u{1F41D}", big: "\u{1F418}", bird: "\u{1F426}", black: "\u26AB", blue: "\u{1F535}", boat: "\u26F5", bones: "\u{1F9B4}", brain: "\u{1F9E0}", bread: "\u{1F35E}", breathe: "\u{1F32C}\uFE0F", brush: "\u{1FAA5}", bus: "\u{1F68C}", butterfly: "\u{1F98B}", candy: "\u{1F36C}", car: "\u{1F697}", cars: "\u{1F697}", cat: "\u{1F431}", cave: "\u{1F573}\uFE0F", cheese: "\u{1F9C0}", cheetah: "\u{1F406}", chef: "\u{1F9D1}\u200D\u{1F373}", chips: "\u{1F35F}", circle: "\u26AA", clock: "\u{1F552}", clouds: "\u2601\uFE0F", cold: "\u{1F976}", comet: "\u2604\uFE0F", corn: "\u{1F33D}", cow: "\u{1F404}", crown: "\u{1F451}", dentist: "\u{1F9B7}", desert: "\u{1F3DC}\uFE0F", doctor: "\u{1F9D1}\u200D\u2695\uFE0F", dog: "\u{1F436}", down: "\u2B07\uFE0F", duck: "\u{1F986}", ears: "\u{1F442}", earth: "\u{1F30D}", elbow: "\u{1F4AA}", elephant: "\u{1F418}", eyes: "\u{1F440}", farmer: "\u{1F9D1}\u200D\u{1F33E}", fast: "\u{1F4A8}", feet: "\u{1F9B6}", fish: "\u{1F41F}", flour: "\u{1F33E}", fork: "\u{1F374}", fox: "\u{1F98A}", frog: "\u{1F438}", grass: "\u{1F33F}", green: "\u{1F7E2}", hair: "\u{1F487}", hands: "\u{1F450}", hat: "\u{1F3A9}", hen: "\u{1F414}", hive: "\u{1F41D}", in: "\u{1F4E5}", juice: "\u{1F9C3}", jupiter: "\u{1FA90}", key: "\u{1F511}", knee: "\u{1F9B5}", ladder: "\u{1FA9C}", lake: "\u{1F3DE}\uFE0F", lava: "\u{1F30B}", leaves: "\u{1F342}", lightning: "\u26A1", lion: "\u{1F981}", map: "\u{1F5FA}\uFE0F", maple: "\u{1F341}", mars: "\u{1F534}", mercury: "\u{1F311}", milk: "\u{1F95B}", moon: "\u{1F319}", mouse: "\u{1F42D}", nails: "\u{1F485}", nectar: "\u{1F338}", neptune: "\u{1F535}", nest: "\u{1FABA}", nose: "\u{1F443}", ocean: "\u{1F30A}", on: "\u{1F51B}", orange: "\u{1F7E0}", paper: "\u{1F4C4}", pig: "\u{1F437}", pilot: "\u{1F9D1}\u200D\u2708\uFE0F", pine: "\u{1F332}", pond: "\u{1F986}", purple: "\u{1F7E3}", rain: "\u{1F327}\uFE0F", rainbow: "\u{1F308}", raincoat: "\u{1F9E5}", red: "\u{1F534}", rice: "\u{1F35A}", rock: "\u{1FAA8}", rocks: "\u{1FAA8}", sand: "\u23F3", saturn: "\u{1FA90}", sea: "\u{1F30A}", ship: "\u{1F6A2}", shoes: "\u{1F45F}", shops: "\u{1F3EA}", smoke: "\u{1F4A8}", snow: "\u2744\uFE0F", spoon: "\u{1F944}", spring: "\u{1F338}", square: "\u{1F7E5}", stones: "\u{1FAA8}", summer: "\u2600\uFE0F", sun: "\u2600\uFE0F", swimsuit: "\u{1FA71}", telescope: "\u{1F52D}", think: "\u{1F914}", thunder: "\u26C8\uFE0F", toe: "\u{1F9B6}", toys: "\u{1F9F8}", trees: "\u{1F333}", triangle: "\u{1F53A}", turtle: "\u{1F422}", venus: "\u{1F7E1}", walk: "\u{1F6B6}", water: "\u{1F4A7}", white: "\u26AA", wind: "\u{1F32C}\uFE0F", winter: "\u26C4", yellow: "\u{1F7E1}", "north pole": "\u{1F9CA}", "it freezes": "\u{1F9CA}", "it steams": "\u2668\uFE0F", "a low cloud": "\u{1F32B}\uFE0F", "blocking sun": "\u{1F311}" };
   const N = (n) => n >= 0 && n <= 20 ? "w/LULU_N" + n : null;
+  bv = function(w) {
+    return '<span class="bv" style="width:'.concat(w, "px;--w:").concat(w, 'px"><img src="img/domi.svg" alt=""></span>');
+  };
+  const FA_SAY = { "bird": "LULU_FA_AN0", "cow": "LULU_FA_AN1", "duck": "LULU_FA_AN2", "hen": "LULU_FA_AN3", "pig": "LULU_FA_AN4", "shark": "LULU_FA_AN5", "fox": "LULU_FA_AN6", "dog": "LULU_FA_AN7", "frog": "LULU_FA_AN8", "bee": "LULU_FA_AN9", "worm": "LULU_FA_AN10", "cat": "LULU_FA_AN11", "bat": "LULU_FA_AN12", "snake": "LULU_FA_AN13", "grass": "LULU_FA_FOOD1", "seeds": "LULU_FA_FOOD2", "bones": "LULU_FA_FOOD3", "fish": "LULU_FA_FOOD4", "fly": "LULU_FA_FOOD5", "flowers": "LULU_FA_FOOD6", "leaves": "LULU_FA_FOOD7", "mosquito": "LULU_FA_FOOD8", "apple": "LULU_FA_FOOD9", "mouse": "LULU_FA_FOOD10", "eggs": "LULU_FA_FOOD11", "corn": "LULU_FA_FOOD12", "nest": "LULU_FA_HOME0", "barn": "LULU_FA_HOME1", "pond": "LULU_FA_HOME2", "doghouse": "LULU_FA_HOME3", "house": "LULU_FA_HOME4", "hive": "LULU_FA_HOME5", "tree": "LULU_FA_HOME6", "cave": "LULU_FA_HOME7", "burrow": "LULU_FA_HOME8", "sea": "LULU_FA_HOME9", "rocks": "LULU_FA_HOME10", "doctor": "LULU_FA_JOB0", "firefighter": "LULU_FA_JOB1", "police": "LULU_FA_JOB2", "chef": "LULU_FA_JOB3", "farmer": "LULU_FA_JOB4", "teacher": "LULU_FA_JOB5", "pilot": "LULU_FA_JOB6", "astronaut": "LULU_FA_JOB7", "mechanic": "LULU_FA_JOB8", "scientist": "LULU_FA_JOB9", "painter": "LULU_FA_JOB10", "builder": "LULU_FA_JOB11", "iran": "LULU_FA_CTY0", "usa": "LULU_FA_CTY1", "canada": "LULU_FA_CTY2", "mexico": "LULU_FA_CTY3", "brazil": "LULU_FA_CTY4", "england": "LULU_FA_CTY5", "france": "LULU_FA_CTY6", "germany": "LULU_FA_CTY7", "italy": "LULU_FA_CTY8", "china": "LULU_FA_CTY9", "japan": "LULU_FA_CTY10", "india": "LULU_FA_CTY11", "egypt": "LULU_FA_CTY12", "australia": "LULU_FA_CTY13", "sun": "LULU_FA_PL0", "mercury": "LULU_FA_PL1", "venus": "LULU_FA_PL2", "earth": "LULU_FA_PL3", "mars": "LULU_FA_PL4", "jupiter": "LULU_FA_PL5", "saturn": "LULU_FA_PL6", "uranus": "LULU_FA_PL7", "neptune": "LULU_FA_PL8", "moon": "LULU_FA_SKY1", "star": "LULU_FA_SKY2", "clouds": "LULU_FA_SKY3", "rain": "LULU_FA_SKY4", "rainbow": "LULU_FA_SKY5", "lightning": "LULU_FA_SKY6", "snow": "LULU_FA_SKY7", "rocket": "LULU_FA_SKY8", "telescope": "LULU_FA_SKY10", "galaxy": "LULU_FA_SKY11", "comet": "LULU_FA_SKY12", "satellite": "LULU_FA_SKY13", "planet": "LULU_FA_SKY14", "log": "LULU_FAW0", "ten": "LULU_FAW4", "box": "LULU_FAW6", "socks": "LULU_FAW7", "key": "LULU_FAW8", "mug": "LULU_FAW11", "bug": "LULU_FAW12", "hat": "LULU_FAW14", "car": "LULU_FAW17", "cake": "LULU_FAW18", "truck": "LULU_FAW21", "jet": "LULU_FAW22", "net": "LULU_FAW23", "fan": "LULU_FAW24", "can": "LULU_FAW25", "map": "LULU_FAW26", "cap": "LULU_FAW27", "fin": "LULU_FAW28", "pin": "LULU_FAW29", "lip": "LULU_FAW30", "ship": "LULU_FAW31", "cut": "LULU_FAW32", "nut": "LULU_FAW33", "cook": "LULU_FA_JOB3", "flower": "LULU_FA_FOOD6", "leaf": "LULU_FA_FOOD7", "egg": "LULU_FA_FOOD11", "cloud": "LULU_FA_SKY3", "stars": "LULU_FA_SKY2", "thunder": "LULU_FA_SKY6", "spring": "LULU_FA_SEA0", "summer": "LULU_FA_SEA1", "autumn": "LULU_FA_SEA2", "fall": "LULU_FA_SEA2", "winter": "LULU_FA_SEA3", "trees": "LULU_FA_HOME6", "ocean": "LULU_FA_HOME9", "a low cloud": "PX_FA_A_LOW_CLOUD", "ant": "PX_FA_ANT", "baker": "PX_FA_BAKER", "ball": "PX_FA_BALL", "beach": "PX_FA_BEACH", "bear": "PX_FA_BEAR", "black": "PX_FA_BLACK", "blue": "PX_FA_BLUE", "brain": "PX_FA_BRAIN", "breathe": "PX_FA_BREATHE", "brown": "PX_FA_BROWN", "butterfly": "PX_FA_BUTTERFLY", "candy": "PX_FA_CANDY", "cars": "PX_FA_CARS", "cheetah": "PX_FA_CHEETAH", "chips": "PX_FA_CHIPS", "circle": "PX_FA_CIRCLE", "crown": "PX_FA_CROWN", "ears": "PX_FA_EARS", "elbow": "PX_FA_ELBOW", "elephant": "PX_FA_ELEPHANT", "eyes": "PX_FA_EYES", "feet": "PX_FA_FEET", "green": "PX_FA_GREEN", "hair": "PX_FA_HAIR", "hands": "PX_FA_HANDS", "knee": "PX_FA_KNEE", "lion": "PX_FA_LION", "maple": "PX_FA_MAPLE", "milk": "PX_FA_MILK", "morning": "PX_FA_MORNING", "nectar": "PX_FA_NECTAR", "night": "PX_FA_NIGHT", "nose": "PX_FA_NOSE", "orange": "PX_FA_ORANGE", "pine": "PX_FA_PINE", "pink": "PX_FA_PINK", "pizza": "PX_FA_PIZZA", "purple": "PX_FA_PURPLE", "raincoat": "PX_FA_RAINCOAT", "red": "PX_FA_RED", "salad": "PX_FA_SALAD", "sand": "PX_FA_SAND", "shoes": "PX_FA_SHOES", "shops": "PX_FA_SHOPS", "smoke": "PX_FA_SMOKE", "snail": "PX_FA_SNAIL", "square": "PX_FA_SQUARE", "swimsuit": "PX_FA_SWIMSUIT", "think": "PX_FA_THINK", "toe": "PX_FA_TOE", "toys": "PX_FA_TOYS", "train": "PX_FA_TRAIN", "triangle": "PX_FA_TRIANGLE", "turtle": "PX_FA_TURTLE", "walk": "PX_FA_WALK", "water": "PX_FA_WATER", "white": "PX_FA_WHITE", "yellow": "PX_FA_YELLOW" };
+  const PLANET_N = ["sun", "mercury", "venus", "earth", "mars", "jupiter", "saturn", "uranus", "neptune"];
+  const DINOS = ["t-rex", "tyrannosaurus", "triceratops", "stegosaurus", "brachiosaurus", "velociraptor", "diplodocus", "pterodactyl"];
+  function faSay(word) {
+    const w = String(word).toLowerCase().trim();
+    if (/^\d+$/.test(w)) return [N(+w)];
+    if (DINOS.includes(w)) return [];
+    const pi = PLANET_N.indexOf(w);
+    if (pi > 0) return ["w/LULU_FA_PL" + pi, "w/LULU_YA", "w/LULU_PL" + pi];
+    const c = FA_SAY[w] || FA_SAY[w.replace(/s$/, "")] || FA_SAY[w + "s"];
+    return c ? ["w/" + c] : [];
+  }
   const PRAISE_CLIPS = ["w/LULU_PR_A", "w/LULU_PR_B", "w/LULU_PR_C", "w/LULU_PR_D", "w/LULU_PR_E", "w/LULU_PR_F", "w/LULU_PRAISE1", "w/LULU_PRAISE2", "w/LULU_PRAISE3", "w/LULU_PRAISE4", "w/LULU_BD_RIGHT", "praise1", "praise2", "praise3", "praise4"];
   const PRAISE_T = ["Yay!", "Super!", "Woohoo!", "Amazing!", "Brilliant!", "You're a star!", "Fantastic!", "Hooray!", "So smart!", "Wow!"];
   const OBJ = ["\u{1F34E}", "\u{1F41F}", "\u2B50", "\u{1F986}", "\u{1F338}", "\u{1F353}", "\u{1F41E}", "\u{1F388}", "\u{1F36A}", "\u{1F423}", "\u{1F9C1}", "\u{1F98B}"];
@@ -5855,6 +5982,7 @@ body {
   }
   function hush() {
     seqId++;
+    askTok++;
     if (voice) {
       voice.onended = null;
       voice.onerror = null;
@@ -5866,7 +5994,7 @@ body {
   sfx.oops = () => tone([[392, 0, 0.12, "triangle", 0.1], [330, 0.1, 0.18, "triangle", 0.1]]);
   const grp = (n, e, cls = "") => '<span class="grp '.concat(cls, '">').concat(Array.from({ length: n }, () => '<i class="ob">'.concat(e, "</i>")).join(""), "</span>");
   const dots = (n) => n <= 10 ? '<span class="dots">'.concat("\u25CF".repeat(n), "</span>") : "";
-  const numOpt = (n) => ({ h: '<b class="num">'.concat(n, "</b>").concat(dots(n)), say: N(n) });
+  const numOpt = (n) => ({ h: '<b class="num">'.concat(n, "</b>").concat(dots(n)), say: [N(n)] });
   function numOpts(right, cands, k = 3) {
     const w = sh([...new Set(cands.filter((x) => x !== right && x >= 0))]).slice(0, k - 1), o = sh([right, ...w]);
     return { opts: o.map(numOpt), ans: o.indexOf(right) };
@@ -5880,7 +6008,8 @@ body {
     { id: "animals", topic: "watcher", e: "\u{1F43E}", name: "Animals" },
     { id: "world", topic: "watcher", e: "\u{1F333}", name: "Our world" },
     { id: "sky", topic: "watcher", e: "\u{1F319}", name: "Sky & space" },
-    { id: "story", topic: "radio", e: "\u{1F4FB}", name: "Domi's Radio" }
+    { id: "story", topic: "radio", e: "\u{1F4FB}", name: "Domi's Radio" },
+    { id: "paint", topic: "paint", e: "\u{1F3A8}", name: "Painting" }
   ];
   const catById = (id) => CATS.find((c) => c.id === id);
   function kindsFor(cat) {
@@ -5973,11 +6102,11 @@ body {
   function qClock(k) {
     if (k === "routine") {
       const r = pickOne(ROUTINES);
-      return { voice: ["c_routine"], cap: "Morning or night?", visual: '<div class="bigemo">'.concat(r[0], "</div>"), opts: [{ h: "<span class='yn'>\u2600\uFE0F</span><small>Morning</small>" }, { h: "<span class='yn'>\u{1F319}</span><small>Night</small>" }], ans: r[2], layout: "yn", hint: "elim", exp: { t: r[2] ? "Night \u{1F319}" : "Morning \u2600\uFE0F", v: ["w/LULU_ANS_IS"] } };
+      return { voice: ["c_routine"], cap: "Morning or night?", visual: '<div class="bigemo">'.concat(r[0], "</div>"), opts: [{ h: "<span class='yn'>\u2600\uFE0F</span><small>Morning</small>", say: faSay("morning") }, { h: "<span class='yn'>\u{1F319}</span><small>Night</small>", say: faSay("night") }], ans: r[2], layout: "yn", hint: "elim", exp: { t: r[2] ? "Night \u{1F319}" : "Morning \u2600\uFE0F", v: ["w/LULU_ANS_IS"] } };
     }
     if (k === "season") {
       const sz = pickOne(SEASONS), SE = { Winter: "\u26C4", Spring: "\u{1F338}", Summer: "\u2600\uFE0F", Autumn: "\u{1F342}" }, o2 = sh(["Winter", "Spring", "Summer", "Autumn"]);
-      return { voice: ["c_season"], cap: "Which season?", visual: '<div class="bigemo">'.concat(sz[0], "</div>"), opts: o2.map((x) => ({ h: '<span class="oe">'.concat(SE[x], "</span><small>").concat(x, "</small>") })), ans: o2.indexOf(sz[2]), layout: "grid", hint: "elim", exp: { t: sz[2], v: ["w/LULU_ANS_IS"] } };
+      return { voice: ["c_season"], cap: "Which season?", visual: '<div class="bigemo">'.concat(sz[0], "</div>"), opts: o2.map((x) => ({ h: '<span class="oe">'.concat(SE[x], "</span><small>").concat(x, "</small>"), say: faSay(x) })), ans: o2.indexOf(sz[2]), layout: "grid", hint: "elim", exp: { t: sz[2], v: ["w/LULU_ANS_IS"] } };
     }
     const h = ri(1, 12), m = k === "oclock" ? 0 : k === "half" ? 30 : k === "quarter" ? pickOne([15, 45]) : ri(1, 11) * 5;
     const w = [dig(hh(h + 1), m), dig(hh(h - 1), m), dig(h, m === 30 ? 0 : 30), dig(h, (m + 15) % 60)];
@@ -5994,7 +6123,7 @@ body {
       const pool = a <= 5 ? ["p", "n"] : a <= 6 ? ["p", "n", "d"] : ["p", "n", "d", "q"], c = pickOne(pool), o = sh(pool.map((x) => COINS[x].v)).slice(0, Math.min(3, pool.length));
       if (!o.includes(COINS[c].v)) o[0] = COINS[c].v;
       const oo = sh(o);
-      return { voice: ["m_value"], cap: COINS[c].name, visual: coinsHTML([c], false).replace(/width="([\d.]+)" height="([\d.]+)"/, (x, w, h) => 'width="'.concat(w * 1.9, '" height="').concat(h * 1.9, '"')) + '<div class="coinname">'.concat(COINS[c].name, "</div>"), opts: oo.map((v) => ({ h: '<b class="num">'.concat(v, "\xA2</b>") })), ans: oo.indexOf(COINS[c].v), layout: oo.length === 2 ? "yn" : "row3", hint: "elim", exp: { t: "".concat(COINS[c].name, " = ").concat(COINS[c].v, "\xA2"), v: ["w/LULU_ANS_IS"] } };
+      return { voice: ["m_value"], cap: COINS[c].name, visual: coinsHTML([c], false).replace(/width="([\d.]+)" height="([\d.]+)"/, (x, w, h) => 'width="'.concat(w * 1.9, '" height="').concat(h * 1.9, '"')) + '<div class="coinname">'.concat(COINS[c].name, "</div>"), opts: oo.map((v) => ({ h: '<b class="num">'.concat(v, "\xA2</b>"), say: [N(v)] })), ans: oo.indexOf(COINS[c].v), layout: oo.length === 2 ? "yn" : "row3", hint: "elim", exp: { t: "".concat(COINS[c].name, " = ").concat(COINS[c].v, "\xA2"), v: ["w/LULU_ANS_IS"] } };
     }
     if (k === "count") {
       let ks;
@@ -6012,7 +6141,7 @@ body {
   }
   function cents(r, c) {
     const w = sh([...new Set(c.filter((x) => x > 0 && x !== r))]).slice(0, 2), o = sh([r, ...w]);
-    return { opts: o.map((x) => ({ h: '<b class="num">'.concat(x, "\xA2</b>") })), ans: o.indexOf(r) };
+    return { opts: o.map((x) => ({ h: '<b class="num">'.concat(x, "\xA2</b>"), say: [N(x)] })), ans: o.indexOf(r) };
   }
   const SKY_TF = [1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0];
   const SKY_TF_E = ["\u2600\uFE0F", "\u{1F319}", "\u{1F30D}", "\u2B50", "\u2601\uFE0F", "\u{1F319}", "\u{1F308}", "\u{1F9D1}\u200D\u{1F680}", "\u{1FA90}", "\u{1F30C}", "\u26C8\uFE0F", "\u2600\uFE0F", "\u{1F30D}", "\u{1F319}", "\u2744\uFE0F", "\u2604\uFE0F"];
@@ -6054,19 +6183,14 @@ body {
       const t = w.q.toLowerCase(), oe = w.o.map(optE);
       for (const [k, e] of TEXT_E) if (t.includes(k) && !oe.includes(e)) return e;
       return catById(cat).e;
-    })(), "</div>"), opts: w.o.map((o) => ({ h: '<span class="oe">'.concat(optE(o) || "\u{1F539}", "</span><small>").concat(o, "</small>") })), ans: w.n, layout: w.o.length > 2 ? "row3" : "yn", hint: "elim", exp: { t: "".concat(w.o[w.n], ": ").concat(w.x), v: ev } };
+    })(), "</div>"), opts: w.o.map((o) => ({ h: '<span class="oe">'.concat(optE(o) || "\u{1F539}", "</span><small>").concat(o, "</small>"), say: faSay(o) })), ans: w.n, layout: w.o.length > 2 ? "row3" : "yn", hint: "elim", exp: { t: "".concat(w.o[w.n], ": ").concat(w.x), v: ev } };
   }
-  const STORIES = [
-    { t: "The picnic \u{1F9FA}", lines: 6, q: [["\u{1F34E}", [2, 3, 4], 1], ["\u{1F34C}", [["\u{1F534}", "Red"], ["\u{1F7E1}", "Yellow"], ["\u{1F535}", "Blue"]], 1], ["\u{1F41D}", [["\u{1F382}", "Cake"], ["\u{1F338}", "Flowers"], ["\u{1F697}", "Car"]], 1]] },
-    { t: "The rainbow \u{1F308}", lines: 5, q: [["\u{1F327}\uFE0F", [["\u{1F333}", "Tree"], ["\u2601\uFE0F", "Clouds"], ["\u{1F3E0}", "House"]], 1], ["\u{1F308}", [["\u{1F308}", "Rainbow"], ["\u{1F319}", "Moon"], ["\u{1F697}", "Car"]], 0], ["\u{1F308}", [3, 7, 10], 1]] },
-    { t: "On the farm \u{1F404}", lines: 5, q: [["\u{1F404}", [["\u{1F431}", "Cat"], ["\u{1F404}", "Cow"], ["\u{1F986}", "Duck"]], 1], ["\u{1F95A}", [2, 4, 6], 1], ["\u{1F95A}", [["\u{1F382}", "Cake"], ["\u{1F355}", "Pizza"], ["\u{1F957}", "Salad"]], 0]] },
-    { t: "The little house \u{1F3E0}", lines: 5, q: [["\u{1F3E0}", [["\u26AA", "Circle"], ["\u{1F53A}", "Triangle"], ["\u{1F7E6}", "Square"]], 1], ["\u{1FA9F}", [["\u2B50", "Star"], ["\u{1F53A}", "Triangle"], ["\u26AA", "Circle"]], 2], ["\u{1FA9F}", [2, 4, 5], 1]] },
-    { t: "A trip to Japan \u2708\uFE0F", lines: 5, q: [["\u2708\uFE0F", [["\u{1F9D1}\u200D\u{1F373}", "Cook"], ["\u{1F9D1}\u200D\u2708\uFE0F", "Pilot"], ["\u{1F9D1}\u200D\u2695\uFE0F", "Doctor"]], 1], ["\u{1F6A9}", [["\u{1F1E8}\u{1F1E6}", "Canada"], ["\u{1F1FA}\u{1F1F8}", "USA"], ["\u{1F1EF}\u{1F1F5}", "Japan"]], 2], ["\u{1F4A8}", [["\u{1F684}", "Train"], ["\u{1F422}", "Turtle"], ["\u{1F40C}", "Snail"]], 0]] },
-    { t: "The little seed \u{1F331}", lines: 5, q: [["\u{1F331}", [["\u{1F36C}", "Candy"], ["\u{1F4A7}", "Water"], ["\u26BD", "Ball"]], 1], ["\u{1F331}", [["\u{1F7E2}", "Green"], ["\u{1F7E3}", "Purple"], ["\u{1F534}", "Red"]], 0], ["\u{1FAB4}", [["\u{1F95B}", "Milk"], ["\u{1F4A7}", "Water"], ["\u{1F3D6}\uFE0F", "Beach"]], 1]] }
-  ];
-  function qStory(s, k) {
-    const [pic, opts, ans] = STORIES[s].q[k], nums = typeof opts[0] === "number";
-    return { voice: ["w/ST_S".concat(s, "_Q").concat(k)], cap: "", visual: '<div class="listen radio">'.concat(pic, "</div>"), opts: opts.map((o) => nums ? numOpt(o) : { h: '<span class="oe">'.concat(o[0], "</span><small>").concat(o[1], "</small>") }), ans, layout: "row3", hint: "elim", story: s, exp: { t: nums ? String(opts[ans]) : opts[ans][1], v: ["w/LULU_ANS_IS"] } };
+  const STORIES = [{ "s": 0, "t": "Picnic", "lines": 6, "q": [{ "k": 0, "nums": [2, 3, 4], "ans": 1 }, { "k": 1, "opts": [["\u{1F534}", "Red"], ["\u{1F7E1}", "Yellow"], ["\u{1F535}", "Blue"]], "ans": 1 }, { "k": 2, "opts": [["\u{1F382}", "Cake"], ["\u{1F338}", "Blossom"], ["\u{1F697}", "Car"]], "ans": 1 }] }, { "s": 1, "t": "Rainbow", "lines": 5, "q": [{ "k": 0, "opts": [["\u{1F333}", "Tree"], ["\u2601\uFE0F", "Cloud"], ["\u{1F3E0}", "House"]], "ans": 1 }, { "k": 1, "opts": [["\u{1F308}", "Rainbow"], ["\u{1F319}", "Moon"], ["\u{1F697}", "Car"]], "ans": 0 }, { "k": 2, "nums": [3, 7, 10], "ans": 1 }] }, { "s": 2, "t": "Farm", "lines": 5, "q": [{ "k": 0, "opts": [["\u{1F431}", "Cat face"], ["\u{1F404}", "Cow"], ["\u{1F986}", "Duck"]], "ans": 1 }, { "k": 1, "nums": [2, 4, 6], "ans": 1 }, { "k": 2, "opts": [["\u{1F382}", "Cake"], ["\u{1F355}", "Pizza"], ["\u{1F957}", "Salad"]], "ans": 0 }] }, { "s": 3, "t": "House", "lines": 5, "q": [{ "k": 0, "opts": [["\u26AA", "Circle"], ["\u{1F53A}", "Triangle"], ["\u{1F7E6}", "Square"]], "ans": 1 }, { "k": 1, "opts": [["\u2B50", "Star"], ["\u{1F53A}", "Triangle"], ["\u26AA", "Circle"]], "ans": 2 }, { "k": 2, "nums": [2, 4, 5], "ans": 1 }] }, { "s": 4, "t": "Trip", "lines": 5, "q": [{ "k": 0, "opts": [["\u{1F9D1}\u200D\u{1F373}", "Cook"], ["\u{1F9D1}\u200D\u2708\uFE0F", "Pilot"], ["\u{1F9D1}\u200D\u2695\uFE0F", "Doctor"]], "ans": 1 }, { "k": 1, "opts": [["\u{1F1E8}\u{1F1E6}", "Canada"], ["\u{1F1FA}\u{1F1F8}", "USA"], ["\u{1F1EF}\u{1F1F5}", "Japan"]], "ans": 2 }, { "k": 2, "opts": [["\u{1F684}", "Train"], ["\u{1F422}", "Turtle"], ["\u{1F40C}", "Snail"]], "ans": 0 }] }, { "s": 5, "t": "Seed", "lines": 5, "q": [{ "k": 0, "opts": [["\u{1F36C}", "Candy"], ["\u{1F4A7}", "Water"], ["\u26BD", "Soccer ball"]], "ans": 1 }, { "k": 1, "opts": [["\u{1F7E2}", "Green"], ["\u{1F7E3}", "Purple"], ["\u{1F534}", "Red"]], "ans": 0 }, { "k": 2, "opts": [["\u{1F95B}", "Milk"], ["\u{1F4A7}", "Water"], ["\u{1F3D6}\uFE0F", "Beach"]], "ans": 1 }] }, { "s": 6, "t": "Sea", "lines": 5, "q": [{ "k": 0, "opts": [["\u{1F36C}", "Candy"], ["\u{1F9C2}", "Salt"], ["\u{1F34B}", "Lemon"]], "ans": 1 }, { "k": 1, "opts": [["\u{1F7E0}", "Orange"], ["\u{1F535}", "Blue"], ["\u{1F7E2}", "Green"]], "ans": 0 }, { "k": 2, "opts": [["\u{1F41F}", "Fish"], ["\u{1F433}", "Whale"], ["\u{1F980}", "Crab"]], "ans": 1 }] }, { "s": 7, "t": "Clock", "lines": 5, "q": [{ "k": 0, "nums": [3, 7, 10], "ans": 1 }, { "k": 1, "opts": [["\u26BD", "Soccer ball"], ["\u{1F4DA}", "Books"], ["\u{1F3B8}", "Guitar"]], "ans": 0 }, { "k": 2, "nums": [1, 2, 3], "ans": 2 }] }, { "s": 8, "t": "Market", "lines": 5, "q": [{ "k": 0, "nums": [1, 2, 4], "ans": 1 }, { "k": 1, "opts": [["\u{1F7E2}", "Green"], ["\u{1F534}", "Red"], ["\u{1F7E3}", "Purple"]], "ans": 0 }, { "k": 2, "opts": [["\u{1F4CF}", "Ruler"], ["\u2696\uFE0F", "Scales"], ["\u23F0", "Alarm clock"]], "ans": 1 }] }];
+  const ST_E = { Picnic: "\u{1F9FA}", Rainbow: "\u{1F308}", Farm: "\u{1F404}", House: "\u{1F3E0}", Trip: "\u2708\uFE0F", Seed: "\u{1F331}", Sea: "\u{1F30A}", Clock: "\u23F0", Market: "\u{1F6D2}" };
+  function qStory(si, k) {
+    const st = STORIES[si], q = st.q.find((x) => x.k === k) || st.q[k], nums = !!q.nums;
+    const opts = nums ? q.nums.map(numOpt) : q.opts.map((o) => ({ h: '<span class="oe">'.concat(o[0], "</span><small>").concat(o[1], "</small>"), say: faSay(o[1]) }));
+    return { voice: ["w/ST_S".concat(st.s, "_Q").concat(q.k)], cap: "", visual: '<div class="listen radio">'.concat(ST_E[st.t] || "\u{1F4FB}", "</div>"), opts, ans: q.ans, layout: "row3", hint: "elim", story: si, exp: { t: nums ? String(q.nums[q.ans]) : q.opts[q.ans][1], v: ["w/LULU_ANS_IS"] } };
   }
   function buildQ(cat, kind, used) {
     if (cat === "count") return qCount(kind);
@@ -6080,9 +6204,11 @@ body {
     closeDrop();
     const p = dayPlan()[i], cat = p.cat;
     L = { g: i, cat, correct: 0, first: 0, acorns: 0, k: 0, t0: Date.now(), queue: [] };
-    if (cat === "story") {
-      const s = p.story;
-      L.queue = [{ radio: s }, ...[0, 1, 2].map((k) => qStory(s, k))];
+    if (cat === "paint") {
+      L.paint = p.page % PAGES.length;
+    } else if (cat === "story") {
+      const s = p.story % STORIES.length;
+      L.queue = [{ radio: s }, ...STORIES[s].q.map((x) => qStory(s, x.k))];
     } else {
       const ks = kindsFor(cat), used = /* @__PURE__ */ new Set();
       let bag = [];
@@ -6113,7 +6239,7 @@ body {
     $("qDots").innerHTML = L.queue.filter((q) => !q.radio).map(() => "<i></i>").join("");
     $("lesson").classList.add("open");
     $("lesson").setAttribute("aria-hidden", "false");
-    setTimeout(nextQ, 350);
+    setTimeout(L.paint !== void 0 ? () => paintGame(L.paint) : nextQ, 350);
   }
   function closeLesson() {
     hush();
@@ -6143,15 +6269,37 @@ body {
     $("qBody").innerHTML = '<div class="qtop"><button class="qspk" id="qSpk" aria-label="Hear the question again"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></button>'.concat(q.cap ? '<span class="cap">'.concat(q.cap, "</span>") : "", '</div>\n    <div class="qvis">').concat(q.visual, '</div>\n    <div class="qopts ').concat(q.layout, '">').concat(q.opts.map((o, j) => '<button class="qo t'.concat(tints[j % 4], '" data-j="').concat(j, '">').concat(o.h, "</button>")).join(""), "</div>");
     $("qSpk").onclick = () => {
       sfx.tap();
-      sayseq(q.voice);
+      ask(q);
     };
     $("qBody").querySelectorAll(".qo").forEach((b) => b.onclick = () => pick(+b.dataset.j, b));
     $("qBody").classList.remove("in");
     void $("qBody").offsetWidth;
     $("qBody").classList.add("in");
     setTimeout(() => {
-      if (L && L.q === q) sayseq(q.voice);
+      if (L && L.q === q) ask(q);
     }, 350);
+  }
+  let askTok = 0;
+  function ask(q, done) {
+    const tok = ++askTok, bs = [...$("qBody").querySelectorAll(".qo")];
+    const lit = (j) => bs.forEach((b, k) => b.classList.toggle("saying", k === j));
+    const list = [{ c: q.voice, j: -1 }, ...q.opts.map((o, j) => ({ c: (o.say || []).filter(Boolean), j })).filter((x) => x.c.length)];
+    let i = 0;
+    const step = () => {
+      if (tok !== askTok || !L || L.q !== q) {
+        lit(-1);
+        return;
+      }
+      if (i >= list.length) {
+        lit(-1);
+        done && done();
+        return;
+      }
+      const it = list[i++];
+      lit(it.j);
+      sayseq(it.c, () => setTimeout(step, it.j < 0 ? 250 : 150));
+    };
+    step();
   }
   function setDot() {
     const d = $("qDots").children[L.k];
@@ -6282,7 +6430,7 @@ body {
       const s = $("qBody").querySelector(".clk");
       if (s) s.classList.add("hintclk");
       elim();
-      sayseq(q.voice, done);
+      ask(q, done);
       return;
     }
     if (q.hint === "coins") {
@@ -6295,21 +6443,21 @@ body {
           sv.after(t);
         }
       });
-      sayseq(q.voice, done);
+      ask(q, done);
       return;
     }
     if (q.hint === "line") {
       const v = $("qBody").querySelector(".qvis");
       v.insertAdjacentHTML("beforeend", '<div class="nline">'.concat(Array.from({ length: 7 }, (x, i) => q.line[0] - 2 + i).filter((x) => x >= 0).map((x) => '<span class="'.concat(q.line.includes(x) ? "hi" : "", '">').concat(x, "</span>")).join(""), "</div>"));
-      sayseq(q.voice, done);
+      ask(q, done);
       return;
     }
     if (q.hint === "again") {
-      sayseq(q.voice, done);
+      ask(q, done);
       return;
     }
     elim();
-    sayseq(q.voice, done);
+    ask(q, done);
   }
   function countAlong(els, done) {
     let i = 0;
@@ -6344,14 +6492,14 @@ body {
   }
   function radioQ(s) {
     const st = STORIES[s];
-    $("qBody").innerHTML = '<div class="radio"><div class="rbox" id="rBox"><span class="rwave"></span><span class="remo">\u{1F4FB}</span><span class="rwave r2"></span></div>\n    <div class="rtitle">'.concat(st.t, '</div>\n    <div class="rbtns"><button class="qbtn sky" id="rPlay">\u21BB Again</button><button class="qbtn good" id="rDone" disabled>I\'m ready! \u279C</button></div></div>');
+    $("qBody").innerHTML = '<div class="radio"><div class="rbox" id="rBox"><span class="rwave"></span><span class="remo">\u{1F4FB}</span><span class="rwave r2"></span></div>\n    <div class="rtitle">'.concat(ST_E[st.t] || "", " ").concat(st.t, '</div>\n    <div class="rbtns"><button class="qbtn sky" id="rPlay">\u21BB Again</button><button class="qbtn good" id="rDone" disabled>I\'m ready! \u279C</button></div></div>');
     $("qBody").classList.remove("in");
     void $("qBody").offsetWidth;
     $("qBody").classList.add("in");
     const box = $("rBox"), done = $("rDone");
     const play = () => {
       box.classList.add("on");
-      sayseq(["w/LULU_ST_INTRO", ...Array.from({ length: st.lines }, (x, i) => "w/ST_S".concat(s, "_L").concat(i))], () => {
+      sayseq(["w/LULU_ST_INTRO", ...Array.from({ length: st.lines }, (x, i) => "w/ST_S".concat(st.s, "_L").concat(i))], () => {
         box.classList.remove("on");
         done.disabled = false;
         done.classList.add("pulse");
@@ -6411,6 +6559,71 @@ body {
       go();
     };
   }
+  const PAINT_COLORS = [["red", "#FF5A5F"], ["orange", "#FF9F40"], ["yellow", "#FFD43B"], ["green", "#51CF66"], ["blue", "#4DABF7"], ["purple", "#9775FA"], ["pink", "#F783AC"], ["brown", "#A0703C"], ["black", "#343A40"], ["white", "#FFFFFF"]];
+  const PAGES = [
+    ["Fish", "\u{1F41F}", ['rect x="4" y="4" width="392" height="392" rx="30"', 'path d="M70 200 Q160 90 270 200 Q160 310 70 200Z"', 'path d="M262 200 L350 130 L340 200 L350 270Z"', 'path d="M150 150 Q175 110 210 140 Q180 150 170 165Z"', 'path d="M150 250 Q175 290 210 262 Q180 252 170 236Z"', 'circle cx="120" cy="190" r="16"', 'circle cx="300" cy="80" r="18"', 'circle cx="335" cy="40" r="11"', 'path d="M4 340 Q60 310 110 340 T210 340 T310 340 T396 340 L396 396 L4 396Z"']],
+    ["House", "\u{1F3E0}", ['rect x="4" y="4" width="392" height="300" rx="30"', 'circle cx="320" cy="80" r="40"', 'rect x="4" y="300" width="392" height="96" rx="0"', 'rect x="90" y="180" width="220" height="150"', 'path d="M70 185 L200 80 L330 185Z"', 'rect x="255" y="95" width="32" height="60"', 'rect x="175" y="250" width="52" height="80" rx="8"', 'rect x="110" y="210" width="45" height="45"', 'rect x="245" y="210" width="45" height="45"']],
+    ["Butterfly", "\u{1F98B}", ['rect x="4" y="4" width="392" height="392" rx="30"', 'path d="M195 190 Q120 60 60 110 Q40 190 195 200Z"', 'path d="M205 190 Q280 60 340 110 Q360 190 205 200Z"', 'path d="M195 205 Q90 220 100 300 Q160 330 195 215Z"', 'path d="M205 205 Q310 220 300 300 Q240 330 205 215Z"', 'rect x="190" y="130" width="20" height="170" rx="10"', 'circle cx="115" cy="140" r="16"', 'circle cx="285" cy="140" r="16"', 'circle cx="140" cy="270" r="13"', 'circle cx="260" cy="270" r="13"']],
+    ["Flower", "\u{1F338}", ['rect x="4" y="4" width="392" height="392" rx="30"', 'path d="M196 230 Q180 300 196 330 L204 330 Q220 300 204 230Z"', 'path d="M200 290 Q140 250 120 290 Q150 315 200 300Z"', 'path d="M200 280 Q260 240 280 280 Q250 305 200 292Z"', 'circle cx="200" cy="105" r="38"', 'circle cx="262" cy="145" r="38"', 'circle cx="240" cy="215" r="38"', 'circle cx="160" cy="215" r="38"', 'circle cx="138" cy="145" r="38"', 'circle cx="200" cy="160" r="34"', 'path d="M130 330 L270 330 L250 392 L150 392Z"']],
+    ["Rocket", "\u{1F680}", ['rect x="4" y="4" width="392" height="392" rx="30"', 'path d="M200 40 Q250 90 250 160 L250 280 L150 280 L150 160 Q150 90 200 40Z"', 'circle cx="200" cy="160" r="26"', 'path d="M150 220 L105 290 L150 280Z"', 'path d="M250 220 L295 290 L250 280Z"', 'path d="M165 282 L235 282 L200 370Z"', 'path d="M70 70 l8 18 l20 2 l-15 13 l5 20 l-18 -10 l-18 10 l5 -20 l-15 -13 l20 -2z"', 'path d="M320 220 l7 15 l16 2 l-12 11 l4 16 l-15 -8 l-15 8 l4 -16 l-12 -11 l16 -2z"', 'circle cx="320" cy="90" r="22"']],
+    ["Domi", "\u{1F9AB}", ['rect x="4" y="4" width="392" height="392" rx="30"', 'ellipse cx="300" cy="300" rx="44" ry="76" transform="rotate(-28 300 300)"', 'ellipse cx="200" cy="296" rx="92" ry="84"', 'ellipse cx="200" cy="304" rx="60" ry="60"', 'circle cx="116" cy="92" r="30"', 'circle cx="284" cy="92" r="30"', 'ellipse cx="200" cy="156" rx="110" ry="98"', 'ellipse cx="200" cy="196" rx="54" ry="40"', 'ellipse cx="156" cy="150" rx="22" ry="27"', 'ellipse cx="244" cy="150" rx="22" ry="27"', 'path d="M182 176 q18 -12 36 0 q-4 16 -18 18 q-14 -2 -18 -18z"', 'rect x="186" y="208" width="28" height="22" rx="4"']]
+  ];
+  function paintSVG(pi, fills) {
+    const pg = PAGES[pi % PAGES.length], f = fills || [];
+    return '<svg viewBox="0 0 400 400" class="psvg">'.concat(pg[2].map((t, k) => "<".concat(t, ' class="rg" data-k="').concat(k, '" fill="').concat(f[k] || "#FFFFFF", '" stroke="#3B3A4A" stroke-width="5" stroke-linejoin="round"/>')).join(""), "</svg>");
+  }
+  function paintGame(pi) {
+    const pg = PAGES[pi], fills = [];
+    let col = PAINT_COLORS[0][1];
+    $("qDots").innerHTML = "";
+    $("qBody").innerHTML = '<div class="paint">\n    <div class="pcanvas" id="pCanvas">'.concat(paintSVG(pi, fills), '</div>\n    <div class="ppal" id="pPal">').concat(PAINT_COLORS.map(([n2, c], k) => '<button class="pot'.concat(k === 0 ? " on" : "", '" data-c="').concat(c, '" data-n="').concat(n2, '" style="--c:').concat(c, '" aria-label="').concat(n2, '"></button>')).join(""), '</div>\n    <div class="pbtns"><button class="qbtn sky" id="pClear">\u21BA</button><button class="qbtn good" id="pDone" disabled>\u2713 ').concat(pg[1], " Done!</button></div></div>");
+    $("qBody").classList.remove("in");
+    void $("qBody").offsetWidth;
+    $("qBody").classList.add("in");
+    const n = pg[2].length;
+    const upd = () => {
+      const k = fills.filter(Boolean).length;
+      $("pDone").disabled = k < Math.ceil(n / 2);
+      $("pDone").classList.toggle("pulse", k >= Math.ceil(n / 2));
+    };
+    $("pPal").querySelectorAll(".pot").forEach((b) => b.onclick = () => {
+      col = b.dataset.c;
+      $("pPal").querySelectorAll(".pot").forEach((x) => x.classList.toggle("on", x === b));
+      sfx.tap();
+      sayseq(faSay(b.dataset.n));
+    });
+    const bindRegions = () => $("pCanvas").querySelectorAll(".rg").forEach((r) => r.onclick = (e) => {
+      const k = +r.dataset.k;
+      fills[k] = col;
+      r.setAttribute("fill", col);
+      r.classList.remove("pop");
+      void r.getBoundingClientRect();
+      r.classList.add("pop");
+      sfx.pop();
+      upd();
+    });
+    bindRegions();
+    $("pClear").onclick = () => {
+      sfx.tap();
+      fills.length = 0;
+      $("pCanvas").innerHTML = paintSVG(pi, fills);
+      bindRegions();
+      upd();
+    };
+    $("pDone").onclick = () => {
+      sfx.tap();
+      hush();
+      S.paintings.push({ p: pi, f: fills.slice(), d: today() });
+      if (S.paintings.length > 24) S.paintings.shift();
+      S.acorns += 3;
+      L.acorns += 3;
+      save();
+      renderStats();
+      burst(140);
+      moundDone();
+    };
+    setTimeout(() => sayseq(["w/PX_PAINT_INTRO"]), 400);
+  }
   const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   const MONTH_LAND = [7, 5, 4, 6, 11, 8, 9, 1, 2, 10, 0, 3];
   function eventNow(d = /* @__PURE__ */ new Date()) {
@@ -6428,21 +6641,21 @@ body {
   }
   const monthIdx = () => S.mapMonth === "auto" ? (/* @__PURE__ */ new Date()).getMonth() : +S.mapMonth;
   const landIdx = () => MONTH_LAND[monthIdx()];
-  const TOPIC_SYM = { math: "\u2795", clock: "\u{1F552}", money: "\u{1FA99}", watcher: "\u{1F50E}", radio: "\u{1F4FB}" };
+  const TOPIC_SYM = { math: "\u2795", clock: "\u{1F552}", money: "\u{1FA99}", watcher: "\u{1F50E}", radio: "\u{1F4FB}", paint: "\u{1F3A8}" };
   const activeTopics = () => S.topics.filter((t) => TOPIC_SYM[t]);
   const activeCats = () => CATS.filter((c) => activeTopics().includes(c.topic));
   function dayPlan() {
-    if (S.day.d !== today() || !S.day.plan || S.day.v !== 3 || S.day.land !== landIdx() || S.day.per !== S.perDay || S.day.tops !== activeTopics().join()) {
-      const n = HOLES[landIdx()].length, cats = activeCats(), hasStory = cats.some((c) => c.id === "story") && n > 2;
-      let rest = cats.filter((c) => c.id !== "story").map((c) => c.id);
+    if (S.day.d !== today() || !S.day.plan || S.day.v !== 4 || S.day.land !== landIdx() || S.day.per !== S.perDay || S.day.tops !== activeTopics().join()) {
+      const n = HOLES[landIdx()].length, cats = activeCats(), hasStory = cats.some((c) => c.id === "story") && n > 2, hasPaint = cats.some((c) => c.id === "paint") && n > 3;
+      let rest = cats.filter((c) => c.id !== "story" && c.id !== "paint").map((c) => c.id);
       if (!rest.length) rest = ["count"];
       const off = dayN() % rest.length;
       rest = [...rest.slice(off), ...rest.slice(0, off)];
-      const sk = hasStory ? Math.floor(n / 2) : -1, Q = Math.max(n, S.perDay) - (hasStory ? 3 : 0), m = n - (hasStory ? 1 : 0), base = Math.floor(Q / m), rem = Q % m;
+      const sk = hasStory ? Math.floor(n / 2) : -1, pk = hasPaint ? n - 1 : -1, Q = Math.max(n, S.perDay) - (hasStory ? 3 : 0), m = n - (hasStory ? 1 : 0) - (hasPaint ? 1 : 0), base = Math.floor(Q / m), rem = Q % m;
       let j = 0, r = 0;
-      const plan = Array.from({ length: n }, (x, i) => i === sk ? { cat: "story", count: 3, story: dayN() % STORIES.length } : { cat: rest[j++ % rest.length], count: Math.max(1, base + (r++ < rem ? 1 : 0)) });
-      const keep = S.day.d === today() && S.day.land === landIdx() && S.day.v === 3;
-      S.day = { d: today(), done: keep ? Math.min(S.day.done, n) : 0, house: keep ? S.day.house : false, plan, land: landIdx(), per: S.perDay, tops: activeTopics().join(), v: 3 };
+      const plan = Array.from({ length: n }, (x, i) => i === sk ? { cat: "story", count: 3, story: dayN() % STORIES.length } : i === pk ? { cat: "paint", count: 0, page: dayN() % PAGES.length } : { cat: rest[j++ % rest.length], count: Math.max(1, base + (r++ < rem ? 1 : 0)) });
+      const keep = S.day.d === today() && S.day.land === landIdx() && S.day.v === 4;
+      S.day = { d: today(), done: keep ? Math.min(S.day.done, n) : 0, house: keep ? S.day.house : false, plan, land: landIdx(), per: S.perDay, tops: activeTopics().join(), v: 4 };
       save();
     }
     return S.day.plan;
@@ -6612,7 +6825,7 @@ body {
     popEl.style.top = pt.y - landEl.offsetTop + 20 + "px";
     popEl.style.setProperty("--ax", pt.x - left + "px");
     popEl.style.setProperty("--pc", i < done ? "#9AA0A8" : i === done ? ZONES[landIdx()].c : "#AFAFBA");
-    const cnt = p.cat === "story" ? "a story + 3 questions" : "".concat(p.count, " ").concat(p.count === 1 ? "question" : "questions");
+    const cnt = p.cat === "story" ? "a story + 3 questions" : p.cat === "paint" ? "colour a picture" : "".concat(p.count, " ").concat(p.count === 1 ? "question" : "questions");
     popEl.innerHTML = i === done ? "<h4>".concat(c.e, " ").concat(c.name, "</h4><p>").concat(cnt, '</p><button class="btn">Let\'s go!</button>') : i < done ? "<h4>\u2705 Done!</h4><p>You finished this mound today.</p>" : "<h4>".concat(c.e, " ").concat(c.name, "</h4><p>Coming up: ").concat(cnt, "</p>");
     popEl.onclick = (e) => e.stopPropagation();
     const b = popEl.querySelector(".btn");
@@ -6686,7 +6899,7 @@ body {
     $("pPrizes").innerHTML = '<button class="back" id="prBack"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>Back</button>\n    <div class="prz"><h2>\u{1F3C6} My prizes</h2><p class="sub" style="margin:0 0 12px">You have '.concat(S.acorns, " \u{1F330} acorns and ").concat(S.wood, " \u{1FAB5} wood</p>\n    <h3>Big prizes</h3>\n    ").concat(S.real.map((r) => {
       const ok = S.acorns >= r.a && S.wood >= r.w, fa = Math.min(1, S.acorns / r.a), fw = Math.min(1, S.wood / r.w);
       return '<button class="rp '.concat(ok ? "ready" : "", '" data-rp="').concat(r.id, '" style="width:100%;text-align:left"><span class="re">').concat(r.e, "</span><b>").concat(r.name).concat(ok ? " \xB7 Ready! \u{1F389}" : "", '</b>\n        <span><span class="bar a"><i style="width:').concat(fa * 100, '%"></i></span><small>\u{1F330} ').concat(Math.min(S.acorns, r.a), " / ").concat(r.a).concat(ok ? "" : " \xB7 ".concat(Math.max(0, r.a - S.acorns), " more"), '</small></span>\n        <span><span class="bar w"><i style="width:').concat(fw * 100, '%"></i></span><small>\u{1FAB5} ').concat(Math.min(S.wood, r.w), " / ").concat(r.w).concat(ok ? "" : " \xB7 ".concat(Math.max(0, r.w - S.wood), " more"), "</small></span></button>");
-    }).join(""), '\n    <div class="howto">\u{1F330} <b>Acorns</b>: one for every right answer, two when right the first time.<br>\u{1FAB5} <b>Wood</b>: one for every finished mound, three for opening Domi\'s big house.</div>\n    <h3>My stickers (').concat(items.length, ')</h3>\n    <div class="stk">').concat(items.map((s, k) => '<button data-st="'.concat(k, '" aria-label="Sticker">').concat(s.e, "</button>")).join("")).concat(Array.from({ length: Math.max(0, 10 - items.length) }, () => '<button class="empty" disabled>?</button>').join(""), '</div>\n    <p class="sub" style="margin-top:10px">A new sticker waits in the big house at the end of every day\'s path.</p></div>');
+    }).join(""), '\n    <div class="howto">\u{1F330} <b>Acorns</b>: one for every right answer, two when right the first time.<br>\u{1FAB5} <b>Wood</b>: one for every finished mound, three for opening Domi\'s big house.</div>\n    ').concat(S.paintings.length ? "<h3>My paintings (".concat(S.paintings.length, ')</h3><div class="pgal">').concat(S.paintings.slice().reverse().map((pp) => '<span class="pthumb">'.concat(paintSVG(pp.p, pp.f), "</span>")).join(""), "</div>") : "", "\n    <h3>My stickers (").concat(items.length, ')</h3>\n    <div class="stk">').concat(items.map((s, k) => '<button data-st="'.concat(k, '" aria-label="Sticker">').concat(s.e, "</button>")).join("")).concat(Array.from({ length: Math.max(0, 10 - items.length) }, () => '<button class="empty" disabled>?</button>').join(""), '</div>\n    <p class="sub" style="margin-top:10px">A new sticker waits in the big house at the end of every day\'s path.</p></div>');
     $("prBack").onclick = () => {
       sfx.tap();
       showMap();
@@ -6746,7 +6959,7 @@ body {
     $("pSettings").hidden = false;
     const pn = curPlayer().name, w = wkLog(), tp = S.lastTopic || "math", dq = DINNER[tp] || DINNER.math, names = w.topics.map((t) => (COURSE.find((c) => c.id === t) || {}).name).filter(Boolean);
     const sk = skillFor(S.age, S.diff), ex1 = makeProb(sk), ex2 = makeProb(sk), n = HOLES[landIdx()].length;
-    const SHORT = { math: "Numbers", clock: "Clock", money: "Coins", watcher: "World", radio: "Radio" }, pct = w.q ? Math.round(w.right / w.q * 100) : 0;
+    const SHORT = { math: "Numbers", clock: "Clock", money: "Coins", watcher: "World", radio: "Radio", paint: "Paint" }, pct = w.q ? Math.round(w.right / w.q * 100) : 0;
     const ring = (v, max, c, ic) => {
       const f = Math.min(1, v / max);
       return '<span class="pring" style="--f:'.concat(f * 360, "deg;--c:").concat(c, '"><i>').concat(ic, '</i></span><small class="pnum">').concat(Math.min(v, max), "/").concat(max, "</small>");
@@ -7006,45 +7219,30 @@ body {
   dayPlan();
   showMap();
   (function intro() {
-    const ev = eventNow(), z = landIdx(), Z = ZONES[z];
+    const ev = eventNow(), z = landIdx(), Z = ZONES[z], t0 = Date.now();
     $("inEv").textContent = ev ? ev.e : "";
-    let spoke = false;
-    const speak = () => {
-      if (spoke) return;
-      spoke = true;
-      sayseq([ev ? ev.clip : "z" + Z.a, "w/LULU_BD_PRIZE", "w/LULU_BD_READY"]);
-    };
-    setTimeout(speak, 500);
-    $("introC").addEventListener("pointerdown", () => {
-      if (!voice || voice.paused) {
-        spoke = false;
-        speak();
-      }
-    }, { once: true });
-    const go = (start) => {
+    let gone = false;
+    const go = () => {
+      if (gone) return;
+      gone = true;
       hush();
       $("introC").classList.add("gone");
       setTimeout(() => $("introC").hidden = true, 420);
       S.seen = true;
       save();
       showMap();
-      if (start) {
-        const n2 = HOLES[landIdx()].length;
-        setTimeout(() => {
-          if (S.day.done < n2) showPop(S.day.done);
-        }, 700);
-      }
+      const n2 = HOLES[landIdx()].length;
+      setTimeout(() => {
+        if (S.day.done < n2) showPop(S.day.done);
+      }, 700);
     };
-    $("inGo").onclick = (e) => {
-      e.stopPropagation();
+    const later = () => setTimeout(go, Math.max(600, 2600 - (Date.now() - t0)));
+    setTimeout(() => sayseq([ev ? ev.clip : "z" + Z.a, "w/LULU_BD_PRIZE"], later), 400);
+    setTimeout(go, 9e3);
+    $("introC").addEventListener("pointerdown", () => {
       sfx.tap();
-      go(true);
-    };
-    $("inSkip").onclick = (e) => {
-      e.stopPropagation();
-      sfx.tap();
-      go(false);
-    };
+      go();
+    });
   })();
 })();
 </script>
