@@ -1,11 +1,12 @@
-# Paraxilingo library (for the Watcher Device and other apps)
+# Paraxilingo library (shared with the Watcher Device)
 
-Same layout as the Watcher's `Version B/Library`, so either app can reuse the other's files.
+Same layout as the Watcher's `Version B/Library`. Everything Paraxilingo adds goes here, so the Watcher can use it too.
 
 | Folder | What is in it |
 |---|---|
-| `voices/` | Lulu's Farsi names for answer words (`PX_FA_<WORD>.mp3`, 59 words: body parts, colours, animals, food, places...) and the painting intro (`PX_PAINT_INTRO.mp3`). `clips.csv`: file, voice, English word, Farsi text |
-| `pictures/` | `domi.svg`, the beaver mascot as a vector picture |
-| `games/` | `painting_pages.js`: the colouring pages (simple SVG shapes) |
+| `voices/` | Lulu saying answer words in Farsi (`PX_FA_*`) and English (`PX_EN_*`), the painting intro, and the dinosaur questions (`x01_q_lulu.mp3` ...). `clips.csv` lists every file with its word |
+| `questions/` | `paraxilingo_questions.csv` (new fixed questions, same columns as the Watcher's questions.csv) and `paraxilingo_games.csv` (Paraxilingo's games and whether they suit the Watcher) |
+| `pictures/` | `domi.svg`, the beaver mascot |
+| `games/` | `painting_pages.js`, the colouring pages |
 
-Paraxilingo reads the Watcher library on every build (questions, stories, voices), so new Watcher questions and stories show up in Paraxilingo by themselves.
+Paraxilingo reads the Watcher library on every build, so new Watcher questions, stories, voices and pictures show up in Paraxilingo automatically.

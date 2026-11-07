@@ -11,6 +11,10 @@ bv=function(w){return `<span class="bv" style="width:${w}px;--w:${w}px"><img src
 const FA_SAY=__FA_SAY__;
 const PLANET_N=["sun","mercury","venus","earth","mars","jupiter","saturn","uranus","neptune"];
 const DINOS=["t-rex","tyrannosaurus","triceratops","stegosaurus","brachiosaurus","velociraptor","diplodocus","pterodactyl"];
+const EN_SAY=__EN_SAY__;
+function enSay(word){const w=String(word).toLowerCase().trim();if(/^\d+$/.test(w))return +w>=1&&+w<=100?["w/LULU_EN"+(+w)]:[];if(DINOS.includes(w)||PLANET_N.includes(w))return [];
+  const c=EN_SAY[w]||EN_SAY[w.replace(/s$/,"")]||EN_SAY[w+"s"];return c?["w/"+c]:[]}
+const both=word=>faSay(word).concat(enSay(word));
 function faSay(word){
   const w=String(word).toLowerCase().trim();
   if(/^\d+$/.test(w))return [N(+w)];
@@ -38,7 +42,7 @@ sfx.oops=()=>tone([[392,0,.12,"triangle",.1],[330,.1,.18,"triangle",.1]]);
 /* ---------- pictures ---------- */
 const grp=(n,e,cls="")=>`<span class="grp ${cls}">${Array.from({length:n},()=>`<i class="ob">${e}</i>`).join("")}</span>`;
 const dots=n=>n<=10?`<span class="dots">${"●".repeat(n)}</span>`:"";
-const numOpt=n=>({h:`<b class="num">${n}</b>${dots(n)}`,say:[N(n)]});
+const numOpt=n=>({h:`<b class="num">${n}</b>${dots(n)}`,say:both(n)});
 function numOpts(right,cands,k=3){const w=sh([...new Set(cands.filter(x=>x!==right&&x>=0))]).slice(0,k-1),o=sh([right,...w]);return {opts:o.map(numOpt),ans:o.indexOf(right)}}
 const near=n=>[n-1,n+1,n+2,n-2,n+3];
 
@@ -51,6 +55,9 @@ const CATS=[
  {id:"animals",topic:"watcher",e:"🐾",name:"Animals"},
  {id:"world",topic:"watcher",e:"🌳",name:"Our world"},
  {id:"sky",topic:"watcher",e:"🌙",name:"Sky & space"},
+ {id:"farm",topic:"watcher",e:"🏡",name:"Homes, food & sounds"},
+ {id:"shapes",topic:"shapes",e:"🔷",name:"Shapes, colours & patterns"},
+ {id:"people",topic:"people",e:"🚩",name:"Flags & jobs"},
  {id:"story",topic:"radio",e:"📻",name:"Domi's Radio"},
  {id:"paint",topic:"paint",e:"🎨",name:"Painting"},
 ];
@@ -65,8 +72,11 @@ function kindsFor(cat){
   const a=lvl();
   if(cat==="count")return a<=4?["find","more","less"]:a<=6?["find","more","less","after","before"]:["after","before","find","more"];
   if(cat==="add")return a<=4?["addPic","subPic","teach"]:a<=7?["addPic","subPic","sum","teach","minus"]:["sum","minus","teach","big"];
-  if(cat==="clock")return a<=5?["routine","oclock"]:a<=6?["routine","oclock","half","season"]:a<=7?["half","quarter","season","oclock"]:["quarter","minutes","half"];
+  if(cat==="clock")return a<=5?["routine","oclock"]:a<=6?["routine","oclock","half","season","nowseason"]:a<=7?["half","quarter","season","today","tomorrow","week"]:["quarter","minutes","after","yesterday","months"];
   if(cat==="money")return a<=5?["pennies","value"]:a<=6?["pennies","value","count"]:a<=7?["value","count","same"]:["count","same","change"];
+  if(cat==="farm")return a<=4?["home","sound","fly"]:["home","food","sound","fly","water"];
+  if(cat==="shapes")return a<=4?["shape","color","pattern"]:["shape","color","pattern","bigsmall"];
+  if(cat==="people")return a<=5?["job","job2"]:["flag","job","flag2","job2"];
   return ["w"];
 }
 const MAXN=()=>{const a=lvl();return a<=4?5:a<=6?10:a<=7?20:100};
@@ -75,9 +85,9 @@ const MAXN=()=>{const a=lvl();return a<=4?5:a<=6?10:a<=7?20:100};
 function qCount(k){
   const mx=Math.min(MAXN(),20),e=pickOne(OBJ);
   if(k==="find"){const n=ri(2,Math.min(mx,10)),c=sh([n,...sh(near(n).filter(x=>x>=1&&x<=12&&x!==n)).slice(0,2)]);
-    return {voice:["w/LULU_C_FIND",N(n)],cap:`Find ${n}`,visual:`<div class="bignum">${n}</div>`,opts:c.map(x=>({h:grp(x,e),say:null})),ans:c.indexOf(n),layout:"col",hint:"elim",exp:{t:`${n}`,v:["w/LULU_ANS_IS"]}}}
+    return {voice:["w/LULU_C_FIND",N(n)],cap:`Find ${n}`,visual:`<div class="bignum">${n}</div>`,opts:c.map(x=>({h:grp(x,e),say:both(x)})),ans:c.indexOf(n),layout:"col",hint:"elim",exp:{t:`${n}`,v:["w/LULU_ANS_IS"]}}}
   if(k==="more"||k==="less"){let a=ri(1,Math.min(mx,9)),b;do{b=ri(1,Math.min(mx,9))}while(b===a||Math.abs(a-b)>4);const o=[a,b],r=k==="more"?Math.max(a,b):Math.min(a,b);
-    return {voice:[k==="more"?"w/LULU_CP_MORE":"w/LULU_CP_LESS"],cap:k==="more"?"Which has more?":"Which has less?",visual:`<div class="listen">⚖️</div>`,opts:o.map(x=>({h:grp(x,e)})),ans:o.indexOf(r),layout:"row",hint:"count",exp:{t:`${r}`,v:["w/LULU_ANS_IS"]}}}
+    return {voice:[k==="more"?"w/LULU_CP_MORE":"w/LULU_CP_LESS"],cap:k==="more"?"Which has more?":"Which has less?",visual:`<div class="listen">⚖️</div>`,opts:o.map(x=>({h:grp(x,e),say:both(x)})),ans:o.indexOf(r),layout:"row",hint:"count",exp:{t:`${r}`,v:["w/LULU_ANS_IS"]}}}
   if(k==="after"){const n=ri(1,Math.min(mx,19)-1);return Object.assign({voice:["w/LULU_C_AFTER1",N(n)],cap:`${n} → ?`,visual:`<div class="seq"><b class="bignum sm">${n}</b><span class="arr">➜</span><b class="bignum sm q">?</b></div>`,layout:"row3",hint:"line",line:[n,n+1],exp:{t:`${n} → ${n+1}`,v:["w/LULU_ANS_IS"]}},numOpts(n+1,[n,n+2,n-1,n+3]))}
   const n=ri(2,Math.min(mx,20));return Object.assign({voice:["w/LULU_C_BEFORE1",N(n)],cap:`? → ${n}`,visual:`<div class="seq"><b class="bignum sm q">?</b><span class="arr">➜</span><b class="bignum sm">${n}</b></div>`,layout:"row3",hint:"line",line:[n-1,n],exp:{t:`${n-1} → ${n}`,v:["w/LULU_ANS_IS"]}},numOpts(n-1,[n,n+1,n-2]));
 }
@@ -95,63 +105,79 @@ function qAdd(k){
   const eq=`<div class="eq"><span>${a}${dots(a)}</span><b>${op}</b><span>${b}${dots(b)}</span><b>=</b><span class="q">?</span></div>`;
   if(k==="teach"){const shown=Math.random()<.5?r:r+pickOne([1,-1,2]);const ok=shown===r;
     return {voice:spoken?[N(a),op==="+"?"w/LULU_PLUS":"w/LULU_MINUS",N(b),"w/LULU_EQUALS",N(shown),"q_teach"]:["q_teach"],cap:"Is Domi right?",
-      visual:`<div class="domisays">${bv(78)}<div class="bub"><b>${a} ${op} ${b} = ${shown}</b></div></div>`,opts:[{h:"<span class='yn'>✅</span>"},{h:"<span class='yn'>❌</span>"}],ans:ok?0:1,layout:"yn",hint:"dots",a,b,
+      visual:`<div class="domisays">${bv(78)}<div class="bub"><b>${a} ${op} ${b} = ${shown}</b></div></div>`,opts:[{h:"<span class='yn'>✅</span>",say:["w/LULU_SK_YES"]},{h:"<span class='yn'>❌</span>",say:["w/LULU_SK_NO"]}],ans:ok?0:1,layout:"yn",hint:"dots",a,b,
       exp:{t:`${a} ${op} ${b} = ${r}`,v:[N(a),op==="+"?"w/LULU_PLUS":"w/LULU_MINUS",N(b),"w/LULU_EQUALS",N(r)]}}}
   return Object.assign({voice:spoken?[N(a),op==="+"?"w/LULU_PLUS":"w/LULU_MINUS",N(b),"w/LULU_EQUALS"]:["q_choose"],cap:"",visual:eq,layout:"row3",hint:spoken&&r<=10?"dots":"elim",
     exp:{t:`${a} ${op} ${b} = ${r}`,v:spoken?[N(a),op==="+"?"w/LULU_PLUS":"w/LULU_MINUS",N(b),"w/LULU_EQUALS",N(r)]:["w/LULU_ANS_IS"]}},numOpts(r,near(r).concat([r+10,r-10])));
 }
 const dig=(h,m)=>`${h}:${String(m).padStart(2,"0")}`;
+const DAYS_EN=["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],MONTHS_EN=["January","February","March","April","May","June","July","August","September","October","November","December"],SEAS=["Spring","Summer","Fall","Winter"];
+const daySay=i=>["w/LULU_FA_DAY"+i,"w/LULU_EN_DAY"+i],seaSay=i=>["w/LULU_FA_SEA"+i,"w/LULU_EN_SEASON"+i],SEA_E=["🌸","☀️","🍂","⛄"];
+function dayOpts(r){const o=sh([r,...sh([0,1,2,3,4,5,6].filter(x=>x!==r)).slice(0,2)]);return {opts:o.map(i=>({h:`<span class="oe">📅</span><small class="dn">${DAYS_EN[i]}</small>`,say:daySay(i)})),ans:o.indexOf(r)}}
+function qCal(k){
+  const t=(new Date().getDay()+6)%7,m=new Date().getMonth(),sea=[3,3,0,0,0,1,1,1,2,2,2,3][m];
+  if(k==="today")return Object.assign({voice:["w/LULU_CA_TODAY"],cap:"What day is today?",visual:`<div class="bigemo">📅</div>`,layout:"col",hint:"elim",exp:{t:DAYS_EN[t],v:["w/LULU_ANS_IS",...daySay(t)]}},dayOpts(t));
+  if(k==="tomorrow")return Object.assign({voice:["w/LULU_CA_TOMORROW"],cap:"What day is tomorrow?",visual:`<div class="bigemo">🌅</div>`,layout:"col",hint:"elim",exp:{t:DAYS_EN[(t+1)%7],v:["w/LULU_ANS_IS",...daySay((t+1)%7)]}},dayOpts((t+1)%7));
+  if(k==="yesterday")return Object.assign({voice:["w/LULU_CA_YESTERDAY"],cap:"What day was yesterday?",visual:`<div class="bigemo">🌙</div>`,layout:"col",hint:"elim",exp:{t:DAYS_EN[(t+6)%7],v:["w/LULU_ANS_IS",...daySay((t+6)%7)]}},dayOpts((t+6)%7));
+  if(k==="after"){const d=ri(0,6);return Object.assign({voice:["w/LULU_CA_DAY_AFTER",...daySay(d)],cap:`${DAYS_EN[d]} → ?`,visual:`<div class="daycard">${DAYS_EN[d]}</div>`,layout:"col",hint:"elim",exp:{t:DAYS_EN[(d+1)%7],v:["w/LULU_ANS_IS",...daySay((d+1)%7)]}},dayOpts((d+1)%7))}
+  if(k==="nowseason"){const o=sh([0,1,2,3]);return {voice:["w/LULU_CA_NOW_SEASON"],cap:"Which season is it now?",visual:`<div class="bigemo">🗓️</div>`,opts:o.map(i=>({h:`<span class="oe">${SEA_E[i]}</span><small>${SEAS[i]}</small>`,say:seaSay(i)})),ans:o.indexOf(sea),layout:"grid",hint:"elim",exp:{t:SEAS[sea],v:["w/LULU_ANS_IS",...seaSay(sea)]}}}
+  if(k==="week")return Object.assign({voice:["w/LULU_CA_WEEK_DAYS"],cap:"How many days in a week?",visual:`<div class="bigemo">📆</div>`,layout:"row3",hint:"elim",exp:{t:"7",v:["w/LULU_ANS_IS",N(7)]}},numOpts(7,[5,10,6,8]));
+  return Object.assign({voice:["w/LULU_CA_YEAR_MONTHS"],cap:"How many months in a year?",visual:`<div class="bigemo">🗓️</div>`,layout:"row3",hint:"elim",exp:{t:"12",v:["w/LULU_ANS_IS",N(12)]}},numOpts(12,[10,7,14]));
+}
 function qClock(k){
-  if(k==="routine"){const r=pickOne(ROUTINES);return {voice:["c_routine"],cap:"Morning or night?",visual:`<div class="bigemo">${r[0]}</div>`,opts:[{h:"<span class='yn'>☀️</span><small>Morning</small>",say:faSay("morning")},{h:"<span class='yn'>🌙</span><small>Night</small>",say:faSay("night")}],ans:r[2],layout:"yn",hint:"elim",exp:{t:r[2]?"Night 🌙":"Morning ☀️",v:["w/LULU_ANS_IS"]}}}
+  if(["today","tomorrow","yesterday","after","nowseason","week","months"].includes(k))return qCal(k);
+  if(k==="routine"){const r=pickOne(ROUTINES);return {voice:["c_routine"],cap:"Morning or night?",visual:`<div class="bigemo">${r[0]}</div>`,opts:[{h:"<span class='yn'>☀️</span><small>Morning</small>",say:both("morning")},{h:"<span class='yn'>🌙</span><small>Night</small>",say:both("night")}],ans:r[2],layout:"yn",hint:"elim",exp:{t:r[2]?"Night 🌙":"Morning ☀️",v:["w/LULU_ANS_IS"]}}}
   if(k==="season"){const sz=pickOne(SEASONS),SE={Winter:"⛄",Spring:"🌸",Summer:"☀️",Autumn:"🍂"},o=sh(["Winter","Spring","Summer","Autumn"]);
-    return {voice:["c_season"],cap:"Which season?",visual:`<div class="bigemo">${sz[0]}</div>`,opts:o.map(x=>({h:`<span class="oe">${SE[x]}</span><small>${x}</small>`,say:faSay(x)})),ans:o.indexOf(sz[2]),layout:"grid",hint:"elim",exp:{t:sz[2],v:["w/LULU_ANS_IS"]}}}
+    return {voice:["c_season"],cap:"Which season?",visual:`<div class="bigemo">${sz[0]}</div>`,opts:o.map(x=>({h:`<span class="oe">${SE[x]}</span><small>${x}</small>`,say:seaSay(["Spring","Summer","Autumn","Winter"].indexOf(x))})),ans:o.indexOf(sz[2]),layout:"grid",hint:"elim",exp:{t:sz[2],v:["w/LULU_ANS_IS"]}}}
   const h=ri(1,12),m=k==="oclock"?0:k==="half"?30:k==="quarter"?pickOne([15,45]):ri(1,11)*5;
   const w=[dig(hh(h+1),m),dig(hh(h-1),m),dig(h,m===30?0:30),dig(h,(m+15)%60)];
   const o=sh([dig(h,m),...sh([...new Set(w.filter(x=>x!==dig(h,m)))]).slice(0,2)]);
-  return {voice:["c_read"],cap:"What time is it?",visual:clockSVG(h,m),opts:o.map(x=>({h:`<b class="num t">${x}</b>`})),ans:o.indexOf(dig(h,m)),layout:"row3",hint:"clock",exp:{t:`${dig(h,m)}  (${tName(h,m)})`,v:["w/LULU_ANS_IS"]}};
+  return {voice:["c_read"],cap:"What time is it?",visual:clockSVG(h,m),opts:o.map(x=>({h:`<b class="num t">${x}</b>`,say:(([hh2,mm2])=>[N(+hh2),"w/LULU_EN"+(+hh2)].concat(+mm2?["w/LULU_EN"+(+mm2)]:[]))(x.split(":"))})),ans:o.indexOf(dig(h,m)),layout:"row3",hint:"clock",exp:{t:`${dig(h,m)}  (${tName(h,m)})`,v:["w/LULU_ANS_IS"]}};
 }
 function qMoney(k){
   const a=lvl();
   if(k==="pennies"){const n=ri(2,a<=5?5:9);return Object.assign({voice:["m_count"],cap:"How many cents?",visual:coinsHTML(Array(n).fill("p"),false),layout:"row3",hint:"coins",exp:{t:`${n}¢`,v:["w/LULU_ANS_IS"]}},cents(n,near(n)))}
   if(k==="value"){const pool=a<=5?["p","n"]:a<=6?["p","n","d"]:["p","n","d","q"],c=pickOne(pool),o=sh(pool.map(x=>COINS[x].v)).slice(0,Math.min(3,pool.length));if(!o.includes(COINS[c].v))o[0]=COINS[c].v;const oo=sh(o);
-    return {voice:["m_value"],cap:COINS[c].name,visual:coinsHTML([c],false).replace(/width="([\d.]+)" height="([\d.]+)"/,(x,w,h)=>`width="${w*1.9}" height="${h*1.9}"`)+`<div class="coinname">${COINS[c].name}</div>`,opts:oo.map(v=>({h:`<b class="num">${v}¢</b>`,say:[N(v)]})),ans:oo.indexOf(COINS[c].v),layout:oo.length===2?"yn":"row3",hint:"elim",exp:{t:`${COINS[c].name} = ${COINS[c].v}¢`,v:["w/LULU_ANS_IS"]}}}
+    return {voice:["m_value"],cap:COINS[c].name,visual:coinsHTML([c],false).replace(/width="([\d.]+)" height="([\d.]+)"/,(x,w,h)=>`width="${w*1.9}" height="${h*1.9}"`)+`<div class="coinname">${COINS[c].name}</div>`,opts:oo.map(v=>({h:`<b class="num">${v}¢</b>`,say:both(v)})),ans:oo.indexOf(COINS[c].v),layout:oo.length===2?"yn":"row3",hint:"elim",exp:{t:`${COINS[c].name} = ${COINS[c].v}¢`,v:["w/LULU_ANS_IS"]}}}
   if(k==="count"){let ks;const pool=a<=6?["p","n"]:a<=7?["p","n","d"]:["p","n","d","q"],cap=a<=6?20:a<=7?50:99;do{ks=Array.from({length:ri(2,4)},()=>pickOne(pool))}while(sumC(ks)>cap);ks.sort((x,y)=>COINS[y].v-COINS[x].v);const t=sumC(ks);
     return Object.assign({voice:["m_count"],cap:"How much money?",visual:coinsHTML(ks,false),layout:"row3",hint:"coins",exp:{t:ks.map(x=>COINS[x].v+"¢").join(" + ")+` = ${t}¢`,v:["w/LULU_ANS_IS"]}},cents(t,[t+1,t-1,t+5,t-5,t+10]))}
   const m=makeMoney();const q={voice:[m.audio],cap:m.title,visual:m.visual,opts:m.opts.map(x=>({h:/<svg/.test(x)?x:`<b class="num">${x}</b>`})),ans:m.ans,layout:m.wide?"col":"row3",hint:"elim",exp:{t:m.answerText||m.opts[m.ans].replace(/<[^>]+>/g,""),v:["w/LULU_ANS_IS"]}};
   return q;
 }
-function cents(r,c){const w=sh([...new Set(c.filter(x=>x>0&&x!==r))]).slice(0,2),o=sh([r,...w]);return {opts:o.map(x=>({h:`<b class="num">${x}¢</b>`,say:[N(x)]})),ans:o.indexOf(r)}}
+function cents(r,c){const w=sh([...new Set(c.filter(x=>x>0&&x!==r))]).slice(0,2),o=sh([r,...w]);return {opts:o.map(x=>({h:`<b class="num">${x}¢</b>`,say:both(x)})),ans:o.indexOf(r)}}
 
 /* Watcher Device questions: Lulu reads the question and the explanation */
 const SKY_TF=[1,0,1,0,1,0,1,1,0,1,1,0,1,0,1,0];
 const SKY_TF_E=["☀️","🌙","🌍","⭐","☁️","🌙","🌈","🧑‍🚀","🪐","🌌","⛈️","☀️","🌍","🌙","❄️","☄️"];
 const SKY_TF_T=["The sun is a star.","The moon is a planet.","We live on planet Earth.","Stars are there only at night.","Clouds are made of tiny drops of water.","The moon has its own light.","A rainbow has seven colours.","Astronauts float in space.","Jupiter is smaller than Earth.","Our galaxy is the Milky Way.","Thunder is the loud sound of the sky.","The sun turns off at night.","The Earth goes around the sun.","There is air to breathe on the moon.","Snow is frozen water.","A comet is a real star with a tail."];
 function wPool(cat){
-  const pre={animals:["a"],world:["b","n"],sky:["s","p"]}[cat],young=S.age<=7;
+  const pre={animals:["a","x"],world:["b","n"],sky:["s","p"]}[cat],young=S.age<=7;
   return WQ.filter(w=>pre.includes(w.i[0])&&w.a<=Math.max(3,S.age)&&(!young||VOICED.has(w.i)));
 }
-const TEXT_E=[["penguin","🐧"],["whale","🐋"],["giraffe","🦒"],["octopus","🐙"],["elephant","🐘"],["spider","🕷️"],["cheetah","🐆"],["bear","🐻"],["owl","🦉"],["hands","🧼"],["teeth","🦷"],["heart","❤️"],["bones","🦴"],["eyes","👀"],["nose","👃"],["ears","👂"],["sleep","😴"],["water","💧"],["cactus","🌵"],["mushroom","🍄"],["mountain","⛰️"],["river","🏞️"],["volcano","🌋"],["carrot","🥕"],["milk","🥛"],["moon","🌙"],["sun","☀️"],["star","⭐"],["rain","🌧️"],["fog","🌫️"],["wind","🌬️"],["planet","🪐"],["plant","🌱"],["flower","🌸"],["tree","🌳"],["bird","🐦"],["fish","🐟"],["egg","🥚"]];
+const TEXT_E=[["t-rex","🦖"],["dinosaur","🦕"],["penguin","🐧"],["whale","🐋"],["giraffe","🦒"],["octopus","🐙"],["elephant","🐘"],["spider","🕷️"],["cheetah","🐆"],["bear","🐻"],["owl","🦉"],["hands","🧼"],["teeth","🦷"],["heart","❤️"],["bones","🦴"],["eyes","👀"],["nose","👃"],["ears","👂"],["sleep","😴"],["water","💧"],["cactus","🌵"],["mushroom","🍄"],["mountain","⛰️"],["river","🏞️"],["volcano","🌋"],["carrot","🥕"],["milk","🥛"],["moon","🌙"],["sun","☀️"],["star","⭐"],["rain","🌧️"],["fog","🌫️"],["wind","🌬️"],["planet","🪐"],["plant","🌱"],["flower","🌸"],["tree","🌳"],["bird","🐦"],["fish","🐟"],["egg","🥚"]];
 const wEmoji=w=>{if(w.p&&PIC_E[w.p])return PIC_E[w.p];const t=w.q.toLowerCase();for(const [k,e] of TEXT_E)if(t.includes(k))return e;return "🤔"};
+Object.assign(WORD_E,{"brachiosaurus":"🦕","t-rex":"🦖","eggs":"🥚","bones":"🦴","clouds":"☁️"});
+const E_VOICED=new Set(__EVOICED__);
 const optE=o=>WORD_E[o.toLowerCase()]||"";
 function qWatcher(cat,used){
   if(cat==="sky"&&Math.random()<.3){const k=sh([...Array(16).keys()]).find(i=>!used.has("tf"+i));if(k!==undefined){used.add("tf"+k);
-    return {voice:["w/LULU_TF"+k],cap:SKY_TF_T[k],visual:`<div class="bigpic">${SKY_TF_E[k]}</div>`,opts:[{h:"<span class='yn'>✅</span>"},{h:"<span class='yn'>❌</span>"}],ans:SKY_TF[k]?0:1,layout:"yn",hint:"again",exp:{t:SKY_TF_T[k]+(SKY_TF[k]?" ✅ True!":" ❌ Not true."),v:["w/LULU_ANS_IS"]}}}}
+    return {voice:["w/LULU_TF"+k],cap:SKY_TF_T[k],visual:`<div class="bigpic">${SKY_TF_E[k]}</div>`,opts:[{h:"<span class='yn'>✅</span>",say:["w/LULU_SK_YES"]},{h:"<span class='yn'>❌</span>",say:["w/LULU_SK_NO"]}],ans:SKY_TF[k]?0:1,layout:"yn",hint:"again",exp:{t:SKY_TF_T[k]+(SKY_TF[k]?" ✅ True!":" ❌ Not true."),v:["w/LULU_ANS_IS"]}}}}
   let pool=wPool(cat).filter(w=>!used.has(w.i)&&!S.seenW.includes(w.i));
   if(!pool.length){S.seenW=S.seenW.filter(i=>!wPool(cat).some(w=>w.i===i));pool=wPool(cat).filter(w=>!used.has(w.i))}
   /* avoid two of the same small topic (e.g. body, nature) in one mound */
   const tops=new Set([...used].map(i=>(WQ.find(w=>w.i===i)||{}).t));const fresh=pool.filter(w=>!tops.has(w.t));const w=pickOne(fresh.length?fresh:pool);
   if(!w)return qCount("find");
   used.add(w.i);S.seenW.push(w.i);
-  const v=VOICED.has(w.i),qv=v?[`w/${w.i}_q_lulu`]:["q_choose"],ev=v?[`w/${w.i}_e_lulu`]:["w/LULU_ANS_IS"];
-  if(w.k==="tf")return {voice:qv,cap:w.q,visual:`<div class="bigpic">${wEmoji(w)}</div>`,opts:[{h:"<span class='yn'>✅</span>"},{h:"<span class='yn'>❌</span>"}],ans:w.n,layout:"yn",hint:"again",exp:{t:(w.n===0?"✅ True! ":"❌ Not true. ")+w.x,v:ev}};
-  return {voice:qv,cap:w.q,visual:`<div class="listen">${(()=>{const t=w.q.toLowerCase(),oe=w.o.map(optE);for(const [k,e] of TEXT_E)if(t.includes(k)&&!oe.includes(e))return e;return catById(cat).e})()}</div>`,opts:w.o.map(o=>({h:`<span class="oe">${optE(o)||"🔹"}</span><small>${o}</small>`,say:faSay(o)})),ans:w.n,layout:w.o.length>2?"row3":"yn",hint:"elim",exp:{t:`${w.o[w.n]}: ${w.x}`,v:ev}};
+  const v=VOICED.has(w.i),qv=v?[`w/${w.i}_q_lulu`]:["q_choose"],ev=E_VOICED.has(w.i)?[`w/${w.i}_e_lulu`]:["w/LULU_ANS_IS"];
+  if(w.k==="tf")return {voice:qv,cap:w.q,visual:`<div class="bigpic">${wEmoji(w)}</div>`,opts:[{h:"<span class='yn'>✅</span>",say:["w/LULU_SK_YES"]},{h:"<span class='yn'>❌</span>",say:["w/LULU_SK_NO"]}],ans:w.n,layout:"yn",hint:"again",exp:{t:(w.n===0?"✅ True! ":"❌ Not true. ")+w.x,v:ev}};
+  return {voice:qv,cap:w.q,visual:`<div class="listen">${(()=>{const t=w.q.toLowerCase(),oe=w.o.map(optE);for(const [k,e] of TEXT_E)if(t.includes(k)&&!oe.includes(e))return e;return catById(cat).e})()}</div>`,opts:w.o.map(o=>/^\d+$/.test(o)?numOpt(+o):({h:`<span class="oe">${optE(o)||"🔹"}</span><small>${o}</small>`,say:both(o)})),ans:w.n,layout:w.o.length>2?"row3":"yn",hint:"elim",exp:{t:`${w.o[w.n]}: ${w.x}`,v:ev}};
 }
 /* Story time (Domi's Radio): stories and questions from the Watcher Device, 5 voices */
 const STORIES=__STORIES__;
 const ST_E={Picnic:"🧺",Rainbow:"🌈",Farm:"🐄",House:"🏠",Trip:"✈️",Seed:"🌱",Sea:"🌊",Clock:"⏰",Market:"🛒"};
 function qStory(si,k){
   const st=STORIES[si],q=st.q.find(x=>x.k===k)||st.q[k],nums=!!q.nums;
-  const opts=nums?q.nums.map(numOpt):q.opts.map(o=>({h:`<span class="oe">${o[0]}</span><small>${o[1]}</small>`,say:faSay(o[1])}));
+  const opts=nums?q.nums.map(numOpt):q.opts.map(o=>({h:`<span class="oe">${o[0]}</span><small>${o[1]}</small>`,say:both(o[1])}));
   return {voice:[`w/ST_S${st.s}_Q${q.k}`],cap:"",visual:`<div class="listen radio">${ST_E[st.t]||"📻"}</div>`,opts,ans:q.ans,layout:"row3",hint:"elim",story:si,exp:{t:nums?String(q.nums[q.ans]):q.opts[q.ans][1],v:["w/LULU_ANS_IS"]}};
 }
 function buildQ(cat,kind,used){
@@ -159,6 +185,11 @@ function buildQ(cat,kind,used){
   if(cat==="add")return qAdd(kind);
   if(cat==="clock")return qClock(kind);
   if(cat==="money")return qMoney(kind);
+  if(cat==="clock")return qClock(kind);
+  if(cat==="farm")return qFarm(kind,used);
+  if(cat==="shapes")return qShapes(kind,used);
+  if(cat==="people")return qPeople(kind,used);
+  if(cat==="sky"&&Math.random()<.35)return Math.random()<.5?qSkyPic(used):qPlanet(used);
   return qWatcher(cat,used);
 }
 
@@ -223,7 +254,7 @@ function pick(j,b){
   q.tries++;L.row=0;sfx.oops();b.classList.add("wrong");setTimeout(()=>{b.classList.remove("wrong");b.classList.add("faded")},450);
   if(q.tries===1){
     q.locked=true;hush();toastHint(pickOne(["Almost! Try again 💪","So close! One more try","Let's look again 👀"]));
-    sayseq(["w/LULU_TRY_ONCE"],()=>giveHint(q,()=>{q.locked=false}));
+    sayseq(["w/LULU_TRY_ONCE"],()=>{q.locked=false;giveHint(q,()=>{})});
     return;
   }
   /* second miss: Domi shows the answer and explains, then we go on */
@@ -322,4 +353,66 @@ function paintGame(pi){
   $("pClear").onclick=()=>{sfx.tap();fills.length=0;$("pCanvas").innerHTML=paintSVG(pi,fills);bindRegions();upd()};
   $("pDone").onclick=()=>{sfx.tap();hush();S.paintings.push({p:pi,f:fills.slice(),d:today()});if(S.paintings.length>24)S.paintings.shift();S.acorns+=3;L.acorns+=3;save();renderStats();burst(140);moundDone()};
   setTimeout(()=>sayseq(["w/PX_PAINT_INTRO"]),400);
+}
+
+/* ================= games from the Watcher Device library (pictures + Lulu's voice) ================= */
+const PIC=(f,c="wp")=>`<img class="${c}" src="img/w/${f}.png" alt="">`;
+const AN=[["bird","🐦"],["cow","🐄"],["duck","🦆"],["chicken","🐔"],["pig","🐷"],["shark","🦈"],["fox","🦊"],["dog","🐶"],["frog","🐸"],["bee","🐝"],["caterpillar","🐛"],["cat","🐱"],["bat","🦇"],["snake","🐍"]];
+const HOMES=["nest","barn","pond","doghouse","house","hive","tree","cave","den","sea","rocks"];
+const FOODS=["worms","grass","seeds","bone","fish","flies","flowers","leaves","mosquitoes","apples","mice","eggs","corn"];
+const HOME_OF={bird:["nest","tree"],cow:["barn"],duck:["pond","nest"],chicken:["barn","nest"],pig:["barn"],shark:["sea"],fox:["den","cave"],dog:["doghouse","house"],frog:["pond"],bee:["hive","tree"],caterpillar:["tree"],cat:["house"],bat:["cave","tree"],snake:["rocks","cave"]};
+const FOOD_OF={bird:["worms","seeds"],cow:["grass","corn"],duck:["seeds","flies"],chicken:["corn","seeds","worms"],pig:["apples","corn","grass"],shark:["fish"],fox:["mice","eggs","apples"],dog:["bone","fish"],frog:["flies","mosquitoes"],bee:["flowers"],caterpillar:["leaves","flowers"],cat:["fish","mice","eggs"],bat:["mosquitoes","flies"],snake:["eggs","mice"]};
+const SOUNDS=["cow","dog","cat","duck","pig","frog","bee","snake","chicken"];
+const anSay=n=>{const i=AN.findIndex(a=>a[0]===n);return ["w/LULU_FA_AN"+i,...enSay(n)]};
+const anOpt=n=>({h:`<span class="oe big">${AN.find(a=>a[0]===n)[1]}</span>`,say:anSay(n)});
+function pick3(right,pool,used,key){const w=sh(pool.filter(x=>!right.includes(x))).slice(0,2),r=pickOne(right);const o=sh([r,...w]);return {o,ans:o.indexOf(r),r}}
+function freshAnimal(used,ok){const c=sh(AN.map(a=>a[0]).filter(ok));return c.find(n=>!used.has("an_"+n))||c[0]}
+function qFarm(k,used){
+  if(k==="home"||k==="food"){const n=freshAnimal(used,x=>true);used.add("an_"+n);const L2=k==="home"?HOMES:FOODS,R2=(k==="home"?HOME_OF:FOOD_OF)[n],{o,ans,r}=pick3(R2,L2);
+    const say=x=>k==="home"?["w/LULU_FA_HOME"+HOMES.indexOf(x),...enSay(x)]:["w/LULU_FA_FOOD"+FOODS.indexOf(x),...enSay(x)];
+    return {voice:[...anSay(n),k==="home"?"w/LULU_AN_HOME":"w/LULU_AN_FOOD"],cap:k==="home"?`Where does the ${n} live?`:`What does the ${n} eat?`,visual:`<div class="bigemo">${AN.find(a=>a[0]===n)[1]}</div>`,
+      opts:o.map(x=>({h:PIC((k==="home"?"home_":"food_")+L2.indexOf(x),"wp op")+`<small>${x}</small>`,say:say(x)})),ans,layout:"row3",hint:"elim",exp:{t:`${n} → ${r}`,v:["w/LULU_ANS_IS",...say(r)]}}}
+  if(k==="sound"){const n=sh(SOUNDS).find(x=>!used.has("snd_"+x))||SOUNDS[0];used.add("snd_"+n);const o=sh([n,...sh(SOUNDS.filter(x=>x!==n)).slice(0,2)]);
+    return {voice:["w/LULU_SND_WHO","w/LULU_EN_SOUND"+SOUNDS.indexOf(n)],cap:"Who says that?",visual:`<div class="listen">🔊</div>`,opts:o.map(anOpt),ans:o.indexOf(n),layout:"row3",hint:"elim",exp:{t:n,v:["w/LULU_ANS_IS",...anSay(n)]}}}
+  const set=k==="fly"?["bird","duck","bee","bat"]:["duck","shark","frog"],non=AN.map(a=>a[0]).filter(x=>!set.includes(x)&&(k!=="fly"||x!=="chicken")),r=pickOne(set),o=sh([r,...sh(non).slice(0,2)]);
+  return {voice:[k==="fly"?"w/LULU_AN_FLY":"w/LULU_AN_WATER"],cap:k==="fly"?"Who can fly?":"Who lives in the water?",visual:`<div class="bigemo">${k==="fly"?"🪽":"💧"}</div>`,opts:o.map(anOpt),ans:o.indexOf(r),layout:"row3",hint:"elim",exp:{t:r,v:["w/LULU_ANS_IS",...anSay(r)]}};
+}
+const SHAPES=["Circle","Square","Triangle","Rectangle","Star","Oval","Rhombus","Trapezoid","Pentagon","Hexagon","Octagon","Parallelogram","Cube","Cylinder","Sphere","Cone","Pyramid","Rectangular prism"];
+const shSay=i=>["w/LULU_SHF"+i,"w/LULU_EN_SH"+i];
+const COLS=[["Red","#FF5A5F",["🍎","🍓","🚒","🌹"]],["Blue","#4DABF7",["🐳","🫐","🧢","💙"]],["Yellow","#FFD43B",["🍌","🌻","🐥","⭐"]],["Green","#51CF66",["🐸","🥦","🌲","🍀"]],["Orange","#FF9F40",["🍊","🥕","🎃","🦊"]],["Purple","#9775FA",["🍇","🍆","🔮","🦄"]],["Pink","#F783AC",["🌸","🐷","🦩","🍬"]],["Brown","#A0703C",["🐻","🍫","🌰","🪵"]],["Black","#343A40",["🎱","🐜","🕶️","🐈‍⬛"]],["White","#FFFFFF",["☁️","🐑","⚪","🦷"]]];
+const colSay=i=>["w/PX_FA_"+COLS[i][0].toUpperCase(),"w/LULU_COLOR"+i];
+const PAT=[["🍎","🍌"],["⭐","🌙"],["🐶","🐱"],["🔴","🔵"],["🌸","🍀"],["🚗","🚲"]];
+function qShapes(k,used){
+  const a=lvl();
+  if(k==="shape"){const max=a<=6?6:a<=7?12:18,c=sh([...Array(max).keys()]),r=c.find(i=>!used.has("sh"+i));used.add("sh"+r);const o=sh([r,...c.filter(i=>i!==r).slice(0,2)]);
+    return {voice:["w/LULU_SH_FIND",...shSay(r)],cap:`Find the ${SHAPES[r].toLowerCase()}!`,visual:`<div class="listen">🔷</div>`,opts:o.map(i=>({h:PIC("shape_"+i,"wp op"),say:shSay(i)})),ans:o.indexOf(r),layout:"row3",hint:"elim",exp:{t:SHAPES[r],v:["w/LULU_ANS_IS",...shSay(r)]}}}
+  if(k==="color"){const c=sh([...Array(a<=5?8:10).keys()]),r=c.find(i=>!used.has("col"+i));used.add("col"+r);const o=sh([r,...c.filter(i=>i!==r).slice(0,2)]);
+    return {voice:["w/LULU_COL_WHAT"],cap:"What colour is it?",visual:`<div class="bigemo">${pickOne(COLS[r][2])}</div>`,opts:o.map(i=>({h:`<span class="swatch" style="--c:${COLS[i][1]}"></span><small>${COLS[i][0]}</small>`,say:colSay(i)})),ans:o.indexOf(r),layout:"row3",hint:"elim",exp:{t:COLS[r][0],v:["w/LULU_ANS_IS",...colSay(r)]}}}
+  if(k==="bigsmall"){const e=pickOne(OBJ),big=Math.random()<.5,o=sh([0,1]),r=big?0:1;
+    return {voice:[big?"w/LULU_CP_BIG":"w/LULU_CP_SMALL"],cap:big?"Which is bigger?":"Which is smaller?",visual:`<div class="bigemo soft">${big?"🐘":"🐭"}</div>`,opts:o.map(i=>({h:`<span class="oe" style="font-size:${i===0?72:30}px">${e}</span>`})),ans:o.indexOf(r),layout:"row",hint:"elim",exp:{t:big?"The big one!":"The small one!",v:["w/LULU_ANS_IS"]}}}
+  /* pattern: what comes next? */
+  const [x,y]=sh(PAT).find(p=>!used.has("pt"+p[0]))||PAT[0];used.add("pt"+x);const kind=a<=5?0:ri(0,2);
+  const seq=kind===0?[x,y,x,y,x]:kind===1?[x,x,y,x,x]:[x,y,y,x,y],next=kind===0?y:kind===1?y:y,ans3=sh([x,y,pickOne(OBJ.filter(z=>z!==x&&z!==y))]);
+  return {voice:["w/LULU_PT_NEXT"],cap:"What comes next?",visual:`<div class="pat">${seq.map(e=>`<span>${e}</span>`).join("")}<span class="q">?</span></div>`,opts:ans3.map(e=>({h:`<span class="oe big">${e}</span>`})),ans:ans3.indexOf(next),layout:"row3",hint:"elim",exp:{t:seq.join(" ")+" "+next,v:["w/LULU_ANS_IS"]}};
+}
+const COUNTRIES=[["Iran","🇮🇷"],["the United States","🇺🇸"],["Canada","🇨🇦"],["Mexico","🇲🇽"],["Brazil","🇧🇷"],["the United Kingdom","🇬🇧"],["France","🇫🇷"],["Germany","🇩🇪"],["Italy","🇮🇹"],["China","🇨🇳"],["Japan","🇯🇵"],["India","🇮🇳"],["Egypt","🇪🇬"],["Australia","🇦🇺"]];
+const JOBS=[["Doctor","🧑‍⚕️"],["Firefighter","🧑‍🚒"],["Police officer","👮"],["Chef","🧑‍🍳"],["Farmer","🧑‍🌾"],["Teacher","🧑‍🏫"],["Pilot","🧑‍✈️"],["Astronaut","🧑‍🚀"],["Mechanic","🧑‍🔧"],["Scientist","🧑‍🔬"],["Artist","🧑‍🎨"],["Builder","👷"]];
+const ctySay=i=>["w/LULU_FA_CTY"+i,"w/LULU_EN_COUNTRY"+i],jobSay=i=>["w/LULU_FA_JOB"+i,"w/LULU_EN_JOB"+i];
+function qPeople(k,used){
+  const flag=k.startsWith("flag"),L2=flag?COUNTRIES:JOBS,c=sh([...L2.keys()]),r=c.find(i=>!used.has(k[0]+i));used.add(k[0]+r);const o=sh([r,...c.filter(i=>i!==r).slice(0,2)]),say=flag?ctySay:jobSay;
+  return {voice:[flag?"w/LULU_GEO_FIND":"w/LULU_JOB_FIND",...say(r)],cap:flag?`Find the flag of ${L2[r][0]}`:`Find the ${L2[r][0].toLowerCase()}`,visual:`<div class="listen">${flag?"🚩":"👀"}</div>`,
+    opts:o.map(i=>({h:`<span class="oe big">${L2[i][1]}</span>`,say:say(i)})),ans:o.indexOf(r),layout:"row3",hint:"elim",exp:{t:L2[r][0],v:["w/LULU_ANS_IS",...say(r)]}};
+}
+const SKYN=["sun","moon","star","cloud","rain","rainbow","lightning","snow","rocket","astronaut","telescope","galaxy","comet","satellite","planet","full moon"];
+const skySay=n=>{const i=SKYN.indexOf(n);const fa=n==="sun"?["w/LULU_FA_PL0"]:n==="full moon"?faSay("full moon"):i>0&&i<15?["w/LULU_FA_SKY"+i]:[];return fa.concat(n==="sun"?["w/LULU_PL0"]:enSay(n==="galaxy"?"milky way":n))};
+const SKYQ=[["w/LULU_SK_NIGHT",["moon","star","full moon"],["sun","rainbow"]],["w/LULU_SK_DAY",["sun"],["star","galaxy","comet"]],["w/LULU_SK_RAIN",["cloud"],["sun","star","moon","rocket"]],["w/LULU_SK_COLD",["snow"],["sun","rainbow","lightning"]],["w/LULU_SK_SPACE",["rocket","satellite"],["cloud","rain","rainbow","snow"]],["w/LULU_SK_ASTRONAUT",["astronaut"],["cloud","rainbow","snow","telescope"]],["w/LULU_SK_AFTER_RAIN",["rainbow"],["snow","comet","star","rocket"]],["w/LULU_SK_LOOK",["telescope"],["rocket","satellite","cloud"]],["w/LULU_SK_GALAXY",["galaxy"],["planet","full moon","comet","cloud"]]];
+function qSkyPic(used){
+  const i=sh([...SKYQ.keys()]).find(j=>!used.has("skq"+j));if(i===undefined)return qWatcher("sky",used);used.add("skq"+i);
+  const [clip,R2,W]=SKYQ[i],r=pickOne(R2),o=sh([r,...sh(W).slice(0,2)]);
+  return {voice:[clip],cap:"",visual:`<div class="listen">🌌</div>`,opts:o.map(n=>({h:PIC("sky_"+SKYN.indexOf(n),"wp op"),say:skySay(n)})),ans:o.indexOf(r),layout:"row3",hint:"elim",exp:{t:r,v:["w/LULU_ANS_IS",...skySay(r)]}};
+}
+function qPlanet(used){
+  const c=sh([...PLANET_N.keys()]),r=c.find(i=>!used.has("pl"+i));if(r===undefined)return qWatcher("sky",used);used.add("pl"+r);const o=sh([r,...c.filter(i=>i!==r).slice(0,2)]);
+  const plSay=i=>i===0?["w/LULU_FA_PL0","w/LULU_YA","w/LULU_PL0"]:["w/LULU_FA_PL"+i,"w/LULU_YA","w/LULU_PL"+i];
+  return {voice:["w/LULU_SK_WHICH"],cap:"What is this?",visual:PIC("pl_"+r,"wp big"),opts:o.map(i=>({h:`<span class="oe">🪐</span><small>${PLANET_N[i][0].toUpperCase()+PLANET_N[i].slice(1)}</small>`,say:plSay(i)})),ans:o.indexOf(r),layout:"col",hint:"elim",exp:{t:PLANET_N[r],v:["w/LULU_ANS_IS",...plSay(r)]}};
 }

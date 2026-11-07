@@ -242,3 +242,18 @@
 @keyframes hopi{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-14px) rotate(2deg)}}
 .introC{cursor:pointer}
 .zbg img.gr{filter:saturate(.3) brightness(1.08) contrast(.95)}
+/* Watcher pictures, swatches, patterns */
+.wp{display:block;width:120px;height:120px;object-fit:contain}
+.wp.op{width:72px;height:72px}
+.wp.big{width:170px;height:170px}
+.qo .oe.big{font-size:56px}
+.swatch{width:56px;height:56px;border-radius:50%;background:var(--c);border:3px solid rgba(0,0,0,.08);box-shadow:inset 0 -6px 0 rgba(0,0,0,.12)}
+.pat{display:flex;gap:6px;align-items:center;font-size:44px;flex-wrap:wrap;justify-content:center}
+.pat .q{font-family:var(--f-display);color:#C3CCDB;font-size:52px}
+.daycard{font-family:var(--f-display);font-size:40px;color:var(--q-lilac);background:#F3EFFF;border-radius:20px;padding:10px 22px}
+.qo small.dn{font-size:20px}
+@media (min-width:700px){.wp.op{width:110px;height:110px}.wp{width:180px;height:180px}.wp.big{width:240px;height:240px}.qo .oe.big{font-size:80px}.swatch{width:84px;height:84px}.pat{font-size:64px}}
+/* white backgrounds everywhere */
+body,.phone,.lesson.q2,.introC,#pSettings,.panel,.map{background:#fff!important}
+.qvis{box-shadow:0 4px 18px rgba(38,51,77,.08);border:2px solid #EEF2F7}
+.qresult{background:#fff}

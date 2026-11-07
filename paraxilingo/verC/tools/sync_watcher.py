@@ -44,7 +44,7 @@ FIX = {"#ffd400": ["🟡", "Yellow"], "house building": ["🏠", "House"], "slic
        "regional indicator symbol letter j regional indicator symbol letter p": ["🇯🇵", "Japan"],
        "deciduous tree": ["🌳", "Tree"], "birthday cake": ["🎂", "Cake"], "green salad": ["🥗", "Salad"], "salt shaker": ["🧂", "Salt"],
        "high-speed train": ["🚄", "Train"], "glass of milk": ["🥛", "Milk"], "beach with umbrella": ["🏖️", "Beach"], "straight ruler": ["📏", "Ruler"],
-       "balance scale": ["⚖️", "Scales"], "droplet": ["💧", "Water"], "crescent moon": ["🌙", "Moon"], "cherry blossom": ["🌸", "Flowers"], "automobile": ["🚗", "Car"]}
+       "balance scale": ["⚖️", "Scales"], "droplet": ["💧", "Water"], "crescent moon": ["🌙", "Moon"], "cherry blossom": ["🌸", "Flowers"], "automobile": ["🚗", "Car"], "cat face": ["🐱", "Cat"], "cow face": ["🐄", "Cow"], "dog face": ["🐶", "Dog"], "spouting whale": ["🐳", "Whale"], "soccer ball": ["⚽", "Ball"]}
 LABEL = lambda o: re.sub(r'\s*\(colou?r\)', '', o).replace('flag: ', '').replace('high-speed ', '').replace('spouting ', '').strip().capitalize()
 rows = list(csv.DictReader(open(os.path.join(Q, 'questions.csv'), encoding='utf-8-sig')))
 voices = set(os.listdir(os.path.join(LIB, 'voices')))
@@ -66,11 +66,14 @@ json.dump(stories, open(os.path.join(S, 'watcher', 'stories.json'), 'w'), ensure
 
 # ---------- voice clips ----------
 dst = os.path.join(S, 'appC', 'audio', 'w'); os.makedirs(dst, exist_ok=True)
-keep = re.compile(r'^(LULU_N\d+|LULU_(PLUS|MINUS|EQUALS|C_FIND|C_AFTER1|C_BEFORE1|CP_MORE|CP_LESS|TRY_ONCE|ANS_IS|BD_PRIZE|BD_READY|BD_PRIZE_IS|BD_RIGHT|L_END|PRIZE_SHORT|ST_INTRO|YA)|LULU_WP_.*|LULU_TF\d+|LULU_PR_.|LULU_PRAISE\d|LULU_EV_.*|LULU_FA_.*|LULU_FAW\d+|LULU_PL\d|LULU_COLOR\d|LULU_EN_SH\d+|ST_S\d+_.*)\.mp3$')
+keep = re.compile(r'^(LULU_N\d+|LULU_(PLUS|MINUS|EQUALS|C_FIND|C_AFTER1|C_BEFORE1|CP_.*|TRY_ONCE|ANS_IS|BD_PRIZE|BD_READY|BD_PRIZE_IS|BD_RIGHT|L_END|PRIZE_SHORT|ST_INTRO|YA|AN_.*|H_.*|SND_.*|SH_.*|SHF\d+|SK_.*|CA_.*|GEO_.*|JOB_.*|COL_WHAT|PT_NEXT|EN\d+|EN_.*|WORD\d+)|LULU_WP_.*|LULU_TF\d+|LULU_PR_.|LULU_PRAISE\d|LULU_EV_.*|LULU_FA_.*|LULU_FAW\d+|LULU_PL\d|LULU_COLOR\d|LULU_EN_SH\d+|ST_S\d+_.*)\.mp3$')
 n = 0
 for f in voices:
     if keep.match(f): shutil.copy(os.path.join(LIB, 'voices', f), os.path.join(dst, f)); n += 1
 for f in os.listdir(os.path.join(LIB, 'quiz_voices')):
     if f.endswith('_lulu.mp3'): shutil.copy(os.path.join(LIB, 'quiz_voices', f), os.path.join(dst, f)); n += 1
 for f in glob.glob(os.path.join(S, 'fa_new', 'out', '*.mp3')): shutil.copy(f, dst); n += 1
+pd=os.path.join(S,'appC','img','w');os.makedirs(pd,exist_ok=True)
+for f in os.listdir(os.path.join(LIB,'pictures')):
+    if re.match(r'(home|food|pl|shape|sky)_\d+\.png$',f): shutil.copy(os.path.join(LIB,'pictures',f),os.path.join(pd,f))
 print('watcher sync:', len(wq), 'quiz questions,', len(stories), 'stories,', n, 'clips')

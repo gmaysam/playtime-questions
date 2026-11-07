@@ -120,5 +120,18 @@
 "fall": "LULU_FA_SEA2",
 "winter": "LULU_FA_SEA3",
 "trees": "LULU_FA_HOME6",
-"ocean": "LULU_FA_HOME9"
+"ocean": "LULU_FA_HOME9",
+"chicken": "LULU_FA_AN3",
+"caterpillar": "LULU_FA_AN10",
+"worms": "LULU_FA_FOOD0",
+"bone": "LULU_FA_FOOD3",
+"flies": "LULU_FA_FOOD5",
+"mosquitoes": "LULU_FA_FOOD8",
+"apples": "LULU_FA_FOOD9",
+"mice": "LULU_FA_FOOD10",
+"den": "LULU_FA_HOME8",
+"milky way": "LULU_FA_SKY11",
+"police officer": "LULU_FA_JOB2",
+"artist": "LULU_FA_JOB10",
+"the united states": "LULU_FA_CTY1"
 }
