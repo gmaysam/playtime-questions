@@ -218,3 +218,27 @@
   .qsheet{max-width:680px;margin:0 auto}
   .introC .talk{width:340px}
 }
+/* painting */
+.paint{display:flex;flex-direction:column;align-items:center;gap:16px;width:100%}
+.pcanvas{width:min(100%,520px);background:#fff;border-radius:32px;box-shadow:0 10px 28px rgba(38,51,77,.10);padding:10px}
+.pcanvas svg{width:100%;height:auto;display:block;touch-action:manipulation}
+.psvg .rg{cursor:pointer;transition:fill .2s}
+.psvg .rg.pop{animation:rgpop .35s}
+@keyframes rgpop{50%{opacity:.75}}
+.ppal{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;width:min(100%,520px)}
+.pot{aspect-ratio:1/1;border-radius:50%;border:4px solid #fff;background:var(--c);box-shadow:0 5px 0 rgba(38,51,77,.18),inset 0 -6px 0 rgba(0,0,0,.12);transition:transform .15s}
+.pot.on{transform:scale(1.15);box-shadow:0 0 0 4px var(--q-ink),0 5px 0 rgba(38,51,77,.18)}
+.pot[data-n="white"]{border-color:#DDE3EC}
+.pbtns{display:grid;grid-template-columns:1fr 3fr;gap:12px;width:min(100%,520px)}
+.pgal{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:6px}
+.pthumb{background:#fff;border-radius:14px;padding:4px;box-shadow:0 3px 10px rgba(38,51,77,.08)}
+.pthumb svg{width:100%;height:auto;display:block}
+.pthumb .rg{stroke-width:7}
+/* the option being read aloud */
+.qo.saying{transform:translateY(-4px) scale(1.04);box-shadow:0 10px 0 var(--sh),0 0 0 5px rgba(255,201,60,.55)}
+/* new Domi */
+.bv img{width:100%;height:auto;display:block}
+.introC .talk{animation:hopi 1.6s ease-in-out infinite;filter:drop-shadow(0 14px 16px rgba(38,51,77,.18))}
+@keyframes hopi{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-14px) rotate(2deg)}}
+.introC{cursor:pointer}
+.zbg img.gr{filter:saturate(.3) brightness(1.08) contrast(.95)}

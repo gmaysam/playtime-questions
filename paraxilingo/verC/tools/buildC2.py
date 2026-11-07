@@ -34,12 +34,13 @@ def rep(text, a, b, cnt=1):
 A = rep(A, ' {id:"feel",e:"😊",name:"Feelings & Friends",soon:true},',
  ''' {id:"watcher",e:"🔎",name:"Discover the world",desc:"Animals, body, nature, sky, space, food: the Watcher questions"},
  {id:"radio",e:"📻",name:"Domi's Radio",desc:"Listen to a short story, then answer questions about it"},
+ {id:"paint",e:"🎨",name:"Painting",desc:"Colour a picture, tap by tap"},
  {id:"feel",e:"😊",name:"Feelings & Friends",soon:true},''')
 A = rep(A, 'perDay:20,', 'perDay:10,')
 A = rep(A, 'ansLang:"",topics:["math","clock","money"],topicsV2:1});',
- 'ansLang:"",topics:["math","clock","money","watcher","radio"],topicsV2:1,topicsV3:1,acorns:0,wood:0,day:{d:"",done:0,house:false,plan:null},stickers:[],seenW:[],real:null,notified:[],mapMonth:"auto",questions:0});')
+ 'ansLang:"",topics:["math","clock","money","watcher","radio","paint"],topicsV2:1,topicsV3:1,topicsV4:1,paintings:[],acorns:0,wood:0,day:{d:"",done:0,house:false,plan:null},stickers:[],seenW:[],real:null,notified:[],mapMonth:"auto",questions:0});')
 A = rep(A, 'if(!S.topicsV2){S.topics=[...new Set([...(S.topics||[]),"math","clock","money"])];S.topicsV2=1}',
- 'if(!S.topicsV2){S.topics=[...new Set([...(S.topics||[]),"math","clock","money"])];S.topicsV2=1}if(!S.topicsV3){S.topics=[...new Set([...S.topics,"watcher","radio"])];S.topicsV3=1}if(!S.real)S.real=defaultReal();if(![10,15,20,30].includes(S.perDay))S.perDay=10')
+ 'if(!S.topicsV2){S.topics=[...new Set([...(S.topics||[]),"math","clock","money"])];S.topicsV2=1}if(!S.topicsV3){S.topics=[...new Set([...S.topics,"watcher","radio"])];S.topicsV3=1}if(!S.topicsV4){S.topics=[...new Set([...S.topics,"paint"])];S.topicsV4=1}if(!S.paintings)S.paintings=[];if(!S.real)S.real=defaultReal();if(![10,15,20,30].includes(S.perDay))S.perDay=10')
 A = rep(A, 'const save=()=>{', '''function defaultReal(){return [{id:"book",e:"📚",name:"A new book",a:60,w:8},{id:"clothes",e:"👕",name:"New clothes",a:120,w:15},{id:"toy",e:"🧸",name:"A toy",a:200,w:25}]}
 const save=()=>{''')
 A = rep(A, 'const a=new Audio("audio/"+(S.lang==="fr"&&!/^(en|rep)\\d/.test(name)?"fr/":"")+name+".mp3");', 'const a=new Audio("audio/"+name+".mp3");')
@@ -50,7 +51,9 @@ PIC_E=re.search(r'const PIC_E=(\{.*?\});',open(os.path.join(os.path.dirname(os.p
 WORD_E=re.search(r'const WORD_E=(\{.*?\});',open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'buildC.py')).read()).group(1)
 import os
 VOICED=sorted(set(f.split('_')[0] for f in os.listdir(os.path.join(os.path.dirname(OUT),'audio','w')) if f.endswith('_q_lulu.mp3')))
-B=open(os.path.join(os.path.dirname(__file__),'qengine.js')).read().replace('__WQ__',wq).replace('__VOICED__',json.dumps(VOICED)).replace('__PIC_E__',PIC_E).replace('__WORD_E__',WORD_E)
+SDIR=os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+FA_SAY=json.load(open(os.path.join(SDIR,'tools','fa_have.json')));FA_SAY.update(json.load(open(os.path.join(SDIR,'fa_new','fa_new.json'))))
+B=open(os.path.join(os.path.dirname(__file__),'qengine.js')).read().replace('__STORIES__',open(os.path.join(SDIR,'watcher','stories.json')).read()).replace('__FA_SAY__',json.dumps(FA_SAY)).replace('__WQ__',wq).replace('__VOICED__',json.dumps(VOICED)).replace('__PIC_E__',PIC_E).replace('__WORD_E__',WORD_E)
 C=''
 
 css += r'''
@@ -196,10 +199,8 @@ markup = '''
   <div class="toast" id="toast"></div>
 
   <div class="introC" id="introC">
-    <img class="talk" src="img/beaver_talk.webp" alt="Domi the beaver talking">
+    <img class="talk" src="img/domi.svg" alt="Domi the beaver">
     <div class="inev" id="inEv"></div>
-    <button class="btn green" id="inGo">I'm ready!</button>
-    <button class="skip" id="inSkip">Skip</button>
   </div>
 
   <canvas class="fx" id="fx"></canvas>
@@ -223,20 +224,20 @@ function eventNow(d=new Date()){
 }
 const monthIdx=()=>S.mapMonth==="auto"?new Date().getMonth():+S.mapMonth;
 const landIdx=()=>MONTH_LAND[monthIdx()];
-const TOPIC_SYM={math:"➕",clock:"🕒",money:"🪙",watcher:"🔎",radio:"📻"};
+const TOPIC_SYM={math:"➕",clock:"🕒",money:"🪙",watcher:"🔎",radio:"📻",paint:"🎨"};
 
 /* ================= today's path: the parents' daily questions split over the mounds ================= */
 const activeTopics=()=>S.topics.filter(t=>TOPIC_SYM[t]);
 const activeCats=()=>CATS.filter(c=>activeTopics().includes(c.topic));
 function dayPlan(){
-  if(S.day.d!==today()||!S.day.plan||S.day.v!==3||S.day.land!==landIdx()||S.day.per!==S.perDay||S.day.tops!==activeTopics().join()){
-    const n=HOLES[landIdx()].length,cats=activeCats(),hasStory=cats.some(c=>c.id==="story")&&n>2;
-    let rest=cats.filter(c=>c.id!=="story").map(c=>c.id);if(!rest.length)rest=["count"];
+  if(S.day.d!==today()||!S.day.plan||S.day.v!==4||S.day.land!==landIdx()||S.day.per!==S.perDay||S.day.tops!==activeTopics().join()){
+    const n=HOLES[landIdx()].length,cats=activeCats(),hasStory=cats.some(c=>c.id==="story")&&n>2,hasPaint=cats.some(c=>c.id==="paint")&&n>3;
+    let rest=cats.filter(c=>c.id!=="story"&&c.id!=="paint").map(c=>c.id);if(!rest.length)rest=["count"];
     const off=dayN()%rest.length;rest=[...rest.slice(off),...rest.slice(0,off)];
-    const sk=hasStory?Math.floor(n/2):-1,Q=Math.max(n,S.perDay)-(hasStory?3:0),m=n-(hasStory?1:0),base=Math.floor(Q/m),rem=Q%m;let j=0,r=0;
-    const plan=Array.from({length:n},(x,i)=>i===sk?{cat:"story",count:3,story:dayN()%STORIES.length}:{cat:rest[(j++)%rest.length],count:Math.max(1,base+(r++<rem?1:0))});
-    const keep=S.day.d===today()&&S.day.land===landIdx()&&S.day.v===3;
-    S.day={d:today(),done:keep?Math.min(S.day.done,n):0,house:keep?S.day.house:false,plan,land:landIdx(),per:S.perDay,tops:activeTopics().join(),v:3};save();
+    const sk=hasStory?Math.floor(n/2):-1,pk=hasPaint?n-1:-1,Q=Math.max(n,S.perDay)-(hasStory?3:0),m=n-(hasStory?1:0)-(hasPaint?1:0),base=Math.floor(Q/m),rem=Q%m;let j=0,r=0;
+    const plan=Array.from({length:n},(x,i)=>i===sk?{cat:"story",count:3,story:dayN()%STORIES.length}:i===pk?{cat:"paint",count:0,page:dayN()%PAGES.length}:{cat:rest[(j++)%rest.length],count:Math.max(1,base+(r++<rem?1:0))});
+    const keep=S.day.d===today()&&S.day.land===landIdx()&&S.day.v===4;
+    S.day={d:today(),done:keep?Math.min(S.day.done,n):0,house:keep?S.day.house:false,plan,land:landIdx(),per:S.perDay,tops:activeTopics().join(),v:4};save();
   }
   return S.day.plan;
 }
@@ -316,7 +317,7 @@ function showPop(i){
   const plan=dayPlan(),p=plan[i],done=S.day.done,c=catById(p.cat),pt=moundXY(i),W=250,left=Math.max(12,Math.min(journey.offsetWidth-W-12,pt.x-W/2));
   popEl=document.createElement("div");popEl.className="pop";popEl.style.left=left+"px";popEl.style.top=(pt.y-landEl.offsetTop+20)+"px";popEl.style.setProperty("--ax",(pt.x-left)+"px");
   popEl.style.setProperty("--pc",i<done?"#9AA0A8":i===done?ZONES[landIdx()].c:"#AFAFBA");
-  const cnt=p.cat==="story"?"a story + 3 questions":`${p.count} ${p.count===1?"question":"questions"}`;
+  const cnt=p.cat==="story"?"a story + 3 questions":p.cat==="paint"?"colour a picture":`${p.count} ${p.count===1?"question":"questions"}`;
   popEl.innerHTML=i===done?`<h4>${c.e} ${c.name}</h4><p>${cnt}</p><button class="btn">Let's go!</button>`
     :i<done?`<h4>✅ Done!</h4><p>You finished this mound today.</p>`:`<h4>${c.e} ${c.name}</h4><p>Coming up: ${cnt}</p>`;
   popEl.onclick=e=>e.stopPropagation();
@@ -365,6 +366,7 @@ function showPrizes(){
         <span><span class="bar a"><i style="width:${fa*100}%"></i></span><small>🌰 ${Math.min(S.acorns,r.a)} / ${r.a}${ok?"":` · ${Math.max(0,r.a-S.acorns)} more`}</small></span>
         <span><span class="bar w"><i style="width:${fw*100}%"></i></span><small>🪵 ${Math.min(S.wood,r.w)} / ${r.w}${ok?"":` · ${Math.max(0,r.w-S.wood)} more`}</small></span></button>`}).join("")}
     <div class="howto">🌰 <b>Acorns</b>: one for every right answer, two when right the first time.<br>🪵 <b>Wood</b>: one for every finished mound, three for opening Domi's big house.</div>
+    ${S.paintings.length?`<h3>My paintings (${S.paintings.length})</h3><div class="pgal">${S.paintings.slice().reverse().map(pp=>`<span class="pthumb">${paintSVG(pp.p,pp.f)}</span>`).join("")}</div>`:""}
     <h3>My stickers (${items.length})</h3>
     <div class="stk">${items.map((s,k)=>`<button data-st="${k}" aria-label="Sticker">${s.e}</button>`).join("")}${Array.from({length:Math.max(0,10-items.length)},()=>`<button class="empty" disabled>?</button>`).join("")}</div>
     <p class="sub" style="margin-top:10px">A new sticker waits in the big house at the end of every day's path.</p></div>`;
@@ -387,7 +389,7 @@ function showParents(){
   hidePanels();$("map").hidden=true;$("pSettings").hidden=false;
   const pn=curPlayer().name,w=wkLog(),tp=S.lastTopic||"math",dq=(DINNER[tp]||DINNER.math),names=w.topics.map(t=>(COURSE.find(c=>c.id===t)||{}).name).filter(Boolean);
   const sk=skillFor(S.age,S.diff),ex1=makeProb(sk),ex2=makeProb(sk),n=HOLES[landIdx()].length;
-  const SHORT={math:"Numbers",clock:"Clock",money:"Coins",watcher:"World",radio:"Radio"},pct=w.q?Math.round(w.right/w.q*100):0;
+  const SHORT={math:"Numbers",clock:"Clock",money:"Coins",watcher:"World",radio:"Radio",paint:"Paint"},pct=w.q?Math.round(w.right/w.q*100):0;
   const ring=(v,max,c,ic)=>{const f=Math.min(1,v/max);return `<span class="pring" style="--f:${f*360}deg;--c:${c}"><i>${ic}</i></span><small class="pnum">${Math.min(v,max)}/${max}</small>`};
   const sec=(e,t)=>`<div class="psec"><span>${e}</span>${t}</div>`;
   $("pSettings").innerHTML=`<button class="back" id="closeSettings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>Back</button>
@@ -462,15 +464,15 @@ start = r'''
 const clk=()=>{const d=new Date();$("clock").textContent=d.getHours()+":"+String(d.getMinutes()).padStart(2,"0")};clk();setInterval(clk,30000);
 dayPlan();showMap();
 (function intro(){
-  const ev=eventNow(),z=landIdx(),Z=ZONES[z];
+  const ev=eventNow(),z=landIdx(),Z=ZONES[z],t0=Date.now();
   $("inEv").textContent=ev?ev.e:"";
-  let spoke=false;const speak=()=>{if(spoke)return;spoke=true;sayseq([ev?ev.clip:"z"+Z.a,"w/LULU_BD_PRIZE","w/LULU_BD_READY"])};
-  setTimeout(speak,500);
-  $("introC").addEventListener("pointerdown",()=>{if(!voice||voice.paused){spoke=false;speak()}},{once:true});
-  const go=(start)=>{hush();$("introC").classList.add("gone");setTimeout(()=>$("introC").hidden=true,420);S.seen=true;save();
-    showMap();if(start){const n2=HOLES[landIdx()].length;setTimeout(()=>{if(S.day.done<n2)showPop(S.day.done)},700)}};
-  $("inGo").onclick=e=>{e.stopPropagation();sfx.tap();go(true)};
-  $("inSkip").onclick=e=>{e.stopPropagation();sfx.tap();go(false)};
+  let gone=false;
+  const go=()=>{if(gone)return;gone=true;hush();$("introC").classList.add("gone");setTimeout(()=>$("introC").hidden=true,420);S.seen=true;save();
+    showMap();const n2=HOLES[landIdx()].length;setTimeout(()=>{if(S.day.done<n2)showPop(S.day.done)},700)};
+  const later=()=>setTimeout(go,Math.max(600,2600-(Date.now()-t0)));
+  setTimeout(()=>sayseq([ev?ev.clip:"z"+Z.a,"w/LULU_BD_PRIZE"],later),400);
+  setTimeout(go,9000);
+  $("introC").addEventListener("pointerdown",()=>{sfx.tap();go()});
 })();
 })();
 '''

@@ -5,6 +5,19 @@ const VOICED=new Set(__VOICED__);
 const PIC_E=__PIC_E__;
 const WORD_E=__WORD_E__;
 const N=n=>n>=0&&n<=20?"w/LULU_N"+n:null;
+/* the new, cuter Domi (vector) everywhere */
+bv=function(w){return `<span class="bv" style="width:${w}px;--w:${w}px"><img src="img/domi.svg" alt=""></span>`};
+/* Farsi names of answer words (Watcher clips + Paraxilingo's own PX_FA_* clips) */
+const FA_SAY=__FA_SAY__;
+const PLANET_N=["sun","mercury","venus","earth","mars","jupiter","saturn","uranus","neptune"];
+const DINOS=["t-rex","tyrannosaurus","triceratops","stegosaurus","brachiosaurus","velociraptor","diplodocus","pterodactyl"];
+function faSay(word){
+  const w=String(word).toLowerCase().trim();
+  if(/^\d+$/.test(w))return [N(+w)];
+  if(DINOS.includes(w))return [];                                  /* dinosaurs: the English name is enough */
+  const pi=PLANET_N.indexOf(w);if(pi>0)return ["w/LULU_FA_PL"+pi,"w/LULU_YA","w/LULU_PL"+pi];   /* "Moshtari ya Jupiter" */
+  const c=FA_SAY[w]||FA_SAY[w.replace(/s$/,"")]||FA_SAY[w+"s"];return c?["w/"+c]:[];
+}
 const PRAISE_CLIPS=["w/LULU_PR_A","w/LULU_PR_B","w/LULU_PR_C","w/LULU_PR_D","w/LULU_PR_E","w/LULU_PR_F","w/LULU_PRAISE1","w/LULU_PRAISE2","w/LULU_PRAISE3","w/LULU_PRAISE4","w/LULU_BD_RIGHT","praise1","praise2","praise3","praise4"];
 const PRAISE_T=["Yay!","Super!","Woohoo!","Amazing!","Brilliant!","You're a star!","Fantastic!","Hooray!","So smart!","Wow!"];
 const OBJ=["🍎","🐟","⭐","🦆","🌸","🍓","🐞","🎈","🍪","🐣","🧁","🦋"];
@@ -19,13 +32,13 @@ function sayseq(list,onEnd){
   const next=()=>{if(id!==seqId)return;if(i>=l.length){speaking(false);onEnd&&onEnd();return}say(l[i++],next)};
   speaking(true);next();
 }
-function hush(){seqId++;if(voice){voice.onended=null;voice.onerror=null;voice.pause();voice=null}speaking(false)}
+function hush(){seqId++;askTok++;if(voice){voice.onended=null;voice.onerror=null;voice.pause();voice=null}speaking(false)}
 sfx.oops=()=>tone([[392,0,.12,"triangle",.1],[330,.1,.18,"triangle",.1]]);
 
 /* ---------- pictures ---------- */
 const grp=(n,e,cls="")=>`<span class="grp ${cls}">${Array.from({length:n},()=>`<i class="ob">${e}</i>`).join("")}</span>`;
 const dots=n=>n<=10?`<span class="dots">${"●".repeat(n)}</span>`:"";
-const numOpt=n=>({h:`<b class="num">${n}</b>${dots(n)}`,say:N(n)});
+const numOpt=n=>({h:`<b class="num">${n}</b>${dots(n)}`,say:[N(n)]});
 function numOpts(right,cands,k=3){const w=sh([...new Set(cands.filter(x=>x!==right&&x>=0))]).slice(0,k-1),o=sh([right,...w]);return {opts:o.map(numOpt),ans:o.indexOf(right)}}
 const near=n=>[n-1,n+1,n+2,n-2,n+3];
 
@@ -39,6 +52,7 @@ const CATS=[
  {id:"world",topic:"watcher",e:"🌳",name:"Our world"},
  {id:"sky",topic:"watcher",e:"🌙",name:"Sky & space"},
  {id:"story",topic:"radio",e:"📻",name:"Domi's Radio"},
+ {id:"paint",topic:"paint",e:"🎨",name:"Painting"},
 ];
 const catById=id=>CATS.find(c=>c.id===id);
 
@@ -88,9 +102,9 @@ function qAdd(k){
 }
 const dig=(h,m)=>`${h}:${String(m).padStart(2,"0")}`;
 function qClock(k){
-  if(k==="routine"){const r=pickOne(ROUTINES);return {voice:["c_routine"],cap:"Morning or night?",visual:`<div class="bigemo">${r[0]}</div>`,opts:[{h:"<span class='yn'>☀️</span><small>Morning</small>"},{h:"<span class='yn'>🌙</span><small>Night</small>"}],ans:r[2],layout:"yn",hint:"elim",exp:{t:r[2]?"Night 🌙":"Morning ☀️",v:["w/LULU_ANS_IS"]}}}
+  if(k==="routine"){const r=pickOne(ROUTINES);return {voice:["c_routine"],cap:"Morning or night?",visual:`<div class="bigemo">${r[0]}</div>`,opts:[{h:"<span class='yn'>☀️</span><small>Morning</small>",say:faSay("morning")},{h:"<span class='yn'>🌙</span><small>Night</small>",say:faSay("night")}],ans:r[2],layout:"yn",hint:"elim",exp:{t:r[2]?"Night 🌙":"Morning ☀️",v:["w/LULU_ANS_IS"]}}}
   if(k==="season"){const sz=pickOne(SEASONS),SE={Winter:"⛄",Spring:"🌸",Summer:"☀️",Autumn:"🍂"},o=sh(["Winter","Spring","Summer","Autumn"]);
-    return {voice:["c_season"],cap:"Which season?",visual:`<div class="bigemo">${sz[0]}</div>`,opts:o.map(x=>({h:`<span class="oe">${SE[x]}</span><small>${x}</small>`})),ans:o.indexOf(sz[2]),layout:"grid",hint:"elim",exp:{t:sz[2],v:["w/LULU_ANS_IS"]}}}
+    return {voice:["c_season"],cap:"Which season?",visual:`<div class="bigemo">${sz[0]}</div>`,opts:o.map(x=>({h:`<span class="oe">${SE[x]}</span><small>${x}</small>`,say:faSay(x)})),ans:o.indexOf(sz[2]),layout:"grid",hint:"elim",exp:{t:sz[2],v:["w/LULU_ANS_IS"]}}}
   const h=ri(1,12),m=k==="oclock"?0:k==="half"?30:k==="quarter"?pickOne([15,45]):ri(1,11)*5;
   const w=[dig(hh(h+1),m),dig(hh(h-1),m),dig(h,m===30?0:30),dig(h,(m+15)%60)];
   const o=sh([dig(h,m),...sh([...new Set(w.filter(x=>x!==dig(h,m)))]).slice(0,2)]);
@@ -100,13 +114,13 @@ function qMoney(k){
   const a=lvl();
   if(k==="pennies"){const n=ri(2,a<=5?5:9);return Object.assign({voice:["m_count"],cap:"How many cents?",visual:coinsHTML(Array(n).fill("p"),false),layout:"row3",hint:"coins",exp:{t:`${n}¢`,v:["w/LULU_ANS_IS"]}},cents(n,near(n)))}
   if(k==="value"){const pool=a<=5?["p","n"]:a<=6?["p","n","d"]:["p","n","d","q"],c=pickOne(pool),o=sh(pool.map(x=>COINS[x].v)).slice(0,Math.min(3,pool.length));if(!o.includes(COINS[c].v))o[0]=COINS[c].v;const oo=sh(o);
-    return {voice:["m_value"],cap:COINS[c].name,visual:coinsHTML([c],false).replace(/width="([\d.]+)" height="([\d.]+)"/,(x,w,h)=>`width="${w*1.9}" height="${h*1.9}"`)+`<div class="coinname">${COINS[c].name}</div>`,opts:oo.map(v=>({h:`<b class="num">${v}¢</b>`})),ans:oo.indexOf(COINS[c].v),layout:oo.length===2?"yn":"row3",hint:"elim",exp:{t:`${COINS[c].name} = ${COINS[c].v}¢`,v:["w/LULU_ANS_IS"]}}}
+    return {voice:["m_value"],cap:COINS[c].name,visual:coinsHTML([c],false).replace(/width="([\d.]+)" height="([\d.]+)"/,(x,w,h)=>`width="${w*1.9}" height="${h*1.9}"`)+`<div class="coinname">${COINS[c].name}</div>`,opts:oo.map(v=>({h:`<b class="num">${v}¢</b>`,say:[N(v)]})),ans:oo.indexOf(COINS[c].v),layout:oo.length===2?"yn":"row3",hint:"elim",exp:{t:`${COINS[c].name} = ${COINS[c].v}¢`,v:["w/LULU_ANS_IS"]}}}
   if(k==="count"){let ks;const pool=a<=6?["p","n"]:a<=7?["p","n","d"]:["p","n","d","q"],cap=a<=6?20:a<=7?50:99;do{ks=Array.from({length:ri(2,4)},()=>pickOne(pool))}while(sumC(ks)>cap);ks.sort((x,y)=>COINS[y].v-COINS[x].v);const t=sumC(ks);
     return Object.assign({voice:["m_count"],cap:"How much money?",visual:coinsHTML(ks,false),layout:"row3",hint:"coins",exp:{t:ks.map(x=>COINS[x].v+"¢").join(" + ")+` = ${t}¢`,v:["w/LULU_ANS_IS"]}},cents(t,[t+1,t-1,t+5,t-5,t+10]))}
   const m=makeMoney();const q={voice:[m.audio],cap:m.title,visual:m.visual,opts:m.opts.map(x=>({h:/<svg/.test(x)?x:`<b class="num">${x}</b>`})),ans:m.ans,layout:m.wide?"col":"row3",hint:"elim",exp:{t:m.answerText||m.opts[m.ans].replace(/<[^>]+>/g,""),v:["w/LULU_ANS_IS"]}};
   return q;
 }
-function cents(r,c){const w=sh([...new Set(c.filter(x=>x>0&&x!==r))]).slice(0,2),o=sh([r,...w]);return {opts:o.map(x=>({h:`<b class="num">${x}¢</b>`})),ans:o.indexOf(r)}}
+function cents(r,c){const w=sh([...new Set(c.filter(x=>x>0&&x!==r))]).slice(0,2),o=sh([r,...w]);return {opts:o.map(x=>({h:`<b class="num">${x}¢</b>`,say:[N(x)]})),ans:o.indexOf(r)}}
 
 /* Watcher Device questions: Lulu reads the question and the explanation */
 const SKY_TF=[1,0,1,0,1,0,1,1,0,1,1,0,1,0,1,0];
@@ -130,20 +144,15 @@ function qWatcher(cat,used){
   used.add(w.i);S.seenW.push(w.i);
   const v=VOICED.has(w.i),qv=v?[`w/${w.i}_q_lulu`]:["q_choose"],ev=v?[`w/${w.i}_e_lulu`]:["w/LULU_ANS_IS"];
   if(w.k==="tf")return {voice:qv,cap:w.q,visual:`<div class="bigpic">${wEmoji(w)}</div>`,opts:[{h:"<span class='yn'>✅</span>"},{h:"<span class='yn'>❌</span>"}],ans:w.n,layout:"yn",hint:"again",exp:{t:(w.n===0?"✅ True! ":"❌ Not true. ")+w.x,v:ev}};
-  return {voice:qv,cap:w.q,visual:`<div class="listen">${(()=>{const t=w.q.toLowerCase(),oe=w.o.map(optE);for(const [k,e] of TEXT_E)if(t.includes(k)&&!oe.includes(e))return e;return catById(cat).e})()}</div>`,opts:w.o.map(o=>({h:`<span class="oe">${optE(o)||"🔹"}</span><small>${o}</small>`})),ans:w.n,layout:w.o.length>2?"row3":"yn",hint:"elim",exp:{t:`${w.o[w.n]}: ${w.x}`,v:ev}};
+  return {voice:qv,cap:w.q,visual:`<div class="listen">${(()=>{const t=w.q.toLowerCase(),oe=w.o.map(optE);for(const [k,e] of TEXT_E)if(t.includes(k)&&!oe.includes(e))return e;return catById(cat).e})()}</div>`,opts:w.o.map(o=>({h:`<span class="oe">${optE(o)||"🔹"}</span><small>${o}</small>`,say:faSay(o)})),ans:w.n,layout:w.o.length>2?"row3":"yn",hint:"elim",exp:{t:`${w.o[w.n]}: ${w.x}`,v:ev}};
 }
 /* Story time (Domi's Radio): stories and questions from the Watcher Device, 5 voices */
-const STORIES=[
- {t:"The picnic 🧺",lines:6,q:[["🍎",[2,3,4],1],["🍌",[["🔴","Red"],["🟡","Yellow"],["🔵","Blue"]],1],["🐝",[["🎂","Cake"],["🌸","Flowers"],["🚗","Car"]],1]]},
- {t:"The rainbow 🌈",lines:5,q:[["🌧️",[["🌳","Tree"],["☁️","Clouds"],["🏠","House"]],1],["🌈",[["🌈","Rainbow"],["🌙","Moon"],["🚗","Car"]],0],["🌈",[3,7,10],1]]},
- {t:"On the farm 🐄",lines:5,q:[["🐄",[["🐱","Cat"],["🐄","Cow"],["🦆","Duck"]],1],["🥚",[2,4,6],1],["🥚",[["🎂","Cake"],["🍕","Pizza"],["🥗","Salad"]],0]]},
- {t:"The little house 🏠",lines:5,q:[["🏠",[["⚪","Circle"],["🔺","Triangle"],["🟦","Square"]],1],["🪟",[["⭐","Star"],["🔺","Triangle"],["⚪","Circle"]],2],["🪟",[2,4,5],1]]},
- {t:"A trip to Japan ✈️",lines:5,q:[["✈️",[["🧑‍🍳","Cook"],["🧑‍✈️","Pilot"],["🧑‍⚕️","Doctor"]],1],["🚩",[["🇨🇦","Canada"],["🇺🇸","USA"],["🇯🇵","Japan"]],2],["💨",[["🚄","Train"],["🐢","Turtle"],["🐌","Snail"]],0]]},
- {t:"The little seed 🌱",lines:5,q:[["🌱",[["🍬","Candy"],["💧","Water"],["⚽","Ball"]],1],["🌱",[["🟢","Green"],["🟣","Purple"],["🔴","Red"]],0],["🪴",[["🥛","Milk"],["💧","Water"],["🏖️","Beach"]],1]]},
-];
-function qStory(s,k){
-  const [pic,opts,ans]=STORIES[s].q[k],nums=typeof opts[0]==="number";
-  return {voice:[`w/ST_S${s}_Q${k}`],cap:"",visual:`<div class="listen radio">${pic}</div>`,opts:opts.map(o=>nums?numOpt(o):{h:`<span class="oe">${o[0]}</span><small>${o[1]}</small>`}),ans,layout:"row3",hint:"elim",story:s,exp:{t:nums?String(opts[ans]):opts[ans][1],v:["w/LULU_ANS_IS"]}};
+const STORIES=__STORIES__;
+const ST_E={Picnic:"🧺",Rainbow:"🌈",Farm:"🐄",House:"🏠",Trip:"✈️",Seed:"🌱",Sea:"🌊",Clock:"⏰",Market:"🛒"};
+function qStory(si,k){
+  const st=STORIES[si],q=st.q.find(x=>x.k===k)||st.q[k],nums=!!q.nums;
+  const opts=nums?q.nums.map(numOpt):q.opts.map(o=>({h:`<span class="oe">${o[0]}</span><small>${o[1]}</small>`,say:faSay(o[1])}));
+  return {voice:[`w/ST_S${st.s}_Q${q.k}`],cap:"",visual:`<div class="listen radio">${ST_E[st.t]||"📻"}</div>`,opts,ans:q.ans,layout:"row3",hint:"elim",story:si,exp:{t:nums?String(q.nums[q.ans]):q.opts[q.ans][1],v:["w/LULU_ANS_IS"]}};
 }
 function buildQ(cat,kind,used){
   if(cat==="count")return qCount(kind);
@@ -159,7 +168,8 @@ function openMound(i){
   closeDrop();
   const p=dayPlan()[i],cat=p.cat;
   L={g:i,cat,correct:0,first:0,acorns:0,k:0,t0:Date.now(),queue:[]};
-  if(cat==="story"){const s=p.story;L.queue=[{radio:s},...[0,1,2].map(k=>qStory(s,k))]}
+  if(cat==="paint"){L.paint=p.page%PAGES.length}
+  else if(cat==="story"){const s=p.story%STORIES.length;L.queue=[{radio:s},...STORIES[s].q.map(x=>qStory(s,x.k))]}
   else{const ks=kindsFor(cat),used=new Set();let bag=[];let last=null;
     for(let n=0;n<p.count;n++){if(!bag.length)bag=sh(ks);let k=bag.shift();if(k===last&&bag.length){bag.push(k);k=bag.shift()}last=k;
       const q=buildQ(cat,k,used);q.cat=cat;q.kind=k;L.queue.push(q)}}
@@ -168,7 +178,7 @@ function openMound(i){
   $("qResult").hidden=true;$("qSheet").className="qsheet";
   $("qDots").innerHTML=L.queue.filter(q=>!q.radio).map(()=>"<i></i>").join("");
   $("lesson").classList.add("open");$("lesson").setAttribute("aria-hidden","false");
-  setTimeout(nextQ,350);
+  setTimeout(L.paint!==undefined?()=>paintGame(L.paint):nextQ,350);
 }
 function closeLesson(){hush();$("lesson").classList.remove("open");$("lesson").setAttribute("aria-hidden","true");$("qSheet").className="qsheet";setTimeout(()=>{$("qResult").hidden=true},400)}
 $("lClose").onclick=()=>{sfx.tap();closeLesson();L=null};
@@ -181,10 +191,20 @@ function nextQ(){
   $("qBody").innerHTML=`<div class="qtop"><button class="qspk" id="qSpk" aria-label="Hear the question again"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></button>${q.cap?`<span class="cap">${q.cap}</span>`:""}</div>
     <div class="qvis">${q.visual}</div>
     <div class="qopts ${q.layout}">${q.opts.map((o,j)=>`<button class="qo t${tints[j%4]}" data-j="${j}">${o.h}</button>`).join("")}</div>`;
-  $("qSpk").onclick=()=>{sfx.tap();sayseq(q.voice)};
+  $("qSpk").onclick=()=>{sfx.tap();ask(q)};
   $("qBody").querySelectorAll(".qo").forEach(b=>b.onclick=()=>pick(+b.dataset.j,b));
   $("qBody").classList.remove("in");void $("qBody").offsetWidth;$("qBody").classList.add("in");
-  setTimeout(()=>{if(L&&L.q===q)sayseq(q.voice)},350);
+  setTimeout(()=>{if(L&&L.q===q)ask(q)},350);
+}
+let askTok=0;
+function ask(q,done){
+  const tok=++askTok,bs=[...$("qBody").querySelectorAll(".qo")];
+  const lit=j=>bs.forEach((b,k)=>b.classList.toggle("saying",k===j));
+  const list=[{c:q.voice,j:-1},...q.opts.map((o,j)=>({c:(o.say||[]).filter(Boolean),j})).filter(x=>x.c.length)];
+  let i=0;const step=()=>{if(tok!==askTok||!L||L.q!==q){lit(-1);return}
+    if(i>=list.length){lit(-1);done&&done();return}
+    const it=list[i++];lit(it.j);sayseq(it.c,()=>setTimeout(step,it.j<0?250:150))};
+  step();
 }
 function setDot(){const d=$("qDots").children[L.k];if(d)d.className="on";L.k++}
 function pick(j,b){
@@ -225,11 +245,11 @@ function giveHint(q,done){
     if(!els.length&&q.layout==="row")els=[...$("qBody").querySelectorAll(".qo .ob")];
     if(els.length&&els.length<=20){countAlong(els,done);return}
   }
-  if(q.hint==="clock"){const s=$("qBody").querySelector(".clk");if(s)s.classList.add("hintclk");elim();sayseq(q.voice,done);return}
-  if(q.hint==="coins"){$("qBody").querySelectorAll(".qvis svg[aria-label]").forEach(sv=>{const c=Object.values(COINS).find(x=>x.name===sv.getAttribute("aria-label"));if(c){const t=document.createElement("span");t.className="ctag";t.textContent=c.v+"¢";sv.after(t)}});sayseq(q.voice,done);return}
-  if(q.hint==="line"){const v=$("qBody").querySelector(".qvis");v.insertAdjacentHTML("beforeend",`<div class="nline">${Array.from({length:7},(x,i)=>q.line[0]-2+i).filter(x=>x>=0).map(x=>`<span class="${q.line.includes(x)?"hi":""}">${x}</span>`).join("")}</div>`);sayseq(q.voice,done);return}
-  if(q.hint==="again"){sayseq(q.voice,done);return}
-  elim();sayseq(q.voice,done);
+  if(q.hint==="clock"){const s=$("qBody").querySelector(".clk");if(s)s.classList.add("hintclk");elim();ask(q,done);return}
+  if(q.hint==="coins"){$("qBody").querySelectorAll(".qvis svg[aria-label]").forEach(sv=>{const c=Object.values(COINS).find(x=>x.name===sv.getAttribute("aria-label"));if(c){const t=document.createElement("span");t.className="ctag";t.textContent=c.v+"¢";sv.after(t)}});ask(q,done);return}
+  if(q.hint==="line"){const v=$("qBody").querySelector(".qvis");v.insertAdjacentHTML("beforeend",`<div class="nline">${Array.from({length:7},(x,i)=>q.line[0]-2+i).filter(x=>x>=0).map(x=>`<span class="${q.line.includes(x)?"hi":""}">${x}</span>`).join("")}</div>`);ask(q,done);return}
+  if(q.hint==="again"){ask(q,done);return}
+  elim();ask(q,done);
 }
 function countAlong(els,done){
   let i=0;const step=()=>{if(!L)return;if(i>=els.length){done();return}const e=els[i];e.classList.add("counted");e.setAttribute("data-n",i+1);sfx.count(i);i++;const c=N(i);if(c)say(c,()=>setTimeout(step,80));else setTimeout(step,450)};
@@ -247,11 +267,11 @@ function dance(){
 function radioQ(s){
   const st=STORIES[s];
   $("qBody").innerHTML=`<div class="radio"><div class="rbox" id="rBox"><span class="rwave"></span><span class="remo">📻</span><span class="rwave r2"></span></div>
-    <div class="rtitle">${st.t}</div>
+    <div class="rtitle">${ST_E[st.t]||""} ${st.t}</div>
     <div class="rbtns"><button class="qbtn sky" id="rPlay">↻ Again</button><button class="qbtn good" id="rDone" disabled>I'm ready! ➜</button></div></div>`;
   $("qBody").classList.remove("in");void $("qBody").offsetWidth;$("qBody").classList.add("in");
   const box=$("rBox"),done=$("rDone");
-  const play=()=>{box.classList.add("on");sayseq(["w/LULU_ST_INTRO",...Array.from({length:st.lines},(x,i)=>`w/ST_S${s}_L${i}`)],()=>{box.classList.remove("on");done.disabled=false;done.classList.add("pulse")})};
+  const play=()=>{box.classList.add("on");sayseq(["w/LULU_ST_INTRO",...Array.from({length:st.lines},(x,i)=>`w/ST_S${st.s}_L${i}`)],()=>{box.classList.remove("on");done.disabled=false;done.classList.add("pulse")})};
   $("rPlay").onclick=()=>{sfx.tap();play()};
   done.onclick=()=>{sfx.tap();hush();nextQ()};
   setTimeout(play,400);setTimeout(()=>{done.disabled=false},30000);
@@ -269,4 +289,37 @@ function moundDone(){
   const leave=()=>{closeLesson();L=null;setTimeout(()=>{renderMap();placeBeaver(true);setTimeout(()=>{scrollToCurrent(true);if(S.day.done>=HOLES[landIdx()].length&&!S.day.house)setTimeout(openHouse,900);else checkRealPrizes()},700)},420)};
   let moved=false;const go=()=>{if(!moved){moved=true;leave()}};
   $("resBtn").onclick=()=>{sfx.tap();go()};
+}
+
+/* ================= painting (this app only: big screens) ================= */
+const PAINT_COLORS=[["red","#FF5A5F"],["orange","#FF9F40"],["yellow","#FFD43B"],["green","#51CF66"],["blue","#4DABF7"],["purple","#9775FA"],["pink","#F783AC"],["brown","#A0703C"],["black","#343A40"],["white","#FFFFFF"]];
+/* each page: [name, emoji, [shapes]]; a shape is [svg tag + attributes] and every shape is one colourable area */
+const PAGES=[
+ ["Fish","🐟",['rect x="4" y="4" width="392" height="392" rx="30"','path d="M70 200 Q160 90 270 200 Q160 310 70 200Z"','path d="M262 200 L350 130 L340 200 L350 270Z"','path d="M150 150 Q175 110 210 140 Q180 150 170 165Z"','path d="M150 250 Q175 290 210 262 Q180 252 170 236Z"','circle cx="120" cy="190" r="16"','circle cx="300" cy="80" r="18"','circle cx="335" cy="40" r="11"','path d="M4 340 Q60 310 110 340 T210 340 T310 340 T396 340 L396 396 L4 396Z"']],
+ ["House","🏠",['rect x="4" y="4" width="392" height="300" rx="30"','circle cx="320" cy="80" r="40"','rect x="4" y="300" width="392" height="96" rx="0"','rect x="90" y="180" width="220" height="150"','path d="M70 185 L200 80 L330 185Z"','rect x="255" y="95" width="32" height="60"','rect x="175" y="250" width="52" height="80" rx="8"','rect x="110" y="210" width="45" height="45"','rect x="245" y="210" width="45" height="45"']],
+ ["Butterfly","🦋",['rect x="4" y="4" width="392" height="392" rx="30"','path d="M195 190 Q120 60 60 110 Q40 190 195 200Z"','path d="M205 190 Q280 60 340 110 Q360 190 205 200Z"','path d="M195 205 Q90 220 100 300 Q160 330 195 215Z"','path d="M205 205 Q310 220 300 300 Q240 330 205 215Z"','rect x="190" y="130" width="20" height="170" rx="10"','circle cx="115" cy="140" r="16"','circle cx="285" cy="140" r="16"','circle cx="140" cy="270" r="13"','circle cx="260" cy="270" r="13"']],
+ ["Flower","🌸",['rect x="4" y="4" width="392" height="392" rx="30"','path d="M196 230 Q180 300 196 330 L204 330 Q220 300 204 230Z"','path d="M200 290 Q140 250 120 290 Q150 315 200 300Z"','path d="M200 280 Q260 240 280 280 Q250 305 200 292Z"','circle cx="200" cy="105" r="38"','circle cx="262" cy="145" r="38"','circle cx="240" cy="215" r="38"','circle cx="160" cy="215" r="38"','circle cx="138" cy="145" r="38"','circle cx="200" cy="160" r="34"','path d="M130 330 L270 330 L250 392 L150 392Z"']],
+ ["Rocket","🚀",['rect x="4" y="4" width="392" height="392" rx="30"','path d="M200 40 Q250 90 250 160 L250 280 L150 280 L150 160 Q150 90 200 40Z"','circle cx="200" cy="160" r="26"','path d="M150 220 L105 290 L150 280Z"','path d="M250 220 L295 290 L250 280Z"','path d="M165 282 L235 282 L200 370Z"','path d="M70 70 l8 18 l20 2 l-15 13 l5 20 l-18 -10 l-18 10 l5 -20 l-15 -13 l20 -2z"','path d="M320 220 l7 15 l16 2 l-12 11 l4 16 l-15 -8 l-15 8 l4 -16 l-12 -11 l16 -2z"','circle cx="320" cy="90" r="22"']],
+ ["Domi","🦫",['rect x="4" y="4" width="392" height="392" rx="30"','ellipse cx="300" cy="300" rx="44" ry="76" transform="rotate(-28 300 300)"','ellipse cx="200" cy="296" rx="92" ry="84"','ellipse cx="200" cy="304" rx="60" ry="60"','circle cx="116" cy="92" r="30"','circle cx="284" cy="92" r="30"','ellipse cx="200" cy="156" rx="110" ry="98"','ellipse cx="200" cy="196" rx="54" ry="40"','ellipse cx="156" cy="150" rx="22" ry="27"','ellipse cx="244" cy="150" rx="22" ry="27"','path d="M182 176 q18 -12 36 0 q-4 16 -18 18 q-14 -2 -18 -18z"','rect x="186" y="208" width="28" height="22" rx="4"']],
+];
+function paintSVG(pi,fills){
+  const pg=PAGES[pi%PAGES.length],f=fills||[];
+  return `<svg viewBox="0 0 400 400" class="psvg">${pg[2].map((t,k)=>`<${t} class="rg" data-k="${k}" fill="${f[k]||"#FFFFFF"}" stroke="#3B3A4A" stroke-width="5" stroke-linejoin="round"/>`).join("")}</svg>`;
+}
+function paintGame(pi){
+  const pg=PAGES[pi],fills=[];let col=PAINT_COLORS[0][1];
+  $("qDots").innerHTML="";
+  $("qBody").innerHTML=`<div class="paint">
+    <div class="pcanvas" id="pCanvas">${paintSVG(pi,fills)}</div>
+    <div class="ppal" id="pPal">${PAINT_COLORS.map(([n,c],k)=>`<button class="pot${k===0?" on":""}" data-c="${c}" data-n="${n}" style="--c:${c}" aria-label="${n}"></button>`).join("")}</div>
+    <div class="pbtns"><button class="qbtn sky" id="pClear">↺</button><button class="qbtn good" id="pDone" disabled>✓ ${pg[1]} Done!</button></div></div>`;
+  $("qBody").classList.remove("in");void $("qBody").offsetWidth;$("qBody").classList.add("in");
+  const n=pg[2].length;
+  const upd=()=>{const k=fills.filter(Boolean).length;$("pDone").disabled=k<Math.ceil(n/2);$("pDone").classList.toggle("pulse",k>=Math.ceil(n/2))};
+  $("pPal").querySelectorAll(".pot").forEach(b=>b.onclick=()=>{col=b.dataset.c;$("pPal").querySelectorAll(".pot").forEach(x=>x.classList.toggle("on",x===b));sfx.tap();sayseq(faSay(b.dataset.n))});
+  const bindRegions=()=>$("pCanvas").querySelectorAll(".rg").forEach(r=>r.onclick=e=>{const k=+r.dataset.k;fills[k]=col;r.setAttribute("fill",col);r.classList.remove("pop");void r.getBoundingClientRect();r.classList.add("pop");sfx.pop();upd()});
+  bindRegions();
+  $("pClear").onclick=()=>{sfx.tap();fills.length=0;$("pCanvas").innerHTML=paintSVG(pi,fills);bindRegions();upd()};
+  $("pDone").onclick=()=>{sfx.tap();hush();S.paintings.push({p:pi,f:fills.slice(),d:today()});if(S.paintings.length>24)S.paintings.shift();S.acorns+=3;L.acorns+=3;save();renderStats();burst(140);moundDone()};
+  setTimeout(()=>sayseq(["w/PX_PAINT_INTRO"]),400);
 }
