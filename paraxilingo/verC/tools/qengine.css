@@ -273,3 +273,45 @@ body,.phone,.lesson.q2,.introC,#pSettings,.panel,.map{background:#fff!important}
 .dpick{border:3px solid transparent;border-radius:18px;background:#F6F8FC;padding:4px;aspect-ratio:1;display:grid;place-items:center;cursor:pointer}
 .dpick img{width:100%;height:100%}
 .dpick.on{border-color:var(--q-sun-d,#F5B400);background:#FFF6DA}
+
+/* ===================== quiz template (owner's example, Nov 7): plain white page, rounded sans font,
+   purple kicker, big dark-grey title, blue square speaker, white cards with a grey edge, light-blue pick ===================== */
+@font-face{font-family:"Nunito";font-weight:600;font-display:swap;src:url(img/fonts/nunito-latin-600-normal.woff2) format("woff2")}
+@font-face{font-family:"Nunito";font-weight:700;font-display:swap;src:url(img/fonts/nunito-latin-700-normal.woff2) format("woff2")}
+@font-face{font-family:"Nunito";font-weight:800;font-display:swap;src:url(img/fonts/nunito-latin-800-normal.woff2) format("woff2")}
+.lesson.q2{--f-display:"Nunito",system-ui,sans-serif;--f-body:"Nunito",system-ui,sans-serif;font-family:"Nunito",system-ui,sans-serif;background:#fff;color:#4B4B4B;
+  --t-ink:#4B4B4B;--t-soft:#777;--t-line:#E5E5E5;--t-blue:#1CB0F6;--t-blue-d:#1899D6;--t-blue-t:#DDF4FF;--t-blue-b:#84D8FF;--t-purple:#CE82FF}
+.lesson.q2 .qbody{justify-content:flex-start;padding-top:14px;gap:16px}
+.qkick{display:flex;align-items:center;gap:8px;font:800 15px "Nunito",sans-serif;letter-spacing:1.2px;text-transform:uppercase;color:var(--t-purple)}
+.qkick .qke{width:28px;height:28px;border-radius:8px;background:#F3E3FF;display:grid;place-items:center;font-size:16px;letter-spacing:0}
+.lesson.q2 .qtop{justify-content:flex-start;min-height:0;gap:14px}
+.lesson.q2 .qspk{width:64px;height:64px;border-radius:16px;color:#fff;background:var(--t-blue);box-shadow:0 5px 0 var(--t-blue-d)}
+.lesson.q2 .qspk svg{width:32px;height:32px}
+.lesson.q2 .qspk:active{box-shadow:0 1px 0 var(--t-blue-d)}
+.lesson.q2 .qspk::after{border-radius:20px;border-color:var(--t-blue-b)}
+.lesson.q2 .qtop .cap{font:800 26px/1.2 "Nunito",sans-serif;color:var(--t-ink);max-width:none}
+.lesson.q2 .qvis{border:2px solid var(--t-line);box-shadow:0 4px 0 var(--t-line);border-radius:18px;background:#fff}
+.lesson.q2 .qopts{gap:14px}
+.lesson.q2 .qo,.lesson.q2 .qo.t0,.lesson.q2 .qo.t1,.lesson.q2 .qo.t2,.lesson.q2 .qo.t3{--bg:#fff;--bd:var(--t-line);--sh:var(--t-line);--ink:var(--t-ink);
+  border-width:2px;border-radius:18px;box-shadow:0 4px 0 var(--sh);font-family:"Nunito",sans-serif;font-weight:700;min-height:120px}
+.lesson.q2 .qo small,.lesson.q2 .qo .dn{font:600 18px "Nunito",sans-serif;color:var(--t-ink);opacity:1}
+.lesson.q2 .qo .num,.lesson.q2 .qo .word{font-family:"Nunito",sans-serif;font-weight:800;color:var(--t-ink)}
+.lesson.q2 .qo.saying{--bg:var(--t-blue-t);--bd:var(--t-blue-b);--sh:var(--t-blue-b);--ink:var(--t-blue-d)}
+.lesson.q2 .qo.saying small,.lesson.q2 .qo.saying .num,.lesson.q2 .qo.saying .word,.lesson.q2 .qo.saying .dn{color:var(--t-blue-d)}
+.lesson.q2 .qo.right,.lesson.q2 .qo.show{--bg:#E2F7EC;--bd:#7FD8A9;--sh:#5BC796;--ink:#1F8A5B}
+.lesson.q2 .qo.wrong{--bd:#FF9C93;--sh:#FF9C93}
+.lesson.q2 .qopts.col .qo{min-height:68px}
+.lesson.q2 .qo .wp.op{width:84%;max-width:150px;height:auto;aspect-ratio:1}
+.lesson.q2 .word.big{color:var(--t-ink)}
+.lesson.q2 .bignum{color:var(--t-ink);text-shadow:none}
+.lesson.q2 .bignum.q{color:#C7C7C7}
+.lesson.q2 .qdots i.on{background:#58CC4A;box-shadow:none}
+@media (min-width:700px){.lesson.q2 .qtop .cap{font-size:34px}.lesson.q2 .qspk{width:80px;height:80px;border-radius:20px}.lesson.q2 .qspk svg{width:40px;height:40px}
+  .qkick{font-size:18px}.lesson.q2 .qo{min-height:170px}.lesson.q2 .qo small,.lesson.q2 .qo .dn{font-size:24px}.lesson.q2 .qo .wp.op{max-width:220px}}
+.lesson.q2 .qopts .qo[data-j]{min-height:150px}
+.lesson.q2 .qopts.tall .qo[data-j]{min-height:210px}
+.lesson.q2 .qo .oe{font-size:60px}
+.lesson.q2 .qo .num{font-size:54px}
+.lesson.q2 .qo .wp.op{width:92%;max-width:170px}
+.lesson.q2 .qopts.col .qo[data-j]{min-height:76px}
+@media (min-width:700px){.lesson.q2 .qopts .qo[data-j]{min-height:230px}.lesson.q2 .qopts.tall .qo[data-j]{min-height:320px}.lesson.q2 .qo .oe{font-size:96px}.lesson.q2 .qo .num{font-size:80px}.lesson.q2 .qo .wp.op{max-width:240px}.lesson.q2 .qopts.col .qo[data-j]{min-height:96px}}
