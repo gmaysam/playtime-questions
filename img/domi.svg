@@ -1,43 +1,50 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220">
   <defs>
-    <radialGradient id="fur" cx="45%" cy="35%" r="70%"><stop offset="0" stop-color="#C8854A"/><stop offset="1" stop-color="#9A5A2B"/></radialGradient>
-    <radialGradient id="bel" cx="50%" cy="40%" r="65%"><stop offset="0" stop-color="#FFE8CC"/><stop offset="1" stop-color="#F2C9A0"/></radialGradient>
-    <linearGradient id="tail" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6E4A2E"/><stop offset="1" stop-color="#4E3220"/></linearGradient>
+    <radialGradient id="f" cx="42%" cy="30%" r="75%"><stop offset="0" stop-color="#EDB57A"/><stop offset=".7" stop-color="#D58F52"/><stop offset="1" stop-color="#C47A3E"/></radialGradient>
+    <radialGradient id="c" cx="50%" cy="35%" r="70%"><stop offset="0" stop-color="#FFF6EA"/><stop offset="1" stop-color="#FBDDBA"/></radialGradient>
+    <linearGradient id="t" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8A5A36"/><stop offset="1" stop-color="#6A4126"/></linearGradient>
   </defs>
-  <!-- tail -->
-  <g transform="rotate(-28 150 150)"><ellipse cx="160" cy="150" rx="22" ry="38" fill="url(#tail)"/>
-    <path d="M146 128 l28 8 M144 142 l32 9 M145 157 l30 8 M148 171 l24 7" stroke="#8A6444" stroke-width="2.5" stroke-linecap="round" opacity=".7"/></g>
-  <!-- body -->
-  <ellipse cx="100" cy="148" rx="46" ry="42" fill="url(#fur)"/>
-  <ellipse cx="100" cy="152" rx="32" ry="32" fill="url(#bel)"/>
-  <!-- feet -->
-  <ellipse cx="74" cy="186" rx="17" ry="9" fill="#7A4A26"/><ellipse cx="126" cy="186" rx="17" ry="9" fill="#7A4A26"/>
-  <!-- arms -->
-  <ellipse cx="62" cy="146" rx="11" ry="17" fill="#A9652F" transform="rotate(20 62 146)"/>
-  <ellipse cx="138" cy="146" rx="11" ry="17" fill="#A9652F" transform="rotate(-20 138 146)"/>
-  <!-- ears -->
-  <circle cx="58" cy="46" r="16" fill="#A9652F"/><circle cx="58" cy="46" r="9" fill="#F3B49A"/>
-  <circle cx="142" cy="46" r="16" fill="#A9652F"/><circle cx="142" cy="46" r="9" fill="#F3B49A"/>
-  <!-- head -->
-  <ellipse cx="100" cy="78" rx="56" ry="50" fill="url(#fur)"/>
-  <!-- muzzle -->
-  <ellipse cx="100" cy="98" rx="27" ry="20" fill="#FFE8CC"/>
-  <!-- eyes -->
-  <ellipse cx="78" cy="75" rx="12.5" ry="15" fill="#2B1A12"/><ellipse cx="122" cy="75" rx="12.5" ry="15" fill="#2B1A12"/>
-  <circle cx="83" cy="69" r="5.5" fill="#fff"/><circle cx="127" cy="69" r="5.5" fill="#fff"/>
-  <circle cx="75" cy="79" r="2" fill="#fff" opacity=".8"/><circle cx="119" cy="79" r="2" fill="#fff" opacity=".8"/>
-  <!-- brows -->
-  <path d="M70 54 q8 -5 16 -2 M114 52 q8 -3 16 2" stroke="#7A4622" stroke-width="2.6" fill="none" stroke-linecap="round" opacity=".7"/>
-  <!-- cheeks -->
-  <ellipse cx="64" cy="94" rx="10" ry="6.5" fill="#FF8F8F" opacity=".55"/><ellipse cx="136" cy="94" rx="10" ry="6.5" fill="#FF8F8F" opacity=".55"/>
-  <!-- nose -->
-  <path d="M91 88 q9 -6 18 0 q-2 8 -9 9 q-7 -1 -9 -9z" fill="#3A2216"/>
-  <ellipse cx="97" cy="89" rx="3" ry="1.6" fill="#fff" opacity=".6"/>
-  <!-- smile -->
-  <path d="M86 101 q14 12 28 0" stroke="#3A2216" stroke-width="3" fill="none" stroke-linecap="round"/>
-  <!-- teeth -->
-  <rect x="93" y="104" width="7" height="10" rx="2" fill="#fff" stroke="#E3D3C2" stroke-width="1"/>
-  <rect x="100" y="104" width="7" height="10" rx="2" fill="#fff" stroke="#E3D3C2" stroke-width="1"/>
+  <g stroke="#5A3418" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
+    <!-- tail -->
+    <path d="M146 160 Q214 136 208 194 Q194 218 148 198 Z" fill="url(#t)"/>
+    <path d="M166 160 L178 206 M186 152 L196 200 M154 180 L204 170 M156 196 L200 188" stroke="#A47452" stroke-width="2.5" fill="none"/>
+    <!-- body -->
+    <ellipse cx="110" cy="176" rx="50" ry="38" fill="url(#f)"/>
+    <ellipse cx="110" cy="182" rx="32" ry="26" fill="url(#c)" stroke="none"/>
+    <!-- feet -->
+    <ellipse cx="84" cy="210" rx="17" ry="8" fill="#8A5A36"/>
+    <ellipse cx="136" cy="210" rx="17" ry="8" fill="#8A5A36"/>
+    <!-- paws -->
+    <ellipse cx="94" cy="168" rx="8" ry="10" fill="#E7A86C" stroke-width="3" transform="rotate(25 94 168)"/>
+    <ellipse cx="126" cy="168" rx="8" ry="10" fill="#E7A86C" stroke-width="3" transform="rotate(-25 126 168)"/>
+    <!-- ears -->
+    <circle cx="52" cy="50" r="19" fill="url(#f)"/>
+    <circle cx="168" cy="50" r="19" fill="url(#f)"/>
+    <circle cx="53" cy="51" r="9" fill="#F6B5A0" stroke="none"/>
+    <circle cx="167" cy="51" r="9" fill="#F6B5A0" stroke="none"/>
+    <!-- head -->
+    <ellipse cx="110" cy="92" rx="70" ry="62" fill="url(#f)"/>
+  </g>
+  <!-- face patch -->
+  <ellipse cx="110" cy="122" rx="34" ry="24" fill="url(#c)"/>
   <!-- tuft -->
-  <path d="M94 34 q4 -10 8 -2 q4 -8 7 3" stroke="#9A5A2B" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <path d="M100 32 Q106 20 112 30 Q118 18 124 32" fill="none" stroke="#5A3418" stroke-width="4" stroke-linecap="round"/>
+  <!-- eyes -->
+  <ellipse cx="82" cy="96" rx="15.5" ry="17.5" fill="#2E1B10"/>
+  <ellipse cx="138" cy="96" rx="15.5" ry="17.5" fill="#2E1B10"/>
+  <ellipse cx="82" cy="103" rx="10" ry="8" fill="#6B4026" opacity=".75"/>
+  <ellipse cx="138" cy="103" rx="10" ry="8" fill="#6B4026" opacity=".75"/>
+  <circle cx="88" cy="88" r="7" fill="#fff"/><circle cx="144" cy="88" r="7" fill="#fff"/>
+  <circle cx="77" cy="105" r="3" fill="#fff"/><circle cx="133" cy="105" r="3" fill="#fff"/>
+  <!-- cheeks -->
+  <ellipse cx="62" cy="118" rx="12" ry="7.5" fill="#FF8E93" opacity=".6"/>
+  <ellipse cx="158" cy="118" rx="12" ry="7.5" fill="#FF8E93" opacity=".6"/>
+  <!-- nose -->
+  <path d="M101 112 Q110 106 119 112 Q117 120 110 121 Q103 120 101 112 Z" fill="#6B3A2A"/>
+  <ellipse cx="107" cy="112" rx="3" ry="1.6" fill="#fff" opacity=".7"/>
+  <!-- mouth -->
+  <path d="M98 126 Q104 132 110 126 Q116 132 122 126" fill="none" stroke="#5A3418" stroke-width="3" stroke-linecap="round"/>
+  <!-- teeth -->
+  <path d="M104.5 129.5 h11 v7 q0 3 -3 3 h-5 q-3 0 -3 -3 z" fill="#fff" stroke="#5A3418" stroke-width="2"/>
+  <line x1="110" y1="130" x2="110" y2="138" stroke="#5A3418" stroke-width="1.6"/>
 </svg>
