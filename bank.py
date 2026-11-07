@@ -23,7 +23,7 @@ def check():
         assert len(q["explain"]) <= 120, q["id"]
         if q["kind"] == "choice":
             assert 2 <= len(q["opts"]) <= 3 and 0 <= q["answer"] < len(q["opts"]), q["id"]
-            for o in q["opts"]: assert len(o) <= 12, (q["id"], o)
+            for o in q["opts"]: assert len(o) <= (12 if len(q["opts"]) == 3 else 14), (q["id"], o)
 
 SKY = {n: ("sky", i) for i, n in enumerate("sun moon star cloud rain rainbow lightning snow rocket astronaut telescope galaxy comet satellite planet fullmoon".split())}
 PLANET = {n: ("planet", i) for i, n in enumerate("sun mercury venus earth mars jupiter saturn uranus neptune".split())}
@@ -337,3 +337,18 @@ C("x07", "science", 6, "What makes a shadow?", ["Blocking sun", "Rain", "Wind"],
   "سایه چطوری درست می‌شه؟ Blocking sun، Rain یا Wind؟", "وقتی یه چیزی جلوی نور رو بگیره، پشتش سایه درست می‌شه.", SKY["sun"])
 T("x08", "science", 6, "Heavy things always fall faster.", False, "Without air in the way, a feather and a hammer fall together. Astronauts tried it on the Moon!",
   "چیزهای سنگین همیشه تندتر می‌افتن.", "اگه هوا نباشه، پَر و چکش با هم می‌افتن. فضانوردها روی ماه امتحانش کردن!")
+
+# ------------------------------------------------------------------ dinosaurs (from the shared pool: Paraxilingo, Nov 7 2026; checked)
+# question voices: Lulu only (age 4+, so Leanna); the explanations are on screen
+C("d01", "animals", 4, "Which dinosaur had a very long neck?", ["Brachiosaurus", "T-Rex"], 0, "Brachiosaurus had a very long neck to eat leaves from tall trees.",
+  "کدوم دایناسور گردنِ خیلی درازی داشت؟ Brachiosaurus یا T-Rex؟", "براکیوسوروس گردنِ خیلی درازی داشت تا برگِ درخت‌های بلند رو بخوره.")
+T("d02", "animals", 4, "T-Rex ate plants.", False, "T-Rex ate meat. It had big, sharp teeth.",
+  "T-Rex گیاه می‌خورد. درسته یا غلط؟", "تی‌رکس گوشت می‌خورد. دندون‌های بزرگ و تیزی داشت.")
+C("d03", "animals", 4, "Where do baby dinosaurs come from?", ["Eggs", "Trees", "Clouds"], 0, "Baby dinosaurs hatched from eggs, like chicks.",
+  "بچه دایناسورها از کجا میان؟ از تخم، از درخت یا از ابر؟", "بچه دایناسورها مثلِ جوجه‌ها از تخم درمی‌اومدن.", FOOD["eggs"])
+T("d04", "animals", 4, "Dinosaurs lived a very, very long time ago.", True, "Dinosaurs lived millions of years ago, long before people.",
+  "دایناسورها خیلی خیلی سال پیش زندگی می‌کردن. درسته یا غلط؟", "دایناسورها میلیون‌ها سال پیش، خیلی قبل از آدم‌ها زندگی می‌کردن.")
+C("d05", "animals", 4, "What do we find from dinosaurs today?", ["Bones", "Toys", "Cars"], 0, "We find dinosaur bones, called fossils, in the ground.",
+  "امروز از دایناسورها چی پیدا می‌کنیم؟ استخون، اسباب‌بازی یا ماشین؟", "ما استخونِ دایناسورها رو توی خاک پیدا می‌کنیم؛ بهشون فسیل می‌گن.", FOOD["bone"])
+T("d06", "animals", 4, "T-Rex had big, sharp teeth.", True, "T-Rex had big, sharp teeth for eating meat.",
+  "T-Rex دندون‌های بزرگ و تیزی داشت. درسته یا غلط؟", "تی‌رکس برای خوردنِ گوشت دندون‌های بزرگ و تیز داشت.")
