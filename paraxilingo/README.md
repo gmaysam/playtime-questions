@@ -27,3 +27,7 @@ Top-left button → Parents (code: 1). Choose the course topics (Numbers & Math,
 ## Data
 
 Progress is saved on the device (browser storage). No server is needed yet; one is only needed later to sync between phones or send parents a weekly recap.
+
+
+## Website for testing
+The latest verC runs at https://gmaysam.github.io/playtime-questions/ (from the `gh-pages` branch, built by `verC/tools/mksite.py`). On an iPad or iPhone: open it in Safari, Share → Add to Home Screen. It opens full screen and works offline; a new version arrives the next time it is opened online. The Xcode project for the App Store version is in `ipad/`.
