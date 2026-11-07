@@ -6,6 +6,7 @@ cd $S
 python3 tools/sync_watcher.py wlib .
 python3 tools/buildC2.py appB/index.html appC/index.html watcher/wq.json
 python3 tools/mkweb.py appC ios/Paraxilingo/Paraxilingo/Web ios/node_modules/.bin/esbuild
+python3 tools/export_library.py .
 python3 tools/mksite.py ios/Paraxilingo/Paraxilingo/Web /home/claude/px-site ios/Paraxilingo/Paraxilingo/Assets.xcassets/AppIcon.appiconset/icon1024.png
 cd /home/claude/px-site && git add -A && git commit -qm "Update Paraxilingo site$( [ -n "$1" ] && echo ": $1")
 

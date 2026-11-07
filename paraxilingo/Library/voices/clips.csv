@@ -154,10 +154,10 @@ PX_EN_WATER.mp3,lulu,en,water
 PX_EN_WHALE.mp3,lulu,en,whale
 PX_EN_WORMS.mp3,lulu,en,worms
 PX_EN_A_LOW_CLOUD.mp3,lulu,en,a low cloud
-PX_PAINT_INTRO.mp3,lulu,fa,painting intro: let us paint! pick a colour and tap the picture
-x01_q_lulu.mp3,lulu,fa,question x01 (see questions/paraxilingo_questions.csv)
-x02_q_lulu.mp3,lulu,fa,question x02 (see questions/paraxilingo_questions.csv)
-x03_q_lulu.mp3,lulu,fa,question x03 (see questions/paraxilingo_questions.csv)
-x04_q_lulu.mp3,lulu,fa,question x04 (see questions/paraxilingo_questions.csv)
-x05_q_lulu.mp3,lulu,fa,question x05 (see questions/paraxilingo_questions.csv)
-x06_q_lulu.mp3,lulu,fa,question x06 (see questions/paraxilingo_questions.csv)
+PX_PAINT_INTRO.mp3,lulu,fa,painting intro
+x01_q_lulu.mp3,lulu,fa,question x01
+x02_q_lulu.mp3,lulu,fa,question x02
+x03_q_lulu.mp3,lulu,fa,question x03
+x04_q_lulu.mp3,lulu,fa,question x04
+x05_q_lulu.mp3,lulu,fa,question x05
+x06_q_lulu.mp3,lulu,fa,question x06

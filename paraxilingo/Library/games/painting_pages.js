@@ -1,4 +1,4 @@
-// Paraxilingo painting pages: [name, emoji, [svg shapes]]; viewBox 0 0 400 400, each shape is one area to colour
+// Paraxilingo painting pages: [name, emoji, [svg shapes]]; viewBox 0 0 400 400
 const PAGES=[
  ["Fish","🐟",['rect x="4" y="4" width="392" height="392" rx="30"','path d="M70 200 Q160 90 270 200 Q160 310 70 200Z"','path d="M262 200 L350 130 L340 200 L350 270Z"','path d="M150 150 Q175 110 210 140 Q180 150 170 165Z"','path d="M150 250 Q175 290 210 262 Q180 252 170 236Z"','circle cx="120" cy="190" r="16"','circle cx="300" cy="80" r="18"','circle cx="335" cy="40" r="11"','path d="M4 340 Q60 310 110 340 T210 340 T310 340 T396 340 L396 396 L4 396Z"']],
  ["House","🏠",['rect x="4" y="4" width="392" height="300" rx="30"','circle cx="320" cy="80" r="40"','rect x="4" y="300" width="392" height="96" rx="0"','rect x="90" y="180" width="220" height="150"','path d="M70 185 L200 80 L330 185Z"','rect x="255" y="95" width="32" height="60"','rect x="175" y="250" width="52" height="80" rx="8"','rect x="110" y="210" width="45" height="45"','rect x="245" y="210" width="45" height="45"']],
