@@ -257,3 +257,13 @@
 body,.phone,.lesson.q2,.introC,#pSettings,.panel,.map{background:#fff!important}
 .qvis{box-shadow:0 4px 18px rgba(38,51,77,.08);border:2px solid #EEF2F7}
 .qresult{background:#fff}
+/* letters, words, reading */
+.qo .num.letter{font-size:52px}
+.word{font-family:var(--f-display);font-size:30px;font-weight:700;letter-spacing:.5px}
+.word.big{font-size:64px;color:var(--q-lilac)}
+.sent{font-family:var(--f-display);font-size:30px;text-align:center;line-height:1.4;color:var(--q-ink)}
+.sent .gap{display:inline-block;min-width:70px;border-bottom:4px dashed var(--q-sun-d);color:#C3CCDB}
+.flash{transition:opacity .4s,filter .4s}.flash.hid{opacity:0;filter:blur(8px)}
+.balloon{display:grid;place-items:center;width:84px;height:100px;border-radius:50% 50% 46% 46%;background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.55),transparent 40%),var(--bd);position:relative}
+.balloon::after{content:"";position:absolute;bottom:-14px;left:50%;width:2px;height:14px;background:#B9C3D3}
+@media (min-width:700px){.word{font-size:42px}.word.big{font-size:96px}.sent{font-size:44px}.balloon{width:120px;height:140px}.qo .num.letter{font-size:76px}}

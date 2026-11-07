@@ -36,13 +36,15 @@ A = rep(A, ' {id:"feel",e:"😊",name:"Feelings & Friends",soon:true},',
  {id:"radio",e:"📻",name:"Domi's Radio",desc:"Listen to a short story, then answer questions about it"},
  {id:"shapes",e:"🔷",name:"Shapes & colours",desc:"Shapes, colours, patterns, bigger or smaller"},
  {id:"people",e:"🚩",name:"Flags & jobs",desc:"Find the flag, find the job"},
+ {id:"words",e:"🔤",name:"Letters & words",desc:"ABC, first letter, English words"},
+ {id:"reading",e:"📖",name:"Read it!",desc:"Sight words and short sentences (age 5+)"},
  {id:"paint",e:"🎨",name:"Painting",desc:"Colour a picture, tap by tap"},
  {id:"feel",e:"😊",name:"Feelings & Friends",soon:true},''')
 A = rep(A, 'perDay:20,', 'perDay:10,')
 A = rep(A, 'ansLang:"",topics:["math","clock","money"],topicsV2:1});',
- 'ansLang:"",topics:["math","clock","money","watcher","shapes","people","radio","paint"],topicsV2:1,topicsV3:1,topicsV4:1,topicsV5:1,paintings:[],acorns:0,wood:0,day:{d:"",done:0,house:false,plan:null},stickers:[],seenW:[],real:null,notified:[],mapMonth:"auto",questions:0});')
+ 'ansLang:"",topics:["math","clock","money","watcher","shapes","people","words","reading","radio","paint"],topicsV2:1,topicsV3:1,topicsV4:1,topicsV5:1,topicsV6:1,paintings:[],acorns:0,wood:0,day:{d:"",done:0,house:false,plan:null},stickers:[],seenW:[],real:null,notified:[],mapMonth:"auto",questions:0});')
 A = rep(A, 'if(!S.topicsV2){S.topics=[...new Set([...(S.topics||[]),"math","clock","money"])];S.topicsV2=1}',
- 'if(!S.topicsV2){S.topics=[...new Set([...(S.topics||[]),"math","clock","money"])];S.topicsV2=1}if(!S.topicsV3){S.topics=[...new Set([...S.topics,"watcher","radio"])];S.topicsV3=1}if(!S.topicsV4){S.topics=[...new Set([...S.topics,"paint"])];S.topicsV4=1}if(!S.topicsV5){S.topics=[...new Set([...S.topics,"shapes","people"])];S.topicsV5=1}if(!S.paintings)S.paintings=[];if(!S.real)S.real=defaultReal();if(![10,15,20,30].includes(S.perDay))S.perDay=10')
+ 'if(!S.topicsV2){S.topics=[...new Set([...(S.topics||[]),"math","clock","money"])];S.topicsV2=1}if(!S.topicsV3){S.topics=[...new Set([...S.topics,"watcher","radio"])];S.topicsV3=1}if(!S.topicsV4){S.topics=[...new Set([...S.topics,"paint"])];S.topicsV4=1}if(!S.topicsV5){S.topics=[...new Set([...S.topics,"shapes","people"])];S.topicsV5=1}if(!S.topicsV6){S.topics=[...new Set([...S.topics,"words","reading"])];S.topicsV6=1}if(!S.paintings)S.paintings=[];if(!S.real)S.real=defaultReal();if(![10,15,20,30].includes(S.perDay))S.perDay=10')
 A = rep(A, 'const save=()=>{', '''function defaultReal(){return [{id:"book",e:"📚",name:"A new book",a:60,w:8},{id:"clothes",e:"👕",name:"New clothes",a:120,w:15},{id:"toy",e:"🧸",name:"A toy",a:200,w:25}]}
 const save=()=>{''')
 A = rep(A, 'const a=new Audio("audio/"+(S.lang==="fr"&&!/^(en|rep)\\d/.test(name)?"fr/":"")+name+".mp3");', 'const a=new Audio("audio/"+name+".mp3");')
@@ -57,7 +59,7 @@ EVOICED=sorted(set(f.split('_')[0] for f in os.listdir(os.path.join(os.path.dirn
 wq=json.dumps(json.loads(wq)+[{k:v for k,v in q.items() if k!='fa_q'} for q in json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'px_questions.json')))],ensure_ascii=False)
 SDIR=os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 FA_SAY=json.load(open(os.path.join(SDIR,'tools','fa_have.json')));EN_SAY=json.load(open(os.path.join(SDIR,'tools','en_have.json')));EN_SAY.update(json.load(open(os.path.join(SDIR,'fa_new','en_new.json'))));FA_SAY.update(json.load(open(os.path.join(SDIR,'fa_new','fa_new2.json'))));FA_SAY.update(json.load(open(os.path.join(SDIR,'fa_new','fa_new.json'))))
-B=open(os.path.join(os.path.dirname(__file__),'qengine.js')).read().replace('__STORIES__',open(os.path.join(SDIR,'watcher','stories.json')).read()).replace('__FA_SAY__',json.dumps(FA_SAY)).replace('__EVOICED__',json.dumps(EVOICED)).replace('__EN_SAY__',json.dumps(EN_SAY)).replace('__WQ__',wq).replace('__VOICED__',json.dumps(VOICED)).replace('__PIC_E__',PIC_E).replace('__WORD_E__',WORD_E)
+B=open(os.path.join(os.path.dirname(__file__),'qengine.js')).read().replace('__STORIES__',open(os.path.join(SDIR,'watcher','stories.json')).read()).replace('__FA_SAY__',json.dumps(FA_SAY)).replace('__EVOICED__',json.dumps(EVOICED)).replace('__EN_SAY__',json.dumps(EN_SAY)).replace('__POOL__',open(os.path.join(SDIR,'watcher','pool.json')).read()).replace('__WQ__',wq).replace('__VOICED__',json.dumps(VOICED)).replace('__PIC_E__',PIC_E).replace('__WORD_E__',WORD_E)
 C=''
 
 css += r'''
@@ -228,7 +230,7 @@ function eventNow(d=new Date()){
 }
 const monthIdx=()=>S.mapMonth==="auto"?new Date().getMonth():+S.mapMonth;
 const landIdx=()=>MONTH_LAND[monthIdx()];
-const TOPIC_SYM={math:"➕",clock:"🕒",money:"🪙",watcher:"🔎",shapes:"🔷",people:"🚩",radio:"📻",paint:"🎨"};
+const TOPIC_SYM={math:"➕",clock:"🕒",money:"🪙",watcher:"🔎",shapes:"🔷",people:"🚩",words:"🔤",reading:"📖",radio:"📻",paint:"🎨"};
 
 /* ================= today's path: the parents' daily questions split over the mounds ================= */
 const activeTopics=()=>S.topics.filter(t=>TOPIC_SYM[t]);
@@ -393,7 +395,7 @@ function showParents(){
   hidePanels();$("map").hidden=true;$("pSettings").hidden=false;
   const pn=curPlayer().name,w=wkLog(),tp=S.lastTopic||"math",dq=(DINNER[tp]||DINNER.math),names=w.topics.map(t=>(COURSE.find(c=>c.id===t)||{}).name).filter(Boolean);
   const sk=skillFor(S.age,S.diff),ex1=makeProb(sk),ex2=makeProb(sk),n=HOLES[landIdx()].length;
-  const SHORT={math:"Numbers",clock:"Clock",money:"Coins",watcher:"World",shapes:"Shapes",people:"People",radio:"Radio",paint:"Paint"},pct=w.q?Math.round(w.right/w.q*100):0;
+  const SHORT={math:"Numbers",clock:"Clock",money:"Coins",watcher:"World",shapes:"Shapes",people:"People",words:"Letters",reading:"Read",radio:"Radio",paint:"Paint"},pct=w.q?Math.round(w.right/w.q*100):0;
   const ring=(v,max,c,ic)=>{const f=Math.min(1,v/max);return `<span class="pring" style="--f:${f*360}deg;--c:${c}"><i>${ic}</i></span><small class="pnum">${Math.min(v,max)}/${max}</small>`};
   const sec=(e,t)=>`<div class="psec"><span>${e}</span>${t}</div>`;
   $("pSettings").innerHTML=`<button class="back" id="closeSettings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>Back</button>

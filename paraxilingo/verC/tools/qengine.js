@@ -58,6 +58,8 @@ const CATS=[
  {id:"farm",topic:"watcher",e:"🏡",name:"Homes, food & sounds"},
  {id:"shapes",topic:"shapes",e:"🔷",name:"Shapes, colours & patterns"},
  {id:"people",topic:"people",e:"🚩",name:"Flags & jobs"},
+ {id:"letters",topic:"words",e:"🔤",name:"Letters & words"},
+ {id:"read",topic:"reading",e:"📖",name:"Read it!"},
  {id:"story",topic:"radio",e:"📻",name:"Domi's Radio"},
  {id:"paint",topic:"paint",e:"🎨",name:"Painting"},
 ];
@@ -72,8 +74,10 @@ function kindsFor(cat){
   const a=lvl();
   if(cat==="count")return a<=4?["find","more","less"]:a<=6?["find","more","less","after","before"]:["after","before","find","more"];
   if(cat==="add")return a<=4?["addPic","subPic","teach"]:a<=7?["addPic","subPic","sum","teach","minus"]:["sum","minus","teach","big"];
-  if(cat==="clock")return a<=5?["routine","oclock"]:a<=6?["routine","oclock","half","season","nowseason"]:a<=7?["half","quarter","season","today","tomorrow","week"]:["quarter","minutes","after","yesterday","months"];
+  if(cat==="clock")return a<=5?["routine","oclock"]:a<=6?["routine","oclock","half","season","nowseason"]:a<=7?["half","quarter","season","today","tomorrow","week"]:["quarter","minutes","after","before","monthafter","yesterday","months"];
   if(cat==="money")return a<=5?["pennies","value"]:a<=6?["pennies","value","count"]:a<=7?["value","count","same"]:["count","same","change"];
+  if(cat==="letters")return a<=4?["abc","listen"]:a<=6?["listen","first","abc","whatis","lafter"]:["listen","first","whatis","lafter","lbefore"];
+  if(cat==="read")return a<=5?["balloon","flash"]:["balloon","flash","sentence"];
   if(cat==="farm")return a<=4?["home","sound","fly"]:["home","food","sound","fly","water"];
   if(cat==="shapes")return a<=4?["shape","color","pattern"]:["shape","color","pattern","bigsmall"];
   if(cat==="people")return a<=5?["job","job2"]:["flag","job","flag2","job2"];
@@ -120,12 +124,15 @@ function qCal(k){
   if(k==="tomorrow")return Object.assign({voice:["w/LULU_CA_TOMORROW"],cap:"What day is tomorrow?",visual:`<div class="bigemo">🌅</div>`,layout:"col",hint:"elim",exp:{t:DAYS_EN[(t+1)%7],v:["w/LULU_ANS_IS",...daySay((t+1)%7)]}},dayOpts((t+1)%7));
   if(k==="yesterday")return Object.assign({voice:["w/LULU_CA_YESTERDAY"],cap:"What day was yesterday?",visual:`<div class="bigemo">🌙</div>`,layout:"col",hint:"elim",exp:{t:DAYS_EN[(t+6)%7],v:["w/LULU_ANS_IS",...daySay((t+6)%7)]}},dayOpts((t+6)%7));
   if(k==="after"){const d=ri(0,6);return Object.assign({voice:["w/LULU_CA_DAY_AFTER",...daySay(d)],cap:`${DAYS_EN[d]} → ?`,visual:`<div class="daycard">${DAYS_EN[d]}</div>`,layout:"col",hint:"elim",exp:{t:DAYS_EN[(d+1)%7],v:["w/LULU_ANS_IS",...daySay((d+1)%7)]}},dayOpts((d+1)%7))}
+  if(k==="before"){const d=ri(0,6);return Object.assign({voice:["w/LULU_CA_DAY_BEFORE",...daySay(d)],cap:`? → ${DAYS_EN[d]}`,visual:`<div class="daycard">${DAYS_EN[d]}</div>`,layout:"col",hint:"elim",exp:{t:DAYS_EN[(d+6)%7],v:["w/LULU_ANS_IS",...daySay((d+6)%7)]}},dayOpts((d+6)%7))}
+  if(k==="monthafter"){const mo=ri(0,11),r=(mo+1)%12,o=sh([r,...sh([...Array(12).keys()].filter(x=>x!==r&&x!==mo)).slice(0,2)]),mSay=i=>["w/LULU_FA_MON"+i,"w/LULU_EN_MONTH"+i];
+    return {voice:["w/LULU_CA_MONTH_AFTER",...mSay(mo)],cap:`${MONTHS_EN[mo]} → ?`,visual:`<div class="daycard">${MONTHS_EN[mo]}</div>`,opts:o.map(i=>({h:`<span class="oe">🗓️</span><small class="dn">${MONTHS_EN[i]}</small>`,say:mSay(i)})),ans:o.indexOf(r),layout:"col",hint:"elim",exp:{t:MONTHS_EN[r],v:["w/LULU_ANS_IS",...mSay(r)]}}}
   if(k==="nowseason"){const o=sh([0,1,2,3]);return {voice:["w/LULU_CA_NOW_SEASON"],cap:"Which season is it now?",visual:`<div class="bigemo">🗓️</div>`,opts:o.map(i=>({h:`<span class="oe">${SEA_E[i]}</span><small>${SEAS[i]}</small>`,say:seaSay(i)})),ans:o.indexOf(sea),layout:"grid",hint:"elim",exp:{t:SEAS[sea],v:["w/LULU_ANS_IS",...seaSay(sea)]}}}
   if(k==="week")return Object.assign({voice:["w/LULU_CA_WEEK_DAYS"],cap:"How many days in a week?",visual:`<div class="bigemo">📆</div>`,layout:"row3",hint:"elim",exp:{t:"7",v:["w/LULU_ANS_IS",N(7)]}},numOpts(7,[5,10,6,8]));
   return Object.assign({voice:["w/LULU_CA_YEAR_MONTHS"],cap:"How many months in a year?",visual:`<div class="bigemo">🗓️</div>`,layout:"row3",hint:"elim",exp:{t:"12",v:["w/LULU_ANS_IS",N(12)]}},numOpts(12,[10,7,14]));
 }
 function qClock(k){
-  if(["today","tomorrow","yesterday","after","nowseason","week","months"].includes(k))return qCal(k);
+  if(["today","tomorrow","yesterday","after","before","monthafter","nowseason","week","months"].includes(k))return qCal(k);
   if(k==="routine"){const r=pickOne(ROUTINES);return {voice:["c_routine"],cap:"Morning or night?",visual:`<div class="bigemo">${r[0]}</div>`,opts:[{h:"<span class='yn'>☀️</span><small>Morning</small>",say:both("morning")},{h:"<span class='yn'>🌙</span><small>Night</small>",say:both("night")}],ans:r[2],layout:"yn",hint:"elim",exp:{t:r[2]?"Night 🌙":"Morning ☀️",v:["w/LULU_ANS_IS"]}}}
   if(k==="season"){const sz=pickOne(SEASONS),SE={Winter:"⛄",Spring:"🌸",Summer:"☀️",Autumn:"🍂"},o=sh(["Winter","Spring","Summer","Autumn"]);
     return {voice:["c_season"],cap:"Which season?",visual:`<div class="bigemo">${sz[0]}</div>`,opts:o.map(x=>({h:`<span class="oe">${SE[x]}</span><small>${x}</small>`,say:seaSay(["Spring","Summer","Autumn","Winter"].indexOf(x))})),ans:o.indexOf(sz[2]),layout:"grid",hint:"elim",exp:{t:sz[2],v:["w/LULU_ANS_IS"]}}}
@@ -187,6 +194,8 @@ function buildQ(cat,kind,used){
   if(cat==="money")return qMoney(kind);
   if(cat==="clock")return qClock(kind);
   if(cat==="farm")return qFarm(kind,used);
+  if(cat==="letters")return qLetters(kind,used);
+  if(cat==="read")return qRead(kind,used);
   if(cat==="shapes")return qShapes(kind,used);
   if(cat==="people")return qPeople(kind,used);
   if(cat==="sky"&&Math.random()<.35)return Math.random()<.5?qSkyPic(used):qPlanet(used);
@@ -225,6 +234,7 @@ function nextQ(){
   $("qSpk").onclick=()=>{sfx.tap();ask(q)};
   $("qBody").querySelectorAll(".qo").forEach(b=>b.onclick=()=>pick(+b.dataset.j,b));
   $("qBody").classList.remove("in");void $("qBody").offsetWidth;$("qBody").classList.add("in");
+  if(q.flash)setTimeout(()=>{const f=$("qBody").querySelector(".flash");if(f)f.classList.add("hid")},2200);
   setTimeout(()=>{if(L&&L.q===q)ask(q)},350);
 }
 let askTok=0;
@@ -415,4 +425,34 @@ function qPlanet(used){
   const c=sh([...PLANET_N.keys()]),r=c.find(i=>!used.has("pl"+i));if(r===undefined)return qWatcher("sky",used);used.add("pl"+r);const o=sh([r,...c.filter(i=>i!==r).slice(0,2)]);
   const plSay=i=>i===0?["w/LULU_FA_PL0","w/LULU_YA","w/LULU_PL0"]:["w/LULU_FA_PL"+i,"w/LULU_YA","w/LULU_PL"+i];
   return {voice:["w/LULU_SK_WHICH"],cap:"What is this?",visual:PIC("pl_"+r,"wp big"),opts:o.map(i=>({h:`<span class="oe">🪐</span><small>${PLANET_N[i][0].toUpperCase()+PLANET_N[i].slice(1)}</small>`,say:plSay(i)})),ans:o.indexOf(r),layout:"col",hint:"elim",exp:{t:PLANET_N[r],v:["w/LULU_ANS_IS",...plSay(r)]}};
+}
+
+/* ================= letters, words and reading (from the shared pool, 'in the games' only) ================= */
+const POOL=__POOL__;
+const WORD_FALLBACK="bird honey cow cake rainbow key baby salad sun star balloon bed duck socks ten tree chicken bus cab mad bag ham fan map web leg hen jet bib lid pig fin lip hit mix pod log mom mop hot fox tub mud mug gum cut dog frog box bee bug cat hat bat car snake truck net can cap pin ship nut".split(" ");
+const WORDS=POOL.words.map(x=>({i:x.i,w:(x.w||WORD_FALLBACK[x.i]||"").toLowerCase()})).filter(x=>x.w&&!["mad","hit","mix","cut","mom"].includes(x.w));
+const LET="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const lSay=l=>["w/LULU_LN_"+l];
+const wSay=x=>["w/LULU_WORD"+x.i];
+function pickWord(used){const c=sh(WORDS);return c.find(x=>!used.has("wd"+x.i))||c[0]}
+function qLetters(k,used){
+  if(k==="abc"){const it=sh(POOL.abc).find(x=>!used.has("abc"+x.l))||POOL.abc[0];used.add("abc"+it.l);const o=sh([it.l,...sh(POOL.abc.map(x=>x.l).filter(l=>l!==it.l)).slice(0,2)]);
+    return {voice:[...lSay(it.l),...enSay(it.w),...lSay(it.l)],cap:"Find the letter!",visual:`<div class="bigemo">${WORD_E[it.w]||optE(it.w)||"🔤"}</div>`,opts:o.map(l=>({h:`<b class="num letter">${l}</b>`,say:lSay(l)})),ans:o.indexOf(it.l),layout:"row3",hint:"elim",exp:{t:it.l,v:["w/LULU_ANS_IS",...lSay(it.l)]}}}
+  if(k==="lafter"||k==="lbefore"){const i=k==="lafter"?ri(0,24):ri(1,25),r=LET[k==="lafter"?i+1:i-1],o=sh([r,...sh(LET.split("").filter(l=>l!==r&&l!==LET[i])).slice(0,2)]);
+    return {voice:[k==="lafter"?"w/LULU_AB_AFTER":"w/LULU_AB_BEFORE",...lSay(LET[i])],cap:k==="lafter"?`${LET[i]} → ?`:`? → ${LET[i]}`,visual:`<div class="seq">${k==="lafter"?`<b class="bignum sm">${LET[i]}</b><span class="arr">➜</span><b class="bignum sm q">?</b>`:`<b class="bignum sm q">?</b><span class="arr">➜</span><b class="bignum sm">${LET[i]}</b>`}</div>`,opts:o.map(l=>({h:`<b class="num letter">${l}</b>`,say:lSay(l)})),ans:o.indexOf(r),layout:"row3",hint:"elim",exp:{t:r,v:["w/LULU_ANS_IS",...lSay(r)]}}}
+  const x=pickWord(used);used.add("wd"+x.i);const o=sh([x,...sh(WORDS.filter(y=>y.i!==x.i)).slice(0,2)]);
+  if(k==="listen")   /* hear the English word, tap its picture (the pictures are not named, that is the game) */
+    return {voice:["w/LULU_W_LISTEN",...wSay(x)],cap:"Listen and find it!",visual:`<div class="listen">👂</div>`,opts:o.map(y=>({h:PIC("wd_"+y.i,"wp op")})),ans:o.indexOf(x),layout:"row3",hint:"elim",exp:{t:x.w,v:["w/LULU_ANS_IS",...wSay(x)]}};
+  if(k==="first"){const r=x.w[0].toUpperCase(),lo=sh([r,...sh(LET.split("").filter(l=>l!==r)).slice(0,2)]);
+    return {voice:["w/LULU_W_FIRST",...wSay(x)],cap:"First letter?",visual:PIC("wd_"+x.i,"wp big"),opts:lo.map(l=>({h:`<b class="num letter">${l}</b>`,say:lSay(l)})),ans:lo.indexOf(r),layout:"row3",hint:"elim",exp:{t:`${r} … ${x.w}`,v:["w/LULU_ANS_IS",...lSay(r),...wSay(x)]}}}
+  return {voice:["w/LULU_SK_WHICH"],cap:"What is it?",visual:PIC("wd_"+x.i,"wp big"),opts:o.map(y=>({h:`<b class="word">${y.w}</b>`,say:wSay(y)})),ans:o.indexOf(x),layout:"col",hint:"elim",exp:{t:x.w,v:["w/LULU_ANS_IS",...wSay(x)]}};
+}
+/* reading: the answers are NOT read aloud, the child reads them */
+function qRead(k,used){
+  if(k==="sentence"){const st=sh(POOL.sents).find(x=>!used.has(x.id))||POOL.sents[0];used.add(st.id);const o=sh(st.o.slice());
+    return {voice:["w/LULU_RD_SENTENCE"],cap:"",visual:`<div class="sent">${st.q.replace("___",'<span class="gap">?</span>')}</div>`,opts:o.map(w=>({h:`<b class="word">${w}</b>`})),ans:o.indexOf(st.a),layout:"row3",hint:"elim",exp:{t:st.q.replace("___",st.a),v:["w/LULU_ANS_IS"]}}}
+  const pool=POOL.sight.slice(0,lvl()<=5?30:lvl()<=6?60:100),x=sh(pool).find(y=>!used.has("sw"+y.i))||pool[0];used.add("sw"+x.i);
+  const o=sh([x,...sh(pool.filter(y=>y.i!==x.i&&y.w[0]!==x.w[0])).slice(0,2)]);
+  if(k==="flash")return {voice:["w/LULU_RD_FLASH"],cap:"Look! Then find it.",visual:`<div class="flash"><b class="word big">${x.w}</b></div>`,opts:o.map(y=>({h:`<b class="word">${y.w}</b>`})),ans:o.indexOf(x),layout:"row3",hint:"elim",flash:true,exp:{t:x.w,v:["w/LULU_ANS_IS","w/LULU_SIGHT"+x.i]}};
+  return {voice:["w/LULU_RD_BALLOON","w/LULU_SIGHT"+x.i],cap:"Pop the balloon!",visual:`<div class="listen">🎈</div>`,opts:o.map(y=>({h:`<span class="balloon"><b class="word">${y.w}</b></span>`})),ans:o.indexOf(x),layout:"row3",hint:"elim",exp:{t:x.w,v:["w/LULU_ANS_IS","w/LULU_SIGHT"+x.i]}};
 }
