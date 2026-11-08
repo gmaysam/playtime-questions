@@ -6551,6 +6551,120 @@ body,
 .lesson.q2 .qopts .qo .grp .ob {
   font-size: min(26px, 3.4vh);
 }
+.lesson.q2 .qbody {
+  align-items: stretch;
+  width: 100%;
+  max-width: 880px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  padding-bottom: 28px;
+}
+.lesson.q2 .qopts.row3,
+.lesson.q2 .qopts.col,
+.lesson.q2 .qopts.grid4,
+.lesson.q2 .qopts.yn,
+.lesson.q2 .qopts.row,
+.lesson.q2 .qopts.grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  grid-auto-rows: minmax(0, 1fr) !important;
+  flex: 1 1 auto !important;
+  min-height: 0;
+  width: 100%;
+  align-content: stretch;
+  gap: 16px;
+  margin: 0;
+}
+.lesson.q2 .qopts .qo[data-j] {
+  height: 100%;
+  min-height: 0;
+  width: auto !important;
+  grid-column: auto !important;
+  justify-self: stretch !important;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+  border-radius: 20px;
+}
+.lesson.q2 .qopts .qo[data-j] small,
+.lesson.q2 .qopts .qo[data-j] .dn {
+  margin-top: auto;
+  padding-bottom: 6px;
+}
+.lesson.q2 .qopts .qo[data-j] .oe {
+  font-size: min(84px, 9vh);
+}
+.lesson.q2 .qopts .qo[data-j] .wp.op {
+  height: min(160px, 15vh);
+  max-width: 80%;
+}
+.lesson.q2 .qvis {
+  flex: 0 0 auto;
+  max-height: 22vh;
+}
+@media (min-width:700px) {
+  .lesson.q2 .qopts .qo[data-j] .oe {
+    font-size: min(130px, 11vh);
+  }
+  .lesson.q2 .qopts .qo[data-j] .wp.op {
+    height: min(220px, 17vh);
+  }
+  .lesson.q2 .qopts {
+    gap: 22px;
+  }
+}
+@media (orientation:landscape) and (min-width:900px) {
+  .lesson.q2 .qbody {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+    grid-template-rows: auto auto 1fr;
+    column-gap: 28px;
+    max-width: 1200px;
+  }
+  .lesson.q2 .qbody > .qkick,
+  .lesson.q2 .qbody > .qtop,
+  .lesson.q2 .qbody > .qvis {
+    grid-column: 1;
+  }
+  .lesson.q2 .qbody > .qopts {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+  }
+  .lesson.q2 .qvis {
+    max-height: none;
+    align-self: start;
+  }
+}
+.lesson.q2 .qopts .qo[data-j] {
+  justify-content: center;
+  padding: 14px 10px 12px;
+}
+.lesson.q2 .qopts .qo[data-j] > :first-child {
+  flex: 1 1 auto;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+}
+.lesson.q2 .qopts .qo[data-j] small,
+.lesson.q2 .qopts .qo[data-j] .dn {
+  margin-top: 0;
+  flex: 0 0 auto;
+}
+@media (orientation:landscape) and (min-width:900px) {
+  .lesson.q2 .qbody {
+    padding-top: 22px;
+  }
+  .lesson.q2 .qbody > .qopts {
+    margin-top: 8px;
+    max-height: calc(100vh - 150px);
+  }
+}
+.lesson.q2 .qopts .qo[data-j] > .lbar:first-child {
+  flex: 0 0 34px;
+  align-self: flex-start;
+  margin: auto 0;
+}
 .qbody,
 .panel {
   max-width: 680px;
@@ -8383,7 +8497,7 @@ body,
     }
     if (k === "long") {
       const lg = Math.random() < 0.5, w = sh([ri(86, 96), ri(64, 74), ri(44, 54), ri(22, 32)]), r = lg ? w.indexOf(Math.max(...w)) : w.indexOf(Math.min(...w)), it = pickOne(["\u{1F40D}", "\u270F\uFE0F", "\u{1F682}"]);
-      return { voice: [lg ? "w/LULU_CP_LONG" : "w/LULU_CP_SHORT"], cap: lg ? "Which is longer?" : "Which is shorter?", visual: '<div class="listen">\u{1F4CF}</div>', opts: w.map((x) => ({ h: '<span class="lbar" style="width:'.concat(x, '%"><i>').concat(it, "</i></span>") })), ans: r, layout: "bars", hint: "elim", exp: { t: lg ? "The long one!" : "The short one!", v: ["w/LULU_ANS_IS"] } };
+      return { voice: [lg ? "w/LULU_CP_LONG" : "w/LULU_CP_SHORT"], cap: lg ? "Which is longer?" : "Which is shorter?", visual: '<div class="listen">\u{1F4CF}</div>', opts: w.map((x) => ({ h: '<span class="lbar" style="width:'.concat(x, '%"><i>').concat(it, "</i></span>") })), ans: r, layout: "row3", hint: "elim", exp: { t: lg ? "The long one!" : "The short one!", v: ["w/LULU_ANS_IS"] } };
     }
     if (k === "graph") {
       const pets = sh(["dog", "cat", "fish", "bird", "rabbit", "duck", "pig"].filter((n) => AN.some((x) => x[0] === n))).slice(0, 4), cnt = sh([ri(7, 9), ri(4, 6), ri(2, 3), 1]), r = cnt.indexOf(Math.max(...cnt));
