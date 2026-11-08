@@ -9,7 +9,7 @@ const fs=require('fs'),path=require('path');const root=process.argv[2],age=+(pro
    r.fulfill({body,contentType:f.endsWith('.html')?'text/html; charset=utf-8':f.endsWith('.svg')?'image/svg+xml':undefined})});
  await p.goto('http://app.test/index.html');await p.waitForTimeout(600);await p.click('#introC');await p.waitForTimeout(1200);
  await p.evaluate(a=>__px.setAge(a),age);
- for(const cat of ['animals','sky','letters','farm','shapes','clock','world']){
+ for(const cat of ['count','add','money','clock','farm','shapes','sky','people','letters','animals']){
    await p.evaluate(c=>{__px.dayPlan();__px.S.day.plan[0]={cat:c,count:5};},cat);
    await p.evaluate(()=>__px.openMound(0));await p.waitForTimeout(700);
    for(let k=0;k<12;k++){
@@ -17,11 +17,11 @@ const fs=require('fs'),path=require('path');const root=process.argv[2],age=+(pro
      if(st==='result'||st==='none')break;
      if(st==='sheet'){await p.click('#qNext');await p.waitForTimeout(400);continue}
      if(st==='wait'){await p.waitForTimeout(400);continue}
-     if(await p.$('#qBody .mboard')){const ids=await p.evaluate(()=>[...document.querySelectorAll('.mc.pic:not(.ok)')].map(b=>b.dataset.id));for(const id of ids){await p.click(`.mc.pic[data-id="${id}"]`);await p.click(`.mc.wrd[data-id="${id}"]`);await p.waitForTimeout(300)}await p.waitForTimeout(1200);continue}
+     if(await p.$('#qBody .mboard')){const ids=await p.evaluate(()=>[...document.querySelectorAll('.mc.pic:not(.ok)')].map(b=>b.dataset.id));for(const id of ids){await p.click(`.mc.pic[data-id="${id}"]`,{force:true});await p.click(`.mc.wrd[data-id="${id}"]`,{force:true});await p.waitForTimeout(300)}await p.waitForTimeout(1200);continue}
      const info=await p.evaluate(()=>({ans:__px.L.q.ans,kind:__px.L.q.kind,say:__px.L.q.opts.map(o=>(o.say||[]).filter(Boolean).length)}));
      await p.screenshot({path:root+`/../shots/c_${cat}_${k}.png`});console.log(cat,info.kind,'say',JSON.stringify(info.say));
-     await p.click(`#qBody .qo[data-j="${info.ans}"]`);await p.waitForTimeout(500);
+     await p.click(`#qBody .qo[data-j="${info.ans}"]`,{force:true});await p.waitForTimeout(500);
    }
-   const rb=await p.$('#resBtn');if(rb)await rb.click();await p.waitForTimeout(1500);
+   const rb=await p.$('#resBtn');if(rb)await rb.click({force:true});await p.waitForTimeout(1500);
  }
  console.log('missing',[...missing].join(' '));console.log(errs.join('\n')||'no errors');await b.close();})();

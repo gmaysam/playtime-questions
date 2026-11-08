@@ -410,3 +410,32 @@ body,.phone,.lesson.q2,.introC,#pSettings,.panel,.map{background:#fff!important}
 .lesson.q2 .qvis .graph{gap:4px}.lesson.q2 .qvis .gbar i{width:min(22px,2.6vh);height:min(22px,2.6vh)}.lesson.q2 .qvis .gbar .gl{font-size:min(34px,4vh)}
 .lesson.q2 .qvis .coins{flex-wrap:wrap;justify-content:center;gap:4px}
 .lesson.q2 .qvis .graph .gbar i{width:min(18px,2.2vh);height:min(18px,2.2vh)}.lesson.q2 .qvis .graph{gap:2px}.lesson.q2 .qvis .gbar .gl{font-size:min(28px,3.4vh);width:36px}
+/* ===== Nov 8: lively answers, like the Watcher device (cards pop in, float, wiggle, jump when right) ===== */
+@keyframes qpop{0%{transform:scale(.4) translateY(30px);opacity:0}60%{transform:scale(1.08) translateY(-6px);opacity:1}80%{transform:scale(.97)}100%{transform:scale(1)}}
+@keyframes qfloat{0%,100%{transform:translateY(0) rotate(0)}25%{transform:translateY(-6px) rotate(-1.2deg)}75%{transform:translateY(4px) rotate(1.2deg)}}
+@keyframes qbob{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-8px) scale(1.05)}}
+@keyframes qsay{0%,100%{transform:scale(1.06) rotate(0)}30%{transform:scale(1.1) rotate(-2deg)}70%{transform:scale(1.1) rotate(2deg)}}
+@keyframes qjump{0%{transform:scale(1)}30%{transform:scale(1.18) translateY(-18px) rotate(-4deg)}55%{transform:scale(.95) translateY(0) rotate(3deg)}75%{transform:scale(1.06)}100%{transform:scale(1.04)}}
+@keyframes qno{0%,100%{transform:translateX(0) rotate(0)}20%{transform:translateX(-10px) rotate(-4deg)}40%{transform:translateX(10px) rotate(4deg)}60%{transform:translateX(-6px) rotate(-2deg)}80%{transform:translateX(6px) rotate(2deg)}}
+@keyframes qsquish{0%{transform:scale(1)}40%{transform:scale(.9,1.05)}70%{transform:scale(1.05,.95)}100%{transform:scale(1)}}
+.lesson.q2 .qopts .qo[data-j]{animation:qpop .55s cubic-bezier(.2,1.4,.4,1) both,qfloat 3.6s ease-in-out .6s infinite;will-change:transform}
+.lesson.q2 .qopts .qo[data-j]:nth-child(2){animation-delay:.1s,.9s;animation-duration:.55s,4.1s}
+.lesson.q2 .qopts .qo[data-j]:nth-child(3){animation-delay:.2s,1.2s;animation-duration:.55s,3.3s}
+.lesson.q2 .qopts .qo[data-j]:nth-child(4){animation-delay:.3s,1.5s;animation-duration:.55s,3.9s}
+.lesson.q2 .qopts .qo[data-j] .oe,.lesson.q2 .qopts .qo[data-j] .wp,.lesson.q2 .qopts .qo[data-j] .grp,.lesson.q2 .qopts .qo[data-j] .num,.lesson.q2 .qopts .qo[data-j] .word,.lesson.q2 .qopts .qo[data-j] .cshape{animation:qbob 2.4s ease-in-out infinite;display:inline-block}
+.lesson.q2 .qopts .qo[data-j]:nth-child(2) .oe,.lesson.q2 .qopts .qo[data-j]:nth-child(2) .wp{animation-delay:.4s}
+.lesson.q2 .qopts .qo[data-j]:nth-child(3) .oe,.lesson.q2 .qopts .qo[data-j]:nth-child(3) .wp{animation-delay:.8s}
+.lesson.q2 .qopts .qo[data-j]:nth-child(4) .oe,.lesson.q2 .qopts .qo[data-j]:nth-child(4) .wp{animation-delay:1.2s}
+.lesson.q2 .qopts .qo[data-j].saying{animation:qsay .7s ease-in-out infinite;z-index:2}
+.lesson.q2 .qopts .qo[data-j]:active{animation:qsquish .3s}
+.lesson.q2 .qopts .qo[data-j].right,.lesson.q2 .qopts .qo[data-j].show{animation:qjump .7s cubic-bezier(.2,1.4,.4,1) both;z-index:3}
+.lesson.q2 .qopts .qo[data-j].wrong{animation:qno .5s ease both}
+.lesson.q2 .qopts .qo[data-j].faded{animation:none;transform:scale(.9);opacity:.35;transition:all .4s}
+.lesson.q2 .qvis .bigpic,.lesson.q2 .qvis .bigemo,.lesson.q2 .qvis .wp.big{animation:qbob 3s ease-in-out infinite}
+.mc{animation:qpop .5s cubic-bezier(.2,1.4,.4,1) both}
+.mc:nth-child(2n){animation-delay:.08s}.mc:nth-child(3n){animation-delay:.16s}
+.mc.sel{animation:qsay .7s ease-in-out infinite}
+.mc.ok{animation:qjump .6s both}
+@media (prefers-reduced-motion:reduce){.lesson.q2 .qopts .qo[data-j],.lesson.q2 .qopts .qo[data-j] *,.mc{animation:none!important}}
+.lesson.q2 .qopts .qo .grp{display:flex!important;flex-wrap:wrap;max-width:100%;justify-content:center;gap:2px;border:0;background:none}
+.lesson.q2 .qopts .qo .grp .ob{font-size:min(26px,3.4vh)}
