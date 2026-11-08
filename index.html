@@ -6360,6 +6360,197 @@ body,
   font-size: min(28px, 3.4vh);
   width: 36px;
 }
+@keyframes qpop {
+  0% {
+    transform: scale(.4) translateY(30px);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.08) translateY(-6px);
+    opacity: 1;
+  }
+  80% {
+    transform: scale(.97);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes qfloat {
+  0%, 100% {
+    transform: translateY(0) rotate(0);
+  }
+  25% {
+    transform: translateY(-6px) rotate(-1.2deg);
+  }
+  75% {
+    transform: translateY(4px) rotate(1.2deg);
+  }
+}
+@keyframes qbob {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-8px) scale(1.05);
+  }
+}
+@keyframes qsay {
+  0%, 100% {
+    transform: scale(1.06) rotate(0);
+  }
+  30% {
+    transform: scale(1.1) rotate(-2deg);
+  }
+  70% {
+    transform: scale(1.1) rotate(2deg);
+  }
+}
+@keyframes qjump {
+  0% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1.18) translateY(-18px) rotate(-4deg);
+  }
+  55% {
+    transform: scale(.95) translateY(0) rotate(3deg);
+  }
+  75% {
+    transform: scale(1.06);
+  }
+  100% {
+    transform: scale(1.04);
+  }
+}
+@keyframes qno {
+  0%, 100% {
+    transform: translateX(0) rotate(0);
+  }
+  20% {
+    transform: translateX(-10px) rotate(-4deg);
+  }
+  40% {
+    transform: translateX(10px) rotate(4deg);
+  }
+  60% {
+    transform: translateX(-6px) rotate(-2deg);
+  }
+  80% {
+    transform: translateX(6px) rotate(2deg);
+  }
+}
+@keyframes qsquish {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(.9, 1.05);
+  }
+  70% {
+    transform: scale(1.05, .95);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+.lesson.q2 .qopts .qo[data-j] {
+  animation: qpop .55s cubic-bezier(.2, 1.4, .4, 1) both, qfloat 3.6s ease-in-out .6s infinite;
+  will-change: transform;
+}
+.lesson.q2 .qopts .qo[data-j]:nth-child(2) {
+  animation-delay: .1s, .9s;
+  animation-duration: .55s, 4.1s;
+}
+.lesson.q2 .qopts .qo[data-j]:nth-child(3) {
+  animation-delay: .2s, 1.2s;
+  animation-duration: .55s, 3.3s;
+}
+.lesson.q2 .qopts .qo[data-j]:nth-child(4) {
+  animation-delay: .3s, 1.5s;
+  animation-duration: .55s, 3.9s;
+}
+.lesson.q2 .qopts .qo[data-j] .oe,
+.lesson.q2 .qopts .qo[data-j] .wp,
+.lesson.q2 .qopts .qo[data-j] .grp,
+.lesson.q2 .qopts .qo[data-j] .num,
+.lesson.q2 .qopts .qo[data-j] .word,
+.lesson.q2 .qopts .qo[data-j] .cshape {
+  animation: qbob 2.4s ease-in-out infinite;
+  display: inline-block;
+}
+.lesson.q2 .qopts .qo[data-j]:nth-child(2) .oe,
+.lesson.q2 .qopts .qo[data-j]:nth-child(2) .wp {
+  animation-delay: .4s;
+}
+.lesson.q2 .qopts .qo[data-j]:nth-child(3) .oe,
+.lesson.q2 .qopts .qo[data-j]:nth-child(3) .wp {
+  animation-delay: .8s;
+}
+.lesson.q2 .qopts .qo[data-j]:nth-child(4) .oe,
+.lesson.q2 .qopts .qo[data-j]:nth-child(4) .wp {
+  animation-delay: 1.2s;
+}
+.lesson.q2 .qopts .qo[data-j].saying {
+  animation: qsay .7s ease-in-out infinite;
+  z-index: 2;
+}
+.lesson.q2 .qopts .qo[data-j]:active {
+  animation: qsquish .3s;
+}
+.lesson.q2 .qopts .qo[data-j].right,
+.lesson.q2 .qopts .qo[data-j].show {
+  animation: qjump .7s cubic-bezier(.2, 1.4, .4, 1) both;
+  z-index: 3;
+}
+.lesson.q2 .qopts .qo[data-j].wrong {
+  animation: qno .5s ease both;
+}
+.lesson.q2 .qopts .qo[data-j].faded {
+  animation: none;
+  transform: scale(.9);
+  opacity: .35;
+  transition: all .4s;
+}
+.lesson.q2 .qvis .bigpic,
+.lesson.q2 .qvis .bigemo,
+.lesson.q2 .qvis .wp.big {
+  animation: qbob 3s ease-in-out infinite;
+}
+.mc {
+  animation: qpop .5s cubic-bezier(.2, 1.4, .4, 1) both;
+}
+.mc:nth-child(2n) {
+  animation-delay: .08s;
+}
+.mc:nth-child(3n) {
+  animation-delay: .16s;
+}
+.mc.sel {
+  animation: qsay .7s ease-in-out infinite;
+}
+.mc.ok {
+  animation: qjump .6s both;
+}
+@media (prefers-reduced-motion:reduce) {
+  .lesson.q2 .qopts .qo[data-j],
+  .lesson.q2 .qopts .qo[data-j] *,
+  .mc {
+    animation: none !important;
+  }
+}
+.lesson.q2 .qopts .qo .grp {
+  display: flex !important;
+  flex-wrap: wrap;
+  max-width: 100%;
+  justify-content: center;
+  gap: 2px;
+  border: 0;
+  background: none;
+}
+.lesson.q2 .qopts .qo .grp .ob {
+  font-size: min(26px, 3.4vh);
+}
 .qbody,
 .panel {
   max-width: 680px;
@@ -6979,14 +7170,15 @@ body,
   bv = function(w) {
     return '<span class="bv" style="width:'.concat(w, "px;--w:").concat(w, 'px"><img src="').concat(domiSrc(), '" alt=""></span>');
   };
-  const FA_SAY = { "bird": "LULU_FA_AN0", "cow": "LULU_FA_AN1", "duck": "LULU_FA_AN2", "hen": "LULU_FA_AN3", "pig": "LULU_FA_AN4", "shark": "LULU_FA_AN5", "fox": "LULU_FA_AN6", "dog": "LULU_FA_AN7", "frog": "LULU_FA_AN8", "bee": "LULU_FA_AN9", "worm": "LULU_FA_AN10", "cat": "LULU_FA_AN11", "bat": "LULU_FA_AN12", "snake": "LULU_FA_AN13", "grass": "LULU_FA_FOOD1", "seeds": "LULU_FA_FOOD2", "bones": "LULU_FA_FOOD3", "fish": "LULU_FA_FOOD4", "fly": "LULU_FA_FOOD5", "flowers": "LULU_FA_FOOD6", "leaves": "LULU_FA_FOOD7", "mosquito": "LULU_FA_FOOD8", "apple": "LULU_FA_FOOD9", "mouse": "LULU_FA_FOOD10", "eggs": "LULU_FA_FOOD11", "corn": "LULU_FA_FOOD12", "nest": "LULU_FA_HOME0", "barn": "LULU_FA_HOME1", "pond": "LULU_FA_HOME2", "doghouse": "LULU_FA_HOME3", "house": "LULU_FA_HOME4", "hive": "LULU_FA_HOME5", "tree": "LULU_FA_HOME6", "cave": "LULU_FA_HOME7", "burrow": "LULU_FA_HOME8", "sea": "LULU_FA_HOME9", "rocks": "LULU_FA_HOME10", "doctor": "LULU_FA_JOB0", "firefighter": "LULU_FA_JOB1", "police": "LULU_FA_JOB2", "chef": "LULU_FA_JOB3", "farmer": "LULU_FA_JOB4", "teacher": "LULU_FA_JOB5", "pilot": "LULU_FA_JOB6", "astronaut": "LULU_FA_JOB7", "mechanic": "LULU_FA_JOB8", "scientist": "LULU_FA_JOB9", "painter": "LULU_FA_JOB10", "builder": "LULU_FA_JOB11", "iran": "LULU_FA_CTY0", "usa": "LULU_FA_CTY1", "canada": "LULU_FA_CTY2", "mexico": "LULU_FA_CTY3", "brazil": "LULU_FA_CTY4", "england": "LULU_FA_CTY5", "france": "LULU_FA_CTY6", "germany": "LULU_FA_CTY7", "italy": "LULU_FA_CTY8", "china": "LULU_FA_CTY9", "japan": "LULU_FA_CTY10", "india": "LULU_FA_CTY11", "egypt": "LULU_FA_CTY12", "australia": "LULU_FA_CTY13", "sun": "LULU_FA_PL0", "mercury": "LULU_FA_PL1", "venus": "LULU_FA_PL2", "earth": "LULU_FA_PL3", "mars": "LULU_FA_PL4", "jupiter": "LULU_FA_PL5", "saturn": "LULU_FA_PL6", "uranus": "LULU_FA_PL7", "neptune": "LULU_FA_PL8", "moon": "LULU_FA_SKY1", "star": "LULU_FA_SKY2", "clouds": "LULU_FA_SKY3", "rain": "LULU_FA_SKY4", "rainbow": "LULU_FA_SKY5", "lightning": "LULU_FA_SKY6", "snow": "LULU_FA_SKY7", "rocket": "LULU_FA_SKY8", "telescope": "LULU_FA_SKY10", "galaxy": "LULU_FA_SKY11", "comet": "LULU_FA_SKY12", "satellite": "LULU_FA_SKY13", "planet": "LULU_FA_SKY14", "log": "LULU_FAW0", "ten": "LULU_FAW4", "box": "LULU_FAW6", "socks": "LULU_FAW7", "key": "LULU_FAW8", "mug": "LULU_FAW11", "bug": "LULU_FAW12", "hat": "LULU_FAW14", "car": "LULU_FAW17", "cake": "LULU_FAW18", "truck": "LULU_FAW21", "jet": "LULU_FAW22", "net": "LULU_FAW23", "fan": "LULU_FAW24", "can": "LULU_FAW25", "map": "LULU_FAW26", "cap": "LULU_FAW27", "fin": "LULU_FAW28", "pin": "LULU_FAW29", "lip": "LULU_FAW30", "ship": "LULU_FAW31", "cut": "LULU_FAW32", "nut": "LULU_FAW33", "cook": "LULU_FA_JOB3", "flower": "LULU_FA_FOOD6", "leaf": "LULU_FA_FOOD7", "egg": "LULU_FA_FOOD11", "cloud": "LULU_FA_SKY3", "stars": "LULU_FA_SKY2", "thunder": "LULU_FA_SKY6", "spring": "LULU_FA_SEA0", "summer": "LULU_FA_SEA1", "autumn": "LULU_FA_SEA2", "fall": "LULU_FA_SEA2", "winter": "LULU_FA_SEA3", "trees": "LULU_FA_HOME6", "ocean": "LULU_FA_HOME9", "chicken": "LULU_FA_AN3", "caterpillar": "LULU_FA_AN10", "worms": "LULU_FA_FOOD0", "bone": "LULU_FA_FOOD3", "flies": "LULU_FA_FOOD5", "mosquitoes": "LULU_FA_FOOD8", "apples": "LULU_FA_FOOD9", "mice": "LULU_FA_FOOD10", "den": "LULU_FA_HOME8", "milky way": "LULU_FA_SKY11", "police officer": "LULU_FA_JOB2", "artist": "LULU_FA_JOB10", "the united states": "LULU_FA_CTY1", "salt": "PX_FA_SALT", "lemon": "PX_FA_LEMON", "whale": "PX_FA_WHALE", "crab": "PX_FA_CRAB", "books": "PX_FA_BOOKS", "guitar": "PX_FA_GUITAR", "ruler": "PX_FA_RULER", "scales": "PX_FA_SCALES", "alarm clock": "PX_FA_ALARM_CLOCK", "soccer ball": "PX_FA_SOCCER_BALL", "full moon": "PX_FA_FULL_MOON", "dinosaur": "PX_FA_DINOSAUR", "a low cloud": "PX_FA_A_LOW_CLOUD", "ant": "PX_FA_ANT", "baker": "PX_FA_BAKER", "ball": "PX_FA_BALL", "beach": "PX_FA_BEACH", "bear": "PX_FA_BEAR", "black": "PX_FA_BLACK", "blue": "PX_FA_BLUE", "brain": "PX_FA_BRAIN", "breathe": "PX_FA_BREATHE", "brown": "PX_FA_BROWN", "butterfly": "PX_FA_BUTTERFLY", "candy": "PX_FA_CANDY", "cars": "PX_FA_CARS", "cheetah": "PX_FA_CHEETAH", "chips": "PX_FA_CHIPS", "circle": "PX_FA_CIRCLE", "crown": "PX_FA_CROWN", "ears": "PX_FA_EARS", "elbow": "PX_FA_ELBOW", "elephant": "PX_FA_ELEPHANT", "eyes": "PX_FA_EYES", "feet": "PX_FA_FEET", "green": "PX_FA_GREEN", "hair": "PX_FA_HAIR", "hands": "PX_FA_HANDS", "knee": "PX_FA_KNEE", "lion": "PX_FA_LION", "maple": "PX_FA_MAPLE", "milk": "PX_FA_MILK", "morning": "PX_FA_MORNING", "nectar": "PX_FA_NECTAR", "night": "PX_FA_NIGHT", "nose": "PX_FA_NOSE", "orange": "PX_FA_ORANGE", "pine": "PX_FA_PINE", "pink": "PX_FA_PINK", "pizza": "PX_FA_PIZZA", "purple": "PX_FA_PURPLE", "raincoat": "PX_FA_RAINCOAT", "red": "PX_FA_RED", "salad": "PX_FA_SALAD", "sand": "PX_FA_SAND", "shoes": "PX_FA_SHOES", "shops": "PX_FA_SHOPS", "smoke": "PX_FA_SMOKE", "snail": "PX_FA_SNAIL", "square": "PX_FA_SQUARE", "swimsuit": "PX_FA_SWIMSUIT", "think": "PX_FA_THINK", "toe": "PX_FA_TOE", "toys": "PX_FA_TOYS", "train": "PX_FA_TRAIN", "triangle": "PX_FA_TRIANGLE", "turtle": "PX_FA_TURTLE", "walk": "PX_FA_WALK", "water": "PX_FA_WATER", "white": "PX_FA_WHITE", "yellow": "PX_FA_YELLOW" };
+  const FA_SAY = { "bird": "LULU_FA_AN0", "cow": "LULU_FA_AN1", "duck": "LULU_FA_AN2", "hen": "LULU_FA_AN3", "pig": "LULU_FA_AN4", "shark": "LULU_FA_AN5", "fox": "LULU_FA_AN6", "dog": "LULU_FA_AN7", "frog": "LULU_FA_AN8", "bee": "LULU_FA_AN9", "worm": "LULU_FA_AN10", "cat": "LULU_FA_AN11", "bat": "LULU_FA_AN12", "snake": "LULU_FA_AN13", "grass": "LULU_FA_FOOD1", "seeds": "LULU_FA_FOOD2", "bones": "LULU_FA_FOOD3", "fish": "LULU_FA_FOOD4", "fly": "LULU_FA_FOOD5", "flowers": "LULU_FA_FOOD6", "leaves": "LULU_FA_FOOD7", "mosquito": "LULU_FA_FOOD8", "apple": "LULU_FA_FOOD9", "mouse": "LULU_FA_FOOD10", "eggs": "LULU_FA_FOOD11", "corn": "LULU_FA_FOOD12", "nest": "LULU_FA_HOME0", "barn": "LULU_FA_HOME1", "pond": "LULU_FA_HOME2", "doghouse": "LULU_FA_HOME3", "house": "LULU_FA_HOME4", "hive": "LULU_FA_HOME5", "tree": "LULU_FA_HOME6", "cave": "LULU_FA_HOME7", "burrow": "LULU_FA_HOME8", "sea": "LULU_FA_HOME9", "rocks": "LULU_FA_HOME10", "doctor": "LULU_FA_JOB0", "firefighter": "LULU_FA_JOB1", "police": "LULU_FA_JOB2", "chef": "LULU_FA_JOB3", "farmer": "LULU_FA_JOB4", "teacher": "LULU_FA_JOB5", "pilot": "LULU_FA_JOB6", "astronaut": "LULU_FA_JOB7", "mechanic": "LULU_FA_JOB8", "scientist": "LULU_FA_JOB9", "painter": "LULU_FA_JOB10", "builder": "LULU_FA_JOB11", "iran": "LULU_FA_CTY0", "usa": "LULU_FA_CTY1", "canada": "LULU_FA_CTY2", "mexico": "LULU_FA_CTY3", "brazil": "LULU_FA_CTY4", "england": "LULU_FA_CTY5", "france": "LULU_FA_CTY6", "germany": "LULU_FA_CTY7", "italy": "LULU_FA_CTY8", "china": "LULU_FA_CTY9", "japan": "LULU_FA_CTY10", "india": "LULU_FA_CTY11", "egypt": "LULU_FA_CTY12", "australia": "LULU_FA_CTY13", "sun": "LULU_FA_PL0", "mercury": "LULU_FA_PL1", "venus": "LULU_FA_PL2", "earth": "LULU_FA_PL3", "mars": "LULU_FA_PL4", "jupiter": "LULU_FA_PL5", "saturn": "LULU_FA_PL6", "uranus": "LULU_FA_PL7", "neptune": "LULU_FA_PL8", "moon": "LULU_FA_SKY1", "star": "LULU_FA_SKY2", "clouds": "LULU_FA_SKY3", "rain": "LULU_FA_SKY4", "rainbow": "LULU_FA_SKY5", "lightning": "LULU_FA_SKY6", "snow": "LULU_FA_SKY7", "rocket": "LULU_FA_SKY8", "telescope": "LULU_FA_SKY10", "galaxy": "LULU_FA_SKY11", "comet": "LULU_FA_SKY12", "satellite": "LULU_FA_SKY13", "planet": "LULU_FA_SKY14", "log": "LULU_FAW0", "ten": "LULU_FAW4", "box": "LULU_FAW6", "socks": "LULU_FAW7", "key": "LULU_FAW8", "mug": "LULU_FAW11", "bug": "LULU_FAW12", "hat": "LULU_FAW14", "car": "LULU_FAW17", "cake": "LULU_FAW18", "truck": "LULU_FAW21", "jet": "LULU_FAW22", "net": "LULU_FAW23", "fan": "LULU_FAW24", "can": "LULU_FAW25", "map": "LULU_FAW26", "cap": "LULU_FAW27", "fin": "LULU_FAW28", "pin": "LULU_FAW29", "lip": "LULU_FAW30", "ship": "LULU_FAW31", "cut": "LULU_FAW32", "nut": "LULU_FAW33", "cook": "LULU_FA_JOB3", "flower": "LULU_FA_FOOD6", "leaf": "LULU_FA_FOOD7", "egg": "LULU_FA_FOOD11", "cloud": "LULU_FA_SKY3", "stars": "LULU_FA_SKY2", "thunder": "LULU_FA_SKY6", "spring": "LULU_FA_SEA0", "summer": "LULU_FA_SEA1", "autumn": "LULU_FA_SEA2", "fall": "LULU_FA_SEA2", "winter": "LULU_FA_SEA3", "trees": "LULU_FA_HOME6", "ocean": "LULU_FA_HOME9", "chicken": "LULU_FA_AN3", "caterpillar": "LULU_FA_AN10", "worms": "LULU_FA_FOOD0", "bone": "LULU_FA_FOOD3", "flies": "LULU_FA_FOOD5", "mosquitoes": "LULU_FA_FOOD8", "apples": "LULU_FA_FOOD9", "mice": "LULU_FA_FOOD10", "den": "LULU_FA_HOME8", "milky way": "LULU_FA_SKY11", "police officer": "LULU_FA_JOB2", "artist": "LULU_FA_JOB10", "the united states": "LULU_FA_CTY1", "salt": "PX_FA_SALT", "lemon": "PX_FA_LEMON", "whale": "PX_FA_WHALE", "crab": "PX_FA_CRAB", "books": "PX_FA_BOOKS", "guitar": "PX_FA_GUITAR", "ruler": "PX_FA_RULER", "scales": "PX_FA_SCALES", "alarm clock": "PX_FA_ALARM_CLOCK", "soccer ball": "PX_FA_SOCCER_BALL", "full moon": "PX_FA_FULL_MOON", "dinosaur": "PX_FA_DINOSAUR", "a low cloud": "PX_FA_A_LOW_CLOUD", "ant": "PX_FA_ANT", "baker": "PX_FA_BAKER", "ball": "PX_FA_BALL", "beach": "PX_FA_BEACH", "bear": "PX_FA_BEAR", "black": "PX_FA_BLACK", "blue": "PX_FA_BLUE", "brain": "PX_FA_BRAIN", "breathe": "PX_FA_BREATHE", "brown": "PX_FA_BROWN", "butterfly": "PX_FA_BUTTERFLY", "candy": "PX_FA_CANDY", "cars": "PX_FA_CARS", "cheetah": "PX_FA_CHEETAH", "chips": "PX_FA_CHIPS", "circle": "PX_FA_CIRCLE", "crown": "PX_FA_CROWN", "ears": "PX_FA_EARS", "elbow": "PX_FA_ELBOW", "elephant": "PX_FA_ELEPHANT", "eyes": "PX_FA_EYES", "feet": "PX_FA_FEET", "green": "PX_FA_GREEN", "hair": "PX_FA_HAIR", "hands": "PX_FA_HANDS", "knee": "PX_FA_KNEE", "lion": "PX_FA_LION", "maple": "PX_FA_MAPLE", "milk": "PX_FA_MILK", "morning": "PX_FA_MORNING", "nectar": "PX_FA_NECTAR", "night": "PX_FA_NIGHT", "nose": "PX_FA_NOSE", "orange": "PX_FA_ORANGE", "pine": "PX_FA_PINE", "pink": "PX_FA_PINK", "pizza": "PX_FA_PIZZA", "purple": "PX_FA_PURPLE", "raincoat": "PX_FA_RAINCOAT", "red": "PX_FA_RED", "salad": "PX_FA_SALAD", "sand": "PX_FA_SAND", "shoes": "PX_FA_SHOES", "shops": "PX_FA_SHOPS", "smoke": "PX_FA_SMOKE", "snail": "PX_FA_SNAIL", "square": "PX_FA_SQUARE", "swimsuit": "PX_FA_SWIMSUIT", "think": "PX_FA_THINK", "toe": "PX_FA_TOE", "toys": "PX_FA_TOYS", "train": "PX_FA_TRAIN", "triangle": "PX_FA_TRIANGLE", "turtle": "PX_FA_TURTLE", "walk": "PX_FA_WALK", "water": "PX_FA_WATER", "white": "PX_FA_WHITE", "yellow": "PX_FA_YELLOW", "bus": "PX_FA_W_BUS", "bed": "PX_FA_W_BED", "spoon": "PX_FA_W_SPOON", "ladder": "PX_FA_W_LADDER", "desert": "PX_FA_W_DESERT", "lake": "PX_FA_W_LAKE", "lava": "PX_FA_W_LAVA", "juice": "PX_FA_W_JUICE", "north pole": "PX_FA_W_NORTH_POLE", "banana": "PX_FA_W_BANANA", "bread": "PX_FA_W_BREAD", "cheese": "PX_FA_W_CHEESE", "flour": "PX_FA_W_FLOUR", "stones": "PX_FA_W_STONES", "paper": "PX_FA_W_PAPER", "rice": "PX_FA_W_RICE", "beans": "PX_FA_W_BEANS", "cold": "PX_FA_W_COLD", "big": "PX_FA_W_BIG", "fast": "PX_FA_W_FAST", "down": "PX_FA_W_DOWN", "in": "PX_FA_W_IN", "on": "PX_FA_W_ON", "dentist": "PX_FA_W_DENTIST", "clock": "PX_FA_W_CLOCK", "fork": "PX_FA_W_FORK", "brush": "PX_FA_W_BRUSH", "nails": "PX_FA_W_NAILS", "boat": "PX_FA_W_BOAT", "it steams": "PX_FA_W_IT_STEAMS", "it freezes": "PX_FA_W_IT_FREEZES", "blocking light": "PX_FA_W_BLOCKING_LIGHT", "wind": "PX_FA_W_WIND", "sleep": "PX_FA_W_SLEEP", "sunglasses": "PX_FA_W_SUNGLASSES", "river": "PX_FA_W_RIVER", "forest": "PX_FA_W_FOREST", "bike": "PX_FA_W_BIKE", "cup": "PX_FA_W_CUP", "up": "PX_FA_W_UP" };
   const PLANET_N = ["sun", "mercury", "venus", "earth", "mars", "jupiter", "saturn", "uranus", "neptune"];
   const DINOS = ["t-rex", "tyrannosaurus", "triceratops", "stegosaurus", "brachiosaurus", "velociraptor", "diplodocus", "pterodactyl"];
-  const EN_SAY = { "bird": "LULU_WORD0", "honey": "LULU_WORD1", "cow": "LULU_WORD2", "cake": "LULU_WORD3", "rainbow": "LULU_WORD4", "key": "LULU_WORD5", "baby": "LULU_WORD6", "salad": "LULU_WORD7", "sun": "LULU_WORD8", "star": "LULU_WORD9", "balloon": "LULU_WORD10", "bed": "LULU_WORD11", "duck": "LULU_WORD12", "socks": "LULU_WORD13", "ten": "LULU_WORD14", "tree": "LULU_WORD15", "chicken": "LULU_WORD16", "bus": "LULU_WORD17", "cab": "LULU_WORD18", "mad": "LULU_WORD19", "bag": "LULU_WORD20", "ham": "LULU_WORD21", "fan": "LULU_WORD22", "map": "LULU_WORD23", "web": "LULU_WORD24", "leg": "LULU_WORD25", "hen": "LULU_WORD26", "jet": "LULU_WORD27", "bib": "LULU_WORD28", "lid": "LULU_WORD29", "pig": "LULU_WORD30", "fin": "LULU_WORD31", "lip": "LULU_WORD32", "hit": "LULU_WORD33", "mix": "LULU_WORD34", "pod": "LULU_WORD35", "log": "LULU_WORD36", "mom": "LULU_WORD37", "mop": "LULU_WORD38", "hot": "LULU_WORD39", "fox": "LULU_WORD40", "tub": "LULU_WORD41", "mud": "LULU_WORD42", "mug": "LULU_WORD43", "gum": "LULU_WORD44", "cut": "LULU_WORD45", "dog": "LULU_WORD46", "frog": "LULU_WORD47", "box": "LULU_WORD48", "bee": "LULU_WORD49", "bug": "LULU_WORD50", "cat": "LULU_WORD51", "hat": "LULU_WORD52", "bat": "LULU_WORD53", "car": "LULU_WORD54", "snake": "LULU_WORD55", "truck": "LULU_WORD56", "net": "LULU_WORD57", "can": "LULU_WORD58", "cap": "LULU_WORD59", "pin": "LULU_WORD60", "ship": "LULU_WORD61", "nut": "LULU_WORD62", "red": "LULU_COLOR0", "blue": "LULU_COLOR1", "yellow": "LULU_COLOR2", "green": "LULU_COLOR3", "orange": "LULU_COLOR4", "purple": "LULU_COLOR5", "pink": "LULU_COLOR6", "brown": "LULU_COLOR7", "black": "LULU_COLOR8", "white": "LULU_COLOR9", "circle": "LULU_EN_SH0", "square": "LULU_EN_SH1", "triangle": "LULU_EN_SH2", "rectangle": "LULU_EN_SH3", "oval": "LULU_EN_SH5", "rhombus": "LULU_EN_SH6", "trapezoid": "LULU_EN_SH7", "pentagon": "LULU_EN_SH8", "hexagon": "LULU_EN_SH9", "octagon": "LULU_EN_SH10", "parallelogram": "LULU_EN_SH11", "cube": "LULU_EN_SH12", "cylinder": "LULU_EN_SH13", "sphere": "LULU_EN_SH14", "cone": "LULU_EN_SH15", "pyramid": "LULU_EN_SH16", "rectangular prism": "LULU_EN_SH17", "iran": "LULU_EN_COUNTRY0", "the united states": "LULU_EN_COUNTRY1", "canada": "LULU_EN_COUNTRY2", "mexico": "LULU_EN_COUNTRY3", "brazil": "LULU_EN_COUNTRY4", "the united kingdom": "LULU_EN_COUNTRY5", "france": "LULU_EN_COUNTRY6", "germany": "LULU_EN_COUNTRY7", "italy": "LULU_EN_COUNTRY8", "china": "LULU_EN_COUNTRY9", "japan": "LULU_EN_COUNTRY10", "india": "LULU_EN_COUNTRY11", "egypt": "LULU_EN_COUNTRY12", "australia": "LULU_EN_COUNTRY13", "usa": "LULU_EN_COUNTRY1", "doctor": "LULU_EN_JOB0", "firefighter": "LULU_EN_JOB1", "police": "LULU_EN_JOB2", "officer": "LULU_EN_JOB3", "chef": "LULU_EN_JOB4", "farmer": "LULU_EN_JOB5", "teacher": "LULU_EN_JOB6", "pilot": "LULU_EN_JOB7", "astronaut": "LULU_EN_JOB8", "mechanic": "LULU_EN_JOB9", "scientist": "LULU_EN_JOB10", "artist": "LULU_EN_JOB11", "cook": "LULU_EN_JOB3", "monday": "LULU_EN_DAY0", "tuesday": "LULU_EN_DAY1", "wednesday": "LULU_EN_DAY2", "thursday": "LULU_EN_DAY3", "friday": "LULU_EN_DAY4", "saturday": "LULU_EN_DAY5", "sunday": "LULU_EN_DAY6", "january": "LULU_EN_MONTH0", "february": "LULU_EN_MONTH1", "march": "LULU_EN_MONTH2", "april": "LULU_EN_MONTH3", "may": "LULU_EN_MONTH4", "june": "LULU_EN_MONTH5", "july": "LULU_EN_MONTH6", "august": "LULU_EN_MONTH7", "september": "LULU_EN_MONTH8", "october": "LULU_EN_MONTH9", "november": "LULU_EN_MONTH10", "december": "LULU_EN_MONTH11", "spring": "LULU_EN_SEASON0", "summer": "LULU_EN_SEASON1", "fall": "LULU_EN_SEASON2", "winter": "LULU_EN_SEASON3", "autumn": "LULU_EN_SEASON2", "barn": "LULU_H_BARN", "cave": "LULU_H_CAVE", "den": "LULU_H_DEN", "doghouse": "LULU_H_DOGHOUSE", "house": "LULU_H_HOUSE", "nest": "LULU_H_NEST", "pond": "LULU_H_POND", "rocks": "LULU_H_ROCKS", "sea": "LULU_H_SEA", "hive": "LULU_H_HIVE", "mercury": "LULU_PL1", "venus": "LULU_PL2", "earth": "LULU_PL3", "mars": "LULU_PL4", "jupiter": "LULU_PL5", "saturn": "LULU_PL6", "uranus": "LULU_PL7", "neptune": "LULU_PL8", "alarm clock": "PX_EN_ALARM_CLOCK", "ant": "PX_EN_ANT", "apple": "PX_EN_APPLE", "baker": "PX_EN_BAKER", "beach": "PX_EN_BEACH", "bear": "PX_EN_BEAR", "flowers": "PX_EN_FLOWERS", "bone": "PX_EN_BONE", "books": "PX_EN_BOOKS", "brain": "PX_EN_BRAIN", "breathe": "PX_EN_BREATHE", "butterfly": "PX_EN_BUTTERFLY", "candy": "PX_EN_CANDY", "cars": "PX_EN_CARS", "caterpillar": "PX_EN_CATERPILLAR", "cheetah": "PX_EN_CHEETAH", "chips": "PX_EN_CHIPS", "cloud": "PX_EN_CLOUD", "comet": "PX_EN_COMET", "corn": "PX_EN_CORN", "crab": "PX_EN_CRAB", "crown": "PX_EN_CROWN", "ears": "PX_EN_EARS", "eggs": "PX_EN_EGGS", "elbow": "PX_EN_ELBOW", "elephant": "PX_EN_ELEPHANT", "eyes": "PX_EN_EYES", "feet": "PX_EN_FEET", "fish": "PX_EN_FISH", "flies": "PX_EN_FLIES", "full moon": "PX_EN_FULL_MOON", "galaxy": "PX_EN_GALAXY", "grass": "PX_EN_GRASS", "guitar": "PX_EN_GUITAR", "hair": "PX_EN_HAIR", "hands": "PX_EN_HANDS", "knee": "PX_EN_KNEE", "leaves": "PX_EN_LEAVES", "lemon": "PX_EN_LEMON", "lightning": "PX_EN_LIGHTNING", "lion": "PX_EN_LION", "maple": "PX_EN_MAPLE", "mice": "PX_EN_MICE", "milk": "PX_EN_MILK", "milky way": "PX_EN_MILKY_WAY", "moon": "PX_EN_MOON", "morning": "PX_EN_MORNING", "mosquitoes": "PX_EN_MOSQUITOES", "nectar": "PX_EN_NECTAR", "night": "PX_EN_NIGHT", "nose": "PX_EN_NOSE", "pine": "PX_EN_PINE", "pizza": "PX_EN_PIZZA", "planet": "PX_EN_PLANET", "rain": "PX_EN_RAIN", "raincoat": "PX_EN_RAINCOAT", "rocket": "PX_EN_ROCKET", "ruler": "PX_EN_RULER", "salt": "PX_EN_SALT", "sand": "PX_EN_SAND", "satellite": "PX_EN_SATELLITE", "scales": "PX_EN_SCALES", "seeds": "PX_EN_SEEDS", "shark": "PX_EN_SHARK", "shoes": "PX_EN_SHOES", "shops": "PX_EN_SHOPS", "smoke": "PX_EN_SMOKE", "snail": "PX_EN_SNAIL", "snow": "PX_EN_SNOW", "soccer ball": "PX_EN_SOCCER_BALL", "swimsuit": "PX_EN_SWIMSUIT", "telescope": "PX_EN_TELESCOPE", "think": "PX_EN_THINK", "thunder": "PX_EN_THUNDER", "toe": "PX_EN_TOE", "toys": "PX_EN_TOYS", "train": "PX_EN_TRAIN", "trees": "PX_EN_TREES", "turtle": "PX_EN_TURTLE", "walk": "PX_EN_WALK", "water": "PX_EN_WATER", "whale": "PX_EN_WHALE", "worms": "PX_EN_WORMS", "a low cloud": "PX_EN_A_LOW_CLOUD" };
+  const EN_SAY = { "bird": "LULU_WORD0", "honey": "LULU_WORD1", "cow": "LULU_WORD2", "cake": "LULU_WORD3", "rainbow": "LULU_WORD4", "key": "LULU_WORD5", "baby": "LULU_WORD6", "salad": "LULU_WORD7", "sun": "LULU_WORD8", "star": "LULU_WORD9", "balloon": "LULU_WORD10", "bed": "LULU_WORD11", "duck": "LULU_WORD12", "socks": "LULU_WORD13", "ten": "LULU_WORD14", "tree": "LULU_WORD15", "chicken": "LULU_WORD16", "bus": "LULU_WORD17", "cab": "LULU_WORD18", "mad": "LULU_WORD19", "bag": "LULU_WORD20", "ham": "LULU_WORD21", "fan": "LULU_WORD22", "map": "LULU_WORD23", "web": "LULU_WORD24", "leg": "LULU_WORD25", "hen": "LULU_WORD26", "jet": "LULU_WORD27", "bib": "LULU_WORD28", "lid": "LULU_WORD29", "pig": "LULU_WORD30", "fin": "LULU_WORD31", "lip": "LULU_WORD32", "hit": "LULU_WORD33", "mix": "LULU_WORD34", "pod": "LULU_WORD35", "log": "LULU_WORD36", "mom": "LULU_WORD37", "mop": "LULU_WORD38", "hot": "LULU_WORD39", "fox": "LULU_WORD40", "tub": "LULU_WORD41", "mud": "LULU_WORD42", "mug": "LULU_WORD43", "gum": "LULU_WORD44", "cut": "LULU_WORD45", "dog": "LULU_WORD46", "frog": "LULU_WORD47", "box": "LULU_WORD48", "bee": "LULU_WORD49", "bug": "LULU_WORD50", "cat": "LULU_WORD51", "hat": "LULU_WORD52", "bat": "LULU_WORD53", "car": "LULU_WORD54", "snake": "LULU_WORD55", "truck": "LULU_WORD56", "net": "LULU_WORD57", "can": "LULU_WORD58", "cap": "LULU_WORD59", "pin": "LULU_WORD60", "ship": "LULU_WORD61", "nut": "LULU_WORD62", "red": "LULU_COLOR0", "blue": "LULU_COLOR1", "yellow": "LULU_COLOR2", "green": "LULU_COLOR3", "orange": "LULU_COLOR4", "purple": "LULU_COLOR5", "pink": "LULU_COLOR6", "brown": "LULU_COLOR7", "black": "LULU_COLOR8", "white": "LULU_COLOR9", "circle": "LULU_EN_SH0", "square": "LULU_EN_SH1", "triangle": "LULU_EN_SH2", "rectangle": "LULU_EN_SH3", "oval": "LULU_EN_SH5", "rhombus": "LULU_EN_SH6", "trapezoid": "LULU_EN_SH7", "pentagon": "LULU_EN_SH8", "hexagon": "LULU_EN_SH9", "octagon": "LULU_EN_SH10", "parallelogram": "LULU_EN_SH11", "cube": "LULU_EN_SH12", "cylinder": "LULU_EN_SH13", "sphere": "LULU_EN_SH14", "cone": "LULU_EN_SH15", "pyramid": "LULU_EN_SH16", "rectangular prism": "LULU_EN_SH17", "iran": "LULU_EN_COUNTRY0", "the united states": "LULU_EN_COUNTRY1", "canada": "LULU_EN_COUNTRY2", "mexico": "LULU_EN_COUNTRY3", "brazil": "LULU_EN_COUNTRY4", "the united kingdom": "LULU_EN_COUNTRY5", "france": "LULU_EN_COUNTRY6", "germany": "LULU_EN_COUNTRY7", "italy": "LULU_EN_COUNTRY8", "china": "LULU_EN_COUNTRY9", "japan": "LULU_EN_COUNTRY10", "india": "LULU_EN_COUNTRY11", "egypt": "LULU_EN_COUNTRY12", "australia": "LULU_EN_COUNTRY13", "usa": "LULU_EN_COUNTRY1", "doctor": "LULU_EN_JOB0", "firefighter": "LULU_EN_JOB1", "police": "LULU_EN_JOB2", "officer": "LULU_EN_JOB3", "chef": "LULU_EN_JOB4", "farmer": "LULU_EN_JOB5", "teacher": "LULU_EN_JOB6", "pilot": "LULU_EN_JOB7", "astronaut": "LULU_EN_JOB8", "mechanic": "LULU_EN_JOB9", "scientist": "LULU_EN_JOB10", "artist": "LULU_EN_JOB11", "cook": "LULU_EN_JOB3", "monday": "LULU_EN_DAY0", "tuesday": "LULU_EN_DAY1", "wednesday": "LULU_EN_DAY2", "thursday": "LULU_EN_DAY3", "friday": "LULU_EN_DAY4", "saturday": "LULU_EN_DAY5", "sunday": "LULU_EN_DAY6", "january": "LULU_EN_MONTH0", "february": "LULU_EN_MONTH1", "march": "LULU_EN_MONTH2", "april": "LULU_EN_MONTH3", "may": "LULU_EN_MONTH4", "june": "LULU_EN_MONTH5", "july": "LULU_EN_MONTH6", "august": "LULU_EN_MONTH7", "september": "LULU_EN_MONTH8", "october": "LULU_EN_MONTH9", "november": "LULU_EN_MONTH10", "december": "LULU_EN_MONTH11", "spring": "LULU_EN_SEASON0", "summer": "LULU_EN_SEASON1", "fall": "LULU_EN_SEASON2", "winter": "LULU_EN_SEASON3", "autumn": "LULU_EN_SEASON2", "barn": "LULU_H_BARN", "cave": "LULU_H_CAVE", "den": "LULU_H_DEN", "doghouse": "LULU_H_DOGHOUSE", "house": "LULU_H_HOUSE", "nest": "LULU_H_NEST", "pond": "LULU_H_POND", "rocks": "LULU_H_ROCKS", "sea": "LULU_H_SEA", "hive": "LULU_H_HIVE", "mercury": "LULU_PL1", "venus": "LULU_PL2", "earth": "LULU_PL3", "mars": "LULU_PL4", "jupiter": "LULU_PL5", "saturn": "LULU_PL6", "uranus": "LULU_PL7", "neptune": "LULU_PL8", "alarm clock": "PX_EN_ALARM_CLOCK", "ant": "PX_EN_ANT", "apple": "PX_EN_APPLE", "baker": "PX_EN_BAKER", "beach": "PX_EN_BEACH", "bear": "PX_EN_BEAR", "flowers": "PX_EN_FLOWERS", "bone": "PX_EN_BONE", "books": "PX_EN_BOOKS", "brain": "PX_EN_BRAIN", "breathe": "PX_EN_BREATHE", "butterfly": "PX_EN_BUTTERFLY", "candy": "PX_EN_CANDY", "cars": "PX_EN_CARS", "caterpillar": "PX_EN_CATERPILLAR", "cheetah": "PX_EN_CHEETAH", "chips": "PX_EN_CHIPS", "cloud": "PX_EN_CLOUD", "comet": "PX_EN_COMET", "corn": "PX_EN_CORN", "crab": "PX_EN_CRAB", "crown": "PX_EN_CROWN", "ears": "PX_EN_EARS", "eggs": "PX_EN_EGGS", "elbow": "PX_EN_ELBOW", "elephant": "PX_EN_ELEPHANT", "eyes": "PX_EN_EYES", "feet": "PX_EN_FEET", "fish": "PX_EN_FISH", "flies": "PX_EN_FLIES", "full moon": "PX_EN_FULL_MOON", "galaxy": "PX_EN_GALAXY", "grass": "PX_EN_GRASS", "guitar": "PX_EN_GUITAR", "hair": "PX_EN_HAIR", "hands": "PX_EN_HANDS", "knee": "PX_EN_KNEE", "leaves": "PX_EN_LEAVES", "lemon": "PX_EN_LEMON", "lightning": "PX_EN_LIGHTNING", "lion": "PX_EN_LION", "maple": "PX_EN_MAPLE", "mice": "PX_EN_MICE", "milk": "PX_EN_MILK", "milky way": "PX_EN_MILKY_WAY", "moon": "PX_EN_MOON", "morning": "PX_EN_MORNING", "mosquitoes": "PX_EN_MOSQUITOES", "nectar": "PX_EN_NECTAR", "night": "PX_EN_NIGHT", "nose": "PX_EN_NOSE", "pine": "PX_EN_PINE", "pizza": "PX_EN_PIZZA", "planet": "PX_EN_PLANET", "rain": "PX_EN_RAIN", "raincoat": "PX_EN_RAINCOAT", "rocket": "PX_EN_ROCKET", "ruler": "PX_EN_RULER", "salt": "PX_EN_SALT", "sand": "PX_EN_SAND", "satellite": "PX_EN_SATELLITE", "scales": "PX_EN_SCALES", "seeds": "PX_EN_SEEDS", "shark": "PX_EN_SHARK", "shoes": "PX_EN_SHOES", "shops": "PX_EN_SHOPS", "smoke": "PX_EN_SMOKE", "snail": "PX_EN_SNAIL", "snow": "PX_EN_SNOW", "soccer ball": "PX_EN_SOCCER_BALL", "swimsuit": "PX_EN_SWIMSUIT", "telescope": "PX_EN_TELESCOPE", "think": "PX_EN_THINK", "thunder": "PX_EN_THUNDER", "toe": "PX_EN_TOE", "toys": "PX_EN_TOYS", "train": "PX_EN_TRAIN", "trees": "PX_EN_TREES", "turtle": "PX_EN_TURTLE", "walk": "PX_EN_WALK", "water": "PX_EN_WATER", "whale": "PX_EN_WHALE", "worms": "PX_EN_WORMS", "a low cloud": "PX_EN_A_LOW_CLOUD", "mouse": "PX_EN_W_MOUSE", "ocean": "PX_EN_W_OCEAN", "ball": "PX_EN_W_BALL", "spoon": "PX_EN_W_SPOON", "ladder": "PX_EN_W_LADDER", "desert": "PX_EN_W_DESERT", "lake": "PX_EN_W_LAKE", "lava": "PX_EN_W_LAVA", "juice": "PX_EN_W_JUICE", "north pole": "PX_EN_W_NORTH_POLE", "banana": "PX_EN_W_BANANA", "bread": "PX_EN_W_BREAD", "cheese": "PX_EN_W_CHEESE", "flour": "PX_EN_W_FLOUR", "stones": "PX_EN_W_STONES", "paper": "PX_EN_W_PAPER", "rice": "PX_EN_W_RICE", "beans": "PX_EN_W_BEANS", "cold": "PX_EN_W_COLD", "big": "PX_EN_W_BIG", "fast": "PX_EN_W_FAST", "down": "PX_EN_W_DOWN", "in": "PX_EN_W_IN", "on": "PX_EN_W_ON", "dentist": "PX_EN_W_DENTIST", "clock": "PX_EN_W_CLOCK", "fork": "PX_EN_W_FORK", "brush": "PX_EN_W_BRUSH", "nails": "PX_EN_W_NAILS", "boat": "PX_EN_W_BOAT", "it steams": "PX_EN_W_IT_STEAMS", "it freezes": "PX_EN_W_IT_FREEZES", "blocking light": "PX_EN_W_BLOCKING_LIGHT", "wind": "PX_EN_W_WIND", "sleep": "PX_EN_W_SLEEP", "sunglasses": "PX_EN_W_SUNGLASSES", "river": "PX_EN_W_RIVER", "forest": "PX_EN_W_FOREST", "bike": "PX_EN_W_BIKE", "cup": "PX_EN_W_CUP", "up": "PX_EN_W_UP", "brachiosaurus": "PX_EN_W_BRACHIOSAURUS", "t-rex": "PX_EN_W_T_REX" };
   function enSay(word) {
     const w = String(word).toLowerCase().trim();
     if (/^\d+$/.test(w)) return +w >= 1 && +w <= 100 ? ["w/LULU_EN" + +w] : [];
-    if (DINOS.includes(w) || PLANET_N.includes(w)) return [];
+    if (PLANET_N.includes(w)) return [];
+    if (DINOS.includes(w)) return EN_SAY[w] ? ["w/" + EN_SAY[w]] : [];
     const c = EN_SAY[w] || EN_SAY[w.replace(/s$/, "")] || EN_SAY[w + "s"];
     return c ? ["w/" + c] : [];
   }
@@ -7013,7 +7205,7 @@ body,
     return a;
   };
   const lvl = () => Math.max(3, Math.min(10, S.age + (S.diff - 1)));
-  const DK = () => lvl() >= 4 ? 3 : 2;
+  const DK = () => 3;
   let seqId = 0;
   function speaking(on) {
     const b = $("qSpk");
@@ -7050,7 +7242,7 @@ body,
   const dots = (n) => n <= 10 ? '<span class="dots">'.concat("\u25CF".repeat(n), "</span>") : "";
   const numOpt = (n) => ({ h: '<b class="num">'.concat(n, "</b>").concat(dots(n)), say: both(n) });
   function numOpts(right, cands, k = DK() + 1) {
-    const w = sh([...new Set(cands.filter((x) => x !== right && x >= 0))]).slice(0, k - 1), o = sh([right, ...w]);
+    const w = sh([...new Set(cands.filter((x) => x !== right && x >= 0 && (x <= 100 || right > 100)))]).slice(0, k - 1), o = sh([right, ...w]);
     return { opts: o.map(numOpt), ans: o.indexOf(right) };
   }
   const near = (n) => [n - 1, n + 1, n + 2, n - 2, n + 3];
@@ -7100,7 +7292,7 @@ body,
         b = ri(1, Math.min(mx, 9));
       } while (b === a || Math.abs(a - b) > 4);
       let o = [a, b];
-      if (lvl() >= 4) {
+      if (true) {
         const pool = sh([...Array(Math.min(mx, 9)).keys()].map((x) => x + 1).filter((x) => !o.includes(x)));
         o = sh([...o, ...pool.slice(0, 2)]);
       }
@@ -7238,11 +7430,14 @@ body,
       return Object.assign({ voice: ["m_count"], cap: "How much money?", visual: coinsHTML(ks, false), layout: "row3", hint: "coins", exp: { t: ks.map((x) => COINS[x].v + "\xA2").join(" + ") + " = ".concat(t, "\xA2"), v: ["w/LULU_ANS_IS"] } }, cents(t, [t + 1, t - 1, t + 5, t - 5, t + 10]));
     }
     const m = makeMoney();
-    const q = { voice: [m.audio], cap: m.title, visual: m.visual, opts: m.opts.map((x) => ({ h: /<svg/.test(x) ? x : '<b class="num">'.concat(x, "</b>") })), ans: m.ans, layout: m.wide ? "col" : "row3", hint: "elim", exp: { t: m.answerText || m.opts[m.ans].replace(/<[^>]+>/g, ""), v: ["w/LULU_ANS_IS"] } };
+    const q = { voice: [m.audio], cap: m.title, visual: m.visual, opts: m.opts.map((x) => {
+      const n = /<svg/.test(x) ? null : /(\d+)/.exec(String(x).replace(/<[^>]+>/g, ""));
+      return { h: /<svg/.test(x) ? x : '<b class="num">'.concat(x, "</b>"), say: n && +n[1] <= 100 ? both(+n[1]) : [] };
+    }), ans: m.ans, layout: m.wide ? "col" : "row3", hint: "elim", exp: { t: m.answerText || m.opts[m.ans].replace(/<[^>]+>/g, ""), v: ["w/LULU_ANS_IS"] } };
     return q;
   }
   function cents(r, c) {
-    const w = sh([...new Set(c.filter((x) => x > 0 && x !== r))]).slice(0, DK()), o = sh([r, ...w]);
+    const w = sh([...new Set([...c, r + 1, r + 2, r - 1, r + 5, r + 10].filter((x) => x > 0 && x !== r))]).slice(0, DK()), o = sh([r, ...w]);
     return { opts: o.map((x) => ({ h: '<b class="num">'.concat(x, "\xA2</b>"), say: both(x) })), ans: o.indexOf(r) };
   }
   const SKY_TF = [1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0];
@@ -7308,7 +7503,7 @@ body,
     if (w.k === "tf") return { voice: qv, cap: w.q, tf: true, visual: '<div class="bigpic">'.concat(wEmoji(w), "</div>"), opts: [{ h: "<span class='yn'>\u2705</span><small>True</small>", say: ["w/LULU_SK_YES"] }, { h: "<span class='yn'>\u274C</span><small>Not true</small>", say: ["w/LULU_SK_NO"] }], ans: w.n, layout: "yn", hint: "again", why, exp: { t: (w.n === 0 ? "\u2705 True! " : "\u274C Not true. ") + w.x, v: ev } };
     if (/what is this/i.test(w.q) && w.p && PIC_E[w.p])
       return { voice: qv, cap: w.q, visual: '<div class="bigpic">'.concat(PIC_E[w.p], "</div>"), opts: w.o.map((o) => ({ h: '<b class="word">'.concat(o, "</b>"), say: both(o) })), ans: w.n, layout: "col", hint: "elim", why, exp: { t: "".concat(w.o[w.n], ": ").concat(w.x), v: ev } };
-    if (lvl() >= 4 && w.o.length === 3) {
+    if (w.o.length === 3) {
       w = Object.assign({}, w, { o: w.o.slice() });
       const x = extraOpt(w);
       if (x !== null) {
@@ -7328,7 +7523,7 @@ body,
   function qStory(si, k) {
     const st = STORIES[si], q = st.q.find((x) => x.k === k) || st.q[k], nums = !!q.nums;
     let src = nums ? q.nums.slice() : q.opts.slice(), ans = q.ans;
-    if (lvl() >= 4 && src.length === 3) {
+    if (src.length === 3) {
       let x = null;
       if (nums) {
         const c = [Math.max(...src) + ri(2, 4), Math.min(...src) - ri(1, 2)].filter((v) => v >= 0 && !src.includes(v));
@@ -7344,6 +7539,8 @@ body,
     return { voice: ["w/ST_S".concat(st.s, "_Q").concat(q.k)], cap: "", visual: '<div class="listen radio">\u{1F4FB}</div>', opts, ans, layout: "row3", hint: "elim", story: si, exp: { t: nums ? String(q.nums[q.ans]) : q.opts[q.ans][1], v: ["w/LULU_ANS_IS"] } };
   }
   function buildQ(cat, kind, used) {
+    fitAge.cat = cat;
+    fitAge.kind = kind;
     return fitAge(buildQ0(cat, kind, used));
   }
   function buildQ0(cat, kind, used) {
@@ -7883,8 +8080,8 @@ body,
       return { voice: ["w/LULU_COL_WHAT"], cap: "What colour is it?", visual: '<div class="bigemo">'.concat(pickOne(COLS[r][2]), "</div>"), opts: o.map((i) => ({ h: '<span class="swatch" style="--c:'.concat(COLS[i][1], '"></span><small>').concat(COLS[i][0], "</small>"), say: colSay(i) })), ans: o.indexOf(r), layout: "row3", hint: "elim", exp: { t: COLS[r][0], v: ["w/LULU_ANS_IS", ...colSay(r)] } };
     }
     if (k === "bigsmall") {
-      const e = pickOne(OBJ), big = Math.random() < 0.5, o = sh([0, 1]), r = big ? 0 : 1;
-      return { voice: [big ? "w/LULU_CP_BIG" : "w/LULU_CP_SMALL"], cap: big ? "Which is bigger?" : "Which is smaller?", visual: '<div class="listen">'.concat(big ? "\u{1F418}" : "\u{1F42D}", "</div>"), opts: o.map((i) => ({ h: '<span class="oe" style="font-size:'.concat(i === 0 ? 96 : 36, 'px">').concat(e, "</span>") })), ans: o.indexOf(r), layout: "row3", hint: "elim", exp: { t: big ? "The big one!" : "The small one!", v: ["w/LULU_ANS_IS"] } };
+      const e = pickOne(OBJ), big = Math.random() < 0.5, o = sh([0, 1, 2, 3]), r = big ? 0 : 3, SZ = [96, 72, 52, 34];
+      return { voice: [big ? "w/LULU_CP_BIG" : "w/LULU_CP_SMALL"], cap: big ? "Which is bigger?" : "Which is smaller?", visual: '<div class="listen">'.concat(big ? "\u{1F418}" : "\u{1F42D}", "</div>"), opts: o.map((i) => ({ h: '<span class="oe" style="font-size:'.concat(SZ[i], 'px">').concat(e, "</span>") })), ans: o.indexOf(r), layout: "row3", hint: "elim", exp: { t: big ? "The biggest one!" : "The smallest one!", v: ["w/LULU_ANS_IS"] } };
     }
     const [x, y] = sh(PAT).find((p) => !used.has("pt" + p[0])) || PAT[0];
     used.add("pt" + x);
@@ -7931,7 +8128,7 @@ body,
     const o = sh([r, ...c.filter((i) => i !== r).slice(0, DK())]);
     const plSay = (i) => i === 0 ? ["w/LULU_FA_PL0", "w/LULU_YA", "w/LULU_PL0"] : ["w/LULU_FA_PL" + i, "w/LULU_YA", "w/LULU_PL" + i];
     const o4 = sh([r, ...c.filter((i) => i !== r).slice(0, 3)]), nm = (i) => PLANET_N[i][0].toUpperCase() + PLANET_N[i].slice(1);
-    return { voice: ["w/LULU_SH_FIND", ...plSay(r)], cap: "Find ".concat(nm(r), "!"), visual: '<div class="listen">\u{1F52D}</div>', opts: o4.map((i) => ({ h: PIC("pl_" + i, "wp op") + "<small>".concat(nm(i), "</small>") })), ans: o4.indexOf(r), layout: "grid4", hint: "elim", exp: { t: nm(r), v: ["w/LULU_ANS_IS", ...plSay(r)] } };
+    return { voice: ["w/LULU_SH_FIND", ...plSay(r)], cap: "Find ".concat(nm(r), "!"), visual: '<div class="listen">\u{1F52D}</div>', opts: o4.map((i) => ({ h: PIC("pl_" + i, "wp op") + "<small>".concat(nm(i), "</small>"), say: plSay(i) })), ans: o4.indexOf(r), layout: "grid4", hint: "elim", exp: { t: nm(r), v: ["w/LULU_ANS_IS", ...plSay(r)] } };
   }
   const POOL = { "words": [{ "i": 0, "w": "Bird" }, { "i": 1, "w": "Honey" }, { "i": 2, "w": "Cow" }, { "i": 3, "w": "Cake" }, { "i": 4, "w": "Rainbow" }, { "i": 5, "w": "Key" }, { "i": 6, "w": "Baby" }, { "i": 7, "w": "Salad" }, { "i": 8, "w": "Sun" }, { "i": 9, "w": "Star" }, { "i": 10, "w": "Balloon" }, { "i": 11, "w": "Bed" }, { "i": 12, "w": "Duck" }, { "i": 13, "w": "Socks" }, { "i": 14, "w": "Ten" }, { "i": 15, "w": "Tree" }, { "i": 16, "w": "Chicken" }, { "i": 17, "w": "Bus" }, { "i": 18, "w": "" }, { "i": 19, "w": "" }, { "i": 20, "w": "" }, { "i": 21, "w": "" }, { "i": 22, "w": "" }, { "i": 23, "w": "" }, { "i": 24, "w": "" }, { "i": 25, "w": "" }, { "i": 26, "w": "" }, { "i": 27, "w": "" }, { "i": 28, "w": "" }, { "i": 29, "w": "" }, { "i": 30, "w": "" }, { "i": 31, "w": "" }, { "i": 32, "w": "" }, { "i": 33, "w": "" }, { "i": 34, "w": "" }, { "i": 35, "w": "" }, { "i": 36, "w": "" }, { "i": 37, "w": "" }, { "i": 38, "w": "" }, { "i": 39, "w": "" }, { "i": 40, "w": "" }, { "i": 41, "w": "" }, { "i": 42, "w": "" }, { "i": 43, "w": "" }, { "i": 44, "w": "" }, { "i": 45, "w": "" }, { "i": 46, "w": "" }, { "i": 47, "w": "" }, { "i": 48, "w": "" }, { "i": 49, "w": "" }, { "i": 50, "w": "" }, { "i": 51, "w": "" }, { "i": 52, "w": "" }, { "i": 53, "w": "" }, { "i": 54, "w": "" }, { "i": 55, "w": "" }, { "i": 56, "w": "" }, { "i": 57, "w": "" }, { "i": 58, "w": "" }, { "i": 59, "w": "" }, { "i": 60, "w": "" }, { "i": 61, "w": "" }, { "i": 62, "w": "" }], "sight": [{ "i": 0, "w": "the" }, { "i": 1, "w": "of" }, { "i": 2, "w": "and" }, { "i": 3, "w": "a" }, { "i": 4, "w": "to" }, { "i": 5, "w": "in" }, { "i": 6, "w": "is" }, { "i": 7, "w": "you" }, { "i": 8, "w": "that" }, { "i": 9, "w": "it" }, { "i": 10, "w": "he" }, { "i": 11, "w": "was" }, { "i": 12, "w": "for" }, { "i": 13, "w": "on" }, { "i": 14, "w": "are" }, { "i": 15, "w": "as" }, { "i": 16, "w": "with" }, { "i": 17, "w": "his" }, { "i": 18, "w": "they" }, { "i": 19, "w": "I" }, { "i": 20, "w": "at" }, { "i": 21, "w": "be" }, { "i": 22, "w": "this" }, { "i": 23, "w": "have" }, { "i": 24, "w": "from" }, { "i": 25, "w": "or" }, { "i": 26, "w": "one" }, { "i": 27, "w": "had" }, { "i": 28, "w": "by" }, { "i": 29, "w": "words" }, { "i": 30, "w": "but" }, { "i": 31, "w": "not" }, { "i": 32, "w": "what" }, { "i": 33, "w": "all" }, { "i": 34, "w": "were" }, { "i": 35, "w": "we" }, { "i": 36, "w": "when" }, { "i": 37, "w": "your" }, { "i": 38, "w": "can" }, { "i": 39, "w": "said" }, { "i": 40, "w": "there" }, { "i": 41, "w": "use" }, { "i": 42, "w": "an" }, { "i": 43, "w": "each" }, { "i": 44, "w": "which" }, { "i": 45, "w": "she" }, { "i": 46, "w": "do" }, { "i": 47, "w": "how" }, { "i": 48, "w": "their" }, { "i": 49, "w": "if" }, { "i": 50, "w": "will" }, { "i": 51, "w": "up" }, { "i": 52, "w": "other" }, { "i": 53, "w": "about" }, { "i": 54, "w": "out" }, { "i": 55, "w": "many" }, { "i": 56, "w": "then" }, { "i": 57, "w": "them" }, { "i": 58, "w": "these" }, { "i": 59, "w": "so" }, { "i": 60, "w": "some" }, { "i": 61, "w": "her" }, { "i": 62, "w": "would" }, { "i": 63, "w": "make" }, { "i": 64, "w": "like" }, { "i": 65, "w": "him" }, { "i": 66, "w": "into" }, { "i": 67, "w": "time" }, { "i": 68, "w": "has" }, { "i": 69, "w": "look" }, { "i": 70, "w": "two" }, { "i": 71, "w": "more" }, { "i": 72, "w": "write" }, { "i": 73, "w": "go" }, { "i": 74, "w": "see" }, { "i": 75, "w": "number" }, { "i": 76, "w": "no" }, { "i": 77, "w": "way" }, { "i": 78, "w": "could" }, { "i": 79, "w": "people" }, { "i": 80, "w": "my" }, { "i": 81, "w": "than" }, { "i": 82, "w": "first" }, { "i": 83, "w": "water" }, { "i": 84, "w": "been" }, { "i": 85, "w": "called" }, { "i": 86, "w": "who" }, { "i": 87, "w": "am" }, { "i": 88, "w": "its" }, { "i": 89, "w": "now" }, { "i": 90, "w": "find" }, { "i": 91, "w": "long" }, { "i": 92, "w": "down" }, { "i": 93, "w": "day" }, { "i": 94, "w": "did" }, { "i": 95, "w": "get" }, { "i": 96, "w": "come" }, { "i": 97, "w": "made" }, { "i": 98, "w": "may" }, { "i": 99, "w": "part" }], "sents": [{ "id": "sent0", "q": "I ___ a cat.", "o": ["see", "the", "of"], "a": "see" }, { "id": "sent1", "q": "The dog is ___ the box.", "o": ["in", "you", "said"], "a": "in" }, { "id": "sent2", "q": "Look ___ the bus!", "o": ["at", "she", "my"], "a": "at" }, { "id": "sent3", "q": "___ is my hat.", "o": ["this", "of", "go"], "a": "this" }, { "id": "sent4", "q": "The sun is ___.", "o": ["up", "the", "of"], "a": "up" }, { "id": "sent5", "q": "She ___ a red bag.", "o": ["has", "of", "you"], "a": "has" }, { "id": "sent6", "q": "The bee is ___ the tree.", "o": ["on", "she", "was"], "a": "on" }, { "id": "sent7", "q": "I like ___ dog.", "o": ["my", "is", "can"], "a": "my" }, { "id": "sent8", "q": "It ___ a duck.", "o": ["is", "the", "of"], "a": "is" }, { "id": "sent9", "q": "Go ___ bed!", "o": ["to", "she", "my"], "a": "to" }, { "id": "sent10", "q": "We go ___ the bus.", "o": ["on", "she", "can"], "a": "on" }, { "id": "sent11", "q": "The fox ___ red.", "o": ["is", "the", "to"], "a": "is" }, { "id": "sent12", "q": "Find ___ key.", "o": ["the", "is", "can"], "a": "the" }, { "id": "sent13", "q": "Get ___ the jet!", "o": ["in", "she", "my"], "a": "in" }, { "id": "sent14", "q": "Look at ___ cow.", "o": ["the", "is", "can"], "a": "the" }, { "id": "sent15", "q": "This is ___ mom.", "o": ["my", "is", "can"], "a": "my" }, { "id": "sent16", "q": "He ___ a pig.", "o": ["has", "of", "you"], "a": "has" }, { "id": "sent17", "q": "I ___ see a car.", "o": ["can", "the", "of"], "a": "can" }, { "id": "sent18", "q": "The frog can jump ___.", "o": ["up", "the", "she"], "a": "up" }, { "id": "sent19", "q": "We ___ a big cake.", "o": ["have", "of", "is"], "a": "have" }, { "id": "sent20", "q": "A bird ___ fly.", "o": ["can", "the", "of"], "a": "can" }, { "id": "sent21", "q": "Do ___ like the cake?", "o": ["you", "is", "of"], "a": "you" }, { "id": "sent22", "q": "The sun is ___ today.", "o": ["out", "the", "of"], "a": "out" }, { "id": "sent23", "q": "I ___ two socks.", "o": ["have", "is", "of"], "a": "have" }, { "id": "sent24", "q": "The duck is in the ___.", "o": ["water", "she", "was"], "a": "water" }, { "id": "sent25", "q": "Come and ___ the star!", "o": ["see", "is", "of"], "a": "see" }, { "id": "sent26", "q": "Look ___ at the bug.", "o": ["down", "the", "she"], "a": "down" }, { "id": "sent27", "q": "Can you ___ the key?", "o": ["find", "is", "of"], "a": "find" }, { "id": "sent28", "q": "We ___ the bus.", "o": ["see", "of", "she"], "a": "see" }, { "id": "sent29", "q": "I see ___ dog.", "o": ["the", "is", "can"], "a": "the" }, { "id": "sent30", "q": "I ___ in the bed.", "o": ["am", "the", "of"], "a": "am" }], "abc": [{ "l": "A", "w": "apple" }, { "l": "B", "w": "bee" }, { "l": "C", "w": "cat" }, { "l": "D", "w": "dog" }, { "l": "E", "w": "egg" }, { "l": "F", "w": "fox" }, { "l": "H", "w": "hat" }, { "l": "K", "w": "key" }, { "l": "P", "w": "pig" }, { "l": "S", "w": "sun" }, { "l": "T", "w": "tree" }] };
   const WORD_FALLBACK = "bird honey cow cake rainbow key baby salad sun star balloon bed duck socks ten tree chicken bus cab mad bag ham fan map web leg hen jet bib lid pig fin lip hit mix pod log mom mop hot fox tub mud mug gum cut dog frog box bee bug cat hat bat car snake truck net can cap pin ship nut".split(" ");
@@ -8116,7 +8313,7 @@ body,
     });
   }
   function fitAge(q) {
-    if (q && q.opts && q.opts.length === 3 && lvl() >= 4) {
+    if (q && q.opts && q.opts.length === 3) {
       const m = q.opts.map((o) => /<b class="num">(\d+)(¢?)<\/b>/.exec(o.h || ""));
       if (m.every(Boolean)) {
         const ns = m.map((x) => +x[1]), suf = m[0][2];
@@ -8128,11 +8325,31 @@ body,
         if (q.layout === "col") q.layout = "row3";
       }
     }
-    if (!q || !q.opts || q.match || q.radio !== void 0 || q.layout === "yn" || q.opts.length <= 2 || lvl() > 3) return q;
-    const d = sh(q.opts.map((o, i) => i).filter((i) => i !== q.ans))[0], keep = sh([q.ans, d]);
-    q.opts = keep.map((i) => q.opts[i]);
-    q.ans = keep.indexOf(q.ans);
-    if (q.layout === "grid4") q.layout = "row3";
+    if (!q || !q.opts || q.match || q.radio !== void 0 || q.layout === "yn" || q.opts.length >= 4 || !fitAge.cat) return q;
+    const key = (h) => {
+      const t = (h || "").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim(), src = ((h || "").match(/src="([^"]+)"/) || [])[1] || "", n = ((h || "").match(/class="ob/g) || []).length;
+      return t + "|" + src + "|" + n;
+    };
+    const have = new Set(q.opts.map((o) => key(o.h)));
+    for (let t = 0; t < 12 && q.opts.length < 4; t++) {
+      let q2;
+      try {
+        q2 = buildQ0(fitAge.cat, fitAge.kind, /* @__PURE__ */ new Set());
+      } catch (e) {
+        break;
+      }
+      if (!q2 || !q2.opts) continue;
+      for (const o of sh(q2.opts.slice())) {
+        const k = key(o.h);
+        if (q.opts.length >= 4) break;
+        if (!have.has(k) && o !== q2.opts[q2.ans]) {
+          have.add(k);
+          const at = ri(0, q.opts.length);
+          q.opts.splice(at, 0, o);
+          if (at <= q.ans) q.ans++;
+        }
+      }
+    }
     return q;
   }
   const NK = () => DK() + 1;
@@ -8165,7 +8382,7 @@ body,
       return Object.assign({ voice: [...arr.flatMap(fNum), "w/LULU_PT_NEXT"], cap: "Count by ".concat(step, "s! What comes next?"), visual: seqHtml([...arr, "?"], 4), layout: "row3", hint: "elim", fact: true, exp: { t: "Count by ".concat(step, "s: ").concat(arr.join(", "), ", ").concat(r), v: ["w/LULU_ANS_IS", ...fNum(r)] } }, o);
     }
     if (k === "long") {
-      const lg = Math.random() < 0.5, w = sh([ri(70, 95), ri(25, 45)]), r = lg ? w.indexOf(Math.max(...w)) : w.indexOf(Math.min(...w)), it = pickOne(["\u{1F40D}", "\u270F\uFE0F", "\u{1F682}"]);
+      const lg = Math.random() < 0.5, w = sh([ri(86, 96), ri(64, 74), ri(44, 54), ri(22, 32)]), r = lg ? w.indexOf(Math.max(...w)) : w.indexOf(Math.min(...w)), it = pickOne(["\u{1F40D}", "\u270F\uFE0F", "\u{1F682}"]);
       return { voice: [lg ? "w/LULU_CP_LONG" : "w/LULU_CP_SHORT"], cap: lg ? "Which is longer?" : "Which is shorter?", visual: '<div class="listen">\u{1F4CF}</div>', opts: w.map((x) => ({ h: '<span class="lbar" style="width:'.concat(x, '%"><i>').concat(it, "</i></span>") })), ans: r, layout: "bars", hint: "elim", exp: { t: lg ? "The long one!" : "The short one!", v: ["w/LULU_ANS_IS"] } };
     }
     if (k === "graph") {
