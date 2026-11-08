@@ -493,6 +493,8 @@ script_new = script_new.replace('function closeLesson(){', 'function closeLesson
 
 head = s[:s.index('<style>')]
 head = head.replace('<title>Paraxilingo B</title>', '<title>Paraxilingo C</title>')
+if 'name="viewport"' not in head:  # same screen setting as the published site, so tests see real phone/iPad layouts
+    head = head.replace('<title>', '<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">\n<title>', 1)
 out = head + '<style>' + css + '</style>\n' + markup + '\n<script>' + script_new + '</script>\n'
 open(OUT, 'w').write(out)
 print("ok", len(out))

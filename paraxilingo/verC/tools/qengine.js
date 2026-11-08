@@ -14,7 +14,8 @@ const DINOS=["t-rex","tyrannosaurus","triceratops","stegosaurus","brachiosaurus"
 const EN_SAY=__EN_SAY__;
 function enSay(word){const w=String(word).toLowerCase().trim();if(/^\d+$/.test(w))return +w>=1&&+w<=100?["w/LULU_EN"+(+w)]:[];if(DINOS.includes(w)||PLANET_N.includes(w))return [];
   const c=EN_SAY[w]||EN_SAY[w.replace(/s$/,"")]||EN_SAY[w+"s"];return c?["w/"+c]:[]}
-const both=word=>faSay(word).concat(enSay(word));
+const faNum=n=>n<=20?[N(n)]:n%10===0||n===100?["w/PX_FA_"+n]:[n<30?N(20):"w/PX_FA_"+(n-n%10),"w/PX_VA",N(n%10)];
+const both=word=>(/^\d+$/.test(String(word))&&+word>20&&+word<=100?faNum(+word):faSay(word)).concat(enSay(word));
 function faSay(word){
   const w=String(word).toLowerCase().trim();
   if(/^\d+$/.test(w))return [N(+w)];
@@ -72,18 +73,19 @@ const catById=id=>CATS.find(c=>c.id===id);
    8+: within 100, 5-minute times, change from $1 */
 function kindsFor(cat){
   const a=lvl();
-  if(cat==="count")return a<=4?["find","more","less"]:a<=6?["find","more","less","after","before"]:["after","before","find","more"];
-  if(cat==="add")return a<=4?["addPic","subPic","teach"]:a<=7?["addPic","subPic","sum","teach","minus"]:["sum","minus","teach","big"];
+  /* age ladder (Khan Kids / PBS Kids style): 3 = 2 choices, pictures, count to 5 · 4-5 = 3 choices, to 10 · 6 = words, to 100 by tens · 7-8 = two steps, near-miss traps */
+  if(cat==="count")return a<=3?["find","more","less","long"]:a<=4?["find","more","less","long"]:a<=5?["find","more","less","missing","long"]:a<=6?["after","before","missing","skip"]:["missing","skip","graph","after"];
+  if(cat==="add")return a<=3?["addPic","share"]:a<=4?["addPic","subPic","share"]:a<=5?["addPic","subPic","left","share"]:a<=6?["sum","minus","left","teach"]:a<=7?["carry","groups","share","minus"]:["carry","groups","share","big"];
   if(cat==="clock")return a<=5?["routine","oclock"]:a<=6?["routine","oclock","half","season","nowseason"]:a<=7?["half","quarter","season","today","tomorrow","week"]:["quarter","minutes","after","before","monthafter","yesterday","months"];
   if(cat==="money")return a<=5?["pennies","value"]:a<=6?["pennies","value","count"]:a<=7?["value","count","same"]:["count","same","change"];
-  if(cat==="letters")return a<=4?["abc","listen","match"]:a<=6?["listen","first","abc","whatis","lafter","match"]:["listen","first","whatis","lafter","lbefore","match"];
+  if(cat==="letters")return a<=4?["abc","listen","match","rhyme"]:a<=6?["listen","first","abc","whatis","lafter","match","rhyme"]:["listen","first","whatis","lafter","lbefore","match"];
   if(cat==="read")return a<=5?["balloon","flash"]:["balloon","flash","sentence"];
   if(cat==="farm")return a<=4?["home","sound","fly","match"]:["home","food","sound","fly","water","match"];
-  if(cat==="shapes")return a<=4?["shape","color","pattern","match"]:["shape","color","pattern","bigsmall","match"];
-  if(cat==="people")return a<=5?["job","job2"]:["flag","job","flag2","job2"];
+  if(cat==="shapes")return a<=4?["shape","color","pattern","match"]:a<=6?["shape","sides","both","pattern","match"]:["sides","both","pattern","bigsmall","match"];
+  if(cat==="people")return a<=5?["feel","job","job2"]:["feel","flag","job","flag2","job2"];
   return ["w"];
 }
-const MAXN=()=>{const a=lvl();return a<=4?5:a<=6?10:a<=7?20:100};
+const MAXN=()=>{const a=lvl();return a<=4?5:a<=5?10:a<=6?20:100};
 
 /* ---------- builders ---------- */
 function qCount(k){
@@ -200,7 +202,9 @@ function qStory(si,k){
   const opts=nums?q.nums.map(numOpt):q.opts.map(o=>({h:`<span class="oe">${o[0]}</span><small>${o[1]}</small>`,say:both(o[1])}));
   return {voice:[`w/ST_S${st.s}_Q${q.k}`],cap:"",visual:`<div class="listen radio">${ST_E[st.t]||"📻"}</div>`,opts,ans:q.ans,layout:"row3",hint:"elim",story:si,exp:{t:nums?String(q.nums[q.ans]):q.opts[q.ans][1],v:["w/LULU_ANS_IS"]}};
 }
-function buildQ(cat,kind,used){
+function buildQ(cat,kind,used){return fitAge(buildQ0(cat,kind,used))}
+function buildQ0(cat,kind,used){
+  if(["missing","skip","long","graph","carry","groups","share","left","sides","both","feel","rhyme"].includes(kind))return qNew(kind,used);
   if(kind==="match")return qMatch(cat==="letters"?"wd":cat==="shapes"?"sh":"an",used);
   if((cat==="animals"||cat==="sky")&&!used.has("match")&&Math.random()<.22){used.add("match");return qMatch(cat==="sky"?"pl":"an",used)}
   if(cat==="count")return qCount(kind);
@@ -396,7 +400,7 @@ const HOME_OF={bird:["nest","tree"],cow:["barn"],duck:["pond","nest"],chicken:["
 const FOOD_OF={bird:["worms","seeds"],cow:["grass","corn"],duck:["seeds","flies"],chicken:["corn","seeds","worms"],pig:["apples","corn","grass"],shark:["fish"],fox:["mice","eggs","apples"],dog:["bone","fish"],frog:["flies","mosquitoes"],bee:["flowers"],caterpillar:["leaves","flowers"],cat:["fish","mice","eggs"],bat:["mosquitoes","flies"],snake:["eggs","mice"]};
 const SOUNDS=["cow","dog","cat","duck","pig","frog","bee","snake","chicken"];
 const anSay=n=>{const i=AN.findIndex(a=>a[0]===n);return ["w/LULU_FA_AN"+i,...enSay(n)]};
-const anOpt=n=>({h:`<span class="oe big">${AN.find(a=>a[0]===n)[1]}</span>`,say:anSay(n)});
+const anOpt=n=>({h:`<span class="oe big">${AN.find(a=>a[0]===n)[1]}</span><small>${n[0].toUpperCase()+n.slice(1)}</small>`,say:anSay(n)});
 function pick3(right,pool,used,key){const w=sh(pool.filter(x=>!right.includes(x))).slice(0,2),r=pickOne(right);const o=sh([r,...w]);return {o,ans:o.indexOf(r),r}}
 function freshAnimal(used,ok){const c=sh(AN.map(a=>a[0]).filter(ok));return c.find(n=>!used.has("an_"+n))||c[0]}
 function qFarm(k,used){
@@ -421,7 +425,7 @@ function qShapes(k,used){
   if(k==="color"){const c=sh([...Array(a<=5?8:10).keys()]),r=c.find(i=>!used.has("col"+i));used.add("col"+r);const o=sh([r,...c.filter(i=>i!==r).slice(0,2)]);
     return {voice:["w/LULU_COL_WHAT"],cap:"What colour is it?",visual:`<div class="bigemo">${pickOne(COLS[r][2])}</div>`,opts:o.map(i=>({h:`<span class="swatch" style="--c:${COLS[i][1]}"></span><small>${COLS[i][0]}</small>`,say:colSay(i)})),ans:o.indexOf(r),layout:"row3",hint:"elim",exp:{t:COLS[r][0],v:["w/LULU_ANS_IS",...colSay(r)]}}}
   if(k==="bigsmall"){const e=pickOne(OBJ),big=Math.random()<.5,o=sh([0,1]),r=big?0:1;
-    return {voice:[big?"w/LULU_CP_BIG":"w/LULU_CP_SMALL"],cap:big?"Which is bigger?":"Which is smaller?",visual:`<div class="bigemo soft">${big?"🐘":"🐭"}</div>`,opts:o.map(i=>({h:`<span class="oe" style="font-size:${i===0?72:30}px">${e}</span>`})),ans:o.indexOf(r),layout:"row",hint:"elim",exp:{t:big?"The big one!":"The small one!",v:["w/LULU_ANS_IS"]}}}
+    return {voice:[big?"w/LULU_CP_BIG":"w/LULU_CP_SMALL"],cap:big?"Which is bigger?":"Which is smaller?",visual:`<div class="listen">${big?"🐘":"🐭"}</div>`,opts:o.map(i=>({h:`<span class="oe" style="font-size:${i===0?96:36}px">${e}</span>`})),ans:o.indexOf(r),layout:"row3",hint:"elim",exp:{t:big?"The big one!":"The small one!",v:["w/LULU_ANS_IS"]}}}
   /* pattern: what comes next? */
   const [x,y]=sh(PAT).find(p=>!used.has("pt"+p[0]))||PAT[0];used.add("pt"+x);const kind=a<=5?0:ri(0,2);
   const seq=kind===0?[x,y,x,y,x]:kind===1?[x,x,y,x,x]:[x,y,y,x,y],next=kind===0?y:kind===1?y:y,ans3=sh([x,y,pickOne(OBJ.filter(z=>z!==x&&z!==y))]);
@@ -433,7 +437,7 @@ const ctySay=i=>["w/LULU_FA_CTY"+i,"w/LULU_EN_COUNTRY"+i],jobSay=i=>["w/LULU_FA_
 function qPeople(k,used){
   const flag=k.startsWith("flag"),L2=flag?COUNTRIES:JOBS,c=sh([...L2.keys()]),r=c.find(i=>!used.has(k[0]+i));used.add(k[0]+r);const o=sh([r,...c.filter(i=>i!==r).slice(0,2)]),say=flag?ctySay:jobSay;
   return {voice:[flag?"w/LULU_GEO_FIND":"w/LULU_JOB_FIND",...say(r)],cap:flag?`Find the flag of ${L2[r][0]}`:`Find the ${L2[r][0].toLowerCase()}`,visual:`<div class="listen">${flag?"🚩":"👀"}</div>`,
-    opts:o.map(i=>({h:`<span class="oe big">${L2[i][1]}</span>`,say:say(i)})),ans:o.indexOf(r),layout:"row3",hint:"elim",exp:{t:L2[r][0],v:["w/LULU_ANS_IS",...say(r)]}};
+    opts:o.map(i=>({h:`<span class="oe big">${L2[i][1]}</span>${flag?"":`<small>${L2[i][0]}</small>`}`,say:say(i)})),ans:o.indexOf(r),layout:"row3",hint:"elim",exp:{t:L2[r][0],v:["w/LULU_ANS_IS",...say(r)]}};
 }
 const SKYN=["sun","moon","star","cloud","rain","rainbow","lightning","snow","rocket","astronaut","telescope","galaxy","comet","satellite","planet","full moon"];
 const skySay=n=>{const i=SKYN.indexOf(n);const fa=n==="sun"?["w/LULU_FA_PL0"]:n==="full moon"?faSay("full moon"):i>0&&i<15?["w/LULU_FA_SKY"+i]:[];return fa.concat(n==="sun"?["w/LULU_PL0"]:enSay(n==="galaxy"?"milky way":n))};
@@ -499,7 +503,7 @@ function qMatch(set,used){
   else if(set==="pl"){items=sh([1,2,3,4,5,6,7,8]).slice(0,4).map(i=>({id:"p"+i,pic:PIC("pl_"+i,"wp mp"),word:PLANET_N[i][0].toUpperCase()+PLANET_N[i].slice(1),ps:["w/LULU_FA_PL"+i],ws:["w/LULU_PL"+i]}))}
   else if(set==="sh")items=sh([...SHAPES.keys()].filter(i=>lvl()>=7||SHAPES[i].length<=9)).slice(0,4).map(i=>({id:"s"+i,pic:PIC("shape_"+i,"wp mp"),word:SHAPES[i],ps:[],ws:["w/LULU_EN_SH"+i]}));
   else items=sh(AN.filter(a=>enSay(a[0]).length)).slice(0,4).map(a=>({id:"a"+a[0],pic:`<span class="oe big">${a[1]}</span>`,word:a[0][0].toUpperCase()+a[0].slice(1),ps:["w/LULU_FA_AN"+AN.indexOf(a)],ws:enSay(a[0])}));
-  return {match:items,voice:[],cap:"Tap the matching pairs",opts:[],ans:-1,layout:"match",exp:{t:"",v:[]}};
+  return {match:items,voice:["w/PX_MATCH"],cap:"Tap the matching pairs",opts:[],ans:-1,layout:"match",exp:{t:"",v:[]}};
 }
 function matchQ(q){
   const cc=CATS.find(c=>c.id===L.cat)||{};
@@ -507,7 +511,7 @@ function matchQ(q){
   $("qBody").innerHTML=`<div class="qkick"><span class="qke">${cc.e||"⭐"}</span>${cc.name||""}</div><div class="qtop"><span class="cap">Tap the matching pairs</span></div>
     <div class="mboard">${L1.map((x,k)=>`<button class="mc pic" data-id="${x.id}" style="grid-row:${k+1};grid-column:1">${x.pic}</button><button class="mc wrd" data-id="${R1[k].id}" style="grid-row:${k+1};grid-column:2"><span>${R1[k].word}</span></button>`).join("")}</div>`;
   $("qBody").classList.remove("in");void $("qBody").offsetWidth;$("qBody").classList.add("in");
-  let selP=null,selW=null,left=q.match.length,miss=0;
+  let selP=null,selW=null,left=q.match.length,miss=0;setTimeout(()=>{if(L&&L.q===q)sayseq(q.voice,()=>{})},400);
   const it=id=>q.match.find(x=>x.id===id);
   const tryPair=()=>{if(!selP||!selW)return;
     const a=selP,b=selW;selP=selW=null;
@@ -520,4 +524,61 @@ function matchQ(q){
     if(b.classList.contains("pic")){if(selP)selP.classList.remove("sel");selP=b;hush();sayseq(x.ps.length?x.ps:[],()=>{})}
     else{if(selW)selW.classList.remove("sel");selW=b;hush();sayseq(x.ws,()=>{})}
     b.classList.add("sel");setTimeout(tryPair,selP&&selW?250:0)});
+}
+
+/* ================= Nov 8: questions inspired by the Khan Academy Kids / PBS Kids ladder ================= */
+/* age 3 gets 2 choices, older children 3 (4 at 8+ where the builder makes them) */
+function fitAge(q){
+  if(!q||!q.opts||q.match||q.radio!==undefined||q.layout==="yn"||q.opts.length<=2||lvl()>3)return q;
+  const d=sh(q.opts.map((o,i)=>i).filter(i=>i!==q.ans))[0],keep=sh([q.ans,d]);
+  q.opts=keep.map(i=>q.opts[i]);q.ans=keep.indexOf(q.ans);if(q.layout==="grid4")q.layout="row3";return q;
+}
+const NK=()=>lvl()>=8?4:3;
+const seqHtml=(a,hole)=>`<div class="seqrow">${a.map((n,i)=>i===hole?`<b class="tile q">?</b>`:`<b class="tile">${n}</b>`).join("")}</div>`;
+const fNum=n=>faNum(n).filter(Boolean);
+const FEEL=[["Happy","😀"],["Sad","😢"],["Angry","😠"],["Scared","😨"],["Surprised","😲"]];
+const feelSay=i=>["w/PX_FA_"+FEEL[i][0].toUpperCase(),"w/PX_EN_"+FEEL[i][0].toUpperCase()];
+const SIDES=[[2,3],[1,4],[3,4],[8,5],[9,6],[10,8]];   /* [shape index, sides]: triangle, square, rectangle, pentagon, hexagon, octagon */
+const CLR=[["Red","#F25C54"],["Blue","#4A90E2"],["Yellow","#F7C548"],["Green","#5BC796"]],FORM=["circle","square","triangle"];
+const shapeDiv=(c,f,big)=>`<span class="cshape ${f}${big?" big":""}" style="--c:${c<0?"#C9D2DE":CLR[c][1]}"></span>`;
+function rhymeSets(){const by={};for(const x of WORDS){const k=x.w.slice(-2);(by[k]=by[k]||[]).push(x)}return Object.values(by).filter(v=>v.length>=2)}
+function qNew(k,used){
+  const a=lvl(),e=pickOne(OBJ);
+  if(k==="missing"){const len=5,st=a<=5?ri(1,6):a<=6?ri(1,15):ri(10,94),hole=ri(1,3),arr=Array.from({length:len},(x,i)=>st+i),r=arr[hole];
+    const o=numOpts(r,[arr[len-1]+1,st-1,r+10,r-10,arr[len-1]+2].filter(x=>x>0&&!arr.includes(x)),NK());
+    return Object.assign({voice:["w/LULU_CA_MISSING"],cap:"Which number is missing?",visual:seqHtml(arr,hole),layout:"row3",hint:"elim",exp:{t:arr.join(", "),v:["w/LULU_ANS_IS",...fNum(r)]}},o)}
+  if(k==="skip"){const step=a<=6?pickOne([10,2]):a<=7?pickOne([5,2,10]):pickOne([3,4,5,25]),st=step===10?10:step===25?25:step*ri(1,a<=6?3:6),arr=[0,1,2,3].map(i=>st+i*step),r=st+4*step;
+    if(r>100)return qNew("missing",used);
+    const o=numOpts(r,[arr[3]+1,r+step,r-1,r+1],NK());
+    return Object.assign({voice:[...arr.flatMap(fNum),"w/LULU_PT_NEXT"],cap:`Count by ${step}s! What comes next?`,visual:seqHtml([...arr,"?"],4),layout:"row3",hint:"elim",exp:{t:`+${step} → ${r}`,v:["w/LULU_ANS_IS",...fNum(r)]}},o)}
+  if(k==="long"){const lg=Math.random()<.5,w=sh([ri(70,95),ri(25,45)]),r=lg?w.indexOf(Math.max(...w)):w.indexOf(Math.min(...w)),it=pickOne(["🐍","✏️","🚂"]);
+    return {voice:[lg?"w/LULU_CP_LONG":"w/LULU_CP_SHORT"],cap:lg?"Which is longer?":"Which is shorter?",visual:`<div class="listen">📏</div>`,opts:w.map(x=>({h:`<span class="lbar" style="width:${x}%"><i>${it}</i></span>`})),ans:r,layout:"bars",hint:"elim",exp:{t:lg?"The long one!":"The short one!",v:["w/LULU_ANS_IS"]}}}
+  if(k==="graph"){const pets=sh(["dog","cat","fish","bird","rabbit"].filter(n=>AN.some(x=>x[0]===n))).slice(0,3),cnt=sh([ri(6,8),ri(3,5),ri(1,2)]),r=cnt.indexOf(Math.max(...cnt));
+    const em=n=>AN.find(x=>x[0]===n)[1];
+    return {voice:["w/LULU_CP_MORE"],cap:"Which pet do MOST children have?",visual:`<div class="graph">${pets.map((n,i)=>`<div class="gbar"><span class="gl">${em(n)}</span>${"<i></i>".repeat(cnt[i])}</div>`).join("")}</div>`,opts:pets.map(anOpt),ans:r,layout:"row3",hint:"elim",exp:{t:`${pets[r]}: ${cnt[r]}`,v:["w/LULU_ANS_IS",...anSay(pets[r])]}}}
+  if(k==="carry"){let x,y;do{x=ri(12,a>=8?68:48);y=ri(5,a>=8?39:29)}while((x%10)+(y%10)<10||x+y>100);const r=x+y;
+    const o=numOpts(r,[r-10,r+10,r+1,r-1],NK());   /* r-10 = forgot to carry the ten, r+10 = carried twice */
+    return Object.assign({voice:[...fNum(x),"w/LULU_PLUS",...fNum(y),"w/LULU_EQUALS"],cap:`${x} + ${y} = ?`,visual:`<div class="eq"><span>${x}</span><b>+</b><span>${y}</span><b>=</b><span class="q">?</span></div>`,layout:"row3",hint:"elim",exp:{t:`${x%10} + ${y%10} = ${(x%10)+(y%10)}: carry the ten! ${x} + ${y} = ${r}`,v:["w/LULU_ANS_IS",...fNum(r)]}},o)}
+  if(k==="groups"){const g=ri(2,a>=8?5:4),n=ri(2,a>=8?6:5),r=g*n;
+    const o=numOpts(r,[g+n,r+n,r-n,r+1],NK());     /* g+n = added instead of groups */
+    return Object.assign({voice:["w/PX_GROUPS"],cap:`${g} bags, ${n} in each. How many in all?`,visual:`<div class="bags">${Array.from({length:g},()=>`<span class="bag">${grp(n,e)}</span>`).join("")}</div>`,layout:"row3",hint:"count",exp:{t:`${Array(g).fill(n).join(" + ")} = ${r}`,v:["w/LULU_ANS_IS",...fNum(r)]}},o)}
+  if(k==="share"){const f=a<=5?2:pickOne([2,3,4]),each=a<=4?ri(1,2):a<=6?ri(2,4):ri(3,5),tot=f*each;
+    const o=numOpts(each,[each+1,each-1,tot,f].filter(x=>x>0),NK());
+    return Object.assign({voice:["w/PX_SHARE"],cap:`Share ${tot} fairly between ${f} friends`,visual:`<div class="story2">${grp(tot,"🍪")}<span class="op">→</span><span class="grp">${"🧒".repeat(f)}</span></div>`,layout:"row3",hint:"count",exp:{t:`${tot} ÷ ${f} = ${each} each`,v:["w/LULU_ANS_IS",...fNum(each)]}},o)}
+  if(k==="left"){const tot=ri(4,a<=5?8:12),ate=ri(1,Math.min(4,tot-1)),r=tot-ate;
+    const o=numOpts(r,[r+1,r-1,tot,ate].filter(x=>x>=0),NK());
+    return Object.assign({voice:["w/LULU_WP_IF",N(tot),"w/LULU_WP_HAVE",N(ate),"w/LULU_WP_GIVE","w/PX_LEFT"],cap:`${tot} cookies. Domi ate ${ate}. How many left?`,visual:`<div class="story2"><span class="grp">${Array.from({length:tot},(x,i)=>`<i class="ob ${i>=r?"gone":""}">🍪</i>`).join("")}</span></div>`,layout:"row3",hint:"count",exp:{t:`${tot} − ${ate} = ${r}`,v:["w/LULU_ANS_IS",N(r)]}},o)}
+  if(k==="sides"){const pool=a<=5?SIDES.slice(0,3):SIDES,[si,n]=pickOne(pool.filter(p=>!used.has("sd"+p[0]))||pool);used.add("sd"+si);
+    const o=numOpts(n,[n-1,n+1,n+2],NK());
+    return Object.assign({voice:["w/LULU_SH_SIDES"],cap:`How many sides does a ${SHAPES[si].toLowerCase()} have?`,visual:PIC("shape_"+si,"wp big"),layout:"row3",hint:"elim",exp:{t:`${SHAPES[si]}: ${n} sides`,v:["w/LULU_ANS_IS",N(n),...shSay(si)]}},o)}
+  if(k==="both"){const c=ri(0,3),f=ri(0,2);let c2;do{c2=ri(0,3)}while(c2===c);let f2;do{f2=ri(0,2)}while(f2===f);
+    const items=sh([[c,f],[c,f2],[c2,f]]),r=items.findIndex(x=>x[0]===c&&x[1]===f);  /* each trap matches exactly one clue */
+    return {voice:["w/PX_BOTH"],cap:`Find the one that is ${CLR[c][0].toUpperCase()} and a ${FORM[f].toUpperCase()}`,visual:`<div class="clues"><span class="clue">${shapeDiv(c,"circle")}<small>${CLR[c][0]}</small></span><b>+</b><span class="clue">${shapeDiv(-1,FORM[f])}<small>${FORM[f]}</small></span></div>`.replace("--c:undefined","--c:#C9D2DE"),
+      opts:items.map(x=>({h:shapeDiv(x[0],FORM[x[1]],1)})),ans:r,layout:"row3",hint:"elim",exp:{t:`${CLR[c][0]} AND ${FORM[f]}`,v:["w/LULU_ANS_IS"]}}}
+  if(k==="feel"){const i=ri(0,a<=4?3:4),o=sh([i,...sh([0,1,2,3,4].filter(x=>x!==i&&(a>4||x<4))).slice(0,2)]);
+    return {voice:["w/PX_FEEL_HOW"],cap:"How does this child feel?",visual:`<div class="bigpic">${FEEL[i][1]}</div>`,opts:o.map(j=>({h:`<b class="word">${FEEL[j][0]}</b>`,say:feelSay(j)})),ans:o.indexOf(i),layout:"col",hint:"elim",exp:{t:FEEL[i][0],v:["w/LULU_ANS_IS",...feelSay(i)]}}}
+  if(k==="rhyme"){const sets=sh(rhymeSets()),st=sets.find(v=>!used.has("rh"+v[0].w))||sets[0];used.add("rh"+st[0].w);const [t,r]=sh(st.slice()).slice(0,2);
+    const others=sh(WORDS.filter(x=>x.w.slice(-2)!==t.w.slice(-2))).slice(0,NK()-1),o=sh([r,...others]);
+    return {voice:["w/PX_RHYME",...wSay(t)],cap:`What rhymes with ${t.w}?`,visual:PIC("wd_"+t.i,"wp big"),opts:o.map(y=>({h:PIC("wd_"+y.i,"wp op")+`<small>${y.w}</small>`,say:wSay(y)})),ans:o.indexOf(r),layout:o.length>3?"grid4":"row3",hint:"elim",exp:{t:`${t.w} – ${r.w}`,v:["w/LULU_ANS_IS",...wSay(r)]}}}
+  return qCount("find");
 }

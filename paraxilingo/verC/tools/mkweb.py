@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Turns the verC page into a stand-alone web folder for the iPad app (works back to iOS 12 Safari).
 usage: mkweb.py <appC dir> <out Web dir> <esbuild binary>"""
-import sys, os, re, shutil, subprocess
+import re, sys, os, re, shutil, subprocess
 SRC, OUT, ESB = sys.argv[1:4]
 s = open(os.path.join(SRC, 'index.html'), encoding='utf-8').read()
 head = s[:s.index('<style>')]
@@ -35,6 +35,7 @@ def esb(code, loader):
 css2 = esb(css, 'css')
 js2 = esb(js, 'js')
 
+head = re.sub(r'<meta name="viewport"[^>]*>\n?', '', head)
 page = ('<!doctype html>\n<html lang="en"><head><meta charset="utf-8">\n'
         '<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">\n'
         '<meta name="apple-mobile-web-app-capable" content="yes">\n'
