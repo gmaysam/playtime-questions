@@ -76,10 +76,10 @@ function kindsFor(cat){
   if(cat==="add")return a<=4?["addPic","subPic","teach"]:a<=7?["addPic","subPic","sum","teach","minus"]:["sum","minus","teach","big"];
   if(cat==="clock")return a<=5?["routine","oclock"]:a<=6?["routine","oclock","half","season","nowseason"]:a<=7?["half","quarter","season","today","tomorrow","week"]:["quarter","minutes","after","before","monthafter","yesterday","months"];
   if(cat==="money")return a<=5?["pennies","value"]:a<=6?["pennies","value","count"]:a<=7?["value","count","same"]:["count","same","change"];
-  if(cat==="letters")return a<=4?["abc","listen"]:a<=6?["listen","first","abc","whatis","lafter"]:["listen","first","whatis","lafter","lbefore"];
+  if(cat==="letters")return a<=4?["abc","listen","match"]:a<=6?["listen","first","abc","whatis","lafter","match"]:["listen","first","whatis","lafter","lbefore","match"];
   if(cat==="read")return a<=5?["balloon","flash"]:["balloon","flash","sentence"];
-  if(cat==="farm")return a<=4?["home","sound","fly"]:["home","food","sound","fly","water"];
-  if(cat==="shapes")return a<=4?["shape","color","pattern"]:["shape","color","pattern","bigsmall"];
+  if(cat==="farm")return a<=4?["home","sound","fly","match"]:["home","food","sound","fly","water","match"];
+  if(cat==="shapes")return a<=4?["shape","color","pattern","match"]:["shape","color","pattern","bigsmall","match"];
   if(cat==="people")return a<=5?["job","job2"]:["flag","job","flag2","job2"];
   return ["w"];
 }
@@ -117,7 +117,10 @@ function qAdd(k){
 const dig=(h,m)=>`${h}:${String(m).padStart(2,"0")}`;
 const DAYS_EN=["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],MONTHS_EN=["January","February","March","April","May","June","July","August","September","October","November","December"],SEAS=["Spring","Summer","Fall","Winter"];
 const daySay=i=>["w/LULU_FA_DAY"+i,"w/LULU_EN_DAY"+i],seaSay=i=>["w/LULU_FA_SEA"+i,"w/LULU_EN_SEASON"+i],SEA_E=["🌸","☀️","🍂","⛄"];
-function dayOpts(r){const o=sh([r,...sh([0,1,2,3,4,5,6].filter(x=>x!==r)).slice(0,2)]);return {opts:o.map(i=>({h:`<span class="oe">📅</span><small class="dn">${DAYS_EN[i]}</small>`,say:daySay(i)})),ans:o.indexOf(r)}}
+/* every day and month gets its own look, so the answers never look the same */
+const DAY_C=["#FF8A80","#FFB74D","#FFD54F","#81C784","#4FC3F7","#7986CB","#BA68C8"];
+const MON_E=["⛄","💝","🌱","🌧️","🌷","☀️","🏖️","🍉","🍎","🎃","🍂","🎄"];
+function dayOpts(r){const o=sh([r,...sh([0,1,2,3,4,5,6].filter(x=>x!==r)).slice(0,2)]);return {opts:o.map(i=>({h:`<span class="dayb" style="--c:${DAY_C[i]}">${DAYS_EN[i].slice(0,2)}</span><small class="dn">${DAYS_EN[i]}</small>`,say:daySay(i)})),ans:o.indexOf(r)}}
 function qCal(k){
   const t=(new Date().getDay()+6)%7,m=new Date().getMonth(),sea=[3,3,0,0,0,1,1,1,2,2,2,3][m];
   if(k==="today")return Object.assign({voice:["w/LULU_CA_TODAY"],cap:"What day is today?",visual:`<div class="bigemo">📅</div>`,layout:"col",hint:"elim",exp:{t:DAYS_EN[t],v:["w/LULU_ANS_IS",...daySay(t)]}},dayOpts(t));
@@ -126,7 +129,7 @@ function qCal(k){
   if(k==="after"){const d=ri(0,6);return Object.assign({voice:["w/LULU_CA_DAY_AFTER",...daySay(d)],cap:`${DAYS_EN[d]} → ?`,visual:`<div class="daycard">${DAYS_EN[d]}</div>`,layout:"col",hint:"elim",exp:{t:DAYS_EN[(d+1)%7],v:["w/LULU_ANS_IS",...daySay((d+1)%7)]}},dayOpts((d+1)%7))}
   if(k==="before"){const d=ri(0,6);return Object.assign({voice:["w/LULU_CA_DAY_BEFORE",...daySay(d)],cap:`? → ${DAYS_EN[d]}`,visual:`<div class="daycard">${DAYS_EN[d]}</div>`,layout:"col",hint:"elim",exp:{t:DAYS_EN[(d+6)%7],v:["w/LULU_ANS_IS",...daySay((d+6)%7)]}},dayOpts((d+6)%7))}
   if(k==="monthafter"){const mo=ri(0,11),r=(mo+1)%12,o=sh([r,...sh([...Array(12).keys()].filter(x=>x!==r&&x!==mo)).slice(0,2)]),mSay=i=>["w/LULU_FA_MON"+i,"w/LULU_EN_MONTH"+i];
-    return {voice:["w/LULU_CA_MONTH_AFTER",...mSay(mo)],cap:`${MONTHS_EN[mo]} → ?`,visual:`<div class="daycard">${MONTHS_EN[mo]}</div>`,opts:o.map(i=>({h:`<span class="oe">🗓️</span><small class="dn">${MONTHS_EN[i]}</small>`,say:mSay(i)})),ans:o.indexOf(r),layout:"col",hint:"elim",exp:{t:MONTHS_EN[r],v:["w/LULU_ANS_IS",...mSay(r)]}}}
+    return {voice:["w/LULU_CA_MONTH_AFTER",...mSay(mo)],cap:`${MONTHS_EN[mo]} → ?`,visual:`<div class="daycard">${MONTHS_EN[mo]}</div>`,opts:o.map(i=>({h:`<span class="oe">${MON_E[i]}</span><small class="dn">${MONTHS_EN[i]}</small>`,say:mSay(i)})),ans:o.indexOf(r),layout:"col",hint:"elim",exp:{t:MONTHS_EN[r],v:["w/LULU_ANS_IS",...mSay(r)]}}}
   if(k==="nowseason"){const o=sh([0,1,2,3]);return {voice:["w/LULU_CA_NOW_SEASON"],cap:"Which season is it now?",visual:`<div class="bigemo">🗓️</div>`,opts:o.map(i=>({h:`<span class="oe">${SEA_E[i]}</span><small>${SEAS[i]}</small>`,say:seaSay(i)})),ans:o.indexOf(sea),layout:"grid",hint:"elim",exp:{t:SEAS[sea],v:["w/LULU_ANS_IS",...seaSay(sea)]}}}
   if(k==="week")return Object.assign({voice:["w/LULU_CA_WEEK_DAYS"],cap:"How many days in a week?",visual:`<div class="bigemo">📆</div>`,layout:"row3",hint:"elim",exp:{t:"7",v:["w/LULU_ANS_IS",N(7)]}},numOpts(7,[5,10,6,8]));
   return Object.assign({voice:["w/LULU_CA_YEAR_MONTHS"],cap:"How many months in a year?",visual:`<div class="bigemo">🗓️</div>`,layout:"row3",hint:"elim",exp:{t:"12",v:["w/LULU_ANS_IS",N(12)]}},numOpts(12,[10,7,14]));
@@ -165,19 +168,29 @@ const TEXT_E=[["t-rex","🦖"],["dinosaur","🦕"],["penguin","🐧"],["whale","
 const wEmoji=w=>{if(w.p&&PIC_E[w.p])return PIC_E[w.p];const t=w.q.toLowerCase();for(const [k,e] of TEXT_E)if(t.includes(k))return e;return "🤔"};
 Object.assign(WORD_E,{"brachiosaurus":"🦕","t-rex":"🦖","eggs":"🥚","bones":"🦴","clouds":"☁️"});
 const E_VOICED=new Set(__EVOICED__);
-const optE=o=>WORD_E[o.toLowerCase()]||"";
+/* wording fixes from the Nov 7 check (also sent to the shared pool as suggestions) */
+const QFIX={s09:{q:"In a storm, what do we see first?"},x07:{o:["Blocking light","Rain","Wind"]}};
+const EXTRA_E={"brachiosaurus":"🦕","t-rex":"🦖","eggs":"🥚"};
+const optE=o=>WORD_E[o.toLowerCase()]||EXTRA_E[o.toLowerCase()]||"";
 function qWatcher(cat,used){
   if(cat==="sky"&&Math.random()<.3){const k=sh([...Array(16).keys()]).find(i=>!used.has("tf"+i));if(k!==undefined){used.add("tf"+k);
     return {voice:["w/LULU_TF"+k],cap:SKY_TF_T[k],visual:`<div class="bigpic">${SKY_TF_E[k]}</div>`,opts:[{h:"<span class='yn'>✅</span>",say:["w/LULU_SK_YES"]},{h:"<span class='yn'>❌</span>",say:["w/LULU_SK_NO"]}],ans:SKY_TF[k]?0:1,layout:"yn",hint:"again",exp:{t:SKY_TF_T[k]+(SKY_TF[k]?" ✅ True!":" ❌ Not true."),v:["w/LULU_ANS_IS"]}}}}
   let pool=wPool(cat).filter(w=>!used.has(w.i)&&!S.seenW.includes(w.i));
+  /* true/false only now and then: at most one per round, the rest are choose-the-answer */
+  const tfDone=[...used].some(i=>(WQ.find(w=>w.i===i)||{}).k==="tf");
+  if(tfDone||Math.random()<.65){const ch=pool.filter(w=>w.k!=="tf");if(ch.length)pool=ch}
   if(!pool.length){S.seenW=S.seenW.filter(i=>!wPool(cat).some(w=>w.i===i));pool=wPool(cat).filter(w=>!used.has(w.i))}
   /* avoid two of the same small topic (e.g. body, nature) in one mound */
   const tops=new Set([...used].map(i=>(WQ.find(w=>w.i===i)||{}).t));const fresh=pool.filter(w=>!tops.has(w.t));const w=pickOne(fresh.length?fresh:pool);
   if(!w)return qCount("find");
   used.add(w.i);S.seenW.push(w.i);
+  {const f=QFIX[w.i];if(f)Object.assign(w,f)}
   const v=VOICED.has(w.i),qv=v?[`w/${w.i}_q_lulu`]:["q_choose"],ev=E_VOICED.has(w.i)?[`w/${w.i}_e_lulu`]:["w/LULU_ANS_IS"];
-  if(w.k==="tf")return {voice:qv,cap:w.q,visual:`<div class="bigpic">${wEmoji(w)}</div>`,opts:[{h:"<span class='yn'>✅</span>",say:["w/LULU_SK_YES"]},{h:"<span class='yn'>❌</span>",say:["w/LULU_SK_NO"]}],ans:w.n,layout:"yn",hint:"again",exp:{t:(w.n===0?"✅ True! ":"❌ Not true. ")+w.x,v:ev}};
-  return {voice:qv,cap:w.q,visual:`<div class="listen">${(()=>{const t=w.q.toLowerCase(),oe=w.o.map(optE);for(const [k,e] of TEXT_E)if(t.includes(k)&&!oe.includes(e))return e;return catById(cat).e})()}</div>`,opts:w.o.map(o=>/^\d+$/.test(o)?numOpt(+o):({h:`<span class="oe">${optE(o)||"🔹"}</span><small>${o}</small>`,say:both(o)})),ans:w.n,layout:w.o.length>2?"row3":"yn",hint:"elim",exp:{t:`${w.o[w.n]}: ${w.x}`,v:ev}};
+  const why={t:w.x,v:E_VOICED.has(w.i)?[`w/${w.i}_e_lulu`]:[]};
+  if(w.k==="tf")return {voice:qv,cap:w.q,tf:true,visual:`<div class="bigpic">${wEmoji(w)}</div>`,opts:[{h:"<span class='yn'>✅</span><small>True</small>",say:["w/LULU_SK_YES"]},{h:"<span class='yn'>❌</span><small>Not true</small>",say:["w/LULU_SK_NO"]}],ans:w.n,layout:"yn",hint:"again",why,exp:{t:(w.n===0?"✅ True! ":"❌ Not true. ")+w.x,v:ev}};
+  if(/what is this/i.test(w.q)&&w.p&&PIC_E[w.p])  /* the picture IS the question */
+    return {voice:qv,cap:w.q,visual:`<div class="bigpic">${PIC_E[w.p]}</div>`,opts:w.o.map(o=>({h:`<b class="word">${o}</b>`,say:both(o)})),ans:w.n,layout:"col",hint:"elim",why,exp:{t:`${w.o[w.n]}: ${w.x}`,v:ev}};
+  return {voice:qv,cap:w.q,visual:`<div class="listen">${(()=>{const t=w.q.toLowerCase(),oe=w.o.map(optE);for(const [k,e] of TEXT_E)if(t.includes(k)&&!oe.includes(e))return e;return catById(cat).e})()}</div>`,opts:w.o.map(o=>/^\d+$/.test(o)?numOpt(+o):({h:`<span class="oe">${optE(o)||"🔹"}</span><small>${o}</small>`,say:both(o)})),ans:w.n,layout:w.o.length>2?"row3":"yn",hint:"elim",why,exp:{t:`${w.o[w.n]}: ${w.x}`,v:ev}};
 }
 /* Story time (Domi's Radio): stories and questions from the Watcher Device, 5 voices */
 const STORIES=__STORIES__;
@@ -188,6 +201,8 @@ function qStory(si,k){
   return {voice:[`w/ST_S${st.s}_Q${q.k}`],cap:"",visual:`<div class="listen radio">${ST_E[st.t]||"📻"}</div>`,opts,ans:q.ans,layout:"row3",hint:"elim",story:si,exp:{t:nums?String(q.nums[q.ans]):q.opts[q.ans][1],v:["w/LULU_ANS_IS"]}};
 }
 function buildQ(cat,kind,used){
+  if(kind==="match")return qMatch(cat==="letters"?"wd":cat==="shapes"?"sh":"an",used);
+  if((cat==="animals"||cat==="sky")&&!used.has("match")&&Math.random()<.22){used.add("match");return qMatch(cat==="sky"?"pl":"an",used)}
   if(cat==="count")return qCount(kind);
   if(cat==="add")return qAdd(kind);
   if(cat==="clock")return qClock(kind);
@@ -227,6 +242,7 @@ function nextQ(){
   const q=L.queue.shift();if(!q)return moundDone();
   L.q=q;q.tries=0;q.locked=false;
   if(q.radio!==undefined)return radioQ(q.radio);
+  if(q.match)return matchQ(q);
   const tints=sh([0,1,2,3]);
   const cc=CATS.find(c=>c.id===L.cat)||{};
   $("qBody").innerHTML=`<div class="qkick"><span class="qke">${cc.e||"⭐"}</span>${cc.name||""}</div><div class="qtop${(q.cap||"").length>30?" long":""}"><button class="qspk" id="qSpk" aria-label="Hear the question again"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></button>${q.cap?`<span class="cap">${q.cap}</span>`:""}</div>
@@ -256,9 +272,14 @@ function pick(j,b){
     const n=q.tries?1:2;S.acorns+=n;L.acorns+=n;L.correct++;if(!q.tries)L.first++;S.questions++;
     {const w=wkLog();w.q++;w.right++}save();renderStats();bump("sAcorns");setDot();
     L.row=(L.row||0)+1;if(L.row%3===0)dance();
-    sheet("good",pickOne(PRAISE_T),`+${n} 🌰`);
     let gone=false;const go=()=>{if(!gone){gone=true;nextQ()}};
-    sayseq([pickOne(PRAISE_CLIPS)],()=>setTimeout(go,500));setTimeout(go,3400);
+    if(q.why){ /* short "why" after the answer: text on the card, Lulu reads it when there is a voice for it */
+      sheet("good why",(q.tf?(q.ans===0?"✅ True! ":"❌ Not true! "):"")+pickOne(PRAISE_T),q.why.t);
+      sayseq([pickOne(PRAISE_CLIPS),...q.why.v],()=>setTimeout(go,q.why.v.length?1800:5500));
+    }else{
+      sheet("good",pickOne(PRAISE_T),`+${n} 🌰`);
+      sayseq([pickOne(PRAISE_CLIPS)],()=>setTimeout(go,500));setTimeout(go,3400);
+    }
     $("qNext").onclick=()=>{sfx.tap();go()};
     return;
   }
@@ -271,7 +292,7 @@ function pick(j,b){
   /* second miss: Domi shows the answer and explains, then we go on */
   q.locked=true;hush();S.questions++;{const w=wkLog();w.q++}save();setDot();
   const rb=$("qBody").querySelectorAll(".qo")[q.ans];rb.classList.add("show");
-  sheet("learn","Let's learn it together!",q.exp.t);
+  sheet("learn"+(q.why?" why":""),"Let's learn it together!",q.exp.t);
   let gone=false;const go=()=>{if(!gone){gone=true;nextQ()}};
   $("qNext").onclick=()=>{sfx.tap();go()};
   sayseq(q.exp.v,()=>{});
@@ -425,13 +446,14 @@ function qSkyPic(used){
 function qPlanet(used){
   const c=sh([...PLANET_N.keys()]),r=c.find(i=>!used.has("pl"+i));if(r===undefined)return qWatcher("sky",used);used.add("pl"+r);const o=sh([r,...c.filter(i=>i!==r).slice(0,2)]);
   const plSay=i=>i===0?["w/LULU_FA_PL0","w/LULU_YA","w/LULU_PL0"]:["w/LULU_FA_PL"+i,"w/LULU_YA","w/LULU_PL"+i];
-  return {voice:["w/LULU_SK_WHICH"],cap:"What is this?",visual:PIC("pl_"+r,"wp big"),opts:o.map(i=>({h:`<span class="oe">🪐</span><small>${PLANET_N[i][0].toUpperCase()+PLANET_N[i].slice(1)}</small>`,say:plSay(i)})),ans:o.indexOf(r),layout:"col",hint:"elim",exp:{t:PLANET_N[r],v:["w/LULU_ANS_IS",...plSay(r)]}};
+  const o4=sh([r,...c.filter(i=>i!==r).slice(0,3)]),nm=i=>PLANET_N[i][0].toUpperCase()+PLANET_N[i].slice(1);
+  return {voice:["w/LULU_SH_FIND",...plSay(r)],cap:`Find ${nm(r)}!`,visual:`<div class="listen">🔭</div>`,opts:o4.map(i=>({h:PIC("pl_"+i,"wp op")+`<small>${nm(i)}</small>`})),ans:o4.indexOf(r),layout:"grid4",hint:"elim",exp:{t:nm(r),v:["w/LULU_ANS_IS",...plSay(r)]}};
 }
 
 /* ================= letters, words and reading (from the shared pool, 'in the games' only) ================= */
 const POOL=__POOL__;
 const WORD_FALLBACK="bird honey cow cake rainbow key baby salad sun star balloon bed duck socks ten tree chicken bus cab mad bag ham fan map web leg hen jet bib lid pig fin lip hit mix pod log mom mop hot fox tub mud mug gum cut dog frog box bee bug cat hat bat car snake truck net can cap pin ship nut".split(" ");
-const WORDS=POOL.words.map(x=>({i:x.i,w:(x.w||WORD_FALLBACK[x.i]||"").toLowerCase()})).filter(x=>x.w&&!["mad","hit","mix","cut","mom"].includes(x.w));
+const WORDS=POOL.words.map(x=>({i:x.i,w:(x.w||WORD_FALLBACK[x.i]||"").toLowerCase()})).filter(x=>x.w&&!["mad","hit","mix","cut","mom","cab","pod","mud","tub","log","mop","hot","gum","lid","fin","lip","bib","ham"].includes(x.w));  /* only words whose picture is clear */
 const LET="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const lSay=l=>["w/LULU_LN_"+l];
 const wSay=x=>["w/LULU_WORD"+x.i];
@@ -443,6 +465,8 @@ function qLetters(k,used){
     return {voice:[k==="lafter"?"w/LULU_AB_AFTER":"w/LULU_AB_BEFORE",...lSay(LET[i])],cap:k==="lafter"?`${LET[i]} → ?`:`? → ${LET[i]}`,visual:`<div class="seq">${k==="lafter"?`<b class="bignum sm">${LET[i]}</b><span class="arr">➜</span><b class="bignum sm q">?</b>`:`<b class="bignum sm q">?</b><span class="arr">➜</span><b class="bignum sm">${LET[i]}</b>`}</div>`,opts:o.map(l=>({h:`<b class="num letter">${l}</b>`,say:lSay(l)})),ans:o.indexOf(r),layout:"row3",hint:"elim",exp:{t:r,v:["w/LULU_ANS_IS",...lSay(r)]}}}
   const x=pickWord(used);used.add("wd"+x.i);const o=sh([x,...sh(WORDS.filter(y=>y.i!==x.i)).slice(0,2)]);
   if(k==="listen")   /* hear the English word, tap its picture (the pictures are not named, that is the game) */
+    {const o4=sh([x,...sh(WORDS.filter(y=>y.i!==x.i)).slice(0,3)]);
+    return {voice:["w/LULU_W_LISTEN",...wSay(x)],cap:"Listen and find it!",visual:`<div class="listen">👂</div>`,opts:o4.map(y=>({h:PIC("wd_"+y.i,"wp op")})),ans:o4.indexOf(x),layout:"grid4",hint:"elim",exp:{t:x.w,v:["w/LULU_ANS_IS",...wSay(x)]}}}
     return {voice:["w/LULU_W_LISTEN",...wSay(x)],cap:"Listen and find it!",visual:`<div class="listen">👂</div>`,opts:o.map(y=>({h:PIC("wd_"+y.i,"wp op")})),ans:o.indexOf(x),layout:"row3",hint:"elim",exp:{t:x.w,v:["w/LULU_ANS_IS",...wSay(x)]}};
   if(k==="first"){const r=x.w[0].toUpperCase(),lo=sh([r,...sh(LET.split("").filter(l=>l!==r)).slice(0,2)]);
     return {voice:["w/LULU_W_FIRST",...wSay(x)],cap:"First letter?",visual:PIC("wd_"+x.i,"wp big"),opts:lo.map(l=>({h:`<b class="num letter">${l}</b>`,say:lSay(l)})),ans:lo.indexOf(r),layout:"row3",hint:"elim",exp:{t:`${r} … ${x.w}`,v:["w/LULU_ANS_IS",...lSay(r),...wSay(x)]}}}
@@ -467,3 +491,33 @@ function domiPicker(){const cur=(curPlayer().domi)||1;
 function wireDomi(){document.querySelectorAll("[data-domi]").forEach(b=>b.onclick=e=>{e.stopPropagation();const p=curPlayer();p.domi=+b.dataset.domi;savePlayers();sfx.tap();
   document.querySelectorAll("[data-domi]").forEach(x=>x.classList.toggle("on",x===b));paintDomi()})}
 setTimeout(paintDomi,0);
+
+/* ================= Tap the matching pairs (picture on the left, English word on the right) ================= */
+function qMatch(set,used){
+  let items;
+  if(set==="wd")items=sh(WORDS).slice(0,4).map(x=>({id:"w"+x.i,pic:PIC("wd_"+x.i,"wp mp"),word:x.w,ps:[],ws:wSay(x)}));
+  else if(set==="pl"){items=sh([1,2,3,4,5,6,7,8]).slice(0,4).map(i=>({id:"p"+i,pic:PIC("pl_"+i,"wp mp"),word:PLANET_N[i][0].toUpperCase()+PLANET_N[i].slice(1),ps:["w/LULU_FA_PL"+i],ws:["w/LULU_PL"+i]}))}
+  else if(set==="sh")items=sh([...SHAPES.keys()].filter(i=>lvl()>=7||SHAPES[i].length<=9)).slice(0,4).map(i=>({id:"s"+i,pic:PIC("shape_"+i,"wp mp"),word:SHAPES[i],ps:[],ws:["w/LULU_EN_SH"+i]}));
+  else items=sh(AN.filter(a=>enSay(a[0]).length)).slice(0,4).map(a=>({id:"a"+a[0],pic:`<span class="oe big">${a[1]}</span>`,word:a[0][0].toUpperCase()+a[0].slice(1),ps:["w/LULU_FA_AN"+AN.indexOf(a)],ws:enSay(a[0])}));
+  return {match:items,voice:[],cap:"Tap the matching pairs",opts:[],ans:-1,layout:"match",exp:{t:"",v:[]}};
+}
+function matchQ(q){
+  const cc=CATS.find(c=>c.id===L.cat)||{};
+  const L1=sh(q.match.slice()),R1=sh(q.match.slice());
+  $("qBody").innerHTML=`<div class="qkick"><span class="qke">${cc.e||"⭐"}</span>${cc.name||""}</div><div class="qtop"><span class="cap">Tap the matching pairs</span></div>
+    <div class="mboard">${L1.map((x,k)=>`<button class="mc pic" data-id="${x.id}" style="grid-row:${k+1};grid-column:1">${x.pic}</button><button class="mc wrd" data-id="${R1[k].id}" style="grid-row:${k+1};grid-column:2"><span>${R1[k].word}</span></button>`).join("")}</div>`;
+  $("qBody").classList.remove("in");void $("qBody").offsetWidth;$("qBody").classList.add("in");
+  let selP=null,selW=null,left=q.match.length,miss=0;
+  const it=id=>q.match.find(x=>x.id===id);
+  const tryPair=()=>{if(!selP||!selW)return;
+    const a=selP,b=selW;selP=selW=null;
+    if(a.dataset.id===b.dataset.id){a.className="mc pic ok";b.className="mc wrd ok";a.disabled=b.disabled=true;sfx.good();burstAt(b,14);left--;
+      const x=it(a.dataset.id);hush();sayseq([...x.ps,...x.ws],()=>{});
+      if(!left){q.locked=true;L.correct++;if(!miss)L.first++;const n=miss?1:2;S.acorns+=n;L.acorns+=n;S.questions++;{const w=wkLog();w.q++;w.right++}save();renderStats();bump("sAcorns");setDot();
+        setTimeout(()=>{sheet("good",pickOne(PRAISE_T),`+${n} 🌰`);let gone=false;const go=()=>{if(!gone){gone=true;nextQ()}};$("qNext").onclick=()=>{sfx.tap();go()};sayseq([pickOne(PRAISE_CLIPS)],()=>setTimeout(go,700))},900)}}
+    else{miss++;sfx.oops();[a,b].forEach(e=>{e.classList.remove("sel");e.classList.add("wrong");setTimeout(()=>e.classList.remove("wrong"),450)})}};
+  $("qBody").querySelectorAll(".mc").forEach(b=>b.onclick=()=>{if(b.disabled||q.locked)return;sfx.tap();const x=it(b.dataset.id);
+    if(b.classList.contains("pic")){if(selP)selP.classList.remove("sel");selP=b;hush();sayseq(x.ps.length?x.ps:[],()=>{})}
+    else{if(selW)selW.classList.remove("sel");selW=b;hush();sayseq(x.ws,()=>{})}
+    b.classList.add("sel");setTimeout(tryPair,selP&&selW?250:0)});
+}

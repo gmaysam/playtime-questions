@@ -15,14 +15,14 @@ const VP=process.env.VP?JSON.parse(process.env.VP):[[390,844,'phone'],[844,390,'
  const seen=new Set();
  for(const [c,k,a] of list){const key=c+k;if(seen.has(key+a))continue;seen.add(key+a);
   for(let n=0;n<N;n++){
-   const r=await p.evaluate(([c,k,a])=>{__px.setAge(a);const q=__px.buildQ(c,k,new Set());if(!q||!q.opts)return null;q.cat=c;q.kind=k;window.__q=q;return true},[c,k,a]);
+   const r=await p.evaluate(([c,k,a])=>{__px.setAge(a);const q=__px.buildQ(c,k,new Set());if(!q||(!q.opts&&!q.match))return null;q.cat=c;q.kind=k;window.__q=q;return true},[c,k,a]);
    if(!r)continue;
    await p.evaluate(()=>window.__render(window.__q)).catch(e=>errs.push('render '+e.message));
    await p.waitForTimeout(650);
    const bad=await p.evaluate(()=>{const B=document.getElementById('qBody');const out=[];const vw=innerWidth;
-     const els=[...B.querySelectorAll('.qkick,.qtop,.qvis,.qopts')];
+     const els=[...B.querySelectorAll('.qkick,.qtop,.qvis,.qopts,.mboard')];
      for(let i=0;i<els.length;i++)for(let j=i+1;j<els.length;j++){const a=els[i].getBoundingClientRect(),b=els[j].getBoundingClientRect();if(a.bottom>b.top+2&&b.bottom>a.top+2&&a.right>b.left&&b.right>a.left)out.push('overlap '+els[i].className.split(' ')[0]+'/'+els[j].className.split(' ')[0])}
-     for(const e of B.querySelectorAll('.qo,.qvis,.qtop')){const r=e.getBoundingClientRect();if(r.right>vw+1||r.left<-1)out.push('offscreen '+e.className.split(' ')[0]);
+     for(const e of B.querySelectorAll('.qo,.qvis,.qtop,.mc')){const r=e.getBoundingClientRect();if(r.right>vw+1||r.left<-1)out.push('offscreen '+e.className.split(' ')[0]);
        for(const ch of e.querySelectorAll('*')){const cr=ch.getBoundingClientRect();if(cr.width&&(cr.right>r.right+3||cr.left<r.left-3||cr.bottom>r.bottom+3||cr.top<r.top-3)&&getComputedStyle(ch).position!=='absolute'&&!ch.closest('svg')){out.push('spill '+e.className.split(' ')[0]+'>'+(ch.className&&ch.className.baseVal===undefined?ch.className:ch.tagName));break}}}
      const sc=B.scrollHeight>B.clientHeight+4;if(sc)out.push('scrolls');return [...new Set(out)]});
    if(bad.length){const id=`${c}/${k}/age${a}`;for(const x of bad){const kk=nm+' | '+x;(probs[kk]=probs[kk]||new Set()).add(id)}

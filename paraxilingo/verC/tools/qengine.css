@@ -333,3 +333,28 @@ body,.phone,.lesson.q2,.introC,#pSettings,.panel,.map{background:#fff!important}
 @media (orientation:landscape){.lesson.q2 .qopts.col{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
   .lesson.q2 .qopts.col .qo[data-j]{min-height:min(150px,20vh)}
   .lesson.q2 .qvis{max-height:20vh;min-height:0;padding-top:8px;padding-bottom:8px}.lesson.q2 .qvis img{max-height:17vh}.lesson.q2 .qvis .bigemo{font-size:min(100px,13vh)}}
+/* ===== Nov 7 b: 2 x 2 picture grid, why card, true/false labels, matching pairs ===== */
+.lesson.q2 .qopts.grid4{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.lesson.q2 .qopts.grid4 .qo[data-j]{min-height:min(190px,22vh);flex-direction:column;gap:6px}
+.lesson.q2 .qopts.grid4 .qo .wp.op{max-width:min(150px,15vh)}
+.lesson.q2 .qopts.yn .qo small{display:block;font:800 22px "Nunito",sans-serif;color:var(--t-ink);margin-top:4px}
+.qsheet.why .qsrow>span>span{display:block;font:600 19px/1.35 "Nunito",sans-serif;color:#3B4A5E;margin-top:4px}
+.qsheet.why .qsf{display:none}
+.mboard{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;width:100%}
+.mc{border:2px solid #E5E5E5;border-radius:18px;background:#fff;box-shadow:0 4px 0 #E5E5E5;min-height:min(120px,14vh);display:grid;place-items:center;padding:8px;font:700 24px "Nunito",sans-serif;color:#4B4B4B;cursor:pointer;transition:background .15s,border-color .15s,opacity .3s}
+.mc .wp.mp{height:min(84px,10vh);width:auto;max-width:100%}
+.mc .oe.big{font-size:min(64px,8vh)}
+.mc.sel{background:#DDF4FF;border-color:#84D8FF;box-shadow:0 4px 0 #84D8FF;color:#1899D6}
+.mc.ok{background:#E2F7EC;border-color:#7FD8A9;box-shadow:0 4px 0 #5BC796;color:#1F8A5B;opacity:.55}
+.mc.wrong{animation:qshake .4s;border-color:#FF9C93}
+@keyframes qshake{20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+@media (min-width:700px){.mc{font-size:34px;min-height:min(160px,15vh)}.mc .wp.mp{height:min(120px,11vh)}.qsheet.why .qsrow>span>span{font-size:24px}.lesson.q2 .qopts.yn .qo small{font-size:30px}}
+.dayb{display:inline-grid;place-items:center;width:52px;height:52px;border-radius:50%;background:var(--c);color:#fff;font:800 22px "Nunito",sans-serif;flex:0 0 auto}
+@media (min-width:700px){.dayb{width:68px;height:68px;font-size:28px}}
+.mboard{grid-auto-rows:minmax(min(150px,15vh),auto)}
+.mc{min-height:min(150px,15vh)}
+.mc .wp.mp{height:min(100px,10vh)}
+.mc .oe.big{font-size:min(76px,9vh)}
+.qsheet.why .qsrow>span>span{font-size:21px}
+@media (min-width:700px){.mboard{grid-auto-rows:minmax(min(190px,16vh),auto)}.mc .wp.mp{height:min(140px,11vh)}}
+@media (orientation:landscape){.mboard{grid-auto-rows:minmax(min(120px,14vh),auto);gap:10px}.mc{min-height:min(120px,14vh);padding:4px}.mc .wp.mp{height:min(90px,10vh)}.mc .oe.big{font-size:min(60px,8vh)}}
