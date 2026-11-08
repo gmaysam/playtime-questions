@@ -229,7 +229,7 @@ function nextQ(){
   if(q.radio!==undefined)return radioQ(q.radio);
   const tints=sh([0,1,2,3]);
   const cc=CATS.find(c=>c.id===L.cat)||{};
-  $("qBody").innerHTML=`<div class="qkick"><span class="qke">${cc.e||"⭐"}</span>${cc.name||""}</div><div class="qtop"><button class="qspk" id="qSpk" aria-label="Hear the question again"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></button>${q.cap?`<span class="cap">${q.cap}</span>`:""}</div>
+  $("qBody").innerHTML=`<div class="qkick"><span class="qke">${cc.e||"⭐"}</span>${cc.name||""}</div><div class="qtop${(q.cap||"").length>30?" long":""}"><button class="qspk" id="qSpk" aria-label="Hear the question again"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></button>${q.cap?`<span class="cap">${q.cap}</span>`:""}</div>
     ${/^<div class="listen/.test(q.visual||"")&&!/radio/.test(q.visual)?"":`<div class="qvis">${q.visual}</div>`}
     <div class="qopts ${q.layout} ${/^<div class="listen/.test(q.visual||"")&&!/radio/.test(q.visual)?"tall":""}">${q.opts.map((o,j)=>`<button class="qo t${tints[j%4]}" data-j="${j}">${o.h}</button>`).join("")}</div>`;
   $("qSpk").onclick=()=>{sfx.tap();ask(q)};

@@ -86,7 +86,11 @@ n = 0
 for f in voices:
     if keep.match(f): shutil.copy(os.path.join(LIB, 'voices', f), os.path.join(dst, f)); n += 1
 for f in os.listdir(os.path.join(LIB, 'quiz_voices')):
-    if f.endswith('_lulu.mp3'): shutil.copy(os.path.join(LIB, 'quiz_voices', f), os.path.join(dst, f)); n += 1
+    if f.endswith('_q_lulu.mp3') or f.endswith('_e_lulu.mp3'):
+        # Paraxilingo reads every answer itself (Farsi, then English), so it uses the question-only cut when there is one
+        qs = f.replace('_q_lulu.mp3', '_qs_lulu.mp3')
+        src = qs if f.endswith('_q_lulu.mp3') and os.path.exists(os.path.join(LIB, 'quiz_voices', qs)) else f
+        shutil.copy(os.path.join(LIB, 'quiz_voices', src), os.path.join(dst, f)); n += 1
 for f in glob.glob(os.path.join(S, 'fa_new', 'out', '*.mp3')): shutil.copy(f, dst); n += 1
 pd=os.path.join(S,'appC','img','w');os.makedirs(pd,exist_ok=True)
 for f in os.listdir(os.path.join(LIB,'pictures')):

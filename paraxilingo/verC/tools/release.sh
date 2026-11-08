@@ -3,7 +3,7 @@
 set -e
 S=/tmp/claude-0/-home-claude/4b546809-d061-5b8c-bae2-78a259824393/scratchpad
 cd $S
-git -C /home/claude/playtime-library pull -q || true
+git -C /home/claude/playtime-library pull -q --rebase || true
 python3 tools/sync_watcher.py /home/claude/playtime-library/library .
 python3 tools/buildC2.py appB/index.html appC/index.html watcher/wq.json
 python3 tools/mkweb.py appC ios/Paraxilingo/Paraxilingo/Web ios/node_modules/.bin/esbuild

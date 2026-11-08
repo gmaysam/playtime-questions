@@ -315,3 +315,21 @@ body,.phone,.lesson.q2,.introC,#pSettings,.panel,.map{background:#fff!important}
 .lesson.q2 .qo .wp.op{width:92%;max-width:170px}
 .lesson.q2 .qopts.col .qo[data-j]{min-height:76px}
 @media (min-width:700px){.lesson.q2 .qopts .qo[data-j]{min-height:230px}.lesson.q2 .qopts.tall .qo[data-j]{min-height:320px}.lesson.q2 .qo .oe{font-size:96px}.lesson.q2 .qo .num{font-size:80px}.lesson.q2 .qo .wp.op{max-width:240px}.lesson.q2 .qopts.col .qo[data-j]{min-height:96px}}
+/* layout fixes (Nov 7): nothing in the question page may squeeze or overlap, long questions get a smaller title, the picture card never takes over the page */
+.lesson.q2 .qbody>*{flex-shrink:0}
+.lesson.q2 .qspk{flex:0 0 auto}
+.lesson.q2 .qtop .cap{flex:1 1 auto;min-width:0;overflow-wrap:anywhere}
+.lesson.q2 .qtop.long .cap{font-size:21px;line-height:1.25}
+.lesson.q2 .qvis{max-height:30vh;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.lesson.q2 .qvis .bigemo{font-size:min(110px,20vh);line-height:1.1}
+.lesson.q2 .qvis img{max-height:26vh;width:auto;max-width:100%}
+.lesson.q2 .qo{overflow:hidden}
+.lesson.q2 .qo>*{max-width:100%}
+@media (min-width:700px){.lesson.q2 .qtop.long .cap{font-size:28px}}
+@media (max-height:500px){.lesson.q2 .qopts .qo[data-j],.lesson.q2 .qopts.tall .qo[data-j]{min-height:90px}.lesson.q2 .qvis{max-height:24vh}.lesson.q2 .qtop .cap{font-size:20px}.lesson.q2 .qspk{width:48px;height:48px}}
+/* sideways screens: shorter cards and picture so the whole question fits without scrolling */
+@media (orientation:landscape){.lesson.q2 .qopts .qo[data-j],.lesson.q2 .qopts.tall .qo[data-j]{min-height:min(170px,22vh)}.lesson.q2 .qopts.col .qo[data-j]{min-height:min(76px,11vh)}
+  .lesson.q2 .qvis{max-height:24vh}.lesson.q2 .qvis img{max-height:20vh}.lesson.q2 .qvis .bigemo{font-size:min(110px,16vh)}.lesson.q2 .qbody{gap:10px}}
+@media (orientation:landscape){.lesson.q2 .qopts.col{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+  .lesson.q2 .qopts.col .qo[data-j]{min-height:min(150px,20vh)}
+  .lesson.q2 .qvis{max-height:20vh;min-height:0;padding-top:8px;padding-bottom:8px}.lesson.q2 .qvis img{max-height:17vh}.lesson.q2 .qvis .bigemo{font-size:min(100px,13vh)}}
