@@ -584,7 +584,7 @@ function qNew(k,used){
     const o=numOpts(r,[arr[3]+1,r+step,r-1,r+1],NK());
     return Object.assign({voice:[...arr.flatMap(fNum),"w/LULU_PT_NEXT"],cap:`Count by ${step}s! What comes next?`,visual:seqHtml([...arr,"?"],4),layout:"row3",hint:"elim",fact:true,exp:{t:`Count by ${step}s: ${arr.join(", ")}, ${r}`,v:["w/LULU_ANS_IS",...fNum(r)]}},o)}
   if(k==="long"){const lg=Math.random()<.5,w=sh([ri(86,96),ri(64,74),ri(44,54),ri(22,32)]),r=lg?w.indexOf(Math.max(...w)):w.indexOf(Math.min(...w)),it=pickOne(["🐍","✏️","🚂"]);
-    return {voice:[lg?"w/LULU_CP_LONG":"w/LULU_CP_SHORT"],cap:lg?"Which is longer?":"Which is shorter?",visual:`<div class="listen">📏</div>`,opts:w.map(x=>({h:`<span class="lbar" style="width:${x}%"><i>${it}</i></span>`})),ans:r,layout:"bars",hint:"elim",exp:{t:lg?"The long one!":"The short one!",v:["w/LULU_ANS_IS"]}}}
+    return {voice:[lg?"w/LULU_CP_LONG":"w/LULU_CP_SHORT"],cap:lg?"Which is longer?":"Which is shorter?",visual:`<div class="listen">📏</div>`,opts:w.map(x=>({h:`<span class="lbar" style="width:${x}%"><i>${it}</i></span>`})),ans:r,layout:"row3",hint:"elim",exp:{t:lg?"The long one!":"The short one!",v:["w/LULU_ANS_IS"]}}}
   if(k==="graph"){const pets=sh(["dog","cat","fish","bird","rabbit","duck","pig"].filter(n=>AN.some(x=>x[0]===n))).slice(0,4),cnt=sh([ri(7,9),ri(4,6),ri(2,3),1]),r=cnt.indexOf(Math.max(...cnt));
     const em=n=>AN.find(x=>x[0]===n)[1];
     return {showsAns:true,voice:["w/LULU_CP_MORE"],cap:"Which pet do MOST children have?",visual:`<div class="graph">${pets.map((n,i)=>`<div class="gbar"><span class="gl">${em(n)}</span>${"<i></i>".repeat(cnt[i])}</div>`).join("")}</div>`,opts:pets.map(anOpt),ans:r,layout:"row3",hint:"elim",exp:{t:`${pets[r]}: ${cnt[r]}`,v:["w/LULU_ANS_IS",...anSay(pets[r])]}}}

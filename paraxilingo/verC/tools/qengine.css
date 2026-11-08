@@ -439,3 +439,24 @@ body,.phone,.lesson.q2,.introC,#pSettings,.panel,.map{background:#fff!important}
 @media (prefers-reduced-motion:reduce){.lesson.q2 .qopts .qo[data-j],.lesson.q2 .qopts .qo[data-j] *,.mc{animation:none!important}}
 .lesson.q2 .qopts .qo .grp{display:flex!important;flex-wrap:wrap;max-width:100%;justify-content:center;gap:2px;border:0;background:none}
 .lesson.q2 .qopts .qo .grp .ob{font-size:min(26px,3.4vh)}
+/* ===== Nov 8 (3rd request): ALWAYS a 2 x 2 grid of big tall cards that fills the screen, like the owner's example ===== */
+.lesson.q2 .qbody{align-items:stretch;width:100%;max-width:880px;margin:0 auto;box-sizing:border-box;padding-bottom:28px}
+.lesson.q2 .qopts.row3,.lesson.q2 .qopts.col,.lesson.q2 .qopts.grid4,.lesson.q2 .qopts.yn,.lesson.q2 .qopts.row,.lesson.q2 .qopts.grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;grid-auto-rows:minmax(0,1fr)!important;flex:1 1 auto!important;min-height:0;width:100%;align-content:stretch;gap:16px;margin:0}
+.lesson.q2 .qopts .qo[data-j]{height:100%;min-height:0;width:auto!important;grid-column:auto!important;justify-self:stretch!important;flex-direction:column;justify-content:center;gap:12px;border-radius:20px}
+.lesson.q2 .qopts .qo[data-j] small,.lesson.q2 .qopts .qo[data-j] .dn{margin-top:auto;padding-bottom:6px}
+.lesson.q2 .qopts .qo[data-j] .oe{font-size:min(84px,9vh)}
+.lesson.q2 .qopts .qo[data-j] .wp.op{height:min(160px,15vh);max-width:80%}
+.lesson.q2 .qvis{flex:0 0 auto;max-height:22vh}
+@media (min-width:700px){.lesson.q2 .qopts .qo[data-j] .oe{font-size:min(130px,11vh)}.lesson.q2 .qopts .qo[data-j] .wp.op{height:min(220px,17vh)}.lesson.q2 .qopts{gap:22px}}
+/* sideways iPad: still 2 x 2, question on the left, the 4 big cards on the right */
+@media (orientation:landscape) and (min-width:900px){
+  .lesson.q2 .qbody{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);grid-template-rows:auto auto 1fr;column-gap:28px;max-width:1200px}
+  .lesson.q2 .qbody>.qkick,.lesson.q2 .qbody>.qtop,.lesson.q2 .qbody>.qvis{grid-column:1}
+  .lesson.q2 .qbody>.qopts{grid-column:2;grid-row:1 / span 3}
+  .lesson.q2 .qvis{max-height:none;align-self:start}
+}
+.lesson.q2 .qopts .qo[data-j]{justify-content:center;padding:14px 10px 12px}
+.lesson.q2 .qopts .qo[data-j]>:first-child{flex:1 1 auto;display:flex!important;align-items:center;justify-content:center;min-height:0}
+.lesson.q2 .qopts .qo[data-j] small,.lesson.q2 .qopts .qo[data-j] .dn{margin-top:0;flex:0 0 auto}
+@media (orientation:landscape) and (min-width:900px){.lesson.q2 .qbody{padding-top:22px}.lesson.q2 .qbody>.qopts{margin-top:8px;max-height:calc(100vh - 150px)}}
+.lesson.q2 .qopts .qo[data-j]>.lbar:first-child{flex:0 0 34px;align-self:flex-start;margin:auto 0}
