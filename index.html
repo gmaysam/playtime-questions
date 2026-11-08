@@ -5856,6 +5856,162 @@ body,
     font-size: min(100px, 13vh);
   }
 }
+.lesson.q2 .qopts.grid4 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+.lesson.q2 .qopts.grid4 .qo[data-j] {
+  min-height: min(190px, 22vh);
+  flex-direction: column;
+  gap: 6px;
+}
+.lesson.q2 .qopts.grid4 .qo .wp.op {
+  max-width: min(150px, 15vh);
+}
+.lesson.q2 .qopts.yn .qo small {
+  display: block;
+  font: 800 22px "Nunito", sans-serif;
+  color: var(--t-ink);
+  margin-top: 4px;
+}
+.qsheet.why .qsrow > span > span {
+  display: block;
+  font: 600 19px/1.35 "Nunito", sans-serif;
+  color: #3B4A5E;
+  margin-top: 4px;
+}
+.qsheet.why .qsf {
+  display: none;
+}
+.mboard {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  width: 100%;
+}
+.mc {
+  border: 2px solid #E5E5E5;
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 4px 0 #E5E5E5;
+  min-height: min(120px, 14vh);
+  display: grid;
+  place-items: center;
+  padding: 8px;
+  font: 700 24px "Nunito", sans-serif;
+  color: #4B4B4B;
+  cursor: pointer;
+  transition:
+    background .15s,
+    border-color .15s,
+    opacity .3s;
+}
+.mc .wp.mp {
+  height: min(84px, 10vh);
+  width: auto;
+  max-width: 100%;
+}
+.mc .oe.big {
+  font-size: min(64px, 8vh);
+}
+.mc.sel {
+  background: #DDF4FF;
+  border-color: #84D8FF;
+  box-shadow: 0 4px 0 #84D8FF;
+  color: #1899D6;
+}
+.mc.ok {
+  background: #E2F7EC;
+  border-color: #7FD8A9;
+  box-shadow: 0 4px 0 #5BC796;
+  color: #1F8A5B;
+  opacity: .55;
+}
+.mc.wrong {
+  animation: qshake .4s;
+  border-color: #FF9C93;
+}
+@keyframes qshake {
+  20%, 60% {
+    transform: translateX(-6px);
+  }
+  40%, 80% {
+    transform: translateX(6px);
+  }
+}
+@media (min-width:700px) {
+  .mc {
+    font-size: 34px;
+    min-height: min(160px, 15vh);
+  }
+  .mc .wp.mp {
+    height: min(120px, 11vh);
+  }
+  .qsheet.why .qsrow > span > span {
+    font-size: 24px;
+  }
+  .lesson.q2 .qopts.yn .qo small {
+    font-size: 30px;
+  }
+}
+.dayb {
+  display: inline-grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--c);
+  color: #fff;
+  font: 800 22px "Nunito", sans-serif;
+  flex: 0 0 auto;
+}
+@media (min-width:700px) {
+  .dayb {
+    width: 68px;
+    height: 68px;
+    font-size: 28px;
+  }
+}
+.mboard {
+  grid-auto-rows: minmax(min(150px, 15vh), auto);
+}
+.mc {
+  min-height: min(150px, 15vh);
+}
+.mc .wp.mp {
+  height: min(100px, 10vh);
+}
+.mc .oe.big {
+  font-size: min(76px, 9vh);
+}
+.qsheet.why .qsrow > span > span {
+  font-size: 21px;
+}
+@media (min-width:700px) {
+  .mboard {
+    grid-auto-rows: minmax(min(190px, 16vh), auto);
+  }
+  .mc .wp.mp {
+    height: min(140px, 11vh);
+  }
+}
+@media (orientation:landscape) {
+  .mboard {
+    grid-auto-rows: minmax(min(120px, 14vh), auto);
+    gap: 10px;
+  }
+  .mc {
+    min-height: min(120px, 14vh);
+    padding: 4px;
+  }
+  .mc .wp.mp {
+    height: min(90px, 10vh);
+  }
+  .mc .oe.big {
+    font-size: min(60px, 8vh);
+  }
+}
 .qbody,
 .panel {
   max-width: 680px;
@@ -6571,10 +6727,10 @@ body,
     if (cat === "add") return a <= 4 ? ["addPic", "subPic", "teach"] : a <= 7 ? ["addPic", "subPic", "sum", "teach", "minus"] : ["sum", "minus", "teach", "big"];
     if (cat === "clock") return a <= 5 ? ["routine", "oclock"] : a <= 6 ? ["routine", "oclock", "half", "season", "nowseason"] : a <= 7 ? ["half", "quarter", "season", "today", "tomorrow", "week"] : ["quarter", "minutes", "after", "before", "monthafter", "yesterday", "months"];
     if (cat === "money") return a <= 5 ? ["pennies", "value"] : a <= 6 ? ["pennies", "value", "count"] : a <= 7 ? ["value", "count", "same"] : ["count", "same", "change"];
-    if (cat === "letters") return a <= 4 ? ["abc", "listen"] : a <= 6 ? ["listen", "first", "abc", "whatis", "lafter"] : ["listen", "first", "whatis", "lafter", "lbefore"];
+    if (cat === "letters") return a <= 4 ? ["abc", "listen", "match"] : a <= 6 ? ["listen", "first", "abc", "whatis", "lafter", "match"] : ["listen", "first", "whatis", "lafter", "lbefore", "match"];
     if (cat === "read") return a <= 5 ? ["balloon", "flash"] : ["balloon", "flash", "sentence"];
-    if (cat === "farm") return a <= 4 ? ["home", "sound", "fly"] : ["home", "food", "sound", "fly", "water"];
-    if (cat === "shapes") return a <= 4 ? ["shape", "color", "pattern"] : ["shape", "color", "pattern", "bigsmall"];
+    if (cat === "farm") return a <= 4 ? ["home", "sound", "fly", "match"] : ["home", "food", "sound", "fly", "water", "match"];
+    if (cat === "shapes") return a <= 4 ? ["shape", "color", "pattern", "match"] : ["shape", "color", "pattern", "bigsmall", "match"];
     if (cat === "people") return a <= 5 ? ["job", "job2"] : ["flag", "job", "flag2", "job2"];
     return ["w"];
   }
@@ -6659,9 +6815,11 @@ body,
   const dig = (h, m) => "".concat(h, ":").concat(String(m).padStart(2, "0"));
   const DAYS_EN = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"], MONTHS_EN = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"], SEAS = ["Spring", "Summer", "Fall", "Winter"];
   const daySay = (i) => ["w/LULU_FA_DAY" + i, "w/LULU_EN_DAY" + i], seaSay = (i) => ["w/LULU_FA_SEA" + i, "w/LULU_EN_SEASON" + i], SEA_E = ["\u{1F338}", "\u2600\uFE0F", "\u{1F342}", "\u26C4"];
+  const DAY_C = ["#FF8A80", "#FFB74D", "#FFD54F", "#81C784", "#4FC3F7", "#7986CB", "#BA68C8"];
+  const MON_E = ["\u26C4", "\u{1F49D}", "\u{1F331}", "\u{1F327}\uFE0F", "\u{1F337}", "\u2600\uFE0F", "\u{1F3D6}\uFE0F", "\u{1F349}", "\u{1F34E}", "\u{1F383}", "\u{1F342}", "\u{1F384}"];
   function dayOpts(r) {
     const o = sh([r, ...sh([0, 1, 2, 3, 4, 5, 6].filter((x) => x !== r)).slice(0, 2)]);
-    return { opts: o.map((i) => ({ h: '<span class="oe">\u{1F4C5}</span><small class="dn">'.concat(DAYS_EN[i], "</small>"), say: daySay(i) })), ans: o.indexOf(r) };
+    return { opts: o.map((i) => ({ h: '<span class="dayb" style="--c:'.concat(DAY_C[i], '">').concat(DAYS_EN[i].slice(0, 2), '</span><small class="dn">').concat(DAYS_EN[i], "</small>"), say: daySay(i) })), ans: o.indexOf(r) };
   }
   function qCal(k) {
     const t = ((/* @__PURE__ */ new Date()).getDay() + 6) % 7, m = (/* @__PURE__ */ new Date()).getMonth(), sea = [3, 3, 0, 0, 0, 1, 1, 1, 2, 2, 2, 3][m];
@@ -6678,7 +6836,7 @@ body,
     }
     if (k === "monthafter") {
       const mo = ri(0, 11), r = (mo + 1) % 12, o = sh([r, ...sh([...Array(12).keys()].filter((x) => x !== r && x !== mo)).slice(0, 2)]), mSay = (i) => ["w/LULU_FA_MON" + i, "w/LULU_EN_MONTH" + i];
-      return { voice: ["w/LULU_CA_MONTH_AFTER", ...mSay(mo)], cap: "".concat(MONTHS_EN[mo], " \u2192 ?"), visual: '<div class="daycard">'.concat(MONTHS_EN[mo], "</div>"), opts: o.map((i) => ({ h: '<span class="oe">\u{1F5D3}\uFE0F</span><small class="dn">'.concat(MONTHS_EN[i], "</small>"), say: mSay(i) })), ans: o.indexOf(r), layout: "col", hint: "elim", exp: { t: MONTHS_EN[r], v: ["w/LULU_ANS_IS", ...mSay(r)] } };
+      return { voice: ["w/LULU_CA_MONTH_AFTER", ...mSay(mo)], cap: "".concat(MONTHS_EN[mo], " \u2192 ?"), visual: '<div class="daycard">'.concat(MONTHS_EN[mo], "</div>"), opts: o.map((i) => ({ h: '<span class="oe">'.concat(MON_E[i], '</span><small class="dn">').concat(MONTHS_EN[i], "</small>"), say: mSay(i) })), ans: o.indexOf(r), layout: "col", hint: "elim", exp: { t: MONTHS_EN[r], v: ["w/LULU_ANS_IS", ...mSay(r)] } };
     }
     if (k === "nowseason") {
       const o = sh([0, 1, 2, 3]);
@@ -6748,7 +6906,9 @@ body,
   };
   Object.assign(WORD_E, { "brachiosaurus": "\u{1F995}", "t-rex": "\u{1F996}", "eggs": "\u{1F95A}", "bones": "\u{1F9B4}", "clouds": "\u2601\uFE0F" });
   const E_VOICED = /* @__PURE__ */ new Set(["a01", "a02", "a03", "a04", "a05", "a06", "a07", "a08", "a09", "a10", "a11", "a12", "a13", "a14", "a15", "a16", "a17", "a18", "a19", "a20", "a21", "a22", "a23", "a24", "a25", "a26", "a27", "a28", "b01", "b02", "b03", "b04", "b05", "b06", "b07", "b08", "b09", "b10", "b11", "b12", "b13", "b14", "n01", "n02", "n03", "n04", "n05", "n06", "n07", "n08", "n09", "n10", "n11", "n12", "n13", "n14", "p01", "p02", "p03", "p04", "p05", "p06", "p07", "p08", "s01", "s02", "s03", "s04", "s05", "s06", "s07", "s08", "s09", "s10", "s11", "s12", "s13", "s14"]);
-  const optE = (o) => WORD_E[o.toLowerCase()] || "";
+  const QFIX = { s09: { q: "In a storm, what do we see first?" }, x07: { o: ["Blocking light", "Rain", "Wind"] } };
+  const EXTRA_E = { "brachiosaurus": "\u{1F995}", "t-rex": "\u{1F996}", "eggs": "\u{1F95A}" };
+  const optE = (o) => WORD_E[o.toLowerCase()] || EXTRA_E[o.toLowerCase()] || "";
   function qWatcher(cat, used) {
     if (cat === "sky" && Math.random() < 0.3) {
       const k = sh([...Array(16).keys()]).find((i) => !used.has("tf" + i));
@@ -6758,6 +6918,11 @@ body,
       }
     }
     let pool = wPool(cat).filter((w2) => !used.has(w2.i) && !S.seenW.includes(w2.i));
+    const tfDone = [...used].some((i) => (WQ.find((w2) => w2.i === i) || {}).k === "tf");
+    if (tfDone || Math.random() < 0.65) {
+      const ch = pool.filter((w2) => w2.k !== "tf");
+      if (ch.length) pool = ch;
+    }
     if (!pool.length) {
       S.seenW = S.seenW.filter((i) => !wPool(cat).some((w2) => w2.i === i));
       pool = wPool(cat).filter((w2) => !used.has(w2.i));
@@ -6768,13 +6933,20 @@ body,
     if (!w) return qCount("find");
     used.add(w.i);
     S.seenW.push(w.i);
+    {
+      const f = QFIX[w.i];
+      if (f) Object.assign(w, f);
+    }
     const v = VOICED.has(w.i), qv = v ? ["w/".concat(w.i, "_q_lulu")] : ["q_choose"], ev = E_VOICED.has(w.i) ? ["w/".concat(w.i, "_e_lulu")] : ["w/LULU_ANS_IS"];
-    if (w.k === "tf") return { voice: qv, cap: w.q, visual: '<div class="bigpic">'.concat(wEmoji(w), "</div>"), opts: [{ h: "<span class='yn'>\u2705</span>", say: ["w/LULU_SK_YES"] }, { h: "<span class='yn'>\u274C</span>", say: ["w/LULU_SK_NO"] }], ans: w.n, layout: "yn", hint: "again", exp: { t: (w.n === 0 ? "\u2705 True! " : "\u274C Not true. ") + w.x, v: ev } };
+    const why = { t: w.x, v: E_VOICED.has(w.i) ? ["w/".concat(w.i, "_e_lulu")] : [] };
+    if (w.k === "tf") return { voice: qv, cap: w.q, tf: true, visual: '<div class="bigpic">'.concat(wEmoji(w), "</div>"), opts: [{ h: "<span class='yn'>\u2705</span><small>True</small>", say: ["w/LULU_SK_YES"] }, { h: "<span class='yn'>\u274C</span><small>Not true</small>", say: ["w/LULU_SK_NO"] }], ans: w.n, layout: "yn", hint: "again", why, exp: { t: (w.n === 0 ? "\u2705 True! " : "\u274C Not true. ") + w.x, v: ev } };
+    if (/what is this/i.test(w.q) && w.p && PIC_E[w.p])
+      return { voice: qv, cap: w.q, visual: '<div class="bigpic">'.concat(PIC_E[w.p], "</div>"), opts: w.o.map((o) => ({ h: '<b class="word">'.concat(o, "</b>"), say: both(o) })), ans: w.n, layout: "col", hint: "elim", why, exp: { t: "".concat(w.o[w.n], ": ").concat(w.x), v: ev } };
     return { voice: qv, cap: w.q, visual: '<div class="listen">'.concat((() => {
       const t = w.q.toLowerCase(), oe = w.o.map(optE);
       for (const [k, e] of TEXT_E) if (t.includes(k) && !oe.includes(e)) return e;
       return catById(cat).e;
-    })(), "</div>"), opts: w.o.map((o) => /^\d+$/.test(o) ? numOpt(+o) : { h: '<span class="oe">'.concat(optE(o) || "\u{1F539}", "</span><small>").concat(o, "</small>"), say: both(o) }), ans: w.n, layout: w.o.length > 2 ? "row3" : "yn", hint: "elim", exp: { t: "".concat(w.o[w.n], ": ").concat(w.x), v: ev } };
+    })(), "</div>"), opts: w.o.map((o) => /^\d+$/.test(o) ? numOpt(+o) : { h: '<span class="oe">'.concat(optE(o) || "\u{1F539}", "</span><small>").concat(o, "</small>"), say: both(o) }), ans: w.n, layout: w.o.length > 2 ? "row3" : "yn", hint: "elim", why, exp: { t: "".concat(w.o[w.n], ": ").concat(w.x), v: ev } };
   }
   const STORIES = [{ "s": 0, "t": "Picnic", "lines": 6, "q": [{ "k": 0, "nums": [2, 3, 4], "ans": 1 }, { "k": 1, "opts": [["\u{1F534}", "Red"], ["\u{1F7E1}", "Yellow"], ["\u{1F535}", "Blue"]], "ans": 1 }, { "k": 2, "opts": [["\u{1F382}", "Cake"], ["\u{1F338}", "Blossom"], ["\u{1F697}", "Car"]], "ans": 1 }] }, { "s": 1, "t": "Rainbow", "lines": 5, "q": [{ "k": 0, "opts": [["\u{1F333}", "Tree"], ["\u2601\uFE0F", "Cloud"], ["\u{1F3E0}", "House"]], "ans": 1 }, { "k": 1, "opts": [["\u{1F308}", "Rainbow"], ["\u{1F319}", "Moon"], ["\u{1F697}", "Car"]], "ans": 0 }, { "k": 2, "nums": [3, 7, 10], "ans": 1 }] }, { "s": 2, "t": "Farm", "lines": 5, "q": [{ "k": 0, "opts": [["\u{1F431}", "Cat"], ["\u{1F404}", "Cow"], ["\u{1F986}", "Duck"]], "ans": 1 }, { "k": 1, "nums": [2, 4, 6], "ans": 1 }, { "k": 2, "opts": [["\u{1F382}", "Cake"], ["\u{1F355}", "Pizza"], ["\u{1F957}", "Salad"]], "ans": 0 }] }, { "s": 3, "t": "House", "lines": 5, "q": [{ "k": 0, "opts": [["\u26AA", "Circle"], ["\u{1F53A}", "Triangle"], ["\u{1F7E6}", "Square"]], "ans": 1 }, { "k": 1, "opts": [["\u2B50", "Star"], ["\u{1F53A}", "Triangle"], ["\u26AA", "Circle"]], "ans": 2 }, { "k": 2, "nums": [2, 4, 5], "ans": 1 }] }, { "s": 4, "t": "Trip", "lines": 5, "q": [{ "k": 0, "opts": [["\u{1F9D1}\u200D\u{1F373}", "Cook"], ["\u{1F9D1}\u200D\u2708\uFE0F", "Pilot"], ["\u{1F9D1}\u200D\u2695\uFE0F", "Doctor"]], "ans": 1 }, { "k": 1, "opts": [["\u{1F1E8}\u{1F1E6}", "Canada"], ["\u{1F1FA}\u{1F1F8}", "USA"], ["\u{1F1EF}\u{1F1F5}", "Japan"]], "ans": 2 }, { "k": 2, "opts": [["\u{1F684}", "Train"], ["\u{1F422}", "Turtle"], ["\u{1F40C}", "Snail"]], "ans": 0 }] }, { "s": 5, "t": "Seed", "lines": 5, "q": [{ "k": 0, "opts": [["\u{1F36C}", "Candy"], ["\u{1F4A7}", "Water"], ["\u26BD", "Ball"]], "ans": 1 }, { "k": 1, "opts": [["\u{1F7E2}", "Green"], ["\u{1F7E3}", "Purple"], ["\u{1F534}", "Red"]], "ans": 0 }, { "k": 2, "opts": [["\u{1F95B}", "Milk"], ["\u{1F4A7}", "Water"], ["\u{1F3D6}\uFE0F", "Beach"]], "ans": 1 }] }, { "s": 6, "t": "Sea", "lines": 5, "q": [{ "k": 0, "opts": [["\u{1F36C}", "Candy"], ["\u{1F9C2}", "Salt"], ["\u{1F34B}", "Lemon"]], "ans": 1 }, { "k": 1, "opts": [["\u{1F7E0}", "Orange"], ["\u{1F535}", "Blue"], ["\u{1F7E2}", "Green"]], "ans": 0 }, { "k": 2, "opts": [["\u{1F41F}", "Fish"], ["\u{1F433}", "Whale"], ["\u{1F980}", "Crab"]], "ans": 1 }] }, { "s": 7, "t": "Clock", "lines": 5, "q": [{ "k": 0, "nums": [3, 7, 10], "ans": 1 }, { "k": 1, "opts": [["\u26BD", "Ball"], ["\u{1F4DA}", "Books"], ["\u{1F3B8}", "Guitar"]], "ans": 0 }, { "k": 2, "nums": [1, 2, 3], "ans": 2 }] }, { "s": 8, "t": "Market", "lines": 5, "q": [{ "k": 0, "nums": [1, 2, 4], "ans": 1 }, { "k": 1, "opts": [["\u{1F7E2}", "Green"], ["\u{1F534}", "Red"], ["\u{1F7E3}", "Purple"]], "ans": 0 }, { "k": 2, "opts": [["\u{1F4CF}", "Ruler"], ["\u2696\uFE0F", "Scales"], ["\u23F0", "Alarm clock"]], "ans": 1 }] }];
   const ST_E = { Picnic: "\u{1F9FA}", Rainbow: "\u{1F308}", Farm: "\u{1F404}", House: "\u{1F3E0}", Trip: "\u2708\uFE0F", Seed: "\u{1F331}", Sea: "\u{1F30A}", Clock: "\u23F0", Market: "\u{1F6D2}" };
@@ -6784,6 +6956,11 @@ body,
     return { voice: ["w/ST_S".concat(st.s, "_Q").concat(q.k)], cap: "", visual: '<div class="listen radio">'.concat(ST_E[st.t] || "\u{1F4FB}", "</div>"), opts, ans: q.ans, layout: "row3", hint: "elim", story: si, exp: { t: nums ? String(q.nums[q.ans]) : q.opts[q.ans][1], v: ["w/LULU_ANS_IS"] } };
   }
   function buildQ(cat, kind, used) {
+    if (kind === "match") return qMatch(cat === "letters" ? "wd" : cat === "shapes" ? "sh" : "an", used);
+    if ((cat === "animals" || cat === "sky") && !used.has("match") && Math.random() < 0.22) {
+      used.add("match");
+      return qMatch(cat === "sky" ? "pl" : "an", used);
+    }
     if (cat === "count") return qCount(kind);
     if (cat === "add") return qAdd(kind);
     if (cat === "clock") return qClock(kind);
@@ -6863,6 +7040,7 @@ body,
     q.tries = 0;
     q.locked = false;
     if (q.radio !== void 0) return radioQ(q.radio);
+    if (q.match) return matchQ(q);
     const tints = sh([0, 1, 2, 3]);
     const cc = CATS.find((c) => c.id === L.cat) || {};
     $("qBody").innerHTML = '<div class="qkick"><span class="qke">'.concat(cc.e || "\u2B50", "</span>").concat(cc.name || "", '</div><div class="qtop').concat((q.cap || "").length > 30 ? " long" : "", '"><button class="qspk" id="qSpk" aria-label="Hear the question again"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></button>').concat(q.cap ? '<span class="cap">'.concat(q.cap, "</span>") : "", "</div>\n    ").concat(/^<div class="listen/.test(q.visual || "") && !/radio/.test(q.visual) ? "" : '<div class="qvis">'.concat(q.visual, "</div>"), '\n    <div class="qopts ').concat(q.layout, " ").concat(/^<div class="listen/.test(q.visual || "") && !/radio/.test(q.visual) ? "tall" : "", '">').concat(q.opts.map((o, j) => '<button class="qo t'.concat(tints[j % 4], '" data-j="').concat(j, '">').concat(o.h, "</button>")).join(""), "</div>");
@@ -6935,7 +7113,6 @@ body,
       setDot();
       L.row = (L.row || 0) + 1;
       if (L.row % 3 === 0) dance();
-      sheet("good", pickOne(PRAISE_T), "+".concat(n, " \u{1F330}"));
       let gone2 = false;
       const go2 = () => {
         if (!gone2) {
@@ -6943,8 +7120,14 @@ body,
           nextQ();
         }
       };
-      sayseq([pickOne(PRAISE_CLIPS)], () => setTimeout(go2, 500));
-      setTimeout(go2, 3400);
+      if (q.why) {
+        sheet("good why", (q.tf ? q.ans === 0 ? "\u2705 True! " : "\u274C Not true! " : "") + pickOne(PRAISE_T), q.why.t);
+        sayseq([pickOne(PRAISE_CLIPS), ...q.why.v], () => setTimeout(go2, q.why.v.length ? 1800 : 5500));
+      } else {
+        sheet("good", pickOne(PRAISE_T), "+".concat(n, " \u{1F330}"));
+        sayseq([pickOne(PRAISE_CLIPS)], () => setTimeout(go2, 500));
+        setTimeout(go2, 3400);
+      }
       $("qNext").onclick = () => {
         sfx.tap();
         go2();
@@ -6981,7 +7164,7 @@ body,
     setDot();
     const rb = $("qBody").querySelectorAll(".qo")[q.ans];
     rb.classList.add("show");
-    sheet("learn", "Let's learn it together!", q.exp.t);
+    sheet("learn" + (q.why ? " why" : ""), "Let's learn it together!", q.exp.t);
     let gone = false;
     const go = () => {
       if (!gone) {
@@ -7343,11 +7526,12 @@ body,
     used.add("pl" + r);
     const o = sh([r, ...c.filter((i) => i !== r).slice(0, 2)]);
     const plSay = (i) => i === 0 ? ["w/LULU_FA_PL0", "w/LULU_YA", "w/LULU_PL0"] : ["w/LULU_FA_PL" + i, "w/LULU_YA", "w/LULU_PL" + i];
-    return { voice: ["w/LULU_SK_WHICH"], cap: "What is this?", visual: PIC("pl_" + r, "wp big"), opts: o.map((i) => ({ h: '<span class="oe">\u{1FA90}</span><small>'.concat(PLANET_N[i][0].toUpperCase() + PLANET_N[i].slice(1), "</small>"), say: plSay(i) })), ans: o.indexOf(r), layout: "col", hint: "elim", exp: { t: PLANET_N[r], v: ["w/LULU_ANS_IS", ...plSay(r)] } };
+    const o4 = sh([r, ...c.filter((i) => i !== r).slice(0, 3)]), nm = (i) => PLANET_N[i][0].toUpperCase() + PLANET_N[i].slice(1);
+    return { voice: ["w/LULU_SH_FIND", ...plSay(r)], cap: "Find ".concat(nm(r), "!"), visual: '<div class="listen">\u{1F52D}</div>', opts: o4.map((i) => ({ h: PIC("pl_" + i, "wp op") + "<small>".concat(nm(i), "</small>") })), ans: o4.indexOf(r), layout: "grid4", hint: "elim", exp: { t: nm(r), v: ["w/LULU_ANS_IS", ...plSay(r)] } };
   }
   const POOL = { "words": [{ "i": 0, "w": "Bird" }, { "i": 1, "w": "Honey" }, { "i": 2, "w": "Cow" }, { "i": 3, "w": "Cake" }, { "i": 4, "w": "Rainbow" }, { "i": 5, "w": "Key" }, { "i": 6, "w": "Baby" }, { "i": 7, "w": "Salad" }, { "i": 8, "w": "Sun" }, { "i": 9, "w": "Star" }, { "i": 10, "w": "Balloon" }, { "i": 11, "w": "Bed" }, { "i": 12, "w": "Duck" }, { "i": 13, "w": "Socks" }, { "i": 14, "w": "Ten" }, { "i": 15, "w": "Tree" }, { "i": 16, "w": "Chicken" }, { "i": 17, "w": "Bus" }, { "i": 18, "w": "" }, { "i": 19, "w": "" }, { "i": 20, "w": "" }, { "i": 21, "w": "" }, { "i": 22, "w": "" }, { "i": 23, "w": "" }, { "i": 24, "w": "" }, { "i": 25, "w": "" }, { "i": 26, "w": "" }, { "i": 27, "w": "" }, { "i": 28, "w": "" }, { "i": 29, "w": "" }, { "i": 30, "w": "" }, { "i": 31, "w": "" }, { "i": 32, "w": "" }, { "i": 33, "w": "" }, { "i": 34, "w": "" }, { "i": 35, "w": "" }, { "i": 36, "w": "" }, { "i": 37, "w": "" }, { "i": 38, "w": "" }, { "i": 39, "w": "" }, { "i": 40, "w": "" }, { "i": 41, "w": "" }, { "i": 42, "w": "" }, { "i": 43, "w": "" }, { "i": 44, "w": "" }, { "i": 45, "w": "" }, { "i": 46, "w": "" }, { "i": 47, "w": "" }, { "i": 48, "w": "" }, { "i": 49, "w": "" }, { "i": 50, "w": "" }, { "i": 51, "w": "" }, { "i": 52, "w": "" }, { "i": 53, "w": "" }, { "i": 54, "w": "" }, { "i": 55, "w": "" }, { "i": 56, "w": "" }, { "i": 57, "w": "" }, { "i": 58, "w": "" }, { "i": 59, "w": "" }, { "i": 60, "w": "" }, { "i": 61, "w": "" }, { "i": 62, "w": "" }], "sight": [{ "i": 0, "w": "the" }, { "i": 1, "w": "of" }, { "i": 2, "w": "and" }, { "i": 3, "w": "a" }, { "i": 4, "w": "to" }, { "i": 5, "w": "in" }, { "i": 6, "w": "is" }, { "i": 7, "w": "you" }, { "i": 8, "w": "that" }, { "i": 9, "w": "it" }, { "i": 10, "w": "he" }, { "i": 11, "w": "was" }, { "i": 12, "w": "for" }, { "i": 13, "w": "on" }, { "i": 14, "w": "are" }, { "i": 15, "w": "as" }, { "i": 16, "w": "with" }, { "i": 17, "w": "his" }, { "i": 18, "w": "they" }, { "i": 19, "w": "I" }, { "i": 20, "w": "at" }, { "i": 21, "w": "be" }, { "i": 22, "w": "this" }, { "i": 23, "w": "have" }, { "i": 24, "w": "from" }, { "i": 25, "w": "or" }, { "i": 26, "w": "one" }, { "i": 27, "w": "had" }, { "i": 28, "w": "by" }, { "i": 29, "w": "words" }, { "i": 30, "w": "but" }, { "i": 31, "w": "not" }, { "i": 32, "w": "what" }, { "i": 33, "w": "all" }, { "i": 34, "w": "were" }, { "i": 35, "w": "we" }, { "i": 36, "w": "when" }, { "i": 37, "w": "your" }, { "i": 38, "w": "can" }, { "i": 39, "w": "said" }, { "i": 40, "w": "there" }, { "i": 41, "w": "use" }, { "i": 42, "w": "an" }, { "i": 43, "w": "each" }, { "i": 44, "w": "which" }, { "i": 45, "w": "she" }, { "i": 46, "w": "do" }, { "i": 47, "w": "how" }, { "i": 48, "w": "their" }, { "i": 49, "w": "if" }, { "i": 50, "w": "will" }, { "i": 51, "w": "up" }, { "i": 52, "w": "other" }, { "i": 53, "w": "about" }, { "i": 54, "w": "out" }, { "i": 55, "w": "many" }, { "i": 56, "w": "then" }, { "i": 57, "w": "them" }, { "i": 58, "w": "these" }, { "i": 59, "w": "so" }, { "i": 60, "w": "some" }, { "i": 61, "w": "her" }, { "i": 62, "w": "would" }, { "i": 63, "w": "make" }, { "i": 64, "w": "like" }, { "i": 65, "w": "him" }, { "i": 66, "w": "into" }, { "i": 67, "w": "time" }, { "i": 68, "w": "has" }, { "i": 69, "w": "look" }, { "i": 70, "w": "two" }, { "i": 71, "w": "more" }, { "i": 72, "w": "write" }, { "i": 73, "w": "go" }, { "i": 74, "w": "see" }, { "i": 75, "w": "number" }, { "i": 76, "w": "no" }, { "i": 77, "w": "way" }, { "i": 78, "w": "could" }, { "i": 79, "w": "people" }, { "i": 80, "w": "my" }, { "i": 81, "w": "than" }, { "i": 82, "w": "first" }, { "i": 83, "w": "water" }, { "i": 84, "w": "been" }, { "i": 85, "w": "called" }, { "i": 86, "w": "who" }, { "i": 87, "w": "am" }, { "i": 88, "w": "its" }, { "i": 89, "w": "now" }, { "i": 90, "w": "find" }, { "i": 91, "w": "long" }, { "i": 92, "w": "down" }, { "i": 93, "w": "day" }, { "i": 94, "w": "did" }, { "i": 95, "w": "get" }, { "i": 96, "w": "come" }, { "i": 97, "w": "made" }, { "i": 98, "w": "may" }, { "i": 99, "w": "part" }], "sents": [{ "id": "sent0", "q": "I ___ a cat.", "o": ["see", "the", "of"], "a": "see" }, { "id": "sent1", "q": "The dog is ___ the box.", "o": ["in", "you", "said"], "a": "in" }, { "id": "sent2", "q": "Look ___ the bus!", "o": ["at", "she", "my"], "a": "at" }, { "id": "sent3", "q": "___ is my hat.", "o": ["this", "of", "go"], "a": "this" }, { "id": "sent4", "q": "The sun is ___.", "o": ["up", "the", "of"], "a": "up" }, { "id": "sent5", "q": "She ___ a red bag.", "o": ["has", "of", "you"], "a": "has" }, { "id": "sent6", "q": "The bee is ___ the tree.", "o": ["on", "she", "was"], "a": "on" }, { "id": "sent7", "q": "I like ___ dog.", "o": ["my", "is", "can"], "a": "my" }, { "id": "sent8", "q": "It ___ a duck.", "o": ["is", "the", "of"], "a": "is" }, { "id": "sent9", "q": "Go ___ bed!", "o": ["to", "she", "my"], "a": "to" }, { "id": "sent10", "q": "We go ___ the bus.", "o": ["on", "she", "can"], "a": "on" }, { "id": "sent11", "q": "The fox ___ red.", "o": ["is", "the", "to"], "a": "is" }, { "id": "sent12", "q": "Find ___ key.", "o": ["the", "is", "can"], "a": "the" }, { "id": "sent13", "q": "Get ___ the jet!", "o": ["in", "she", "my"], "a": "in" }, { "id": "sent14", "q": "Look at ___ cow.", "o": ["the", "is", "can"], "a": "the" }, { "id": "sent15", "q": "This is ___ mom.", "o": ["my", "is", "can"], "a": "my" }, { "id": "sent16", "q": "He ___ a pig.", "o": ["has", "of", "you"], "a": "has" }, { "id": "sent17", "q": "I ___ see a car.", "o": ["can", "the", "of"], "a": "can" }, { "id": "sent18", "q": "The frog can jump ___.", "o": ["up", "the", "she"], "a": "up" }, { "id": "sent19", "q": "We ___ a big cake.", "o": ["have", "of", "is"], "a": "have" }, { "id": "sent20", "q": "A bird ___ fly.", "o": ["can", "the", "of"], "a": "can" }, { "id": "sent21", "q": "Do ___ like the cake?", "o": ["you", "is", "of"], "a": "you" }, { "id": "sent22", "q": "The sun is ___ today.", "o": ["out", "the", "of"], "a": "out" }, { "id": "sent23", "q": "I ___ two socks.", "o": ["have", "is", "of"], "a": "have" }, { "id": "sent24", "q": "The duck is in the ___.", "o": ["water", "she", "was"], "a": "water" }, { "id": "sent25", "q": "Come and ___ the star!", "o": ["see", "is", "of"], "a": "see" }, { "id": "sent26", "q": "Look ___ at the bug.", "o": ["down", "the", "she"], "a": "down" }, { "id": "sent27", "q": "Can you ___ the key?", "o": ["find", "is", "of"], "a": "find" }, { "id": "sent28", "q": "We ___ the bus.", "o": ["see", "of", "she"], "a": "see" }, { "id": "sent29", "q": "I see ___ dog.", "o": ["the", "is", "can"], "a": "the" }, { "id": "sent30", "q": "I ___ in the bed.", "o": ["am", "the", "of"], "a": "am" }], "abc": [{ "l": "A", "w": "apple" }, { "l": "B", "w": "bee" }, { "l": "C", "w": "cat" }, { "l": "D", "w": "dog" }, { "l": "E", "w": "egg" }, { "l": "F", "w": "fox" }, { "l": "H", "w": "hat" }, { "l": "K", "w": "key" }, { "l": "P", "w": "pig" }, { "l": "S", "w": "sun" }, { "l": "T", "w": "tree" }] };
   const WORD_FALLBACK = "bird honey cow cake rainbow key baby salad sun star balloon bed duck socks ten tree chicken bus cab mad bag ham fan map web leg hen jet bib lid pig fin lip hit mix pod log mom mop hot fox tub mud mug gum cut dog frog box bee bug cat hat bat car snake truck net can cap pin ship nut".split(" ");
-  const WORDS = POOL.words.map((x) => ({ i: x.i, w: (x.w || WORD_FALLBACK[x.i] || "").toLowerCase() })).filter((x) => x.w && !["mad", "hit", "mix", "cut", "mom"].includes(x.w));
+  const WORDS = POOL.words.map((x) => ({ i: x.i, w: (x.w || WORD_FALLBACK[x.i] || "").toLowerCase() })).filter((x) => x.w && !["mad", "hit", "mix", "cut", "mom", "cab", "pod", "mud", "tub", "log", "mop", "hot", "gum", "lid", "fin", "lip", "bib", "ham"].includes(x.w));
   const LET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   const lSay = (l) => ["w/LULU_LN_" + l];
   const wSay = (x) => ["w/LULU_WORD" + x.i];
@@ -7369,8 +7553,11 @@ body,
     const x = pickWord(used);
     used.add("wd" + x.i);
     const o = sh([x, ...sh(WORDS.filter((y) => y.i !== x.i)).slice(0, 2)]);
-    if (k === "listen")
-      return { voice: ["w/LULU_W_LISTEN", ...wSay(x)], cap: "Listen and find it!", visual: '<div class="listen">\u{1F442}</div>', opts: o.map((y) => ({ h: PIC("wd_" + y.i, "wp op") })), ans: o.indexOf(x), layout: "row3", hint: "elim", exp: { t: x.w, v: ["w/LULU_ANS_IS", ...wSay(x)] } };
+    if (k === "listen") {
+      const o4 = sh([x, ...sh(WORDS.filter((y) => y.i !== x.i)).slice(0, 3)]);
+      return { voice: ["w/LULU_W_LISTEN", ...wSay(x)], cap: "Listen and find it!", visual: '<div class="listen">\u{1F442}</div>', opts: o4.map((y) => ({ h: PIC("wd_" + y.i, "wp op") })), ans: o4.indexOf(x), layout: "grid4", hint: "elim", exp: { t: x.w, v: ["w/LULU_ANS_IS", ...wSay(x)] } };
+    }
+    return { voice: ["w/LULU_W_LISTEN", ...wSay(x)], cap: "Listen and find it!", visual: '<div class="listen">\u{1F442}</div>', opts: o.map((y) => ({ h: PIC("wd_" + y.i, "wp op") })), ans: o.indexOf(x), layout: "row3", hint: "elim", exp: { t: x.w, v: ["w/LULU_ANS_IS", ...wSay(x)] } };
     if (k === "first") {
       const r = x.w[0].toUpperCase(), lo = sh([r, ...sh(LET.split("").filter((l) => l !== r)).slice(0, 2)]);
       return { voice: ["w/LULU_W_FIRST", ...wSay(x)], cap: "First letter?", visual: PIC("wd_" + x.i, "wp big"), opts: lo.map((l) => ({ h: '<b class="num letter">'.concat(l, "</b>"), say: lSay(l) })), ans: lo.indexOf(r), layout: "row3", hint: "elim", exp: { t: "".concat(r, " \u2026 ").concat(x.w), v: ["w/LULU_ANS_IS", ...lSay(r), ...wSay(x)] } };
@@ -7418,6 +7605,103 @@ body,
     });
   }
   setTimeout(paintDomi, 0);
+  function qMatch(set, used) {
+    let items;
+    if (set === "wd") items = sh(WORDS).slice(0, 4).map((x) => ({ id: "w" + x.i, pic: PIC("wd_" + x.i, "wp mp"), word: x.w, ps: [], ws: wSay(x) }));
+    else if (set === "pl") {
+      items = sh([1, 2, 3, 4, 5, 6, 7, 8]).slice(0, 4).map((i) => ({ id: "p" + i, pic: PIC("pl_" + i, "wp mp"), word: PLANET_N[i][0].toUpperCase() + PLANET_N[i].slice(1), ps: ["w/LULU_FA_PL" + i], ws: ["w/LULU_PL" + i] }));
+    } else if (set === "sh") items = sh([...SHAPES.keys()].filter((i) => lvl() >= 7 || SHAPES[i].length <= 9)).slice(0, 4).map((i) => ({ id: "s" + i, pic: PIC("shape_" + i, "wp mp"), word: SHAPES[i], ps: [], ws: ["w/LULU_EN_SH" + i] }));
+    else items = sh(AN.filter((a) => enSay(a[0]).length)).slice(0, 4).map((a) => ({ id: "a" + a[0], pic: '<span class="oe big">'.concat(a[1], "</span>"), word: a[0][0].toUpperCase() + a[0].slice(1), ps: ["w/LULU_FA_AN" + AN.indexOf(a)], ws: enSay(a[0]) }));
+    return { match: items, voice: [], cap: "Tap the matching pairs", opts: [], ans: -1, layout: "match", exp: { t: "", v: [] } };
+  }
+  function matchQ(q) {
+    const cc = CATS.find((c) => c.id === L.cat) || {};
+    const L1 = sh(q.match.slice()), R1 = sh(q.match.slice());
+    $("qBody").innerHTML = '<div class="qkick"><span class="qke">'.concat(cc.e || "\u2B50", "</span>").concat(cc.name || "", '</div><div class="qtop"><span class="cap">Tap the matching pairs</span></div>\n    <div class="mboard">').concat(L1.map((x, k) => '<button class="mc pic" data-id="'.concat(x.id, '" style="grid-row:').concat(k + 1, ';grid-column:1">').concat(x.pic, '</button><button class="mc wrd" data-id="').concat(R1[k].id, '" style="grid-row:').concat(k + 1, ';grid-column:2"><span>').concat(R1[k].word, "</span></button>")).join(""), "</div>");
+    $("qBody").classList.remove("in");
+    void $("qBody").offsetWidth;
+    $("qBody").classList.add("in");
+    let selP = null, selW = null, left = q.match.length, miss = 0;
+    const it = (id) => q.match.find((x) => x.id === id);
+    const tryPair = () => {
+      if (!selP || !selW) return;
+      const a = selP, b = selW;
+      selP = selW = null;
+      if (a.dataset.id === b.dataset.id) {
+        a.className = "mc pic ok";
+        b.className = "mc wrd ok";
+        a.disabled = b.disabled = true;
+        sfx.good();
+        burstAt(b, 14);
+        left--;
+        const x = it(a.dataset.id);
+        hush();
+        sayseq([...x.ps, ...x.ws], () => {
+        });
+        if (!left) {
+          q.locked = true;
+          L.correct++;
+          if (!miss) L.first++;
+          const n = miss ? 1 : 2;
+          S.acorns += n;
+          L.acorns += n;
+          S.questions++;
+          {
+            const w = wkLog();
+            w.q++;
+            w.right++;
+          }
+          save();
+          renderStats();
+          bump("sAcorns");
+          setDot();
+          setTimeout(() => {
+            sheet("good", pickOne(PRAISE_T), "+".concat(n, " \u{1F330}"));
+            let gone = false;
+            const go = () => {
+              if (!gone) {
+                gone = true;
+                nextQ();
+              }
+            };
+            $("qNext").onclick = () => {
+              sfx.tap();
+              go();
+            };
+            sayseq([pickOne(PRAISE_CLIPS)], () => setTimeout(go, 700));
+          }, 900);
+        }
+      } else {
+        miss++;
+        sfx.oops();
+        [a, b].forEach((e) => {
+          e.classList.remove("sel");
+          e.classList.add("wrong");
+          setTimeout(() => e.classList.remove("wrong"), 450);
+        });
+      }
+    };
+    $("qBody").querySelectorAll(".mc").forEach((b) => b.onclick = () => {
+      if (b.disabled || q.locked) return;
+      sfx.tap();
+      const x = it(b.dataset.id);
+      if (b.classList.contains("pic")) {
+        if (selP) selP.classList.remove("sel");
+        selP = b;
+        hush();
+        sayseq(x.ps.length ? x.ps : [], () => {
+        });
+      } else {
+        if (selW) selW.classList.remove("sel");
+        selW = b;
+        hush();
+        sayseq(x.ws, () => {
+        });
+      }
+      b.classList.add("sel");
+      setTimeout(tryPair, selP && selW ? 250 : 0);
+    });
+  }
   const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   const MONTH_LAND = [7, 5, 4, 6, 11, 8, 9, 1, 2, 10, 0, 3];
   function eventNow(d = /* @__PURE__ */ new Date()) {
