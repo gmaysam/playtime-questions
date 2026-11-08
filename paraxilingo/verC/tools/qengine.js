@@ -93,7 +93,9 @@ function qCount(k){
   const mx=Math.min(MAXN(),20),e=pickOne(OBJ);
   if(k==="find"){const n=ri(2,Math.min(mx,10)),c=sh([n,...sh(near(n).filter(x=>x>=1&&x<=12&&x!==n)).slice(0,DK())]);
     return {voice:["w/LULU_C_FIND",N(n)],cap:`Find ${n}`,visual:`<div class="bignum">${n}</div>`,opts:c.map(x=>({h:grp(x,e),say:both(x)})),ans:c.indexOf(n),layout:"col",hint:"elim",exp:{t:`${n}`,v:["w/LULU_ANS_IS"]}}}
-  if(k==="more"||k==="less"){let a=ri(1,Math.min(mx,9)),b;do{b=ri(1,Math.min(mx,9))}while(b===a||Math.abs(a-b)>4);const o=[a,b],r=k==="more"?Math.max(a,b):Math.min(a,b);
+  if(k==="more"||k==="less"){let a=ri(1,Math.min(mx,9)),b;do{b=ri(1,Math.min(mx,9))}while(b===a||Math.abs(a-b)>4);let o=[a,b];
+    if(lvl()>=4){const pool=sh([...Array(Math.min(mx,9)).keys()].map(x=>x+1).filter(x=>!o.includes(x)));o=sh([...o,...pool.slice(0,2)])}
+    const r=k==="more"?Math.max(...o):Math.min(...o);
     return {voice:[k==="more"?"w/LULU_CP_MORE":"w/LULU_CP_LESS"],cap:k==="more"?"Which has more?":"Which has less?",visual:`<div class="listen">⚖️</div>`,opts:o.map(x=>({h:grp(x,e),say:both(x)})),ans:o.indexOf(r),layout:"row",hint:"count",exp:{t:`${r}`,v:["w/LULU_ANS_IS"]}}}
   if(k==="after"){const n=ri(1,Math.min(mx,19)-1);return Object.assign({voice:["w/LULU_C_AFTER1",N(n)],cap:`${n} → ?`,visual:`<div class="seq"><b class="bignum sm">${n}</b><span class="arr">➜</span><b class="bignum sm q">?</b></div>`,layout:"row3",hint:"line",line:[n,n+1],exp:{t:`${n} → ${n+1}`,v:["w/LULU_ANS_IS"]}},numOpts(n+1,[n,n+2,n-1,n+3]))}
   const n=ri(2,Math.min(mx,20));return Object.assign({voice:["w/LULU_C_BEFORE1",N(n)],cap:`? → ${n}`,visual:`<div class="seq"><b class="bignum sm q">?</b><span class="arr">➜</span><b class="bignum sm">${n}</b></div>`,layout:"row3",hint:"line",line:[n-1,n],exp:{t:`${n-1} → ${n}`,v:["w/LULU_ANS_IS"]}},numOpts(n-1,[n,n+1,n-2]));
@@ -177,7 +179,10 @@ const QFIX={s09:{q:"In a storm, what do we see first?"},x07:{o:["Blocking light"
 const EXTRA_E={"brachiosaurus":"🦕","t-rex":"🦖","eggs":"🥚"};
 const optE=o=>WORD_E[o.toLowerCase()]||EXTRA_E[o.toLowerCase()]||"";
 /* a 4th answer that is surely wrong: a number nobody would pick, or a thing from a different topic */
+/* a 4th answer for each Watcher question, picked by hand (plausible but clearly wrong) */
+const WQ_EXTRA={"a01": "Dog", "a02": "Cow", "a05": "Frog", "a07": "8", "a08": "Cave", "a10": "Dog", "a12": "Cat", "a14": "Chips", "a15": "Cow", "a17": "Frog", "a19": "4", "a21": "Pig", "a23": "Pig", "a25": "Desert", "a27": "Bird", "b01": "Hands", "b02": "Nose", "b04": "3", "b06": "Feet", "b08": "Cake", "b10": "Sleep", "b12": "Knee", "b14": "20", "n01": "Candy", "n03": "Black", "n05": "Purple", "n07": "Autumn", "n09": "Juice", "n11": "Banana", "n13": "Toys", "s01": "Moon", "s03": "Comet", "s05": "Sunglasses", "s07": "Cloud", "s11": "Rain", "s13": "Winter", "p01": "Doctor", "p03": "Venus", "p05": "Saturn", "p07": "Earth", "p09": "10", "p11": "Fork", "p13": "Jupiter", "e01": "Juice", "e03": "North Pole", "e05": "River", "e07": "Milk", "e09": "Forest", "f01": "Rice", "f03": "Purple", "f05": "Sand", "f07": "Milk", "f09": "Bread", "m01": "6", "m02": "4", "m04": "1", "m07": "9", "m08": "6", "m09": "8", "m11": "9", "m12": "12", "m13": "9", "w01": "Cow", "w02": "Bike", "w03": "Cup", "w04": "Cat", "w05": "Up", "w06": "Big", "w07": "Pig", "w08": "5", "l01": "Yellow", "l03": "Farmer", "l05": "Chef", "l07": "Spoon", "x01": "Water", "x03": "Spoon", "x07": "Snow", "d03": "Rocks", "d05": "Shoes"};
 function extraOpt(w){
+  if(WQ_EXTRA[w.i]&&!w.o.includes(WQ_EXTRA[w.i]))return WQ_EXTRA[w.i];
   if(w.o.every(o=>/^\d+$/.test(o))){const n=w.o.map(Number),c=[Math.max(...n)+ri(2,5),Math.max(1,Math.min(...n)-ri(1,3))].filter(x=>!n.includes(x));return c.length?String(c[0]):null}
   const t=w.q.toLowerCase(),c=sh(WQ.filter(v=>v.t!==w.t&&v.k==="c").flatMap(v=>v.o)).find(o=>!/^\d+$/.test(o)&&!w.o.includes(o)&&!t.includes(o.toLowerCase())&&optE(o)&&faSay(o).length&&enSay(o).length);
   return c||null}
@@ -262,6 +267,9 @@ function nextQ(){
   if(q.match)return matchQ(q);
   const tints=sh([0,1,2,3]);
   const cc=CATS.find(c=>c.id===L.cat)||{};
+  if(q.visual&&q.opts&&q.ans>=0&&!q.showsAns){const tk=h=>{const t=new Set();(h||"").replace(/src="([^"]+)"/g,(m,x)=>t.add(x));((h||"").replace(/<[^>]+>/g," ").match(/\p{Extended_Pictographic}/gu)||[]).forEach(x=>t.add(x));return t};
+    const v=tk(q.visual),a=[...tk(q.opts[q.ans].h)],others=q.opts.filter((o,i)=>i!==q.ans).map(o=>tk(o.h));
+    if(a.some(x=>v.has(x)&&!others.every(o=>o.has(x))))q.visual=`<div class="listen">${cc.e||"⭐"}</div>`}
   $("qBody").innerHTML=`<div class="qkick"><span class="qke">${cc.e||"⭐"}</span>${cc.name||""}</div><div class="qtop${(q.cap||"").length>30?" long":""}"><button class="qspk" id="qSpk" aria-label="Hear the question again"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></button>${q.cap?`<span class="cap">${q.cap}</span>`:""}</div>
     ${/^<div class="listen/.test(q.visual||"")&&!/radio/.test(q.visual)?"":`<div class="qvis">${q.visual}</div>`}
     <div class="qopts ${q.layout} ${/^<div class="listen/.test(q.visual||"")&&!/radio/.test(q.visual)?"tall":""}">${q.opts.map((o,j)=>`<button class="qo t${tints[j%4]}" data-j="${j}">${o.h}</button>`).join("")}</div>`;
@@ -290,6 +298,7 @@ function pick(j,b){
     {const w=wkLog();w.q++;w.right++}save();renderStats();bump("sAcorns");setDot();
     L.row=(L.row||0)+1;if(L.row%3===0)dance();
     let gone=false;const go=()=>{if(!gone){gone=true;nextQ()}};
+    if(!q.why&&q.fact&&q.exp&&q.exp.t)q.why={t:q.exp.t,v:[]};
     if(q.why){ /* short "why" after the answer: text on the card, Lulu reads it when there is a voice for it */
       sheet("good why",(q.tf?(q.ans===0?"✅ True! ":"❌ Not true! "):"")+pickOne(PRAISE_T),q.why.t);
       sayseq([pickOne(PRAISE_CLIPS),...q.why.v],()=>setTimeout(go,q.why.v.length?1800:5500));
@@ -363,8 +372,8 @@ function moundDone(){
   if(first){S.day.done++;S.wood+=1;wkLog().mounds=(wkLog().mounds||0)+1}
   save();renderStats();
   const r=$("qResult");sfx.fanfare();burst(160);
-  sayseq([pickOne(["w/LULU_L_END","w/LULU_PR_E","w/LULU_PR_D"])]);
-  r.innerHTML=`<div class="rs-sun"></div><span class="dm">${bv(170)}</span><h2>${pickOne(["You did it!","Amazing job!","Super star!","Hooray!"])}</h2><p>${pickOne(["Domi is so proud of you!","Your brain is growing!","What a great learner!"])}</p>
+  sayseq([pickOne(["w/LULU_PR_A","w/LULU_PR_E","w/LULU_PR_D"])]);
+  r.innerHTML=`<div class="rs-sun"></div><span class="dm">${bv(170)}</span><h2>${pickOne(["You did it!","Amazing job!","Great work!","Hooray!"])}</h2><p>${pickOne(["Domi is so proud of you!","Your brain is growing!","What a great learner!"])}</p>
     <div class="gains"><span class="gn a">+${L.acorns} 🌰</span>${first?`<span class="gn w">+1 🪵</span>`:""}</div>
     <button class="qbtn good big" id="resBtn">Continue ➜</button>`;
   r.hidden=false;
@@ -444,7 +453,7 @@ function qShapes(k,used){
   /* pattern: what comes next? */
   const [x,y]=sh(PAT).find(p=>!used.has("pt"+p[0]))||PAT[0];used.add("pt"+x);const kind=a<=5?0:ri(0,2);
   const seq=kind===0?[x,y,x,y,x]:kind===1?[x,x,y,x,x]:[x,y,y,x,y],next=kind===0?y:kind===1?y:y,ans3=sh([x,y,...sh(OBJ.filter(z=>z!==x&&z!==y)).slice(0,DK()-1)]);
-  return {voice:["w/LULU_PT_NEXT"],cap:"What comes next?",visual:`<div class="pat">${seq.map(e=>`<span>${e}</span>`).join("")}<span class="q">?</span></div>`,opts:ans3.map(e=>({h:`<span class="oe big">${e}</span>`})),ans:ans3.indexOf(next),layout:"row3",hint:"elim",exp:{t:seq.join(" ")+" "+next,v:["w/LULU_ANS_IS"]}};
+  return {showsAns:true,voice:["w/LULU_PT_NEXT"],cap:"What comes next?",visual:`<div class="pat">${seq.map(e=>`<span>${e}</span>`).join("")}<span class="q">?</span></div>`,opts:ans3.map(e=>({h:`<span class="oe big">${e}</span>`})),ans:ans3.indexOf(next),layout:"row3",hint:"elim",exp:{t:seq.join(" ")+" "+next,v:["w/LULU_ANS_IS"]}};
 }
 const COUNTRIES=[["Iran","🇮🇷"],["the United States","🇺🇸"],["Canada","🇨🇦"],["Mexico","🇲🇽"],["Brazil","🇧🇷"],["the United Kingdom","🇬🇧"],["France","🇫🇷"],["Germany","🇩🇪"],["Italy","🇮🇹"],["China","🇨🇳"],["Japan","🇯🇵"],["India","🇮🇳"],["Egypt","🇪🇬"],["Australia","🇦🇺"]];
 const JOBS=[["Doctor","🧑‍⚕️"],["Firefighter","🧑‍🚒"],["Police officer","👮"],["Chef","🧑‍🍳"],["Farmer","🧑‍🌾"],["Teacher","🧑‍🏫"],["Pilot","🧑‍✈️"],["Astronaut","🧑‍🚀"],["Mechanic","🧑‍🔧"],["Scientist","🧑‍🔬"],["Artist","🧑‍🎨"],["Builder","👷"]];
@@ -456,7 +465,7 @@ function qPeople(k,used){
 }
 const SKYN=["sun","moon","star","cloud","rain","rainbow","lightning","snow","rocket","astronaut","telescope","galaxy","comet","satellite","planet","full moon"];
 const skySay=n=>{const i=SKYN.indexOf(n);const fa=n==="sun"?["w/LULU_FA_PL0"]:n==="full moon"?faSay("full moon"):i>0&&i<15?["w/LULU_FA_SKY"+i]:[];return fa.concat(n==="sun"?["w/LULU_PL0"]:enSay(n==="galaxy"?"milky way":n))};
-const SKYQ=[["w/LULU_SK_NIGHT",["moon","star","full moon"],["sun","rainbow"]],["w/LULU_SK_DAY",["sun"],["star","galaxy","comet"]],["w/LULU_SK_RAIN",["cloud"],["sun","star","moon","rocket"]],["w/LULU_SK_COLD",["snow"],["sun","rainbow","lightning"]],["w/LULU_SK_SPACE",["rocket","satellite"],["cloud","rain","rainbow","snow"]],["w/LULU_SK_ASTRONAUT",["astronaut"],["cloud","rainbow","snow","telescope"]],["w/LULU_SK_AFTER_RAIN",["rainbow"],["snow","comet","star","rocket"]],["w/LULU_SK_LOOK",["telescope"],["rocket","satellite","cloud"]],["w/LULU_SK_GALAXY",["galaxy"],["planet","full moon","comet","cloud"]]];
+const SKYQ=[["w/LULU_SK_NIGHT",["moon","star","full moon"],["sun","rainbow","astronaut"]],["w/LULU_SK_DAY",["sun"],["star","galaxy","comet"]],["w/LULU_SK_RAIN",["cloud"],["sun","star","moon","rocket"]],["w/LULU_SK_COLD",["snow"],["sun","rainbow","lightning"]],["w/LULU_SK_SPACE",["rocket","satellite"],["cloud","rain","rainbow","snow"]],["w/LULU_SK_ASTRONAUT",["astronaut"],["cloud","rainbow","snow","telescope"]],["w/LULU_SK_AFTER_RAIN",["rainbow"],["snow","comet","star","rocket"]],["w/LULU_SK_LOOK",["telescope"],["rocket","satellite","cloud"]],["w/LULU_SK_GALAXY",["galaxy"],["planet","full moon","comet","cloud"]]];
 function qSkyPic(used){
   const i=sh([...SKYQ.keys()]).find(j=>!used.has("skq"+j));if(i===undefined)return qWatcher("sky",used);used.add("skq"+i);
   const [clip,R2,W]=SKYQ[i],r=pickOne(R2),o=sh([r,...sh(W).slice(0,DK())]);
@@ -565,31 +574,31 @@ function qNew(k,used){
   const a=lvl(),e=pickOne(OBJ);
   if(k==="missing"){const len=5,st=a<=5?ri(1,6):a<=6?ri(1,15):ri(10,94),hole=ri(1,3),arr=Array.from({length:len},(x,i)=>st+i),r=arr[hole];
     const o=numOpts(r,[arr[len-1]+1,st-1,r+10,r-10,arr[len-1]+2].filter(x=>x>0&&!arr.includes(x)),NK());
-    return Object.assign({voice:["w/LULU_CA_MISSING"],cap:"Which number is missing?",visual:seqHtml(arr,hole),layout:"row3",hint:"elim",exp:{t:arr.join(", "),v:["w/LULU_ANS_IS",...fNum(r)]}},o)}
+    return Object.assign({voice:["w/LULU_CA_MISSING"],cap:"Which number is missing?",visual:seqHtml(arr,hole),layout:"row3",hint:"elim",fact:true,exp:{t:arr.join(", "),v:["w/LULU_ANS_IS",...fNum(r)]}},o)}
   if(k==="skip"){const step=a<=6?pickOne([10,2]):a<=7?pickOne([5,2,10]):pickOne([3,4,5,25]),st=step===10?10:step===25?25:step*ri(1,a<=6?3:6),arr=[0,1,2,3].map(i=>st+i*step),r=st+4*step;
     if(r>100)return qNew("missing",used);
     const o=numOpts(r,[arr[3]+1,r+step,r-1,r+1],NK());
-    return Object.assign({voice:[...arr.flatMap(fNum),"w/LULU_PT_NEXT"],cap:`Count by ${step}s! What comes next?`,visual:seqHtml([...arr,"?"],4),layout:"row3",hint:"elim",exp:{t:`+${step} → ${r}`,v:["w/LULU_ANS_IS",...fNum(r)]}},o)}
+    return Object.assign({voice:[...arr.flatMap(fNum),"w/LULU_PT_NEXT"],cap:`Count by ${step}s! What comes next?`,visual:seqHtml([...arr,"?"],4),layout:"row3",hint:"elim",fact:true,exp:{t:`Count by ${step}s: ${arr.join(", ")}, ${r}`,v:["w/LULU_ANS_IS",...fNum(r)]}},o)}
   if(k==="long"){const lg=Math.random()<.5,w=sh([ri(70,95),ri(25,45)]),r=lg?w.indexOf(Math.max(...w)):w.indexOf(Math.min(...w)),it=pickOne(["🐍","✏️","🚂"]);
     return {voice:[lg?"w/LULU_CP_LONG":"w/LULU_CP_SHORT"],cap:lg?"Which is longer?":"Which is shorter?",visual:`<div class="listen">📏</div>`,opts:w.map(x=>({h:`<span class="lbar" style="width:${x}%"><i>${it}</i></span>`})),ans:r,layout:"bars",hint:"elim",exp:{t:lg?"The long one!":"The short one!",v:["w/LULU_ANS_IS"]}}}
   if(k==="graph"){const pets=sh(["dog","cat","fish","bird","rabbit","duck","pig"].filter(n=>AN.some(x=>x[0]===n))).slice(0,4),cnt=sh([ri(7,9),ri(4,6),ri(2,3),1]),r=cnt.indexOf(Math.max(...cnt));
     const em=n=>AN.find(x=>x[0]===n)[1];
-    return {voice:["w/LULU_CP_MORE"],cap:"Which pet do MOST children have?",visual:`<div class="graph">${pets.map((n,i)=>`<div class="gbar"><span class="gl">${em(n)}</span>${"<i></i>".repeat(cnt[i])}</div>`).join("")}</div>`,opts:pets.map(anOpt),ans:r,layout:"row3",hint:"elim",exp:{t:`${pets[r]}: ${cnt[r]}`,v:["w/LULU_ANS_IS",...anSay(pets[r])]}}}
+    return {showsAns:true,voice:["w/LULU_CP_MORE"],cap:"Which pet do MOST children have?",visual:`<div class="graph">${pets.map((n,i)=>`<div class="gbar"><span class="gl">${em(n)}</span>${"<i></i>".repeat(cnt[i])}</div>`).join("")}</div>`,opts:pets.map(anOpt),ans:r,layout:"row3",hint:"elim",exp:{t:`${pets[r]}: ${cnt[r]}`,v:["w/LULU_ANS_IS",...anSay(pets[r])]}}}
   if(k==="carry"){let x,y;do{x=ri(12,a>=8?68:48);y=ri(5,a>=8?39:29)}while((x%10)+(y%10)<10||x+y>100);const r=x+y;
     const o=numOpts(r,[r-10,r+10,r+1,r-1],NK());   /* r-10 = forgot to carry the ten, r+10 = carried twice */
-    return Object.assign({voice:[...fNum(x),"w/LULU_PLUS",...fNum(y),"w/LULU_EQUALS"],cap:`${x} + ${y} = ?`,visual:`<div class="eq"><span>${x}</span><b>+</b><span>${y}</span><b>=</b><span class="q">?</span></div>`,layout:"row3",hint:"elim",exp:{t:`${x%10} + ${y%10} = ${(x%10)+(y%10)}: carry the ten! ${x} + ${y} = ${r}`,v:["w/LULU_ANS_IS",...fNum(r)]}},o)}
+    return Object.assign({voice:[...fNum(x),"w/LULU_PLUS",...fNum(y),"w/LULU_EQUALS"],cap:`${x} + ${y} = ?`,visual:`<div class="eq"><span>${x}</span><b>+</b><span>${y}</span><b>=</b><span class="q">?</span></div>`,layout:"row3",hint:"elim",fact:true,exp:{t:`${x%10} + ${y%10} = ${(x%10)+(y%10)}: carry the ten! ${x} + ${y} = ${r}`,v:["w/LULU_ANS_IS",...fNum(r)]}},o)}
   if(k==="groups"){const g=ri(2,a>=8?5:4),n=ri(2,a>=8?6:5),r=g*n;
     const o=numOpts(r,[g+n,r+n,r-n,r+1],NK());     /* g+n = added instead of groups */
-    return Object.assign({voice:["w/PX_GROUPS"],cap:`${g} bags, ${n} in each. How many in all?`,visual:`<div class="bags">${Array.from({length:g},()=>`<span class="bag">${grp(n,e)}</span>`).join("")}</div>`,layout:"row3",hint:"count",exp:{t:`${Array(g).fill(n).join(" + ")} = ${r}`,v:["w/LULU_ANS_IS",...fNum(r)]}},o)}
+    return Object.assign({voice:["w/PX_GROUPS"],cap:`${g} bags, ${n} in each. How many in all?`,visual:`<div class="bags">${Array.from({length:g},()=>`<span class="bag">${grp(n,e)}</span>`).join("")}</div>`,layout:"row3",hint:"count",fact:true,exp:{t:`${g} groups of ${n}: ${Array(g).fill(n).join(" + ")} = ${r}`,v:["w/LULU_ANS_IS",...fNum(r)]}},o)}
   if(k==="share"){const f=a<=5?2:pickOne([2,3,4]),each=a<=4?ri(1,2):a<=6?ri(2,4):ri(3,5),tot=f*each;
-    const o=numOpts(each,[each+1,each-1,tot,f].filter(x=>x>0),NK());
-    return Object.assign({voice:["w/PX_SHARE"],cap:`Share ${tot} fairly between ${f} friends`,visual:`<div class="story2">${grp(tot,"🍪")}<span class="op">→</span><span class="grp">${"🧒".repeat(f)}</span></div>`,layout:"row3",hint:"count",exp:{t:`${tot} ÷ ${f} = ${each} each`,v:["w/LULU_ANS_IS",...fNum(each)]}},o)}
+    const o=numOpts(each,[each+1,each-1,tot,f,each+2,each+3].filter(x=>x>0),Math.max(NK(),DK()+1));
+    return Object.assign({voice:["w/PX_SHARE"],cap:`Share ${tot} fairly between ${f} friends`,visual:`<div class="story2">${grp(tot,"🍪")}<span class="op">→</span><span class="grp">${"🧒".repeat(f)}</span></div>`,layout:"row3",hint:"count",fact:true,exp:{t:`${tot} shared by ${f} friends = ${each} each`,v:["w/LULU_ANS_IS",...fNum(each)]}},o)}
   if(k==="left"){const tot=ri(4,a<=5?8:12),ate=ri(1,Math.min(4,tot-1)),r=tot-ate;
     const o=numOpts(r,[r+1,r-1,tot,ate].filter(x=>x>=0),NK());
-    return Object.assign({voice:["w/LULU_WP_IF",N(tot),"w/LULU_WP_HAVE",N(ate),"w/LULU_WP_GIVE","w/PX_LEFT"],cap:`${tot} cookies. Domi ate ${ate}. How many left?`,visual:`<div class="story2"><span class="grp">${Array.from({length:tot},(x,i)=>`<i class="ob ${i>=r?"gone":""}">🍪</i>`).join("")}</span></div>`,layout:"row3",hint:"count",exp:{t:`${tot} − ${ate} = ${r}`,v:["w/LULU_ANS_IS",N(r)]}},o)}
+    return Object.assign({voice:["w/LULU_WP_IF",N(tot),"w/LULU_WP_HAVE",N(ate),"w/LULU_WP_GIVE","w/PX_LEFT"],cap:`${tot} cookies. Domi ate ${ate}. How many left?`,visual:`<div class="story2"><span class="grp">${Array.from({length:tot},(x,i)=>`<i class="ob ${i>=r?"gone":""}">🍪</i>`).join("")}</span></div>`,layout:"row3",hint:"count",fact:true,exp:{t:`${tot} − ${ate} = ${r}`,v:["w/LULU_ANS_IS",N(r)]}},o)}
   if(k==="sides"){const pool=a<=5?SIDES.slice(0,3):SIDES,[si,n]=pickOne(pool.filter(p=>!used.has("sd"+p[0]))||pool);used.add("sd"+si);
     const o=numOpts(n,[n-1,n+1,n+2],NK());
-    return Object.assign({voice:["w/LULU_SH_SIDES"],cap:`How many sides does a ${SHAPES[si].toLowerCase()} have?`,visual:PIC("shape_"+si,"wp big"),layout:"row3",hint:"elim",exp:{t:`${SHAPES[si]}: ${n} sides`,v:["w/LULU_ANS_IS",N(n),...shSay(si)]}},o)}
+    return Object.assign({voice:["w/LULU_SH_SIDES"],cap:`How many sides does a ${SHAPES[si].toLowerCase()} have?`,visual:PIC("shape_"+si,"wp big"),layout:"row3",hint:"elim",fact:true,exp:{t:`A ${SHAPES[si].toLowerCase()} has ${n} straight sides.`,v:["w/LULU_ANS_IS",N(n),...shSay(si)]}},o)}
   if(k==="both"){const c=ri(0,3),f=ri(0,2);let c2;do{c2=ri(0,3)}while(c2===c);let f2;do{f2=ri(0,2)}while(f2===f);
     const items=sh([[c,f],[c,f2],[c2,f],[c2,f2]]),r=items.findIndex(x=>x[0]===c&&x[1]===f);  /* each trap matches exactly one clue */
     return {voice:["w/PX_BOTH"],cap:`Find the one that is ${CLR[c][0].toUpperCase()} and a ${FORM[f].toUpperCase()}`,visual:`<div class="clues"><span class="clue">${shapeDiv(c,"circle")}<small>${CLR[c][0]}</small></span><b>+</b><span class="clue">${shapeDiv(-1,FORM[f])}<small>${FORM[f]}</small></span></div>`.replace("--c:undefined","--c:#C9D2DE"),

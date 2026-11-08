@@ -59,6 +59,12 @@ EVOICED=sorted(set(f.split('_')[0] for f in os.listdir(os.path.join(os.path.dirn
 # Paraxilingo's own dinosaur questions are now in the pool as d01-d06 (no separate merge)
 SDIR=os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 FA_SAY=json.load(open(os.path.join(SDIR,'tools','fa_have.json')));EN_SAY=json.load(open(os.path.join(SDIR,'tools','en_have.json')));EN_SAY.update(json.load(open(os.path.join(SDIR,'fa_new','en_new.json'))));FA_SAY.update(json.load(open(os.path.join(SDIR,'fa_new','fa_new2.json'))));FA_SAY.update(json.load(open(os.path.join(SDIR,'fa_new','fa_new.json'))))
+
+for _f,_d in (('fa_new3.json','FA'),('en_new2.json','EN')):
+    _p=os.path.join(SDIR,'fa_new',_f)
+    if os.path.exists(_p):
+        for _w,_c in json.load(open(_p)).items():
+            if os.path.exists(os.path.join(SDIR,'fa_new','out',_c+'.mp3')):(FA_SAY if _d=='FA' else EN_SAY)[_w]=_c
 B=open(os.path.join(os.path.dirname(__file__),'qengine.js')).read().replace('__STORIES__',open(os.path.join(SDIR,'watcher','stories.json')).read()).replace('__FA_SAY__',json.dumps(FA_SAY)).replace('__EVOICED__',json.dumps(EVOICED)).replace('__EN_SAY__',json.dumps(EN_SAY)).replace('__POOL__',open(os.path.join(SDIR,'watcher','pool.json')).read()).replace('__WQ__',wq).replace('__VOICED__',json.dumps(VOICED)).replace('__PIC_E__',PIC_E).replace('__WORD_E__',WORD_E)
 C=''
 
