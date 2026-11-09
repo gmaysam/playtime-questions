@@ -1110,6 +1110,41 @@ body,.phone,.lesson.q2,.introC,#pSettings,.panel,.map{background:#fff!important}
 .lesson.q2 .qopts .qo[data-j] small,.lesson.q2 .qopts .qo[data-j] .dn{margin-top:0;flex:0 0 auto}
 @media (orientation:landscape) and (min-width:900px){.lesson.q2 .qbody{padding-top:22px}.lesson.q2 .qbody>.qopts{margin-top:8px;max-height:calc(100vh - 150px)}}
 .lesson.q2 .qopts .qo[data-j]>.lbar:first-child{flex:0 0 34px;align-self:flex-start;margin:auto 0}
+/* ===== Nov 8 (template, exact): title, speaker + item, 2 x 2 cards, CHECK ===== */
+.lesson.q2 .qtitle{margin:2px 0 0;font:800 27px/1.2 "Nunito",sans-serif;color:#4B4B4B;flex:0 0 auto}
+.lesson.q2 .qtitle.long{font-size:22px}
+.lesson.q2 .qtop2{display:flex;align-items:center;gap:16px;flex:0 0 auto;min-height:64px}
+.lesson.q2 .qtop2 .qspk{flex:0 0 auto}
+.lesson.q2 .qtop2 .qvis{flex:1 1 auto;border:0;box-shadow:none;background:none;padding:0;margin:0;min-height:0;max-height:15vh;justify-content:flex-start;overflow:visible}
+.lesson.q2 .qtop2 .qvis .bigpic,.lesson.q2 .qtop2 .qvis .bigemo{font-size:min(84px,11vh);line-height:1}
+.lesson.q2 .qtop2 .qvis .wp.big,.lesson.q2 .qtop2 .qvis img{max-height:14vh;height:auto}
+.lesson.q2 .qtop2 .qvis .seqrow,.lesson.q2 .qtop2 .qvis .eq,.lesson.q2 .qtop2 .qvis .graph,.lesson.q2 .qtop2 .qvis .clues{justify-content:flex-start;transform-origin:left center}
+.lesson.q2 .qtop2 .qvis svg{max-height:15vh;width:auto}
+.lesson.q2 .qopts .qo[data-j].sel{--bg:#DDF4FF;--bd:#84D8FF;--sh:#84D8FF;--ink:#1899D6;background:#DDF4FF;border-color:#84D8FF;box-shadow:0 4px 0 #84D8FF}
+.lesson.q2 .qopts .qo[data-j].sel small,.lesson.q2 .qopts .qo[data-j].sel .num,.lesson.q2 .qopts .qo[data-j].sel .word,.lesson.q2 .qopts .qo[data-j].sel .dn{color:#1899D6}
+.qcheck{flex:0 0 auto;width:100%;height:58px;border:0;border-radius:16px;background:#E5E5E5;color:#AFAFAF;font:800 20px "Nunito",sans-serif;letter-spacing:1.5px;box-shadow:0 4px 0 #D0D0D0;cursor:pointer;margin-top:4px;transition:background .2s,color .2s}
+.qcheck.on{background:#58CC02;color:#fff;box-shadow:0 4px 0 #46A302;animation:qsquish .35s}
+.qcheck.on:active{transform:translateY(3px);box-shadow:0 1px 0 #46A302}
+@media (min-width:700px){.lesson.q2 .qtitle{font-size:36px}.lesson.q2 .qtitle.long{font-size:29px}.qcheck{height:70px;font-size:26px}}
+@media (orientation:landscape) and (min-width:900px){
+  .lesson.q2 .qbody{grid-template-rows:auto auto auto 1fr auto}
+  .lesson.q2 .qbody>.qkick,.lesson.q2 .qbody>.qtitle,.lesson.q2 .qbody>.qtop2{grid-column:1}
+  .lesson.q2 .qbody>.qopts{grid-column:2;grid-row:1 / span 4}
+  .lesson.q2 .qbody>.qcheck{grid-column:2;grid-row:5}
+  .lesson.q2 .qtop2{flex-wrap:wrap}.lesson.q2 .qtop2 .qvis{max-height:40vh}
+}
+/* the item next to the speaker: sized to fit (no spilling) */
+.lesson.q2 .qtop2 .qvis{max-height:none;min-width:0;flex-wrap:wrap}
+.lesson.q2 .qtop2 .qvis .bigemo,.lesson.q2 .qtop2 .qvis .bigpic{width:auto;height:auto;padding:0;margin:0;background:none!important;box-shadow:none;font-size:min(68px,8.5vh)!important;line-height:1.1}
+.lesson.q2 .qtop2 .qvis .wp.big,.lesson.q2 .qtop2 .qvis img{height:min(100px,12vh)!important;width:auto;max-width:100%}
+.lesson.q2 .qtop2 .qvis .seqrow{gap:6px;flex-wrap:wrap}.lesson.q2 .qtop2 .qvis .seqrow .tile{min-width:40px;height:44px;font-size:22px;padding:0 4px}
+.lesson.q2 .qtop2 .qvis .eq{font-size:30px;gap:6px;flex-wrap:wrap}.lesson.q2 .qtop2 .qvis .eq *{font-size:inherit}
+.lesson.q2 .qtop2 .qvis .graph{padding:0}.lesson.q2 .qtop2 .qvis .gbar .gl{font-size:22px;width:28px}.lesson.q2 .qtop2 .qvis .gbar i{width:14px;height:14px}
+.lesson.q2 .qtop2 .qvis .pat{transform:scale(.8);transform-origin:left center;flex-wrap:wrap}
+.lesson.q2 .qtop2 .qvis .coins,.lesson.q2 .qtop2 .qvis .coinname{flex-wrap:wrap;max-width:100%}.lesson.q2 .qtop2 .qvis .coins svg{height:40px;width:auto}
+.lesson.q2 .qtop2 .qvis .story2,.lesson.q2 .qtop2 .qvis .bags{flex-wrap:wrap;justify-content:flex-start}
+.lesson.q2 .qtop2 .qvis svg{max-height:12vh}
+@media (min-width:700px){.lesson.q2 .qtop2 .qvis .bigemo,.lesson.q2 .qtop2 .qvis .bigpic{font-size:min(96px,9vh)!important}.lesson.q2 .qtop2 .qvis .seqrow .tile{min-width:56px;height:60px;font-size:30px}.lesson.q2 .qtop2 .qvis .eq{font-size:42px}}
 </style>
 
 <div class="stage">
@@ -1743,11 +1778,20 @@ function nextQ(){
   if(q.visual&&q.opts&&q.ans>=0&&!q.showsAns){const tk=h=>{const t=new Set();(h||"").replace(/src="([^"]+)"/g,(m,x)=>t.add(x));((h||"").replace(/<[^>]+>/g," ").match(/\p{Extended_Pictographic}/gu)||[]).forEach(x=>t.add(x));return t};
     const v=tk(q.visual),a=[...tk(q.opts[q.ans].h)],others=q.opts.filter((o,i)=>i!==q.ans).map(o=>tk(o.h));
     if(a.some(x=>v.has(x)&&!others.every(o=>o.has(x))))q.visual=`<div class="listen">${cc.e||"⭐"}</div>`}
-  $("qBody").innerHTML=`<div class="qkick"><span class="qke">${cc.e||"⭐"}</span>${cc.name||""}</div><div class="qtop${(q.cap||"").length>30?" long":""}"><button class="qspk" id="qSpk" aria-label="Hear the question again"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></button>${q.cap?`<span class="cap">${q.cap}</span>`:""}</div>
-    ${/^<div class="listen/.test(q.visual||"")&&!/radio/.test(q.visual)?"":`<div class="qvis">${q.visual}</div>`}
-    <div class="qopts ${q.layout} ${/^<div class="listen/.test(q.visual||"")&&!/radio/.test(q.visual)?"tall":""}">${q.opts.map((o,j)=>`<button class="qo t${tints[j%4]}" data-j="${j}">${o.h}</button>`).join("")}</div>`;
+  const deco=/^<div class="listen/.test(q.visual||"")&&!/radio/.test(q.visual);
+  /* owner's template: title, speaker + the thing asked, 4 cards in a 2 x 2 grid, big CHECK button */
+  $("qBody").innerHTML=`<div class="qkick"><span class="qke">${cc.e||"⭐"}</span>${cc.name||""}</div>
+    <h2 class="qtitle${(q.cap||"").length>34?" long":""}">${q.cap||"Choose the right one"}</h2>
+    <div class="qtop2"><button class="qspk" id="qSpk" aria-label="Hear the question again"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></button>${deco||!q.visual?"":`<div class="qvis">${q.visual}</div>`}</div>
+    <div class="qopts ${q.layout} ${deco?"tall":""}">${q.opts.map((o,j)=>`<button class="qo t${tints[j%4]}" data-j="${j}">${o.h}</button>`).join("")}</div>
+    <button class="qcheck" id="qCheck" disabled>CHECK</button>`;
   $("qSpk").onclick=()=>{sfx.tap();ask(q)};
-  $("qBody").querySelectorAll(".qo").forEach(b=>b.onclick=()=>pick(+b.dataset.j,b));
+  /* tap = choose (Lulu says it), CHECK = answer */
+  const chk=$("qCheck");
+  $("qBody").querySelectorAll(".qo").forEach(b=>b.onclick=()=>{if(q.locked||b.classList.contains("faded"))return;sfx.tap();
+    $("qBody").querySelectorAll(".qo.sel").forEach(x=>x.classList.remove("sel"));b.classList.add("sel");
+    hush();sayseq((q.opts[+b.dataset.j]||{}).say||[],()=>{});chk.disabled=false;chk.classList.add("on")});
+  chk.onclick=()=>{const b=$("qBody").querySelector(".qo.sel");if(!b||q.locked)return;b.classList.remove("sel");chk.disabled=true;chk.classList.remove("on");pick(+b.dataset.j,b)};
   $("qBody").classList.remove("in");void $("qBody").offsetWidth;$("qBody").classList.add("in");
   if(q.flash)setTimeout(()=>{const f=$("qBody").querySelector(".flash");if(f)f.classList.add("hid")},2200);
   setTimeout(()=>{if(L&&L.q===q)ask(q)},350);

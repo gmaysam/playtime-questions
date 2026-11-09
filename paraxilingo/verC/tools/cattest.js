@@ -20,7 +20,7 @@ const fs=require('fs'),path=require('path');const root=process.argv[2],age=+(pro
      if(await p.$('#qBody .mboard')){const ids=await p.evaluate(()=>[...document.querySelectorAll('.mc.pic:not(.ok)')].map(b=>b.dataset.id));for(const id of ids){await p.click(`.mc.pic[data-id="${id}"]`,{force:true});await p.click(`.mc.wrd[data-id="${id}"]`,{force:true});await p.waitForTimeout(300)}await p.waitForTimeout(1200);continue}
      const info=await p.evaluate(()=>({ans:__px.L.q.ans,kind:__px.L.q.kind,say:__px.L.q.opts.map(o=>(o.say||[]).filter(Boolean).length)}));
      await p.screenshot({path:root+`/../shots/c_${cat}_${k}.png`});console.log(cat,info.kind,'say',JSON.stringify(info.say));
-     await p.click(`#qBody .qo[data-j="${info.ans}"]`,{force:true});await p.waitForTimeout(500);
+     await p.click(`#qBody .qo[data-j="${info.ans}"]`,{force:true});await p.click('#qCheck',{force:true}).catch(()=>{});await p.waitForTimeout(500);
    }
    const rb=await p.$('#resBtn');if(rb)await rb.click({force:true});await p.waitForTimeout(1500);
  }

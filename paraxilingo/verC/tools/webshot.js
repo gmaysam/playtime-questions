@@ -10,5 +10,5 @@ const {chromium}=require('/opt/npm-tools/node_modules/playwright');const fs=requ
  const m=await p.$$('.mound,.mnd,[data-mound]');if(m.length)await m[0].click({force:true});await p.waitForTimeout(800);
  await p.getByText(/LET.S GO/i).first().click({force:true}).catch(e=>errs.push('go '+e.message));
  for(let i=0;i<4;i++){await p.waitForTimeout(3500);await p.screenshot({path:`shots/${out}_${nm}_${i}.png`});
-   const ans=await p.$$('#qBody .qo');if(ans.length)await ans[0].click({force:true}).catch(()=>{});await p.waitForTimeout(600);const a2=await p.$$('#qBody .qo:not(.faded):not(.wrong)');for(const a of a2){await a.click({force:true}).catch(()=>{});await p.waitForTimeout(400)}await p.waitForTimeout(6000)}await p.close()}
+   const ans=await p.$$('#qBody .qo');if(ans.length){await ans[0].click({force:true}).catch(()=>{});await p.waitForTimeout(500);if(i===0)await p.screenshot({path:`shots/${out}_${nm}_sel.png`});await p.click('#qCheck',{force:true}).catch(()=>{})}await p.waitForTimeout(600);const a2=await p.$$('#qBody .qo:not(.faded):not(.wrong)');for(const a of a2){await a.click({force:true}).catch(()=>{});await p.click('#qCheck',{force:true}).catch(()=>{});await p.waitForTimeout(400)}await p.waitForTimeout(6000)}await p.close()}
  console.log(errs.join('\n')||'no errors');await b.close()})();

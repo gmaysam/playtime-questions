@@ -20,7 +20,7 @@ const VP=process.env.VP?JSON.parse(process.env.VP):[[390,844,'phone'],[844,390,'
    await p.evaluate(()=>window.__render(window.__q)).catch(e=>errs.push('render '+e.message));
    await p.waitForTimeout(650);
    const bad=await p.evaluate(()=>{const B=document.getElementById('qBody');const out=[];const vw=innerWidth;
-     const els=[...B.querySelectorAll('.qkick,.qtop,.qvis,.qopts,.mboard')];
+     const els=[...B.querySelectorAll('.qkick,.qtitle,.qtop2,.qtop,.qopts,.mboard,.qcheck')];
      for(let i=0;i<els.length;i++)for(let j=i+1;j<els.length;j++){const a=els[i].getBoundingClientRect(),b=els[j].getBoundingClientRect();if(a.bottom>b.top+2&&b.bottom>a.top+2&&a.right>b.left&&b.right>a.left)out.push('overlap '+els[i].className.split(' ')[0]+'/'+els[j].className.split(' ')[0])}
      for(const e of B.querySelectorAll('.qo,.qvis,.qtop,.mc')){const r=e.getBoundingClientRect();if(r.right>vw+1||r.left<-1)out.push('offscreen '+e.className.split(' ')[0]);
        for(const ch of e.querySelectorAll('*')){const cr=ch.getBoundingClientRect();if(cr.width&&(cr.right>r.right+3||cr.left<r.left-3||cr.bottom>r.bottom+3||cr.top<r.top-3)&&getComputedStyle(ch).position!=='absolute'&&!ch.closest('svg')){out.push('spill '+e.className.split(' ')[0]+'>'+(ch.className&&ch.className.baseVal===undefined?ch.className:ch.tagName));break}}}

@@ -29,11 +29,11 @@ const fs=require('fs'),path=require('path');const root=process.argv[2],age=+(pro
      const opts=await p.$$('#qBody .qo:not(.faded)');
      if(!wrongDone&&i%2===0){ // try wrong twice on the first question of every other mound
        const w=[];for(const o of opts){const j=+(await o.getAttribute('data-j'));if(j!==info.ans)w.push(o)}
-       if(w.length){await w[0].click({force:true});await p.waitForTimeout(info.tries===0?300:900);
+       if(w.length){await w[0].click({force:true});await p.click('#qCheck',{force:true}).catch(()=>{});await p.waitForTimeout(info.tries===0?300:900);
          if(info.tries===0){await p.waitForTimeout(2500);if(shot<40)await p.screenshot({path:root+`/../shots/q_${String(shot++).padStart(2,'0')}_hint.png`})}
          else wrongDone=true;continue}
      }
-     for(const o of opts){if(+(await o.getAttribute('data-j'))===info.ans){await o.click({force:true});break}}
+     for(const o of opts){if(+(await o.getAttribute('data-j'))===info.ans){await o.click({force:true});await p.click('#qCheck',{force:true}).catch(()=>{});break}}
      await p.waitForTimeout(700);
    }
    if(i===0)await p.screenshot({path:root+'/../shots/q_result.png'});
