@@ -9437,5 +9437,5 @@ body,
   })();
 })();
 </script>
-<script>if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(function(){})</script>
+<script>if("serviceWorker" in navigator){navigator.serviceWorker.register("sw.js",{updateViaCache:"none"}).then(function(r){r.update()}).catch(function(){});var pxR=false;navigator.serviceWorker.addEventListener("controllerchange",function(){if(!pxR){pxR=true;location.reload()}})}</script>
 </body></html>
