@@ -816,3 +816,127 @@ body,.phone,.lesson.q2,.introC,#pSettings,.panel,.map{background:#fff!important}
 .qvis .bigpic .plimg{width:1.1em;height:1.1em}
 .plrow{display:inline-flex;gap:.12em;align-items:center}.plrow .plimg.sm{width:.55em;height:.55em}
 .lesson.q2 .qopts .qo[data-j] .oe .plimg{width:1.7em;height:1.7em}
+/* ===== Nov 9d: new formats ===== */
+@keyframes nope{20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
+.nope{animation:nope .4s}
+.drag{z-index:50;position:relative;box-shadow:0 12px 24px rgba(0,0,0,.18)!important;transition:none!important}
+.hov{outline:4px dashed #1CB0F6;outline-offset:4px}
+.sel{box-shadow:0 0 0 4px #84D8FF!important}
+.gt-e{font-size:clamp(30px,8vw,52px);line-height:1.1;display:grid;place-items:center}.gt-e .wp,.gt-e .gsp{width:clamp(40px,11vw,70px);height:clamp(40px,11vw,70px);object-fit:contain}
+.gt-e .plimg{width:1.1em;height:1.1em}
+.gt-l{font:800 13px "Nunito",sans-serif;color:#777;text-align:center;line-height:1.1}
+.gsh{width:100%;height:100%}
+/* sort */
+.srt-items{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;align-content:center;flex:1;min-height:0}
+.srt-it{width:clamp(70px,20vw,104px);aspect-ratio:1;background:#fff;border:2px solid #E5E5E5;border-radius:18px;box-shadow:0 4px 0 #E5E5E5;display:flex;flex-direction:column;align-items:center;justify-content:center;font:900 34px "Nunito",sans-serif;color:#4B4B4B;cursor:grab;user-select:none;-webkit-user-select:none}
+.srt-it.gone{visibility:hidden}
+.srt-bk{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.bask{border:3px solid #E5E5E5;border-radius:24px 24px 30px 30px;background:linear-gradient(#FFF8E6,#FFE7B0);min-height:120px;display:flex;flex-direction:column;align-items:center;padding:8px;gap:2px}
+.bask .bk-e{font-size:30px}.bask b{font:900 15px "Nunito",sans-serif;color:#8A6100;text-align:center}
+.bk-in{display:flex;flex-wrap:wrap;justify-content:center;gap:2px;font-size:22px;font-weight:900}
+.bk-in .wp,.bk-in .gsp{width:26px;height:26px}
+/* tap all */
+.ta-top{display:flex;align-items:center;justify-content:center;gap:14px;min-height:34px}
+.gsh-big{width:56px;height:56px;display:inline-block}.ta-big{font:900 48px "Nunito",sans-serif;color:#1CB0F6}
+.ta-left{font:900 16px "Nunito",sans-serif;color:#fff;background:#FF9600;border-radius:999px;padding:4px 12px}
+.ta-grid{display:grid;gap:10px;flex:1;align-content:center;min-height:0}
+.ta-it{aspect-ratio:1;max-height:21vh;border:2px solid #E5E5E5;border-radius:18px;background:#fff;box-shadow:0 4px 0 #E5E5E5;display:flex;flex-direction:column;align-items:center;justify-content:center;font:900 34px "Nunito",sans-serif;color:#4B4B4B;padding:6px;touch-action:manipulation}
+.ta-it .gsh{width:70%;height:70%}
+.ta-it.ok{background:#D7FFB8;border-color:#58CC02;box-shadow:0 4px 0 #58CC02;position:relative}.ta-it.ok::after{content:"✓";position:absolute;top:4px;right:8px;color:#58A700;font-size:20px}
+/* count + ten frame */
+.tc-field{position:relative;flex:1;min-height:180px;border-radius:22px;background:#F7F7F7;transition:all .4s}
+.tc-field.small{flex:0 0 120px;min-height:120px}
+.tc-o{position:absolute;transform:translate(-50%,-50%);border:0;background:none;font-size:clamp(34px,9vw,54px);touch-action:manipulation;padding:0}
+.tc-o.on{filter:drop-shadow(0 0 0 #58CC02)}.tc-o.on::after{content:attr(data-k);position:absolute;top:-6px;right:-10px;background:#58CC02;color:#fff;font:900 14px "Nunito",sans-serif;border-radius:999px;min-width:22px;height:22px;display:grid;place-items:center}
+.tc-say{text-align:center;font:900 40px "Nunito",sans-serif;color:#58CC02;min-height:44px}
+.tc-num{text-align:center;font:900 84px "Nunito",sans-serif;color:#1CB0F6;line-height:1}
+.tc-frame{display:flex;flex-direction:column;gap:12px;align-items:stretch}
+.tf-wrap{display:flex;flex-direction:column;gap:10px;align-items:center}
+.tf{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;background:#4B4B4B;padding:6px;border-radius:14px;width:min(100%,380px)}
+.tf-c{aspect-ratio:1;border:0;border-radius:8px;background:#fff;touch-action:manipulation}.tf-c.on{background:radial-gradient(circle,#FF4B4B 55%,#fff 57%)}
+/* swipe */
+.sw-stack{flex:1;display:grid;place-items:center;min-height:0;position:relative}
+.sw-card{position:relative;width:min(78%,300px);aspect-ratio:3/4;max-height:52vh;background:#fff;border:2px solid #E5E5E5;border-radius:28px;box-shadow:0 8px 0 #E5E5E5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;transition:transform .35s,opacity .35s;user-select:none;-webkit-user-select:none}
+.sw-e{font-size:clamp(70px,22vw,120px);line-height:1;font-weight:900;color:#4B4B4B;font-family:"Nunito",sans-serif}.sw-e .wp,.sw-e .gsp{width:clamp(90px,30vw,150px);height:auto}.sw-e .plimg{width:1.2em;height:1.2em}
+.sw-card b{font:900 22px "Nunito",sans-serif;color:#4B4B4B;text-align:center;padding:0 10px}
+.sw-l,.sw-r{position:absolute;top:16px;font:900 34px "Nunito",sans-serif;opacity:0;transition:opacity .2s}.sw-l{left:18px;color:#FF4B4B}.sw-r{right:18px;color:#58CC02}
+.lean-l .sw-l,.lean-r .sw-r{opacity:1}.was-y{border-color:#58CC02}.was-y .sw-r,.was-n .sw-l{opacity:1}.was-n{border-color:#FF4B4B}
+.sw-btns{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.sw-no,.sw-yes{flex:1;min-height:58px;border:0;border-radius:18px;font:900 20px "Nunito",sans-serif;color:#fff;touch-action:manipulation}.sw-no{background:#FF4B4B;box-shadow:0 5px 0 #D33131}.sw-yes{background:#58CC02;box-shadow:0 5px 0 #46A302}
+.sw-ct{font:800 14px "Nunito",sans-serif;color:#AFAFAF}
+/* feed */
+.fd-an{position:relative;align-self:center;width:min(60vw,240px);aspect-ratio:1;border-radius:50%;background:radial-gradient(#FFF5D3,#FFE29A);display:grid;place-items:center}
+.fd-e{font-size:clamp(90px,26vw,150px);line-height:1}.fd-mouth{position:absolute;bottom:14%;font-size:30px}
+.fd-an.chomp .fd-e{animation:chomp .5s 2}.fd-an.spit{animation:nope .4s}.fd-eat{position:absolute;bottom:18%;font-size:30px;animation:eat .6s forwards}
+@keyframes chomp{50%{transform:scale(1.12)}}@keyframes eat{to{transform:scale(.2);opacity:0}}
+.fd-foods{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:auto}
+.fd-f{width:clamp(76px,21vw,104px);aspect-ratio:1;background:#fff;border:2px solid #E5E5E5;border-radius:18px;box-shadow:0 4px 0 #E5E5E5;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:38px;user-select:none;-webkit-user-select:none}
+.fd-f small{font:800 12px "Nunito",sans-serif;color:#777}.fd-f.gone{visibility:hidden}.fd-f.hint{border-color:#58CC02;box-shadow:0 4px 0 #58CC02}
+/* set the clock */
+.sc-dig{text-align:center;font:900 30px "Nunito",sans-serif;color:#1CB0F6}
+.sc-wrap{align-self:center;width:min(78vw,320px,44vh);aspect-ratio:1;touch-action:none}.sc-svg{width:100%;height:100%}
+.sc-tip{text-align:center;font:700 14px "Nunito",sans-serif;color:#AFAFAF}
+/* put in order */
+.sq-slots{display:flex;justify-content:center;gap:8px}
+.sq-sl{position:relative;flex:1;max-width:96px;aspect-ratio:1;border:3px dashed #CFCFCF;border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:clamp(30px,8vw,46px)}
+.sq-sl small{font:800 11px "Nunito",sans-serif;color:#AFAFAF}.sq-sl>small:first-child{position:absolute;top:2px;left:6px}
+.sq-sl.ok{border:3px solid #58CC02;background:#D7FFB8}.sq-sl b{font:900 22px "Nunito",sans-serif}
+.sq-cards{flex:1;display:flex;flex-wrap:wrap;justify-content:center;align-content:center;gap:10px;min-height:0}
+.sq-c{width:clamp(74px,20vw,100px);aspect-ratio:1;background:#fff;border:2px solid #E5E5E5;border-radius:18px;box-shadow:0 4px 0 #E5E5E5;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:clamp(34px,9vw,50px);user-select:none;-webkit-user-select:none}
+.sq-c small{font:800 11px "Nunito",sans-serif;color:#777}.sq-c b{font:900 26px "Nunito",sans-serif;color:#4B4B4B}.sq-c.gone{visibility:hidden}
+/* drag pattern */
+.dp-row{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;font-size:clamp(30px,8vw,46px)}
+.dp-t,.dp-gap{width:clamp(44px,12vw,64px);aspect-ratio:1;display:grid;place-items:center;border-radius:14px;background:#F7F7F7}
+.dp-gap{border:3px dashed #FFC800;background:#FFF5D3;color:#C79500;font:900 30px "Nunito",sans-serif}.dp-gap.ok{border:3px solid #58CC02;background:#D7FFB8}
+.dp-pcs{flex:1;display:flex;justify-content:center;align-items:center;gap:14px}
+.dp-p{width:clamp(70px,20vw,96px);aspect-ratio:1;background:#fff;border:2px solid #E5E5E5;border-radius:18px;box-shadow:0 4px 0 #E5E5E5;display:grid;place-items:center;font-size:clamp(36px,10vw,52px);user-select:none;-webkit-user-select:none}.dp-p.gone{visibility:hidden}
+/* balance */
+.bl-eq{text-align:center;font:900 30px "Nunito",sans-serif;color:#4B4B4B;min-height:36px}.bl-eq b{color:#1CB0F6}
+.bl-scale{position:relative;flex:1;min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end}
+.bl-beam{position:relative;width:min(92%,420px);height:10px;background:#8D6E63;border-radius:6px;transition:transform .5s cubic-bezier(.3,1.6,.5,1);display:flex;justify-content:space-between;margin-bottom:auto;margin-top:auto}
+.bl-beam.flat{background:#58CC02}
+.bl-pan{position:relative;top:10px;width:44%;min-height:90px;border:3px solid #CFCFCF;border-top:0;border-radius:0 0 40px 40px;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:4px}
+.bl-pan b{font:900 22px "Nunito",sans-serif;color:#4B4B4B}
+.bl-st{display:flex;flex-wrap:wrap-reverse;justify-content:center;gap:2px;max-width:100%}
+.bl-st i{width:16px;height:16px;border-radius:4px}.bk-l{background:#FF9600}.bk-g{background:#AFAFAF}.bk-a{background:#1CB0F6}
+.bl-post{width:14px;height:70px;background:#8D6E63;border-radius:4px;margin-top:-4px}
+.bl-ctl{display:flex;gap:12px;justify-content:center}
+.bl-btn,.bl-add{min-height:56px;border:0;border-radius:16px;font:900 22px "Nunito",sans-serif;padding:0 22px;touch-action:manipulation}
+.bl-btn{background:#fff;border:2px solid #E5E5E5;box-shadow:0 4px 0 #E5E5E5;color:#4B4B4B}.bl-add{background:#1CB0F6;color:#fff;box-shadow:0 5px 0 #1899D6;flex:1;max-width:220px}
+/* I spy */
+.sp-scene{position:relative;flex:1;min-height:260px;border-radius:24px;overflow:hidden}
+.bg-farm{background:linear-gradient(#BDE7FF 0 35%,#9BDB6C 35%)}.bg-sky{background:linear-gradient(#1B2A55,#3D6BD1 60%,#8EC5FF)}.bg-map{background:#DDF4FF}.bg-town{background:linear-gradient(#DDF4FF 0 55%,#D9D9D9 55%)}
+.bg-kitchen{background:repeating-linear-gradient(45deg,#FFF5D3 0 20px,#FFEFC2 20px 40px)}.bg-paper{background:#fff;border:2px solid #E5E5E5}
+.sp-it{position:absolute;transform:translate(-50%,-50%) rotate(var(--r)) scale(var(--s));border:0;background:none;padding:0;font-size:clamp(34px,9vw,52px);line-height:1;touch-action:manipulation;width:clamp(52px,14vw,76px);aspect-ratio:1;display:grid;place-items:center}
+.sp-it .sp-pic,.sp-it .gsh{width:100%;height:100%;object-fit:contain}
+.sp-it.found{animation:none;transform:translate(-50%,-50%) scale(1.5);filter:drop-shadow(0 0 10px #FFC800);z-index:5}
+.sp-snd{align-self:center}
+/* trace */
+.tr-wrap{position:relative;flex:1;min-height:240px;border-radius:24px;background:#fff;border:2px solid #E5E5E5;overflow:hidden}
+.tr-wrap canvas{position:absolute;inset:0}
+.tr-bar{position:absolute;left:12px;right:12px;bottom:10px;height:10px;border-radius:99px;background:#EFEFEF;overflow:hidden}.tr-bar div{height:100%;width:0;background:#58CC02;transition:width .3s}
+.tr-btns{display:flex;justify-content:center}
+/* whack */
+.wk-t{color:#1CB0F6;font-size:1.2em}
+.wk-score{text-align:center;font:900 26px "Nunito",sans-serif;color:#58CC02;letter-spacing:4px}
+.wk-grid{flex:1;display:grid;grid-template-columns:repeat(3,1fr);gap:14px;align-content:center;min-height:0}
+.wk-h{position:relative;aspect-ratio:1;max-height:22vh;border-radius:50%;background:radial-gradient(ellipse at 50% 70%,#5D4037 0 45%,#8D6E63 46% 60%,transparent 61%);overflow:hidden}
+.wk-m{position:absolute;left:15%;width:70%;height:70%;bottom:-75%;border:0;border-radius:50% 50% 20% 20%;background:#C69C6D;color:#fff;font:900 clamp(26px,7vw,40px) "Nunito",sans-serif;transition:bottom .2s;touch-action:manipulation;text-shadow:0 2px 0 rgba(0,0,0,.25)}
+.wk-m.up{bottom:12%}.wk-m.hit{background:#58CC02}.wk-m.bad{background:#FF4B4B}
+/* catch */
+.ca-field{position:relative;flex:1;min-height:280px;border-radius:24px;background:linear-gradient(#DDF4FF,#fff);overflow:hidden}
+.ca-it{position:absolute;transform:translate(-50%,0);font:900 clamp(30px,8vw,44px) "Nunito",sans-serif;color:#4B4B4B;pointer-events:none}
+.ca-bask{position:absolute;bottom:4%;left:50%;transform:translateX(-50%);font-size:clamp(54px,14vw,76px);line-height:1;pointer-events:none}
+/* colour it */
+.pt-ins{text-align:center;font:800 20px "Nunito",sans-serif;color:#4B4B4B;display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap}
+.pt-sw{display:inline-block;width:22px;height:22px;border-radius:50%}
+.pt-shapes{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:12px;align-content:center;min-height:0}
+.pt-s{aspect-ratio:1;max-height:20vh;border:2px solid #E5E5E5;border-radius:18px;background:#fff;box-shadow:0 4px 0 #E5E5E5;padding:10%;touch-action:manipulation}.pt-s.done{border-color:#58CC02;box-shadow:0 4px 0 #58CC02}
+.pt-pal{display:flex;justify-content:center;gap:14px}
+.pt-c{width:54px;height:54px;border-radius:50%;border:4px solid #fff;background:var(--c);box-shadow:0 0 0 2px #E5E5E5,0 4px 0 #D9D9D9;touch-action:manipulation}.pt-c.sel{box-shadow:0 0 0 4px #4B4B4B;transform:scale(1.12)}
+.bl-scale{position:relative;flex:1;min-height:220px;max-height:300px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.bl-beam{margin:0!important;transform-origin:50% 50%}
+.bl-post{width:14px;height:90px;background:#8D6E63;border-radius:4px;margin-top:-2px}
+.bl-post::after{content:"";display:block;width:90px;height:12px;background:#8D6E63;border-radius:6px;margin:88px 0 0 -38px}
+.bl-ctl{margin-top:auto}
+.bl-beam{z-index:2}.bl-post{position:relative;z-index:1}

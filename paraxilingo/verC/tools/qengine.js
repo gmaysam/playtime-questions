@@ -233,6 +233,7 @@ function qStory(si,k){
 }
 function buildQ(cat,kind,used){fitAge.cat=cat;fitAge.kind=kind;return fitAge(buildQ0(cat,kind,used))}
 function buildQ0(cat,kind,used){
+  if(String(kind).startsWith("f_")){const g=buildFormat(kind,cat);if(g)return g}
   if(kind==="robot")return qRobot();
   if(kind==="simon")return qSimon();
   if(kind==="pairs")return qPairs();
@@ -264,6 +265,7 @@ function openMound(i){
   L={g:i,cat,correct:0,first:0,acorns:0,k:0,t0:Date.now(),queue:[]};
   if(cat==="paint"){L.paint=p.page%PAGES.length}
   else if(cat==="story"){const s=p.story%STORIES.length;L.queue=[{radio:s},...STORIES[s].q.map(x=>qStory(s,x.k))]}
+  else if((L.plan=planRound(cat,p.count))){const used=new Set();for(const k of L.plan){let q=null;try{q=k.startsWith("f_")?buildFormat(k,cat):buildQ(cat,k,used)}catch(e){q=null}if(!q)q=buildQ(cat,pickOne(kindsFor(cat)),used);q.cat=cat;q.kind=k;L.queue.push(q)}}
   else{const ks=kindsFor(cat),used=new Set();let bag=[];let last=null;
     for(let n=0;n<p.count;n++){if(!bag.length)bag=sh(ks);let k=bag.shift();if(k===last&&bag.length){bag.push(k);k=bag.shift()}last=k;
       const q=buildQ(cat,k,used);q.cat=cat;q.kind=k;L.queue.push(q)}}

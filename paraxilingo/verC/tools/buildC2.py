@@ -69,7 +69,7 @@ for _f,_d in (('fa_new3.json','FA'),('en_new2.json','EN')):
     if os.path.exists(_p):
         for _w,_c in json.load(open(_p)).items():
             if os.path.exists(os.path.join(SDIR,'fa_new','out',_c+'.mp3')):(FA_SAY if _d=='FA' else EN_SAY)[_w]=_c
-B=open(os.path.join(os.path.dirname(__file__),'qengine.js')).read().replace('__STORIES__',open(os.path.join(SDIR,'watcher','stories.json')).read()).replace('__FA_SAY__',json.dumps(FA_SAY)).replace('__EVOICED__',json.dumps(EVOICED)).replace('__EN_SAY__',json.dumps(EN_SAY)).replace('__POOL__',open(os.path.join(SDIR,'watcher','pool.json')).read()).replace('__WQ__',wq).replace('__VOICED__',json.dumps(VOICED)).replace('__PIC_E__',PIC_E).replace('__WORD_E__',WORD_E)+open(os.path.join(os.path.dirname(__file__),'games.js')).read()
+B=open(os.path.join(os.path.dirname(__file__),'qengine.js')).read().replace('__STORIES__',open(os.path.join(SDIR,'watcher','stories.json')).read()).replace('__FA_SAY__',json.dumps(FA_SAY)).replace('__EVOICED__',json.dumps(EVOICED)).replace('__EN_SAY__',json.dumps(EN_SAY)).replace('__POOL__',open(os.path.join(SDIR,'watcher','pool.json')).read()).replace('__WQ__',wq).replace('__VOICED__',json.dumps(VOICED)).replace('__PIC_E__',PIC_E).replace('__WORD_E__',WORD_E)+open(os.path.join(os.path.dirname(__file__),'games.js')).read()+open(os.path.join(os.path.dirname(__file__),'games2.js')).read()
 C=''
 
 css += r'''

@@ -12,7 +12,7 @@ const fs=require('fs'),path=require('path');const root=process.argv[2],out=proce
  for(const [age,cat,kind] of JSON.parse(process.env.G||"[]")){
    await p.evaluate(([a,c,k])=>{__px.setAge(a);__px.openMound(0);__px.L.queue=[__px.bq(c,k)];__px.L.total=1},[age,cat,kind]);
    await p.waitForTimeout(2600);await p.screenshot({path:`${out}/g_${kind}_${age}.png`});
-   await p.evaluate(()=>window.__gSolve());await p.waitForTimeout(kind==="simon"||kind==="piano"?11000:3500);
+   await p.evaluate(()=>window.__gSolve());await p.waitForTimeout(kind==="simon"||kind==="piano"?11000:kind==="f_whack"?18000:kind==="f_tcount"?5000:kind==="f_swipe"?6000:3800);
    const st=await p.evaluate(()=>({sheet:document.getElementById('qSheet').className,sk:Object.keys(__px.S.sk||{}).slice(-1)[0]}));console.log(kind,age,JSON.stringify(st));
    if(kind==="pizza"&&age===8)await p.screenshot({path:`${out}/g_${kind}_win.png`});
    await p.evaluate(()=>{const c=document.getElementById('lClose');c&&c.click()});await p.waitForTimeout(500);

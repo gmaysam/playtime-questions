@@ -21,8 +21,8 @@ const gHead=(e,kick,title)=>`<div class="qkick"><span class="qke">${e}</span>${k
 function gShow(html){$("qBody").innerHTML=html;$("qBody").classList.remove("in");void $("qBody").offsetWidth;$("qBody").classList.add("in")}
 function gameWin(q,miss,el,extra){q.done=q.locked=true;q.tries=miss?1:0;logSk(q,true);sfx.good();if(el)burstAt(el,40);L.correct++;if(!miss)L.first++;
   const n=miss?1:2;S.acorns+=n;L.acorns+=n;S.questions++;{const w=wkLog();w.q++;w.right++}save();renderStats();bump("sAcorns");setDot();L.row=(L.row||0)+1;
-  setTimeout(()=>{sheet("good",pickOne(PRAISE_T),`+${n} 🌰`);let gone=false;const go=()=>{if(!gone){gone=true;nextQ()}};$("qNext").onclick=()=>{sfx.tap();go()};
-    sayseq([...(extra||[]),pickOne(PRAISE_CLIPS)],()=>setTimeout(go,900))},extra&&extra.length?200:600)}
+  setTimeout(()=>{sheet("good",pickOne(PRAISE_T),`+${n} 🌰`+(q.factT?`<span class="ffact"><b>💡</b><span>${q.factT}</span></span>`:""));let gone=false;const go=()=>{if(!gone){gone=true;nextQ()}};$("qNext").onclick=()=>{sfx.tap();go()};
+    sayseq([...(extra||[]),pickOne(PRAISE_CLIPS)],()=>setTimeout(go,q.factT?2600:900))},extra&&extra.length?200:600)}
 function gameLearn(q,t,v){q.done=q.locked=true;q.tries=2;logSk(q,false);S.questions++;{const w=wkLog();w.q++}save();setDot();L.row=0;
   sheet("learn","Let's learn it together!",t);let gone=false;const go=()=>{if(!gone){gone=true;nextQ()}};$("qNext").onclick=()=>{sfx.tap();go()};sayseq(v||[],()=>{})}
 const gAsk=q=>setTimeout(()=>{if(L&&L.q===q)sayseq(q.voice,()=>{})},400);
