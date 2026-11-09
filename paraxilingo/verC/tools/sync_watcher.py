@@ -81,7 +81,7 @@ json.dump(stories, open(os.path.join(S, 'watcher', 'stories.json'), 'w'), ensure
 
 # ---------- voice clips ----------
 dst = os.path.join(S, 'appC', 'audio', 'w'); os.makedirs(dst, exist_ok=True)
-keep = re.compile(r'^(LULU_N\d+|LULU_(PLUS|MINUS|EQUALS|C_FIND|C_AFTER1|C_BEFORE1|CP_.*|TRY_ONCE|ANS_IS|BD_PRIZE|BD_READY|BD_PRIZE_IS|BD_RIGHT|L_END|PRIZE_SHORT|ST_INTRO|YA|AN_.*|H_.*|SND_.*|SH_.*|SHF\d+|SK_.*|CA_.*|GEO_.*|JOB_.*|COL_WHAT|PT_NEXT|EN\d+|EN_.*|WORD\d+|LN_.|PH_.|W_.*|RD_.*|R_.*|SIGHT\d+|AB_.*|IF_.*|RB_.*)|LULU_WP_.*|LULU_TF\d+|LULU_PR_.|LULU_PRAISE\d|LULU_EV_.*|LULU_FA_.*|LULU_FAW\d+|LULU_PL\d|LULU_COLOR\d|LULU_EN_SH\d+|ST_S\d+_.*)\.mp3$')
+keep = re.compile(r'^(LULU_N\d+|LULU_(PLUS|MINUS|EQUALS|C_FIND|C_AFTER1|C_BEFORE1|CP_.*|SM_.*|FR_.*|TRY_ONCE|ANS_IS|BD_PRIZE|BD_READY|BD_PRIZE_IS|BD_RIGHT|L_END|PRIZE_SHORT|ST_INTRO|YA|AN_.*|H_.*|SND_.*|SH_.*|SHF\d+|SK_.*|CA_.*|GEO_.*|JOB_.*|COL_WHAT|PT_NEXT|EN\d+|EN_.*|WORD\d+|LN_.|PH_.|W_.*|RD_.*|R_.*|SIGHT\d+|AB_.*|IF_.*|RB_.*)|LULU_WP_.*|LULU_TF\d+|LULU_PR_.|LULU_PRAISE\d|LULU_EV_.*|LULU_FA_.*|LULU_FAW\d+|LULU_PL\d|LULU_COLOR\d|LULU_EN_SH\d+|ST_S\d+_.*)\.mp3$')
 n = 0
 for f in voices:
     if keep.match(f): shutil.copy(os.path.join(LIB, 'voices', f), os.path.join(dst, f)); n += 1

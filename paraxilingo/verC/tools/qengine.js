@@ -53,7 +53,6 @@ const CATS=[
  {id:"count",topic:"math",e:"🔢",name:"Counting"},
  {id:"add",topic:"math",e:"➕",name:"Adding & taking away"},
  {id:"clock",topic:"clock",e:"🕒",name:"Clock & time"},
- {id:"money",topic:"money",e:"🪙",name:"Coins"},
  {id:"animals",topic:"watcher",e:"🐾",name:"Animals"},
  {id:"world",topic:"watcher",e:"🌳",name:"Our world"},
  {id:"sky",topic:"watcher",e:"🌙",name:"Sky & space"},
@@ -75,14 +74,14 @@ const catById=id=>CATS.find(c=>c.id===id);
 function kindsFor(cat){
   const a=lvl();
   /* age ladder (Khan Kids / PBS Kids style): 3 = 2 choices, pictures, count to 5 · 4-5 = 3 choices, to 10 · 6 = words, to 100 by tens · 7-8 = two steps, near-miss traps */
-  if(cat==="count")return a<=3?["find","more","less","long"]:a<=4?["find","more","less","long"]:a<=5?["find","more","less","missing","long"]:a<=6?["after","before","missing","skip"]:["missing","skip","graph","after"];
-  if(cat==="add")return a<=3?["addPic","share"]:a<=4?["addPic","subPic","share"]:a<=5?["addPic","subPic","left","share"]:a<=6?["sum","minus","left","teach"]:a<=7?["carry","groups","share","minus"]:["carry","groups","share","big"];
+  if(cat==="count")return a<=3?["find","more","less","long"]:a<=4?["find","more","less","long","order"]:a<=5?["find","more","less","missing","long","order"]:a<=6?["after","before","missing","skip","order"]:["missing","skip","graph","after","order"];
+  if(cat==="add")return a<=3?["addPic","share"]:a<=4?["addPic","subPic","share"]:a<=5?["addPic","subPic","left","share","pizza"]:a<=6?["sum","minus","left","teach","pizza"]:a<=7?["carry","groups","share","minus","pizza"]:["carry","groups","share","big","pizza"];
   if(cat==="clock")return a<=5?["routine","oclock"]:a<=6?["routine","oclock","half","season","nowseason"]:a<=7?["half","quarter","season","today","tomorrow","week"]:["quarter","minutes","after","before","monthafter","yesterday","months"];
   if(cat==="money")return a<=5?["pennies","value"]:a<=6?["pennies","value","count"]:a<=7?["value","count","same"]:["count","same","change"];
-  if(cat==="letters")return a<=4?["abc","listen","match","rhyme"]:a<=6?["listen","first","abc","whatis","lafter","match","rhyme"]:["listen","first","whatis","lafter","lbefore","match"];
+  if(cat==="letters")return a<=4?["abc","listen","match","rhyme"]:a<=6?["listen","first","abc","whatis","lafter","match","rhyme","build"]:["listen","first","whatis","lafter","lbefore","match","build"];
   if(cat==="read")return a<=5?["balloon","flash"]:["balloon","flash","sentence"];
-  if(cat==="farm")return a<=4?["home","sound","fly","match"]:["home","food","sound","fly","water","match"];
-  if(cat==="shapes")return a<=4?["shape","color","pattern","match","robot"]:a<=6?["shape","sides","both","pattern","match","robot"]:["sides","both","pattern","bigsmall","match","robot"];
+  if(cat==="farm")return a<=4?["home","sound","fly","match","pairs"]:["home","food","sound","fly","water","match","pairs"];
+  if(cat==="shapes")return a<=4?["shape","color","pattern","match","robot","simon"]:a<=6?["shape","sides","both","pattern","match","robot","simon"]:["sides","both","pattern","bigsmall","match","robot","simon"];
   if(cat==="people")return a<=5?["feel","job","job2"]:["feel","flag","job","flag2","job2"];
   return ["w"];
 }
@@ -223,13 +222,18 @@ function qStory(si,k){
 function buildQ(cat,kind,used){fitAge.cat=cat;fitAge.kind=kind;return fitAge(buildQ0(cat,kind,used))}
 function buildQ0(cat,kind,used){
   if(kind==="robot")return qRobot();
+  if(kind==="simon")return qSimon();
+  if(kind==="pairs")return qPairs();
+  if(kind==="order")return qOrder();
+  if(kind==="pizza")return qPizza();
+  if(kind==="build")return qBuild(used);
+  if(cat==="animals"&&!used.has("pairs")&&Math.random()<.2){used.add("pairs");const g=qPairs();g.kind="pairs";return g}
   if(["missing","skip","long","graph","carry","groups","share","left","sides","both","feel","rhyme"].includes(kind))return qNew(kind,used);
   if(kind==="match")return qMatch(cat==="letters"?"wd":cat==="shapes"?"sh":"an",used);
   if((cat==="animals"||cat==="sky")&&!used.has("match")&&Math.random()<.22){used.add("match");return qMatch(cat==="sky"?"pl":"an",used)}
   if(cat==="count")return qCount(kind);
   if(cat==="add")return qAdd(kind);
   if(cat==="clock")return qClock(kind);
-  if(cat==="money")return qMoney(kind);
   if(cat==="clock")return qClock(kind);
   if(cat==="farm")return qFarm(kind,used);
   if(cat==="letters")return qLetters(kind,used);
@@ -267,6 +271,7 @@ function nextQ(){
   if(q.radio!==undefined)return radioQ(q.radio);
   if(q.match)return matchQ(q);
   if(q.robot)return robotQ(q);
+  if(q.game)return GAMES[q.game](q);
   const tints=sh([0,1,2,3]);
   const cc=CATS.find(c=>c.id===L.cat)||{};
   if(q.visual&&q.opts&&q.ans>=0&&!q.showsAns){const tk=h=>{const t=new Set();(h||"").replace(/src="([^"]+)"/g,(m,x)=>t.add(x));((h||"").replace(/<[^>]+>/g," ").match(/\p{Extended_Pictographic}/gu)||[]).forEach(x=>t.add(x));return t};
@@ -306,7 +311,7 @@ function setDot(){const d=$("qDots").children[L.k];if(d)d.className="on";L.k++}
 function pick(j,b){
   const q=L.q;if(!q||q.locked)return;
   if(j===q.ans){
-    q.locked=true;q.done=true;hush();b.classList.add("right");sfx.good();burstAt(b,40);
+    q.locked=true;q.done=true;hush();b.classList.add("right");sfx.good();burstAt(b,40);logSk(q,true);
     const n=q.tries?1:2;S.acorns+=n;L.acorns+=n;L.correct++;if(!q.tries)L.first++;S.questions++;
     {const w=wkLog();w.q++;w.right++}save();renderStats();bump("sAcorns");setDot();
     L.row=(L.row||0)+1;if(L.row%3===0)dance();
@@ -335,7 +340,7 @@ function pick(j,b){
     return;
   }
   /* second miss: Domi shows the answer and explains, then we go on */
-  q.locked=true;q.done=true;hush();S.questions++;{const w=wkLog();w.q++}save();setDot();
+  q.locked=true;q.done=true;hush();logSk(q,false);S.questions++;{const w=wkLog();w.q++}save();setDot();
   const rb=$("qBody").querySelectorAll(".qo")[q.ans];rb.classList.add("show");
   sheet("learn"+(q.why?" why":""),"Let's learn it together!",q.exp.t);
   let gone=false;const go=()=>{if(!gone){gone=true;nextQ()}};
@@ -391,7 +396,7 @@ function moundDone(){
   const r=$("qResult");sfx.fanfare();burst(160);
   sayseq([pickOne(["w/LULU_PR_A","w/LULU_PR_E","w/LULU_PR_D"])]);
   r.innerHTML=`<div class="rs-sun"></div><span class="dm">${bv(170)}</span><h2>${pickOne(["You did it!","Amazing job!","Great work!","Hooray!"])}</h2><p>${pickOne(["Domi is so proud of you!","Your brain is growing!","What a great learner!"])}</p>
-    <div class="gains"><span class="gn a">+${L.acorns} 🌰</span>${first?`<span class="gn w">+1 🪵</span>`:""}</div>
+    <div class="gains"><span class="gn a">+${L.acorns} 🌰</span>${first?`<span class="gn w">+1 🪵</span>`:""}</div>${goalCard()}
     <button class="qbtn good big" id="resBtn">Continue ➜</button>`;
   r.hidden=false;
   const leave=()=>{closeLesson();L=null;setTimeout(()=>{renderMap();placeBeaver(true);setTimeout(()=>{scrollToCurrent(true);if(S.day.done>=HOLES[landIdx()].length&&!S.day.house)setTimeout(openHouse,900);else checkRealPrizes()},700)},420)};
@@ -540,9 +545,9 @@ setTimeout(paintDomi,0);
 /* ================= Tap the matching pairs (picture on the left, English word on the right) ================= */
 function qMatch(set,used){
   let items;
-  if(set==="wd")items=sh(WORDS).slice(0,4).map(x=>({id:"w"+x.i,pic:PIC("wd_"+x.i,"wp mp"),word:x.w,ps:[],ws:wSay(x)}));
+  if(set==="wd")items=sh(WORDS.filter(x=>faSay(x.w).length)).slice(0,4).map(x=>({id:"w"+x.i,pic:PIC("wd_"+x.i,"wp mp"),word:x.w,ps:faSay(x.w),ws:wSay(x)}));
   else if(set==="pl"){items=sh([1,2,3,4,5,6,7,8]).slice(0,4).map(i=>({id:"p"+i,pic:PIC("pl_"+i,"wp mp"),word:PLANET_N[i][0].toUpperCase()+PLANET_N[i].slice(1),ps:["w/LULU_FA_PL"+i],ws:["w/LULU_PL"+i]}))}
-  else if(set==="sh")items=sh([...SHAPES.keys()].filter(i=>lvl()>=7||SHAPES[i].length<=9)).slice(0,4).map(i=>({id:"s"+i,pic:PIC("shape_"+i,"wp mp"),word:SHAPES[i],ps:[],ws:["w/LULU_EN_SH"+i]}));
+  else if(set==="sh")items=sh([...SHAPES.keys()].filter(i=>(lvl()>=7||SHAPES[i].length<=9)&&faSay(SHAPES[i]).length)).slice(0,4).map(i=>({id:"s"+i,pic:PIC("shape_"+i,"wp mp"),word:SHAPES[i],ps:faSay(SHAPES[i]),ws:["w/LULU_EN_SH"+i]}));
   else items=sh(AN.filter(a=>enSay(a[0]).length)).slice(0,4).map(a=>({id:"a"+a[0],pic:`<span class="oe big">${a[1]}</span>`,word:a[0][0].toUpperCase()+a[0].slice(1),ps:["w/LULU_FA_AN"+AN.indexOf(a)],ws:enSay(a[0])}));
   return {match:items,voice:["w/PX_MATCH"],cap:"Tap the matching pairs",opts:[],ans:-1,layout:"match",exp:{t:"",v:[]}};
 }
@@ -558,7 +563,7 @@ function matchQ(q){
     const a=selP,b=selW;selP=selW=null;
     if(a.dataset.id===b.dataset.id){a.className="mc pic ok";b.className="mc wrd ok";a.disabled=b.disabled=true;sfx.good();burstAt(b,14);left--;
       const x=it(a.dataset.id);hush();sayseq([...x.ps,...x.ws],()=>{});
-      if(!left){q.locked=true;L.correct++;if(!miss)L.first++;const n=miss?1:2;S.acorns+=n;L.acorns+=n;S.questions++;{const w=wkLog();w.q++;w.right++}save();renderStats();bump("sAcorns");setDot();
+      if(!left){q.locked=true;q.tries=miss?1:0;logSk(q,true);L.correct++;if(!miss)L.first++;const n=miss?1:2;S.acorns+=n;L.acorns+=n;S.questions++;{const w=wkLog();w.q++;w.right++}save();renderStats();bump("sAcorns");setDot();
         setTimeout(()=>{sheet("good",pickOne(PRAISE_T),`+${n} 🌰`);let gone=false;const go=()=>{if(!gone){gone=true;nextQ()}};$("qNext").onclick=()=>{sfx.tap();go()};sayseq([pickOne(PRAISE_CLIPS)],()=>setTimeout(go,700))},900)}}
     else{miss++;sfx.oops();[a,b].forEach(e=>{e.classList.remove("sel");e.classList.add("wrong");setTimeout(()=>e.classList.remove("wrong"),450)})}};
   $("qBody").querySelectorAll(".mc").forEach(b=>b.onclick=()=>{if(b.disabled||q.locked)return;sfx.tap();const x=it(b.dataset.id);
@@ -672,7 +677,8 @@ function robotQ(q){const R2=q.robot,cc=CATS.find(c=>c.id===L.cat)||{};let prog=[
       if(nx[0]<0||nx[1]<0||nx[0]>=R2.n||nx[1]>=R2.n||R2.walls.some(w=>w[0]===nx[0]&&w[1]===nx[1])){running=false;miss++;sfx.oops();sayseq(["w/LULU_RB_WALL"],()=>{});$("rbGrid").classList.add("bump");setTimeout(()=>{$("rbGrid").classList.remove("bump");pos=R2.st.slice();draw()},900);return}
       pos=nx;i++;sfx.tap();draw();if(pos[0]===R2.gl[0]&&pos[1]===R2.gl[1]){running=false;return win()}setTimeout(step,450)};
     setTimeout(step,300)};
-  const win=()=>{q.done=q.locked=true;sfx.good();burstAt($("rbGrid"),40);L.correct++;if(!miss)L.first++;const n=miss?1:2;S.acorns+=n;L.acorns+=n;S.questions++;{const w=wkLog();w.q++;w.right++}save();renderStats();bump("sAcorns");setDot();
+  const win=()=>{q.done=q.locked=true;q.tries=miss?1:0;logSk(q,true);sfx.good();burstAt($("rbGrid"),40);L.correct++;if(!miss)L.first++;const n=miss?1:2;S.acorns+=n;L.acorns+=n;S.questions++;{const w=wkLog();w.q++;w.right++}save();renderStats();bump("sAcorns");setDot();
     const f=funFact("shapes","robot"),fi=f?+f.c.split("_").pop():-1;setTimeout(()=>{sheet("good why",pickOne(PRAISE_T),f?`<span class="ffact"><b>💡</b><span>${ROBOT_EN[fi]||""}</span></span>`:"");let gone=false;const go=()=>{if(!gone){gone=true;nextQ()}};$("qNext").onclick=()=>{sfx.tap();go()};
       sayseq([pickOne(PRAISE_CLIPS),...(f?["w/"+f.c]:[])],()=>setTimeout(go,1800))},700)};
 }
+window.__qm=(s)=>qMatch(s,new Set());window.__fa=faSay;

@@ -40,12 +40,13 @@ A = rep(A, ' {id:"feel",e:"😊",name:"Feelings & Friends",soon:true},',
  {id:"reading",e:"📖",name:"Read it!",desc:"Sight words and short sentences (age 5+)"},
  {id:"paint",e:"🎨",name:"Painting",desc:"Colour a picture, tap by tap"},
  {id:"feel",e:"😊",name:"Feelings & Friends",soon:true},''')
-A = rep(A, 'perDay:20,', 'perDay:10,')
+A = rep(A, 'perDay:20,', 'perDay:28,')
+A = rep(A, ' {id:"money",e:"🪙",name:"Money Market",desc:"Coins, their values, counting money, change from $1"},\n', '')
 A = rep(A, 'ansLang:"",topics:["math","clock","money"],topicsV2:1});',
  'ansLang:"",topics:["math","clock","money","watcher","shapes","people","words","reading","radio","paint"],topicsV2:1,topicsV3:1,topicsV4:1,topicsV5:1,topicsV6:1,paintings:[],acorns:0,wood:0,day:{d:"",done:0,house:false,plan:null},stickers:[],seenW:[],real:null,notified:[],mapMonth:"auto",questions:0});')
 A = rep(A, 'if(!S.topicsV2){S.topics=[...new Set([...(S.topics||[]),"math","clock","money"])];S.topicsV2=1}',
- 'if(!S.topicsV2){S.topics=[...new Set([...(S.topics||[]),"math","clock","money"])];S.topicsV2=1}if(!S.topicsV3){S.topics=[...new Set([...S.topics,"watcher","radio"])];S.topicsV3=1}if(!S.topicsV4){S.topics=[...new Set([...S.topics,"paint"])];S.topicsV4=1}if(!S.topicsV5){S.topics=[...new Set([...S.topics,"shapes","people"])];S.topicsV5=1}if(!S.topicsV6){S.topics=[...new Set([...S.topics,"words","reading"])];S.topicsV6=1}if(!S.paintings)S.paintings=[];if(!S.real)S.real=defaultReal();if(![10,15,20,30].includes(S.perDay))S.perDay=10')
-A = rep(A, 'const save=()=>{', '''function defaultReal(){return [{id:"book",e:"📚",name:"A new book",a:60,w:8},{id:"clothes",e:"👕",name:"New clothes",a:120,w:15},{id:"toy",e:"🧸",name:"A toy",a:200,w:25}]}
+ 'if(!S.topicsV2){S.topics=[...new Set([...(S.topics||[]),"math","clock","money"])];S.topicsV2=1}if(!S.topicsV3){S.topics=[...new Set([...S.topics,"watcher","radio"])];S.topicsV3=1}if(!S.topicsV4){S.topics=[...new Set([...S.topics,"paint"])];S.topicsV4=1}if(!S.topicsV5){S.topics=[...new Set([...S.topics,"shapes","people"])];S.topicsV5=1}if(!S.topicsV6){S.topics=[...new Set([...S.topics,"words","reading"])];S.topicsV6=1}if(!S.paintings)S.paintings=[];if(!S.real)S.real=defaultReal();if(![28,35,42,49].includes(S.perDay))S.perDay=28;if(!S.realV){if((S.real||[]).map(r=>r.id).join()==="book,clothes,toy")S.real=[];S.realV=1}if(!S.sk)S.sk={}')
+A = rep(A, 'const save=()=>{', '''function defaultReal(){return []}
 const save=()=>{''')
 A = rep(A, 'const a=new Audio("audio/"+(S.lang==="fr"&&!/^(en|rep)\\d/.test(name)?"fr/":"")+name+".mp3");', 'const a=new Audio("audio/"+name+".mp3");')
 
@@ -65,7 +66,7 @@ for _f,_d in (('fa_new3.json','FA'),('en_new2.json','EN')):
     if os.path.exists(_p):
         for _w,_c in json.load(open(_p)).items():
             if os.path.exists(os.path.join(SDIR,'fa_new','out',_c+'.mp3')):(FA_SAY if _d=='FA' else EN_SAY)[_w]=_c
-B=open(os.path.join(os.path.dirname(__file__),'qengine.js')).read().replace('__STORIES__',open(os.path.join(SDIR,'watcher','stories.json')).read()).replace('__FA_SAY__',json.dumps(FA_SAY)).replace('__EVOICED__',json.dumps(EVOICED)).replace('__EN_SAY__',json.dumps(EN_SAY)).replace('__POOL__',open(os.path.join(SDIR,'watcher','pool.json')).read()).replace('__WQ__',wq).replace('__VOICED__',json.dumps(VOICED)).replace('__PIC_E__',PIC_E).replace('__WORD_E__',WORD_E)
+B=open(os.path.join(os.path.dirname(__file__),'qengine.js')).read().replace('__STORIES__',open(os.path.join(SDIR,'watcher','stories.json')).read()).replace('__FA_SAY__',json.dumps(FA_SAY)).replace('__EVOICED__',json.dumps(EVOICED)).replace('__EN_SAY__',json.dumps(EN_SAY)).replace('__POOL__',open(os.path.join(SDIR,'watcher','pool.json')).read()).replace('__WQ__',wq).replace('__VOICED__',json.dumps(VOICED)).replace('__PIC_E__',PIC_E).replace('__WORD_E__',WORD_E)+open(os.path.join(os.path.dirname(__file__),'games.js')).read()
 C=''
 
 css += r'''
@@ -236,7 +237,7 @@ function eventNow(d=new Date()){
 }
 const monthIdx=()=>S.mapMonth==="auto"?new Date().getMonth():+S.mapMonth;
 const landIdx=()=>MONTH_LAND[monthIdx()];
-const TOPIC_SYM={math:"➕",clock:"🕒",money:"🪙",watcher:"🔎",shapes:"🔷",people:"🚩",words:"🔤",reading:"📖",radio:"📻",paint:"🎨"};
+const TOPIC_SYM={math:"➕",clock:"🕒",watcher:"🔎",shapes:"🔷",people:"🚩",words:"🔤",reading:"📖",radio:"📻",paint:"🎨"};
 
 /* ================= today's path: the parents' daily questions split over the mounds ================= */
 const activeTopics=()=>S.topics.filter(t=>TOPIC_SYM[t]);
@@ -317,8 +318,20 @@ function scrollToCurrent(smooth){
 function renderStats(){
   $("sAcorns").querySelector("span").textContent=S.acorns;$("sWood").querySelector("span").textContent=S.wood;
   const cp=curPlayer();$("tbCourse").style.setProperty("--pc",cp.color);$("tbCourse").textContent=cp.name.trim()[0].toUpperCase();
+  const g=goalPick();$("tbPrizes").innerHTML=(g?`<span class="tbg" style="--f:${Math.round(goalPct(g)*360)}deg">${pzI(g,"sm")}</span>`:"🏆")+`<span class="dotn" id="prDot" hidden>!</span>`;
+  $("tbPrizes").classList.toggle("hasg",!!g);
   $("prDot").hidden=!S.real.some(r=>S.acorns>=r.a&&S.wood>=r.w);
 }
+/* the parents' optional prize: a photo of the toy, and how close the child is */
+const pzI=(r,c="")=>r.img?`<img class="pzimg ${c}" src="${r.img}" alt="">`:`<span class="pze ${c}">${r.e||"🎁"}</span>`;
+const goalPct=r=>Math.min(1,(Math.min(1,S.acorns/r.a)+Math.min(1,S.wood/r.w))/2);
+function goalPick(){const R=S.real||[];if(!R.length)return null;const nr=R.filter(r=>!(S.acorns>=r.a&&S.wood>=r.w));return (nr.length?nr:R).slice().sort((x,y)=>goalPct(y)-goalPct(x))[0]}
+function goalCard(){const r=goalPick();if(!r)return "";const ok=S.acorns>=r.a&&S.wood>=r.w,fa=Math.min(1,S.acorns/r.a),fw=Math.min(1,S.wood/r.w),ma=Math.max(0,r.a-S.acorns),mw=Math.max(0,r.w-S.wood),close=!ok&&goalPct(r)>=.85;
+  return `<div class="goalc ${ok?"ok":close?"close":""}"><span class="gpic">${pzI(r)}</span><div class="gtx"><b>${ok?"Your prize is ready! 🎉":close?"Almost there! ✨":"Your prize: "+r.name}</b>
+    <span class="gbar a"><i style="width:${fa*100}%"></i></span><small>🌰 ${Math.min(S.acorns,r.a)} / ${r.a}${ma?` · ${ma} more`:" ✓"}</small>
+    <span class="gbar w"><i style="width:${fw*100}%"></i></span><small>🪵 ${Math.min(S.wood,r.w)} / ${r.w}${mw?` · ${mw} more`:" ✓"}</small></div></div>`}
+function pzLoad(file,cb){const fr=new FileReader();fr.onload=()=>{const im=new Image();im.onload=()=>{const m=360,k=Math.min(1,m/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);
+  c.getContext("2d").drawImage(im,0,0,c.width,c.height);cb(c.toDataURL("image/jpeg",.8))};im.onerror=()=>toast("Could not open that picture");im.src=fr.result};fr.readAsDataURL(file)}
 function bump(id){const e=$(id);if(!e)return;e.classList.remove("bump");void e.offsetWidth;e.classList.add("bump")}
 
 /* mound pop-up */
@@ -350,7 +363,8 @@ function openHouse(){
   const items=themeItems(),e=items[S.stickers.length%items.length];
   S.day.house=true;S.wood+=3;S.stickers.push({e,d:today(),land:landIdx()});save();
   say("w/LULU_BD_PRIZE_IS");
-  reveal(e,"Today's prize!",`A new sticker for your collection, and +3 🪵 wood!`,()=>{renderMap();checkRealPrizes()});
+  const rv=reveal(e,"Today's prize!",`A new sticker for your collection, and +3 🪵 wood!`,()=>{renderMap();checkRealPrizes()});
+  const gc=goalCard();if(gc)rv.querySelector("p").insertAdjacentHTML("afterend",gc);
 }
 function reveal(item,title,text,cb,gift="🎁"){
   const v=document.createElement("div");v.className="reveal";
@@ -358,12 +372,13 @@ function reveal(item,title,text,cb,gift="🎁"){
   $("phone").appendChild(v);sfx.unlock();
   setTimeout(()=>{$("rvGift").classList.add("open");setTimeout(()=>{$("rvGift").remove();$("rvItem").classList.add("show");v.classList.add("lit");sfx.fanfare();burst(180);setTimeout(()=>burst(120),600)},300)},1500);
   $("rvOk").onclick=()=>{sfx.tap();v.remove();cb&&cb()};
+  return v;
 }
 function checkRealPrizes(){
   const ready=S.real.find(r=>S.acorns>=r.a&&S.wood>=r.w&&!S.notified.includes(r.id));
   if(!ready)return;
   S.notified.push(ready.id);save();say("w/LULU_PRIZE_SHORT");
-  reveal(ready.e,`${ready.name} is ready!`,"You earned it! Go and tell a grown-up 🎉",()=>renderStats(),"🎁");
+  reveal(pzI(ready,"big"),`${ready.name} is ready!`,"You earned it! Go and tell a grown-up 🎉",()=>renderStats(),"🎁");
 }
 
 /* ================= prizes page ================= */
@@ -374,7 +389,7 @@ function showPrizes(){
     <div class="prz"><h2>🏆 My prizes</h2><p class="sub" style="margin:0 0 12px">You have ${S.acorns} 🌰 acorns and ${S.wood} 🪵 wood</p>
     <h3>Big prizes</h3>
     ${S.real.map(r=>{const ok=S.acorns>=r.a&&S.wood>=r.w,fa=Math.min(1,S.acorns/r.a),fw=Math.min(1,S.wood/r.w);
-      return `<button class="rp ${ok?"ready":""}" data-rp="${r.id}" style="width:100%;text-align:left"><span class="re">${r.e}</span><b>${r.name}${ok?" · Ready! 🎉":""}</b>
+      return `<button class="rp ${ok?"ready":""}" data-rp="${r.id}" style="width:100%;text-align:left"><span class="re">${pzI(r)}</span><b>${r.name}${ok?" · Ready! 🎉":""}</b>
         <span><span class="bar a"><i style="width:${fa*100}%"></i></span><small>🌰 ${Math.min(S.acorns,r.a)} / ${r.a}${ok?"":` · ${Math.max(0,r.a-S.acorns)} more`}</small></span>
         <span><span class="bar w"><i style="width:${fw*100}%"></i></span><small>🪵 ${Math.min(S.wood,r.w)} / ${r.w}${ok?"":` · ${Math.max(0,r.w-S.wood)} more`}</small></span></button>`}).join("")}
     <div class="howto">🌰 <b>Acorns</b>: one for every right answer, two when right the first time.<br>🪵 <b>Wood</b>: one for every finished mound, three for opening Domi's big house.</div>
@@ -385,7 +400,7 @@ function showPrizes(){
   $("prBack").onclick=()=>{sfx.tap();showMap()};
   $("pPrizes").querySelectorAll("[data-st]").forEach(b=>b.onclick=()=>{const s=S.stickers[+b.dataset.st];reveal(s.e,"My sticker",`Won on ${s.d}`,null,"✨")});
   $("pPrizes").querySelectorAll("[data-rp]").forEach(b=>b.onclick=()=>{const r=S.real.find(x=>x.id===b.dataset.rp),ok=S.acorns>=r.a&&S.wood>=r.w;
-    reveal(r.e,r.name,ok?"Ready! Ask a grown-up for your prize 🎉":`${Math.max(0,r.a-S.acorns)} more 🌰 and ${Math.max(0,r.w-S.wood)} more 🪵 to go!`,null,ok?"🎁":"🔒")});
+    reveal(pzI(r,"big"),r.name,ok?"Ready! Ask a grown-up for your prize 🎉":`${Math.max(0,r.a-S.acorns)} more 🌰 and ${Math.max(0,r.w-S.wood)} more 🪵 to go!`,null,ok?"🎁":"🔒")});
 }
 function hidePanels(){closePop();closeDrop();$("pPrizes").hidden=true;$("pSettings").hidden=true}
 function showMap(){hidePanels();$("map").hidden=false;renderMap();requestAnimationFrame(()=>{placeBeaver(false);scrollToCurrent(false)})}
@@ -401,7 +416,7 @@ function showParents(){
   hidePanels();$("map").hidden=true;$("pSettings").hidden=false;
   const pn=curPlayer().name,w=wkLog(),tp=S.lastTopic||"math",dq=(DINNER[tp]||DINNER.math),names=w.topics.map(t=>(COURSE.find(c=>c.id===t)||{}).name).filter(Boolean);
   const sk=skillFor(S.age,S.diff),ex1=makeProb(sk),ex2=makeProb(sk),n=HOLES[landIdx()].length;
-  const SHORT={math:"Numbers",clock:"Clock",money:"Coins",watcher:"World",shapes:"Shapes",people:"People",words:"Letters",reading:"Read",radio:"Radio",paint:"Paint"},pct=w.q?Math.round(w.right/w.q*100):0;
+  const SHORT={math:"Numbers",clock:"Clock",watcher:"World",shapes:"Shapes",people:"People",words:"Letters",reading:"Read",radio:"Radio",paint:"Paint"},pct=w.q?Math.round(w.right/w.q*100):0;
   const ring=(v,max,c,ic)=>{const f=Math.min(1,v/max);return `<span class="pring" style="--f:${f*360}deg;--c:${c}"><i>${ic}</i></span><small class="pnum">${Math.min(v,max)}/${max}</small>`};
   const sec=(e,t)=>`<div class="psec"><span>${e}</span>${t}</div>`;
   $("pSettings").innerHTML=`<button class="back" id="closeSettings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>Back</button>
@@ -409,15 +424,27 @@ function showParents(){
     <div class="ptiles"><div class="pt1"><i>📅</i><b>${w.days.length}</b><small>days</small></div><div class="pt1"><i>❓</i><b>${w.q}</b><small>questions</small></div><div class="pt1"><i>⭐</i><b>${pct}%</b><small>right</small></div></div>
     <div class="pchips">${w.topics.map(t=>`<span>${(COURSE.find(c=>c.id===t)||{}).e||""} ${SHORT[t]||t}</span>`).join("")||`<span class="dim">—</span>`}</div>
     <div class="ptalk"><div>🏡 ${TRY[tp]||TRY.math}</div><div>🍽️ “${dq[dayN()%dq.length]}”</div></div>
-    ${sec("🎁","Big prizes")}
-    <div class="plegend"><span>🌰 = right answers</span><span>🪵 = finished mounds</span></div>
+    ${sec("📘",`What ${pn} is learning`)}
+    ${reportHTML(pn)}
+    ${sec("🎁","Prize (optional)")}
+    <p class="pnote">Promised ${pn} a toy? Add its photo and how many 🌰 acorns and 🪵 wood it costs. ${pn} sees it after every round and at the end of the path. No prize is fine too.</p>
+    ${S.real.length?`<div class="plegend"><span>🌰 = right answers</span><span>🪵 = finished mounds</span></div>`:""}
     ${S.real.map((r,k)=>{const e=estimate(r),ok=S.acorns>=r.a&&S.wood>=r.w;return `<div class="pprize ${ok?"ok":""}">
-      <span class="ppe">${r.e}</span>
+      <label class="ppe" title="Change photo">${pzI(r)}<input type="file" accept="image/*" data-pic="${k}" hidden></label><b class="ppn">${r.name}</b><button class="pdel" data-del="${k}" aria-label="Remove prize">✕</button>
       <div class="ppr">${ring(S.acorns,r.a,"#C8803F","🌰")}<div class="pstep"><button class="stp" data-c="${k}:a:-10">−</button><button class="stp" data-c="${k}:a:10">+</button></div></div>
       <div class="ppr">${ring(S.wood,r.w,"#7A4A1E","🪵")}<div class="pstep"><button class="stp" data-c="${k}:w:-1">−</button><button class="stp" data-c="${k}:w:1">+</button></div></div>
-      ${ok?`<button class="pgive" data-give="${k}">✓ Given</button>`:`<span class="pdays">⏳ ~${e.days}d</span>`}</div>`}).join("")}
+      ${ok?`<button class="pgive" data-give="${k}">✓ Given</button>`:`<span class="pdays">⏳ ~${e.days} days</span>`}</div>`}).join("")}
+    <button class="padd" id="pzAdd">＋ Add a prize</button>
+    <div class="pzform" id="pzForm" hidden>
+      <label class="pzpic"><input type="file" accept="image/*" id="pzFile" hidden><span id="pzPrev">📷<small>Add a photo</small></span></label>
+      <div class="pzf2"><input id="pzName" maxlength="28" placeholder="What is it? e.g. Lego car" aria-label="Prize name">
+        <div class="pzgoal"><label>🌰<select id="pzA">${[50,100,150,200,300,400,500,700,1000].map(x=>`<option ${x===200?"selected":""}>${x}</option>`).join("")}</select></label>
+        <label>🪵<select id="pzW">${[5,10,15,20,30,40,60,80].map(x=>`<option ${x===20?"selected":""}>${x}</option>`).join("")}</select></label></div>
+        <small id="pzEst"></small></div>
+      <div class="pzbtns"><button class="btn ghost" id="pzCancel">Cancel</button><button class="btn green" id="pzSave">Save prize</button></div>
+    </div>
     ${sec("❓","Questions a day")}
-    <div class="pseg">${[10,15,20,30].map(q=>`<button data-per="${q}" aria-pressed="${S.perDay===q}">${q}</button>`).join("")}</div>
+    <div class="pseg">${[28,35,42,49].map(q=>`<button data-per="${q}" aria-pressed="${S.perDay===q}">${q}</button>`).join("")}</div>
     ${sec("📚","Topics")}
     <div class="ptopics">${COURSE.filter(c=>!c.soon).map(c=>`<button data-topic="${c.id}" aria-pressed="${S.topics.includes(c.id)}"><i>${c.e}</i><small>${SHORT[c.id]||c.name}</small></button>`).join("")}</div>
     ${sec("🎂","Age")}
@@ -439,7 +466,16 @@ function showParents(){
   const keep=fn=>{const y=$("pSettings").scrollTop;fn();save();sfx.tap();showParents();$("pSettings").scrollTop=y};
   $("closeSettings").onclick=()=>{sfx.tap();showMap();if(S.ageUp)setTimeout(ageUpCeremony,500)};
   P$("[data-c]").forEach(b=>b.onclick=()=>keep(()=>{const [k,f,d]=b.dataset.c.split(":");const r=S.real[+k];r[f]=Math.max(f==="a"?10:1,r[f]+ +d);S.notified=S.notified.filter(x=>x!==r.id)}));
-  P$("[data-give]").forEach(b=>b.onclick=()=>keep(()=>{const r=S.real[+b.dataset.give];S.acorns-=r.a;S.wood-=r.w;S.notified=S.notified.filter(x=>x!==r.id);toast(`${r.e} Enjoy the prize!`)}));
+  P$("[data-del]").forEach(b=>b.onclick=()=>keep(()=>{const r=S.real[+b.dataset.del];S.real.splice(+b.dataset.del,1);S.notified=S.notified.filter(x=>x!==r.id)}));
+  P$("[data-pic]").forEach(inp=>inp.onchange=()=>{const f=inp.files[0];if(f)pzLoad(f,u=>keep(()=>{S.real[+inp.dataset.pic].img=u}))});
+  {let img="";const est=()=>{const r={a:+$("pzA").value,w:+$("pzW").value};$("pzEst").textContent=`About ${estimate({a:r.a+S.acorns,w:r.w+S.wood}).days} days of play at ${S.perDay} questions a day`};
+   $("pzAdd").onclick=()=>{sfx.tap();$("pzForm").hidden=false;$("pzAdd").hidden=true;est();$("pzName").focus()};
+   $("pzCancel").onclick=()=>{sfx.tap();$("pzForm").hidden=true;$("pzAdd").hidden=false};
+   $("pzA").onchange=$("pzW").onchange=est;
+   $("pzFile").onchange=()=>{const f=$("pzFile").files[0];if(f)pzLoad(f,u=>{img=u;$("pzPrev").innerHTML=`<img src="${u}" alt="">`})};
+   $("pzSave").onclick=()=>{const name=$("pzName").value.trim()||"A surprise";keep(()=>{S.real.push({id:"r"+Date.now(),e:"🎁",img,name,a:+$("pzA").value+S.acorns,w:+$("pzW").value+S.wood})})}}
+  $("pShare")&&($("pShare").onclick=()=>{const t=reportText(pn);sfx.tap();if(navigator.share)navigator.share({title:`${pn}'s learning`,text:t}).catch(()=>{});else if(navigator.clipboard)navigator.clipboard.writeText(t).then(()=>toast("Report copied 📋"));});
+  P$("[data-give]").forEach(b=>b.onclick=()=>keep(()=>{const r=S.real[+b.dataset.give];S.acorns-=r.a;S.wood-=r.w;S.notified=S.notified.filter(x=>x!==r.id);toast(`🎉 Enjoy the ${r.name}!`)}));
   P$("[data-topic]").forEach(b=>b.onclick=()=>keep(()=>{const id=b.dataset.topic,on=S.topics.includes(id);if(on&&activeTopics().length===1){toast("Keep at least one topic");return}S.topics=on?S.topics.filter(x=>x!==id):[...S.topics,id]}));
   P$("[data-age]").forEach(b=>b.onclick=()=>keep(()=>{const old=S.age;S.age=+b.dataset.age;S.ageUp=S.age>old?S.age:0}));
   P$("[data-diff]").forEach(b=>b.onclick=()=>keep(()=>{S.diff=+b.dataset.diff}));
@@ -452,6 +488,21 @@ function showParents(){
   $("btnResetNo").onclick=()=>{$("resetConfirm").hidden=true;$("btnReset").hidden=false};
   $("btnResetYes").onclick=()=>{const k={voice:S.voice,fx:S.fx,age:S.age,diff:S.diff,perDay:S.perDay,reward:S.reward,topics:S.topics,real:S.real};S=Object.assign(fresh(),k);S.seen=true;save();landEl=null;showMap()};
 }
+
+/* ================= the parents' learning report: every skill the child practised, and how sure they are ================= */
+const LVL_T=[["🌱","Just started"],["🌿","Practising"],["🌳","Got it!"]];
+function skRows(){const sk=S.sk||{};return Object.entries(sk).map(([k,r])=>{const [cat,name]=k.split("|"),ones=(r.h.match(/1/g)||[]).length;return {cat,name,r,lv:skLevel(r),pct:r.h.length?Math.round(ones/r.h.length*100):0}})}
+function reportHTML(pn){const rows=skRows();
+  if(!rows.length)return `<p class="pnote">After a few rounds you'll see here what ${pn} is learning, skill by skill: what is new, what needs practice, and what ${pn} already knows.</p>`;
+  const cnt=[0,1,2].map(l=>rows.filter(x=>x.lv===l).length),areas={};rows.forEach(x=>{const a=(AREA[x.cat]||["⭐","Other"])[1];(areas[a]=areas[a]||{e:(AREA[x.cat]||["⭐"])[0],l:[]}).l.push(x)});
+  const prac=rows.filter(x=>x.lv===1).sort((a,b)=>a.pct-b.pct).slice(0,2),got=rows.filter(x=>x.lv===2);
+  return `<div class="rsum">${[2,1,0].map(l=>`<div class="rs${l}"><b>${cnt[l]}</b><small>${LVL_T[l][0]} ${LVL_T[l][1]}</small></div>`).join("")}</div>
+    ${prac.length?`<div class="rtip"><b>Practise together</b>${prac.map(x=>`<span>${(AREA[x.cat]||["⭐"])[0]} ${x.name}</span>`).join("")}</div>`:""}
+    ${got.length>=5&&S.diff<2?`<div class="rtip up"><b>Ready for more?</b><span>${pn} knows ${got.length} skills well. Try the next level 🐇🚀 below.</span></div>`:""}
+    ${Object.entries(areas).map(([a,g])=>`<div class="rarea"><div class="rah">${g.e} ${a}</div>${g.l.sort((x,y)=>y.lv-x.lv||y.r.n-x.r.n).map(x=>`<div class="rrow"><span class="rlv l${x.lv}" title="${LVL_T[x.lv][1]}">${LVL_T[x.lv][0]}</span><div class="rnm"><b>${x.name}</b><small>${x.r.n} answer${x.r.n===1?"":"s"} · ${x.pct}% right first time lately</small></div><span class="rh">${x.r.h.split("").map(c=>`<i class="${c==="1"?"y":"n"}"></i>`).join("")}</span></div>`).join("")}</div>`).join("")}
+    <button class="padd share" id="pShare">📤 Share this report</button>`}
+function reportText(pn){const rows=skRows(),w=wkLog();let t=`${pn}'s learning in Paraxilingo\nThis week: ${w.days.length} days, ${w.q} questions, ${w.q?Math.round(w.right/w.q*100):0}% right\n`;
+  [2,1,0].forEach(l=>{const r=rows.filter(x=>x.lv===l);if(r.length)t+=`\n${LVL_T[l][0]} ${LVL_T[l][1]}: ${r.map(x=>x.name).join(", ")}`});return t+"\n"}
 
 /* ================= players ================= */
 let dropKind=null;
