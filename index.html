@@ -8648,6 +8648,182 @@ body,
 .lesson.q2 .qopts.st-balloon .qo[data-j]::before {
   bottom: -5px;
 }
+.lesson.q2 .qopts .qo[data-j] b.num,
+.lesson.q2 .qopts .qo[data-j] b.num.letter,
+.lesson.q2 .qopts .qo[data-j] .word,
+.lesson.q2 .qopts.st-balloon .qo[data-j] .word,
+.lesson.q2 .qopts.st-balloon .qo[data-j] b.num,
+.lesson.q2 .qopts.st-fish .qo[data-j] .word,
+.lesson.q2 .qopts.st-fish .qo[data-j] b.num {
+  font-size: 40px;
+}
+.lesson.q2 .qopts .qo[data-j] small {
+  font-size: 19px;
+}
+.lesson.q2 .qopts .qo[data-j] .dots {
+  font-size: 14px;
+}
+.lesson.q2 .qopts .qo[data-j] .oe {
+  font-size: min(64px, 7vh) !important;
+}
+@media (min-width:700px) {
+  .lesson.q2 .qopts .qo[data-j] small {
+    font-size: 26px;
+  }
+  .lesson.q2 .qopts .qo[data-j] .oe {
+    font-size: min(100px, 9vh) !important;
+  }
+  .lesson.q2 .qopts .qo[data-j] .dots {
+    font-size: 18px;
+  }
+}
+@keyframes skyRise {
+  from {
+    top: 100%;
+  }
+  to {
+    top: -42%;
+  }
+}
+@keyframes skySway {
+  from {
+    margin-left: -10px;
+  }
+  to {
+    margin-left: 10px;
+  }
+}
+@keyframes seaSwim {
+  from {
+    left: -36%;
+  }
+  to {
+    left: 104%;
+  }
+}
+@keyframes seaBob {
+  from {
+    margin-top: -6px;
+  }
+  to {
+    margin-top: 6px;
+  }
+}
+.lesson.q2 .qopts.field {
+  display: block !important;
+  position: relative;
+  overflow: hidden;
+  flex: 1 1 0;
+  min-height: 240px;
+  border-radius: 24px;
+  padding: 0 !important;
+  container-type: normal;
+}
+.lesson.q2 .qopts.st-balloon.field {
+  background:
+    linear-gradient(
+      #CDEBFF,
+      #F3FAFF 70%,
+      #FFFFFF);
+}
+.lesson.q2 .qopts.st-fish.field {
+  background: linear-gradient(#BFE6FF, #7FC8F8);
+}
+.lesson.q2 .qopts.st-balloon.field .qo[data-j] {
+  position: absolute !important;
+  top: 100%;
+  width: min(24%, 130px) !important;
+  height: auto !important;
+  aspect-ratio: .86;
+  margin: 0 !important;
+  animation: skyRise var(--t,9s) linear var(--d,0s) infinite, skySway 1.8s ease-in-out infinite alternate !important;
+}
+.lesson.q2 .qopts.st-fish.field .qo[data-j] {
+  position: absolute !important;
+  left: -36%;
+  width: min(34%, 190px) !important;
+  height: min(20%, 90px) !important;
+  min-height: 58px !important;
+  margin: 0 !important;
+  animation: seaSwim var(--t,9s) linear var(--d,0s) infinite, seaBob 1.4s ease-in-out infinite alternate !important;
+}
+.lesson.q2 .qopts.field .qo[data-j].right {
+  animation: bPop .45s ease-in forwards !important;
+  animation-play-state: running;
+}
+.lesson.q2 .qopts.field .qo[data-j].wrong {
+  animation-play-state: paused !important;
+  filter: grayscale(.6);
+  opacity: .5;
+}
+.lesson.q2 .qopts.field .qo[data-j].faded {
+  opacity: .35;
+}
+.lesson.q2 .qopts.field::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      circle at 15% 20%,
+      rgba(255, 255, 255, .7) 0 3%,
+      transparent 3.5%),
+    radial-gradient(
+      circle at 80% 12%,
+      rgba(255, 255, 255, .6) 0 4%,
+      transparent 4.5%);
+}
+.pnwrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  min-height: 0;
+}
+.pnmid {
+  font-size: 52px;
+  line-height: 1;
+}
+.pnkeys {
+  display: grid;
+  gap: 6px;
+  width: 100%;
+  max-width: 640px;
+  height: min(40vh, 300px);
+}
+.pnk {
+  border: 0;
+  border-radius: 0 0 16px 16px;
+  background: linear-gradient(#fff 55%, var(--c) 55%);
+  box-shadow: 0 6px 0 #D9D9D9, inset 0 0 0 2px #E5E5E5;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 10px;
+  touch-action: manipulation;
+}
+.pnk span {
+  font: 900 clamp(14px, 3.6vw, 22px) "Nunito", sans-serif;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, .25);
+}
+.pnk.lit {
+  background: var(--c);
+  transform: translateY(4px);
+  box-shadow: 0 2px 0 #D9D9D9, 0 0 24px var(--c);
+}
+.pnkeys.watch .pnk {
+  pointer-events: none;
+}
+.pnkeys.bump {
+  animation: gBump .4s;
+}
 .qbody,
 .panel {
   max-width: 680px;
@@ -8759,7 +8935,10 @@ body,
     { id: "watcher", e: "\u{1F50E}", name: "Discover the world", desc: "Animals, body, nature, sky, space, food: the Watcher questions" },
     { id: "radio", e: "\u{1F4FB}", name: "Domi's Radio", desc: "Listen to a short story, then answer questions about it" },
     { id: "shapes", e: "\u{1F537}", name: "Shapes & colours", desc: "Shapes, colours, patterns, bigger or smaller" },
-    { id: "people", e: "\u{1F6A9}", name: "Flags & jobs", desc: "Find the flag, find the job" },
+    { id: "people", e: "\u{1F9D1}\u200D\u{1F692}", name: "Jobs & feelings", desc: "Find the job, how does this child feel?" },
+    { id: "flags", e: "\u{1F6A9}", name: "Flags", desc: "Flags of the world" },
+    { id: "robot", e: "\u{1F916}", name: "Robots", desc: "Help the robot reach the flag: first steps in coding" },
+    { id: "memory", e: "\u{1F9E0}", name: "Concentration", desc: "Simon colours, piano notes, memory pairs" },
     { id: "words", e: "\u{1F524}", name: "Letters & words", desc: "ABC, first letter, English words" },
     { id: "reading", e: "\u{1F4D6}", name: "Read it!", desc: "Sight words and short sentences (age 5+)" },
     { id: "paint", e: "\u{1F3A8}", name: "Painting", desc: "Colour a picture, tap by tap" },
@@ -9121,6 +9300,10 @@ body,
       if (!S.paintings) S.paintings = [];
       if (!S.real) S.real = defaultReal();
       if (![28, 35, 42, 49].includes(S.perDay)) S.perDay = 28;
+      if (!S.topicsV7) {
+        S.topics = [.../* @__PURE__ */ new Set([...S.topics, "flags", "robot", "memory"])];
+        S.topicsV7 = 1;
+      }
       if (!S.realV) {
         if ((S.real || []).map((r) => r.id).join() === "book,clothes,toy") S.real = [];
         S.realV = 1;
@@ -9356,7 +9539,10 @@ body,
     { id: "sky", topic: "watcher", e: "\u{1F319}", name: "Sky & space" },
     { id: "farm", topic: "watcher", e: "\u{1F3E1}", name: "Homes, food & sounds" },
     { id: "shapes", topic: "shapes", e: "\u{1F537}", name: "Shapes, colours & patterns" },
-    { id: "people", topic: "people", e: "\u{1F6A9}", name: "Flags & jobs" },
+    { id: "people", topic: "people", e: "\u{1F9D1}\u200D\u{1F692}", name: "Jobs & feelings" },
+    { id: "flags", topic: "flags", e: "\u{1F6A9}", name: "Flags of the world" },
+    { id: "robot", topic: "robot", e: "\u{1F916}", name: "Robots" },
+    { id: "memory", topic: "memory", e: "\u{1F9E0}", name: "Concentration" },
     { id: "letters", topic: "words", e: "\u{1F524}", name: "Letters & words" },
     { id: "read", topic: "reading", e: "\u{1F4D6}", name: "Read it!" },
     { id: "story", topic: "radio", e: "\u{1F4FB}", name: "Domi's Radio" },
@@ -9371,9 +9557,12 @@ body,
     if (cat === "money") return a <= 5 ? ["pennies", "value"] : a <= 6 ? ["pennies", "value", "count"] : a <= 7 ? ["value", "count", "same"] : ["count", "same", "change"];
     if (cat === "letters") return a <= 4 ? ["abc", "listen", "match", "rhyme"] : a <= 6 ? ["listen", "first", "abc", "whatis", "lafter", "match", "rhyme", "build"] : ["listen", "first", "whatis", "lafter", "lbefore", "match", "build"];
     if (cat === "read") return a <= 5 ? ["balloon", "flash"] : ["balloon", "flash", "sentence"];
-    if (cat === "farm") return a <= 4 ? ["home", "sound", "fly", "match", "pairs"] : ["home", "food", "sound", "fly", "water", "match", "pairs"];
-    if (cat === "shapes") return a <= 4 ? ["shape", "color", "pattern", "match", "robot", "simon"] : a <= 6 ? ["shape", "sides", "both", "pattern", "match", "robot", "simon"] : ["sides", "both", "pattern", "bigsmall", "match", "robot", "simon"];
-    if (cat === "people") return a <= 5 ? ["feel", "job", "job2"] : ["feel", "flag", "job", "flag2", "job2"];
+    if (cat === "farm") return a <= 4 ? ["home", "sound", "fly", "match"] : ["home", "food", "sound", "fly", "water", "match"];
+    if (cat === "shapes") return a <= 4 ? ["shape", "color", "pattern", "match"] : a <= 6 ? ["shape", "sides", "both", "pattern", "match"] : ["sides", "both", "pattern", "bigsmall", "match"];
+    if (cat === "people") return ["feel", "job", "job2"];
+    if (cat === "flags") return a <= 5 ? ["flag"] : ["flag", "flag2"];
+    if (cat === "robot") return ["robot"];
+    if (cat === "memory") return ["simon", "piano", "pairs"];
     return ["w"];
   }
   const MAXN = () => {
@@ -9647,15 +9836,10 @@ body,
     if (kind === "robot") return qRobot();
     if (kind === "simon") return qSimon();
     if (kind === "pairs") return qPairs();
+    if (kind === "piano") return qPiano();
     if (kind === "order") return qOrder();
     if (kind === "pizza") return qPizza();
     if (kind === "build") return qBuild(used);
-    if (cat === "animals" && !used.has("pairs") && Math.random() < 0.2) {
-      used.add("pairs");
-      const g = qPairs();
-      g.kind = "pairs";
-      return g;
-    }
     if (["missing", "skip", "long", "graph", "carry", "groups", "share", "left", "sides", "both", "feel", "rhyme"].includes(kind)) return qNew(kind, used);
     if (kind === "match") return qMatch(cat === "letters" ? "wd" : cat === "shapes" ? "sh" : "an", used);
     if ((cat === "animals" || cat === "sky") && !used.has("match") && Math.random() < 0.22) {
@@ -9670,7 +9854,7 @@ body,
     if (cat === "letters") return qLetters(kind, used);
     if (cat === "read") return qRead(kind, used);
     if (cat === "shapes") return qShapes(kind, used);
-    if (cat === "people") return qPeople(kind, used);
+    if (cat === "people" || cat === "flags") return qPeople(kind, used);
     if (cat === "sky" && Math.random() < 0.35) return Math.random() < 0.5 ? qSkyPic(used) : qPlanet(used);
     return qWatcher(cat, used);
   }
@@ -9760,7 +9944,7 @@ body,
       q.style = "cards";
       if (q.opts && q.opts.length === 4 && q.layout !== "yn" && !q.tf && !q.flash) {
         const r = Math.random();
-        q.style = r < 0.22 ? "balloon" : r < 0.4 ? "fish" : "cards";
+        q.style = r < 0.28 ? "balloon" : r < 0.48 ? "fish" : "cards";
       }
     }
     $("qBody").innerHTML = '<div class="qkick"><span class="qke">'.concat(cc.e || "\u2B50", "</span>").concat(cc.name || "", '</div>\n    <h2 class="qtitle').concat((q.cap || "").length > 34 ? " long" : "", '">').concat(q.cap || "Choose the right one", '</h2>\n    <div class="qtop2').concat(/class="(seqrow|pat|eq|coins|coinname|graph|story2|bags|clues|seq|daycard|sent)/.test(q.visual || "") ? " wide" : "", '"><button class="qspk" id="qSpk" aria-label="Hear the question again"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></button>').concat(deco || !q.visual ? "" : '<div class="qvis">'.concat(q.visual, "</div>"), '</div>\n    <div class="qopts ').concat(q.layout, " ").concat(deco ? "tall" : "", " st-").concat(q.style, '">').concat(q.opts.map((o, j) => '<button class="qo t'.concat(tints[j % 4], '" data-j="').concat(j, '">').concat(o.h, "</button>")).join(""), "</div>\n    ").concat(q.style === "cards" ? '<button class="qcheck" id="qCheck" disabled>CHECK</button>' : '<div class="qhint2">'.concat(q.style === "balloon" ? "\u{1F388} Pop the right balloon!" : "\u{1F3A3} Catch the right fish!", '</div><button class="qcheck" id="qCheck" disabled hidden>CHECK</button>'));
@@ -9798,7 +9982,9 @@ body,
         choose(b);
       };
     });
-    $("qBody").querySelectorAll(".qo .num,.qo .word,.qo small").forEach((e) => e.style.setProperty("--n", Math.max(2, e.textContent.replace(/[●\s]/g, "").length)));
+    requestAnimationFrame(() => requestAnimationFrame(fitOpts));
+    setTimeout(fitOpts, 450);
+    if (q.style === "balloon" || q.style === "fish") moveField(q);
     chk.onclick = () => {
       const b = $("qBody").querySelector(".qo.sel");
       if (!b || q.done) return;
@@ -10351,7 +10537,7 @@ body,
         if (x2) o0.push(x2.w);
       }
       const o2 = sh(o0);
-      return { voice: ["w/LULU_RD_SENTENCE"], cap: "", visual: '<div class="sent">'.concat(st.q.replace("___", '<span class="gap">?</span>'), "</div>"), opts: o2.map((w) => ({ h: '<b class="word">'.concat(w, "</b>") })), ans: o2.indexOf(st.a), layout: "row3", hint: "elim", exp: { t: st.q.replace("___", st.a), v: ["w/LULU_ANS_IS"] } };
+      return { voice: ["w/LULU_RD_SENTENCE", "w/PX_SENT_" + st.id], cap: "Read it and find the missing word", visual: '<div class="sent">'.concat(st.q.replace("___", '<span class="gap">?</span>'), "</div>"), opts: o2.map((w) => ({ h: '<b class="word">'.concat(w, "</b>") })), ans: o2.indexOf(st.a), layout: "row3", hint: "elim", exp: { t: st.q.replace("___", st.a), v: ["w/LULU_ANS_IS"] } };
     }
     const pool = POOL.sight.slice(0, lvl() <= 5 ? 30 : lvl() <= 6 ? 60 : 100), x = sh(pool).find((y) => !used.has("sw" + y.i)) || pool[0];
     used.add("sw" + x.i);
@@ -10884,6 +11070,7 @@ body,
     bigsmall: "Big and small",
     simon: "Memory (colours in order)",
     feel: "Feelings",
+    piano: "Memory (piano notes)",
     job: "Jobs",
     job2: "Jobs",
     flag: "Flags",
@@ -10891,7 +11078,7 @@ body,
     w: "Facts about the world"
   };
   const SKCAT = { "clock.after": "What day comes next", "clock.before": "What day came before", "count.after": "What comes next", "count.before": "What comes before" };
-  const AREA = { count: ["\u{1F522}", "Numbers"], add: ["\u2795", "Adding & taking away"], clock: ["\u{1F552}", "Time & calendar"], letters: ["\u{1F524}", "Letters & words"], read: ["\u{1F4D6}", "Reading"], farm: ["\u{1F3E1}", "Animals"], animals: ["\u{1F43E}", "Animals"], world: ["\u{1F333}", "Our world"], sky: ["\u{1F319}", "Sky & space"], shapes: ["\u{1F537}", "Shapes & thinking"], people: ["\u{1F6A9}", "People & feelings"], story: ["\u{1F4FB}", "Listening (stories)"] };
+  const AREA = { count: ["\u{1F522}", "Numbers"], add: ["\u2795", "Adding & taking away"], clock: ["\u{1F552}", "Time & calendar"], letters: ["\u{1F524}", "Letters & words"], read: ["\u{1F4D6}", "Reading"], farm: ["\u{1F3E1}", "Animals"], animals: ["\u{1F43E}", "Animals"], world: ["\u{1F333}", "Our world"], sky: ["\u{1F319}", "Sky & space"], shapes: ["\u{1F537}", "Shapes & thinking"], people: ["\u{1F9D1}\u200D\u{1F692}", "Jobs & feelings"], flags: ["\u{1F6A9}", "Flags"], robot: ["\u{1F916}", "Robots"], memory: ["\u{1F9E0}", "Concentration"], story: ["\u{1F4FB}", "Listening (stories)"] };
   const skName = (cat, kind) => SKCAT[cat + "." + kind] || (cat === "story" ? "Listening to a story" : SKN[kind]) || (cat === "sky" ? "Sky & space facts" : cat === "animals" ? "Animal facts" : cat === "world" ? "Facts about our world" : "Other");
   function logSk(q, ok) {
     try {
@@ -11326,7 +11513,7 @@ body,
       t();
     };
   }
-  const GAMES = { simon: simonQ, pairs: pairsQ, order: orderQ, pizza: pizzaQ, build: bldQ };
+  const GAMES = { piano: pianoQ, simon: simonQ, pairs: pairsQ, order: orderQ, pizza: pizzaQ, build: bldQ };
   const DAYS7 = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], MONTHS12 = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   const SEASON_F = { spring: "In spring, flowers bloom and baby animals are born.", summer: "Summer has the longest days of the year.", autumn: "In autumn, many leaves turn red and yellow and fall down.", fall: "In autumn, many leaves turn red and yellow and fall down.", winter: "In winter, some animals sleep until spring. That is called hibernation." };
   const JOB_F = { astronaut: "Astronauts float in space because there is almost no gravity up there.", farmer: "Farmers grow the food we eat, like wheat for our bread.", pilot: "Pilots fly planes high above the clouds.", scientist: "Scientists ask questions and do experiments to find answers.", builder: "Builders use bricks, wood and steel to make houses.", chef: "Chefs cook food in restaurants. Their tall hat is called a toque.", teacher: "Teachers help children learn to read, write and count.", doctor: "Doctors listen to your heart with a stethoscope.", firefighter: "Firefighters use big hoses to put out fires.", police: "Police officers help keep people safe.", "police officer": "Police officers help keep people safe.", dentist: "Dentists keep our teeth clean and strong.", nurse: "Nurses take care of people who are sick.", baker: "Bakers get up very early to bake fresh bread.", vet: "Vets are doctors for animals.", mechanic: "Mechanics fix cars and trucks.", artist: "Artists make pictures, songs and stories.", singer: "Singers use their voice like a musical instrument.", mail: "Mail carriers bring letters to every house." };
@@ -11414,7 +11601,7 @@ body,
         const co = Object.keys(COLOR_F).find((x) => lab.includes(x));
         if (co) return COLOR_F[co];
       }
-      if (c === "people") {
+      if (c === "people" || c === "flags") {
         const f2 = FEEL_F[w];
         if (f2) return f2;
         const j = Object.keys(JOB_F).find((x) => lab.includes(x));
@@ -11437,6 +11624,158 @@ body,
       return "";
     }
   }
+  function fitOpts() {
+    const B = $("qBody");
+    if (!B) return;
+    B.querySelectorAll(".qo[data-j]").forEach((c) => {
+      const W = c.clientWidth, H = c.clientHeight;
+      if (!W || !H) return;
+      const round = c.closest(".st-balloon,.st-fish"), pic = c.querySelector("img,.oe,.grp,.cshape,.swatch,.dayb,svg"), dots2 = c.querySelector(".dots");
+      c.querySelectorAll("b.num,b.word").forEach((e) => {
+        const n = Math.max(1.3, e.textContent.trim().length * 0.6);
+        let f = Math.min(H * (pic ? 0.26 : dots2 ? 0.42 : round ? 0.36 : 0.48), W * (round ? 0.66 : 0.8) / n, round ? 64 : 120);
+        f = Math.max(f, 14);
+        e.style.fontSize = f + "px";
+        e.style.lineHeight = "1.15";
+        e.style.whiteSpace = "nowrap";
+        let g = 0;
+        while (e.scrollWidth > W * (round ? 0.72 : 0.88) && g++ < 25 && f > 12) {
+          f *= 0.9;
+          e.style.fontSize = f + "px";
+        }
+      });
+    });
+  }
+  window.addEventListener("resize", () => {
+    try {
+      fitOpts();
+    } catch (e) {
+    }
+  });
+  function moveField(q) {
+    const box = $("qBody").querySelector(".qopts");
+    if (!box) return;
+    box.classList.add("field");
+    const els = [...box.querySelectorAll(".qo[data-j]")], n = els.length, a = lvl(), T = a <= 4 ? 11 : a <= 6 ? 9 : 7.5, lanes = sh([...Array(n).keys()]);
+    els.forEach((e, i) => {
+      const lane = lanes[i];
+      e.style.setProperty("--t", (T + Math.random() * 2).toFixed(2) + "s");
+      e.style.setProperty("--d", (-(i * T / n) + 1.2).toFixed(2) + "s");
+      if (q.style === "balloon") e.style.left = 4 + lane * (92 / n) + "%";
+      else e.style.top = 4 + lane * (92 / n) + "%";
+    });
+  }
+  const PIANO = [["C", "Do", "#FF5A5F", 262], ["D", "Re", "#FF9F1C", 294], ["E", "Mi", "#FFD23F", 330], ["F", "Fa", "#3DDC97", 349], ["G", "Sol", "#2EC4B6", 392], ["A", "La", "#4D96FF", 440], ["B", "Si", "#9B5DE5", 494], ["C", "Do", "#F15BB5", 523]];
+  let __pac = null;
+  function pianoTone(f, ms = 700) {
+    try {
+      __pac = __pac || new (window.AudioContext || window.webkitAudioContext)();
+      const t = __pac.currentTime, g = __pac.createGain();
+      g.connect(__pac.destination);
+      g.gain.setValueAtTime(1e-4, t);
+      g.gain.exponentialRampToValueAtTime(0.45, t + 0.01);
+      g.gain.exponentialRampToValueAtTime(1e-4, t + ms / 1e3);
+      [[1, 1], [2, 0.35], [3, 0.12]].forEach(([m, v]) => {
+        const o = __pac.createOscillator(), gg = __pac.createGain();
+        o.type = "sine";
+        o.frequency.value = f * m;
+        gg.gain.value = v;
+        o.connect(gg).connect(g);
+        o.start(t);
+        o.stop(t + ms / 1e3 + 0.05);
+      });
+    } catch (e) {
+    }
+  }
+  function qPiano() {
+    const a = lvl(), keys = a <= 4 ? 5 : 8, len = a <= 3 ? 2 : a <= 5 ? 3 : a <= 7 ? 4 : 5;
+    let seq = [];
+    for (let i = 0; i < len; i++) {
+      let k;
+      do {
+        k = ri(0, keys - 1);
+      } while (seq.length && k === seq[seq.length - 1]);
+      seq.push(k);
+    }
+    return { game: "piano", seq, keys, voice: ["w/PX_PIANO"] };
+  }
+  function pianoQ(q) {
+    gShow('<div class="game">'.concat(gHead("\u{1F3B9}", "Piano", "Listen, then play the same notes!"), '\n    <div class="pnwrap"><div class="pnmid" id="pnMid">\u{1F442}</div><div class="pnkeys" id="pnK" style="grid-template-columns:repeat(').concat(q.keys, ',1fr)">').concat(PIANO.slice(0, q.keys).map((k, i) => '<button class="pnk" data-i="'.concat(i, '" style="--c:').concat(k[2], '"><span>').concat(k[1], "</span></button>")).join(""), '</div>\n    <div class="smdots" id="pnDots">').concat(q.seq.map(() => "<i></i>").join(""), "</div></div></div>"));
+    let at = 0, miss = 0, busy = true;
+    const ks = [...$("qBody").querySelectorAll(".pnk")];
+    const hit = (i, ms = 650) => {
+      ks[i].classList.add("lit");
+      pianoTone(PIANO[i][3], ms + 300);
+      setTimeout(() => ks[i].classList.remove("lit"), ms - 120);
+    };
+    const dots2 = () => $("pnDots").querySelectorAll("i").forEach((d, k) => d.className = k < at ? "on" : "");
+    const play = (clip, cb) => {
+      busy = true;
+      at = 0;
+      dots2();
+      $("pnMid").textContent = "\u{1F442}";
+      $("pnK").classList.add("watch");
+      sayseq(clip ? [clip] : [], () => {
+        let k = 0;
+        const step = () => {
+          if (!L || L.q !== q) return;
+          if (k >= q.seq.length) {
+            $("pnK").classList.remove("watch");
+            $("pnMid").textContent = "\u{1F3B9}";
+            busy = false;
+            sayseq(["w/LULU_SM_YOUR"], () => {
+            });
+            cb && cb();
+            return;
+          }
+          hit(q.seq[k++]);
+          setTimeout(step, lvl() <= 4 ? 850 : 700);
+        };
+        setTimeout(step, 400);
+      });
+    };
+    ks.forEach((b) => b.onpointerdown = (e) => {
+      e.preventDefault();
+      if (busy || q.done) return;
+      const i = +b.dataset.i;
+      hit(i, 420);
+      if (i === q.seq[at]) {
+        at++;
+        dots2();
+        if (at === q.seq.length) {
+          busy = true;
+          $("pnMid").textContent = "\u{1F389}";
+          gameWin(q, miss, $("pnK"));
+        }
+      } else {
+        miss++;
+        sfx.oops();
+        $("pnK").classList.add("bump");
+        setTimeout(() => $("pnK").classList.remove("bump"), 450);
+        if (miss >= 2) {
+          busy = true;
+          setTimeout(() => play(null, () => {
+            busy = true;
+            gameLearn(q, "The notes were: " + q.seq.map((x) => PIANO[x][1]).join(" "));
+          }), 700);
+        } else setTimeout(() => play(null), 800);
+      }
+    });
+    window.__gSolve = () => {
+      let k = 0;
+      const t = () => {
+        if (busy) return setTimeout(t, 300);
+        if (k < q.seq.length) {
+          ks[q.seq[k++]].dispatchEvent(new PointerEvent("pointerdown", { bubbles: true }));
+          setTimeout(t, 150);
+        }
+      };
+      t();
+    };
+    setTimeout(() => {
+      if (L && L.q === q) play("w/PX_PIANO");
+    }, 400);
+  }
   const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   const MONTH_LAND = [7, 5, 4, 6, 11, 8, 9, 1, 2, 10, 0, 3];
   function eventNow(d = /* @__PURE__ */ new Date()) {
@@ -11454,7 +11793,7 @@ body,
   }
   const monthIdx = () => S.mapMonth === "auto" ? (/* @__PURE__ */ new Date()).getMonth() : +S.mapMonth;
   const landIdx = () => MONTH_LAND[monthIdx()];
-  const TOPIC_SYM = { math: "\u2795", clock: "\u{1F552}", watcher: "\u{1F50E}", shapes: "\u{1F537}", people: "\u{1F6A9}", words: "\u{1F524}", reading: "\u{1F4D6}", radio: "\u{1F4FB}", paint: "\u{1F3A8}" };
+  const TOPIC_SYM = { flags: "\u{1F6A9}", robot: "\u{1F916}", memory: "\u{1F9E0}", math: "\u2795", clock: "\u{1F552}", watcher: "\u{1F50E}", shapes: "\u{1F537}", people: "\u{1F6A9}", words: "\u{1F524}", reading: "\u{1F4D6}", radio: "\u{1F4FB}", paint: "\u{1F3A8}" };
   const activeTopics = () => S.topics.filter((t) => TOPIC_SYM[t]);
   const activeCats = () => CATS.filter((c) => activeTopics().includes(c.topic));
   function dayPlan() {
@@ -11808,7 +12147,7 @@ body,
     $("pSettings").hidden = false;
     const pn = curPlayer().name, w = wkLog(), tp = S.lastTopic || "math", dq = DINNER[tp] || DINNER.math, names = w.topics.map((t) => (COURSE.find((c) => c.id === t) || {}).name).filter(Boolean);
     const sk = skillFor(S.age, S.diff), ex1 = makeProb(sk), ex2 = makeProb(sk), n = HOLES[landIdx()].length;
-    const SHORT = { math: "Numbers", clock: "Clock", watcher: "World", shapes: "Shapes", people: "People", words: "Letters", reading: "Read", radio: "Radio", paint: "Paint" }, pct = w.q ? Math.round(w.right / w.q * 100) : 0;
+    const SHORT = { flags: "Flags", robot: "Robots", memory: "Focus", people: "Jobs", math: "Numbers", clock: "Clock", watcher: "World", shapes: "Shapes", words: "Letters", reading: "Read", radio: "Radio", paint: "Paint" }, pct = w.q ? Math.round(w.right / w.q * 100) : 0;
     const ring = (v, max, c, ic) => {
       const f = Math.min(1, v / max);
       return '<span class="pring" style="--f:'.concat(f * 360, "deg;--c:").concat(c, '"><i>').concat(ic, '</i></span><small class="pnum">').concat(Math.min(v, max), "/").concat(max, "</small>");
