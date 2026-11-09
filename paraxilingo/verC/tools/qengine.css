@@ -557,3 +557,25 @@ body,.phone,.lesson.q2,.introC,#pSettings,.panel,.map{background:#fff!important}
 .rbpad{flex-wrap:nowrap;gap:8px}.rbpad button{width:min(60px,15vw);height:min(60px,15vw);font-size:28px}
 .rbprog{min-height:36px;font-size:24px}
 @media (min-width:700px){.rbgrid{width:min(100%,46vh)}.rbpad button{width:88px;height:88px;font-size:42px}}
+/* ===== Nov 8 night: everything inside a card stays inside it ===== */
+.lesson.q2 .qopts .qo[data-j]{overflow:hidden!important}
+.lesson.q2 .qopts .qo[data-j] .oe,.lesson.q2 .qopts .qo[data-j] .wp,.lesson.q2 .qopts .qo[data-j] .grp,.lesson.q2 .qopts .qo[data-j] .num,.lesson.q2 .qopts .qo[data-j] .word,.lesson.q2 .qopts .qo[data-j] .cshape{animation:none!important}
+.lesson.q2 .qopts .qo[data-j]>:first-child{max-height:calc(100% - 34px);overflow:hidden}
+.lesson.q2 .qopts .qo[data-j] .oe{font-size:min(64px,7vh)!important;line-height:1.1}
+.lesson.q2 .qopts .qo[data-j] .wp.op{height:min(100px,10vh)!important;width:auto;max-width:85%}
+.lesson.q2 .qopts .qo[data-j] .cshape.big{width:min(70px,8vh);height:min(70px,8vh)}
+.lesson.q2 .qopts .qo[data-j] img{max-height:100%;max-width:100%;object-fit:contain}
+.lesson.q2 .qopts .qo[data-j] small,.lesson.q2 .qopts .qo[data-j] .dn{font-size:19px;line-height:1.2}
+@media (min-width:700px){.lesson.q2 .qopts .qo[data-j] .oe{font-size:min(100px,9vh)!important}.lesson.q2 .qopts .qo[data-j] .wp.op{height:min(160px,12vh)!important}.lesson.q2 .qopts .qo[data-j] small,.lesson.q2 .qopts .qo[data-j] .dn{font-size:26px}}
+/* the radio and other "listen" pictures: small, next to the speaker */
+.lesson.q2 .qtop2 .qvis .listen{width:auto!important;height:auto!important;padding:0!important;background:none!important;box-shadow:none!important;font-size:min(56px,7vh)!important;line-height:1}
+.ffact{direction:ltr;text-align:left;font-family:"Nunito",sans-serif}
+/* fish v2: tidy grid, tail and eye inside the card, gentle swim */
+.lesson.q2 .qopts.st-fish{box-sizing:border-box;padding:12px;gap:14px}
+@keyframes fSwim{0%,100%{transform:translateX(-3px) rotate(-1.5deg)}50%{transform:translateX(3px) rotate(1.5deg)}}
+.lesson.q2 .qopts.st-fish .qo[data-j]{border-radius:46% 22% 22% 46% / 50% 30% 30% 50%!important;padding:10px 34px 10px 18px!important;overflow:hidden!important;width:100%!important;box-sizing:border-box}
+.lesson.q2 .qopts.st-fish .qo[data-j]::after{right:4px!important;top:calc(50% - 14px)!important;border-width:14px 0 14px 20px!important;border-style:solid!important;border-color:transparent transparent transparent rgba(0,0,0,.18)!important}
+.lesson.q2 .qopts.st-fish .qo[data-j]::before{left:12%!important;top:22%!important}
+/* balloons v2: sized to their cell, never over the hint */
+.lesson.q2 .qopts.st-balloon{gap:10px 18px}
+.lesson.q2 .qopts.st-balloon .qo[data-j]{width:min(100%,24vh)!important;max-height:calc(100% - 22px);aspect-ratio:.86;justify-self:center!important;align-self:center;margin:0 auto 20px!important;padding:8px!important}
