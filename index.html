@@ -6917,6 +6917,301 @@ body,
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
   }
 }
+.lesson.q2 .qtop2.wide {
+  flex-wrap: wrap;
+}
+.lesson.q2 .qtop2.wide .qvis {
+  flex: 1 1 100%;
+  order: 2;
+  max-height: none;
+  justify-content: center;
+}
+.lesson.q2 .qtop2 .qvis .pat {
+  transform: none !important;
+  font-size: min(40px, 5vh);
+  gap: 4px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.lesson.q2 .qtop2 .qvis .pat * {
+  font-size: inherit;
+}
+.ffact {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  margin-top: 8px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: #FFF8E1;
+  font:
+    600 18px/1.5 "Vazirmatn",
+    "Nunito",
+    sans-serif;
+  color: #5B4A1E;
+  text-align: right;
+}
+.ffact b {
+  flex: 0 0 auto;
+}
+.ffact span {
+  flex: 1;
+}
+@keyframes bRise {
+  0% {
+    transform: translateY(60vh) scale(.6);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+@keyframes bSway {
+  0%, 100% {
+    transform: translateY(0) rotate(-3deg);
+  }
+  50% {
+    transform: translateY(-14px) rotate(3deg);
+  }
+}
+@keyframes bPop {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.35);
+  }
+  100% {
+    transform: scale(0);
+    opacity: 0;
+  }
+}
+.lesson.q2 .qopts.st-balloon .qo[data-j] {
+  border: 0 !important;
+  box-shadow: none !important;
+  background:
+    radial-gradient(
+      circle at 32% 28%,
+      rgba(255, 255, 255, .75),
+      transparent 34%),
+    var(--bc,#FF8A80) !important;
+  border-radius: 50% 50% 47% 47% / 55% 55% 45% 45% !important;
+  margin: 0 8% 22px;
+  overflow: visible !important;
+  position: relative;
+  animation: bRise .9s cubic-bezier(.2, 1.2, .4, 1) both, bSway 3s ease-in-out .9s infinite !important;
+}
+.lesson.q2 .qopts.st-balloon .qo[data-j]::after {
+  content: "";
+  position: absolute;
+  bottom: -22px;
+  left: 50%;
+  width: 2px;
+  height: 22px;
+  background: #B7C0CC;
+}
+.lesson.q2 .qopts.st-balloon .qo[data-j]::before {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: calc(50% - 6px);
+  border: 6px solid transparent;
+  border-top-color: var(--bc,#FF8A80);
+}
+.lesson.q2 .qopts.st-balloon .qo[data-j]:nth-child(1) {
+  --bc:#FF8A80;
+}
+.lesson.q2 .qopts.st-balloon .qo[data-j]:nth-child(2) {
+  --bc:#81D4FA;
+  animation-delay: .12s, 1.3s !important;
+}
+.lesson.q2 .qopts.st-balloon .qo[data-j]:nth-child(3) {
+  --bc:#FFE082;
+  animation-delay: .24s, .6s !important;
+}
+.lesson.q2 .qopts.st-balloon .qo[data-j]:nth-child(4) {
+  --bc:#A5D6A7;
+  animation-delay: .36s, 1.6s !important;
+}
+.lesson.q2 .qopts.st-balloon .qo[data-j] small,
+.lesson.q2 .qopts.st-balloon .qo[data-j] .num,
+.lesson.q2 .qopts.st-balloon .qo[data-j] .word {
+  color: #3A3A3A;
+}
+.lesson.q2 .qopts.st-balloon .qo[data-j].right {
+  animation: bPop .5s ease-in forwards !important;
+}
+.lesson.q2 .qopts.st-balloon .qo[data-j].wrong {
+  animation: qno .5s !important;
+}
+@keyframes fSwim {
+  0%, 100% {
+    transform: translateX(-10%) scaleX(1);
+  }
+  49% {
+    transform: translateX(10%) scaleX(1);
+  }
+  50% {
+    transform: translateX(10%) scaleX(-1);
+  }
+  99% {
+    transform: translateX(-10%) scaleX(-1);
+  }
+}
+@keyframes fIn {
+  0% {
+    transform: translateX(-120%);
+    opacity: 0;
+  }
+  100% {
+    transform: none;
+    opacity: 1;
+  }
+}
+.lesson.q2 .qopts.st-fish {
+  background: linear-gradient(#E3F4FF, #C9E8FF);
+  border-radius: 22px;
+  padding: 12px;
+  position: relative;
+}
+.lesson.q2 .qopts.st-fish .qo[data-j] {
+  background: #FFB74D !important;
+  border: 0 !important;
+  box-shadow: 0 3px 0 #F09A22 !important;
+  border-radius: 50% 20% 20% 50% / 50% 40% 40% 50% !important;
+  position: relative;
+  overflow: visible !important;
+  animation: fIn .7s ease-out both, fSwim 5s ease-in-out .7s infinite !important;
+}
+.lesson.q2 .qopts.st-fish .qo[data-j]::after {
+  content: "";
+  position: absolute;
+  right: -18px;
+  top: calc(50% - 18px);
+  border: 18px solid transparent;
+  border-left: 22px solid #FFB74D;
+}
+.lesson.q2 .qopts.st-fish .qo[data-j]::before {
+  content: "";
+  position: absolute;
+  left: 14%;
+  top: 28%;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #333;
+  box-shadow: 0 0 0 3px #fff;
+}
+.lesson.q2 .qopts.st-fish .qo[data-j]:nth-child(2) {
+  animation-delay: .1s, 1.6s !important;
+  background: #F48FB1 !important;
+}
+.lesson.q2 .qopts.st-fish .qo[data-j]:nth-child(2)::after {
+  border-left-color: #F48FB1;
+}
+.lesson.q2 .qopts.st-fish .qo[data-j]:nth-child(3) {
+  animation-delay: .2s, .9s !important;
+  background: #9FA8DA !important;
+}
+.lesson.q2 .qopts.st-fish .qo[data-j]:nth-child(3)::after {
+  border-left-color: #9FA8DA;
+}
+.lesson.q2 .qopts.st-fish .qo[data-j]:nth-child(4) {
+  animation-delay: .3s, 2.2s !important;
+  background: #80CBC4 !important;
+}
+.lesson.q2 .qopts.st-fish .qo[data-j]:nth-child(4)::after {
+  border-left-color: #80CBC4;
+}
+.lesson.q2 .qopts.st-fish .qo[data-j].right {
+  animation: qjump .7s both !important;
+}
+.lesson.q2 .qopts.st-fish .qo[data-j].wrong {
+  animation: qno .5s !important;
+}
+.qhint2 {
+  flex: 0 0 auto;
+  text-align: center;
+  font: 800 20px "Nunito", sans-serif;
+  color: #A16AE8;
+  padding: 6px 0;
+}
+.rbwrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+.rbgrid {
+  display: grid;
+  gap: 6px;
+  width: min(100%, 46vh);
+  aspect-ratio: 1;
+  background: #EEF4FB;
+  border-radius: 18px;
+  padding: 8px;
+  box-sizing: border-box;
+}
+.rbgrid.bump {
+  animation: qno .5s;
+}
+.rbc {
+  background: #fff;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  font-size: min(44px, 6vh);
+  box-shadow: 0 2px 0 #DDE6F0;
+}
+.rbprog {
+  min-height: 44px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  justify-content: center;
+  font-size: 28px;
+  color: #9AA7B6;
+  font-family: "Nunito", sans-serif;
+}
+.rbpad {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.rbpad button {
+  width: 70px;
+  height: 70px;
+  border-radius: 18px;
+  border: 2px solid #E5E5E5;
+  box-shadow: 0 4px 0 #E5E5E5;
+  background: #fff;
+  font-size: 34px;
+  cursor: pointer;
+}
+.rbpad button:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 #E5E5E5;
+}
+.rbpad .rbdel {
+  background: #FFF3F0;
+}
+@media (min-width:700px) {
+  .rbpad button {
+    width: 92px;
+    height: 92px;
+    font-size: 44px;
+  }
+  .ffact {
+    font-size: 22px;
+  }
+  .qhint2 {
+    font-size: 26px;
+  }
+}
 .qbody,
 .panel {
   max-width: 680px;
@@ -7638,7 +7933,7 @@ body,
     if (cat === "letters") return a <= 4 ? ["abc", "listen", "match", "rhyme"] : a <= 6 ? ["listen", "first", "abc", "whatis", "lafter", "match", "rhyme"] : ["listen", "first", "whatis", "lafter", "lbefore", "match"];
     if (cat === "read") return a <= 5 ? ["balloon", "flash"] : ["balloon", "flash", "sentence"];
     if (cat === "farm") return a <= 4 ? ["home", "sound", "fly", "match"] : ["home", "food", "sound", "fly", "water", "match"];
-    if (cat === "shapes") return a <= 4 ? ["shape", "color", "pattern", "match"] : a <= 6 ? ["shape", "sides", "both", "pattern", "match"] : ["sides", "both", "pattern", "bigsmall", "match"];
+    if (cat === "shapes") return a <= 4 ? ["shape", "color", "pattern", "match", "robot"] : a <= 6 ? ["shape", "sides", "both", "pattern", "match", "robot"] : ["sides", "both", "pattern", "bigsmall", "match", "robot"];
     if (cat === "people") return a <= 5 ? ["feel", "job", "job2"] : ["feel", "flag", "job", "flag2", "job2"];
     return ["w"];
   }
@@ -7910,6 +8205,7 @@ body,
     return fitAge(buildQ0(cat, kind, used));
   }
   function buildQ0(cat, kind, used) {
+    if (kind === "robot") return qRobot();
     if (["missing", "skip", "long", "graph", "carry", "groups", "share", "left", "sides", "both", "feel", "rhyme"].includes(kind)) return qNew(kind, used);
     if (kind === "match") return qMatch(cat === "letters" ? "wd" : cat === "shapes" ? "sh" : "an", used);
     if ((cat === "animals" || cat === "sky") && !used.has("match") && Math.random() < 0.22) {
@@ -7996,6 +8292,7 @@ body,
     q.locked = false;
     if (q.radio !== void 0) return radioQ(q.radio);
     if (q.match) return matchQ(q);
+    if (q.robot) return robotQ(q);
     const tints = sh([0, 1, 2, 3]);
     const cc = CATS.find((c) => c.id === L.cat) || {};
     if (q.visual && q.opts && q.ans >= 0 && !q.showsAns) {
@@ -8009,15 +8306,29 @@ body,
       if (a.some((x) => v.has(x) && !others.every((o) => o.has(x)))) q.visual = '<div class="listen">'.concat(cc.e || "\u2B50", "</div>");
     }
     const deco = /^<div class="listen/.test(q.visual || "") && !/radio/.test(q.visual);
-    $("qBody").innerHTML = '<div class="qkick"><span class="qke">'.concat(cc.e || "\u2B50", "</span>").concat(cc.name || "", '</div>\n    <h2 class="qtitle').concat((q.cap || "").length > 34 ? " long" : "", '">').concat(q.cap || "Choose the right one", '</h2>\n    <div class="qtop2"><button class="qspk" id="qSpk" aria-label="Hear the question again"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></button>').concat(deco || !q.visual ? "" : '<div class="qvis">'.concat(q.visual, "</div>"), '</div>\n    <div class="qopts ').concat(q.layout, " ").concat(deco ? "tall" : "", '">').concat(q.opts.map((o, j) => '<button class="qo t'.concat(tints[j % 4], '" data-j="').concat(j, '">').concat(o.h, "</button>")).join(""), '</div>\n    <button class="qcheck" id="qCheck" disabled>CHECK</button>');
+    if (!q.style) {
+      q.style = "cards";
+      if (q.opts && q.opts.length === 4 && q.layout !== "yn" && !q.tf && !q.flash) {
+        const r = Math.random();
+        q.style = r < 0.22 ? "balloon" : r < 0.4 ? "fish" : "cards";
+      }
+    }
+    $("qBody").innerHTML = '<div class="qkick"><span class="qke">'.concat(cc.e || "\u2B50", "</span>").concat(cc.name || "", '</div>\n    <h2 class="qtitle').concat((q.cap || "").length > 34 ? " long" : "", '">').concat(q.cap || "Choose the right one", '</h2>\n    <div class="qtop2').concat(/class="(seqrow|pat|eq|coins|coinname|graph|story2|bags|clues|seq|daycard|sent)/.test(q.visual || "") ? " wide" : "", '"><button class="qspk" id="qSpk" aria-label="Hear the question again"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></button>').concat(deco || !q.visual ? "" : '<div class="qvis">'.concat(q.visual, "</div>"), '</div>\n    <div class="qopts ').concat(q.layout, " ").concat(deco ? "tall" : "", " st-").concat(q.style, '">').concat(q.opts.map((o, j) => '<button class="qo t'.concat(tints[j % 4], '" data-j="').concat(j, '">').concat(o.h, "</button>")).join(""), "</div>\n    ").concat(q.style === "cards" ? '<button class="qcheck" id="qCheck" disabled>CHECK</button>' : '<div class="qhint2">'.concat(q.style === "balloon" ? "\u{1F388} Pop the right balloon!" : "\u{1F3A3} Catch the right fish!", '</div><button class="qcheck" id="qCheck" disabled hidden>CHECK</button>'));
     $("qSpk").onclick = () => {
       sfx.tap();
       ask(q);
     };
     const chk = $("qCheck");
     $("qBody").querySelectorAll(".qo").forEach((b) => b.onclick = () => {
-      if (q.locked || b.classList.contains("faded")) return;
+      if (q.done || b.classList.contains("faded")) return;
       sfx.tap();
+      if (q.style === "balloon" || q.style === "fish") {
+        hush();
+        q.locked = false;
+        b.classList.add(q.style === "balloon" ? "popped" : "caught");
+        pick(+b.dataset.j, b);
+        return;
+      }
       $("qBody").querySelectorAll(".qo.sel").forEach((x) => x.classList.remove("sel"));
       b.classList.add("sel");
       hush();
@@ -8028,7 +8339,9 @@ body,
     });
     chk.onclick = () => {
       const b = $("qBody").querySelector(".qo.sel");
-      if (!b || q.locked) return;
+      if (!b || q.done) return;
+      hush();
+      q.locked = false;
       b.classList.remove("sel");
       chk.disabled = true;
       chk.classList.remove("on");
@@ -8077,6 +8390,7 @@ body,
     if (!q || q.locked) return;
     if (j === q.ans) {
       q.locked = true;
+      q.done = true;
       hush();
       b.classList.add("right");
       sfx.good();
@@ -8106,8 +8420,18 @@ body,
         }
       };
       if (!q.why && q.fact && q.exp && q.exp.t) q.why = { t: q.exp.t, v: [] };
+      {
+        const f = funFact(L.cat, q.kind);
+        if (f) {
+          if (!q.why) q.why = { t: "", v: [] };
+          if (!q.why.v.length) {
+            q.why.v = ["w/" + f.c];
+            q.why.f = f.t;
+          }
+        }
+      }
       if (q.why) {
-        sheet("good why", (q.tf ? q.ans === 0 ? "\u2705 True! " : "\u274C Not true! " : "") + pickOne(PRAISE_T), q.why.t);
+        sheet("good why", (q.tf ? q.ans === 0 ? "\u2705 True! " : "\u274C Not true! " : "") + pickOne(PRAISE_T), (q.why.t || "") + (q.why.f ? '<span class="ffact"><b>\u{1F4A1}</b><span dir="rtl" lang="fa">'.concat(q.why.f, "</span></span>") : ""));
         sayseq([pickOne(PRAISE_CLIPS), ...q.why.v], () => setTimeout(go2, q.why.v.length ? 1800 : 5500));
       } else {
         const fact = q.exp && q.exp.t && String(q.exp.t).length > 2 ? q.exp.t : "";
@@ -8141,6 +8465,7 @@ body,
       return;
     }
     q.locked = true;
+    q.done = true;
     hush();
     S.questions++;
     {
@@ -8841,6 +9166,187 @@ body,
       return { voice: ["w/PX_RHYME", ...wSay(t)], cap: "What rhymes with ".concat(t.w, "?"), visual: PIC("wd_" + t.i, "wp big"), opts: o.map((y) => ({ h: PIC("wd_" + y.i, "wp op") + "<small>".concat(y.w, "</small>"), say: wSay(y) })), ans: o.indexOf(r), layout: o.length > 3 ? "grid4" : "row3", hint: "elim", exp: { t: "".concat(t.w, " \u2013 ").concat(r.w), v: ["w/LULU_ANS_IS", ...wSay(r)] } };
     }
     return qCount("find");
+  }
+  const IFACTS = { "MATH": [["LULU_IF_MATH_0", "\u062A\u0648 \u062F\u0647 \u062A\u0627 \u0627\u0646\u06AF\u0634\u062A \u062F\u0627\u0631\u06CC\u060C \u0648\u0627\u0633\u0647 \u0647\u0645\u06CC\u0646\u0647 \u06A9\u0647 \u0645\u0627 \u062F\u0647\u200C\u062A\u0627 \u062F\u0647\u200C\u062A\u0627 \u0645\u06CC\u200C\u0634\u0645\u0631\u06CC\u0645!"], ["LULU_IF_MATH_1", "\u0635\u0641\u0631 \u06CC\u0639\u0646\u06CC \u0647\u06CC\u0686\u06CC\u060C \u0645\u062B\u0644 \u06CC\u0647 \u0628\u0634\u0642\u0627\u0628\u0650 \u062E\u0627\u0644\u06CC."], ["LULU_IF_MATH_2", "\u0627\u06AF\u0647 \u0628\u0647 \u06CC\u0647 \u0639\u062F\u062F \u06CC\u06A9\u06CC \u0627\u0636\u0627\u0641\u0647 \u06A9\u0646\u06CC\u060C \u0639\u062F\u062F\u0650 \u0628\u0639\u062F\u06CC \u0631\u0648 \u0645\u06CC\u200C\u06AF\u06CC\u0631\u06CC: \u067E\u0646\u062C \u0648 \u06CC\u06A9\u06CC \u062F\u06CC\u06AF\u0647 \u0645\u06CC\u200C\u0634\u0647 \u0634\u06CC\u0634."], ["LULU_IF_MATH_3", "\u062A\u0648\u06CC \u062C\u0645\u0639\u060C \u062C\u0627\u06CC \u0639\u062F\u062F\u0647\u0627 \u0645\u0647\u0645 \u0646\u06CC\u0633\u062A: \u062F\u0648 \u0628\u0647 \u0627\u0636\u0627\u0641\u0647\u200C\u06CC \u0633\u0647 \u0648 \u0633\u0647 \u0628\u0647 \u0627\u0636\u0627\u0641\u0647\u200C\u06CC \u062F\u0648\u060C \u0647\u0631 \u062F\u0648 \u0645\u06CC\u200C\u0634\u0646 \u067E\u0646\u062C."], ["LULU_IF_MATH_4", "\u06CC\u0647 \u062F\u0648\u062C\u06CC\u0646 \u06CC\u0639\u0646\u06CC \u062F\u0648\u0627\u0632\u062F\u0647 \u062A\u0627\u060C \u0645\u062B\u0644 \u06CC\u0647 \u062C\u0639\u0628\u0647 \u0628\u0627 \u062F\u0648\u0627\u0632\u062F\u0647 \u062A\u0627 \u062A\u062E\u0645\u200C\u0645\u0631\u063A."], ["LULU_IF_MATH_5", "\u062A\u0641\u0631\u06CC\u0642 \u0628\u0631\u0639\u06A9\u0633\u0650 \u062C\u0645\u0639\u0647: \u067E\u0646\u062C \u0645\u0646\u0647\u0627\u06CC \u062F\u0648 \u0645\u06CC\u200C\u0634\u0647 \u0633\u0647\u060C \u0648 \u0633\u0647 \u0628\u0647 \u0627\u0636\u0627\u0641\u0647\u200C\u06CC \u062F\u0648 \u0645\u06CC\u200C\u0634\u0647 \u067E\u0646\u062C."], ["LULU_IF_MATH_6", "\u0639\u062F\u062F\u0647\u0627\u06CC \u0632\u0648\u062C \u0631\u0648 \u0645\u06CC\u200C\u0634\u0647 \u0639\u0627\u062F\u0644\u0627\u0646\u0647 \u0628\u06CC\u0646 \u062F\u0648 \u062A\u0627 \u062F\u0648\u0633\u062A \u062A\u0642\u0633\u06CC\u0645 \u06A9\u0631\u062F: \u062F\u0648\u060C \u0686\u0647\u0627\u0631\u060C \u0634\u06CC\u0634\u060C \u0647\u0634\u062A..."], ["LULU_IF_MATH_7", "\u0647\u0631 \u0639\u062F\u062F\u06CC \u0636\u0631\u0628 \u062F\u0631 \u0635\u0641\u0631\u060C \u0645\u06CC\u200C\u0634\u0647 \u0635\u0641\u0631!"], ["LULU_IF_MATH_8", "\u0639\u062F\u062F\u0647\u0627\u06CC\u06CC \u06A9\u0647 \u0645\u0627 \u0645\u06CC\u200C\u0646\u0648\u06CC\u0633\u06CC\u0645 \u0627\u0632 \u0647\u0646\u062F \u0648 \u0627\u06CC\u0631\u0627\u0646\u060C \u0628\u06CC\u0634\u062A\u0631 \u0627\u0632 \u0647\u0632\u0627\u0631 \u0633\u0627\u0644 \u067E\u06CC\u0634\u060C \u0628\u0647 \u0645\u0627 \u0631\u0633\u06CC\u062F\u0647."], ["LULU_IF_MATH_9", "\u062E\u0648\u0627\u0631\u0632\u0645\u06CC\u060C \u06CC\u0647 \u0631\u06CC\u0627\u0636\u06CC\u062F\u0627\u0646\u0650 \u0627\u06CC\u0631\u0627\u0646\u06CC\u060C \u062D\u062F\u0648\u062F \u0647\u0632\u0627\u0631 \u0648 \u062F\u0648\u06CC\u0633\u062A \u0633\u0627\u0644 \u067E\u06CC\u0634 \u06CC\u0647 \u06A9\u062A\u0627\u0628\u0650 \u0645\u0639\u0631\u0648\u0641 \u062F\u0631\u0628\u0627\u0631\u0647\u200C\u06CC \u062C\u0628\u0631 \u0646\u0648\u0634\u062A."], ["LULU_IF_MATH_10", "\u0639\u062F\u062F\u0647\u0627 \u0647\u06CC\u0686\u200C\u0648\u0642\u062A \u062A\u0645\u0648\u0645 \u0646\u0645\u06CC\u200C\u0634\u0646: \u0647\u0645\u06CC\u0634\u0647 \u0645\u06CC\u200C\u0634\u0647 \u06CC\u06A9\u06CC \u062F\u06CC\u06AF\u0647 \u0627\u0636\u0627\u0641\u0647 \u06A9\u0631\u062F!"], ["LULU_IF_MATH_11", "\u0636\u0631\u0628 \u06CC\u0639\u0646\u06CC \u062C\u0645\u0639\u0650 \u0633\u0631\u06CC\u0639: \u0633\u0647 \u0636\u0631\u0628\u062F\u0631 \u0686\u0647\u0627\u0631 \u0645\u06CC\u200C\u0634\u0647 \u0686\u0647\u0627\u0631 \u0648 \u0686\u0647\u0627\u0631 \u0648 \u0686\u0647\u0627\u0631\u060C \u06CC\u0639\u0646\u06CC \u062F\u0648\u0627\u0632\u062F\u0647."]], "PLANETS": [["LULU_IF_PLANETS_0", "\u0632\u0645\u06CC\u0646 \u062A\u0646\u0647\u0627 \u0633\u06CC\u0627\u0631\u0647\u200C\u0627\u06CC\u0647 \u06A9\u0647 \u0645\u06CC\u200C\u062F\u0648\u0646\u06CC\u0645 \u062A\u0648\u0634 \u0632\u0646\u062F\u06AF\u06CC \u0647\u0633\u062A."], ["LULU_IF_PLANETS_1", "\u0627\u0628\u0631\u0647\u0627 \u0627\u0632 \u0642\u0637\u0631\u0647\u200C\u0647\u0627\u06CC \u062E\u06CC\u0644\u06CC \u06A9\u0648\u0686\u06CC\u06A9\u0650 \u0622\u0628 \u062F\u0631\u0633\u062A \u0634\u062F\u0646. \u0648\u0642\u062A\u06CC \u0642\u0637\u0631\u0647\u200C\u0647\u0627 \u0633\u0646\u06AF\u06CC\u0646 \u0628\u0634\u0646\u060C \u0628\u0647 \u0634\u06A9\u0644\u0650 \u0628\u0627\u0631\u0648\u0646 \u0645\u06CC\u200C\u0631\u06CC\u0632\u0646."], ["LULU_IF_PLANETS_2", "\u0631\u0646\u06AF\u06CC\u0646\u200C\u06A9\u0645\u0648\u0646 \u0648\u0642\u062A\u06CC \u062F\u0631\u0633\u062A \u0645\u06CC\u200C\u0634\u0647 \u06A9\u0647 \u0646\u0648\u0631\u0650 \u062E\u0648\u0631\u0634\u06CC\u062F \u0627\u0632 \u0642\u0637\u0631\u0647\u200C\u0647\u0627\u06CC \u0628\u0627\u0631\u0648\u0646 \u0631\u062F \u0628\u0634\u0647."], ["LULU_IF_PLANETS_3", "\u0645\u0627\u0647 \u0646\u0648\u0631\u0650 \u062E\u0648\u062F\u0634 \u0631\u0648 \u0646\u062F\u0627\u0631\u0647. \u0645\u06CC\u200C\u062F\u0631\u062E\u0634\u0647 \u0686\u0648\u0646 \u062E\u0648\u0631\u0634\u06CC\u062F \u0631\u0648\u0634 \u0646\u0648\u0631 \u0645\u06CC\u200C\u062A\u0627\u0628\u0648\u0646\u0647."], ["LULU_IF_PLANETS_4", "\u0633\u062A\u0627\u0631\u0647\u200C\u0647\u0627 \u062A\u0648\u067E\u200C\u0647\u0627\u06CC \u0628\u0632\u0631\u06AF\u06CC \u0627\u0632 \u06AF\u0627\u0632\u0650 \u062F\u0627\u063A \u0647\u0633\u062A\u0646. \u062E\u0648\u0631\u0634\u06CC\u062F \u0646\u0632\u062F\u06CC\u06A9\u200C\u062A\u0631\u06CC\u0646 \u0633\u062A\u0627\u0631\u0647 \u0628\u0647 \u0645\u0627\u0633\u062A."], ["LULU_IF_PLANETS_5", "\u0632\u062D\u0644 \u062D\u0644\u0642\u0647\u200C\u0647\u0627\u06CC \u0642\u0634\u0646\u06AF\u06CC \u062F\u0627\u0631\u0647 \u06A9\u0647 \u0627\u0632 \u06CC\u062E \u0648 \u0633\u0646\u06AF \u062F\u0631\u0633\u062A \u0634\u062F\u0646."], ["LULU_IF_PLANETS_6", "\u0641\u0636\u0627\u0646\u0648\u0631\u062F\u0647\u0627 \u0631\u0648\u06CC \u0645\u0627\u0647 \u0631\u0627\u0647 \u0631\u0641\u062A\u0646. \u062C\u0627\u06CC \u067E\u0627\u0634\u0648\u0646 \u0647\u0646\u0648\u0632 \u0627\u0648\u0646\u062C\u0627\u0633\u062A\u060C \u0686\u0648\u0646 \u0627\u0648\u0646\u062C\u0627 \u0628\u0627\u062F \u0646\u0645\u06CC\u0627\u062F!"], ["LULU_IF_PLANETS_7", "\u0628\u0631\u0642 \u062E\u06CC\u0644\u06CC \u062F\u0627\u063A\u0647\u060C \u0648 \u0631\u0639\u062F \u0635\u062F\u0627\u06CC \u0627\u0648\u0646\u0647. \u0627\u0648\u0644 \u0646\u0648\u0631 \u0631\u0648 \u0645\u06CC\u200C\u0628\u06CC\u0646\u06CC\u0645\u060C \u0628\u0639\u062F \u0635\u062F\u0627\u06CC \u0628\u0648\u0645 \u0631\u0648 \u0645\u06CC\u200C\u0634\u0646\u0648\u06CC\u0645."], ["LULU_IF_PLANETS_8", "\u06A9\u0647\u06A9\u0634\u0627\u0646\u0650 \u0645\u0627\u060C \u0631\u0627\u0647 \u0634\u06CC\u0631\u06CC\u060C \u0634\u06A9\u0644\u0650 \u06CC\u0647 \u0645\u0627\u0631\u067E\u06CC\u0686\u0650 \u062E\u06CC\u0644\u06CC \u0628\u0632\u0631\u06AF\u0647 \u06A9\u0647 \u0645\u06CC\u200C\u0686\u0631\u062E\u0647."], ["LULU_IF_PLANETS_9", "\u0646\u0648\u0631\u0650 \u062E\u0648\u0631\u0634\u06CC\u062F \u062D\u062F\u0648\u062F \u0647\u0634\u062A \u062F\u0642\u06CC\u0642\u0647 \u0637\u0648\u0644 \u0645\u06CC\u200C\u06A9\u0634\u0647 \u062A\u0627 \u0628\u0647 \u0632\u0645\u06CC\u0646 \u0628\u0631\u0633\u0647."], ["LULU_IF_PLANETS_10", "\u0645\u0634\u062A\u0631\u06CC \u0628\u0632\u0631\u06AF\u200C\u062A\u0631\u06CC\u0646 \u0633\u06CC\u0627\u0631\u0647\u200C\u0633\u062A\u060C \u0628\u06CC\u0634\u062A\u0631 \u0627\u0632 \u0647\u0632\u0627\u0631 \u062A\u0627 \u0632\u0645\u06CC\u0646 \u062A\u0648\u0634 \u062C\u0627 \u0645\u06CC\u200C\u0634\u0647!"], ["LULU_IF_PLANETS_11", "\u0646\u0648\u0631\u0650 \u0633\u062A\u0627\u0631\u0647\u200C\u0647\u0627\u06CC \u062F\u0648\u0631 \u0645\u06CC\u200C\u062A\u0648\u0646\u0647 \u0647\u0632\u0627\u0631\u0627\u0646 \u0633\u0627\u0644 \u062A\u0648\u06CC \u0631\u0627\u0647 \u0628\u0627\u0634\u0647 \u062A\u0627 \u0628\u0647 \u0686\u0634\u0645\u0650 \u062A\u0648 \u0628\u0631\u0633\u0647."]], "SHAPES": [["LULU_IF_SHAPES_0", "\u0645\u062B\u0644\u062B \u0633\u0647 \u062A\u0627 \u0636\u0644\u0639 \u0648 \u0633\u0647 \u062A\u0627 \u06AF\u0648\u0634\u0647 \u062F\u0627\u0631\u0647."], ["LULU_IF_SHAPES_1", "\u062F\u0627\u06CC\u0631\u0647 \u0627\u0635\u0644\u0627\u064B \u06AF\u0648\u0634\u0647 \u0646\u062F\u0627\u0631\u0647."], ["LULU_IF_SHAPES_2", "\u0645\u0631\u0628\u0639 \u0686\u0647\u0627\u0631 \u062A\u0627 \u0636\u0644\u0639 \u062F\u0627\u0631\u0647 \u06A9\u0647 \u0647\u0645\u0647\u200C\u0634\u0648\u0646 \u0647\u0645\u200C\u0627\u0646\u062F\u0627\u0632\u0647\u200C\u0627\u0646."], ["LULU_IF_SHAPES_3", "\u0686\u0631\u062E\u200C\u0647\u0627 \u06AF\u0650\u0631\u062F\u0646 \u062A\u0627 \u0628\u062A\u0648\u0646\u0646 \u0631\u0627\u062D\u062A \u0642\u0650\u0644 \u0628\u062E\u0648\u0631\u0646."], ["LULU_IF_SHAPES_4", "\u062A\u0627\u0628\u0644\u0648\u06CC \u0627\u06CC\u0633\u062A \u0647\u0634\u062A\u200C\u0636\u0644\u0639\u06CC\u0647\u060C \u06CC\u0639\u0646\u06CC \u0647\u0634\u062A \u062A\u0627 \u0636\u0644\u0639 \u062F\u0627\u0631\u0647."], ["LULU_IF_SHAPES_5", "\u062A\u0627\u0633 \u0645\u06A9\u0639\u0628\u0647\u060C \u0634\u06CC\u0634 \u062A\u0627 \u0648\u062C\u0647\u0650 \u0645\u0631\u0628\u0639\u06CC \u062F\u0627\u0631\u0647."], ["LULU_IF_SHAPES_6", "\u0632\u0646\u0628\u0648\u0631\u0647\u0627 \u0644\u0648\u0646\u0647\u200C\u0634\u0648\u0646 \u0631\u0648 \u0627\u0632 \u0634\u0634\u200C\u0636\u0644\u0639\u06CC\u200C\u0647\u0627 \u0645\u06CC\u200C\u0633\u0627\u0632\u0646."], ["LULU_IF_SHAPES_7", "\u0647\u0631\u0645\u200C\u0647\u0627\u06CC \u0645\u0635\u0631 \u0628\u06CC\u0634\u062A\u0631 \u0627\u0632 \u0686\u0647\u0627\u0631 \u0647\u0632\u0627\u0631 \u0648 \u067E\u0648\u0646\u0635\u062F \u0633\u0627\u0644 \u0639\u0645\u0631 \u062F\u0627\u0631\u0646."], ["LULU_IF_SHAPES_8", "\u06A9\u064F\u0631\u0647 \u0627\u0632 \u0647\u0631 \u0637\u0631\u0641 \u06CC\u0647 \u0634\u06A9\u0644 \u062F\u06CC\u062F\u0647 \u0645\u06CC\u200C\u0634\u0647\u060C \u0645\u062B\u0644\u0650 \u062A\u0648\u067E."], ["LULU_IF_SHAPES_9", "\u0632\u0627\u0648\u06CC\u0647\u200C\u0647\u0627\u06CC \u06CC\u0647 \u0645\u062B\u0644\u062B \u0628\u0627 \u0647\u0645 \u0647\u0645\u06CC\u0634\u0647 \u0645\u06CC\u200C\u0634\u0646 \u0635\u062F \u0648 \u0647\u0634\u062A\u0627\u062F \u062F\u0631\u062C\u0647."], ["LULU_IF_SHAPES_10", "\u062F\u0648\u0646\u0647\u200C\u0647\u0627\u06CC \u0628\u0631\u0641 \u0645\u0639\u0645\u0648\u0644\u0627\u064B \u0634\u06CC\u0634 \u062A\u0627 \u0634\u0627\u062E\u0647 \u062F\u0627\u0631\u0646."], ["LULU_IF_SHAPES_11", "\u06A9\u0627\u0634\u06CC\u200C\u0647\u0627 \u0648 \u0641\u0631\u0634\u200C\u0647\u0627\u06CC \u0627\u06CC\u0631\u0627\u0646\u06CC \u067E\u0631 \u0627\u0632 \u0627\u0644\u06AF\u0648\u0647\u0627\u06CC \u0642\u0634\u0646\u06AF\u0650 \u0634\u06A9\u0644\u200C\u0647\u0627\u0646."]], "WORDS": [["LULU_IF_WORDS_0", "cat \u0648 hat \u0648 bat \u0647\u0645\u200C\u0642\u0627\u0641\u06CC\u0647\u200C\u0627\u0646\u060C \u0622\u062E\u0631\u0634\u0648\u0646 \u06CC\u0647 \u0635\u062F\u0627 \u062F\u0627\u0631\u0647."], ["LULU_IF_WORDS_1", "\u0627\u0644\u0641\u0628\u0627\u06CC \u0627\u0646\u06AF\u0644\u06CC\u0633\u06CC \u0628\u06CC\u0633\u062A \u0648 \u0634\u06CC\u0634 \u062A\u0627 \u062D\u0631\u0641 \u062F\u0627\u0631\u0647."], ["LULU_IF_WORDS_2", "\u0628\u0647 \u062D\u0631\u0641\u200C\u0647\u0627\u06CC A \u0648 E \u0648 I \u0648 O \u0648 U \u0645\u06CC\u200C\u06AF\u0646 \u062D\u0631\u0648\u0641\u0650 \u0635\u062F\u0627\u062F\u0627\u0631."], ["LULU_IF_WORDS_3", "\u0627\u0644\u0641\u0628\u0627\u06CC \u0641\u0627\u0631\u0633\u06CC \u0633\u06CC \u0648 \u062F\u0648 \u062A\u0627 \u062D\u0631\u0641 \u062F\u0627\u0631\u0647."], ["LULU_IF_WORDS_4", "\u0641\u0627\u0631\u0633\u06CC \u0627\u0632 \u0631\u0627\u0633\u062A \u0628\u0647 \u0686\u067E \u0646\u0648\u0634\u062A\u0647 \u0645\u06CC\u200C\u0634\u0647\u060C \u0627\u0646\u06AF\u0644\u06CC\u0633\u06CC \u0627\u0632 \u0686\u067E \u0628\u0647 \u0631\u0627\u0633\u062A."], ["LULU_IF_WORDS_5", "\u06CC\u0647 \u06A9\u0644\u0645\u0647 \u0645\u06CC\u200C\u062A\u0648\u0646\u0647 \u0686\u0646\u062F \u062A\u0627 \u0645\u0639\u0646\u06CC \u062F\u0627\u0634\u062A\u0647 \u0628\u0627\u0634\u0647: bat \u0647\u0645 \u06CC\u0647 \u062D\u06CC\u0648\u0648\u0646\u0647 \u0647\u0645 \u0686\u0648\u0628\u0650 \u0628\u06CC\u0633\u0628\u0627\u0644."], ["LULU_IF_WORDS_6", "\u06A9\u0644\u0645\u0647\u200C\u0647\u0627\u06CC \u0645\u0631\u06A9\u0628 \u0627\u0632 \u062F\u0648 \u062A\u0627 \u06A9\u0644\u0645\u0647 \u062F\u0631\u0633\u062A \u0645\u06CC\u200C\u0634\u0646: sun \u0648 flower \u0645\u06CC\u200C\u0634\u0647 sunflower."], ["LULU_IF_WORDS_7", "\u0628\u0639\u0636\u06CC \u0627\u0632 \u06A9\u0644\u0645\u0647\u200C\u0647\u0627\u06CC \u0628\u0644\u0646\u062F\u0650 \u0627\u0646\u06AF\u0644\u06CC\u0633\u06CC \u0628\u06CC\u0634\u062A\u0631 \u0627\u0632 \u0628\u06CC\u0633\u062A \u062A\u0627 \u062D\u0631\u0641 \u062F\u0627\u0631\u0646!"], ["LULU_IF_WORDS_8", "\u0627\u0646\u06AF\u0644\u06CC\u0633\u06CC \u0628\u0639\u0636\u06CC \u06A9\u0644\u0645\u0647\u200C\u0647\u0627 \u0631\u0648 \u0627\u0632 \u0641\u0627\u0631\u0633\u06CC \u06AF\u0631\u0641\u062A\u0647\u060C \u0645\u062B\u0644\u0650 paradise \u0648 pajamas \u0648 bazaar."], ["LULU_IF_WORDS_9", "\u06A9\u0644\u0645\u0647\u200C\u0647\u0627\u06CC\u06CC \u06A9\u0647 \u06CC\u0647\u200C\u062C\u0648\u0631 \u062A\u0644\u0641\u0638 \u0645\u06CC\u200C\u0634\u0646 \u0648\u0644\u06CC \u0645\u0639\u0646\u06CC\u200C\u0634\u0648\u0646 \u0641\u0631\u0642 \u062F\u0627\u0631\u0647\u060C \u0645\u062B\u0644\u0650 sea \u0648 see."], ["LULU_IF_WORDS_10", "\u062D\u0631\u0641\u0650 E \u067E\u0631\u06A9\u0627\u0631\u0628\u0631\u062F\u062A\u0631\u06CC\u0646 \u062D\u0631\u0641\u0650 \u0627\u0646\u06AF\u0644\u06CC\u0633\u06CC\u0647."], ["LULU_IF_WORDS_11", "\u0647\u0631 \u0633\u0627\u0644 \u06A9\u0644\u0645\u0647\u200C\u0647\u0627\u06CC \u062C\u062F\u06CC\u062F \u0628\u0647 \u0641\u0631\u0647\u0646\u06AF\u0650 \u0644\u063A\u062A \u0627\u0636\u0627\u0641\u0647 \u0645\u06CC\u200C\u0634\u0646."]], "READ": [["LULU_IF_READ_0", "the \u067E\u0631\u06A9\u0627\u0631\u0628\u0631\u062F\u062A\u0631\u06CC\u0646 \u06A9\u0644\u0645\u0647\u200C\u06CC \u0627\u0646\u06AF\u0644\u06CC\u0633\u06CC\u0647."], ["LULU_IF_READ_1", "\u0647\u0631 \u0631\u0648\u0632 \u06CC\u0647 \u06A9\u0645 \u062E\u0648\u0646\u062F\u0646\u060C \u062A\u0648 \u0631\u0648 \u06CC\u0647 \u06A9\u062A\u0627\u0628\u200C\u062E\u0648\u0646\u0650 \u0642\u0647\u0631\u0645\u0627\u0646 \u0645\u06CC\u200C\u06A9\u0646\u0647."], ["LULU_IF_READ_2", "\u0639\u06A9\u0633\u200C\u0647\u0627\u06CC \u06A9\u062A\u0627\u0628 \u06A9\u0645\u06A9 \u0645\u06CC\u200C\u06A9\u0646\u0646 \u0642\u0635\u0647 \u0631\u0648 \u0628\u0641\u0647\u0645\u06CC\u0645."], ["LULU_IF_READ_3", "\u0645\u06CC\u200C\u062A\u0648\u0646\u06CC \u0648\u0627\u0633\u0647 \u0639\u0631\u0648\u0633\u06A9\u200C\u0647\u0627\u062A \u06A9\u062A\u0627\u0628 \u0628\u062E\u0648\u0646\u06CC\u060C \u0627\u0648\u0646\u0627 \u0647\u0645 \u0642\u0635\u0647 \u062F\u0648\u0633\u062A \u062F\u0627\u0631\u0646!"], ["LULU_IF_READ_4", "\u062A\u0648\u06CC \u06A9\u062A\u0627\u0628\u062E\u0648\u0646\u0647 \u0645\u06CC\u200C\u0634\u0647 \u06A9\u062A\u0627\u0628 \u0631\u0648 \u0645\u062C\u0627\u0646\u06CC \u0627\u0645\u0627\u0646\u062A \u06AF\u0631\u0641\u062A."], ["LULU_IF_READ_5", "\u062D\u062F\u0648\u062F\u0650 \u0635\u062F \u062A\u0627 \u06A9\u0644\u0645\u0647\u200C\u06CC \u067E\u0631\u062A\u06A9\u0631\u0627\u0631\u060C \u0646\u0635\u0641\u0650 \u0686\u06CC\u0632\u0647\u0627\u06CC\u06CC\u200C\u0627\u0646 \u06A9\u0647 \u0645\u06CC\u200C\u062E\u0648\u0646\u06CC\u0645."], ["LULU_IF_READ_6", "\u0627\u0648\u0644\u06CC\u0646 \u06A9\u062A\u0627\u0628\u200C\u0647\u0627\u06CC \u0686\u0627\u067E\u06CC \u0628\u06CC\u0634\u062A\u0631 \u0627\u0632 \u067E\u0648\u0646\u0635\u062F \u0633\u0627\u0644 \u067E\u06CC\u0634 \u0633\u0627\u062E\u062A\u0647 \u0634\u062F\u0646."], ["LULU_IF_READ_7", "\u0622\u062F\u0645\u200C\u0647\u0627\u06CC \u0646\u0627\u0628\u06CC\u0646\u0627 \u0628\u0627 \u0627\u0646\u06AF\u0634\u062A\u200C\u0647\u0627\u0634\u0648\u0646\u060C \u0628\u0627 \u0646\u0642\u0637\u0647\u200C\u0647\u0627\u06CC \u0628\u0631\u06CC\u0644\u060C \u0645\u06CC\u200C\u062E\u0648\u0646\u0646."], ["LULU_IF_READ_8", "\u0628\u0644\u0646\u062F \u062E\u0648\u0646\u062F\u0646 \u06A9\u0645\u06A9 \u0645\u06CC\u200C\u06A9\u0646\u0647 \u06A9\u0644\u0645\u0647\u200C\u0647\u0627 \u0631\u0648 \u0628\u0647\u062A\u0631 \u06CC\u0627\u062F\u062A \u0628\u0645\u0648\u0646\u0647."], ["LULU_IF_READ_9", "\u0634\u0627\u0647\u0646\u0627\u0645\u0647\u060C \u06CC\u0647 \u06A9\u062A\u0627\u0628\u0650 \u0645\u0639\u0631\u0648\u0641\u0650 \u0641\u0627\u0631\u0633\u06CC\u060C \u062D\u062F\u0648\u062F\u0650 \u067E\u0646\u062C\u0627\u0647 \u0647\u0632\u0627\u0631 \u0628\u06CC\u062A \u0634\u0639\u0631 \u062F\u0627\u0631\u0647."], ["LULU_IF_READ_10", "\u0648\u0642\u062A\u06CC \u0642\u0635\u0647 \u0645\u06CC\u200C\u062E\u0648\u0646\u06CC\u060C \u0645\u063A\u0632\u062A \u062A\u0648\u06CC \u0630\u0647\u0646\u062A \u0639\u06A9\u0633 \u0645\u06CC\u200C\u0633\u0627\u0632\u0647."], ["LULU_IF_READ_11", "\u0628\u0639\u0636\u06CC\u200C\u0647\u0627 \u0645\u06CC\u200C\u062A\u0648\u0646\u0646 \u062A\u0648\u06CC \u06CC\u0647 \u062F\u0642\u06CC\u0642\u0647 \u0628\u06CC\u0634\u062A\u0631 \u0627\u0632 \u062F\u0648\u06CC\u0633\u062A \u062A\u0627 \u06A9\u0644\u0645\u0647 \u0628\u062E\u0648\u0646\u0646."]], "ROBOT": [["LULU_IF_ROBOT_0", "\u0631\u0628\u0627\u062A\u200C\u0647\u0627 \u0641\u0642\u0637 \u06A9\u0627\u0631\u06CC \u0631\u0648 \u0645\u06CC\u200C\u06A9\u0646\u0646 \u06A9\u0647 \u0645\u0627 \u0628\u0647\u0634\u0648\u0646 \u0628\u06AF\u06CC\u0645."], ["LULU_IF_ROBOT_1", "\u0631\u0627\u0633\u062A \u0648 \u0686\u067E \u0628\u0631\u0639\u06A9\u0633\u0650 \u0647\u0645\u0646\u060C \u0628\u0627\u0644\u0627 \u0648 \u067E\u0627\u06CC\u06CC\u0646 \u0647\u0645 \u0647\u0645\u06CC\u0646\u200C\u0637\u0648\u0631."], ["LULU_IF_ROBOT_2", "\u0628\u0647 \u0627\u0634\u062A\u0628\u0627\u0647 \u062A\u0648\u06CC \u0628\u0631\u0646\u0627\u0645\u0647 \u0645\u06CC\u200C\u06AF\u0646 \u0628\u0627\u06AF."], ["LULU_IF_ROBOT_3", "\u0631\u0628\u0627\u062A\u200C\u0647\u0627 \u062A\u0648\u06CC \u06A9\u0627\u0631\u062E\u0648\u0646\u0647 \u0628\u0647 \u0633\u0627\u062E\u062A\u0646\u0650 \u0645\u0627\u0634\u06CC\u0646 \u06A9\u0645\u06A9 \u0645\u06CC\u200C\u06A9\u0646\u0646."], ["LULU_IF_ROBOT_4", "\u062C\u0627\u0631\u0648\u0628\u0631\u0642\u06CC\u0650 \u0631\u0628\u0627\u062A\u06CC \u062E\u0648\u062F\u0634 \u062A\u0646\u0647\u0627\u06CC\u06CC \u0632\u0645\u06CC\u0646 \u0631\u0648 \u062A\u0645\u06CC\u0632 \u0645\u06CC\u200C\u06A9\u0646\u0647."], ["LULU_IF_ROBOT_5", "\u0627\u06AF\u0647 \u0642\u0628\u0644 \u0627\u0632 \u0634\u0631\u0648\u0639 \u0628\u0631\u0646\u0627\u0645\u0647\u200C\u0631\u06CC\u0632\u06CC \u06A9\u0646\u06CC\u060C \u0648\u0642\u062A\u062A \u0647\u062F\u0631 \u0646\u0645\u06CC\u200C\u0631\u0647."], ["LULU_IF_ROBOT_6", "\u062D\u0644\u0642\u0647 \u0642\u062F\u0645\u200C\u0647\u0627 \u0631\u0648 \u062A\u06A9\u0631\u0627\u0631 \u0645\u06CC\u200C\u06A9\u0646\u0647: \xAB\u0633\u0647 \u0628\u0627\u0631 \u0628\u0631\u0648 \u0631\u0627\u0633\u062A\xBB \u0628\u0647 \u062C\u0627\u06CC \u0631\u0627\u0633\u062A\u060C \u0631\u0627\u0633\u062A\u060C \u0631\u0627\u0633\u062A."], ["LULU_IF_ROBOT_7", "\u06A9\u0644\u0645\u0647\u200C\u06CC \u0627\u0644\u06AF\u0648\u0631\u06CC\u062A\u0645 \u0627\u0632 \u0627\u0633\u0645\u0650 \u062E\u0648\u0627\u0631\u0632\u0645\u06CC\u060C \u062F\u0627\u0646\u0634\u0645\u0646\u062F\u0650 \u0627\u06CC\u0631\u0627\u0646\u06CC\u060C \u0627\u0648\u0645\u062F\u0647."], ["LULU_IF_ROBOT_8", "\u0631\u0628\u0627\u062A\u200C\u0647\u0627\u06CC\u06CC \u06A9\u0647 \u0631\u0648\u06CC \u0645\u0631\u06CC\u062E \u0647\u0633\u062A\u0646\u060C \u062F\u0648\u0631 \u0645\u06CC\u200C\u0632\u0646\u0646 \u0648 \u0639\u06A9\u0633 \u0645\u06CC\u200C\u06AF\u06CC\u0631\u0646."], ["LULU_IF_ROBOT_9", "\u0622\u062F\u0627 \u0644\u0627\u0648\u0644\u06CC\u0633 \u062D\u062F\u0648\u062F\u0650 \u062F\u0648\u06CC\u0633\u062A \u0633\u0627\u0644 \u067E\u06CC\u0634 \u06CC\u06A9\u06CC \u0627\u0632 \u0627\u0648\u0644\u06CC\u0646 \u0628\u0631\u0646\u0627\u0645\u0647\u200C\u0647\u0627\u06CC \u06A9\u0627\u0645\u067E\u06CC\u0648\u062A\u0631\u06CC \u0631\u0648 \u0646\u0648\u0634\u062A."], ["LULU_IF_ROBOT_10", "\u06A9\u0627\u0645\u067E\u06CC\u0648\u062A\u0631\u0647\u0627 \u0641\u0642\u0637 \u062F\u0648 \u062A\u0627 \u0639\u062F\u062F \u0631\u0648 \u0645\u06CC\u200C\u0641\u0647\u0645\u0646: \u0635\u0641\u0631 \u0648 \u06CC\u06A9."], ["LULU_IF_ROBOT_11", "\u067E\u06CC\u062F\u0627 \u06A9\u0631\u062F\u0646\u0650 \u06A9\u0648\u062A\u0627\u0647\u200C\u062A\u0631\u06CC\u0646 \u0631\u0627\u0647\u060C \u0645\u0639\u0645\u0627\u06CC\u06CC\u0647 \u06A9\u0647 \u0646\u0642\u0634\u0647\u200C\u0647\u0627 \u0648 \u0645\u0627\u0634\u06CC\u0646\u200C\u0647\u0627\u06CC \u067E\u0633\u062A \u0647\u0631 \u0631\u0648\u0632 \u062D\u0644\u0634 \u0645\u06CC\u200C\u06A9\u0646\u0646."]], "SIMON": [["LULU_IF_SIMON_0", "\u0642\u0631\u0645\u0632 \u0648 \u0632\u0631\u062F \u0648 \u0622\u0628\u06CC \u0631\u0648 \u06A9\u0647 \u0642\u0627\u0637\u06CC \u06A9\u0646\u06CC\u060C \u06A9\u0644\u06CC \u0631\u0646\u06AF\u0650 \u062F\u06CC\u06AF\u0647 \u062F\u0631\u0633\u062A \u0645\u06CC\u200C\u0634\u0647."], ["LULU_IF_SIMON_1", "\u0632\u0631\u062F \u0648 \u0622\u0628\u06CC \u0628\u0627 \u0647\u0645 \u0645\u06CC\u200C\u0634\u0646 \u0633\u0628\u0632."], ["LULU_IF_SIMON_2", "\u0642\u0631\u0645\u0632 \u0648 \u0632\u0631\u062F \u0628\u0627 \u0647\u0645 \u0645\u06CC\u200C\u0634\u0646 \u0646\u0627\u0631\u0646\u062C\u06CC."], ["LULU_IF_SIMON_3", "\u0622\u0647\u0646\u06AF\u200C\u0647\u0627 \u06A9\u0645\u06A9\u0645\u0648\u0646 \u0645\u06CC\u200C\u06A9\u0646\u0646 \u0686\u06CC\u0632\u0647\u0627 \u06CC\u0627\u062F\u0645\u0648\u0646 \u0628\u0645\u0648\u0646\u0647\u060C \u0648\u0627\u0633\u0647 \u0647\u0645\u06CC\u0646\u0647 \u06A9\u0647 \u0627\u0644\u0641\u0628\u0627 \u0631\u0648 \u0622\u0648\u0627\u0632 \u0645\u06CC\u200C\u062E\u0648\u0646\u06CC\u0645."], ["LULU_IF_SIMON_4", "\u06CC\u0647 \u062E\u0648\u0627\u0628\u0650 \u062E\u0648\u0628 \u06A9\u0645\u06A9 \u0645\u06CC\u200C\u06A9\u0646\u0647 \u0686\u06CC\u0632\u0647\u0627\u06CC\u06CC \u06A9\u0647 \u0627\u0645\u0631\u0648\u0632 \u06CC\u0627\u062F \u06AF\u0631\u0641\u062A\u06CC \u06CC\u0627\u062F\u062A \u0628\u0645\u0648\u0646\u0647."], ["LULU_IF_SIMON_5", "\u0641\u06CC\u0644\u200C\u0647\u0627 \u062D\u0627\u0641\u0638\u0647\u200C\u06CC \u0641\u0648\u0642\u200C\u0627\u0644\u0639\u0627\u062F\u0647\u200C\u0627\u06CC \u062F\u0627\u0631\u0646."], ["LULU_IF_SIMON_6", "\u0628\u06CC\u0634\u062A\u0631\u0650 \u0622\u062F\u0645\u200C\u0647\u0627 \u0645\u06CC\u200C\u062A\u0648\u0646\u0646 \u062D\u062F\u0648\u062F\u0650 \u0647\u0641\u062A \u062A\u0627 \u0686\u06CC\u0632 \u0631\u0648 \u0647\u0645\u0632\u0645\u0627\u0646 \u062A\u0648\u06CC \u0630\u0647\u0646\u0634\u0648\u0646 \u0646\u06AF\u0647 \u062F\u0627\u0631\u0646."], ["LULU_IF_SIMON_7", "\u062F\u0633\u062A\u0647\u200C\u0628\u0646\u062F\u06CC \u06A9\u0645\u06A9 \u0645\u06CC\u200C\u06A9\u0646\u0647: \u06CC\u0647 \u0634\u0645\u0627\u0631\u0647 \u0631\u0648 \u062F\u0648 \u062A\u0627 \u062F\u0648 \u062A\u0627 \u0631\u0627\u062D\u062A\u200C\u062A\u0631 \u06CC\u0627\u062F\u062A \u0645\u06CC\u200C\u0645\u0648\u0646\u0647."], ["LULU_IF_SIMON_8", "\u0631\u0646\u06AF\u06CC\u0646\u200C\u06A9\u0645\u0648\u0646 \u0647\u0645\u06CC\u0634\u0647 \u0631\u0646\u06AF\u200C\u0647\u0627\u0634 \u0628\u0647 \u06CC\u0647 \u062A\u0631\u062A\u06CC\u0628\u0647: \u0642\u0631\u0645\u0632\u060C \u0646\u0627\u0631\u0646\u062C\u06CC\u060C \u0632\u0631\u062F\u060C \u0633\u0628\u0632\u060C \u0622\u0628\u06CC\u060C \u0646\u06CC\u0644\u06CC\u060C \u0628\u0646\u0641\u0634."], ["LULU_IF_SIMON_9", "\u0645\u063A\u0632\u062A \u062D\u062F\u0648\u062F\u0650 \u0647\u0634\u062A\u0627\u062F \u0648 \u0634\u06CC\u0634 \u0645\u06CC\u0644\u06CC\u0627\u0631\u062F \u0633\u0644\u0648\u0644\u0650 \u0639\u0635\u0628\u06CC \u062F\u0627\u0631\u0647."], ["LULU_IF_SIMON_10", "\u0645\u0648\u0633\u06CC\u0642\u06CC \u0632\u062F\u0646 \u0648 \u0628\u0627\u0632\u06CC \u06A9\u0631\u062F\u0646 \u0645\u06CC\u200C\u062A\u0648\u0646\u0647 \u062D\u0627\u0641\u0638\u0647 \u0631\u0648 \u0642\u0648\u06CC\u200C\u062A\u0631 \u06A9\u0646\u0647."], ["LULU_IF_SIMON_11", "\u0628\u0639\u0636\u06CC \u0642\u0647\u0631\u0645\u0627\u0646\u200C\u0647\u0627\u06CC \u062D\u0627\u0641\u0638\u0647\u060C \u062A\u0631\u062A\u06CC\u0628\u0650 \u06CC\u0647 \u062F\u0633\u062A\u0647\u200C\u06CC \u06A9\u0627\u0645\u0644\u0650 \u0648\u0631\u0642 \u0631\u0648 \u06A9\u0645\u062A\u0631 \u0627\u0632 \u06CC\u0647 \u062F\u0642\u06CC\u0642\u0647 \u062D\u0641\u0638 \u0645\u06CC\u200C\u06A9\u0646\u0646."]], "PATTERN": [["LULU_IF_PATTERN_0", "\u0631\u0648\u0632 \u0648 \u0634\u0628 \u0647\u0631 \u0631\u0648\u0632 \u062A\u06A9\u0631\u0627\u0631 \u0645\u06CC\u200C\u0634\u0646\u060C \u0627\u06CC\u0646 \u06CC\u0647 \u0627\u0644\u06AF\u0648\u0626\u0647."], ["LULU_IF_PATTERN_1", "\u06AF\u0648\u0631\u062E\u0631\u0647\u0627 \u0631\u0627\u0647\u200C\u0631\u0627\u0647\u200C\u0627\u0646\u060C \u0648 \u0631\u0627\u0647\u200C\u0631\u0627\u0647\u200C\u0647\u0627\u06CC \u0647\u0631 \u06AF\u0648\u0631\u062E\u0631 \u0628\u0627 \u0628\u0642\u06CC\u0647 \u0641\u0631\u0642 \u062F\u0627\u0631\u0647."], ["LULU_IF_PATTERN_2", "\u0641\u0635\u0644\u200C\u0647\u0627 \u062A\u06A9\u0631\u0627\u0631 \u0645\u06CC\u200C\u0634\u0646: \u0628\u0647\u0627\u0631\u060C \u062A\u0627\u0628\u0633\u062A\u0648\u0646\u060C \u067E\u0627\u06CC\u06CC\u0632\u060C \u0632\u0645\u0633\u062A\u0648\u0646."], ["LULU_IF_PATTERN_3", "\u062F\u0648 \u062A\u0627 \u062F\u0648 \u062A\u0627 \u0634\u0645\u0631\u062F\u0646: \u062F\u0648\u060C \u0686\u0647\u0627\u0631\u060C \u0634\u06CC\u0634\u060C \u0647\u0634\u062A\u060C \u062F\u0647!"], ["LULU_IF_PATTERN_4", "\u062F\u0633\u062A\u060C \u062F\u0633\u062A\u060C \u067E\u0627\u060C \u06CC\u0647 \u0627\u0644\u06AF\u0648\u0626\u0647 \u06A9\u0647 \u0645\u06CC\u200C\u0634\u0647 \u0634\u0646\u06CC\u062F\u0634."], ["LULU_IF_PATTERN_5", "\u0631\u0648\u0632\u0647\u0627\u06CC \u0647\u0641\u062A\u0647 \u0647\u0631 \u0647\u0641\u062A \u0631\u0648\u0632 \u06CC\u0647 \u0628\u0627\u0631 \u062A\u06A9\u0631\u0627\u0631 \u0645\u06CC\u200C\u0634\u0646."], ["LULU_IF_PATTERN_6", "\u067E\u0646\u062C \u062A\u0627 \u067E\u0646\u062C \u062A\u0627 \u0634\u0645\u0631\u062F\u0646: \u067E\u0646\u062C\u060C \u062F\u0647\u060C \u067E\u0648\u0646\u0632\u062F\u0647\u060C \u0628\u06CC\u0633\u062A\u060C \u0622\u062E\u0631\u0634\u0648\u0646 \u0647\u0645\u06CC\u0634\u0647 \u067E\u0646\u062C \u06CC\u0627 \u0635\u0641\u0631\u0647."], ["LULU_IF_PATTERN_7", "\u062F\u0648\u0646\u0647\u200C\u0647\u0627\u06CC \u0622\u0641\u062A\u0627\u0628\u06AF\u0631\u062F\u0648\u0646 \u0628\u0647 \u0634\u06A9\u0644\u0650 \u0645\u0627\u0631\u067E\u06CC\u0686 \u06A9\u0646\u0627\u0631 \u0647\u0645 \u0645\u06CC\u200C\u0631\u0648\u06CC\u064E\u0646."], ["LULU_IF_PATTERN_8", "\u062A\u0648\u06CC \u06CC\u06A9\u060C \u06CC\u06A9\u060C \u062F\u0648\u060C \u0633\u0647\u060C \u067E\u0646\u062C\u060C \u0647\u0634\u062A\u060C \u0647\u0631 \u0639\u062F\u062F \u062C\u0645\u0639\u0650 \u062F\u0648 \u062A\u0627 \u0639\u062F\u062F\u0650 \u0642\u0628\u0644\u06CC\u0647."], ["LULU_IF_PATTERN_9", "\u0634\u06A9\u0644\u0650 \u0645\u0627\u0647 \u0628\u0627 \u06CC\u0647 \u0627\u0644\u06AF\u0648 \u0639\u0648\u0636 \u0645\u06CC\u200C\u0634\u0647 \u06A9\u0647 \u062D\u062F\u0648\u062F\u0650 \u0647\u0631 \u0628\u06CC\u0633\u062A \u0648 \u0646\u0647 \u0631\u0648\u0632 \u062A\u06A9\u0631\u0627\u0631 \u0645\u06CC\u200C\u0634\u0647."], ["LULU_IF_PATTERN_10", "\u0631\u0645\u0632\u0647\u0627 \u0648 \u067E\u06CC\u0627\u0645\u200C\u0647\u0627\u06CC \u0645\u062E\u0641\u06CC \u0645\u0639\u0645\u0648\u0644\u0627\u064B \u0627\u0644\u06AF\u0648\u0647\u0627\u06CC \u067E\u0646\u0647\u0648\u0646\u06CC\u200C\u0627\u0646."], ["LULU_IF_PATTERN_11", "\u0641\u0631\u0634\u200C\u0647\u0627\u06CC \u0627\u06CC\u0631\u0627\u0646\u06CC \u0627\u0644\u06AF\u0648\u0647\u0627\u0634\u0648\u0646 \u0631\u0648 \u06AF\u0631\u0647 \u0628\u0647 \u06AF\u0631\u0647\u060C \u06A9\u0627\u0645\u0644 \u062A\u06A9\u0631\u0627\u0631 \u0645\u06CC\u200C\u06A9\u0646\u0646."]], "COMPARE": [["LULU_IF_COMPARE_0", "\u0641\u06CC\u0644 \u0627\u0632 \u0645\u0648\u0634 \u0628\u0632\u0631\u06AF\u200C\u062A\u0631\u0647\u060C \u0648 \u0645\u0648\u0634 \u0627\u0632 \u06AF\u0631\u0628\u0647 \u06A9\u0648\u0686\u06CC\u06A9\u200C\u062A\u0631\u0647."], ["LULU_IF_COMPARE_1", "\u0646\u0647\u0646\u06AF\u0650 \u0622\u0628\u06CC \u0628\u0632\u0631\u06AF\u200C\u062A\u0631\u06CC\u0646 \u062D\u06CC\u0648\u0648\u0646\u06CC\u0647 \u06A9\u0647 \u062A\u0627 \u062D\u0627\u0644\u0627 \u0628\u0648\u062F\u0647."], ["LULU_IF_COMPARE_2", "\u0632\u0631\u0627\u0641\u0647 \u0628\u0644\u0646\u062F\u062A\u0631\u06CC\u0646 \u062D\u06CC\u0648\u0648\u0646\u0647."], ["LULU_IF_COMPARE_3", "\u062F\u0647 \u0627\u0632 \u0646\u064F\u0647 \u0628\u06CC\u0634\u062A\u0631\u0647\u060C \u0686\u0648\u0646 \u0648\u0642\u062A\u06CC \u0645\u06CC\u200C\u0634\u0645\u0631\u06CC\u0645 \u0628\u0639\u062F \u0627\u0632 \u0646\u064F\u0647 \u0645\u06CC\u0627\u062F."], ["LULU_IF_COMPARE_4", "\u06CC\u0648\u0632\u067E\u0644\u0646\u06AF \u0633\u0631\u06CC\u0639\u200C\u062A\u0631\u06CC\u0646 \u062F\u0648\u0646\u062F\u0647\u200C\u06CC \u0631\u0648\u06CC \u062E\u0634\u06A9\u06CC\u0647."], ["LULU_IF_COMPARE_5", "\u067E\u0627\u0647\u0627\u062A \u0627\u0632 \u0648\u0642\u062A\u06CC \u0646\u06CC\u200C\u0646\u06CC \u0628\u0648\u062F\u06CC \u0628\u0632\u0631\u06AF\u200C\u062A\u0631 \u0634\u062F\u0646\u060C \u06A9\u0641\u0634\u200C\u0647\u0627\u062A \u0631\u0648 \u0645\u0642\u0627\u06CC\u0633\u0647 \u06A9\u0646!"], ["LULU_IF_COMPARE_6", "\u0639\u0644\u0627\u0645\u062A\u0650 \u0628\u0632\u0631\u06AF\u200C\u062A\u0631 \u0645\u062B\u0644\u0650 \u062F\u0647\u0646\u0650 \u062A\u0645\u0633\u0627\u062D\u0647\u060C \u062F\u0647\u0646\u0634 \u0631\u0648 \u0628\u0647 \u0639\u062F\u062F\u0650 \u0628\u0632\u0631\u06AF\u200C\u062A\u0631 \u0628\u0627\u0632\u0647\u060C \u0645\u062B\u0644\u0650 \u067E\u0646\u062C \u0628\u0632\u0631\u06AF\u200C\u062A\u0631 \u0627\u0632 \u062F\u0648."], ["LULU_IF_COMPARE_7", "\u0627\u0648\u0631\u0633\u062A \u0628\u0644\u0646\u062F\u062A\u0631\u06CC\u0646 \u06A9\u0648\u0647\u0647\u060C \u062A\u0642\u0631\u06CC\u0628\u0627\u064B \u0646\u064F\u0647 \u06A9\u06CC\u0644\u0648\u0645\u062A\u0631 \u0627\u0631\u062A\u0641\u0627\u0639 \u062F\u0627\u0631\u0647."], ["LULU_IF_COMPARE_8", "\u062F\u0645\u0627\u0648\u0646\u062F\u060C \u0628\u0644\u0646\u062F\u062A\u0631\u06CC\u0646 \u06A9\u0648\u0647\u0650 \u0627\u06CC\u0631\u0627\u0646\u060C \u0628\u06CC\u0634\u062A\u0631 \u0627\u0632 \u067E\u0646\u062C \u0647\u0632\u0627\u0631 \u0648 \u0634\u0634\u0635\u062F \u0645\u062A\u0631 \u0627\u0631\u062A\u0641\u0627\u0639 \u062F\u0627\u0631\u0647."], ["LULU_IF_COMPARE_9", "\u0628\u06CC\u0646 \u067E\u0646\u062C\u0627\u0647 \u0648 \u062F\u0648 \u0648 \u0628\u06CC\u0633\u062A \u0648 \u067E\u0646\u062C\u060C \u062F\u0647\u06AF\u0627\u0646 \u0645\u06CC\u200C\u06AF\u0647 \u06A9\u062F\u0648\u0645 \u0628\u0632\u0631\u06AF\u200C\u062A\u0631\u0647: \u067E\u0646\u062C \u062A\u0627 \u062F\u0647 \u0627\u0632 \u062F\u0648 \u062A\u0627 \u062F\u0647 \u0628\u06CC\u0634\u062A\u0631\u0647."], ["LULU_IF_COMPARE_10", "\u06CC\u0647 \u06A9\u06CC\u0644\u0648 \u067E\u064E\u0631 \u0628\u0627 \u06CC\u0647 \u06A9\u06CC\u0644\u0648 \u0633\u0646\u06AF \u0647\u0645\u200C\u0648\u0632\u0646\u0647!"], ["LULU_IF_COMPARE_11", "\u062E\u0648\u0631\u0634\u06CC\u062F \u06A9\u0648\u0686\u06CC\u06A9 \u0628\u0647 \u0646\u0638\u0631 \u0645\u06CC\u0627\u062F \u0686\u0648\u0646 \u062E\u06CC\u0644\u06CC \u062F\u0648\u0631\u0647\u060C \u0648\u0644\u06CC \u0648\u0627\u0642\u0639\u0627\u064B \u062E\u06CC\u0644\u06CC \u0628\u0632\u0631\u06AF\u0647."]], "SOUNDS": [["LULU_IF_SOUNDS_0", "\u062D\u0631\u0641\u0650 S \u0635\u062F\u0627\u06CC \u0645\u0627\u0631 \u0645\u06CC\u200C\u062F\u0647: \u0633\u0633\u0633!"], ["LULU_IF_SOUNDS_1", "\u062D\u0631\u0641\u0650 M \u0645\u062B\u0644\u0650 \u0648\u0642\u062A\u06CC\u0647 \u06A9\u0647 \u06CC\u0647 \u0686\u06CC\u0632 \u062E\u0648\u0634\u0645\u0632\u0647 \u0645\u06CC\u200C\u062E\u0648\u0631\u06CC: \u0645\u0645\u0645\u0645!"], ["LULU_IF_SOUNDS_2", "cat \u0648 can \u0648 cap \u0647\u0645\u0647 \u0628\u0627 \u06CC\u0647 \u0635\u062F\u0627 \u0634\u0631\u0648\u0639 \u0645\u06CC\u200C\u0634\u0646."], ["LULU_IF_SOUNDS_3", "\u0647\u0631 \u06A9\u0644\u0645\u0647 \u062D\u062F\u0627\u0642\u0644 \u06CC\u0647 \u0635\u062F\u0627\u06CC \u0635\u062F\u0627\u062F\u0627\u0631 \u062F\u0627\u0631\u0647."], ["LULU_IF_SOUNDS_4", "\u06CC\u0647 \u0635\u062F\u0627 \u0631\u0648 \u0639\u0648\u0636 \u06A9\u0646\u06CC \u06CC\u0647 \u06A9\u0644\u0645\u0647\u200C\u06CC \u062C\u062F\u06CC\u062F \u0645\u06CC\u200C\u06AF\u06CC\u0631\u06CC: cat\u060C hat\u060C mat!"], ["LULU_IF_SOUNDS_5", "\u062F\u0633\u062A \u0632\u062F\u0646 \u06A9\u0645\u06A9 \u0645\u06CC\u200C\u06A9\u0646\u0647 \u0642\u0633\u0645\u062A\u200C\u0647\u0627\u06CC \u06A9\u0644\u0645\u0647 \u0631\u0648 \u0628\u0634\u0645\u0631\u06CC: \u0628\u064E-\u0646\u0627-\u0646\u0627 \u0633\u0647 \u062A\u0627 \u0642\u0633\u0645\u062A \u062F\u0627\u0631\u0647."], ["LULU_IF_SOUNDS_6", "sh \u0628\u0627 \u0647\u0645 \u06CC\u0647 \u0635\u062F\u0627 \u0645\u06CC\u200C\u062F\u0646\u060C \u0645\u062B\u0644\u0650 ship \u0648 shoe."], ["LULU_IF_SOUNDS_7", "\u062D\u0631\u0641\u0650 C \u06AF\u0627\u0647\u06CC \u0635\u062F\u0627\u06CC \u06A9\u0650 \u0645\u06CC\u200C\u062F\u0647 \u0645\u062B\u0644\u0650 cat\u060C \u06AF\u0627\u0647\u06CC \u0635\u062F\u0627\u06CC \u0633\u0650 \u0645\u062B\u0644\u0650 city."], ["LULU_IF_SOUNDS_8", "E \u06CC \u0628\u06CC\u200C\u0635\u062F\u0627 \u0622\u062E\u0631\u0650 \u06A9\u0644\u0645\u0647\u060C \u0635\u062F\u0627\u06CC \u062D\u0631\u0641 \u0631\u0648 \u0639\u0648\u0636 \u0645\u06CC\u200C\u06A9\u0646\u0647: cap \u0645\u06CC\u200C\u0634\u0647 cape."], ["LULU_IF_SOUNDS_9", "\u0627\u0646\u06AF\u0644\u06CC\u0633\u06CC \u062D\u062F\u0648\u062F\u0650 \u0686\u0647\u0644 \u0648 \u0686\u0647\u0627\u0631 \u062A\u0627 \u0635\u062F\u0627 \u062F\u0627\u0631\u0647 \u0648\u0644\u06CC \u0641\u0642\u0637 \u0628\u06CC\u0633\u062A \u0648 \u0634\u06CC\u0634 \u062A\u0627 \u062D\u0631\u0641."], ["LULU_IF_SOUNDS_10", "\u0646\u06CC\u200C\u0646\u06CC\u200C\u0647\u0627 \u0642\u0628\u0644 \u0627\u0632 \u062D\u0631\u0641 \u0632\u062F\u0646\u060C \u0635\u062F\u0627\u0647\u0627\u06CC \u0632\u0628\u0648\u0646\u0634\u0648\u0646 \u0631\u0648 \u06CC\u0627\u062F \u0645\u06CC\u200C\u06AF\u06CC\u0631\u0646."], ["LULU_IF_SOUNDS_11", "\u062C\u0645\u0644\u0647\u200C\u0647\u0627\u06CC \u0632\u0628\u0648\u0646\u200C\u067E\u06CC\u0686 \u0645\u062B\u0644\u0650 she sells sea shells \u0635\u062F\u0627\u0647\u0627\u062A \u0631\u0648 \u062A\u0645\u0631\u06CC\u0646 \u0645\u06CC\u200C\u062F\u0646."]], "ANIMALS": [["LULU_IF_ANIMALS_0", "\u0632\u0646\u0628\u0648\u0631\u0647\u0627 \u0627\u0632 \u06AF\u0644\u200C\u0647\u0627 \u0639\u0633\u0644 \u062F\u0631\u0633\u062A \u0645\u06CC\u200C\u06A9\u0646\u0646."], ["LULU_IF_ANIMALS_1", "\u0642\u0648\u0631\u0628\u0627\u063A\u0647\u200C\u0647\u0627 \u0628\u0627 \u0632\u0628\u0648\u0646\u0650 \u062F\u0631\u0627\u0632 \u0648 \u0686\u0633\u0628\u0646\u0627\u06A9\u0634\u0648\u0646 \u0645\u06AF\u0633 \u0645\u06CC\u200C\u06AF\u06CC\u0631\u0646."], ["LULU_IF_ANIMALS_2", "\u0645\u0639\u062F\u0647\u200C\u06CC \u06AF\u0627\u0648 \u0686\u0647\u0627\u0631 \u0642\u0633\u0645\u062A \u062F\u0627\u0631\u0647 \u062A\u0627 \u0639\u0644\u0641 \u0631\u0648 \u0647\u0636\u0645 \u06A9\u0646\u0647."], ["LULU_IF_ANIMALS_3", "\u062E\u0641\u0627\u0634\u200C\u0647\u0627 \u062A\u0648\u06CC \u063A\u0627\u0631 \u0633\u0631\u0648\u062A\u0647 \u0645\u06CC\u200C\u062E\u0648\u0627\u0628\u0646."], ["LULU_IF_ANIMALS_4", "\u06A9\u0627\u062A\u0631\u067E\u06CC\u0644\u0627\u0631\u0647\u0627\u060C \u06CC\u0639\u0646\u06CC \u06A9\u0631\u0645\u0650 \u067E\u0631\u0648\u0627\u0646\u0647\u060C \u0628\u0632\u0631\u06AF \u06A9\u0647 \u0628\u0634\u0646 \u067E\u0631\u0648\u0627\u0646\u0647 \u0645\u06CC\u200C\u0634\u0646."], ["LULU_IF_ANIMALS_5", "\u067E\u0631\u0647\u0627\u06CC \u0627\u0631\u062F\u06A9 \u0636\u062F\u0622\u0628\u0647."], ["LULU_IF_ANIMALS_6", "\u06A9\u0648\u0633\u0647\u200C\u0647\u0627 \u0627\u0632 \u062F\u0627\u06CC\u0646\u0627\u0633\u0648\u0631\u0647\u0627 \u0647\u0645 \u0642\u062F\u06CC\u0645\u06CC\u200C\u062A\u0631\u0646."], ["LULU_IF_ANIMALS_7", "\u0631\u0648\u0628\u0627\u0647\u200C\u0647\u0627 \u0628\u0627 \u06AF\u0648\u0634\u200C\u0647\u0627\u06CC \u0628\u0632\u0631\u06AF\u0634\u0648\u0646 \u0635\u062F\u0627\u06CC \u0645\u0648\u0634 \u0631\u0648 \u0632\u06CC\u0631\u0650 \u0628\u0631\u0641 \u0645\u06CC\u200C\u0634\u0646\u0648\u0646."], ["LULU_IF_ANIMALS_8", "\u06CC\u0647 \u0632\u0646\u0628\u0648\u0631 \u062A\u0648\u06CC \u06CC\u0647 \u0633\u0641\u0631 \u0645\u06CC\u200C\u062A\u0648\u0646\u0647 \u0628\u0647 \u0635\u062F \u062A\u0627 \u06AF\u0644 \u0633\u0631 \u0628\u0632\u0646\u0647."], ["LULU_IF_ANIMALS_9", "\u0645\u0627\u0631\u0647\u0627 \u0628\u0627 \u0632\u0628\u0648\u0646\u0634\u0648\u0646 \u0628\u0648 \u0645\u06CC\u200C\u06A9\u0634\u0646."], ["LULU_IF_ANIMALS_10", "\u06CC\u0648\u0632\u067E\u0644\u0646\u06AF\u0650 \u0627\u06CC\u0631\u0627\u0646\u06CC \u0641\u0642\u0637 \u062A\u0648\u06CC \u0627\u06CC\u0631\u0627\u0646 \u0632\u0646\u062F\u06AF\u06CC \u0645\u06CC\u200C\u06A9\u0646\u0647 \u0648 \u062E\u06CC\u0644\u06CC \u06A9\u0645\u06CC\u0627\u0628\u0647."], ["LULU_IF_ANIMALS_11", "\u0647\u0634\u062A\u200C\u067E\u0627 \u0633\u0647 \u062A\u0627 \u0642\u0644\u0628 \u0648 \u062E\u0648\u0646\u0650 \u0622\u0628\u06CC \u062F\u0627\u0631\u0647."]], "PIZZA": [["LULU_IF_PIZZA_0", "\u0646\u0635\u0641\u0650 \u0686\u0647\u0627\u0631 \u0645\u06CC\u200C\u0634\u0647 \u062F\u0648."], ["LULU_IF_PIZZA_1", "\u062F\u0648 \u062A\u0627 \u0646\u0635\u0641 \u0645\u06CC\u200C\u0634\u0647 \u06CC\u0647 \u06A9\u0627\u0645\u0644."], ["LULU_IF_PIZZA_2", "\u0686\u0647\u0627\u0631 \u062A\u0627 \u06CC\u06A9 \u0686\u0647\u0627\u0631\u0645 \u0645\u06CC\u200C\u0634\u0647 \u06CC\u0647 \u06A9\u0627\u0645\u0644."], ["LULU_IF_PIZZA_3", "\u0646\u06CC\u0645 \u0633\u0627\u0639\u062A \u06CC\u0639\u0646\u06CC \u0633\u06CC \u062F\u0642\u06CC\u0642\u0647."], ["LULU_IF_PIZZA_4", "\u0627\u06AF\u0647 \u06CC\u0647 \u0633\u0627\u0646\u062F\u0648\u06CC\u0686 \u0631\u0648 \u06AF\u0648\u0634\u0647 \u0628\u0647 \u06AF\u0648\u0634\u0647 \u0628\u0628\u0631\u06CC\u060C \u062F\u0648 \u062A\u0627 \u0645\u062B\u0644\u062B \u0645\u06CC\u200C\u0634\u0647."], ["LULU_IF_PIZZA_5", "\u06CC\u06A9 \u0686\u0647\u0627\u0631\u0645 \u06CC\u0639\u0646\u06CC \u0646\u0635\u0641\u0650 \u06CC\u0647 \u0646\u0635\u0641."], ["LULU_IF_PIZZA_6", "\u06CC\u06A9 \u062F\u0648\u0645 \u0627\u0632 \u06CC\u06A9 \u0686\u0647\u0627\u0631\u0645 \u0628\u0632\u0631\u06AF\u200C\u062A\u0631\u0647\u060C \u0628\u0627 \u0627\u06CC\u0646\u06A9\u0647 \u0686\u0647\u0627\u0631 \u0627\u0632 \u062F\u0648 \u0628\u0632\u0631\u06AF\u200C\u062A\u0631\u0647!"], ["LULU_IF_PIZZA_7", "\u06CC\u0647 \u0631\u0628\u0639 \u0633\u0627\u0639\u062A \u06CC\u0639\u0646\u06CC \u067E\u0648\u0646\u0632\u062F\u0647 \u062F\u0642\u06CC\u0642\u0647."], ["LULU_IF_PIZZA_8", "\u0627\u06AF\u0647 \u0633\u0647 \u0686\u0647\u0627\u0631\u0645\u0650 \u067E\u06CC\u062A\u0632\u0627 \u0631\u0648 \u0628\u062E\u0648\u0631\u06CC\u060C \u06CC\u06A9 \u0686\u0647\u0627\u0631\u0645\u0634 \u0648\u0627\u0633\u0647 \u062F\u0648\u0633\u062A\u062A \u0645\u06CC\u200C\u0645\u0648\u0646\u0647."], ["LULU_IF_PIZZA_9", "\u062F\u0648 \u0686\u0647\u0627\u0631\u0645 \u0647\u0645\u0648\u0646 \u0627\u0646\u062F\u0627\u0632\u0647\u200C\u06CC \u06CC\u06A9 \u062F\u0648\u0645\u0647."], ["LULU_IF_PIZZA_10", "\u0645\u0648\u0633\u06CC\u0642\u06CC \u0647\u0645 \u06A9\u0633\u0631 \u062F\u0627\u0631\u0647: \u0646\u064F\u062A\u0650 \u0646\u0635\u0641 \u0648 \u0646\u064F\u062A\u0650 \u06CC\u06A9 \u0686\u0647\u0627\u0631\u0645."], ["LULU_IF_PIZZA_11", "\u067E\u06CC\u062A\u0632\u0627\u06CC\u06CC \u06A9\u0647 \u0647\u0634\u062A \u062A\u06CC\u06A9\u0647 \u0628\u0634\u0647\u060C \u0647\u0631 \u062A\u06CC\u06A9\u0647\u200C\u0627\u0634 \u06CC\u06A9 \u0647\u0634\u062A\u0645\u0647."]], "DAILY": [["LULU_IF_DAILY_0", "\u0628\u0686\u0647\u200C\u0647\u0627 \u0647\u0631 \u0631\u0648\u0632 \u0635\u062F\u0647\u0627 \u0633\u0624\u0627\u0644 \u0645\u06CC\u200C\u067E\u0631\u0633\u0646!"], ["LULU_IF_DAILY_1", "\u0686\u0631\u0627 \u0622\u0633\u0645\u0648\u0646 \u0622\u0628\u06CC\u0647\u061F \u0646\u0648\u0631\u0650 \u062E\u0648\u0631\u0634\u06CC\u062F \u062A\u0648\u06CC \u0647\u0648\u0627 \u0627\u06CC\u0646\u200C\u0648\u0631 \u0648 \u0627\u0648\u0646\u200C\u0648\u0631 \u0645\u06CC\u200C\u0631\u0647\u060C \u0648 \u0631\u0646\u06AF\u0650 \u0622\u0628\u06CC \u0627\u0632 \u0647\u0645\u0647 \u0628\u06CC\u0634\u062A\u0631."], ["LULU_IF_DAILY_2", "\u0642\u0644\u0628\u0650 \u062A\u0648 \u0647\u0631 \u0631\u0648\u0632 \u062D\u062F\u0648\u062F \u0635\u062F \u0647\u0632\u0627\u0631 \u0628\u0627\u0631 \u0645\u06CC\u200C\u0632\u0646\u0647."], ["LULU_IF_DAILY_3", "\u0639\u0633\u0644 \u0647\u06CC\u0686\u200C\u0648\u0642\u062A \u062E\u0631\u0627\u0628 \u0646\u0645\u06CC\u200C\u0634\u0647. \u0632\u0646\u0628\u0648\u0631\u0647\u0627 \u0627\u0648\u0646 \u0631\u0648 \u0627\u0632 \u06AF\u0644\u200C\u0647\u0627 \u062F\u0631\u0633\u062A \u0645\u06CC\u200C\u06A9\u0646\u0646."], ["LULU_IF_DAILY_4", "\u0647\u0634\u062A\u200C\u067E\u0627 \u0633\u0647 \u062A\u0627 \u0642\u0644\u0628 \u062F\u0627\u0631\u0647."], ["LULU_IF_DAILY_5", "\u06AF\u06CC\u0627\u0647\u200C\u0647\u0627 \u0628\u0627 \u0631\u06CC\u0634\u0647\u200C\u0647\u0627\u0634\u0648\u0646 \u0622\u0628 \u0645\u06CC\u200C\u062E\u0648\u0631\u0646."], ["LULU_IF_DAILY_6", "\u0627\u0633\u062A\u062E\u0648\u0646\u200C\u0647\u0627\u062A \u062A\u0627 \u0648\u0642\u062A\u06CC \u0628\u0632\u0631\u06AF \u0628\u0634\u06CC \u0631\u0634\u062F \u0645\u06CC\u200C\u06A9\u0646\u0646."], ["LULU_IF_DAILY_7", "\u06CC\u0647 \u0631\u0648\u0632 \u0631\u0648\u06CC \u0632\u0645\u06CC\u0646 \u0628\u06CC\u0633\u062A \u0648 \u0686\u0647\u0627\u0631 \u0633\u0627\u0639\u062A\u0647: \u06CC\u0647 \u062F\u0648\u0631\u0650 \u06A9\u0627\u0645\u0644\u0650 \u0633\u06CC\u0627\u0631\u0647\u200C\u06CC \u0645\u0627."], ["LULU_IF_DAILY_8", "\u067E\u0631\u0648\u0627\u0646\u0647\u200C\u0647\u0627 \u0628\u0627 \u067E\u0627\u0647\u0627\u0634\u0648\u0646 \u0645\u0632\u0647 \u0631\u0648 \u0645\u06CC\u200C\u0641\u0647\u0645\u0646."], ["LULU_IF_DAILY_9", "\u0628\u0632\u0631\u06AF\u200C\u062A\u0631\u06CC\u0646 \u062D\u06CC\u0648\u0648\u0646\u0650 \u062F\u0646\u06CC\u0627 \u0646\u0647\u0646\u06AF\u0650 \u0622\u0628\u06CC\u0647."], ["LULU_IF_DAILY_10", "\u0622\u0628 \u0645\u06CC\u200C\u062A\u0648\u0646\u0647 \u06CC\u062E \u0628\u0627\u0634\u0647\u060C \u0622\u0628 \u0628\u0627\u0634\u0647 \u06CC\u0627 \u0628\u062E\u0627\u0631."], ["LULU_IF_DAILY_11", "\u0635\u062F\u0627 \u0627\u0632 \u0646\u0648\u0631 \u0622\u0647\u0633\u062A\u0647\u200C\u062A\u0631 \u0645\u06CC\u200C\u0631\u0647\u061B \u0648\u0627\u0633\u0647 \u0647\u0645\u06CC\u0646\u0647 \u06A9\u0647 \u0631\u0639\u062F \u0628\u0639\u062F \u0627\u0632 \u0628\u0631\u0642 \u0645\u06CC\u0627\u062F."]], "CALENDAR": [["LULU_IF_CALENDAR_0", "\u0646\u0648\u0631\u0648\u0632\u060C \u0633\u0627\u0644\u0650 \u0646\u0648\u0650 \u0627\u06CC\u0631\u0627\u0646\u06CC\u060C \u0628\u0627 \u0627\u0648\u0644\u06CC\u0646 \u0631\u0648\u0632\u0650 \u0628\u0647\u0627\u0631 \u0634\u0631\u0648\u0639 \u0645\u06CC\u200C\u0634\u0647."], ["LULU_IF_CALENDAR_1", "\u0634\u0646\u0628\u0647 \u0648 \u06CC\u06A9\u0634\u0646\u0628\u0647 \u062A\u0648\u06CC \u062E\u06CC\u0644\u06CC \u0627\u0632 \u06A9\u0634\u0648\u0631\u0647\u0627 \u0622\u062E\u0631\u0650 \u0647\u0641\u062A\u0647\u200C\u0633\u062A."], ["LULU_IF_CALENDAR_2", "\u0641\u0648\u0631\u06CC\u0647 \u06A9\u0648\u062A\u0627\u0647\u200C\u062A\u0631\u06CC\u0646 \u0645\u0627\u0647\u0647: \u0628\u06CC\u0633\u062A \u0648 \u0647\u0634\u062A \u0631\u0648\u0632 \u062F\u0627\u0631\u0647\u060C \u06CC\u0627 \u062A\u0648\u06CC \u0633\u0627\u0644\u0650 \u06A9\u0628\u06CC\u0633\u0647 \u0628\u06CC\u0633\u062A \u0648 \u0646\u0647 \u0631\u0648\u0632."], ["LULU_IF_CALENDAR_3", "\u062A\u0648\u06CC \u0632\u0645\u0633\u062A\u0648\u0646 \u0634\u0628\u200C\u0647\u0627 \u0628\u0644\u0646\u062F\u0646 \u0648 \u0631\u0648\u0632\u0647\u0627 \u06A9\u0648\u062A\u0627\u0647."], ["LULU_IF_CALENDAR_4", "\u0628\u0631\u06AF\u200C\u0647\u0627 \u062A\u0648\u06CC \u067E\u0627\u06CC\u06CC\u0632 \u0631\u0646\u06AF \u0639\u0648\u0636 \u0645\u06CC\u200C\u06A9\u0646\u0646 \u0686\u0648\u0646 \u062F\u0631\u062E\u062A\u200C\u0647\u0627 \u0628\u0631\u0627\u06CC \u0632\u0645\u0633\u062A\u0648\u0646 \u0622\u0645\u0627\u062F\u0647 \u0645\u06CC\u200C\u0634\u0646."], ["LULU_IF_CALENDAR_5", "\u062A\u0648\u0644\u062F\u062A \u0633\u0627\u0644\u06CC \u06CC\u0647 \u0628\u0627\u0631 \u0645\u06CC\u0627\u062F."], ["LULU_IF_CALENDAR_6", "\u062C\u0648\u0644\u0627\u06CC \u0648 \u0622\u06AF\u0648\u0633\u062A \u0647\u0631 \u062F\u0648 \u0633\u06CC \u0648 \u06CC\u06A9 \u0631\u0648\u0632 \u062F\u0627\u0631\u0646."], ["LULU_IF_CALENDAR_7", "\u0634\u0628\u0650 \u06CC\u0644\u062F\u0627\u060C \u0627\u0648\u0644\u0650 \u0632\u0645\u0633\u062A\u0648\u0646\u060C \u0628\u0644\u0646\u062F\u062A\u0631\u06CC\u0646 \u0634\u0628\u0650 \u0633\u0627\u0644\u0647."], ["LULU_IF_CALENDAR_8", "\u0633\u0627\u0644\u0650 \u06A9\u0628\u06CC\u0633\u0647 \u0647\u0631 \u0686\u0647\u0627\u0631 \u0633\u0627\u0644 \u06CC\u0647 \u0628\u0627\u0631 \u0645\u06CC\u0627\u062F \u0648 \u0633\u06CC\u0635\u062F \u0648 \u0634\u0635\u062A \u0648 \u0634\u0634 \u0631\u0648\u0632 \u062F\u0627\u0631\u0647."], ["LULU_IF_CALENDAR_9", "\u0648\u0642\u062A\u06CC \u0627\u06CC\u0646\u062C\u0627 \u062A\u0627\u0628\u0633\u062A\u0648\u0646\u0647\u060C \u062A\u0648\u06CC \u0627\u0633\u062A\u0631\u0627\u0644\u06CC\u0627 \u0632\u0645\u0633\u062A\u0648\u0646\u0647!"], ["LULU_IF_CALENDAR_10", "\u06CC\u0647 \u0631\u0648\u0632 \u0628\u06CC\u0633\u062A \u0648 \u0686\u0647\u0627\u0631 \u0633\u0627\u0639\u062A\u0647 \u0648 \u06CC\u0647 \u0633\u0627\u0639\u062A \u0634\u0635\u062A \u062F\u0642\u06CC\u0642\u0647."], ["LULU_IF_CALENDAR_11", "\u0627\u0633\u0645\u0650 \u062C\u0648\u0644\u0627\u06CC \u0648 \u0622\u06AF\u0648\u0633\u062A \u0627\u0632 \u0698\u0648\u0644\u06CC\u0648\u0633 \u0633\u0632\u0627\u0631 \u0648 \u0622\u06AF\u0648\u0633\u062A\u0648\u0633 \u0627\u0648\u0645\u062F\u0647."]] };
+  const FACT_SET = { count: "MATH", add: "MATH", money: "MATH", clock: "DAILY", animals: "ANIMALS", farm: "ANIMALS", world: "ANIMALS", sky: "PLANETS", shapes: "SHAPES", people: "DAILY", letters: "WORDS", read: "READ" };
+  const factSeen = {};
+  function funFact(cat, kind) {
+    const k = kind === "pattern" ? "PATTERN" : kind === "robot" ? "ROBOT" : kind === "sound" ? "SOUNDS" : ["more", "less", "long", "bigsmall"].includes(kind) ? "COMPARE" : ["months", "week", "today", "tomorrow", "yesterday", "after", "before", "monthafter", "season", "nowseason"].includes(kind) ? "CALENDAR" : FACT_SET[cat];
+    const L2 = IFACTS[k];
+    if (!L2) return null;
+    factSeen[k] = factSeen[k] || [];
+    if (factSeen[k].length >= L2.length) factSeen[k] = [];
+    const i = sh(L2.map((x, j) => j).filter((j) => !factSeen[k].includes(j)))[0];
+    factSeen[k].push(i);
+    return { c: L2[i][0], t: L2[i][1] };
+  }
+  function qRobot() {
+    const a = lvl(), n = a <= 4 ? 3 : a <= 6 ? 4 : 5;
+    let walls = [], st, gl;
+    for (let t = 0; t < 200; t++) {
+      st = [0, ri(0, n - 1)];
+      gl = [n - 1, ri(0, n - 1)];
+      walls = [];
+      const nw = a <= 4 ? 0 : a <= 6 ? 2 : 4;
+      while (walls.length < nw) {
+        const w = [ri(0, n - 1), ri(0, n - 1)];
+        if (!(w[0] === st[0] && w[1] === st[1]) && !(w[0] === gl[0] && w[1] === gl[1]) && !walls.some((x) => x[0] === w[0] && x[1] === w[1])) walls.push(w);
+      }
+      if (robPath(n, st, gl, walls) > 0) break;
+    }
+    return { robot: { n, st, gl, walls }, voice: ["w/LULU_RB_INTRO"], cap: "Help the robot reach the flag!", opts: [], ans: -1, kind: "robot", exp: { t: "", v: [] } };
+  }
+  function robPath(n, st, gl, walls) {
+    const key = (p) => p[0] + "," + p[1], seen = /* @__PURE__ */ new Set([key(st)]);
+    let fr = [[st, 0]];
+    while (fr.length) {
+      const [p, d] = fr.shift();
+      if (p[0] === gl[0] && p[1] === gl[1]) return d;
+      for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
+        const q2 = [p[0] + dx, p[1] + dy];
+        if (q2[0] < 0 || q2[1] < 0 || q2[0] >= n || q2[1] >= n || walls.some((w) => w[0] === q2[0] && w[1] === q2[1]) || seen.has(key(q2))) continue;
+        seen.add(key(q2));
+        fr.push([q2, d + 1]);
+      }
+    }
+    return -1;
+  }
+  function robotQ(q) {
+    const R2 = q.robot, cc = CATS.find((c) => c.id === L.cat) || {};
+    let prog = [], pos = R2.st.slice(), running = false, miss = 0;
+    const ARW = { r: ["\u27A1\uFE0F", 1, 0], l: ["\u2B05\uFE0F", -1, 0], u: ["\u2B06\uFE0F", 0, -1], d: ["\u2B07\uFE0F", 0, 1] };
+    const cell = (x, y) => x === pos[0] && y === pos[1] ? "\u{1F916}" : x === R2.gl[0] && y === R2.gl[1] ? "\u{1F3C1}" : R2.walls.some((w) => w[0] === x && w[1] === y) ? "\u{1F9F1}" : "";
+    const draw = () => {
+      $("rbGrid").innerHTML = Array.from({ length: R2.n * R2.n }, (_, i) => {
+        const x = i % R2.n, y = Math.floor(i / R2.n);
+        return '<div class="rbc">'.concat(cell(x, y), "</div>");
+      }).join("");
+      $("rbProg").innerHTML = prog.length ? prog.map((k) => "<span>".concat(ARW[k][0], "</span>")).join("") : "<em>Tap the arrows</em>";
+    };
+    $("qBody").innerHTML = '<div class="qkick"><span class="qke">\u{1F916}</span>Robot path</div><h2 class="qtitle">Help the robot reach the flag!</h2>\n    <div class="rbwrap"><div class="rbgrid" id="rbGrid" style="grid-template-columns:repeat('.concat(R2.n, ",1fr);grid-template-rows:repeat(").concat(R2.n, ',1fr)"></div>\n    <div class="rbprog" id="rbProg"></div>\n    <div class="rbpad"><button data-k="u">\u2B06\uFE0F</button><button data-k="l">\u2B05\uFE0F</button><button data-k="d">\u2B07\uFE0F</button><button data-k="r">\u27A1\uFE0F</button><button class="rbdel" data-k="x">\u21A9\uFE0F</button></div></div>\n    <button class="qcheck on" id="rbGo">GO \u25B6</button>');
+    $("qBody").classList.remove("in");
+    void $("qBody").offsetWidth;
+    $("qBody").classList.add("in");
+    draw();
+    setTimeout(() => {
+      if (L && L.q === q) sayseq(q.voice, () => {
+      });
+    }, 400);
+    window.__rbSolve = () => {
+      const key = (p) => p + "", prev = {}, fr = [R2.st], seen = /* @__PURE__ */ new Set([key(R2.st)]);
+      while (fr.length) {
+        const p = fr.shift();
+        if (p[0] === R2.gl[0] && p[1] === R2.gl[1]) break;
+        for (const k of "rlud") {
+          const a2 = ARW[k], q2 = [p[0] + a2[1], p[1] + a2[2]];
+          if (q2[0] < 0 || q2[1] < 0 || q2[0] >= R2.n || q2[1] >= R2.n || R2.walls.some((w) => w[0] === q2[0] && w[1] === q2[1]) || seen.has(key(q2))) continue;
+          seen.add(key(q2));
+          prev[key(q2)] = [p, k];
+          fr.push(q2);
+        }
+      }
+      const path = [];
+      let c = R2.gl;
+      while (key(c) !== key(R2.st)) {
+        const [p, k] = prev[key(c)];
+        path.unshift(k);
+        c = p;
+      }
+      prog = path;
+      draw();
+      $("rbGo").click();
+    };
+    $("qBody").querySelectorAll(".rbpad button").forEach((b) => b.onclick = () => {
+      if (running || q.done) return;
+      sfx.tap();
+      const k = b.dataset.k;
+      if (k === "x") prog.pop();
+      else if (prog.length < 14) prog.push(k);
+      pos = R2.st.slice();
+      draw();
+    });
+    $("rbGo").onclick = () => {
+      if (running || q.done || !prog.length) return;
+      running = true;
+      pos = R2.st.slice();
+      draw();
+      let i = 0;
+      hush();
+      const step = () => {
+        if (i >= prog.length) {
+          running = false;
+          if (pos[0] === R2.gl[0] && pos[1] === R2.gl[1]) return win();
+          miss++;
+          sfx.oops();
+          sayseq(["w/LULU_RB_OOPS"], () => {
+          });
+          pos = R2.st.slice();
+          setTimeout(draw, 900);
+          return;
+        }
+        const a2 = ARW[prog[i]], nx = [pos[0] + a2[1], pos[1] + a2[2]];
+        if (nx[0] < 0 || nx[1] < 0 || nx[0] >= R2.n || nx[1] >= R2.n || R2.walls.some((w) => w[0] === nx[0] && w[1] === nx[1])) {
+          running = false;
+          miss++;
+          sfx.oops();
+          sayseq(["w/LULU_RB_WALL"], () => {
+          });
+          $("rbGrid").classList.add("bump");
+          setTimeout(() => {
+            $("rbGrid").classList.remove("bump");
+            pos = R2.st.slice();
+            draw();
+          }, 900);
+          return;
+        }
+        pos = nx;
+        i++;
+        sfx.tap();
+        draw();
+        if (pos[0] === R2.gl[0] && pos[1] === R2.gl[1]) {
+          running = false;
+          return win();
+        }
+        setTimeout(step, 450);
+      };
+      setTimeout(step, 300);
+    };
+    const win = () => {
+      q.done = q.locked = true;
+      sfx.good();
+      burstAt($("rbGrid"), 40);
+      L.correct++;
+      if (!miss) L.first++;
+      const n = miss ? 1 : 2;
+      S.acorns += n;
+      L.acorns += n;
+      S.questions++;
+      {
+        const w = wkLog();
+        w.q++;
+        w.right++;
+      }
+      save();
+      renderStats();
+      bump("sAcorns");
+      setDot();
+      const f = funFact("shapes", "robot");
+      setTimeout(() => {
+        sheet("good why", pickOne(PRAISE_T), f ? '<span class="ffact"><b>\u{1F4A1}</b><span dir="rtl" lang="fa">'.concat(f.t, "</span></span>") : "");
+        let gone = false;
+        const go = () => {
+          if (!gone) {
+            gone = true;
+            nextQ();
+          }
+        };
+        $("qNext").onclick = () => {
+          sfx.tap();
+          go();
+        };
+        sayseq([pickOne(PRAISE_CLIPS), ...f ? ["w/" + f.c] : []], () => setTimeout(go, 1800));
+      }, 700);
+    };
   }
   const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   const MONTH_LAND = [7, 5, 4, 6, 11, 8, 9, 1, 2, 10, 0, 3];
