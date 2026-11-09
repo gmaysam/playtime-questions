@@ -811,3 +811,8 @@ body,.phone,.lesson.q2,.introC,#pSettings,.panel,.map{background:#fff!important}
 .pnk.lit{background:var(--c);transform:translateY(4px);box-shadow:0 2px 0 #D9D9D9,0 0 24px var(--c)}
 .pnkeys.watch .pnk{pointer-events:none}
 .pnkeys.bump{animation:gBump .4s}
+/* real planet photos in questions and answers */
+.plimg{width:1em;height:1em;object-fit:contain;vertical-align:middle;filter:drop-shadow(0 4px 4px rgba(38,51,77,.18))}
+.qvis .bigpic .plimg{width:1.1em;height:1.1em}
+.plrow{display:inline-flex;gap:.12em;align-items:center}.plrow .plimg.sm{width:.55em;height:.55em}
+.lesson.q2 .qopts .qo[data-j] .oe .plimg{width:1.7em;height:1.7em}

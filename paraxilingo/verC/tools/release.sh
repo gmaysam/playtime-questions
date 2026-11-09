@@ -6,6 +6,7 @@ cd $S
 git -C /home/claude/playtime-library pull -q --rebase || true
 python3 tools/sync_watcher.py /home/claude/playtime-library/library .
 python3 tools/buildC2.py appB/index.html appC/index.html watcher/wq.json
+echo "checking every question..."; node tools/qcheck.js appC 2>&1 | grep -v -i proxy; if [ "${PIPESTATUS[0]}" != 0 ]; then echo "QUESTION CHECK FAILED - not released"; exit 1; fi
 python3 tools/mkweb.py appC ios/Paraxilingo/Paraxilingo/Web ios/node_modules/.bin/esbuild
 python3 tools/export_library.py .
 python3 tools/mksite.py ios/Paraxilingo/Paraxilingo/Web /home/claude/px-site ios/Paraxilingo/Paraxilingo/Assets.xcassets/AppIcon.appiconset/icon1024.png

@@ -175,17 +175,23 @@ function wPool(cat){
   const pre={animals:["a","x"],world:["b","n"],sky:["s","p"]}[cat],young=S.age<=7;
   return WQ.filter(w=>pre.includes(w.i[0])&&w.a<=Math.max(3,S.age)&&(!young||VOICED.has(w.i)));
 }
-const TEXT_E=[["t-rex","🦖"],["dinosaur","🦕"],["penguin","🐧"],["whale","🐋"],["giraffe","🦒"],["octopus","🐙"],["elephant","🐘"],["spider","🕷️"],["cheetah","🐆"],["bear","🐻"],["owl","🦉"],["hands","🧼"],["teeth","🦷"],["heart","❤️"],["bones","🦴"],["eyes","👀"],["nose","👃"],["ears","👂"],["sleep","😴"],["water","💧"],["cactus","🌵"],["mushroom","🍄"],["mountain","⛰️"],["river","🏞️"],["volcano","🌋"],["carrot","🥕"],["milk","🥛"],["moon","🌙"],["sun","☀️"],["star","⭐"],["rain","🌧️"],["fog","🌫️"],["wind","🌬️"],["planet","🪐"],["plant","🌱"],["flower","🌸"],["tree","🌳"],["bird","🐦"],["fish","🐟"],["egg","🥚"]];
-const wEmoji=w=>{if(w.p&&PIC_E[w.p])return PIC_E[w.p];const t=w.q.toLowerCase();for(const [k,e] of TEXT_E)if(t.includes(k))return e;return "🤔"};
+const TEXT_E=[["tomato","🍅"],["sharing toys","🧸"],["recycled","♻️"],["nowruz","🌷"],["magnet","🧲"],["ice melts","🧊"],["light to see","💡"],["fall faster","🪶"],["t-rex","🦖"],["dinosaur","🦕"],["penguin","🐧"],["whale","🐋"],["giraffe","🦒"],["octopus","🐙"],["elephant","🐘"],["spider","🕷️"],["cheetah","🐆"],["bear","🐻"],["owl","🦉"],["hands","🧼"],["teeth","🦷"],["heart","❤️"],["bones","🦴"],["eyes","👀"],["nose","👃"],["ears","👂"],["sleep","😴"],["water","💧"],["cactus","🌵"],["mushroom","🍄"],["mountain","⛰️"],["river","🏞️"],["volcano","🌋"],["carrot","🥕"],["milk","🥛"],["moon","🌙"],["sun","☀️"],["star","⭐"],["rain","🌧️"],["fog","🌫️"],["wind","🌬️"],["planet","🪐"],["plant","🌱"],["flower","🌸"],["tree","🌳"],["bird","🐦"],["fish","🐟"],["egg","🥚"]];
+const PL_IMG=n=>{const i=PLANET_N.indexOf(String(n).toLowerCase());return i>=0?`<img class="plimg" src="img/w/pl_${i}.png" alt="${n}">`:""};
+const planetIn=t=>{for(const n of ["mercury","venus","jupiter","saturn","uranus","neptune","mars"])if(new RegExp("\\b"+n+"\\b","i").test(t))return n;return /\bplanets\b/i.test(t)?"*":""};
+const plVis=t=>{const n=planetIn(t);return n==="*"?`<span class="plrow">${[3,4,5,6].map(i=>`<img class="plimg sm" src="img/w/pl_${i}.png" alt="">`).join("")}</span>`:n?PL_IMG(n):""};
+const PFIX={n03:"🌿",n05:"🌳",n10:"🌿",p07:"🔭",p09:"*",p13:"☀️",a19:"🕷️",x07:"🔦"};
+const wEmoji=w=>{if(PFIX[w.i])return PFIX[w.i]==="*"?plVis("planets"):PFIX[w.i];{const pv=plVis(w.q);if(pv)return pv}if(w.p&&PIC_E[w.p])return PIC_E[w.p];const t=w.q.toLowerCase();for(const [k,e] of TEXT_E)if(t.includes(k))return e;return "🤔"};
 Object.assign(WORD_E,{"brachiosaurus":"🦕","t-rex":"🦖","eggs":"🥚","bones":"🦴","clouds":"☁️"});
 const E_VOICED=new Set(__EVOICED__);
 /* wording fixes from the Nov 7 check (also sent to the shared pool as suggestions) */
 const QFIX={s09:{q:"In a storm, what do we see first?"},x07:{o:["Blocking light","Rain","Wind"]}};
+const SKY_TF_PIC=k=>k===8?PL_IMG("jupiter"):SKY_TF_E[k];
 const EXTRA_E={"brachiosaurus":"🦕","t-rex":"🦖","eggs":"🥚"};
-const optE=o=>WORD_E[o.toLowerCase()]||EXTRA_E[o.toLowerCase()]||"";
+const optE=o=>PL_IMG(o)||OPT_FIX[o.toLowerCase()]||WORD_E[o.toLowerCase()]||EXTRA_E[o.toLowerCase()]||"";
+const OPT_FIX={nails:"🔩",sand:"🏖️",leaves:"🍃",pond:"🪷","blocking light":"👤","blocking sun":"👤",hive:"🍯"};
 /* a 4th answer that is surely wrong: a number nobody would pick, or a thing from a different topic */
 /* a 4th answer for each Watcher question, picked by hand (plausible but clearly wrong) */
-const WQ_EXTRA={"a01": "Dog", "a02": "Cow", "a05": "Frog", "a07": "8", "a08": "Cave", "a10": "Dog", "a12": "Cat", "a14": "Chips", "a15": "Cow", "a17": "Frog", "a19": "4", "a21": "Pig", "a23": "Pig", "a25": "Desert", "a27": "Bird", "b01": "Hands", "b02": "Nose", "b04": "3", "b06": "Feet", "b08": "Cake", "b10": "Sleep", "b12": "Knee", "b14": "20", "n01": "Candy", "n03": "Black", "n05": "Purple", "n07": "Autumn", "n09": "Juice", "n11": "Banana", "n13": "Toys", "s01": "Moon", "s03": "Comet", "s05": "Sunglasses", "s07": "Cloud", "s11": "Rain", "s13": "Winter", "p01": "Doctor", "p03": "Venus", "p05": "Saturn", "p07": "Earth", "p09": "10", "p11": "Fork", "p13": "Jupiter", "e01": "Juice", "e03": "North Pole", "e05": "River", "e07": "Milk", "e09": "Forest", "f01": "Rice", "f03": "Purple", "f05": "Sand", "f07": "Milk", "f09": "Bread", "m01": "6", "m02": "4", "m04": "1", "m07": "9", "m08": "6", "m09": "8", "m11": "9", "m12": "12", "m13": "9", "w01": "Cow", "w02": "Bike", "w03": "Cup", "w04": "Cat", "w05": "Up", "w06": "Big", "w07": "Pig", "w08": "5", "l01": "Yellow", "l03": "Farmer", "l05": "Chef", "l07": "Spoon", "x01": "Water", "x03": "Spoon", "x07": "Snow", "d03": "Rocks", "d05": "Shoes"};
+const WQ_EXTRA={"a01": "Dog", "a02": "Cow", "a05": "Frog", "a07": "8", "a08": "Cave", "a10": "Dog", "a12": "Cat", "a14": "Chips", "a15": "Cow", "a17": "Frog", "a19": "4", "a21": "Pig", "a23": "Pig", "a25": "Desert", "a27": "Bird", "b01": "Hands", "b02": "Nose", "b04": "3", "b06": "Feet", "b08": "Cake", "b10": "Sleep", "b12": "Knee", "b14": "20", "n01": "Candy", "n03": "Black", "n05": "Green", "n07": "Autumn", "n09": "Rocks", "n11": "Banana", "n13": "Toys", "s01": "Moon", "s03": "Comet", "s05": "Sunglasses", "s07": "Cloud", "s11": "Rain", "s13": "Winter", "p01": "Doctor", "p03": "Venus", "p05": "Saturn", "p07": "Earth", "p09": "10", "p11": "Fork", "p13": "Jupiter", "e01": "Juice", "e03": "North Pole", "e05": "River", "e07": "Milk", "e09": "Forest", "f01": "Rice", "f03": "Purple", "f05": "Sand", "f07": "Milk", "f09": "Bread", "m01": "6", "m02": "4", "m04": "1", "m07": "9", "m08": "6", "m09": "8", "m11": "9", "m12": "12", "m13": "9", "w01": "Cow", "w02": "Bike", "w03": "Cup", "w04": "Cat", "w05": "Up", "w06": "Big", "w07": "Pig", "w08": "5", "l01": "Yellow", "l03": "Farmer", "l05": "Chef", "l07": "Spoon", "x01": "Water", "x03": "Stones", "x07": "Snow", "d03": "Rocks", "d05": "Shoes"};
 function extraOpt(w){
   if(WQ_EXTRA[w.i]&&!w.o.includes(WQ_EXTRA[w.i]))return WQ_EXTRA[w.i];
   if(w.o.every(o=>/^\d+$/.test(o))){const n=w.o.map(Number),c=[Math.max(...n)+ri(2,5),Math.max(1,Math.min(...n)-ri(1,3))].filter(x=>!n.includes(x));return c.length?String(c[0]):null}
@@ -193,14 +199,14 @@ function extraOpt(w){
   return c||null}
 function qWatcher(cat,used){
   if(cat==="sky"&&Math.random()<.3){const k=sh([...Array(16).keys()]).find(i=>!used.has("tf"+i));if(k!==undefined){used.add("tf"+k);
-    return {tf:true,why:{t:SKY_TF_X[k],v:[]},voice:["w/LULU_TF"+k],cap:SKY_TF_T[k],visual:`<div class="bigpic">${SKY_TF_E[k]}</div>`,opts:[{h:"<span class='yn'>✅</span><small>True</small>",say:["w/LULU_SK_YES"]},{h:"<span class='yn'>❌</span><small>Not true</small>",say:["w/LULU_SK_NO"]}],ans:SKY_TF[k]?0:1,layout:"yn",hint:"again",exp:{t:SKY_TF_T[k]+(SKY_TF[k]?" ✅ True!":" ❌ Not true."),v:["w/LULU_ANS_IS"]}}}}
+    return {tf:true,why:{t:SKY_TF_X[k],v:[]},voice:["w/LULU_TF"+k],cap:SKY_TF_T[k],visual:`<div class="bigpic">${SKY_TF_PIC(k)}</div>`,opts:[{h:"<span class='yn'>✅</span><small>True</small>",say:["w/LULU_SK_YES"]},{h:"<span class='yn'>❌</span><small>Not true</small>",say:["w/LULU_SK_NO"]}],ans:SKY_TF[k]?0:1,layout:"yn",hint:"again",exp:{t:SKY_TF_T[k]+(SKY_TF[k]?" ✅ True!":" ❌ Not true."),v:["w/LULU_ANS_IS"]}}}}
   let pool=wPool(cat).filter(w=>!used.has(w.i)&&!S.seenW.includes(w.i));
   /* true/false only now and then: at most one per round, the rest are choose-the-answer */
   const tfDone=[...used].some(i=>(WQ.find(w=>w.i===i)||{}).k==="tf");
   if(tfDone||Math.random()<.65){const ch=pool.filter(w=>w.k!=="tf");if(ch.length)pool=ch}
   if(!pool.length){S.seenW=S.seenW.filter(i=>!wPool(cat).some(w=>w.i===i));pool=wPool(cat).filter(w=>!used.has(w.i))}
   /* avoid two of the same small topic (e.g. body, nature) in one mound */
-  const tops=new Set([...used].map(i=>(WQ.find(w=>w.i===i)||{}).t));const fresh=pool.filter(w=>!tops.has(w.t));let w=pickOne(fresh.length?fresh:pool);
+  const tops=new Set([...used].map(i=>(WQ.find(w=>w.i===i)||{}).t));const fresh=pool.filter(w=>!tops.has(w.t));let w=window.__fw?WQ.find(x=>x.i===window.__fw):pickOne(fresh.length?fresh:pool);
   if(!w)return qCount("find");
   used.add(w.i);S.seenW.push(w.i);
   {const f=QFIX[w.i];if(f)Object.assign(w,f)}
@@ -210,7 +216,7 @@ function qWatcher(cat,used){
   if(/what is this/i.test(w.q)&&w.p&&PIC_E[w.p])  /* the picture IS the question */
     return {voice:qv,cap:w.q,visual:`<div class="bigpic">${PIC_E[w.p]}</div>`,opts:w.o.map(o=>({h:`<b class="word">${o}</b>`,say:both(o)})),ans:w.n,layout:"col",hint:"elim",why,exp:{t:`${w.o[w.n]}: ${w.x}`,v:ev}};
   if(w.o.length===3){w=Object.assign({},w,{o:w.o.slice()});const x=extraOpt(w);if(x!==null){const at=ri(0,3);w.o.splice(at,0,x);if(at<=w.n)w.n++}}
-  return {voice:qv,cap:w.q,visual:`<div class="listen">${(()=>{const t=w.q.toLowerCase(),oe=w.o.map(optE);for(const [k,e] of TEXT_E)if(t.includes(k)&&!oe.includes(e))return e;return catById(cat).e})()}</div>`,opts:w.o.map(o=>/^\d+$/.test(o)?numOpt(+o):({h:`<span class="oe">${optE(o)||"🔹"}</span><small>${o}</small>`,say:both(o)})),ans:w.n,layout:w.o.length>2?"row3":"yn",hint:"elim",why,exp:{t:`${w.o[w.n]}: ${w.x}`,v:ev}};
+  return {voice:qv,cap:w.q,visual:`<div class="listen">${(()=>{const t=w.q.toLowerCase(),oe=w.o.map(optE);if(PFIX[w.i]&&!oe.includes(PFIX[w.i]))return PFIX[w.i]==="*"?plVis("planets"):PFIX[w.i];if(/\bplanets?\b/.test(t))return catById(cat).e;for(const [k,e] of TEXT_E)if(t.includes(k)&&!oe.includes(e))return e;return catById(cat).e})()}</div>`,opts:w.o.map(o=>/^\d+$/.test(o)?numOpt(+o):({h:`<span class="oe">${optE(o)||"🔹"}</span><small>${o}</small>`,say:both(o)})),ans:w.n,layout:w.o.length>2?"row3":"yn",hint:"elim",why,exp:{t:`${w.o[w.n]}: ${w.x}`,v:ev}};
 }
 /* Story time (Domi's Radio): stories and questions from the Watcher Device, 5 voices */
 const STORIES=__STORIES__;
@@ -284,7 +290,7 @@ function nextQ(){
     const v=tk(q.visual),a=[...tk(q.opts[q.ans].h)],others=q.opts.filter((o,i)=>i!==q.ans).map(o=>tk(o.h));
     if(a.some(x=>v.has(x)&&!others.every(o=>o.has(x))))q.visual=`<div class="listen">${cc.e||"⭐"}</div>`}
   const deco=/^<div class="listen/.test(q.visual||"")&&!/radio/.test(q.visual);
-  if(!q.style){q.style="cards";if(q.opts&&q.opts.length===4&&q.layout!=="yn"&&!q.tf&&!q.flash){const r=Math.random();q.style=r<.28?"balloon":r<.48?"fish":"cards"}}
+  if(!q.style){q.style="cards";if(q.opts&&q.opts.length===4&&q.layout!=="yn"&&!q.tf&&!q.flash&&q.opts.every(o=>!/<img|<svg|class=["']?(oe|grp|ob|wp|cshape|swatch|dayb|clk|yn)/.test(o.h||""))){const r=Math.random();q.style=r<.28?"balloon":r<.48?"fish":"cards"}}
   /* owner's template: title, speaker + the thing asked, 4 cards in a 2 x 2 grid, big CHECK button */
   $("qBody").innerHTML=`<div class="qkick"><span class="qke">${cc.e||"⭐"}</span>${cc.name||""}</div>
     <h2 class="qtitle${(q.cap||"").length>34?" long":""}">${q.cap||"Choose the right one"}</h2>
