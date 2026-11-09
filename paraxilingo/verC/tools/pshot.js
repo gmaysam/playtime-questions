@@ -1,0 +1,21 @@
+const {chromium}=require('/opt/npm-tools/node_modules/playwright');
+const fs=require('fs'),path=require('path');const root=process.argv[2];
+(async()=>{
+ const b=await chromium.launch();const p=await b.newPage({viewport:{width:390,height:844},deviceScaleFactor:2});
+ const errs=[];p.on('pageerror',e=>errs.push('PE '+e.message));
+ await p.route('http://app.test/**',r=>{let f=decodeURIComponent(new URL(r.request().url()).pathname.slice(1));const fp=path.join(root,f);
+   if(!fs.existsSync(fp))return r.fulfill({status:404,body:''});
+   let body=fs.readFileSync(fp);if(f==='index.html')body=body.toString().replace('let L=null;','let L=null;window.__px={get L(){return L},openMound:(i)=>openMound(i),dayPlan:()=>dayPlan(),showParents:()=>showParents()};');
+   r.fulfill({body,contentType:f.endsWith('.html')?'text/html; charset=utf-8':f.endsWith('.svg')?'image/svg+xml':undefined})});
+ await p.goto('http://app.test/index.html');await p.waitForTimeout(700);
+ await p.screenshot({path:root+'/../shots/p_intro.png'});
+ await p.click('#inSkip');await p.waitForTimeout(1200);await p.screenshot({path:root+'/../shots/p_map.png'});
+ const i=await p.evaluate(()=>__px.dayPlan().findIndex(x=>x.cat==='sky'||x.cat==='animals'));
+ await p.evaluate(i=>__px.openMound(i),i);await p.waitForTimeout(900);await p.screenshot({path:root+'/../shots/p_q.png'});
+ const ans=await p.evaluate(()=>__px.L.q.ans);await p.click(`#qBody .qo[data-j="${ans}"]`);await p.waitForTimeout(700);await p.screenshot({path:root+'/../shots/p_qok.png'});
+ await p.click('#lClose');await p.waitForTimeout(400);
+ await p.evaluate(()=>__px.showParents());await p.waitForTimeout(400);await p.screenshot({path:root+'/../shots/p_par1.png'});
+ await p.evaluate(()=>document.getElementById('pSettings').scrollTop=700);await p.waitForTimeout(200);await p.screenshot({path:root+'/../shots/p_par2.png'});
+ await p.evaluate(()=>document.getElementById('pSettings').scrollTop=1500);await p.waitForTimeout(200);await p.screenshot({path:root+'/../shots/p_par3.png'});
+ await p.click('[data-per="20"]');await p.click('[data-topic="radio"]');await p.waitForTimeout(200);
+ console.log(errs.join('\n')||'no errors');await b.close();})();

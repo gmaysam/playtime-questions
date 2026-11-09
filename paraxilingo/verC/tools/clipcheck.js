@@ -7,5 +7,5 @@ const {chromium}=require('/opt/npm-tools/node_modules/playwright');const fs=requ
    if(!q)continue;(q.voice||[]).forEach(v=>v&&clips.add(v));(q.opts||[]).forEach(o=>(o.say||[]).forEach(v=>v&&clips.add(v)));((q.why||{}).v||[]).forEach(v=>clips.add(v));((q.exp||{}).v||[]).forEach(v=>v&&clips.add(v));(q.match||[]).forEach(m=>[...m.ps,...m.ws].forEach(v=>clips.add(v)));
    const key=a+':'+(q.opts?q.opts.length:'m');cnt[key]=(cnt[key]||0)+1}}}return {clips:[...clips],bad:[...new Set(bad)],cnt}});
  const miss=res.clips.filter(c=>c.startsWith('w/')&&!fs.existsSync(path.join(root,'audio',c+'.mp3')));
- console.log('clips',res.clips.length,'missing',miss.length,miss.slice(0,30).join(' '));console.log('errors',res.bad.slice(0,10).join(' | ')||'none',errs.join(' ')||'');
+ fs.writeFileSync('nov8/used_clips.json',JSON.stringify(res.clips));console.log('clips',res.clips.length,'missing',miss.length,miss.slice(0,30).join(' '));console.log('errors',res.bad.slice(0,10).join(' | ')||'none',errs.join(' ')||'');
  console.log('choices per age',JSON.stringify(res.cnt));await b.close()})();
