@@ -6885,6 +6885,38 @@ body,
   flex: 0 0 auto !important;
   margin-bottom: auto;
 }
+@media (orientation:landscape) and (min-width:900px) {
+  .lesson.q2 .qbody {
+    display: flex !important;
+    flex-direction: column;
+    max-width: 900px;
+  }
+  .lesson.q2 .qbody > .qopts {
+    grid-column: auto;
+    grid-row: auto;
+    max-height: none;
+    margin-top: 0;
+    width: min(100%, calc((100vh - 290px) * 1.45));
+    align-self: center;
+  }
+  .lesson.q2 .qbody > .qcheck {
+    width: min(100%, calc((100vh - 290px) * 1.45));
+    align-self: center;
+  }
+  .lesson.q2 .qtop2 {
+    flex-wrap: nowrap;
+  }
+  .lesson.q2 .qtop2 .qvis {
+    max-height: 15vh;
+  }
+}
+@media (orientation:landscape) {
+  .lesson.q2 .qopts.row3,
+  .lesson.q2 .qopts.col,
+  .lesson.q2 .qopts.grid4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
 .qbody,
 .panel {
   max-width: 680px;
