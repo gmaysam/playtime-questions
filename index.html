@@ -8824,6 +8824,30 @@ body,
 .pnkeys.bump {
   animation: gBump .4s;
 }
+.plimg {
+  width: 1em;
+  height: 1em;
+  object-fit: contain;
+  vertical-align: middle;
+  filter: drop-shadow(0 4px 4px rgba(38, 51, 77, .18));
+}
+.qvis .bigpic .plimg {
+  width: 1.1em;
+  height: 1.1em;
+}
+.plrow {
+  display: inline-flex;
+  gap: .12em;
+  align-items: center;
+}
+.plrow .plimg.sm {
+  width: .55em;
+  height: .55em;
+}
+.lesson.q2 .qopts .qo[data-j] .oe .plimg {
+  width: 1.7em;
+  height: 1.7em;
+}
 .qbody,
 .panel {
   max-width: 680px;
@@ -9737,8 +9761,26 @@ body,
     const pre = { animals: ["a", "x"], world: ["b", "n"], sky: ["s", "p"] }[cat], young = S.age <= 7;
     return WQ.filter((w) => pre.includes(w.i[0]) && w.a <= Math.max(3, S.age) && (!young || VOICED.has(w.i)));
   }
-  const TEXT_E = [["t-rex", "\u{1F996}"], ["dinosaur", "\u{1F995}"], ["penguin", "\u{1F427}"], ["whale", "\u{1F40B}"], ["giraffe", "\u{1F992}"], ["octopus", "\u{1F419}"], ["elephant", "\u{1F418}"], ["spider", "\u{1F577}\uFE0F"], ["cheetah", "\u{1F406}"], ["bear", "\u{1F43B}"], ["owl", "\u{1F989}"], ["hands", "\u{1F9FC}"], ["teeth", "\u{1F9B7}"], ["heart", "\u2764\uFE0F"], ["bones", "\u{1F9B4}"], ["eyes", "\u{1F440}"], ["nose", "\u{1F443}"], ["ears", "\u{1F442}"], ["sleep", "\u{1F634}"], ["water", "\u{1F4A7}"], ["cactus", "\u{1F335}"], ["mushroom", "\u{1F344}"], ["mountain", "\u26F0\uFE0F"], ["river", "\u{1F3DE}\uFE0F"], ["volcano", "\u{1F30B}"], ["carrot", "\u{1F955}"], ["milk", "\u{1F95B}"], ["moon", "\u{1F319}"], ["sun", "\u2600\uFE0F"], ["star", "\u2B50"], ["rain", "\u{1F327}\uFE0F"], ["fog", "\u{1F32B}\uFE0F"], ["wind", "\u{1F32C}\uFE0F"], ["planet", "\u{1FA90}"], ["plant", "\u{1F331}"], ["flower", "\u{1F338}"], ["tree", "\u{1F333}"], ["bird", "\u{1F426}"], ["fish", "\u{1F41F}"], ["egg", "\u{1F95A}"]];
+  const TEXT_E = [["tomato", "\u{1F345}"], ["sharing toys", "\u{1F9F8}"], ["recycled", "\u267B\uFE0F"], ["nowruz", "\u{1F337}"], ["magnet", "\u{1F9F2}"], ["ice melts", "\u{1F9CA}"], ["light to see", "\u{1F4A1}"], ["fall faster", "\u{1FAB6}"], ["t-rex", "\u{1F996}"], ["dinosaur", "\u{1F995}"], ["penguin", "\u{1F427}"], ["whale", "\u{1F40B}"], ["giraffe", "\u{1F992}"], ["octopus", "\u{1F419}"], ["elephant", "\u{1F418}"], ["spider", "\u{1F577}\uFE0F"], ["cheetah", "\u{1F406}"], ["bear", "\u{1F43B}"], ["owl", "\u{1F989}"], ["hands", "\u{1F9FC}"], ["teeth", "\u{1F9B7}"], ["heart", "\u2764\uFE0F"], ["bones", "\u{1F9B4}"], ["eyes", "\u{1F440}"], ["nose", "\u{1F443}"], ["ears", "\u{1F442}"], ["sleep", "\u{1F634}"], ["water", "\u{1F4A7}"], ["cactus", "\u{1F335}"], ["mushroom", "\u{1F344}"], ["mountain", "\u26F0\uFE0F"], ["river", "\u{1F3DE}\uFE0F"], ["volcano", "\u{1F30B}"], ["carrot", "\u{1F955}"], ["milk", "\u{1F95B}"], ["moon", "\u{1F319}"], ["sun", "\u2600\uFE0F"], ["star", "\u2B50"], ["rain", "\u{1F327}\uFE0F"], ["fog", "\u{1F32B}\uFE0F"], ["wind", "\u{1F32C}\uFE0F"], ["planet", "\u{1FA90}"], ["plant", "\u{1F331}"], ["flower", "\u{1F338}"], ["tree", "\u{1F333}"], ["bird", "\u{1F426}"], ["fish", "\u{1F41F}"], ["egg", "\u{1F95A}"]];
+  const PL_IMG = (n) => {
+    const i = PLANET_N.indexOf(String(n).toLowerCase());
+    return i >= 0 ? '<img class="plimg" src="img/w/pl_'.concat(i, '.png" alt="').concat(n, '">') : "";
+  };
+  const planetIn = (t) => {
+    for (const n of ["mercury", "venus", "jupiter", "saturn", "uranus", "neptune", "mars"]) if (new RegExp("\\b" + n + "\\b", "i").test(t)) return n;
+    return /\bplanets\b/i.test(t) ? "*" : "";
+  };
+  const plVis = (t) => {
+    const n = planetIn(t);
+    return n === "*" ? '<span class="plrow">'.concat([3, 4, 5, 6].map((i) => '<img class="plimg sm" src="img/w/pl_'.concat(i, '.png" alt="">')).join(""), "</span>") : n ? PL_IMG(n) : "";
+  };
+  const PFIX = { n03: "\u{1F33F}", n05: "\u{1F333}", n10: "\u{1F33F}", p07: "\u{1F52D}", p09: "*", p13: "\u2600\uFE0F", a19: "\u{1F577}\uFE0F", x07: "\u{1F526}" };
   const wEmoji = (w) => {
+    if (PFIX[w.i]) return PFIX[w.i] === "*" ? plVis("planets") : PFIX[w.i];
+    {
+      const pv = plVis(w.q);
+      if (pv) return pv;
+    }
     if (w.p && PIC_E[w.p]) return PIC_E[w.p];
     const t = w.q.toLowerCase();
     for (const [k, e] of TEXT_E) if (t.includes(k)) return e;
@@ -9747,9 +9789,11 @@ body,
   Object.assign(WORD_E, { "brachiosaurus": "\u{1F995}", "t-rex": "\u{1F996}", "eggs": "\u{1F95A}", "bones": "\u{1F9B4}", "clouds": "\u2601\uFE0F" });
   const E_VOICED = /* @__PURE__ */ new Set(["a01", "a02", "a03", "a04", "a05", "a06", "a07", "a08", "a09", "a10", "a11", "a12", "a13", "a14", "a15", "a16", "a17", "a18", "a19", "a20", "a21", "a22", "a23", "a24", "a25", "a26", "a27", "a28", "b01", "b02", "b03", "b04", "b05", "b06", "b07", "b08", "b09", "b10", "b11", "b12", "b13", "b14", "n01", "n02", "n03", "n04", "n05", "n06", "n07", "n08", "n09", "n10", "n11", "n12", "n13", "n14", "p01", "p02", "p03", "p04", "p05", "p06", "p07", "p08", "s01", "s02", "s03", "s04", "s05", "s06", "s07", "s08", "s09", "s10", "s11", "s12", "s13", "s14"]);
   const QFIX = { s09: { q: "In a storm, what do we see first?" }, x07: { o: ["Blocking light", "Rain", "Wind"] } };
+  const SKY_TF_PIC = (k) => k === 8 ? PL_IMG("jupiter") : SKY_TF_E[k];
   const EXTRA_E = { "brachiosaurus": "\u{1F995}", "t-rex": "\u{1F996}", "eggs": "\u{1F95A}" };
-  const optE = (o) => WORD_E[o.toLowerCase()] || EXTRA_E[o.toLowerCase()] || "";
-  const WQ_EXTRA = { "a01": "Dog", "a02": "Cow", "a05": "Frog", "a07": "8", "a08": "Cave", "a10": "Dog", "a12": "Cat", "a14": "Chips", "a15": "Cow", "a17": "Frog", "a19": "4", "a21": "Pig", "a23": "Pig", "a25": "Desert", "a27": "Bird", "b01": "Hands", "b02": "Nose", "b04": "3", "b06": "Feet", "b08": "Cake", "b10": "Sleep", "b12": "Knee", "b14": "20", "n01": "Candy", "n03": "Black", "n05": "Purple", "n07": "Autumn", "n09": "Juice", "n11": "Banana", "n13": "Toys", "s01": "Moon", "s03": "Comet", "s05": "Sunglasses", "s07": "Cloud", "s11": "Rain", "s13": "Winter", "p01": "Doctor", "p03": "Venus", "p05": "Saturn", "p07": "Earth", "p09": "10", "p11": "Fork", "p13": "Jupiter", "e01": "Juice", "e03": "North Pole", "e05": "River", "e07": "Milk", "e09": "Forest", "f01": "Rice", "f03": "Purple", "f05": "Sand", "f07": "Milk", "f09": "Bread", "m01": "6", "m02": "4", "m04": "1", "m07": "9", "m08": "6", "m09": "8", "m11": "9", "m12": "12", "m13": "9", "w01": "Cow", "w02": "Bike", "w03": "Cup", "w04": "Cat", "w05": "Up", "w06": "Big", "w07": "Pig", "w08": "5", "l01": "Yellow", "l03": "Farmer", "l05": "Chef", "l07": "Spoon", "x01": "Water", "x03": "Spoon", "x07": "Snow", "d03": "Rocks", "d05": "Shoes" };
+  const optE = (o) => PL_IMG(o) || OPT_FIX[o.toLowerCase()] || WORD_E[o.toLowerCase()] || EXTRA_E[o.toLowerCase()] || "";
+  const OPT_FIX = { nails: "\u{1F529}", sand: "\u{1F3D6}\uFE0F", leaves: "\u{1F343}", pond: "\u{1FAB7}", "blocking light": "\u{1F464}", "blocking sun": "\u{1F464}", hive: "\u{1F36F}" };
+  const WQ_EXTRA = { "a01": "Dog", "a02": "Cow", "a05": "Frog", "a07": "8", "a08": "Cave", "a10": "Dog", "a12": "Cat", "a14": "Chips", "a15": "Cow", "a17": "Frog", "a19": "4", "a21": "Pig", "a23": "Pig", "a25": "Desert", "a27": "Bird", "b01": "Hands", "b02": "Nose", "b04": "3", "b06": "Feet", "b08": "Cake", "b10": "Sleep", "b12": "Knee", "b14": "20", "n01": "Candy", "n03": "Black", "n05": "Green", "n07": "Autumn", "n09": "Rocks", "n11": "Banana", "n13": "Toys", "s01": "Moon", "s03": "Comet", "s05": "Sunglasses", "s07": "Cloud", "s11": "Rain", "s13": "Winter", "p01": "Doctor", "p03": "Venus", "p05": "Saturn", "p07": "Earth", "p09": "10", "p11": "Fork", "p13": "Jupiter", "e01": "Juice", "e03": "North Pole", "e05": "River", "e07": "Milk", "e09": "Forest", "f01": "Rice", "f03": "Purple", "f05": "Sand", "f07": "Milk", "f09": "Bread", "m01": "6", "m02": "4", "m04": "1", "m07": "9", "m08": "6", "m09": "8", "m11": "9", "m12": "12", "m13": "9", "w01": "Cow", "w02": "Bike", "w03": "Cup", "w04": "Cat", "w05": "Up", "w06": "Big", "w07": "Pig", "w08": "5", "l01": "Yellow", "l03": "Farmer", "l05": "Chef", "l07": "Spoon", "x01": "Water", "x03": "Stones", "x07": "Snow", "d03": "Rocks", "d05": "Shoes" };
   function extraOpt(w) {
     if (WQ_EXTRA[w.i] && !w.o.includes(WQ_EXTRA[w.i])) return WQ_EXTRA[w.i];
     if (w.o.every((o) => /^\d+$/.test(o))) {
@@ -9764,7 +9808,7 @@ body,
       const k = sh([...Array(16).keys()]).find((i) => !used.has("tf" + i));
       if (k !== void 0) {
         used.add("tf" + k);
-        return { tf: true, why: { t: SKY_TF_X[k], v: [] }, voice: ["w/LULU_TF" + k], cap: SKY_TF_T[k], visual: '<div class="bigpic">'.concat(SKY_TF_E[k], "</div>"), opts: [{ h: "<span class='yn'>\u2705</span><small>True</small>", say: ["w/LULU_SK_YES"] }, { h: "<span class='yn'>\u274C</span><small>Not true</small>", say: ["w/LULU_SK_NO"] }], ans: SKY_TF[k] ? 0 : 1, layout: "yn", hint: "again", exp: { t: SKY_TF_T[k] + (SKY_TF[k] ? " \u2705 True!" : " \u274C Not true."), v: ["w/LULU_ANS_IS"] } };
+        return { tf: true, why: { t: SKY_TF_X[k], v: [] }, voice: ["w/LULU_TF" + k], cap: SKY_TF_T[k], visual: '<div class="bigpic">'.concat(SKY_TF_PIC(k), "</div>"), opts: [{ h: "<span class='yn'>\u2705</span><small>True</small>", say: ["w/LULU_SK_YES"] }, { h: "<span class='yn'>\u274C</span><small>Not true</small>", say: ["w/LULU_SK_NO"] }], ans: SKY_TF[k] ? 0 : 1, layout: "yn", hint: "again", exp: { t: SKY_TF_T[k] + (SKY_TF[k] ? " \u2705 True!" : " \u274C Not true."), v: ["w/LULU_ANS_IS"] } };
       }
     }
     let pool = wPool(cat).filter((w2) => !used.has(w2.i) && !S.seenW.includes(w2.i));
@@ -9779,7 +9823,7 @@ body,
     }
     const tops = new Set([...used].map((i) => (WQ.find((w2) => w2.i === i) || {}).t));
     const fresh2 = pool.filter((w2) => !tops.has(w2.t));
-    let w = pickOne(fresh2.length ? fresh2 : pool);
+    let w = window.__fw ? WQ.find((x) => x.i === window.__fw) : pickOne(fresh2.length ? fresh2 : pool);
     if (!w) return qCount("find");
     used.add(w.i);
     S.seenW.push(w.i);
@@ -9803,6 +9847,8 @@ body,
     }
     return { voice: qv, cap: w.q, visual: '<div class="listen">'.concat((() => {
       const t = w.q.toLowerCase(), oe = w.o.map(optE);
+      if (PFIX[w.i] && !oe.includes(PFIX[w.i])) return PFIX[w.i] === "*" ? plVis("planets") : PFIX[w.i];
+      if (/\bplanets?\b/.test(t)) return catById(cat).e;
       for (const [k, e] of TEXT_E) if (t.includes(k) && !oe.includes(e)) return e;
       return catById(cat).e;
     })(), "</div>"), opts: w.o.map((o) => /^\d+$/.test(o) ? numOpt(+o) : { h: '<span class="oe">'.concat(optE(o) || "\u{1F539}", "</span><small>").concat(o, "</small>"), say: both(o) }), ans: w.n, layout: w.o.length > 2 ? "row3" : "yn", hint: "elim", why, exp: { t: "".concat(w.o[w.n], ": ").concat(w.x), v: ev } };
@@ -9942,7 +9988,7 @@ body,
     const deco = /^<div class="listen/.test(q.visual || "") && !/radio/.test(q.visual);
     if (!q.style) {
       q.style = "cards";
-      if (q.opts && q.opts.length === 4 && q.layout !== "yn" && !q.tf && !q.flash) {
+      if (q.opts && q.opts.length === 4 && q.layout !== "yn" && !q.tf && !q.flash && q.opts.every((o) => !/<img|<svg|class=["']?(oe|grp|ob|wp|cshape|swatch|dayb|clk|yn)/.test(o.h || ""))) {
         const r = Math.random();
         q.style = r < 0.28 ? "balloon" : r < 0.48 ? "fish" : "cards";
       }
