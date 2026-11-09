@@ -490,16 +490,26 @@ function showParents(){
 }
 
 /* ================= the parents' learning report: every skill the child practised, and how sure they are ================= */
-const LVL_T=[["🌱","Just started"],["🌿","Practising"],["🌳","Got it!"]];
-function skRows(){const sk=S.sk||{};return Object.entries(sk).map(([k,r])=>{const [cat,name]=k.split("|"),ones=(r.h.match(/1/g)||[]).length;return {cat,name,r,lv:skLevel(r),pct:r.h.length?Math.round(ones/r.h.length*100):0}})}
+const LVL_T=[["🌱","New"],["🌿","Learning"],["🌳","Knows it"]];
+function skRows(){const sk=S.sk||{};return Object.entries(sk).map(([k,r])=>{const [cat,name]=k.split("|");return {cat,name,r,lv:skLevel(r)}})}
 function reportHTML(pn){const rows=skRows();
-  if(!rows.length)return `<p class="pnote">After a few rounds you'll see here what ${pn} is learning, skill by skill: what is new, what needs practice, and what ${pn} already knows.</p>`;
-  const cnt=[0,1,2].map(l=>rows.filter(x=>x.lv===l).length),areas={};rows.forEach(x=>{const a=(AREA[x.cat]||["⭐","Other"])[1];(areas[a]=areas[a]||{e:(AREA[x.cat]||["⭐"])[0],l:[]}).l.push(x)});
-  const prac=rows.filter(x=>x.lv===1).sort((a,b)=>a.pct-b.pct).slice(0,2),got=rows.filter(x=>x.lv===2);
-  return `<div class="rsum">${[2,1,0].map(l=>`<div class="rs${l}"><b>${cnt[l]}</b><small>${LVL_T[l][0]} ${LVL_T[l][1]}</small></div>`).join("")}</div>
-    ${prac.length?`<div class="rtip"><b>Practise together</b>${prac.map(x=>`<span>${(AREA[x.cat]||["⭐"])[0]} ${x.name}</span>`).join("")}</div>`:""}
-    ${got.length>=5&&S.diff<2?`<div class="rtip up"><b>Ready for more?</b><span>${pn} knows ${got.length} skills well. Try the next level 🐇🚀 below.</span></div>`:""}
-    ${Object.entries(areas).map(([a,g])=>`<div class="rarea"><div class="rah">${g.e} ${a}</div>${g.l.sort((x,y)=>y.lv-x.lv||y.r.n-x.r.n).map(x=>`<div class="rrow"><span class="rlv l${x.lv}" title="${LVL_T[x.lv][1]}">${LVL_T[x.lv][0]}</span><div class="rnm"><b>${x.name}</b><small>${x.r.n} answer${x.r.n===1?"":"s"} · ${x.pct}% right first time lately</small></div><span class="rh">${x.r.h.split("").map(c=>`<i class="${c==="1"?"y":"n"}"></i>`).join("")}</span></div>`).join("")}</div>`).join("")}
+  /* the last 7 days: how many questions a day */
+  const days=[];for(let i=6;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);days.push([d,(S.dq||{})[dayStr(d)]||0])}
+  const mx=Math.max(10,...days.map(x=>x[1])),goal=S.perDay;
+  const week=`<div class="rweek"><div class="rwh"><b>Last 7 days</b><small>questions a day · goal ${goal}</small></div><div class="rbars">${days.map(([d,n],i)=>`<div class="rb"><span class="rbn">${n||""}</span><i class="${n>=goal?"full":n?"some":""}" style="height:${Math.max(4,n/Math.max(mx,goal)*100)}%"></i><small>${i===6?"Today":["Su","Mo","Tu","We","Th","Fr","Sa"][d.getDay()]}</small></div>`).join("")}<span class="rgoal" style="bottom:calc(22px + ${goal/Math.max(mx,goal)*100}% * (100% - 40px) / 100%)"></span></div></div>`;
+  if(!rows.length)return week+`<p class="pnote">Play a few rounds and you'll see here what ${pn} is learning.</p>`;
+  const cnt=[0,1,2].map(l=>rows.filter(x=>x.lv===l).length),tot=rows.length,areas={};
+  rows.forEach(x=>{const A=AREA[x.cat]||["⭐","Other"];(areas[A[1]]=areas[A[1]]||{e:A[0],l:[]}).l.push(x)});
+  const prac=rows.filter(x=>x.lv===1).sort((a,b)=>((a.r.h.match(/1/g)||[]).length/a.r.h.length)-((b.r.h.match(/1/g)||[]).length/b.r.h.length)).slice(0,2);
+  const seg=l=>cnt[l]?`<i class="s${l}" style="flex:${cnt[l]}"></i>`:"";
+  return `<div class="rhero"><div class="rbig">${cnt[2]}<small>of ${tot}</small></div><div class="rht"><b>skills ${pn} knows well</b><div class="rstack">${seg(2)}${seg(1)}${seg(0)}</div>
+      <div class="rleg"><span><i class="s2"></i>${LVL_T[2][1]} ${cnt[2]}</span><span><i class="s1"></i>${LVL_T[1][1]} ${cnt[1]}</span><span><i class="s0"></i>${LVL_T[0][1]} ${cnt[0]}</span></div></div></div>
+    ${week}
+    ${prac.length?`<div class="rtip"><b>🤝 Practise together</b>${prac.map(x=>`<span>${(AREA[x.cat]||["⭐"])[0]} ${x.name}</span>`).join("")}</div>`:""}
+    <div class="rgrid">${Object.entries(areas).map(([a,g])=>{const k2=g.l.filter(x=>x.lv===2).length,f=k2/g.l.length;
+      return `<details class="rcard"><summary><span class="rring" style="--f:${Math.round(f*360)}deg"><i>${g.e}</i></span><b>${a}</b><small>${k2} of ${g.l.length} known</small></summary>
+        <div class="rlist">${g.l.sort((x,y)=>y.lv-x.lv).map(x=>`<span class="l${x.lv}">${LVL_T[x.lv][0]} ${x.name}</span>`).join("")}</div></details>`}).join("")}</div>
+    <p class="rhow">🌳 knows it = right the first time almost every time lately · 🌿 learning = still mixing it up · 🌱 new = just started. Tap an area to see its skills.</p>
     <button class="padd share" id="pShare">📤 Share this report</button>`}
 function reportText(pn){const rows=skRows(),w=wkLog();let t=`${pn}'s learning in Paraxilingo\nThis week: ${w.days.length} days, ${w.q} questions, ${w.q?Math.round(w.right/w.q*100):0}% right\n`;
   [2,1,0].forEach(l=>{const r=rows.filter(x=>x.lv===l);if(r.length)t+=`\n${LVL_T[l][0]} ${LVL_T[l][1]}: ${r.map(x=>x.name).join(", ")}`});return t+"\n"}

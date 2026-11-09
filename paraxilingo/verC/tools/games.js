@@ -13,7 +13,7 @@ const SKCAT={"clock.after":"What day comes next","clock.before":"What day came b
 const AREA={count:["🔢","Numbers"],add:["➕","Adding & taking away"],clock:["🕒","Time & calendar"],letters:["🔤","Letters & words"],read:["📖","Reading"],farm:["🏡","Animals"],animals:["🐾","Animals"],world:["🌳","Our world"],sky:["🌙","Sky & space"],shapes:["🔷","Shapes & thinking"],people:["🚩","People & feelings"],story:["📻","Listening (stories)"]};
 const skName=(cat,kind)=>SKCAT[cat+"."+kind]||(cat==="story"?"Listening to a story":SKN[kind])||(cat==="sky"?"Sky & space facts":cat==="animals"?"Animal facts":cat==="world"?"Facts about our world":"Other");
 function logSk(q,ok){try{const cat=q.cat||(L&&L.cat)||"",k=cat+"|"+skName(cat,q.game||(q.match?"match":q.robot?"robot":q.kind)||"");if(!S.sk)S.sk={};const r=S.sk[k]||(S.sk[k]={n:0,r:0,f:0,d0:today(),d:"",h:""});
-  r.n++;if(ok)r.r++;const first=ok&&!q.tries;if(first)r.f++;r.d=today();r.h=(r.h+(first?"1":"0")).slice(-10)}catch(e){}}
+  r.n++;if(ok)r.r++;if(!S.dq)S.dq={};S.dq[today()]=(S.dq[today()]||0)+1;{const ks=Object.keys(S.dq).sort();while(ks.length>21)delete S.dq[ks.shift()]}const first=ok&&!q.tries;if(first)r.f++;r.d=today();r.h=(r.h+(first?"1":"0")).slice(-10)}catch(e){}}
 function skLevel(r){const ones=(r.h.match(/1/g)||[]).length,p=r.h.length?ones/r.h.length:0;return r.n<4?0:p>=.8&&r.n>=6?2:1}
 
 /* shared bits for the play games */
@@ -123,3 +123,65 @@ function bldQ(q){
   window.__gSolve=()=>{let i=0;const t=()=>{if(i<q.letters.length){const l=q.letters[i++];[...$("qBody").querySelectorAll(".bdt")].find(b=>!b.disabled&&b.dataset.l===l).click();setTimeout(t,200)}};t()};
 }
 const GAMES={simon:simonQ,pairs:pairsQ,order:orderQ,pizza:pizzaQ,build:bldQ};
+
+/* ================= Nov 9: a short English fact after EVERY right answer, made from the question and its answer ================= */
+const DAYS7=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],MONTHS12=["January","February","March","April","May","June","July","August","September","October","November","December"];
+const SEASON_F={spring:"In spring, flowers bloom and baby animals are born.",summer:"Summer has the longest days of the year.",autumn:"In autumn, many leaves turn red and yellow and fall down.",fall:"In autumn, many leaves turn red and yellow and fall down.",winter:"In winter, some animals sleep until spring. That is called hibernation."};
+const JOB_F={astronaut:"Astronauts float in space because there is almost no gravity up there.",farmer:"Farmers grow the food we eat, like wheat for our bread.",pilot:"Pilots fly planes high above the clouds.",scientist:"Scientists ask questions and do experiments to find answers.",builder:"Builders use bricks, wood and steel to make houses.",chef:"Chefs cook food in restaurants. Their tall hat is called a toque.",teacher:"Teachers help children learn to read, write and count.",doctor:"Doctors listen to your heart with a stethoscope.",firefighter:"Firefighters use big hoses to put out fires.",police:"Police officers help keep people safe.","police officer":"Police officers help keep people safe.",dentist:"Dentists keep our teeth clean and strong.",nurse:"Nurses take care of people who are sick.",baker:"Bakers get up very early to bake fresh bread.",vet:"Vets are doctors for animals.",mechanic:"Mechanics fix cars and trucks.",artist:"Artists make pictures, songs and stories.",singer:"Singers use their voice like a musical instrument.",mail:"Mail carriers bring letters to every house."};
+const FLAG_F={"the united states":"The US flag has 50 stars, one for each state.",italy:"Italy is shaped like a boot! Its flag is green, white and red.",egypt:"Egypt has the famous pyramids. Its flag has an eagle in the middle.",france:"France's flag is blue, white and red. Paris is its capital.",japan:"Japan's flag shows a red sun. Japan is called the Land of the Rising Sun.",canada:"Canada's flag has a red maple leaf.",iran:"Iran's flag is green, white and red.",china:"China has the most people of any country.",brazil:"Brazil's flag is green with a blue globe full of stars.",germany:"Germany's flag is black, red and gold.",india:"India's flag has a blue wheel in the middle.",mexico:"Mexico's flag has an eagle eating a snake.","the united kingdom":"The UK flag is called the Union Jack.",spain:"Spain's flag is red and yellow.",australia:"Australia is home to kangaroos and koalas.",turkey:"Turkey's flag has a white moon and star."};
+const SHAPE_F={circle:"A circle has no corners and no straight sides.",square:"A square has 4 sides that are all the same length.",triangle:"A triangle has 3 sides and 3 corners.",rectangle:"A rectangle has 4 sides: 2 long and 2 short.",star:"Our star shape has 5 points.",oval:"An oval looks like a stretched circle, like an egg.",heart:"A heart shape means love.",diamond:"A diamond is a square standing on its corner.",rhombus:"A rhombus has 4 sides that are all the same length.",pentagon:"A pentagon has 5 sides.",hexagon:"A hexagon has 6 sides, like a honeycomb cell.",octagon:"An octagon has 8 sides, like a stop sign.",trapezoid:"A trapezoid has 4 sides, and 2 of them are parallel.",cube:"A cube has 6 square faces, like a dice.",sphere:"A sphere is round all over, like a ball.",cylinder:"A cylinder is like a can: 2 circles and a tube.",cone:"A cone is like an ice cream cone.",pyramid:"A pyramid has a square bottom and triangle sides."};
+const COLOR_F={red:"Red and yellow mixed together make orange.",blue:"The sky looks blue because of how sunlight scatters.",yellow:"Yellow and blue mixed together make green.",green:"Plants are green because of chlorophyll, which helps them make food.",orange:"Orange is a mix of red and yellow.",purple:"Purple is a mix of red and blue.",pink:"Pink is red mixed with white.",brown:"Brown is made by mixing many colours together.",black:"Black is what we see when there is no light.",white:"White light holds all the colours of the rainbow.",grey:"Grey is black mixed with white.",gray:"Grey is black mixed with white."};
+const FEEL_F={happy:"When we are happy, we smile and our eyes crinkle.",sad:"It is OK to feel sad. A hug can help.",angry:"When you feel angry, take three slow, deep breaths.",scared:"When we feel scared, our heart beats faster.",surprised:"When we are surprised, our eyes and mouth open wide."};
+const VOWEL="AEIOU";
+function numFact(n){n=+n;if(!(n>=0))return "";if(n===0)return "Zero means nothing at all.";
+  const eo=n%2===0?`${n} is an even number: it makes 2 equal groups of ${n/2}.`:`${n} is an odd number: one is always left over when we make pairs.`;
+  if(n>=10&&n<100){const t=Math.floor(n/10),o=n%10;return o?`${n} is ${t} tens and ${o} ones.`:`${n} is ${t} tens. ${eo}`}
+  return n===100?"100 is ten tens!":eo}
+function factFor(q){try{
+  const raw=((q.opts&&q.opts[q.ans]||{}).h||"").replace(/<[^>]+>/g," ").replace(/[●]/g," ").replace(/\s+/g," ").trim(),lab=raw.toLowerCase(),
+    k=q.kind||"",c=q.cat||"",obs=((q.opts&&q.opts[q.ans]||{}).h||"").match(/class="ob/g),num=(lab.match(/\d+/)||[])[0]||(obs&&obs.length?String(obs.length):undefined);
+  let w=lab.replace(/^[^a-z0-9]+/,"").trim();if(!w)w=String(q.exp&&q.exp.t||"").toLowerCase().replace(/[^a-z' -]/g,"").trim();
+  const fe=FACT_EN[w]||FACT_EN[w.replace(/s$/,"")]||FACT_EN[lab];
+  if(fe&&!["count","add"].includes(c))return fe;
+  if(c==="count"||c==="add"){
+    if(k==="more"||k==="less"){const ns=q.opts.map(o=>(o.h.match(/class="ob/g)||[]).length).filter(Boolean),r=ns[q.ans],o=k==="more"?Math.min(...ns):Math.max(...ns);
+      return r&&o?`${r} is ${k==="more"?"more":"less"} than ${o}: it comes ${k==="more"?"after":"before"} ${o} when we count.`:"Count each group carefully, one by one."}
+    if(k==="long")return /short/i.test(q.cap)?"Short things need fewer blocks to measure them.":"Long things need more blocks to measure them.";
+    if(k==="graph")return "A chart shows numbers as bars. The tallest bar is the biggest number.";
+    if(k==="skip"){const m=(q.cap||"").match(/by (\d+)/);return m?`Counting by ${m[1]}s is faster than counting by ones!`:numFact(num)}
+    if(k==="share")return "Sharing fairly means everyone gets the same amount.";
+    if(k==="groups")return "Equal groups help us count faster. That's called multiplying!";
+    if(k==="carry")return "When the ones make 10 or more, we carry a ten to the tens.";
+    if(k==="addPic"||k==="sum")return "Adding means putting things together, so we get more.";
+    if(k==="subPic"||k==="minus"||k==="left")return "Taking away means fewer are left than we started with.";
+    if(num)return numFact(num);
+    if(fe)return fe}
+  if(c==="clock"){const tm=lab.match(/(\d+):(\d\d)/);
+    if(tm){const m=+tm[2];return m===0?`At ${tm[1]} o'clock the long hand points straight up to 12.`:m===30?"Half past: the long hand points down to the 6.":m===15?"Quarter past: the long hand points to the 3.":m===45?"Quarter to: the long hand points to the 9.":"There are 60 minutes in one hour."}
+    const d=DAYS7.findIndex(x=>lab.includes(x.toLowerCase()));if(d>=0)return `A week has 7 days. ${DAYS7[d]} comes after ${DAYS7[(d+6)%7]}.`;
+    const mo=MONTHS12.findIndex(x=>lab.includes(x.toLowerCase()));if(mo>=0)return `${MONTHS12[mo]} is month number ${mo+1} of the 12 months in a year.`;
+    for(const s2 in SEASON_F)if(lab.includes(s2))return SEASON_F[s2];
+    if(/morning/.test(lab))return "In the morning the sun comes up in the east.";
+    if(/night/.test(lab))return "At night our bodies rest and grow while we sleep.";
+    if(/afternoon|evening/.test(lab))return "Evening comes after the afternoon, when the sun goes down.";
+    if(k==="week")return "A week has 7 days: 5 school days and 2 weekend days.";
+    if(k==="months")return "A year has 12 months and 4 seasons.";
+    if(num)return numFact(num)}
+  if(c==="letters"){
+    if(/^[a-z]$/i.test(w)){const L2=w.toUpperCase(),i=L2.charCodeAt(0)-64;return `${L2} is letter number ${i} of the 26 letters.${VOWEL.includes(L2)?` ${L2} is a vowel.`:""}`}
+    if(k==="rhyme")return `Rhyming words end with the same sound, like "${w}" and "${(q.exp&&q.exp.t||"").split(/[–-]/)[0].trim()}".`;
+    if(w)return `"${w}" has ${w.replace(/[^a-z]/g,"").length} letters and starts with ${w[0].toUpperCase()}.`}
+  if(c==="read"){if(k==="sentence"){const t=String(q.exp&&q.exp.t||"");return t?`Read it all together: "${t}"`:"A sentence starts with a capital letter and ends with a full stop."}
+    return `"${w}" is one of the words we read most often. Now you know it by sight!`}
+  if(c==="shapes"){if(k==="pattern")return "A pattern repeats again and again, like the stripes on a zebra.";
+    if(k==="both")return "You checked two things at once: the colour AND the shape!";
+    if(k==="bigsmall")return /small/i.test(q.cap)?"Small things take up less space.":"Big things take up more space.";
+    const sh=Object.keys(SHAPE_F).find(x=>lab.includes(x)||String(q.exp&&q.exp.t||"").toLowerCase().includes(x)||(q.cap||"").toLowerCase().includes(x));if(sh)return SHAPE_F[sh];
+    const co=Object.keys(COLOR_F).find(x=>lab.includes(x));if(co)return COLOR_F[co]}
+  if(c==="people"){const f2=FEEL_F[w];if(f2)return f2;const j=Object.keys(JOB_F).find(x=>lab.includes(x));if(j)return JOB_F[j];
+    const t=String(q.exp&&q.exp.t||lab).toLowerCase(),fl=Object.keys(FLAG_F).find(x=>t.includes(x));if(fl)return FLAG_F[fl];if(k.startsWith("flag"))return "Every country has its own flag with its own colours."}
+  if(c==="farm"){if(k==="fly")return "Animals that fly have wings: birds, bats and many insects.";if(k==="water")return "Fish breathe under water with gills.";if(k==="sound")return "Every animal has its own way to talk to its friends.";
+    if(k==="home")return "Animals live where they can find food and stay safe.";if(k==="food")return "Some animals eat plants, some eat meat, and some eat both."}
+  if(fe)return fe;
+  if(num)return numFact(num);
+  return ""}catch(e){return ""}}

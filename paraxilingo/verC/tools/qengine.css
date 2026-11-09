@@ -710,3 +710,73 @@ body,.phone,.lesson.q2,.introC,#pSettings,.panel,.map{background:#fff!important}
 .tbtn.hasg{padding:0}
 .tbg{width:38px;height:38px;border-radius:50%;background:conic-gradient(#58CC02 var(--f),#E5E5E5 0);display:grid;place-items:center}
 .tbg .pzimg.sm,.tbg .pze.sm{width:30px;height:30px;border-radius:50%;object-fit:cover;background:#fff;display:grid;place-items:center;font-size:18px}
+/* ===== Nov 9b: answers never cut, one tap is enough =====
+   iPad Safari cut the text of cards that grow from a small size or tilt while they float, and the first-child
+   max-height clipped big letters and numbers. Cards now slide in (no scaling), stand still, and size their text to the card. */
+@keyframes qin2{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes qok{0%,100%{transform:none}40%{transform:translateY(-10px)}}
+@keyframes qno2{20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
+@keyframes bRise{0%{transform:translateY(40vh);opacity:0}100%{transform:none;opacity:1}}
+@keyframes bSway{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes fSwim{0%,100%{transform:translateX(-4px)}50%{transform:translateX(4px)}}
+@keyframes fIn{0%{transform:translateX(-60px);opacity:0}100%{transform:none;opacity:1}}
+@keyframes bPop{0%{opacity:1}100%{opacity:0;transform:translateY(-30px)}}
+.lesson.q2 .qopts .qo[data-j]{animation:qin2 .35s ease-out both;will-change:auto;touch-action:manipulation;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent;container-type:size;overflow:hidden}
+.lesson.q2 .qopts .qo[data-j]:nth-child(2){animation-delay:.05s}.lesson.q2 .qopts .qo[data-j]:nth-child(3){animation-delay:.1s}.lesson.q2 .qopts .qo[data-j]:nth-child(4){animation-delay:.15s}
+.lesson.q2 .qopts .qo[data-j]:active{animation:none;transform:translateY(3px)}
+.lesson.q2 .qopts .qo[data-j].saying{animation:none}
+.lesson.q2 .qopts .qo[data-j].right,.lesson.q2 .qopts .qo[data-j].show{animation:qok .5s ease both}
+.lesson.q2 .qopts .qo[data-j].wrong{animation:qno2 .4s ease both}
+.lesson.q2 .qopts .qo[data-j].faded{transform:none}
+.lesson.q2 .qopts .qo[data-j]>:first-child{max-height:none;overflow:visible}
+.lesson.q2 .qopts .qo[data-j] *{animation:none!important}
+.lesson.q2 .qopts .qo[data-j] b.num{line-height:1.15;font-size:min(46cqh,calc(150cqw / var(--n,2)),120px)}
+.lesson.q2 .qopts .qo[data-j] b.num.letter{font-size:min(50cqh,60cqw,120px)}
+.lesson.q2 .qopts .qo[data-j] .word{line-height:1.2;font-size:min(30cqh,calc(150cqw / var(--n,4)),64px)}
+.lesson.q2 .qopts .qo[data-j] .oe{font-size:min(44cqh,50cqw,100px)!important;line-height:1.15}
+.lesson.q2 .qopts .qo[data-j] small{font-size:min(15cqh,calc(150cqw / var(--n,6)),26px);line-height:1.2}
+.lesson.q2 .qopts .qo[data-j] .dots{font-size:min(10cqh,calc(90cqw / var(--n,5)),20px);line-height:1.2;white-space:nowrap}
+.lesson.q2 .qopts .qo[data-j] .wp.op{height:min(60cqh,160px)!important}
+/* balloons and fish move gently up/down or side to side only (no tilting) and keep the word inside */
+.lesson.q2 .qopts.st-balloon .qo[data-j]{animation:bRise .7s ease-out both,bSway 3s ease-in-out .7s infinite!important;overflow:visible!important}
+.lesson.q2 .qopts.st-balloon .qo[data-j] .word,.lesson.q2 .qopts.st-balloon .qo[data-j] b.num{font-size:min(36cqh,calc(120cqw / var(--n,4)),56px)}
+.lesson.q2 .qopts.st-balloon .qo[data-j].right{animation:bPop .45s ease-in forwards!important}
+.lesson.q2 .qopts.st-balloon .qo[data-j].wrong,.lesson.q2 .qopts.st-fish .qo[data-j].wrong{animation:qno2 .4s!important}
+.lesson.q2 .qopts.st-fish .qo[data-j]{animation:fIn .6s ease-out both,fSwim 3s ease-in-out .6s infinite!important}
+.lesson.q2 .qopts.st-fish .qo[data-j].right{animation:qok .5s both!important}
+.lesson.q2 .qopts.st-fish .qo[data-j] .word,.lesson.q2 .qopts.st-fish .qo[data-j] b.num{font-size:min(40cqh,calc(110cqw / var(--n,4)),56px)}
+.mc{touch-action:manipulation}.mc.sel{animation:none;box-shadow:0 0 0 4px #84D8FF}
+
+/* ===== Nov 9b: the learning report, as pictures ===== */
+.rhero{display:flex;align-items:center;gap:14px;border:2px solid #E5E5E5;border-radius:20px;padding:14px;box-shadow:0 4px 0 #E5E5E5}
+.rbig{font:900 46px/1 "Nunito",sans-serif;color:#58CC02;text-align:center;min-width:70px}.rbig small{display:block;font:800 14px "Nunito",sans-serif;color:#AFAFAF}
+.rht{flex:1;min-width:0}.rht b{font-weight:800;font-size:16px}
+.rstack{display:flex;height:16px;border-radius:99px;overflow:hidden;background:#EFEFEF;margin:8px 0 6px;gap:2px}
+.rstack i,.rleg i{display:block}.s2{background:#58CC02}.s1{background:#FF9600}.s0{background:#1CB0F6}
+.rleg{display:flex;flex-wrap:wrap;gap:4px 12px;font-weight:800;font-size:13px;color:#777}.rleg span{display:flex;align-items:center;gap:5px}.rleg i{width:11px;height:11px;border-radius:50%}
+.rweek{border:2px solid #E5E5E5;border-radius:20px;padding:12px 14px 8px;margin-top:12px;box-shadow:0 4px 0 #E5E5E5}
+.rwh{display:flex;align-items:baseline;justify-content:space-between;gap:8px}.rwh b{font-weight:800}.rwh small{font-weight:700;color:#AFAFAF;font-size:12px}
+.rbars{position:relative;display:grid;grid-template-columns:repeat(7,1fr);gap:8px;height:130px;margin-top:8px}
+.rb{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:3px;min-width:0}
+.rb i{width:70%;max-width:34px;border-radius:8px 8px 4px 4px;background:#E5E5E5;max-height:calc(100% - 40px)}
+.rb i.some{background:#84D8FF}.rb i.full{background:#58CC02}
+.rbn{font:800 12px "Nunito",sans-serif;color:#777;min-height:14px}.rb small{font:800 12px "Nunito",sans-serif;color:#AFAFAF;height:18px}
+.rgoal{display:none}
+.rgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.rcard{border:2px solid #E5E5E5;border-radius:20px;box-shadow:0 4px 0 #E5E5E5;padding:12px 10px;min-width:0}
+.rcard[open]{grid-column:1/-1}
+.rcard summary{list-style:none;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;text-align:center}
+.rcard summary::-webkit-details-marker{display:none}
+.rring{width:64px;height:64px;border-radius:50%;background:conic-gradient(#58CC02 var(--f),#EFEFEF 0);display:grid;place-items:center}
+.rring i{font-style:normal;width:48px;height:48px;border-radius:50%;background:#fff;display:grid;place-items:center;font-size:24px}
+.rcard summary b{font-weight:800;font-size:15px;line-height:1.2}.rcard summary small{font-weight:800;color:#AFAFAF;font-size:12px}
+.rlist{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;justify-content:center}
+.rlist span{border-radius:999px;padding:5px 10px;font-weight:800;font-size:13px}
+.rlist .l2{background:#D7FFB8;color:#58A700}.rlist .l1{background:#FFF0D5;color:#C76E00}.rlist .l0{background:#DDF4FF;color:#1477A8}
+.rhow{font-weight:700;font-size:12px;color:#AFAFAF;line-height:1.5;margin:10px 2px 0}
+/* balloons: two rows that always fit the space left under the question, string included */
+.lesson.q2 .qopts.st-balloon{container-type:size;flex:1 1 0;min-height:0;grid-template-rows:1fr 1fr!important;grid-auto-rows:auto!important;align-items:start}
+.lesson.q2 .qopts.st-balloon .qo[data-j]{min-height:0!important;height:min(calc(50cqh - 34px),calc((50cqw - 20px) / .86))!important;width:auto!important;max-width:100%;max-height:none!important;aspect-ratio:.86;margin:0 auto 0!important;align-self:start!important}
+.lesson.q2 .qopts.st-balloon .qo[data-j] .dots,.lesson.q2 .qopts.st-fish .qo[data-j] .dots{display:none}
+.lesson.q2 .qopts.st-balloon .balloon{background:none!important;width:auto;height:auto}
+.lesson.q2 .qopts.st-balloon .qo[data-j]::before{bottom:-5px}

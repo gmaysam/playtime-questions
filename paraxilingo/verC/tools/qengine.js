@@ -288,10 +288,12 @@ function nextQ(){
   $("qSpk").onclick=()=>{sfx.tap();ask(q)};
   /* tap = choose (Lulu says it), CHECK = answer */
   const chk=$("qCheck");
-  $("qBody").querySelectorAll(".qo").forEach(b=>b.onclick=()=>{if(q.done||b.classList.contains("faded"))return;sfx.tap();
+  const choose=b=>{if(q.done||b.classList.contains("faded"))return;sfx.tap();
     if(q.style==="balloon"||q.style==="fish"){hush();q.locked=false;b.classList.add(q.style==="balloon"?"popped":"caught");pick(+b.dataset.j,b);return}
     $("qBody").querySelectorAll(".qo.sel").forEach(x=>x.classList.remove("sel"));b.classList.add("sel");
-    hush();sayseq((q.opts[+b.dataset.j]||{}).say||[],()=>{});chk.disabled=false;chk.classList.add("on")});
+    hush();sayseq((q.opts[+b.dataset.j]||{}).say||[],()=>{});chk.disabled=false;chk.classList.add("on")};
+  $("qBody").querySelectorAll(".qo").forEach(b=>{b.onpointerdown=e=>{if(e.button>0)return;b._pd=Date.now();choose(b)};b.onclick=()=>{if(Date.now()-(b._pd||0)<1000)return;choose(b)}});
+  $("qBody").querySelectorAll(".qo .num,.qo .word,.qo small").forEach(e=>e.style.setProperty("--n",Math.max(2,e.textContent.replace(/[●\s]/g,"").length)));
   chk.onclick=()=>{const b=$("qBody").querySelector(".qo.sel");if(!b||q.done)return;hush();q.locked=false;b.classList.remove("sel");chk.disabled=true;chk.classList.remove("on");pick(+b.dataset.j,b)};
   $("qBody").classList.remove("in");void $("qBody").offsetWidth;$("qBody").classList.add("in");
   if(q.flash)setTimeout(()=>{const f=$("qBody").querySelector(".flash");if(f)f.classList.add("hid")},2200);
@@ -318,8 +320,8 @@ function pick(j,b){
     let gone=false;const go=()=>{if(!gone){gone=true;nextQ()}};
     if(!q.why&&q.fact&&q.exp&&q.exp.t)q.why={t:q.exp.t,v:[]};
     /* a short fact that matches THIS answer (English text); Lulu explains the answer in Farsi */
-    {const lab=((q.opts[q.ans]||{}).h||"").replace(/<[^>]+>/g," ").replace(/\s+/g," ").trim().toLowerCase(),fe=FACT_EN[lab]||FACT_EN[lab.replace(/s$/,"")];
-     if(fe){if(!q.why)q.why={t:"",v:[]};if(!(q.why.t||"").includes(fe))q.why.f=fe}
+    {const lab=((q.opts[q.ans]||{}).h||"").replace(/<[^>]+>/g," ").replace(/\s+/g," ").trim().toLowerCase(),fe=factFor(q);
+     if(fe){if(!q.why){const et=String(q.exp&&q.exp.t||"").trim();q.why={t:et.length>2&&et.toLowerCase()!==lab&&!fe.includes(et)?et:"",v:[]}}if(!(q.why.t||"").includes(fe))q.why.f=fe}
      if(q.why&&!q.why.v.length&&q.exp&&q.exp.v)q.why.v=q.exp.v.filter(Boolean)}
     if(q.why){ /* short "why" after the answer: text on the card, Lulu reads it when there is a voice for it */
       sheet("good why",(q.tf?(q.ans===0?"✅ True! ":"❌ Not true! "):"")+pickOne(PRAISE_T),(q.why.t||"")+(q.why.f?`<span class="ffact"><b>💡</b><span>${q.why.f}</span></span>`:""));
@@ -595,7 +597,7 @@ const feelSay=i=>["w/PX_FA_"+FEEL[i][0].toUpperCase(),"w/PX_EN_"+FEEL[i][0].toUp
 const SIDES=[[2,3],[1,4],[3,4],[8,5],[9,6],[10,8]];   /* [shape index, sides]: triangle, square, rectangle, pentagon, hexagon, octagon */
 const CLR=[["Red","#F25C54"],["Blue","#4A90E2"],["Yellow","#F7C548"],["Green","#5BC796"]],FORM=["circle","square","triangle"];
 const shapeDiv=(c,f,big)=>`<span class="cshape ${f}${big?" big":""}" style="--c:${c<0?"#C9D2DE":CLR[c][1]}"></span>`;
-function rhymeSets(){const by={};for(const x of WORDS){const k=x.w.slice(-2);(by[k]=by[k]||[]).push(x)}return Object.values(by).filter(v=>v.length>=2)}
+function rhymeSets(){const by={};for(const x of WORDS.filter(x=>!(/ow$/.test(x.w)&&!["cow","now","how","wow"].includes(x.w))&&!["one","two","eye"].includes(x.w))){const k=x.w.slice(-2);(by[k]=by[k]||[]).push(x)}return Object.values(by).filter(v=>v.length>=2)}
 function qNew(k,used){
   const a=lvl(),e=pickOne(OBJ);
   if(k==="missing"){const len=5,st=a<=5?ri(1,6):a<=6?ri(1,15):ri(10,94),hole=ri(1,3),arr=Array.from({length:len},(x,i)=>st+i),r=arr[hole];
@@ -624,7 +626,7 @@ function qNew(k,used){
     return Object.assign({voice:["w/LULU_WP_IF",N(tot),"w/LULU_WP_HAVE",N(ate),"w/LULU_WP_GIVE","w/PX_LEFT"],cap:`${tot} cookies. Domi ate ${ate}. How many left?`,visual:`<div class="story2"><span class="grp">${Array.from({length:tot},(x,i)=>`<i class="ob ${i>=r?"gone":""}">🍪</i>`).join("")}</span></div>`,layout:"row3",hint:"count",fact:true,exp:{t:`${tot} − ${ate} = ${r}`,v:["w/LULU_ANS_IS",N(r)]}},o)}
   if(k==="sides"){const pool=a<=5?SIDES.slice(0,3):SIDES,[si,n]=pickOne(pool.filter(p=>!used.has("sd"+p[0]))||pool);used.add("sd"+si);
     const o=numOpts(n,[n-1,n+1,n+2],NK());
-    return Object.assign({voice:["w/LULU_SH_SIDES"],cap:`How many sides does a ${SHAPES[si].toLowerCase()} have?`,visual:PIC("shape_"+si,"wp big"),layout:"row3",hint:"elim",fact:true,exp:{t:`A ${SHAPES[si].toLowerCase()} has ${n} straight sides.`,v:["w/LULU_ANS_IS",N(n),...shSay(si)]}},o)}
+    return Object.assign({voice:["w/LULU_SH_SIDES"],cap:`How many sides does ${/^[aeiou]/i.test(SHAPES[si])?"an":"a"} ${SHAPES[si].toLowerCase()} have?`,visual:PIC("shape_"+si,"wp big"),layout:"row3",hint:"elim",fact:true,exp:{t:`${/^[aeiou]/i.test(SHAPES[si])?"An":"A"} ${SHAPES[si].toLowerCase()} has ${n} straight sides.`,v:["w/LULU_ANS_IS",N(n),...shSay(si)]}},o)}
   if(k==="both"){const c=ri(0,3),f=ri(0,2);let c2;do{c2=ri(0,3)}while(c2===c);let f2;do{f2=ri(0,2)}while(f2===f);
     const items=sh([[c,f],[c,f2],[c2,f],[c2,f2]]),r=items.findIndex(x=>x[0]===c&&x[1]===f);  /* each trap matches exactly one clue */
     return {voice:["w/PX_BOTH"],cap:`Find the one that is ${CLR[c][0].toUpperCase()} and a ${FORM[f].toUpperCase()}`,visual:`<div class="clues"><span class="clue">${shapeDiv(c,"circle")}<small>${CLR[c][0]}</small></span><b>+</b><span class="clue">${shapeDiv(-1,FORM[f])}<small>${FORM[f]}</small></span></div>`.replace("--c:undefined","--c:#C9D2DE"),

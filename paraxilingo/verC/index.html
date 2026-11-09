@@ -1360,6 +1360,76 @@ body,.phone,.lesson.q2,.introC,#pSettings,.panel,.map{background:#fff!important}
 .tbtn.hasg{padding:0}
 .tbg{width:38px;height:38px;border-radius:50%;background:conic-gradient(#58CC02 var(--f),#E5E5E5 0);display:grid;place-items:center}
 .tbg .pzimg.sm,.tbg .pze.sm{width:30px;height:30px;border-radius:50%;object-fit:cover;background:#fff;display:grid;place-items:center;font-size:18px}
+/* ===== Nov 9b: answers never cut, one tap is enough =====
+   iPad Safari cut the text of cards that grow from a small size or tilt while they float, and the first-child
+   max-height clipped big letters and numbers. Cards now slide in (no scaling), stand still, and size their text to the card. */
+@keyframes qin2{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes qok{0%,100%{transform:none}40%{transform:translateY(-10px)}}
+@keyframes qno2{20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
+@keyframes bRise{0%{transform:translateY(40vh);opacity:0}100%{transform:none;opacity:1}}
+@keyframes bSway{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes fSwim{0%,100%{transform:translateX(-4px)}50%{transform:translateX(4px)}}
+@keyframes fIn{0%{transform:translateX(-60px);opacity:0}100%{transform:none;opacity:1}}
+@keyframes bPop{0%{opacity:1}100%{opacity:0;transform:translateY(-30px)}}
+.lesson.q2 .qopts .qo[data-j]{animation:qin2 .35s ease-out both;will-change:auto;touch-action:manipulation;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent;container-type:size;overflow:hidden}
+.lesson.q2 .qopts .qo[data-j]:nth-child(2){animation-delay:.05s}.lesson.q2 .qopts .qo[data-j]:nth-child(3){animation-delay:.1s}.lesson.q2 .qopts .qo[data-j]:nth-child(4){animation-delay:.15s}
+.lesson.q2 .qopts .qo[data-j]:active{animation:none;transform:translateY(3px)}
+.lesson.q2 .qopts .qo[data-j].saying{animation:none}
+.lesson.q2 .qopts .qo[data-j].right,.lesson.q2 .qopts .qo[data-j].show{animation:qok .5s ease both}
+.lesson.q2 .qopts .qo[data-j].wrong{animation:qno2 .4s ease both}
+.lesson.q2 .qopts .qo[data-j].faded{transform:none}
+.lesson.q2 .qopts .qo[data-j]>:first-child{max-height:none;overflow:visible}
+.lesson.q2 .qopts .qo[data-j] *{animation:none!important}
+.lesson.q2 .qopts .qo[data-j] b.num{line-height:1.15;font-size:min(46cqh,calc(150cqw / var(--n,2)),120px)}
+.lesson.q2 .qopts .qo[data-j] b.num.letter{font-size:min(50cqh,60cqw,120px)}
+.lesson.q2 .qopts .qo[data-j] .word{line-height:1.2;font-size:min(30cqh,calc(150cqw / var(--n,4)),64px)}
+.lesson.q2 .qopts .qo[data-j] .oe{font-size:min(44cqh,50cqw,100px)!important;line-height:1.15}
+.lesson.q2 .qopts .qo[data-j] small{font-size:min(15cqh,calc(150cqw / var(--n,6)),26px);line-height:1.2}
+.lesson.q2 .qopts .qo[data-j] .dots{font-size:min(10cqh,calc(90cqw / var(--n,5)),20px);line-height:1.2;white-space:nowrap}
+.lesson.q2 .qopts .qo[data-j] .wp.op{height:min(60cqh,160px)!important}
+/* balloons and fish move gently up/down or side to side only (no tilting) and keep the word inside */
+.lesson.q2 .qopts.st-balloon .qo[data-j]{animation:bRise .7s ease-out both,bSway 3s ease-in-out .7s infinite!important;overflow:visible!important}
+.lesson.q2 .qopts.st-balloon .qo[data-j] .word,.lesson.q2 .qopts.st-balloon .qo[data-j] b.num{font-size:min(36cqh,calc(120cqw / var(--n,4)),56px)}
+.lesson.q2 .qopts.st-balloon .qo[data-j].right{animation:bPop .45s ease-in forwards!important}
+.lesson.q2 .qopts.st-balloon .qo[data-j].wrong,.lesson.q2 .qopts.st-fish .qo[data-j].wrong{animation:qno2 .4s!important}
+.lesson.q2 .qopts.st-fish .qo[data-j]{animation:fIn .6s ease-out both,fSwim 3s ease-in-out .6s infinite!important}
+.lesson.q2 .qopts.st-fish .qo[data-j].right{animation:qok .5s both!important}
+.lesson.q2 .qopts.st-fish .qo[data-j] .word,.lesson.q2 .qopts.st-fish .qo[data-j] b.num{font-size:min(40cqh,calc(110cqw / var(--n,4)),56px)}
+.mc{touch-action:manipulation}.mc.sel{animation:none;box-shadow:0 0 0 4px #84D8FF}
+
+/* ===== Nov 9b: the learning report, as pictures ===== */
+.rhero{display:flex;align-items:center;gap:14px;border:2px solid #E5E5E5;border-radius:20px;padding:14px;box-shadow:0 4px 0 #E5E5E5}
+.rbig{font:900 46px/1 "Nunito",sans-serif;color:#58CC02;text-align:center;min-width:70px}.rbig small{display:block;font:800 14px "Nunito",sans-serif;color:#AFAFAF}
+.rht{flex:1;min-width:0}.rht b{font-weight:800;font-size:16px}
+.rstack{display:flex;height:16px;border-radius:99px;overflow:hidden;background:#EFEFEF;margin:8px 0 6px;gap:2px}
+.rstack i,.rleg i{display:block}.s2{background:#58CC02}.s1{background:#FF9600}.s0{background:#1CB0F6}
+.rleg{display:flex;flex-wrap:wrap;gap:4px 12px;font-weight:800;font-size:13px;color:#777}.rleg span{display:flex;align-items:center;gap:5px}.rleg i{width:11px;height:11px;border-radius:50%}
+.rweek{border:2px solid #E5E5E5;border-radius:20px;padding:12px 14px 8px;margin-top:12px;box-shadow:0 4px 0 #E5E5E5}
+.rwh{display:flex;align-items:baseline;justify-content:space-between;gap:8px}.rwh b{font-weight:800}.rwh small{font-weight:700;color:#AFAFAF;font-size:12px}
+.rbars{position:relative;display:grid;grid-template-columns:repeat(7,1fr);gap:8px;height:130px;margin-top:8px}
+.rb{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:3px;min-width:0}
+.rb i{width:70%;max-width:34px;border-radius:8px 8px 4px 4px;background:#E5E5E5;max-height:calc(100% - 40px)}
+.rb i.some{background:#84D8FF}.rb i.full{background:#58CC02}
+.rbn{font:800 12px "Nunito",sans-serif;color:#777;min-height:14px}.rb small{font:800 12px "Nunito",sans-serif;color:#AFAFAF;height:18px}
+.rgoal{display:none}
+.rgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.rcard{border:2px solid #E5E5E5;border-radius:20px;box-shadow:0 4px 0 #E5E5E5;padding:12px 10px;min-width:0}
+.rcard[open]{grid-column:1/-1}
+.rcard summary{list-style:none;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;text-align:center}
+.rcard summary::-webkit-details-marker{display:none}
+.rring{width:64px;height:64px;border-radius:50%;background:conic-gradient(#58CC02 var(--f),#EFEFEF 0);display:grid;place-items:center}
+.rring i{font-style:normal;width:48px;height:48px;border-radius:50%;background:#fff;display:grid;place-items:center;font-size:24px}
+.rcard summary b{font-weight:800;font-size:15px;line-height:1.2}.rcard summary small{font-weight:800;color:#AFAFAF;font-size:12px}
+.rlist{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;justify-content:center}
+.rlist span{border-radius:999px;padding:5px 10px;font-weight:800;font-size:13px}
+.rlist .l2{background:#D7FFB8;color:#58A700}.rlist .l1{background:#FFF0D5;color:#C76E00}.rlist .l0{background:#DDF4FF;color:#1477A8}
+.rhow{font-weight:700;font-size:12px;color:#AFAFAF;line-height:1.5;margin:10px 2px 0}
+/* balloons: two rows that always fit the space left under the question, string included */
+.lesson.q2 .qopts.st-balloon{container-type:size;flex:1 1 0;min-height:0;grid-template-rows:1fr 1fr!important;grid-auto-rows:auto!important;align-items:start}
+.lesson.q2 .qopts.st-balloon .qo[data-j]{min-height:0!important;height:min(calc(50cqh - 34px),calc((50cqw - 20px) / .86))!important;width:auto!important;max-width:100%;max-height:none!important;aspect-ratio:.86;margin:0 auto 0!important;align-self:start!important}
+.lesson.q2 .qopts.st-balloon .qo[data-j] .dots,.lesson.q2 .qopts.st-fish .qo[data-j] .dots{display:none}
+.lesson.q2 .qopts.st-balloon .balloon{background:none!important;width:auto;height:auto}
+.lesson.q2 .qopts.st-balloon .qo[data-j]::before{bottom:-5px}
 </style>
 
 <div class="stage">
@@ -2010,10 +2080,12 @@ function nextQ(){
   $("qSpk").onclick=()=>{sfx.tap();ask(q)};
   /* tap = choose (Lulu says it), CHECK = answer */
   const chk=$("qCheck");
-  $("qBody").querySelectorAll(".qo").forEach(b=>b.onclick=()=>{if(q.done||b.classList.contains("faded"))return;sfx.tap();
+  const choose=b=>{if(q.done||b.classList.contains("faded"))return;sfx.tap();
     if(q.style==="balloon"||q.style==="fish"){hush();q.locked=false;b.classList.add(q.style==="balloon"?"popped":"caught");pick(+b.dataset.j,b);return}
     $("qBody").querySelectorAll(".qo.sel").forEach(x=>x.classList.remove("sel"));b.classList.add("sel");
-    hush();sayseq((q.opts[+b.dataset.j]||{}).say||[],()=>{});chk.disabled=false;chk.classList.add("on")});
+    hush();sayseq((q.opts[+b.dataset.j]||{}).say||[],()=>{});chk.disabled=false;chk.classList.add("on")};
+  $("qBody").querySelectorAll(".qo").forEach(b=>{b.onpointerdown=e=>{if(e.button>0)return;b._pd=Date.now();choose(b)};b.onclick=()=>{if(Date.now()-(b._pd||0)<1000)return;choose(b)}});
+  $("qBody").querySelectorAll(".qo .num,.qo .word,.qo small").forEach(e=>e.style.setProperty("--n",Math.max(2,e.textContent.replace(/[●\s]/g,"").length)));
   chk.onclick=()=>{const b=$("qBody").querySelector(".qo.sel");if(!b||q.done)return;hush();q.locked=false;b.classList.remove("sel");chk.disabled=true;chk.classList.remove("on");pick(+b.dataset.j,b)};
   $("qBody").classList.remove("in");void $("qBody").offsetWidth;$("qBody").classList.add("in");
   if(q.flash)setTimeout(()=>{const f=$("qBody").querySelector(".flash");if(f)f.classList.add("hid")},2200);
@@ -2040,8 +2112,8 @@ function pick(j,b){
     let gone=false;const go=()=>{if(!gone){gone=true;nextQ()}};
     if(!q.why&&q.fact&&q.exp&&q.exp.t)q.why={t:q.exp.t,v:[]};
     /* a short fact that matches THIS answer (English text); Lulu explains the answer in Farsi */
-    {const lab=((q.opts[q.ans]||{}).h||"").replace(/<[^>]+>/g," ").replace(/\s+/g," ").trim().toLowerCase(),fe=FACT_EN[lab]||FACT_EN[lab.replace(/s$/,"")];
-     if(fe){if(!q.why)q.why={t:"",v:[]};if(!(q.why.t||"").includes(fe))q.why.f=fe}
+    {const lab=((q.opts[q.ans]||{}).h||"").replace(/<[^>]+>/g," ").replace(/\s+/g," ").trim().toLowerCase(),fe=factFor(q);
+     if(fe){if(!q.why){const et=String(q.exp&&q.exp.t||"").trim();q.why={t:et.length>2&&et.toLowerCase()!==lab&&!fe.includes(et)?et:"",v:[]}}if(!(q.why.t||"").includes(fe))q.why.f=fe}
      if(q.why&&!q.why.v.length&&q.exp&&q.exp.v)q.why.v=q.exp.v.filter(Boolean)}
     if(q.why){ /* short "why" after the answer: text on the card, Lulu reads it when there is a voice for it */
       sheet("good why",(q.tf?(q.ans===0?"✅ True! ":"❌ Not true! "):"")+pickOne(PRAISE_T),(q.why.t||"")+(q.why.f?`<span class="ffact"><b>💡</b><span>${q.why.f}</span></span>`:""));
@@ -2317,7 +2389,7 @@ const feelSay=i=>["w/PX_FA_"+FEEL[i][0].toUpperCase(),"w/PX_EN_"+FEEL[i][0].toUp
 const SIDES=[[2,3],[1,4],[3,4],[8,5],[9,6],[10,8]];   /* [shape index, sides]: triangle, square, rectangle, pentagon, hexagon, octagon */
 const CLR=[["Red","#F25C54"],["Blue","#4A90E2"],["Yellow","#F7C548"],["Green","#5BC796"]],FORM=["circle","square","triangle"];
 const shapeDiv=(c,f,big)=>`<span class="cshape ${f}${big?" big":""}" style="--c:${c<0?"#C9D2DE":CLR[c][1]}"></span>`;
-function rhymeSets(){const by={};for(const x of WORDS){const k=x.w.slice(-2);(by[k]=by[k]||[]).push(x)}return Object.values(by).filter(v=>v.length>=2)}
+function rhymeSets(){const by={};for(const x of WORDS.filter(x=>!(/ow$/.test(x.w)&&!["cow","now","how","wow"].includes(x.w))&&!["one","two","eye"].includes(x.w))){const k=x.w.slice(-2);(by[k]=by[k]||[]).push(x)}return Object.values(by).filter(v=>v.length>=2)}
 function qNew(k,used){
   const a=lvl(),e=pickOne(OBJ);
   if(k==="missing"){const len=5,st=a<=5?ri(1,6):a<=6?ri(1,15):ri(10,94),hole=ri(1,3),arr=Array.from({length:len},(x,i)=>st+i),r=arr[hole];
@@ -2346,7 +2418,7 @@ function qNew(k,used){
     return Object.assign({voice:["w/LULU_WP_IF",N(tot),"w/LULU_WP_HAVE",N(ate),"w/LULU_WP_GIVE","w/PX_LEFT"],cap:`${tot} cookies. Domi ate ${ate}. How many left?`,visual:`<div class="story2"><span class="grp">${Array.from({length:tot},(x,i)=>`<i class="ob ${i>=r?"gone":""}">🍪</i>`).join("")}</span></div>`,layout:"row3",hint:"count",fact:true,exp:{t:`${tot} − ${ate} = ${r}`,v:["w/LULU_ANS_IS",N(r)]}},o)}
   if(k==="sides"){const pool=a<=5?SIDES.slice(0,3):SIDES,[si,n]=pickOne(pool.filter(p=>!used.has("sd"+p[0]))||pool);used.add("sd"+si);
     const o=numOpts(n,[n-1,n+1,n+2],NK());
-    return Object.assign({voice:["w/LULU_SH_SIDES"],cap:`How many sides does a ${SHAPES[si].toLowerCase()} have?`,visual:PIC("shape_"+si,"wp big"),layout:"row3",hint:"elim",fact:true,exp:{t:`A ${SHAPES[si].toLowerCase()} has ${n} straight sides.`,v:["w/LULU_ANS_IS",N(n),...shSay(si)]}},o)}
+    return Object.assign({voice:["w/LULU_SH_SIDES"],cap:`How many sides does ${/^[aeiou]/i.test(SHAPES[si])?"an":"a"} ${SHAPES[si].toLowerCase()} have?`,visual:PIC("shape_"+si,"wp big"),layout:"row3",hint:"elim",fact:true,exp:{t:`${/^[aeiou]/i.test(SHAPES[si])?"An":"A"} ${SHAPES[si].toLowerCase()} has ${n} straight sides.`,v:["w/LULU_ANS_IS",N(n),...shSay(si)]}},o)}
   if(k==="both"){const c=ri(0,3),f=ri(0,2);let c2;do{c2=ri(0,3)}while(c2===c);let f2;do{f2=ri(0,2)}while(f2===f);
     const items=sh([[c,f],[c,f2],[c2,f],[c2,f2]]),r=items.findIndex(x=>x[0]===c&&x[1]===f);  /* each trap matches exactly one clue */
     return {voice:["w/PX_BOTH"],cap:`Find the one that is ${CLR[c][0].toUpperCase()} and a ${FORM[f].toUpperCase()}`,visual:`<div class="clues"><span class="clue">${shapeDiv(c,"circle")}<small>${CLR[c][0]}</small></span><b>+</b><span class="clue">${shapeDiv(-1,FORM[f])}<small>${FORM[f]}</small></span></div>`.replace("--c:undefined","--c:#C9D2DE"),
@@ -2419,7 +2491,7 @@ const SKCAT={"clock.after":"What day comes next","clock.before":"What day came b
 const AREA={count:["🔢","Numbers"],add:["➕","Adding & taking away"],clock:["🕒","Time & calendar"],letters:["🔤","Letters & words"],read:["📖","Reading"],farm:["🏡","Animals"],animals:["🐾","Animals"],world:["🌳","Our world"],sky:["🌙","Sky & space"],shapes:["🔷","Shapes & thinking"],people:["🚩","People & feelings"],story:["📻","Listening (stories)"]};
 const skName=(cat,kind)=>SKCAT[cat+"."+kind]||(cat==="story"?"Listening to a story":SKN[kind])||(cat==="sky"?"Sky & space facts":cat==="animals"?"Animal facts":cat==="world"?"Facts about our world":"Other");
 function logSk(q,ok){try{const cat=q.cat||(L&&L.cat)||"",k=cat+"|"+skName(cat,q.game||(q.match?"match":q.robot?"robot":q.kind)||"");if(!S.sk)S.sk={};const r=S.sk[k]||(S.sk[k]={n:0,r:0,f:0,d0:today(),d:"",h:""});
-  r.n++;if(ok)r.r++;const first=ok&&!q.tries;if(first)r.f++;r.d=today();r.h=(r.h+(first?"1":"0")).slice(-10)}catch(e){}}
+  r.n++;if(ok)r.r++;if(!S.dq)S.dq={};S.dq[today()]=(S.dq[today()]||0)+1;{const ks=Object.keys(S.dq).sort();while(ks.length>21)delete S.dq[ks.shift()]}const first=ok&&!q.tries;if(first)r.f++;r.d=today();r.h=(r.h+(first?"1":"0")).slice(-10)}catch(e){}}
 function skLevel(r){const ones=(r.h.match(/1/g)||[]).length,p=r.h.length?ones/r.h.length:0;return r.n<4?0:p>=.8&&r.n>=6?2:1}
 
 /* shared bits for the play games */
@@ -2529,6 +2601,68 @@ function bldQ(q){
   window.__gSolve=()=>{let i=0;const t=()=>{if(i<q.letters.length){const l=q.letters[i++];[...$("qBody").querySelectorAll(".bdt")].find(b=>!b.disabled&&b.dataset.l===l).click();setTimeout(t,200)}};t()};
 }
 const GAMES={simon:simonQ,pairs:pairsQ,order:orderQ,pizza:pizzaQ,build:bldQ};
+
+/* ================= Nov 9: a short English fact after EVERY right answer, made from the question and its answer ================= */
+const DAYS7=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],MONTHS12=["January","February","March","April","May","June","July","August","September","October","November","December"];
+const SEASON_F={spring:"In spring, flowers bloom and baby animals are born.",summer:"Summer has the longest days of the year.",autumn:"In autumn, many leaves turn red and yellow and fall down.",fall:"In autumn, many leaves turn red and yellow and fall down.",winter:"In winter, some animals sleep until spring. That is called hibernation."};
+const JOB_F={astronaut:"Astronauts float in space because there is almost no gravity up there.",farmer:"Farmers grow the food we eat, like wheat for our bread.",pilot:"Pilots fly planes high above the clouds.",scientist:"Scientists ask questions and do experiments to find answers.",builder:"Builders use bricks, wood and steel to make houses.",chef:"Chefs cook food in restaurants. Their tall hat is called a toque.",teacher:"Teachers help children learn to read, write and count.",doctor:"Doctors listen to your heart with a stethoscope.",firefighter:"Firefighters use big hoses to put out fires.",police:"Police officers help keep people safe.","police officer":"Police officers help keep people safe.",dentist:"Dentists keep our teeth clean and strong.",nurse:"Nurses take care of people who are sick.",baker:"Bakers get up very early to bake fresh bread.",vet:"Vets are doctors for animals.",mechanic:"Mechanics fix cars and trucks.",artist:"Artists make pictures, songs and stories.",singer:"Singers use their voice like a musical instrument.",mail:"Mail carriers bring letters to every house."};
+const FLAG_F={"the united states":"The US flag has 50 stars, one for each state.",italy:"Italy is shaped like a boot! Its flag is green, white and red.",egypt:"Egypt has the famous pyramids. Its flag has an eagle in the middle.",france:"France's flag is blue, white and red. Paris is its capital.",japan:"Japan's flag shows a red sun. Japan is called the Land of the Rising Sun.",canada:"Canada's flag has a red maple leaf.",iran:"Iran's flag is green, white and red.",china:"China has the most people of any country.",brazil:"Brazil's flag is green with a blue globe full of stars.",germany:"Germany's flag is black, red and gold.",india:"India's flag has a blue wheel in the middle.",mexico:"Mexico's flag has an eagle eating a snake.","the united kingdom":"The UK flag is called the Union Jack.",spain:"Spain's flag is red and yellow.",australia:"Australia is home to kangaroos and koalas.",turkey:"Turkey's flag has a white moon and star."};
+const SHAPE_F={circle:"A circle has no corners and no straight sides.",square:"A square has 4 sides that are all the same length.",triangle:"A triangle has 3 sides and 3 corners.",rectangle:"A rectangle has 4 sides: 2 long and 2 short.",star:"Our star shape has 5 points.",oval:"An oval looks like a stretched circle, like an egg.",heart:"A heart shape means love.",diamond:"A diamond is a square standing on its corner.",rhombus:"A rhombus has 4 sides that are all the same length.",pentagon:"A pentagon has 5 sides.",hexagon:"A hexagon has 6 sides, like a honeycomb cell.",octagon:"An octagon has 8 sides, like a stop sign.",trapezoid:"A trapezoid has 4 sides, and 2 of them are parallel.",cube:"A cube has 6 square faces, like a dice.",sphere:"A sphere is round all over, like a ball.",cylinder:"A cylinder is like a can: 2 circles and a tube.",cone:"A cone is like an ice cream cone.",pyramid:"A pyramid has a square bottom and triangle sides."};
+const COLOR_F={red:"Red and yellow mixed together make orange.",blue:"The sky looks blue because of how sunlight scatters.",yellow:"Yellow and blue mixed together make green.",green:"Plants are green because of chlorophyll, which helps them make food.",orange:"Orange is a mix of red and yellow.",purple:"Purple is a mix of red and blue.",pink:"Pink is red mixed with white.",brown:"Brown is made by mixing many colours together.",black:"Black is what we see when there is no light.",white:"White light holds all the colours of the rainbow.",grey:"Grey is black mixed with white.",gray:"Grey is black mixed with white."};
+const FEEL_F={happy:"When we are happy, we smile and our eyes crinkle.",sad:"It is OK to feel sad. A hug can help.",angry:"When you feel angry, take three slow, deep breaths.",scared:"When we feel scared, our heart beats faster.",surprised:"When we are surprised, our eyes and mouth open wide."};
+const VOWEL="AEIOU";
+function numFact(n){n=+n;if(!(n>=0))return "";if(n===0)return "Zero means nothing at all.";
+  const eo=n%2===0?`${n} is an even number: it makes 2 equal groups of ${n/2}.`:`${n} is an odd number: one is always left over when we make pairs.`;
+  if(n>=10&&n<100){const t=Math.floor(n/10),o=n%10;return o?`${n} is ${t} tens and ${o} ones.`:`${n} is ${t} tens. ${eo}`}
+  return n===100?"100 is ten tens!":eo}
+function factFor(q){try{
+  const raw=((q.opts&&q.opts[q.ans]||{}).h||"").replace(/<[^>]+>/g," ").replace(/[●]/g," ").replace(/\s+/g," ").trim(),lab=raw.toLowerCase(),
+    k=q.kind||"",c=q.cat||"",obs=((q.opts&&q.opts[q.ans]||{}).h||"").match(/class="ob/g),num=(lab.match(/\d+/)||[])[0]||(obs&&obs.length?String(obs.length):undefined);
+  let w=lab.replace(/^[^a-z0-9]+/,"").trim();if(!w)w=String(q.exp&&q.exp.t||"").toLowerCase().replace(/[^a-z' -]/g,"").trim();
+  const fe=FACT_EN[w]||FACT_EN[w.replace(/s$/,"")]||FACT_EN[lab];
+  if(fe&&!["count","add"].includes(c))return fe;
+  if(c==="count"||c==="add"){
+    if(k==="more"||k==="less"){const ns=q.opts.map(o=>(o.h.match(/class="ob/g)||[]).length).filter(Boolean),r=ns[q.ans],o=k==="more"?Math.min(...ns):Math.max(...ns);
+      return r&&o?`${r} is ${k==="more"?"more":"less"} than ${o}: it comes ${k==="more"?"after":"before"} ${o} when we count.`:"Count each group carefully, one by one."}
+    if(k==="long")return /short/i.test(q.cap)?"Short things need fewer blocks to measure them.":"Long things need more blocks to measure them.";
+    if(k==="graph")return "A chart shows numbers as bars. The tallest bar is the biggest number.";
+    if(k==="skip"){const m=(q.cap||"").match(/by (\d+)/);return m?`Counting by ${m[1]}s is faster than counting by ones!`:numFact(num)}
+    if(k==="share")return "Sharing fairly means everyone gets the same amount.";
+    if(k==="groups")return "Equal groups help us count faster. That's called multiplying!";
+    if(k==="carry")return "When the ones make 10 or more, we carry a ten to the tens.";
+    if(k==="addPic"||k==="sum")return "Adding means putting things together, so we get more.";
+    if(k==="subPic"||k==="minus"||k==="left")return "Taking away means fewer are left than we started with.";
+    if(num)return numFact(num);
+    if(fe)return fe}
+  if(c==="clock"){const tm=lab.match(/(\d+):(\d\d)/);
+    if(tm){const m=+tm[2];return m===0?`At ${tm[1]} o'clock the long hand points straight up to 12.`:m===30?"Half past: the long hand points down to the 6.":m===15?"Quarter past: the long hand points to the 3.":m===45?"Quarter to: the long hand points to the 9.":"There are 60 minutes in one hour."}
+    const d=DAYS7.findIndex(x=>lab.includes(x.toLowerCase()));if(d>=0)return `A week has 7 days. ${DAYS7[d]} comes after ${DAYS7[(d+6)%7]}.`;
+    const mo=MONTHS12.findIndex(x=>lab.includes(x.toLowerCase()));if(mo>=0)return `${MONTHS12[mo]} is month number ${mo+1} of the 12 months in a year.`;
+    for(const s2 in SEASON_F)if(lab.includes(s2))return SEASON_F[s2];
+    if(/morning/.test(lab))return "In the morning the sun comes up in the east.";
+    if(/night/.test(lab))return "At night our bodies rest and grow while we sleep.";
+    if(/afternoon|evening/.test(lab))return "Evening comes after the afternoon, when the sun goes down.";
+    if(k==="week")return "A week has 7 days: 5 school days and 2 weekend days.";
+    if(k==="months")return "A year has 12 months and 4 seasons.";
+    if(num)return numFact(num)}
+  if(c==="letters"){
+    if(/^[a-z]$/i.test(w)){const L2=w.toUpperCase(),i=L2.charCodeAt(0)-64;return `${L2} is letter number ${i} of the 26 letters.${VOWEL.includes(L2)?` ${L2} is a vowel.`:""}`}
+    if(k==="rhyme")return `Rhyming words end with the same sound, like "${w}" and "${(q.exp&&q.exp.t||"").split(/[–-]/)[0].trim()}".`;
+    if(w)return `"${w}" has ${w.replace(/[^a-z]/g,"").length} letters and starts with ${w[0].toUpperCase()}.`}
+  if(c==="read"){if(k==="sentence"){const t=String(q.exp&&q.exp.t||"");return t?`Read it all together: "${t}"`:"A sentence starts with a capital letter and ends with a full stop."}
+    return `"${w}" is one of the words we read most often. Now you know it by sight!`}
+  if(c==="shapes"){if(k==="pattern")return "A pattern repeats again and again, like the stripes on a zebra.";
+    if(k==="both")return "You checked two things at once: the colour AND the shape!";
+    if(k==="bigsmall")return /small/i.test(q.cap)?"Small things take up less space.":"Big things take up more space.";
+    const sh=Object.keys(SHAPE_F).find(x=>lab.includes(x)||String(q.exp&&q.exp.t||"").toLowerCase().includes(x)||(q.cap||"").toLowerCase().includes(x));if(sh)return SHAPE_F[sh];
+    const co=Object.keys(COLOR_F).find(x=>lab.includes(x));if(co)return COLOR_F[co]}
+  if(c==="people"){const f2=FEEL_F[w];if(f2)return f2;const j=Object.keys(JOB_F).find(x=>lab.includes(x));if(j)return JOB_F[j];
+    const t=String(q.exp&&q.exp.t||lab).toLowerCase(),fl=Object.keys(FLAG_F).find(x=>t.includes(x));if(fl)return FLAG_F[fl];if(k.startsWith("flag"))return "Every country has its own flag with its own colours."}
+  if(c==="farm"){if(k==="fly")return "Animals that fly have wings: birds, bats and many insects.";if(k==="water")return "Fish breathe under water with gills.";if(k==="sound")return "Every animal has its own way to talk to its friends.";
+    if(k==="home")return "Animals live where they can find food and stay safe.";if(k==="food")return "Some animals eat plants, some eat meat, and some eat both."}
+  if(fe)return fe;
+  if(num)return numFact(num);
+  return ""}catch(e){return ""}}
 
 
 /* ================= months and events ================= */
@@ -2803,16 +2937,26 @@ function showParents(){
 }
 
 /* ================= the parents' learning report: every skill the child practised, and how sure they are ================= */
-const LVL_T=[["🌱","Just started"],["🌿","Practising"],["🌳","Got it!"]];
-function skRows(){const sk=S.sk||{};return Object.entries(sk).map(([k,r])=>{const [cat,name]=k.split("|"),ones=(r.h.match(/1/g)||[]).length;return {cat,name,r,lv:skLevel(r),pct:r.h.length?Math.round(ones/r.h.length*100):0}})}
+const LVL_T=[["🌱","New"],["🌿","Learning"],["🌳","Knows it"]];
+function skRows(){const sk=S.sk||{};return Object.entries(sk).map(([k,r])=>{const [cat,name]=k.split("|");return {cat,name,r,lv:skLevel(r)}})}
 function reportHTML(pn){const rows=skRows();
-  if(!rows.length)return `<p class="pnote">After a few rounds you'll see here what ${pn} is learning, skill by skill: what is new, what needs practice, and what ${pn} already knows.</p>`;
-  const cnt=[0,1,2].map(l=>rows.filter(x=>x.lv===l).length),areas={};rows.forEach(x=>{const a=(AREA[x.cat]||["⭐","Other"])[1];(areas[a]=areas[a]||{e:(AREA[x.cat]||["⭐"])[0],l:[]}).l.push(x)});
-  const prac=rows.filter(x=>x.lv===1).sort((a,b)=>a.pct-b.pct).slice(0,2),got=rows.filter(x=>x.lv===2);
-  return `<div class="rsum">${[2,1,0].map(l=>`<div class="rs${l}"><b>${cnt[l]}</b><small>${LVL_T[l][0]} ${LVL_T[l][1]}</small></div>`).join("")}</div>
-    ${prac.length?`<div class="rtip"><b>Practise together</b>${prac.map(x=>`<span>${(AREA[x.cat]||["⭐"])[0]} ${x.name}</span>`).join("")}</div>`:""}
-    ${got.length>=5&&S.diff<2?`<div class="rtip up"><b>Ready for more?</b><span>${pn} knows ${got.length} skills well. Try the next level 🐇🚀 below.</span></div>`:""}
-    ${Object.entries(areas).map(([a,g])=>`<div class="rarea"><div class="rah">${g.e} ${a}</div>${g.l.sort((x,y)=>y.lv-x.lv||y.r.n-x.r.n).map(x=>`<div class="rrow"><span class="rlv l${x.lv}" title="${LVL_T[x.lv][1]}">${LVL_T[x.lv][0]}</span><div class="rnm"><b>${x.name}</b><small>${x.r.n} answer${x.r.n===1?"":"s"} · ${x.pct}% right first time lately</small></div><span class="rh">${x.r.h.split("").map(c=>`<i class="${c==="1"?"y":"n"}"></i>`).join("")}</span></div>`).join("")}</div>`).join("")}
+  /* the last 7 days: how many questions a day */
+  const days=[];for(let i=6;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);days.push([d,(S.dq||{})[dayStr(d)]||0])}
+  const mx=Math.max(10,...days.map(x=>x[1])),goal=S.perDay;
+  const week=`<div class="rweek"><div class="rwh"><b>Last 7 days</b><small>questions a day · goal ${goal}</small></div><div class="rbars">${days.map(([d,n],i)=>`<div class="rb"><span class="rbn">${n||""}</span><i class="${n>=goal?"full":n?"some":""}" style="height:${Math.max(4,n/Math.max(mx,goal)*100)}%"></i><small>${i===6?"Today":["Su","Mo","Tu","We","Th","Fr","Sa"][d.getDay()]}</small></div>`).join("")}<span class="rgoal" style="bottom:calc(22px + ${goal/Math.max(mx,goal)*100}% * (100% - 40px) / 100%)"></span></div></div>`;
+  if(!rows.length)return week+`<p class="pnote">Play a few rounds and you'll see here what ${pn} is learning.</p>`;
+  const cnt=[0,1,2].map(l=>rows.filter(x=>x.lv===l).length),tot=rows.length,areas={};
+  rows.forEach(x=>{const A=AREA[x.cat]||["⭐","Other"];(areas[A[1]]=areas[A[1]]||{e:A[0],l:[]}).l.push(x)});
+  const prac=rows.filter(x=>x.lv===1).sort((a,b)=>((a.r.h.match(/1/g)||[]).length/a.r.h.length)-((b.r.h.match(/1/g)||[]).length/b.r.h.length)).slice(0,2);
+  const seg=l=>cnt[l]?`<i class="s${l}" style="flex:${cnt[l]}"></i>`:"";
+  return `<div class="rhero"><div class="rbig">${cnt[2]}<small>of ${tot}</small></div><div class="rht"><b>skills ${pn} knows well</b><div class="rstack">${seg(2)}${seg(1)}${seg(0)}</div>
+      <div class="rleg"><span><i class="s2"></i>${LVL_T[2][1]} ${cnt[2]}</span><span><i class="s1"></i>${LVL_T[1][1]} ${cnt[1]}</span><span><i class="s0"></i>${LVL_T[0][1]} ${cnt[0]}</span></div></div></div>
+    ${week}
+    ${prac.length?`<div class="rtip"><b>🤝 Practise together</b>${prac.map(x=>`<span>${(AREA[x.cat]||["⭐"])[0]} ${x.name}</span>`).join("")}</div>`:""}
+    <div class="rgrid">${Object.entries(areas).map(([a,g])=>{const k2=g.l.filter(x=>x.lv===2).length,f=k2/g.l.length;
+      return `<details class="rcard"><summary><span class="rring" style="--f:${Math.round(f*360)}deg"><i>${g.e}</i></span><b>${a}</b><small>${k2} of ${g.l.length} known</small></summary>
+        <div class="rlist">${g.l.sort((x,y)=>y.lv-x.lv).map(x=>`<span class="l${x.lv}">${LVL_T[x.lv][0]} ${x.name}</span>`).join("")}</div></details>`}).join("")}</div>
+    <p class="rhow">🌳 knows it = right the first time almost every time lately · 🌿 learning = still mixing it up · 🌱 new = just started. Tap an area to see its skills.</p>
     <button class="padd share" id="pShare">📤 Share this report</button>`}
 function reportText(pn){const rows=skRows(),w=wkLog();let t=`${pn}'s learning in Paraxilingo\nThis week: ${w.days.length} days, ${w.q} questions, ${w.q?Math.round(w.right/w.q*100):0}% right\n`;
   [2,1,0].forEach(l=>{const r=rows.filter(x=>x.lv===l);if(r.length)t+=`\n${LVL_T[l][0]} ${LVL_T[l][1]}: ${r.map(x=>x.name).join(", ")}`});return t+"\n"}
