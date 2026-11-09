@@ -551,3 +551,9 @@ body,.phone,.lesson.q2,.introC,#pSettings,.panel,.map{background:#fff!important}
 .rbpad button:active{transform:translateY(3px);box-shadow:0 1px 0 #E5E5E5}
 .rbpad .rbdel{background:#FFF3F0}
 @media (min-width:700px){.rbpad button{width:92px;height:92px;font-size:44px}.ffact{font-size:22px}.qhint2{font-size:26px}}
+@keyframes fSwim{0%,100%{transform:translateX(-4%) scaleX(1)}49%{transform:translateX(4%) scaleX(1)}50%{transform:translateX(4%) scaleX(-1)}99%{transform:translateX(-4%) scaleX(-1)}}
+.lesson.q2 .qopts.st-fish{padding:12px 26px 12px 12px}
+.rbgrid{width:min(100%,38vh)}
+.rbpad{flex-wrap:nowrap;gap:8px}.rbpad button{width:min(60px,15vw);height:min(60px,15vw);font-size:28px}
+.rbprog{min-height:36px;font-size:24px}
+@media (min-width:700px){.rbgrid{width:min(100%,46vh)}.rbpad button{width:88px;height:88px;font-size:42px}}
