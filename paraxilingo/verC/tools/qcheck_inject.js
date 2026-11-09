@@ -13,7 +13,7 @@ window.__qc=()=>{const bad=[],FORBID=["💅","⏳"],PL=["mercury","venus","jupit
  for(let k=0;k<16;k++){const u=new Set([...Array(16).keys()].filter(i=>i!==k).map(i=>"tf"+i));const R=Math.random;Math.random=()=>.1;const q=qWatcher("sky",u);Math.random=R;chk(q,"skytf"+k)}
  for(const c of CATS){if(["story","paint"].includes(c.id))continue;for(const a of [3,5,7,9]){S.age=a;S.diff=1;for(const k of kindsFor(c.id))for(let i=0;i<6;i++){let q;
    try{q=buildQ(c.id,k,new Set())}catch(e){bad.push(c.id+"/"+k+": "+e.message);continue}if(!q)continue;q.cat=c.id;q.kind=k;chk(q,c.id+"/"+k+"@"+a)}}}
- for(const c of CATS){for(const a of [3,5,7,9]){S.age=a;S.diff=1;for(const k of formatsFor(c.id))for(let i=0;i<5;i++){let q;try{q=buildFormat(k,c.id)}catch(e){bad.push(c.id+"/"+k+"@"+a+": "+e.message);continue}n++;
-   if(!q){bad.push(c.id+"/"+k+": not built");continue}if(!(q.voice||[]).filter(Boolean).length)bad.push(c.id+"/"+k+": no voice");if(!q.factT)bad.push(c.id+"/"+k+": no fact");
-   if(q.items&&q.items.some(x=>!x||!x[0]))bad.push(c.id+"/"+k+": empty item");if(q.cards&&q.cards.some(x=>!x[0]))bad.push(c.id+"/"+k+": empty card")}}}
+ for(const c of CATS){for(const a of [3,5,7,9]){S.age=a;S.diff=1;for(const k of formatsFor(c.id))for(let i=0;i<5;i++){let q;try{q=k.startsWith("f_")?buildFormat(k,c.id):buildQ(c.id,k,new Set())}catch(e){bad.push(c.id+"/"+k+"@"+a+": "+e.message);continue}n++;
+   if(!q){bad.push(c.id+"/"+k+": not built");continue}if(!(q.voice||[]).filter(Boolean).length)bad.push(c.id+"/"+k+": no voice");if(!q.factT&&k.startsWith("f_"))bad.push(c.id+"/"+k+": no fact");
+   if(q.items&&q.items.some(x=>!x||(Array.isArray(x)&&!x[0])))bad.push(c.id+"/"+k+": empty item");if(q.cards&&q.cards.some(x=>!x[0]))bad.push(c.id+"/"+k+": empty card")}}}
  return {n,bad:[...new Set(bad)]}};

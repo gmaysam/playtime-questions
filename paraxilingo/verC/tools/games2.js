@@ -79,17 +79,18 @@ function sortQ(q){
 
 /* ---------- 2. tap them all ---------- */
 function qTapAll(cat){const a=lvl(),big=a>=5,n=big?9:6,yes=big?3:2;let k,Y,NN,v=[],f="";
-  const opts={farm:["wings","water"],animals:["wings","water"],world:["fruit","red"],count:a>=6?["even"]:["shape"],letters:["letter"],read:["letter"],shapes:["shape"],sky:["shape"]}[cat]||["fruit"];k=pickOne(opts);
+  const opts={farm:["wings","water"],animals:["wings","water"],world:["fruit","red"],count:a>=6?["even"]:["shape"],letters:["letter"],read:["letter"],shapes:["shape"],sky:["planets"]}[cat]||["fruit"];k=pickOne(opts);
   if(k==="wings"){Y=WINGS_Y;NN=WALKERS;v=[V("G_TAP_WINGS")];f="Birds, bees, bats and butterflies all have wings. Chickens and ducks have wings too!"}
   if(k==="water"){Y=SEA;NN=LAND;v=[V("G_TAP_WATER")];f="Fish breathe under water with gills. Whales and dolphins come up to breathe air."}
   if(k==="fruit"){Y=FRUIT;NN=[...VEG,...THINGS];v=[V("G_TAP_FRUIT")];f="Fruits grow from flowers and have seeds inside."}
   if(k==="red"){Y=REDS;NN=NOTRED;v=[V("G_TAP_RED")];f="Red is the colour of strawberries, cherries and fire trucks."}
+  if(k==="planets"){Y=[1,2,3,4,5,6,7,8].map(i=>[PL_IMG(PLANET_N[i]),cap1(PLANET_N[i])]);NN=[["sun","Sun"],["moon","Moon"],["star","Star"],["comet","Comet"],["cloud","Cloud"],["rocket","Rocket"]].map(([n,l])=>[n==="sun"?PL_IMG("sun"):PIC("sky_"+SKYN.indexOf(n),"wp gsp"),l]);v=[V("G_TAP_THIS"),"w/LULU_FA_SKY14"];f="There are 8 planets. The Sun is a star, and the Moon goes around the Earth."}
   if(k==="even"){const ev=sh([2,4,6,8,10,12,14,16,18,20]),od=sh([1,3,5,7,9,11,13,15,17,19]);Y=ev.map(x=>[String(x),""]);NN=od.map(x=>[String(x),""]);v=[V("G_TAP_EVEN")];f="Even numbers end in 0, 2, 4, 6 or 8."}
   if(k==="shape"){const ss=Object.keys(SVGSH),t=pickOne(ss),cs=Object.values(GCOLS);Y=sh(cs).map(c=>[shSVG(t,c),""]);NN=ss.filter(x=>x!==t).flatMap(x=>cs.map(c=>[shSVG(x,c),""]));v=[V("G_TAP_THIS"),...faSay(t)];f=SHAPE_F[t]||"";k="shape:"+t}
   if(k==="letter"){const L2=pickOne("ABCDEFGHKLMNPRST".split("")),others=sh("ABCDEFGHKLMNOPRSTUVW".split("").filter(x=>x!==L2));Y=Array(4).fill([L2,""]);NN=others.map(x=>[x,""]);v=[V("G_TAP_THIS"),...lSay(L2)];f=`${L2} is letter number ${L2.charCodeAt(0)-64} of 26.`;k="letter:"+L2}
   const items=sh([...sh(Y).slice(0,yes).map(x=>[...x,1]),...sh(NN).slice(0,n-yes).map(x=>[...x,0])]);
   const show=k.startsWith("shape")?`<span class="gsh-big">${shSVG(k.slice(6),"#4B4B4B")}</span>`:k.startsWith("letter")?`<b class="ta-big">${k.slice(7)}</b>`:"";
-  const cap2=k==="wings"?"Tap every one with wings":k==="water"?"Tap every animal that lives in water":k==="fruit"?"Tap every fruit":k==="red"?"Tap every red thing":k==="even"?"Tap every even number":k.startsWith("shape")?`Tap every ${k.slice(6)}`:`Tap every ${k.slice(7)}`;
+  const cap2=k==="planets"?"Tap every planet":k==="wings"?"Tap every one with wings":k==="water"?"Tap every animal that lives in water":k==="fruit"?"Tap every fruit":k==="red"?"Tap every red thing":k==="even"?"Tap every even number":k.startsWith("shape")?`Tap every ${k.slice(6)}`:`Tap every ${k.slice(7)}`;
   return {game:"tapall",set:k,items,yes,voice:v,show,factT:f,cap2}}
 function tapallQ(q){
   gShow(`<div class="game">${gHead("👆","Find them all",q.cap2||"Tap every one that fits")}
@@ -191,7 +192,7 @@ function setclockQ(q){let hA=((q.h+ri(3,8))%12)*30,mA=q.both?ri(1,11)*30:0;const
 }
 
 /* ---------- 7. put in order (life cycles, the day, size, weekdays) ---------- */
-function qSeq(cat){const a=lvl(),pk={world:["plant","chick","life","butterfly"],animals:["chick","butterfly","size"],farm:["chick","size"],sky:["day"],clock:a>=6?["day","week","months"]:["day"],count:["size"],shapes:["size"]}[cat]||["plant"];
+function qSeq(cat){const a=lvl(),pk={world:["plant","chick","life","butterfly"],animals:["chick","butterfly","size"],farm:["chick","size"],sky:["day","planets","psize"],clock:a>=6?["day","week","months"]:["day"],count:["size"],shapes:["size"]}[cat]||["plant"];
   const kk=pickOne(pk),s=SEQS.find(x=>x.k===kk);return {game:"seq",s,order:sh([...s.s.keys()]),voice:[V(s.v||"G_ORDER")],factT:s.f}}
 function seqQ(q){const s=q.s,n=s.s.length;
   gShow(`<div class="game">${gHead("➡️","Put in order",s.c)}
@@ -350,17 +351,19 @@ function paintQ(q){let st=0,col=null,miss=0;
 Object.assign(GAMES,{sort:sortQ,tapall:tapallQ,tcount:tcountQ,tshow:tcountQ,swipe:swipeQ,feed:feedQ,setclock:setclockQ,seq:seqQ,dragpat:dragpatQ,balance:balanceQ,spy:spyQ,trace:traceQ,whack:whackQ,catch:catchQ,paint:paintQ});
 
 /* which new formats each topic gets (by age) */
-function formatsFor(cat){const a=lvl(),F={
-  count:["f_tcount","f_tshow","f_balance","f_whack","f_swipe",...(a>=5?["f_catch","f_sort"]:[]),...(a<=6?["f_trace"]:[]),...(a>=6?["f_tapall"]:[]),"f_seq"],
+const G_READY=__GVOICE__,SK2_READY=__SK2VOICE__;  /* new formats switch on only when Lulu's instructions are in the app */
+function formatsFor(cat){const F0=formatsFor0(cat);return G_READY?F0:F0.filter(k=>!k.startsWith("f_"))}
+function formatsFor0(cat){const a=lvl(),F={
+  count:["robot","f_tcount","f_tshow","f_balance","f_whack","f_swipe",...(a>=5?["f_catch","f_sort"]:[]),...(a<=6?["f_trace"]:[]),...(a>=6?["f_tapall"]:[]),"f_seq"],
   add:["f_balance","f_tshow","f_catch","f_swipe",...(a<=5?["f_tcount"]:[])],
   clock:a>=4?["f_setclock","f_seq"]:["f_seq"],
-  letters:["f_trace","f_whack","f_tapall","f_catch",...(a>=5?["f_sort"]:[])],
+  letters:["f_trace","f_whack","f_tapall","f_catch","piano",...(a>=5?["f_sort"]:[])],
   read:["f_whack","f_tapall","f_catch"],
-  farm:["f_feed","f_sort","f_tapall","f_swipe","f_spy","f_seq"],
+  farm:["f_feed","f_sort","f_tapall","f_swipe","f_spy","f_seq","pairs"],
   animals:["f_feed","f_spy","f_sort","f_swipe","f_seq","f_tapall"],
   world:["f_sort","f_tapall","f_swipe","f_catch","f_seq","f_spy"],
-  sky:["f_sort","f_swipe","f_spy","f_seq"],
-  shapes:["f_paint","f_dragpat","f_tapall","f_spy","f_swipe",...(a>=5?["f_sort"]:[])],
+  sky:["f_sort","f_swipe","f_spy","f_seq","f_tapall"],
+  shapes:["f_paint","f_dragpat","f_tapall","f_spy","f_swipe","simon","robot",...(a>=5?["f_sort"]:[])],
   people:["f_spy"],flags:["f_spy","f_swipe"]}[cat];return F||[]}
 function buildFormat(kind,cat){const k=kind.slice(2);
   if(k==="sort")return qSort(cat);if(k==="tapall")return qTapAll(cat);if(k==="tcount")return qTCount(false);if(k==="tshow")return qTCount(true);
@@ -368,10 +371,21 @@ function buildFormat(kind,cat){const k=kind.slice(2);
   if(k==="balance")return qBalance();if(k==="spy")return qSpy(cat);if(k==="trace")return qTrace(cat);if(k==="whack")return qWhack(cat);if(k==="catch")return qCatch(cat);if(k==="paint")return qPaint();return null}
 /* a round: about 1 in 4 classic choose-the-answer, the rest new formats; never the same format twice in a row */
 function planRound(cat,count){const ks=kindsFor(cat),fs=formatsFor(cat);if(!fs.length)return null;
-  const nClassic=Math.max(1,Math.round(count/4)),out=[];let fb=[],cb=[];
+  const nClassic=Math.max(1,Math.round(count/4),count-(cat==="memory"||cat==="robot"?count:fs.length)),out=[];let fb=[],cb=[];
   const slots=sh([...Array(count).keys()]).slice(0,nClassic);
   for(let i=0;i<count;i++){let k;const prev=out[out.length-1];
     if(!slots.includes(i)){if(!fb.length)fb=sh(fs);k=fb.shift();if(k===prev&&fb.length){fb.push(k);k=fb.shift()}if(k===prev)k=null}
     if(!k){if(!cb.length)cb=sh(ks);k=cb.shift();if(k===prev&&cb.length){cb.push(k);k=cb.shift()}}
     out.push(k)}
   return out}
+
+/* ================= Nov 9e: more sky and space - 19 new questions, each with a Farsi question and a Farsi fact ================= */
+const SKY2=[["k1", 6, "Which planet is the smallest?", ["mercury", "jupiter", "earth", "saturn"], "Mercury is the smallest planet, just a bit bigger than our Moon."], ["k2", 6, "Which planet is the hottest?", ["venus", "neptune", "mars", "uranus"], "Venus is the hottest planet. Its thick clouds trap the heat like a blanket."], ["k3", 6, "Which planet is the farthest from the Sun?", ["neptune", "mercury", "earth", "mars"], "Neptune is the farthest planet. It is very cold and very windy."], ["k4", 4, "Which one goes around the Earth?", ["moon", "sun", "mars", "comet"], "The Moon goes around the Earth about once a month."], ["k5", 4, "Which one is a star?", ["sun", "moon", "earth", "comet"], "The Sun is a star: the closest star to us."], ["k6", 5, "Which one has a long, icy tail?", ["comet", "moon", "rocket", "cloud"], "A comet is a ball of ice and dust. Near the Sun it grows a long shiny tail."], ["k7", 5, "Which one helps our phones and TV from space?", ["satellite", "comet", "star", "cloud"], "Satellites go around the Earth and send signals for phones, TV and maps."], ["k8", 5, "What is the name of our galaxy?", ["galaxy", "moon", "saturn", "cloud"], "Our galaxy is the Milky Way. It has billions of stars, and our Sun is one of them."], ["k9", 4, "What makes the loud thunder?", ["lightning", "rainbow", "snow", "star"], "Lightning heats the air so fast that it booms. That boom is thunder!"], ["k10", 6, "Which planet has a giant red storm?", ["jupiter", "venus", "mercury", "earth"], "Jupiter's Great Red Spot is a storm bigger than the whole Earth!"], ["k11", 6, "Which planet spins on its side?", ["uranus", "earth", "mars", "venus"], "Uranus is tipped over, so it rolls around the Sun like a ball."], ["k12", 4, "Which planet has water, air and life?", ["earth", "mars", "venus", "neptune"], "Earth is the only planet we know with life: plants, animals and people."], ["k13", 6, "Which planet has the most moons?", ["saturn", "earth", "mars", "mercury"], "Saturn has more moons than any other planet: more than 200!"], ["k14", 5, "Which one shines at night but has no light of its own?", ["moon", "sun", "star", "lightning"], "The Moon shines because sunlight bounces off it, like a mirror."], ["k15", 5, "Which one is NOT in space?", ["cloud", "moon", "comet", "satellite"], "Clouds float in the air close to the Earth. Space starts much higher up."], ["k16", 4, "Which one is the biggest?", ["sun", "earth", "moon", "comet"], "The Sun is so big that about a million Earths could fit inside it!"], ["k17", 6, "Which planet shines brightest in our sky?", ["venus", "neptune", "saturn", "mars"], "Venus is the brightest planet. People call it the Morning Star."], ["k18", 5, "Which planet do robot rovers explore?", ["mars", "jupiter", "saturn", "neptune"], "Robot rovers drive on Mars and send us photos of its red rocks."], ["k19", 4, "Which one changes its shape during the month?", ["moon", "sun", "star", "earth"], "The Moon looks different each night: full, half or a thin smile."]];
+function qSky2(used){if(!SK2_READY)return null;const a=Math.max(lvl(),3),pool=SKY2.filter(x=>x[1]<=Math.max(4,a)&&!used.has("s2"+x[0]));if(!pool.length)return null;const x=pickOne(pool);used.add("s2"+x[0]);
+  const r=x[3][0],o=sh(x[3].slice());
+  const pic=n=>PLANET_N.includes(n)?PL_IMG(n):SKYN.includes(n)?PIC("sky_"+SKYN.indexOf(n),"wp op"):"";
+  const say=n=>{const i=PLANET_N.indexOf(n);return i>=0?["w/LULU_FA_PL"+i,"w/LULU_YA","w/LULU_PL"+i]:skySay(n)};
+  return {voice:["w/PX_SK2_Q_"+x[0]],cap:x[2],visual:`<div class="listen">🔭</div>`,opts:o.map(n=>({h:`<span class="oe">${pic(n)}</span><small>${n==="galaxy"?"Milky Way":cap1(n)}</small>`,say:say(n)})),
+    ans:o.indexOf(r),layout:"row3",hint:"elim",why:{t:"",f:x[4],v:["w/PX_SK2_F_"+x[0]]},exp:{t:r==="galaxy"?"The Milky Way":cap1(r),v:[]}}}
+SEQS.push({k:"planets",c:"Closest to the Sun first",s:["mercury","venus","earth","mars"].map(n=>[PL_IMG(n),cap1(n)]),f:"Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune: the 8 planets in order from the Sun."},
+ {k:"psize",c:"From the smallest planet to the biggest",s:["mercury","mars","earth","jupiter"].map(n=>[PL_IMG(n),cap1(n)]),v:"G_SIZE",f:"Jupiter is the biggest planet. More than 1,000 Earths could fit inside it!"});

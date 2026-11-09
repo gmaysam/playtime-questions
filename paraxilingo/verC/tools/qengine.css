@@ -940,3 +940,4 @@ body,.phone,.lesson.q2,.introC,#pSettings,.panel,.map{background:#fff!important}
 .bl-post::after{content:"";display:block;width:90px;height:12px;background:#8D6E63;border-radius:6px;margin:88px 0 0 -38px}
 .bl-ctl{margin-top:auto}
 .bl-beam{z-index:2}.bl-post{position:relative;z-index:1}
+.ta-it .plimg,.sq-c .plimg,.sq-sl .plimg,.srt-it .plimg{width:clamp(44px,12vw,64px);height:clamp(44px,12vw,64px)}

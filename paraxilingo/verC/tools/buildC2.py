@@ -44,6 +44,8 @@ A = rep(A, ' {id:"feel",e:"😊",name:"Feelings & Friends",soon:true},',
  {id:"paint",e:"🎨",name:"Painting",desc:"Colour a picture, tap by tap"},
  {id:"feel",e:"😊",name:"Feelings & Friends",soon:true},''')
 A = rep(A, 'perDay:20,', 'perDay:28,')
+A = rep(A, 'function say(name,onEnd,rate=1){', 'function say(name,onEnd,rate=.92){')
+A = rep(A, 'voice=a;a.playbackRate=rate;', 'voice=a;a.playbackRate=rate;try{a.preservesPitch=true;a.webkitPreservesPitch=true}catch(e){}')
 A = rep(A, ' {id:"money",e:"🪙",name:"Money Market",desc:"Coins, their values, counting money, change from $1"},\n', '')
 A = rep(A, 'ansLang:"",topics:["math","clock","money"],topicsV2:1});',
  'ansLang:"",topics:["math","clock","money","watcher","shapes","people","words","reading","radio","paint"],topicsV2:1,topicsV3:1,topicsV4:1,topicsV5:1,topicsV6:1,paintings:[],acorns:0,wood:0,day:{d:"",done:0,house:false,plan:null},stickers:[],seenW:[],real:null,notified:[],mapMonth:"auto",questions:0});')
@@ -69,7 +71,7 @@ for _f,_d in (('fa_new3.json','FA'),('en_new2.json','EN')):
     if os.path.exists(_p):
         for _w,_c in json.load(open(_p)).items():
             if os.path.exists(os.path.join(SDIR,'fa_new','out',_c+'.mp3')):(FA_SAY if _d=='FA' else EN_SAY)[_w]=_c
-B=open(os.path.join(os.path.dirname(__file__),'qengine.js')).read().replace('__STORIES__',open(os.path.join(SDIR,'watcher','stories.json')).read()).replace('__FA_SAY__',json.dumps(FA_SAY)).replace('__EVOICED__',json.dumps(EVOICED)).replace('__EN_SAY__',json.dumps(EN_SAY)).replace('__POOL__',open(os.path.join(SDIR,'watcher','pool.json')).read()).replace('__WQ__',wq).replace('__VOICED__',json.dumps(VOICED)).replace('__PIC_E__',PIC_E).replace('__WORD_E__',WORD_E)+open(os.path.join(os.path.dirname(__file__),'games.js')).read()+open(os.path.join(os.path.dirname(__file__),'games2.js')).read()
+B=open(os.path.join(os.path.dirname(__file__),'qengine.js')).read().replace('__STORIES__',open(os.path.join(SDIR,'watcher','stories.json')).read()).replace('__FA_SAY__',json.dumps(FA_SAY)).replace('__EVOICED__',json.dumps(EVOICED)).replace('__EN_SAY__',json.dumps(EN_SAY)).replace('__POOL__',open(os.path.join(SDIR,'watcher','pool.json')).read()).replace('__WQ__',wq).replace('__VOICED__',json.dumps(VOICED)).replace('__PIC_E__',PIC_E).replace('__WORD_E__',WORD_E)+open(os.path.join(os.path.dirname(__file__),'games.js')).read()+open(os.path.join(os.path.dirname(__file__),'games2.js')).read().replace('__GVOICE__','true' if os.path.exists('appC/audio/w/PX_G_SPY.mp3') else 'false').replace('__SK2VOICE__','true' if os.path.exists('appC/audio/w/PX_SK2_Q_k19.mp3') else 'false')
 C=''
 
 css += r'''
@@ -246,14 +248,15 @@ const TOPIC_SYM={flags:"🚩",robot:"🤖",memory:"🧠",math:"➕",clock:"🕒"
 const activeTopics=()=>S.topics.filter(t=>TOPIC_SYM[t]);
 const activeCats=()=>CATS.filter(c=>activeTopics().includes(c.topic));
 function dayPlan(){
-  if(S.day.d!==today()||!S.day.plan||S.day.v!==4||S.day.land!==landIdx()||S.day.per!==S.perDay||S.day.tops!==activeTopics().join()){
+  if(S.day.d!==today()||!S.day.plan||S.day.v!==5||S.day.land!==landIdx()||S.day.per!==S.perDay||S.day.tops!==activeTopics().join()){
     const n=HOLES[landIdx()].length,cats=activeCats(),hasStory=cats.some(c=>c.id==="story")&&n>2,hasPaint=cats.some(c=>c.id==="paint")&&n>3;
     let rest=cats.filter(c=>c.id!=="story"&&c.id!=="paint").map(c=>c.id);if(!rest.length)rest=["count"];
     const off=dayN()%rest.length;rest=[...rest.slice(off),...rest.slice(0,off)];
+    {const fav=["memory","robot"].filter(x=>rest.includes(x)),m0=n-(hasStory?1:0)-(hasPaint?1:0);if(fav.length&&!rest.slice(0,m0).some(x=>fav.includes(x))){const f=fav[dayN()%fav.length];rest=rest.filter(x=>x!==f);rest.splice(1,0,f)}}
     const sk=hasStory?Math.floor(n/2):-1,pk=hasPaint?n-1:-1,Q=Math.max(n,S.perDay)-(hasStory?3:0),m=n-(hasStory?1:0)-(hasPaint?1:0),base=Math.floor(Q/m),rem=Q%m;let j=0,r=0;
     const plan=Array.from({length:n},(x,i)=>i===sk?{cat:"story",count:3,story:dayN()%STORIES.length}:i===pk?{cat:"paint",count:0,page:dayN()%PAGES.length}:{cat:rest[(j++)%rest.length],count:Math.max(1,base+(r++<rem?1:0))});
-    const keep=S.day.d===today()&&S.day.land===landIdx()&&S.day.v===4;
-    S.day={d:today(),done:keep?Math.min(S.day.done,n):0,house:keep?S.day.house:false,plan,land:landIdx(),per:S.perDay,tops:activeTopics().join(),v:4};save();
+    const keep=S.day.d===today()&&S.day.land===landIdx();
+    S.day={d:today(),done:keep?Math.min(S.day.done,n):0,house:keep?S.day.house:false,plan,land:landIdx(),per:S.perDay,tops:activeTopics().join(),v:5};save();
   }
   return S.day.plan;
 }

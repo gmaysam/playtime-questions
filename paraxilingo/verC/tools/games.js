@@ -187,11 +187,14 @@ function factFor(q){try{
   return ""}catch(e){return ""}}
 
 /* ================= Nov 9c: answer text sized by script, so it fits on every device ================= */
-function fitOpts(){const B=$("qBody");if(!B)return;B.querySelectorAll(".qo[data-j]").forEach(c=>{const W=c.clientWidth,H=c.clientHeight;if(!W||!H)return;
+function fitOpts(){const B=$("qBody");if(!B)return;const sizes=[];B.querySelectorAll(".qo[data-j]").forEach(c=>{const W=c.clientWidth,H=c.clientHeight;if(!W||!H)return;
   const round=c.closest(".st-balloon,.st-fish"),pic=c.querySelector("img,.oe,.grp,.cshape,.swatch,.dayb,svg"),dots=c.querySelector(".dots");
   c.querySelectorAll("b.num,b.word").forEach(e=>{const n=Math.max(1.3,e.textContent.trim().length*.6);
     let f=Math.min(H*(pic?.26:dots?.42:round?.36:.48),W*(round?.66:.8)/n,round?64:120);f=Math.max(f,14);e.style.fontSize=f+"px";e.style.lineHeight="1.15";e.style.whiteSpace="nowrap";
-    let g=0;while(e.scrollWidth>W*(round?.72:.88)&&g++<25&&f>12){f*=.9;e.style.fontSize=f+"px"}})})}
+    let g=0;while(e.scrollWidth>W*(round?.72:.88)&&g++<25&&f>12){f*=.9;e.style.fontSize=f+"px"}sizes.push([e,f])})});
+  /* every answer in one question gets the same text size (the smallest one that fits all) */
+  const words=sizes.filter(([e])=>e.matches("b.word")),nums=sizes.filter(([e])=>e.matches("b.num"));
+  for(const grp of [words,nums])if(grp.length>1){const m=Math.min(...grp.map(x=>x[1]));grp.forEach(([e])=>e.style.fontSize=m+"px")}}
 window.addEventListener("resize",()=>{try{fitOpts()}catch(e){}});
 
 /* ================= Nov 9c: balloons float up and fly away, fish swim across - pop / catch the answer before it leaves ================= */

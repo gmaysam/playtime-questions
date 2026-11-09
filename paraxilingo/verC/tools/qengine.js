@@ -35,7 +35,7 @@ let seqId=0;
 function speaking(on){const b=$("qSpk");if(b)b.classList.toggle("talking",on)}
 function sayseq(list,onEnd){
   const id=++seqId,l=list.filter(Boolean);let i=0;
-  const next=()=>{if(id!==seqId)return;if(i>=l.length){speaking(false);onEnd&&onEnd();return}say(l[i++],next)};
+  const next=()=>{if(id!==seqId)return;if(i>=l.length){speaking(false);onEnd&&onEnd();return}say(l[i++],()=>{if(i<l.length)setTimeout(next,230);else next()})};
   speaking(true);next();
 }
 function hush(){seqId++;askTok++;if(voice){voice.onended=null;voice.onerror=null;voice.pause();voice=null}speaking(false)}
@@ -253,6 +253,7 @@ function buildQ0(cat,kind,used){
   if(cat==="read")return qRead(kind,used);
   if(cat==="shapes")return qShapes(kind,used);
   if(cat==="people"||cat==="flags")return qPeople(kind,used);
+  if(cat==="sky"&&Math.random()<.4){const g=qSky2(used);if(g)return g}
   if(cat==="sky"&&Math.random()<.35)return Math.random()<.5?qSkyPic(used):qPlanet(used);
   return qWatcher(cat,used);
 }
@@ -336,11 +337,11 @@ function pick(j,b){
     if(!q.why&&q.fact&&q.exp&&q.exp.t)q.why={t:q.exp.t,v:[]};
     /* a short fact that matches THIS answer (English text); Lulu explains the answer in Farsi */
     {const lab=((q.opts[q.ans]||{}).h||"").replace(/<[^>]+>/g," ").replace(/\s+/g," ").trim().toLowerCase(),fe=factFor(q);
-     if(fe){if(!q.why){const et=String(q.exp&&q.exp.t||"").trim();q.why={t:et.length>2&&et.toLowerCase()!==lab&&!fe.includes(et)?et:"",v:[]}}if(!(q.why.t||"").includes(fe))q.why.f=fe}
-     if(q.why&&!q.why.v.length&&q.exp&&q.exp.v)q.why.v=q.exp.v.filter(Boolean)}
+     if(fe){if(!q.why){const et=String(q.exp&&q.exp.t||"").trim();q.why={t:et.length>2&&et.toLowerCase()!==lab&&!fe.includes(et)?et:"",v:[]}}if(!q.why.f&&!(q.why.t||"").includes(fe))q.why.f=fe}
+     if(q.why)q.why.v=(q.why.v||[]).filter(c=>c&&!/LULU_ANS_IS/.test(c))}
     if(q.why){ /* short "why" after the answer: text on the card, Lulu reads it when there is a voice for it */
       sheet("good why",(q.tf?(q.ans===0?"✅ True! ":"❌ Not true! "):"")+pickOne(PRAISE_T),(q.why.t||"")+(q.why.f?`<span class="ffact"><b>💡</b><span>${q.why.f}</span></span>`:""));
-      sayseq([pickOne(PRAISE_CLIPS),...q.why.v],()=>setTimeout(go,q.why.v.length?1800:5500));
+      sayseq([pickOne(PRAISE_CLIPS),...q.why.v],()=>setTimeout(go,q.why.v.length?1600:3800));
     }else{
       /* a short fact or the worked answer under the praise (e.g. "Pig: barn", "7 + 5 = 12") */
       const fact=q.exp&&q.exp.t&&String(q.exp.t).length>2?q.exp.t:"";
@@ -389,7 +390,7 @@ function sheet(kind,title,sub){
   $("qSheet").innerHTML=`<div class="qsrow"><span class="qsf">${kind==="good"?"🎉":"💡"}</span><span><b>${title}</b><span>${sub}</span></span></div><button class="qbtn ${kind}" id="qNext">Next ➜</button>`;
   $("qSheet").className="qsheet show "+kind;
 }
-function dance(){
+function dance(){burst(120);return;
   const d=document.createElement("div");d.className="dance";d.innerHTML=`${bv(150)}<div class="tx">${pickOne(["Hop hop hooray!","3 in a row!","You rock!","Wow wow wow!"])}</div>`;
   $("lesson").appendChild(d);burst(120);setTimeout(()=>d.remove(),1900);
 }
