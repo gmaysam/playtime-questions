@@ -8,9 +8,9 @@ const SKN={find:"Counting things",more:"More or less",less:"More or less",long:"
  balloon:"Sight words",flash:"Sight words (quick look)",sentence:"Reading sentences",
  home:"Animal homes",sound:"Animal sounds",fly:"Animals that fly",food:"What animals eat",water:"Animals in water",pairs:"Memory (pairs)",
  shape:"Shape names",color:"Colours",pattern:"Patterns",robot:"Coding (robot path)",sides:"Sides of shapes",both:"Two clues",bigsmall:"Big and small",simon:"Memory (colours in order)",
- feel:"Feelings",job:"Jobs",job2:"Jobs",flag:"Flags",flag2:"Flags",w:"Facts about the world"};
+ feel:"Feelings",piano:"Memory (piano notes)",job:"Jobs",job2:"Jobs",flag:"Flags",flag2:"Flags",w:"Facts about the world"};
 const SKCAT={"clock.after":"What day comes next","clock.before":"What day came before","count.after":"What comes next","count.before":"What comes before"};
-const AREA={count:["🔢","Numbers"],add:["➕","Adding & taking away"],clock:["🕒","Time & calendar"],letters:["🔤","Letters & words"],read:["📖","Reading"],farm:["🏡","Animals"],animals:["🐾","Animals"],world:["🌳","Our world"],sky:["🌙","Sky & space"],shapes:["🔷","Shapes & thinking"],people:["🚩","People & feelings"],story:["📻","Listening (stories)"]};
+const AREA={count:["🔢","Numbers"],add:["➕","Adding & taking away"],clock:["🕒","Time & calendar"],letters:["🔤","Letters & words"],read:["📖","Reading"],farm:["🏡","Animals"],animals:["🐾","Animals"],world:["🌳","Our world"],sky:["🌙","Sky & space"],shapes:["🔷","Shapes & thinking"],people:["🧑‍🚒","Jobs & feelings"],flags:["🚩","Flags"],robot:["🤖","Robots"],memory:["🧠","Concentration"],story:["📻","Listening (stories)"]};
 const skName=(cat,kind)=>SKCAT[cat+"."+kind]||(cat==="story"?"Listening to a story":SKN[kind])||(cat==="sky"?"Sky & space facts":cat==="animals"?"Animal facts":cat==="world"?"Facts about our world":"Other");
 function logSk(q,ok){try{const cat=q.cat||(L&&L.cat)||"",k=cat+"|"+skName(cat,q.game||(q.match?"match":q.robot?"robot":q.kind)||"");if(!S.sk)S.sk={};const r=S.sk[k]||(S.sk[k]={n:0,r:0,f:0,d0:today(),d:"",h:""});
   r.n++;if(ok)r.r++;if(!S.dq)S.dq={};S.dq[today()]=(S.dq[today()]||0)+1;{const ks=Object.keys(S.dq).sort();while(ks.length>21)delete S.dq[ks.shift()]}const first=ok&&!q.tries;if(first)r.f++;r.d=today();r.h=(r.h+(first?"1":"0")).slice(-10)}catch(e){}}
@@ -122,7 +122,7 @@ function bldQ(q){
       if(miss>=3){q.done=true;sl.forEach((s,i)=>{s.textContent=q.letters[i];s.classList.add("ok")});gameLearn(q,q.x.w.toUpperCase(),[...wSay(q.x),...faSay(q.x.w)])}}});
   window.__gSolve=()=>{let i=0;const t=()=>{if(i<q.letters.length){const l=q.letters[i++];[...$("qBody").querySelectorAll(".bdt")].find(b=>!b.disabled&&b.dataset.l===l).click();setTimeout(t,200)}};t()};
 }
-const GAMES={simon:simonQ,pairs:pairsQ,order:orderQ,pizza:pizzaQ,build:bldQ};
+const GAMES={piano:pianoQ,simon:simonQ,pairs:pairsQ,order:orderQ,pizza:pizzaQ,build:bldQ};
 
 /* ================= Nov 9: a short English fact after EVERY right answer, made from the question and its answer ================= */
 const DAYS7=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],MONTHS12=["January","February","March","April","May","June","July","August","September","October","November","December"];
@@ -178,10 +178,49 @@ function factFor(q){try{
     if(k==="bigsmall")return /small/i.test(q.cap)?"Small things take up less space.":"Big things take up more space.";
     const sh=Object.keys(SHAPE_F).find(x=>lab.includes(x)||String(q.exp&&q.exp.t||"").toLowerCase().includes(x)||(q.cap||"").toLowerCase().includes(x));if(sh)return SHAPE_F[sh];
     const co=Object.keys(COLOR_F).find(x=>lab.includes(x));if(co)return COLOR_F[co]}
-  if(c==="people"){const f2=FEEL_F[w];if(f2)return f2;const j=Object.keys(JOB_F).find(x=>lab.includes(x));if(j)return JOB_F[j];
+  if(c==="people"||c==="flags"){const f2=FEEL_F[w];if(f2)return f2;const j=Object.keys(JOB_F).find(x=>lab.includes(x));if(j)return JOB_F[j];
     const t=String(q.exp&&q.exp.t||lab).toLowerCase(),fl=Object.keys(FLAG_F).find(x=>t.includes(x));if(fl)return FLAG_F[fl];if(k.startsWith("flag"))return "Every country has its own flag with its own colours."}
   if(c==="farm"){if(k==="fly")return "Animals that fly have wings: birds, bats and many insects.";if(k==="water")return "Fish breathe under water with gills.";if(k==="sound")return "Every animal has its own way to talk to its friends.";
     if(k==="home")return "Animals live where they can find food and stay safe.";if(k==="food")return "Some animals eat plants, some eat meat, and some eat both."}
   if(fe)return fe;
   if(num)return numFact(num);
   return ""}catch(e){return ""}}
+
+/* ================= Nov 9c: answer text sized by script, so it fits on every device ================= */
+function fitOpts(){const B=$("qBody");if(!B)return;B.querySelectorAll(".qo[data-j]").forEach(c=>{const W=c.clientWidth,H=c.clientHeight;if(!W||!H)return;
+  const round=c.closest(".st-balloon,.st-fish"),pic=c.querySelector("img,.oe,.grp,.cshape,.swatch,.dayb,svg"),dots=c.querySelector(".dots");
+  c.querySelectorAll("b.num,b.word").forEach(e=>{const n=Math.max(1.3,e.textContent.trim().length*.6);
+    let f=Math.min(H*(pic?.26:dots?.42:round?.36:.48),W*(round?.66:.8)/n,round?64:120);f=Math.max(f,14);e.style.fontSize=f+"px";e.style.lineHeight="1.15";e.style.whiteSpace="nowrap";
+    let g=0;while(e.scrollWidth>W*(round?.72:.88)&&g++<25&&f>12){f*=.9;e.style.fontSize=f+"px"}})})}
+window.addEventListener("resize",()=>{try{fitOpts()}catch(e){}});
+
+/* ================= Nov 9c: balloons float up and fly away, fish swim across - pop / catch the answer before it leaves ================= */
+function moveField(q){const box=$("qBody").querySelector(".qopts");if(!box)return;box.classList.add("field");
+  const els=[...box.querySelectorAll(".qo[data-j]")],n=els.length,a=lvl(),T=a<=4?11:a<=6?9:7.5,lanes=sh([...Array(n).keys()]);
+  els.forEach((e,i)=>{const lane=lanes[i];e.style.setProperty("--t",(T+Math.random()*2).toFixed(2)+"s");e.style.setProperty("--d",(-(i*T/n)+1.2).toFixed(2)+"s");
+    if(q.style==="balloon")e.style.left=(4+lane*(92/n))+"%";else e.style.top=(4+lane*(92/n))+"%"})}
+
+/* ================= Nov 9c: piano - listen to a few notes, then play them back ================= */
+const PIANO=[["C","Do","#FF5A5F",262],["D","Re","#FF9F1C",294],["E","Mi","#FFD23F",330],["F","Fa","#3DDC97",349],["G","Sol","#2EC4B6",392],["A","La","#4D96FF",440],["B","Si","#9B5DE5",494],["C","Do","#F15BB5",523]];
+let __pac=null;function pianoTone(f,ms=700){try{__pac=__pac||new (window.AudioContext||window.webkitAudioContext)();const t=__pac.currentTime,g=__pac.createGain();g.connect(__pac.destination);
+  g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.45,t+.01);g.gain.exponentialRampToValueAtTime(.0001,t+ms/1000);
+  [[1,1],[2,.35],[3,.12]].forEach(([m,v])=>{const o=__pac.createOscillator(),gg=__pac.createGain();o.type="sine";o.frequency.value=f*m;gg.gain.value=v;o.connect(gg).connect(g);o.start(t);o.stop(t+ms/1000+.05)})}catch(e){}}
+function qPiano(){const a=lvl(),keys=a<=4?5:8,len=a<=3?2:a<=5?3:a<=7?4:5;let seq=[];for(let i=0;i<len;i++){let k;do{k=ri(0,keys-1)}while(seq.length&&k===seq[seq.length-1]);seq.push(k)}
+  return {game:"piano",seq,keys,voice:["w/PX_PIANO"]}}
+function pianoQ(q){
+  gShow(`<div class="game">${gHead("🎹","Piano","Listen, then play the same notes!")}
+    <div class="pnwrap"><div class="pnmid" id="pnMid">👂</div><div class="pnkeys" id="pnK" style="grid-template-columns:repeat(${q.keys},1fr)">${PIANO.slice(0,q.keys).map((k,i)=>`<button class="pnk" data-i="${i}" style="--c:${k[2]}"><span>${k[1]}</span></button>`).join("")}</div>
+    <div class="smdots" id="pnDots">${q.seq.map(()=>"<i></i>").join("")}</div></div></div>`);
+  let at=0,miss=0,busy=true;const ks=[...$("qBody").querySelectorAll(".pnk")];
+  const hit=(i,ms=650)=>{ks[i].classList.add("lit");pianoTone(PIANO[i][3],ms+300);setTimeout(()=>ks[i].classList.remove("lit"),ms-120)};
+  const dots=()=>$("pnDots").querySelectorAll("i").forEach((d,k)=>d.className=k<at?"on":"");
+  const play=(clip,cb)=>{busy=true;at=0;dots();$("pnMid").textContent="👂";$("pnK").classList.add("watch");
+    sayseq(clip?[clip]:[],()=>{let k=0;const step=()=>{if(!L||L.q!==q)return;if(k>=q.seq.length){$("pnK").classList.remove("watch");$("pnMid").textContent="🎹";busy=false;sayseq(["w/LULU_SM_YOUR"],()=>{});cb&&cb();return}hit(q.seq[k++]);setTimeout(step,lvl()<=4?850:700)};setTimeout(step,400)})};
+  ks.forEach(b=>b.onpointerdown=e=>{e.preventDefault();if(busy||q.done)return;const i=+b.dataset.i;hit(i,420);
+    if(i===q.seq[at]){at++;dots();if(at===q.seq.length){busy=true;$("pnMid").textContent="🎉";gameWin(q,miss,$("pnK"))}}
+    else{miss++;sfx.oops();$("pnK").classList.add("bump");setTimeout(()=>$("pnK").classList.remove("bump"),450);
+      if(miss>=2){busy=true;setTimeout(()=>play(null,()=>{busy=true;gameLearn(q,"The notes were: "+q.seq.map(x=>PIANO[x][1]).join(" "))}),700)}
+      else setTimeout(()=>play(null),800)}});
+  window.__gSolve=()=>{let k=0;const t=()=>{if(busy)return setTimeout(t,300);if(k<q.seq.length){ks[q.seq[k++]].dispatchEvent(new PointerEvent("pointerdown",{bubbles:true}));setTimeout(t,150)}};t()};
+  setTimeout(()=>{if(L&&L.q===q)play("w/PX_PIANO")},400);
+}

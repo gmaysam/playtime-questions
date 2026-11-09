@@ -58,7 +58,10 @@ const CATS=[
  {id:"sky",topic:"watcher",e:"🌙",name:"Sky & space"},
  {id:"farm",topic:"watcher",e:"🏡",name:"Homes, food & sounds"},
  {id:"shapes",topic:"shapes",e:"🔷",name:"Shapes, colours & patterns"},
- {id:"people",topic:"people",e:"🚩",name:"Flags & jobs"},
+ {id:"people",topic:"people",e:"🧑‍🚒",name:"Jobs & feelings"},
+ {id:"flags",topic:"flags",e:"🚩",name:"Flags of the world"},
+ {id:"robot",topic:"robot",e:"🤖",name:"Robots"},
+ {id:"memory",topic:"memory",e:"🧠",name:"Concentration"},
  {id:"letters",topic:"words",e:"🔤",name:"Letters & words"},
  {id:"read",topic:"reading",e:"📖",name:"Read it!"},
  {id:"story",topic:"radio",e:"📻",name:"Domi's Radio"},
@@ -80,9 +83,12 @@ function kindsFor(cat){
   if(cat==="money")return a<=5?["pennies","value"]:a<=6?["pennies","value","count"]:a<=7?["value","count","same"]:["count","same","change"];
   if(cat==="letters")return a<=4?["abc","listen","match","rhyme"]:a<=6?["listen","first","abc","whatis","lafter","match","rhyme","build"]:["listen","first","whatis","lafter","lbefore","match","build"];
   if(cat==="read")return a<=5?["balloon","flash"]:["balloon","flash","sentence"];
-  if(cat==="farm")return a<=4?["home","sound","fly","match","pairs"]:["home","food","sound","fly","water","match","pairs"];
-  if(cat==="shapes")return a<=4?["shape","color","pattern","match","robot","simon"]:a<=6?["shape","sides","both","pattern","match","robot","simon"]:["sides","both","pattern","bigsmall","match","robot","simon"];
-  if(cat==="people")return a<=5?["feel","job","job2"]:["feel","flag","job","flag2","job2"];
+  if(cat==="farm")return a<=4?["home","sound","fly","match"]:["home","food","sound","fly","water","match"];
+  if(cat==="shapes")return a<=4?["shape","color","pattern","match"]:a<=6?["shape","sides","both","pattern","match"]:["sides","both","pattern","bigsmall","match"];
+  if(cat==="people")return ["feel","job","job2"];
+  if(cat==="flags")return a<=5?["flag"]:["flag","flag2"];
+  if(cat==="robot")return ["robot"];
+  if(cat==="memory")return ["simon","piano","pairs"];
   return ["w"];
 }
 const MAXN=()=>{const a=lvl();return a<=4?5:a<=5?10:a<=6?20:100};
@@ -224,10 +230,10 @@ function buildQ0(cat,kind,used){
   if(kind==="robot")return qRobot();
   if(kind==="simon")return qSimon();
   if(kind==="pairs")return qPairs();
+  if(kind==="piano")return qPiano();
   if(kind==="order")return qOrder();
   if(kind==="pizza")return qPizza();
   if(kind==="build")return qBuild(used);
-  if(cat==="animals"&&!used.has("pairs")&&Math.random()<.2){used.add("pairs");const g=qPairs();g.kind="pairs";return g}
   if(["missing","skip","long","graph","carry","groups","share","left","sides","both","feel","rhyme"].includes(kind))return qNew(kind,used);
   if(kind==="match")return qMatch(cat==="letters"?"wd":cat==="shapes"?"sh":"an",used);
   if((cat==="animals"||cat==="sky")&&!used.has("match")&&Math.random()<.22){used.add("match");return qMatch(cat==="sky"?"pl":"an",used)}
@@ -239,7 +245,7 @@ function buildQ0(cat,kind,used){
   if(cat==="letters")return qLetters(kind,used);
   if(cat==="read")return qRead(kind,used);
   if(cat==="shapes")return qShapes(kind,used);
-  if(cat==="people")return qPeople(kind,used);
+  if(cat==="people"||cat==="flags")return qPeople(kind,used);
   if(cat==="sky"&&Math.random()<.35)return Math.random()<.5?qSkyPic(used):qPlanet(used);
   return qWatcher(cat,used);
 }
@@ -278,7 +284,7 @@ function nextQ(){
     const v=tk(q.visual),a=[...tk(q.opts[q.ans].h)],others=q.opts.filter((o,i)=>i!==q.ans).map(o=>tk(o.h));
     if(a.some(x=>v.has(x)&&!others.every(o=>o.has(x))))q.visual=`<div class="listen">${cc.e||"⭐"}</div>`}
   const deco=/^<div class="listen/.test(q.visual||"")&&!/radio/.test(q.visual);
-  if(!q.style){q.style="cards";if(q.opts&&q.opts.length===4&&q.layout!=="yn"&&!q.tf&&!q.flash){const r=Math.random();q.style=r<.22?"balloon":r<.4?"fish":"cards"}}
+  if(!q.style){q.style="cards";if(q.opts&&q.opts.length===4&&q.layout!=="yn"&&!q.tf&&!q.flash){const r=Math.random();q.style=r<.28?"balloon":r<.48?"fish":"cards"}}
   /* owner's template: title, speaker + the thing asked, 4 cards in a 2 x 2 grid, big CHECK button */
   $("qBody").innerHTML=`<div class="qkick"><span class="qke">${cc.e||"⭐"}</span>${cc.name||""}</div>
     <h2 class="qtitle${(q.cap||"").length>34?" long":""}">${q.cap||"Choose the right one"}</h2>
@@ -293,7 +299,8 @@ function nextQ(){
     $("qBody").querySelectorAll(".qo.sel").forEach(x=>x.classList.remove("sel"));b.classList.add("sel");
     hush();sayseq((q.opts[+b.dataset.j]||{}).say||[],()=>{});chk.disabled=false;chk.classList.add("on")};
   $("qBody").querySelectorAll(".qo").forEach(b=>{b.onpointerdown=e=>{if(e.button>0)return;b._pd=Date.now();choose(b)};b.onclick=()=>{if(Date.now()-(b._pd||0)<1000)return;choose(b)}});
-  $("qBody").querySelectorAll(".qo .num,.qo .word,.qo small").forEach(e=>e.style.setProperty("--n",Math.max(2,e.textContent.replace(/[●\s]/g,"").length)));
+  requestAnimationFrame(()=>requestAnimationFrame(fitOpts));setTimeout(fitOpts,450);
+  if(q.style==="balloon"||q.style==="fish")moveField(q);
   chk.onclick=()=>{const b=$("qBody").querySelector(".qo.sel");if(!b||q.done)return;hush();q.locked=false;b.classList.remove("sel");chk.disabled=true;chk.classList.remove("on");pick(+b.dataset.j,b)};
   $("qBody").classList.remove("in");void $("qBody").offsetWidth;$("qBody").classList.add("in");
   if(q.flash)setTimeout(()=>{const f=$("qBody").querySelector(".flash");if(f)f.classList.add("hid")},2200);
@@ -527,7 +534,7 @@ function qLetters(k,used){
 /* reading: the answers are NOT read aloud, the child reads them */
 function qRead(k,used){
   if(k==="sentence"){const st=sh(POOL.sents).find(x=>!used.has(x.id))||POOL.sents[0];used.add(st.id);const o0=st.o.slice();if(o0.length===3){const x=sh(POOL.sight).find(y=>!o0.includes(y.w)&&y.w.length>2&&!st.q.includes(y.w));if(x)o0.push(x.w)}const o=sh(o0);
-    return {voice:["w/LULU_RD_SENTENCE"],cap:"",visual:`<div class="sent">${st.q.replace("___",'<span class="gap">?</span>')}</div>`,opts:o.map(w=>({h:`<b class="word">${w}</b>`})),ans:o.indexOf(st.a),layout:"row3",hint:"elim",exp:{t:st.q.replace("___",st.a),v:["w/LULU_ANS_IS"]}}}
+    return {voice:["w/LULU_RD_SENTENCE","w/PX_SENT_"+st.id],cap:"Read it and find the missing word",visual:`<div class="sent">${st.q.replace("___",'<span class="gap">?</span>')}</div>`,opts:o.map(w=>({h:`<b class="word">${w}</b>`})),ans:o.indexOf(st.a),layout:"row3",hint:"elim",exp:{t:st.q.replace("___",st.a),v:["w/LULU_ANS_IS"]}}}
   const pool=POOL.sight.slice(0,lvl()<=5?30:lvl()<=6?60:100),x=sh(pool).find(y=>!used.has("sw"+y.i))||pool[0];used.add("sw"+x.i);
   const o=sh([x,...sh(pool.filter(y=>y.i!==x.i&&y.w[0]!==x.w[0])).slice(0,DK())]);
   if(k==="flash")return {voice:["w/LULU_RD_FLASH"],cap:"Look! Then find it.",visual:`<div class="flash"><b class="word big">${x.w}</b></div>`,opts:o.map(y=>({h:`<b class="word">${y.w}</b>`})),ans:o.indexOf(x),layout:"row3",hint:"elim",flash:true,exp:{t:x.w,v:["w/LULU_ANS_IS","w/LULU_SIGHT"+x.i]}};

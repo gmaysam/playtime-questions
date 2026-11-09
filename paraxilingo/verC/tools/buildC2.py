@@ -35,7 +35,10 @@ A = rep(A, ' {id:"feel",e:"😊",name:"Feelings & Friends",soon:true},',
  ''' {id:"watcher",e:"🔎",name:"Discover the world",desc:"Animals, body, nature, sky, space, food: the Watcher questions"},
  {id:"radio",e:"📻",name:"Domi's Radio",desc:"Listen to a short story, then answer questions about it"},
  {id:"shapes",e:"🔷",name:"Shapes & colours",desc:"Shapes, colours, patterns, bigger or smaller"},
- {id:"people",e:"🚩",name:"Flags & jobs",desc:"Find the flag, find the job"},
+ {id:"people",e:"🧑‍🚒",name:"Jobs & feelings",desc:"Find the job, how does this child feel?"},
+ {id:"flags",e:"🚩",name:"Flags",desc:"Flags of the world"},
+ {id:"robot",e:"🤖",name:"Robots",desc:"Help the robot reach the flag: first steps in coding"},
+ {id:"memory",e:"🧠",name:"Concentration",desc:"Simon colours, piano notes, memory pairs"},
  {id:"words",e:"🔤",name:"Letters & words",desc:"ABC, first letter, English words"},
  {id:"reading",e:"📖",name:"Read it!",desc:"Sight words and short sentences (age 5+)"},
  {id:"paint",e:"🎨",name:"Painting",desc:"Colour a picture, tap by tap"},
@@ -45,7 +48,7 @@ A = rep(A, ' {id:"money",e:"🪙",name:"Money Market",desc:"Coins, their values,
 A = rep(A, 'ansLang:"",topics:["math","clock","money"],topicsV2:1});',
  'ansLang:"",topics:["math","clock","money","watcher","shapes","people","words","reading","radio","paint"],topicsV2:1,topicsV3:1,topicsV4:1,topicsV5:1,topicsV6:1,paintings:[],acorns:0,wood:0,day:{d:"",done:0,house:false,plan:null},stickers:[],seenW:[],real:null,notified:[],mapMonth:"auto",questions:0});')
 A = rep(A, 'if(!S.topicsV2){S.topics=[...new Set([...(S.topics||[]),"math","clock","money"])];S.topicsV2=1}',
- 'if(!S.topicsV2){S.topics=[...new Set([...(S.topics||[]),"math","clock","money"])];S.topicsV2=1}if(!S.topicsV3){S.topics=[...new Set([...S.topics,"watcher","radio"])];S.topicsV3=1}if(!S.topicsV4){S.topics=[...new Set([...S.topics,"paint"])];S.topicsV4=1}if(!S.topicsV5){S.topics=[...new Set([...S.topics,"shapes","people"])];S.topicsV5=1}if(!S.topicsV6){S.topics=[...new Set([...S.topics,"words","reading"])];S.topicsV6=1}if(!S.paintings)S.paintings=[];if(!S.real)S.real=defaultReal();if(![28,35,42,49].includes(S.perDay))S.perDay=28;if(!S.realV){if((S.real||[]).map(r=>r.id).join()==="book,clothes,toy")S.real=[];S.realV=1}if(!S.sk)S.sk={}')
+ 'if(!S.topicsV2){S.topics=[...new Set([...(S.topics||[]),"math","clock","money"])];S.topicsV2=1}if(!S.topicsV3){S.topics=[...new Set([...S.topics,"watcher","radio"])];S.topicsV3=1}if(!S.topicsV4){S.topics=[...new Set([...S.topics,"paint"])];S.topicsV4=1}if(!S.topicsV5){S.topics=[...new Set([...S.topics,"shapes","people"])];S.topicsV5=1}if(!S.topicsV6){S.topics=[...new Set([...S.topics,"words","reading"])];S.topicsV6=1}if(!S.paintings)S.paintings=[];if(!S.real)S.real=defaultReal();if(![28,35,42,49].includes(S.perDay))S.perDay=28;if(!S.topicsV7){S.topics=[...new Set([...S.topics,"flags","robot","memory"])];S.topicsV7=1}if(!S.realV){if((S.real||[]).map(r=>r.id).join()==="book,clothes,toy")S.real=[];S.realV=1}if(!S.sk)S.sk={}')
 A = rep(A, 'const save=()=>{', '''function defaultReal(){return []}
 const save=()=>{''')
 A = rep(A, 'const a=new Audio("audio/"+(S.lang==="fr"&&!/^(en|rep)\\d/.test(name)?"fr/":"")+name+".mp3");', 'const a=new Audio("audio/"+name+".mp3");')
@@ -237,7 +240,7 @@ function eventNow(d=new Date()){
 }
 const monthIdx=()=>S.mapMonth==="auto"?new Date().getMonth():+S.mapMonth;
 const landIdx=()=>MONTH_LAND[monthIdx()];
-const TOPIC_SYM={math:"➕",clock:"🕒",watcher:"🔎",shapes:"🔷",people:"🚩",words:"🔤",reading:"📖",radio:"📻",paint:"🎨"};
+const TOPIC_SYM={flags:"🚩",robot:"🤖",memory:"🧠",math:"➕",clock:"🕒",watcher:"🔎",shapes:"🔷",people:"🚩",words:"🔤",reading:"📖",radio:"📻",paint:"🎨"};
 
 /* ================= today's path: the parents' daily questions split over the mounds ================= */
 const activeTopics=()=>S.topics.filter(t=>TOPIC_SYM[t]);
@@ -416,7 +419,7 @@ function showParents(){
   hidePanels();$("map").hidden=true;$("pSettings").hidden=false;
   const pn=curPlayer().name,w=wkLog(),tp=S.lastTopic||"math",dq=(DINNER[tp]||DINNER.math),names=w.topics.map(t=>(COURSE.find(c=>c.id===t)||{}).name).filter(Boolean);
   const sk=skillFor(S.age,S.diff),ex1=makeProb(sk),ex2=makeProb(sk),n=HOLES[landIdx()].length;
-  const SHORT={math:"Numbers",clock:"Clock",watcher:"World",shapes:"Shapes",people:"People",words:"Letters",reading:"Read",radio:"Radio",paint:"Paint"},pct=w.q?Math.round(w.right/w.q*100):0;
+  const SHORT={flags:"Flags",robot:"Robots",memory:"Focus",people:"Jobs",math:"Numbers",clock:"Clock",watcher:"World",shapes:"Shapes",words:"Letters",reading:"Read",radio:"Radio",paint:"Paint"},pct=w.q?Math.round(w.right/w.q*100):0;
   const ring=(v,max,c,ic)=>{const f=Math.min(1,v/max);return `<span class="pring" style="--f:${f*360}deg;--c:${c}"><i>${ic}</i></span><small class="pnum">${Math.min(v,max)}/${max}</small>`};
   const sec=(e,t)=>`<div class="psec"><span>${e}</span>${t}</div>`;
   $("pSettings").innerHTML=`<button class="back" id="closeSettings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>Back</button>

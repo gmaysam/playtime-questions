@@ -780,3 +780,34 @@ body,.phone,.lesson.q2,.introC,#pSettings,.panel,.map{background:#fff!important}
 .lesson.q2 .qopts.st-balloon .qo[data-j] .dots,.lesson.q2 .qopts.st-fish .qo[data-j] .dots{display:none}
 .lesson.q2 .qopts.st-balloon .balloon{background:none!important;width:auto;height:auto}
 .lesson.q2 .qopts.st-balloon .qo[data-j]::before{bottom:-5px}
+/* ===== Nov 9c: text sized by script (remove container-unit font sizes that iPad Safari rejects) ===== */
+.lesson.q2 .qopts .qo[data-j] b.num,.lesson.q2 .qopts .qo[data-j] b.num.letter,.lesson.q2 .qopts .qo[data-j] .word,.lesson.q2 .qopts.st-balloon .qo[data-j] .word,.lesson.q2 .qopts.st-balloon .qo[data-j] b.num,.lesson.q2 .qopts.st-fish .qo[data-j] .word,.lesson.q2 .qopts.st-fish .qo[data-j] b.num{font-size:40px}
+.lesson.q2 .qopts .qo[data-j] small{font-size:19px}
+.lesson.q2 .qopts .qo[data-j] .dots{font-size:14px}
+.lesson.q2 .qopts .qo[data-j] .oe{font-size:min(64px,7vh)!important}
+@media (min-width:700px){.lesson.q2 .qopts .qo[data-j] small{font-size:26px}.lesson.q2 .qopts .qo[data-j] .oe{font-size:min(100px,9vh)!important}.lesson.q2 .qopts .qo[data-j] .dots{font-size:18px}}
+/* ===== moving answers: balloons fly up and away, fish swim across ===== */
+@keyframes skyRise{from{top:100%}to{top:-42%}}
+@keyframes skySway{from{margin-left:-10px}to{margin-left:10px}}
+@keyframes seaSwim{from{left:-36%}to{left:104%}}
+@keyframes seaBob{from{margin-top:-6px}to{margin-top:6px}}
+.lesson.q2 .qopts.field{display:block!important;position:relative;overflow:hidden;flex:1 1 0;min-height:240px;border-radius:24px;padding:0!important;container-type:normal}
+.lesson.q2 .qopts.st-balloon.field{background:linear-gradient(#CDEBFF,#F3FAFF 70%,#FFFFFF)}
+.lesson.q2 .qopts.st-fish.field{background:linear-gradient(#BFE6FF,#7FC8F8)}
+.lesson.q2 .qopts.st-balloon.field .qo[data-j]{position:absolute!important;top:100%;width:min(24%,130px)!important;height:auto!important;aspect-ratio:.86;margin:0!important;
+  animation:skyRise var(--t,9s) linear var(--d,0s) infinite,skySway 1.8s ease-in-out infinite alternate!important}
+.lesson.q2 .qopts.st-fish.field .qo[data-j]{position:absolute!important;left:-36%;width:min(34%,190px)!important;height:min(20%,90px)!important;min-height:58px!important;margin:0!important;
+  animation:seaSwim var(--t,9s) linear var(--d,0s) infinite,seaBob 1.4s ease-in-out infinite alternate!important}
+.lesson.q2 .qopts.field .qo[data-j].right{animation:bPop .45s ease-in forwards!important;animation-play-state:running}
+.lesson.q2 .qopts.field .qo[data-j].wrong{animation-play-state:paused!important;filter:grayscale(.6);opacity:.5}
+.lesson.q2 .qopts.field .qo[data-j].faded{opacity:.35}
+.lesson.q2 .qopts.field::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 15% 20%,rgba(255,255,255,.7) 0 3%,transparent 3.5%),radial-gradient(circle at 80% 12%,rgba(255,255,255,.6) 0 4%,transparent 4.5%)}
+/* piano */
+.pnwrap{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;min-height:0}
+.pnmid{font-size:52px;line-height:1}
+.pnkeys{display:grid;gap:6px;width:100%;max-width:640px;height:min(40vh,300px)}
+.pnk{border:0;border-radius:0 0 16px 16px;background:linear-gradient(#fff 55%,var(--c) 55%);box-shadow:0 6px 0 #D9D9D9,inset 0 0 0 2px #E5E5E5;display:flex;align-items:flex-end;justify-content:center;padding-bottom:10px;touch-action:manipulation}
+.pnk span{font:900 clamp(14px,3.6vw,22px) "Nunito",sans-serif;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.25)}
+.pnk.lit{background:var(--c);transform:translateY(4px);box-shadow:0 2px 0 #D9D9D9,0 0 24px var(--c)}
+.pnkeys.watch .pnk{pointer-events:none}
+.pnkeys.bump{animation:gBump .4s}
