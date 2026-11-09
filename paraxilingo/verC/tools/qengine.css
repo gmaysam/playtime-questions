@@ -495,3 +495,4 @@ body,.phone,.lesson.q2,.introC,#pSettings,.panel,.map{background:#fff!important}
 .lesson.q2 .qtop2 .qvis .story2,.lesson.q2 .qtop2 .qvis .bags{flex-wrap:wrap;justify-content:flex-start}
 .lesson.q2 .qtop2 .qvis svg{max-height:12vh}
 @media (min-width:700px){.lesson.q2 .qtop2 .qvis .bigemo,.lesson.q2 .qtop2 .qvis .bigpic{font-size:min(96px,9vh)!important}.lesson.q2 .qtop2 .qvis .seqrow .tile{min-width:56px;height:60px;font-size:30px}.lesson.q2 .qtop2 .qvis .eq{font-size:42px}}
+.lesson.q2 .qopts.yn{grid-auto-rows:min(250px,32vh)!important;flex:0 0 auto!important;margin-bottom:auto}
