@@ -23,6 +23,7 @@ const fs=require('fs'),path=require('path');const root=process.argv[2],age=+(pro
      if(st==='radio'){await p.screenshot({path:root+`/../shots/q_${String(shot++).padStart(2,'0')}_radio.png`});await p.evaluate(()=>{document.getElementById('rDone').disabled=false});await p.click('#rDone');await p.waitForTimeout(600);continue}
      if(st==='paint'){await p.screenshot({path:root+'/../shots/q_paint0.png'});const rg=await p.$$('#pCanvas .rg');const pots=await p.$$('.pot');for(let r=0;r<rg.length;r++){await pots[r%pots.length].click({force:true});await rg[r].dispatchEvent('click');}await p.waitForTimeout(300);await p.screenshot({path:root+'/../shots/q_paint1.png'});await p.click('#pDone',{force:true});await p.waitForTimeout(800);continue}
      if(st==='wait'){await p.waitForTimeout(400);continue}
+     if(await p.$('#rbGrid')){await p.evaluate(()=>window.__rbSolve());await p.waitForTimeout(9000);continue}
      if(await p.$('#qBody .mboard')){const ids=await p.evaluate(()=>[...document.querySelectorAll('.mc.pic:not(.ok)')].map(b=>b.dataset.id));for(const id of ids){await p.click(`.mc.pic[data-id="${id}"]`,{force:true});await p.click(`.mc.wrd[data-id="${id}"]`,{force:true});await p.waitForTimeout(300)}await p.waitForTimeout(1200);continue}
      const info=await p.evaluate(()=>({ans:__px.L.q.ans,n:__px.L.q.opts.length,kind:__px.L.q.kind,cat:__px.L.cat,tries:__px.L.q.tries}));
      if(shot<40&&info.tries===0)await p.screenshot({path:root+`/../shots/q_${String(shot++).padStart(2,'0')}_${info.cat}_${info.kind}.png`});

@@ -504,3 +504,50 @@ body,.phone,.lesson.q2,.introC,#pSettings,.panel,.map{background:#fff!important}
   .lesson.q2 .qtop2{flex-wrap:nowrap}.lesson.q2 .qtop2 .qvis{max-height:15vh}
 }
 @media (orientation:landscape){.lesson.q2 .qopts.row3,.lesson.q2 .qopts.col,.lesson.q2 .qopts.grid4{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+/* ===== Nov 8 evening ===== */
+/* wide question pictures (patterns, sequences, sums, coins...) get their own full row: never over the answers */
+.lesson.q2 .qtop2.wide{flex-wrap:wrap}
+.lesson.q2 .qtop2.wide .qvis{flex:1 1 100%;order:2;max-height:none;justify-content:center}
+.lesson.q2 .qtop2 .qvis .pat{transform:none!important;font-size:min(40px,5vh);gap:4px;flex-wrap:wrap;justify-content:center}
+.lesson.q2 .qtop2 .qvis .pat *{font-size:inherit}
+/* fun fact on the answer card */
+.ffact{display:flex;gap:8px;align-items:flex-start;margin-top:8px;padding:10px 12px;border-radius:14px;background:#FFF8E1;font:600 18px/1.5 "Vazirmatn","Nunito",sans-serif;color:#5B4A1E;text-align:right}
+.ffact b{flex:0 0 auto}.ffact span{flex:1}
+/* balloons to pop */
+@keyframes bRise{0%{transform:translateY(60vh) scale(.6);opacity:0}100%{transform:translateY(0) scale(1);opacity:1}}
+@keyframes bSway{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-14px) rotate(3deg)}}
+@keyframes bPop{0%{transform:scale(1)}40%{transform:scale(1.35)}100%{transform:scale(0);opacity:0}}
+.lesson.q2 .qopts.st-balloon .qo[data-j]{border:0!important;box-shadow:none!important;background:radial-gradient(circle at 32% 28%,rgba(255,255,255,.75),transparent 34%),var(--bc,#FF8A80)!important;border-radius:50% 50% 47% 47% / 55% 55% 45% 45%!important;margin:0 8% 22px;overflow:visible!important;position:relative;
+  animation:bRise .9s cubic-bezier(.2,1.2,.4,1) both,bSway 3s ease-in-out .9s infinite!important}
+.lesson.q2 .qopts.st-balloon .qo[data-j]::after{content:"";position:absolute;bottom:-22px;left:50%;width:2px;height:22px;background:#B7C0CC}
+.lesson.q2 .qopts.st-balloon .qo[data-j]::before{content:"";position:absolute;bottom:-4px;left:calc(50% - 6px);border:6px solid transparent;border-top-color:var(--bc,#FF8A80)}
+.lesson.q2 .qopts.st-balloon .qo[data-j]:nth-child(1){--bc:#FF8A80}.lesson.q2 .qopts.st-balloon .qo[data-j]:nth-child(2){--bc:#81D4FA;animation-delay:.12s,1.3s!important}
+.lesson.q2 .qopts.st-balloon .qo[data-j]:nth-child(3){--bc:#FFE082;animation-delay:.24s,.6s!important}.lesson.q2 .qopts.st-balloon .qo[data-j]:nth-child(4){--bc:#A5D6A7;animation-delay:.36s,1.6s!important}
+.lesson.q2 .qopts.st-balloon .qo[data-j] small,.lesson.q2 .qopts.st-balloon .qo[data-j] .num,.lesson.q2 .qopts.st-balloon .qo[data-j] .word{color:#3A3A3A}
+.lesson.q2 .qopts.st-balloon .qo[data-j].right{animation:bPop .5s ease-in forwards!important}
+.lesson.q2 .qopts.st-balloon .qo[data-j].wrong{animation:qno .5s!important}
+/* fish to catch: they swim left and right */
+@keyframes fSwim{0%,100%{transform:translateX(-10%) scaleX(1)}49%{transform:translateX(10%) scaleX(1)}50%{transform:translateX(10%) scaleX(-1)}99%{transform:translateX(-10%) scaleX(-1)}}
+@keyframes fIn{0%{transform:translateX(-120%);opacity:0}100%{transform:none;opacity:1}}
+.lesson.q2 .qopts.st-fish{background:linear-gradient(#E3F4FF,#C9E8FF);border-radius:22px;padding:12px;position:relative}
+.lesson.q2 .qopts.st-fish .qo[data-j]{background:#FFB74D!important;border:0!important;box-shadow:0 3px 0 #F09A22!important;border-radius:50% 20% 20% 50% / 50% 40% 40% 50%!important;position:relative;overflow:visible!important;
+  animation:fIn .7s ease-out both,fSwim 5s ease-in-out .7s infinite!important}
+.lesson.q2 .qopts.st-fish .qo[data-j]::after{content:"";position:absolute;right:-18px;top:calc(50% - 18px);border:18px solid transparent;border-left:22px solid #FFB74D}
+.lesson.q2 .qopts.st-fish .qo[data-j]::before{content:"";position:absolute;left:14%;top:28%;width:10px;height:10px;border-radius:50%;background:#333;box-shadow:0 0 0 3px #fff}
+.lesson.q2 .qopts.st-fish .qo[data-j]:nth-child(2){animation-delay:.1s,1.6s!important;background:#F48FB1!important}.lesson.q2 .qopts.st-fish .qo[data-j]:nth-child(2)::after{border-left-color:#F48FB1}
+.lesson.q2 .qopts.st-fish .qo[data-j]:nth-child(3){animation-delay:.2s,.9s!important;background:#9FA8DA!important}.lesson.q2 .qopts.st-fish .qo[data-j]:nth-child(3)::after{border-left-color:#9FA8DA}
+.lesson.q2 .qopts.st-fish .qo[data-j]:nth-child(4){animation-delay:.3s,2.2s!important;background:#80CBC4!important}.lesson.q2 .qopts.st-fish .qo[data-j]:nth-child(4)::after{border-left-color:#80CBC4}
+.lesson.q2 .qopts.st-fish .qo[data-j].right{animation:qjump .7s both!important}
+.lesson.q2 .qopts.st-fish .qo[data-j].wrong{animation:qno .5s!important}
+.qhint2{flex:0 0 auto;text-align:center;font:800 20px "Nunito",sans-serif;color:#A16AE8;padding:6px 0}
+/* robot path */
+.rbwrap{display:flex;flex-direction:column;align-items:center;gap:12px;flex:1 1 auto;min-height:0}
+.rbgrid{display:grid;gap:6px;width:min(100%,46vh);aspect-ratio:1;background:#EEF4FB;border-radius:18px;padding:8px;box-sizing:border-box}
+.rbgrid.bump{animation:qno .5s}
+.rbc{background:#fff;border-radius:10px;display:grid;place-items:center;font-size:min(44px,6vh);box-shadow:0 2px 0 #DDE6F0}
+.rbprog{min-height:44px;display:flex;flex-wrap:wrap;gap:4px;justify-content:center;font-size:28px;color:#9AA7B6;font-family:"Nunito",sans-serif}
+.rbpad{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.rbpad button{width:70px;height:70px;border-radius:18px;border:2px solid #E5E5E5;box-shadow:0 4px 0 #E5E5E5;background:#fff;font-size:34px;cursor:pointer}
+.rbpad button:active{transform:translateY(3px);box-shadow:0 1px 0 #E5E5E5}
+.rbpad .rbdel{background:#FFF3F0}
+@media (min-width:700px){.rbpad button{width:92px;height:92px;font-size:44px}.ffact{font-size:22px}.qhint2{font-size:26px}}

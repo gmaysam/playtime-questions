@@ -9,7 +9,7 @@ const fs=require('fs'),path=require('path');const root=process.argv[2],age=+(pro
    r.fulfill({body,contentType:f.endsWith('.html')?'text/html; charset=utf-8':f.endsWith('.svg')?'image/svg+xml':undefined})});
  await p.goto('http://app.test/index.html');await p.waitForTimeout(600);await p.click('#introC');await p.waitForTimeout(1200);
  await p.evaluate(a=>__px.setAge(a),age);
- for(const cat of ['count','add','money','clock','farm','shapes','sky','people','letters','animals']){
+ for(const cat of ['shapes','animals','count','letters']){
    await p.evaluate(c=>{__px.dayPlan();__px.S.day.plan[0]={cat:c,count:5};},cat);
    await p.evaluate(()=>__px.openMound(0));await p.waitForTimeout(700);
    for(let k=0;k<12;k++){
@@ -17,6 +17,7 @@ const fs=require('fs'),path=require('path');const root=process.argv[2],age=+(pro
      if(st==='result'||st==='none')break;
      if(st==='sheet'){await p.click('#qNext');await p.waitForTimeout(400);continue}
      if(st==='wait'){await p.waitForTimeout(400);continue}
+     if(await p.$('#rbGrid')){await p.evaluate(()=>window.__rbSolve());await p.waitForTimeout(9000);continue}
      if(await p.$('#qBody .mboard')){const ids=await p.evaluate(()=>[...document.querySelectorAll('.mc.pic:not(.ok)')].map(b=>b.dataset.id));for(const id of ids){await p.click(`.mc.pic[data-id="${id}"]`,{force:true});await p.click(`.mc.wrd[data-id="${id}"]`,{force:true});await p.waitForTimeout(300)}await p.waitForTimeout(1200);continue}
      const info=await p.evaluate(()=>({ans:__px.L.q.ans,kind:__px.L.q.kind,say:__px.L.q.opts.map(o=>(o.say||[]).filter(Boolean).length)}));
      await p.screenshot({path:root+`/../shots/c_${cat}_${k}.png`});console.log(cat,info.kind,'say',JSON.stringify(info.say));
