@@ -1842,6 +1842,24 @@ body,.phone,.lesson.q2,.introC,#pSettings,.panel,.map{background:#fff!important}
 .pz-frame{flex:0 0 120px;height:120px;scroll-snap-align:start;background:#fff;border:8px solid #C8803F;border-radius:10px;box-shadow:0 4px 0 #9A6233}
 .pz-frame svg{width:100%;height:100%;display:block}
 .pz-frame .rg{stroke-width:7}
+/* Nov 10c: more lab experiments, themed block fit */
+.lab-tg{font-size:64px}
+.mg-it.wo{width:auto;min-width:96px;padding:14px 12px}.mg-it.wo b{font:900 22px "Nunito",sans-serif;color:#4B4B4B}
+.ss{position:relative;height:170px;margin:10px auto 14px;width:min(100%,330px)}
+.ss-bar{position:absolute;left:4%;right:4%;top:72px;height:12px;border-radius:8px;background:#A0703C;display:flex;justify-content:space-between;transition:transform .7s cubic-bezier(.4,1.6,.5,1);transform-origin:50% 50%}
+.ss-bar>span{position:absolute;bottom:12px;display:flex;flex-wrap:wrap-reverse;gap:1px;width:44%;font-size:22px;line-height:1}
+.ss-bar .ss-l{left:2%;justify-content:flex-start}.ss-bar .ss-r{right:2%;justify-content:flex-end}.ss-bar i{font-style:normal}
+.ss-pv{position:absolute;left:50%;top:84px;transform:translateX(-50%);width:0;height:0;border-left:24px solid transparent;border-right:24px solid transparent;border-bottom:44px solid #5B6B85}
+.ss.tl .ss-bar{transform:rotate(-12deg)}.ss.tr .ss-bar{transform:rotate(12deg)}
+.mx{display:flex;align-items:center;justify-content:center;gap:10px;margin:18px 0 20px;font:900 34px "Nunito",sans-serif;color:#9AA7B6}
+.mx-d{width:74px;height:74px;border-radius:50% 50% 50% 8%;background:var(--c,#EEF1F6);box-shadow:inset 0 -6px 0 rgba(0,0,0,.12);display:grid;place-items:center;color:#9AA7B6;transform:rotate(-45deg)}
+.mx-d.q{background:#EEF1F6;border:3px dashed #C9D4E2}
+.mx-opts{display:flex;gap:16px;justify-content:center}
+.mx-o{width:86px;height:86px;border-radius:50%;border:4px solid #fff;background:var(--c);box-shadow:0 0 0 2px #E5E5E5,0 5px 0 #D5D5D5;cursor:pointer}
+.mx-o.ok{box-shadow:0 0 0 4px #58CC02,0 5px 0 #58A700}.mx-o:disabled{opacity:.35}
+.bk i em{position:absolute;inset:0;display:grid;place-items:center;font-style:normal;font-size:calc(var(--s) * .58);line-height:1;color:#fff;font-weight:900;font-family:"Nunito",sans-serif}
+.bk .bf em{opacity:.55;filter:grayscale(.2)}
+.mx-q{font-style:normal;transform:rotate(45deg)}
 </style>
 
 <div class="stage">
@@ -2941,7 +2959,7 @@ function gameWin(q,miss,el,extra){q.done=q.locked=true;q.tries=miss?1:0;logSk(q,
   setTimeout(()=>{sheet("good",pr?pickOne(PRAISE_T):"💡 Did you know?",`+${n} 🌰`+(q.factT?`<span class="ffact"><b>💡</b><span>${q.factT}</span></span>`:""));let gone=false;const go=()=>{if(!gone){gone=true;nextQ()}};$("qNext").onclick=()=>{sfx.tap();go()};
     sayseq([...(extra||[]),...(pr?[pickOne(PRAISE_CLIPS)]:[]),...fv],()=>setTimeout(go,fv.length?1400:q.factT?2600:900))},extra&&extra.length?200:600)}
 /* Farsi voice for a fact text, when one has been recorded (tools/fact_voice.json: text -> clip) */
-const FACT_V={"Short things need fewer blocks to measure them.": "PX_FX_00", "Long things need more blocks to measure them.": "PX_FX_01", "The elephant is the biggest animal that lives on land.": "PX_FX_02", "A chart shows numbers as bars. The tallest bar is the biggest number.": "PX_FX_03", "Adding means putting things together, so we get more.": "PX_FX_04", "Sharing fairly means everyone gets the same amount.": "PX_FX_05", "Taking away means fewer are left than we started with.": "PX_FX_06", "Equal groups help us count faster. That's called multiplying!": "PX_FX_07", "At night our bodies rest and grow while we sleep.": "PX_FX_08", "In the morning the sun comes up in the east.": "PX_FX_09", "The sun rises in the morning and sets in the evening.": "PX_FX_10", "Winter is the coldest season.": "PX_FX_11", "Summer is the hottest season.": "PX_FX_12", "In autumn, leaves change colour and fall.": "PX_FX_13", "Birds, bats and many insects have wings to fly.": "PX_FX_15", "Animals that fly have wings.": "PX_FX_16", "Fish breathe under water with gills.": "PX_FX_17", "A caterpillar eats and eats, makes a chrysalis, then comes out as a butterfly.": "PX_FX_18", "Heat melts ice and snow into water.": "PX_FX_21", "Fruits have seeds inside. Vegetables are roots, leaves or stems we eat.": "PX_FX_22", "Fruits grow from flowers and have seeds inside.": "PX_FX_23", "Red is the colour of strawberries, cherries and fire trucks.": "PX_FX_24", "Fruits have seeds inside.": "PX_FX_25", "Everyone grows from a baby to a grown-up, little by little.": "PX_FX_26", "A seed needs water, soil and sunlight to grow into a tree.": "PX_FX_27", "Birds and planes fly in the sky; fish and whales swim in the sea.": "PX_FX_28", "Animals live where they can find food and stay safe.": "PX_FX_29", "Ponds are homes for ducks, frogs and fish.": "PX_FX_30", "Bears and bats like caves.": "PX_FX_31", "A den is a cosy home for foxes.": "PX_FX_32", "A barn is a home for farm animals.": "PX_FX_33", "A hive is a home for bees.": "PX_FX_34", "Some animals eat plants, some eat meat, and some eat both.": "PX_FX_35", "A pattern repeats again and again, like the stripes on a zebra.": "PX_FX_36", "A pattern repeats again and again. Can you see what repeats?": "PX_FX_37", "A circle has no corners and no straight sides.": "PX_FX_38", "Circles and ovals have no corners.": "PX_FX_39", "You checked two things at once: the colour AND the shape!": "PX_FX_40", "Flat shapes are drawn on paper. Solid shapes you can hold, like a ball or a box.": "PX_FX_41", "Big things take up more space.": "PX_FX_42", "Small things take up less space.": "PX_FX_43", "Every country has its own flag with its own colours and shapes.": "PX_FX_44", "Letters make words; numbers tell how many.": "PX_FX_45", "Metal lets electricity flow, so the lamp turns on.": "PX_FX_46", "Magnets pull things made of iron and steel.": "PX_FX_47", "Gears that touch turn opposite ways.": "PX_FX_48", "With three gears in a row, the first and the last turn the same way.": "PX_FX_49", "Turning a shape does not change it. It is still the same shape!": "PX_FX_50", "Bees visit flowers to collect nectar and make honey.": "PX_FX_51", "Squirrels hide nuts in the ground to eat in winter.": "PX_FX_52", "Dogs can smell things from very far away.": "PX_FX_53", "Caterpillars eat lots of leaves before they become butterflies.": "PX_FX_54", "A cow eats grass for many hours every day.": "PX_FX_55", "Astronauts come back home to Earth after their trip to space.": "PX_FX_56", "Sea turtles swim in the ocean but lay their eggs on the beach.": "PX_FX_57", "Robots need energy from a battery to move.": "PX_FX_58", "Frogs can jump far with their strong back legs.": "PX_FX_59", "Word hunters look in rows and in columns!": "PX_FX_60"};const factV=t=>t&&FACT_V[String(t).trim()]?["w/"+FACT_V[String(t).trim()]]:[];
+const FACT_V={"Short things need fewer blocks to measure them.": "PX_FX_00", "Long things need more blocks to measure them.": "PX_FX_01", "The elephant is the biggest animal that lives on land.": "PX_FX_02", "A chart shows numbers as bars. The tallest bar is the biggest number.": "PX_FX_03", "Adding means putting things together, so we get more.": "PX_FX_04", "Sharing fairly means everyone gets the same amount.": "PX_FX_05", "Taking away means fewer are left than we started with.": "PX_FX_06", "Equal groups help us count faster. That's called multiplying!": "PX_FX_07", "At night our bodies rest and grow while we sleep.": "PX_FX_08", "In the morning the sun comes up in the east.": "PX_FX_09", "The sun rises in the morning and sets in the evening.": "PX_FX_10", "Winter is the coldest season.": "PX_FX_11", "Summer is the hottest season.": "PX_FX_12", "In autumn, leaves change colour and fall.": "PX_FX_13", "Birds, bats and many insects have wings to fly.": "PX_FX_15", "Animals that fly have wings.": "PX_FX_16", "Fish breathe under water with gills.": "PX_FX_17", "A caterpillar eats and eats, makes a chrysalis, then comes out as a butterfly.": "PX_FX_18", "Heat melts ice and snow into water.": "PX_FX_21", "Fruits have seeds inside. Vegetables are roots, leaves or stems we eat.": "PX_FX_22", "Fruits grow from flowers and have seeds inside.": "PX_FX_23", "Red is the colour of strawberries, cherries and fire trucks.": "PX_FX_24", "Fruits have seeds inside.": "PX_FX_25", "Everyone grows from a baby to a grown-up, little by little.": "PX_FX_26", "A seed needs water, soil and sunlight to grow into a tree.": "PX_FX_27", "Birds and planes fly in the sky; fish and whales swim in the sea.": "PX_FX_28", "Animals live where they can find food and stay safe.": "PX_FX_29", "Ponds are homes for ducks, frogs and fish.": "PX_FX_30", "Bears and bats like caves.": "PX_FX_31", "A den is a cosy home for foxes.": "PX_FX_32", "A barn is a home for farm animals.": "PX_FX_33", "A hive is a home for bees.": "PX_FX_34", "Some animals eat plants, some eat meat, and some eat both.": "PX_FX_35", "A pattern repeats again and again, like the stripes on a zebra.": "PX_FX_36", "A pattern repeats again and again. Can you see what repeats?": "PX_FX_37", "A circle has no corners and no straight sides.": "PX_FX_38", "Circles and ovals have no corners.": "PX_FX_39", "You checked two things at once: the colour AND the shape!": "PX_FX_40", "Flat shapes are drawn on paper. Solid shapes you can hold, like a ball or a box.": "PX_FX_41", "Big things take up more space.": "PX_FX_42", "Small things take up less space.": "PX_FX_43", "Every country has its own flag with its own colours and shapes.": "PX_FX_44", "Letters make words; numbers tell how many.": "PX_FX_45", "Metal lets electricity flow, so the lamp turns on.": "PX_FX_46", "Magnets pull things made of iron and steel.": "PX_FX_47", "Gears that touch turn opposite ways.": "PX_FX_48", "With three gears in a row, the first and the last turn the same way.": "PX_FX_49", "Turning a shape does not change it. It is still the same shape!": "PX_FX_50", "Bees visit flowers to collect nectar and make honey.": "PX_FX_51", "Squirrels hide nuts in the ground to eat in winter.": "PX_FX_52", "Dogs can smell things from very far away.": "PX_FX_53", "Caterpillars eat lots of leaves before they become butterflies.": "PX_FX_54", "A cow eats grass for many hours every day.": "PX_FX_55", "Astronauts come back home to Earth after their trip to space.": "PX_FX_56", "Sea turtles swim in the ocean but lay their eggs on the beach.": "PX_FX_57", "Robots need energy from a battery to move.": "PX_FX_58", "Frogs can jump far with their strong back legs.": "PX_FX_59", "Word hunters look in rows and in columns!": "PX_FX_60", "Wood, leaves and balloons are light, so they float. Rocks and keys sink.": "PX_FX_61", "A seed needs water, soil, air and sunlight to grow.": "PX_FX_62", "Heat from the sun melts ice, snow and chocolate.": "PX_FX_63", "The Sun and stars make their own light. The Moon shines because sunlight bounces off it.": "PX_FX_64", "Washing hands, good food, water and sleep keep our bodies healthy.": "PX_FX_65", "The heavier side of a seesaw goes down.": "PX_FX_66", "Mixing two colours makes a new colour!": "PX_FX_67"};const factV=t=>t&&FACT_V[String(t).trim()]?["w/"+FACT_V[String(t).trim()]]:[];
 function gameLearn(q,t,v){q.done=q.locked=true;q.tries=2;logSk(q,false);S.questions++;{const w=wkLog();w.q++}save();setDot();L.row=0;
   sheet("learn","Let's learn it together!",t);let gone=false;const go=()=>{if(!gone){gone=true;nextQ()}};$("qNext").onclick=()=>{sfx.tap();go()};sayseq(v||[],()=>{})}
 const gAsk=q=>setTimeout(()=>{if(L&&L.q===q)sayseq(q.voice,()=>{})},400);
@@ -3519,7 +3537,7 @@ function buildFormat(kind,cat){const k=kind.slice(2);
   if(k==="balance")return qBalance();if(k==="spy")return qSpy(cat);if(k==="trace")return qTrace(cat);if(k==="whack")return qWhack(cat);if(k==="catch")return qCatch(cat);if(k==="paint")return qPaint();return null}
 /* a round: about 1 in 4 classic choose-the-answer, the rest new formats; never the same format twice in a row */
 function planRound(cat,count){const ks=kindsFor(cat),fs=formatsFor(cat);if(!fs.length)return null;
-  const nClassic=cat==="robot"?Math.ceil(count/2):Math.max(1,Math.round(count/4),count-(cat==="memory"?count:fs.length)),out=[];let fb=[],cb=[];
+  const nClassic=cat==="robot"?Math.ceil(count/2):cat==="memory"?Math.max(1,count-2):Math.max(1,Math.round(count/4),count-fs.length),out=[];let fb=[],cb=[];
   const slots=sh([...Array(count).keys()]).slice(0,nClassic);
   for(let i=0;i<count;i++){let k;const prev=out[out.length-1];
     if(!slots.includes(i)){if(!fb.length)fb=sh(fs);k=fb.shift();if(k===prev&&fb.length){fb.push(k);k=fb.shift()}if(k===prev)k=null}
@@ -3622,7 +3640,23 @@ function paradeQ(q){let miss=0,ready=false;
 const CONDUCT=[["🔑","key"],["🥄","spoon"],["📎","paper clip"],["🪙","coin"],["🔩","bolt"]],INSUL=[["🖍️","crayon"],["🧸","teddy bear"],["🧦","sock"],["🍃","leaf"],["🎈","balloon"],["🧽","sponge"]];
 const MAGNETIC=[["📎","paper clip"],["🔩","bolt"],["🧷","safety pin"],["🔧","wrench"],["✂️","scissors"],["🪛","screwdriver"]],NONMAG=[["🧸","teddy bear"],["🍎","apple"],["🖍️","crayon"],["🧦","sock"],["🎈","balloon"],["🪵","wood"],["🥛","glass of milk"]];
 const LAB_F={circuit:"Metal lets electricity flow, so the lamp turns on.",magnet:"Magnets pull things made of iron and steel.",g2:"Gears that touch turn opposite ways.",g3:"With three gears in a row, the first and the last turn the same way."};
-function qLab(cat){const a=lvl(),pick=a<=5?pickOne(["circuit","magnet"]):pickOne(["circuit","magnet","gears"]);
+/* tap-all experiments: [target emoji, caption, yes items, no items] */
+const LAB_TAP={float:["🛁","Which ones float on water?",[["🪵","wood"],["🍃","leaf"],["🎈","balloon"],["🧽","sponge"],["🏐","ball"],["🍎","apple"]],[["🪨","rock"],["🔑","key"],["🪙","coin"],["🔩","bolt"],["🥄","spoon"]]],
+  grow:["🌱","What does a seed need to grow?",[["💧","water"],["☀️","sunlight"],["🟫","soil"],["🌬️","air"]],[["🍬","candy"],["🧦","sock"],["📱","phone"],["🧸","teddy bear"],["🎈","balloon"]]],
+  melt:["☀️","What melts in the hot sun?",[["🧊","ice"],["🍦","ice cream"],["⛄","snowman"],["🍫","chocolate"]],[["🪨","rock"],["🔑","key"],["🧱","brick"],["🪵","wood"],["🥄","spoon"]]],
+  light:["👀","Which ones make their own light?",[["☀️","Sun"],["⭐","star"],["💡","lamp"],["🔦","flashlight"],["🔥","fire"]],[["🌙","Moon"],["🪐","planet"],["🌍","Earth"],["🪞","mirror"]]],
+  healthy:["💪","What helps keep us healthy?",[["🧼","soap"],["🥦","broccoli"],["💧","water"],["🛌","sleep"],["🍎","apple"]],[["🍭","candy"],["🥤","soda"],["📺","TV all day"]]]};
+Object.assign(LAB_F,{float:"Wood, leaves and balloons are light, so they float. Rocks and keys sink.",grow:"A seed needs water, soil, air and sunlight to grow.",melt:"Heat from the sun melts ice, snow and chocolate.",
+  light:"The Sun and stars make their own light. The Moon shines because sunlight bounces off it.",healthy:"Washing hands, good food, water and sleep keep our bodies healthy.",seesaw:"The heavier side of a seesaw goes down.",mix:"Mixing two colours makes a new colour!"});
+const LAB_BY={count:["seesaw","magnet","float"],add:["seesaw","float"],clock:["gears","melt","light"],animals:["float","grow","melt"],farm:["grow","float","magnet"],world:["circuit","magnet","float","melt","grow"],
+  sky:["light","melt"],shapes:["mix","gears","circuit","seesaw"],people:["healthy","circuit"],flags:["melt","float","light"],letters:["float","magnet","mix"],read:["float","magnet","grow"],robot:["circuit","magnet","gears"],memory:["magnet","light","circuit"]};
+const MIXES=[["red","yellow","orange"],["blue","yellow","green"],["red","blue","purple"],["red","white","pink"]];
+const PCOL=n=>(PAINT_COLORS.find(x=>x[0]===n)||[n,"#ccc"])[1];
+function qLab(cat){const a=lvl(),opts=(LAB_BY[cat]||["circuit","magnet","gears"]).filter(x=>x!=="gears"||a>=6),pick=pickOne(opts.length?opts:["circuit"]),wordOnly=cat==="read"&&a>=6;
+  if(LAB_TAP[pick]){const [tg,capT,yes,no]=LAB_TAP[pick],y=sh(yes).slice(0,a<=4?2:3),items=sh([...y.map(x=>[...x,1]),...sh(no).slice(0,a<=4?2:3).map(x=>[...x,0])]);
+    return {game:"lab",sub:pick,tg,capT,items,wordOnly,voice:[G3(pick.toUpperCase())],factT:LAB_F[pick]}}
+  if(pick==="seesaw"){const l=ri(1,a<=4?4:8);let r=ri(1,a<=4?4:8);if(r===l)r=l+(l<3?2:-1);return {game:"lab",sub:"seesaw",l,r,voice:[G3("SEESAW")],factT:LAB_F.seesaw}}
+  if(pick==="mix"){const m=pickOne(MIXES),o=sh([m[2],...sh(["orange","green","purple","pink","brown"].filter(x=>x!==m[2])).slice(0,2)]);return {game:"lab",sub:"mix",m,o,voice:[G3("MIX")],factT:LAB_F.mix}}
   if(pick==="circuit"){const ok=pickOne(CONDUCT),items=sh([ok,...sh(INSUL).slice(0,a<=4?2:3)]);return {game:"lab",sub:"circuit",ok,items,voice:[G3("CIRCUIT")],factT:LAB_F.circuit}}
   if(pick==="magnet"){const y=sh(MAGNETIC).slice(0,a<=4?2:3),items=sh([...y.map(x=>[...x,1]),...sh(NONMAG).slice(0,a<=4?2:3).map(x=>[...x,0])]);return {game:"lab",sub:"magnet",items,voice:[G3("MAGNET")],factT:LAB_F.magnet}}
   const three=a>=8&&Math.random()<.6,cw=Math.random()<.5;return {game:"lab",sub:"gears",three,cw,voice:[G3("GEARS")],factT:three?LAB_F.g3:LAB_F.g2}}
@@ -3643,6 +3677,29 @@ function labQ(q){let miss=0;
         if(miss>=3){q.done=true;drop.innerHTML=`<span>${q.ok[0]}</span>`;$("labS").classList.add("on");gameLearn(q,`${q.ok[1]}: metal`,[])}}};
     $("qBody").querySelectorAll(".lab-it").forEach(el=>dragify(el,()=>[drop],()=>tryIt(el),()=>tryIt(el)));
     window.__gSolve=()=>tryIt($("qBody").querySelector(`.lab-it[data-i="${q.items.indexOf(q.ok)}"]`));return}
+  if(LAB_TAP[q.sub]){const need=q.items.filter(x=>x[2]).length;let got=0;
+    gShow(`<div class="game">${gHead("🔬","Lab",q.capT)}<div class="mg-top"><span class="lab-tg">${q.tg}</span><div class="mg-got" id="mgGot"></div></div>
+      <div class="mg-items">${q.items.map((x,i)=>`<button class="mg-it${q.wordOnly?" wo":""}" data-i="${i}">${q.wordOnly?`<b>${x[1]}</b>`:`<span>${x[0]}</span><small>${x[1]}</small>`}</button>`).join("")}</div><p class="gmhint">Tap every one that fits</p></div>`);
+    gAsk(q);
+    $("qBody").querySelectorAll(".mg-it").forEach(b=>b.onclick=()=>{if(q.done||b.disabled)return;const x=q.items[+b.dataset.i];
+      if(x[2]){b.disabled=true;b.classList.add("fly");sfx.tap();$("mgGot").insertAdjacentHTML("beforeend",`<span>${x[0]}</span>`);got++;if(got===need)gameWin(q,miss>1?1:0,$("mgGot"),[])}
+      else{miss++;sfx.oops();bounce(b);b.classList.add("no");if(miss>=4){q.done=true;gameLearn(q,q.items.filter(z=>z[2]).map(z=>z[0]+" "+z[1]).join(", "),[])}}});
+    window.__gSolve=()=>$("qBody").querySelectorAll(".mg-it").forEach(b=>{if(q.items[+b.dataset.i][2])b.click()});return}
+  if(q.sub==="seesaw"){const down=q.l>q.r?"l":"r",blk=n=>Array.from({length:n},()=>"<i>🧱</i>").join("");
+    gShow(`<div class="game">${gHead("⚖️","Lab","Which side goes down?")}<div class="ss" id="ssB"><div class="ss-bar"><span class="ss-l">${blk(q.l)}</span><span class="ss-r">${blk(q.r)}</span></div><div class="ss-pv"></div></div>
+      <div class="gr-opts"><button class="gr-o" data-s="l">⬅️<small>this side</small></button><button class="gr-o" data-s="r">➡️<small>that side</small></button></div></div>`);
+    gAsk(q);let m2=0;
+    $("qBody").querySelectorAll(".gr-o").forEach(b=>b.onclick=()=>{if(q.done)return;if(b.dataset.s===down){b.classList.add("ok");$("ssB").classList.add(down==="l"?"tl":"tr");gameWin(q,m2,b,[...both(q.l),...both(q.r)].slice(0,0))}
+      else{m2++;sfx.oops();bounce(b);if(m2>=2){q.done=true;$("ssB").classList.add(down==="l"?"tl":"tr");gameLearn(q,`${Math.max(q.l,q.r)} is heavier than ${Math.min(q.l,q.r)}`,[])}}});
+    window.__gSolve=()=>$("qBody").querySelector(`.gr-o[data-s="${down}"]`).click();return}
+  if(q.sub==="mix"){const [c1,c2,res]=q.m;
+    gShow(`<div class="game">${gHead("🎨","Lab","What colour do they make?")}<div class="mx"><span class="mx-d" style="--c:${PCOL(c1)}"></span><b>+</b><span class="mx-d" style="--c:${PCOL(c2)}"></span><b>=</b><span class="mx-d q" id="mxR"><i class="mx-q">?</i></span></div>
+      <div class="mx-opts">${q.o.map(c=>`<button class="mx-o" data-c="${c}" style="--c:${PCOL(c)}" aria-label="${c}"></button>`).join("")}</div></div>`);
+    gAsk(q);let m3=0;
+    $("qBody").querySelectorAll(".mx-o").forEach(b=>b.onclick=()=>{if(q.done)return;sayseq(faSay(b.dataset.c),()=>{});
+      if(b.dataset.c===res){b.classList.add("ok");const r=$("mxR");r.textContent="";r.classList.remove("q");r.style.setProperty("--c",PCOL(res));gameWin(q,m3,b,[])}
+      else{m3++;sfx.oops();bounce(b);b.disabled=true;if(m3>=2){q.done=true;const r=$("mxR");r.textContent="";r.classList.remove("q");r.style.setProperty("--c",PCOL(res));gameLearn(q,`${c1} + ${c2} = ${res}`,faSay(res))}}});
+    window.__gSolve=()=>$("qBody").querySelector(`.mx-o[data-c="${res}"]`).click();return}
   if(q.sub==="magnet"){const need=q.items.filter(x=>x[2]).length;let got=0;
     gShow(`<div class="game">${gHead("🧲","Lab","What does the magnet pick up?")}<div class="mg-top"><span class="mg">🧲</span><div class="mg-got" id="mgGot"></div></div>
       <div class="mg-items">${q.items.map((x,i)=>`<button class="mg-it" data-i="${i}"><span>${x[0]}</span><small>${x[1]}</small></button>`).join("")}</div><p class="gmhint">Tap every one the magnet pulls</p></div>`);
@@ -3721,6 +3778,10 @@ function hearQ(q){let miss=0,line=[];const pic=q.mode==="pic";
 
 /* ---------- 7. block fit: a falling piece fills the gap (Tetris-like, one piece at a time) ---------- */
 const TET={I:[[0,0],[1,0],[2,0],[3,0]],O:[[0,0],[1,0],[0,1],[1,1]],T:[[0,0],[1,0],[2,0],[1,1]],L:[[0,0],[0,1],[0,2],[1,2]],J:[[1,0],[1,1],[1,2],[0,2]],S:[[1,0],[2,0],[0,1],[1,1]],Z:[[0,0],[1,0],[1,1],[2,1]]};
+/* each section dresses the blocks in its own pictures */
+const TET_TH={count:["1️⃣","2️⃣","3️⃣","4️⃣","5️⃣","6️⃣","7️⃣","8️⃣","9️⃣"],add:["➕","➖","🟰","🔢"],clock:["🕐","🕑","🕒","⏰","☀️","🌙"],animals:["🐶","🐱","🐰","🐻","🦊","🐸"],farm:["🐄","🐖","🐑","🐔","🌾","🥕"],
+  world:["🌳","🌸","🍎","🌍","🌊","🍄"],sky:["⭐","🌙","🪐","☀️","🚀","☁️"],shapes:["🔺","🟦","🟡","🔶","⬛","🟣"],people:["👩‍🚒","👨‍🍳","👩‍⚕️","😀","😢","😮"],flags:["🇮🇷","🇫🇷","🇯🇵","🇧🇷","🇨🇦","🇮🇹"],
+  letters:["A","B","C","D","E","F"],read:["a","b","c","d","e","f"],robot:["🤖","⚙️","🔋","🔩"],memory:["🧠","🎹","🔴","🟢","🔵","🟡"]};
 const TCOL={I:"#1CB0F6",O:"#FFC800",T:"#CE82FF",L:"#FF9600",J:"#2B70C9",S:"#58CC02",Z:"#FF4B4B"};
 const rot=(p,k)=>{let c=p.map(x=>x.slice());for(let i=0;i<k;i++)c=c.map(([x,y])=>[-y,x]);const mx=Math.min(...c.map(z=>z[0])),my=Math.min(...c.map(z=>z[1]));return c.map(([x,y])=>[x-mx,y-my])};
 function qBlocks(cat){const a=lvl(),W=6,H=8,turn=a>=6;
@@ -3729,7 +3790,7 @@ function qBlocks(cat){const a=lvl(),W=6,H=8,turn=a>=6;
     /* every gap cell must be reachable from above */
     if([...gap].some(c=>{const cx=c%W,cy=Math.floor(c/W);for(let y=H-rows;y<cy;y++)if(!gap.has(y*W+cx))return true;return false}))continue;
     const fill=[];for(let y=H-rows;y<H;y++)for(let xx=0;xx<W;xx++)if(!gap.has(y*W+xx))fill.push(y*W+xx);
-    const r0=turn?(r+ri(1,3))%4:r;return {game:"blocks",W,H,k,r0,rt:r,gx:x,rows,fill,turn,voice:[G3("BLOCKS")],factT:"Turning a shape does not change it. It is still the same shape!"}}
+    const r0=turn?(r+ri(1,3))%4:r,th=sh(TET_TH[cat]||TET_TH.shapes);return {game:"blocks",W,H,k,r0,rt:r,gx:x,rows,fill,turn,th,voice:[G3("BLOCKS")],factT:"Turning a shape does not change it. It is still the same shape!"}}
   return null}
 function blocksQ(q){const {W,H}=q;let miss=0,r=q.r0,px,py,timer=null,landed=false;
   const S2=Math.floor(Math.min(36,(innerHeight*.42)/H,(($("qBody").clientWidth||340)*.62)/W));
@@ -3737,8 +3798,9 @@ function blocksQ(q){const {W,H}=q;let miss=0,r=q.r0,px,py,timer=null,landed=fals
     <div class="bk-pad">${["l",...(q.turn?["r"]:[]),"d","R"].map(k=>`<button data-k="${k}">${{l:"⬅️",r:"🔄",d:"⬇️",R:"➡️"}[k]}</button>`).join("")}</div></div>`);
   gAsk(q);const B=$("bkB"),cells=()=>rot(TET[q.k],r).map(([u,v])=>[u+px,v+py]);
   const fits=(cs)=>cs.every(([x,y])=>x>=0&&x<W&&y<H&&(y<0||!q.fill.includes(y*W+x)));
-  const draw=()=>{let h=q.fill.map(c=>`<i class="bf" style="left:${(c%W)*S2}px;top:${Math.floor(c/W)*S2}px"></i>`).join("");
-    h+=cells().map(([x,y])=>`<i class="bp" style="left:${x*S2}px;top:${y*S2}px;background:${TCOL[q.k]}"></i>`).join("");B.innerHTML=h};
+  const th=q.th||["🟦"],te=i=>`<em>${th[i%th.length]}</em>`;
+  const draw=()=>{let h=q.fill.map((c,i)=>`<i class="bf" style="left:${(c%W)*S2}px;top:${Math.floor(c/W)*S2}px">${te(i+2)}</i>`).join("");
+    h+=cells().map(([x,y],i)=>`<i class="bp" style="left:${x*S2}px;top:${y*S2}px;background:${TCOL[q.k]}">${te(i)}</i>`).join("");B.innerHTML=h};
   const reset=()=>{r=q.r0;const P=rot(TET[q.k],r);px=Math.floor((W-(Math.max(...P.map(z=>z[0]))+1))/2);py=0;landed=false;draw();clearInterval(timer);timer=setInterval(fall,q.turn?900:1100)};
   const lock=()=>{clearInterval(timer);landed=true;const cs=cells(),full=[];for(let y=H-q.rows;y<H;y++){let ok=true;for(let x=0;x<W;x++)if(!q.fill.includes(y*W+x)&&!cs.some(([a,b])=>a===x&&b===y))ok=false;if(ok)full.push(y)}
     if(full.length===q.rows){B.classList.add("clear");gameWin(q,miss,B,[])}
@@ -3759,7 +3821,8 @@ formatsFor0=function(cat){const a=lvl(),base=_ff0(cat);if(!G3_READY)return base;
   count:["f_puzzle","f_maze","f_parade"],add:["f_parade","f_puzzle"],clock:["f_puzzle"],letters:["f_puzzle","f_hear",...(a>=6?["f_wsearch"]:[])],read:["f_hear",...(a>=6?["f_wsearch"]:[]),"f_puzzle"],
   farm:["f_puzzle","f_maze","f_parade",...(a>=6?["f_wsearch"]:[])],animals:["f_puzzle","f_maze","f_parade",...(a>=6?["f_wsearch"]:[])],world:["f_puzzle","f_maze","f_lab","f_parade",...(a>=7?["f_wsearch"]:[])],
   sky:["f_puzzle","f_maze","f_parade"],shapes:["f_puzzle","f_blocks","f_lab"],people:["f_puzzle"],flags:["f_puzzle"],robot:["f_maze","f_lab","f_blocks"]}[cat]||[];
-  return [...base,...add]};
+  const out=[...base,...add];if(!["story","paint"].includes(cat)){/* in every section, about 6% of questions each (balanced against the other games) */for(const g of ["f_blocks","f_lab"])if(!out.includes(g)&&(window.__allfmt||Math.random()<.6))out.push(g)}
+  return out};
 const _bf=buildFormat;
 buildFormat=function(kind,cat){const k=kind.slice(2);
   if(k==="puzzle")return qPuzzle(cat);if(k==="maze")return qMaze(cat);if(k==="parade")return qParade(cat);if(k==="lab")return qLab(cat);
@@ -3967,7 +4030,7 @@ const GSET={sort:{fly:FM,fruit:FM,hot:FM,farm:FM,sky:FM,num:[["cog","math"]],let
  swipe:{fruit:FM,fly:FM,water:FM,planet:FM,corner:[["cog","math"]],big:[["cog","math"]],flag:[["cog","curiosity"]]},
  seq:{plant:FM,chick:FM,butterfly:FM,life:FM,day:[["life","selfcare"]],week:[["life","selfcare"]],months:[["life","selfcare"]],size:[["cog","math"]],planets:FM,psize:FM},
  spy:{sky:FM,flags:[["cog","curiosity"]],map:[["cog","curiosity"]],town:[["cog","curiosity"]],kitchen:FM,paper:[["cog","math"]],farm:FM,sound:[["lang","listen"]]},
- lab:{circuit:[["cre","science"]],magnet:[["cre","science"]],gears:[["cre","invent"]]},hear:{pic:[["lang","vocab"]],sent:[["lang","read"]]},
+ lab:{circuit:[["cre","science"]],magnet:[["cre","science"]],gears:[["cre","invent"]],float:[["cre","science"]],grow:[["cre","science"]],melt:[["cre","science"]],light:[["cre","science"]],healthy:[["phys","body"]],seesaw:[["cog","math"]],mix:[["cre","art"]]},hear:{pic:[["lang","vocab"]],sent:[["lang","read"]]},
  whack:{letter:[["lang","read"]],num:[["cog","math"]],animal:FM},catch:{fruit:FM,big:[["cog","math"]],letter:[["lang","read"]]}};
 
 /* which game was this question? */

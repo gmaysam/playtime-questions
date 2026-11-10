@@ -371,7 +371,7 @@ function buildFormat(kind,cat){const k=kind.slice(2);
   if(k==="balance")return qBalance();if(k==="spy")return qSpy(cat);if(k==="trace")return qTrace(cat);if(k==="whack")return qWhack(cat);if(k==="catch")return qCatch(cat);if(k==="paint")return qPaint();return null}
 /* a round: about 1 in 4 classic choose-the-answer, the rest new formats; never the same format twice in a row */
 function planRound(cat,count){const ks=kindsFor(cat),fs=formatsFor(cat);if(!fs.length)return null;
-  const nClassic=cat==="robot"?Math.ceil(count/2):Math.max(1,Math.round(count/4),count-(cat==="memory"?count:fs.length)),out=[];let fb=[],cb=[];
+  const nClassic=cat==="robot"?Math.ceil(count/2):cat==="memory"?Math.max(1,count-2):Math.max(1,Math.round(count/4),count-fs.length),out=[];let fb=[],cb=[];
   const slots=sh([...Array(count).keys()]).slice(0,nClassic);
   for(let i=0;i<count;i++){let k;const prev=out[out.length-1];
     if(!slots.includes(i)){if(!fb.length)fb=sh(fs);k=fb.shift();if(k===prev&&fb.length){fb.push(k);k=fb.shift()}if(k===prev)k=null}

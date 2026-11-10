@@ -1192,3 +1192,21 @@ body,.phone,.lesson.q2,.introC,#pSettings,.panel,.map{background:#fff!important}
 .pz-frame{flex:0 0 120px;height:120px;scroll-snap-align:start;background:#fff;border:8px solid #C8803F;border-radius:10px;box-shadow:0 4px 0 #9A6233}
 .pz-frame svg{width:100%;height:100%;display:block}
 .pz-frame .rg{stroke-width:7}
+/* Nov 10c: more lab experiments, themed block fit */
+.lab-tg{font-size:64px}
+.mg-it.wo{width:auto;min-width:96px;padding:14px 12px}.mg-it.wo b{font:900 22px "Nunito",sans-serif;color:#4B4B4B}
+.ss{position:relative;height:170px;margin:10px auto 14px;width:min(100%,330px)}
+.ss-bar{position:absolute;left:4%;right:4%;top:72px;height:12px;border-radius:8px;background:#A0703C;display:flex;justify-content:space-between;transition:transform .7s cubic-bezier(.4,1.6,.5,1);transform-origin:50% 50%}
+.ss-bar>span{position:absolute;bottom:12px;display:flex;flex-wrap:wrap-reverse;gap:1px;width:44%;font-size:22px;line-height:1}
+.ss-bar .ss-l{left:2%;justify-content:flex-start}.ss-bar .ss-r{right:2%;justify-content:flex-end}.ss-bar i{font-style:normal}
+.ss-pv{position:absolute;left:50%;top:84px;transform:translateX(-50%);width:0;height:0;border-left:24px solid transparent;border-right:24px solid transparent;border-bottom:44px solid #5B6B85}
+.ss.tl .ss-bar{transform:rotate(-12deg)}.ss.tr .ss-bar{transform:rotate(12deg)}
+.mx{display:flex;align-items:center;justify-content:center;gap:10px;margin:18px 0 20px;font:900 34px "Nunito",sans-serif;color:#9AA7B6}
+.mx-d{width:74px;height:74px;border-radius:50% 50% 50% 8%;background:var(--c,#EEF1F6);box-shadow:inset 0 -6px 0 rgba(0,0,0,.12);display:grid;place-items:center;color:#9AA7B6;transform:rotate(-45deg)}
+.mx-d.q{background:#EEF1F6;border:3px dashed #C9D4E2}
+.mx-opts{display:flex;gap:16px;justify-content:center}
+.mx-o{width:86px;height:86px;border-radius:50%;border:4px solid #fff;background:var(--c);box-shadow:0 0 0 2px #E5E5E5,0 5px 0 #D5D5D5;cursor:pointer}
+.mx-o.ok{box-shadow:0 0 0 4px #58CC02,0 5px 0 #58A700}.mx-o:disabled{opacity:.35}
+.bk i em{position:absolute;inset:0;display:grid;place-items:center;font-style:normal;font-size:calc(var(--s) * .58);line-height:1;color:#fff;font-weight:900;font-family:"Nunito",sans-serif}
+.bk .bf em{opacity:.55;filter:grayscale(.2)}
+.mx-q{font-style:normal;transform:rotate(45deg)}

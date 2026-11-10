@@ -160,7 +160,7 @@ const GSET={sort:{fly:FM,fruit:FM,hot:FM,farm:FM,sky:FM,num:[["cog","math"]],let
  swipe:{fruit:FM,fly:FM,water:FM,planet:FM,corner:[["cog","math"]],big:[["cog","math"]],flag:[["cog","curiosity"]]},
  seq:{plant:FM,chick:FM,butterfly:FM,life:FM,day:[["life","selfcare"]],week:[["life","selfcare"]],months:[["life","selfcare"]],size:[["cog","math"]],planets:FM,psize:FM},
  spy:{sky:FM,flags:[["cog","curiosity"]],map:[["cog","curiosity"]],town:[["cog","curiosity"]],kitchen:FM,paper:[["cog","math"]],farm:FM,sound:[["lang","listen"]]},
- lab:{circuit:[["cre","science"]],magnet:[["cre","science"]],gears:[["cre","invent"]]},hear:{pic:[["lang","vocab"]],sent:[["lang","read"]]},
+ lab:{circuit:[["cre","science"]],magnet:[["cre","science"]],gears:[["cre","invent"]],float:[["cre","science"]],grow:[["cre","science"]],melt:[["cre","science"]],light:[["cre","science"]],healthy:[["phys","body"]],seesaw:[["cog","math"]],mix:[["cre","art"]]},hear:{pic:[["lang","vocab"]],sent:[["lang","read"]]},
  whack:{letter:[["lang","read"]],num:[["cog","math"]],animal:FM},catch:{fruit:FM,big:[["cog","math"]],letter:[["lang","read"]]}};
 
 /* which game was this question? */

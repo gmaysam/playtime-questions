@@ -1,4 +1,4 @@
-window.__qc=()=>{const bad=[],FORBID=["💅","⏳"],PL=["mercury","venus","jupiter","uranus","neptune","mars"];let n=0;
+window.__qc=()=>{window.__allfmt=1;const bad=[],FORBID=["💅","⏳"],PL=["mercury","venus","jupiter","uranus","neptune","mars"];let n=0;
  const strip=h=>String(h||"").replace(/<[^>]+>/g," ");
  const pil=(q,tag)=>{const g=gidOf(q,q.cat),sb=gsub(q),G2=g.startsWith("g:")?g.slice(2).split(":")[0]:"";if(!gameInfo(g,sb))bad.push(tag+": game \""+g+"\" is not in the learning-pillar map (categorise it before release)");else if(GSET[G2]&&sb&&!GSET[G2][sb])bad.push(tag+": content set \""+G2+"/"+sb+"\" has no pillar decision")};
  const chk=(q,tag)=>{n++;pil(q,tag);const t=(q.cap||"")+" "+(q.visual||"")+" "+(q.opts||[]).map(o=>o.h).join(" ");
