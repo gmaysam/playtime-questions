@@ -1,6 +1,7 @@
 window.__qc=()=>{const bad=[],FORBID=["💅","⏳"],PL=["mercury","venus","jupiter","uranus","neptune","mars"];let n=0;
  const strip=h=>String(h||"").replace(/<[^>]+>/g," ");
- const chk=(q,tag)=>{n++;const t=(q.cap||"")+" "+(q.visual||"")+" "+(q.opts||[]).map(o=>o.h).join(" ");
+ const pil=(q,tag)=>{const g=gidOf(q,q.cat),sb=gsub(q),G2=g.startsWith("g:")?g.slice(2).split(":")[0]:"";if(!gameInfo(g,sb))bad.push(tag+": game \""+g+"\" is not in the learning-pillar map (categorise it before release)");else if(GSET[G2]&&sb&&!GSET[G2][sb])bad.push(tag+": content set \""+G2+"/"+sb+"\" has no pillar decision")};
+ const chk=(q,tag)=>{n++;pil(q,tag);const t=(q.cap||"")+" "+(q.visual||"")+" "+(q.opts||[]).map(o=>o.h).join(" ");
   if(q.opts&&!q.match&&!q.robot&&!q.game){if(q.ans<0||q.ans>=q.opts.length)bad.push(tag+": answer index out of range");const hs=q.opts.map(o=>o.h);if(new Set(hs).size!==hs.length)bad.push(tag+": repeated option");}
   for(const f of FORBID)if(t.includes(f))bad.push(tag+": wrong emoji "+f+" in "+(q.cap||""));
   const words=(q.cap||"")+" "+(q.opts||[]).map(o=>strip(o.h)).join(" ");
@@ -14,6 +15,7 @@ window.__qc=()=>{const bad=[],FORBID=["💅","⏳"],PL=["mercury","venus","jupit
  for(const c of CATS){if(["story","paint"].includes(c.id))continue;for(const a of [3,5,7,9]){S.age=a;S.diff=1;for(const k of kindsFor(c.id))for(let i=0;i<6;i++){let q;
    try{q=buildQ(c.id,k,new Set())}catch(e){bad.push(c.id+"/"+k+": "+e.message);continue}if(!q)continue;q.cat=c.id;q.kind=k;chk(q,c.id+"/"+k+"@"+a)}}}
  for(const c of CATS){for(const a of [3,5,7,9]){S.age=a;S.diff=1;for(const k of formatsFor(c.id))for(let i=0;i<5;i++){let q;try{q=k.startsWith("f_")?buildFormat(k,c.id):buildQ(c.id,k,new Set())}catch(e){bad.push(c.id+"/"+k+"@"+a+": "+e.message);continue}n++;
-   if(!q){bad.push(c.id+"/"+k+": not built");continue}if(!(q.voice||[]).filter(Boolean).length)bad.push(c.id+"/"+k+": no voice");if(!q.factT&&k.startsWith("f_"))bad.push(c.id+"/"+k+": no fact");
+   if(!q){bad.push(c.id+"/"+k+": not built");continue}if(!q.cat)q.cat=c.id;if(!q.kind)q.kind=k;pil(q,c.id+"/"+k);if(!(q.voice||[]).filter(Boolean).length)bad.push(c.id+"/"+k+": no voice");if(!q.factT&&k.startsWith("f_"))bad.push(c.id+"/"+k+": no fact");
    if(q.items&&q.items.some(x=>!x||(Array.isArray(x)&&!x[0])))bad.push(c.id+"/"+k+": empty item");if(q.cards&&q.cards.some(x=>!x[0]))bad.push(c.id+"/"+k+": empty card")}}}
+ pil({cat:"story",kind:"q"},"story");pil({gid:"paint"},"paint");
  return {n,bad:[...new Set(bad)]}};

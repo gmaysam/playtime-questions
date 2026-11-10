@@ -385,7 +385,7 @@ function qSky2(used){if(!SK2_READY)return null;const a=Math.max(lvl(),3),pool=SK
   const r=x[3][0],o=sh(x[3].slice());
   const pic=n=>PLANET_N.includes(n)?PL_IMG(n):SKYN.includes(n)?PIC("sky_"+SKYN.indexOf(n),"wp op"):"";
   const say=n=>{const i=PLANET_N.indexOf(n);return i>=0?["w/LULU_FA_PL"+i,"w/LULU_YA","w/LULU_PL"+i]:skySay(n)};
-  return {voice:["w/PX_SK2_Q_"+x[0]],cap:x[2],visual:`<div class="listen">🔭</div>`,opts:o.map(n=>({h:`<span class="oe">${pic(n)}</span><small>${n==="galaxy"?"Milky Way":cap1(n)}</small>`,say:say(n)})),
+  return {gid:"sky2",voice:["w/PX_SK2_Q_"+x[0]],cap:x[2],visual:`<div class="listen">🔭</div>`,opts:o.map(n=>({h:`<span class="oe">${pic(n)}</span><small>${n==="galaxy"?"Milky Way":cap1(n)}</small>`,say:say(n)})),
     ans:o.indexOf(r),layout:"row3",hint:"elim",why:{t:"",f:x[4],v:["w/PX_SK2_F_"+x[0]]},exp:{t:r==="galaxy"?"The Milky Way":cap1(r),v:[]}}}
 SEQS.push({k:"planets",c:"Closest to the Sun first",s:["mercury","venus","earth","mars"].map(n=>[PL_IMG(n),cap1(n)]),f:"Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune: the 8 planets in order from the Sun."},
  {k:"psize",c:"From the smallest planet to the biggest",s:["mercury","mars","earth","jupiter"].map(n=>[PL_IMG(n),cap1(n)]),v:"G_SIZE",f:"Jupiter is the biggest planet. More than 1,000 Earths could fit inside it!"});

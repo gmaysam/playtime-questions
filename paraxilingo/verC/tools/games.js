@@ -12,7 +12,7 @@ const SKN={find:"Counting things",more:"More or less",less:"More or less",long:"
 const SKCAT={"clock.after":"What day comes next","clock.before":"What day came before","count.after":"What comes next","count.before":"What comes before"};
 const AREA={count:["🔢","Numbers"],add:["➕","Adding & taking away"],clock:["🕒","Time & calendar"],letters:["🔤","Letters & words"],read:["📖","Reading"],farm:["🏡","Animals"],animals:["🐾","Animals"],world:["🌳","Our world"],sky:["🌙","Sky & space"],shapes:["🔷","Shapes & thinking"],people:["🧑‍🚒","Jobs & feelings"],flags:["🚩","Flags"],robot:["🤖","Robots"],memory:["🧠","Concentration"],story:["📻","Listening (stories)"]};
 const skName=(cat,kind)=>SKCAT[cat+"."+kind]||(cat==="story"?"Listening to a story":SKN[kind])||(cat==="sky"?"Sky & space facts":cat==="animals"?"Animal facts":cat==="world"?"Facts about our world":"Other");
-function logSk(q,ok){try{const cat=q.cat||(L&&L.cat)||"",k=cat+"|"+skName(cat,q.game||(q.match?"match":q.robot?"robot":q.kind)||"");if(!S.sk)S.sk={};const r=S.sk[k]||(S.sk[k]={n:0,r:0,f:0,d0:today(),d:"",h:""});
+function logSk(q,ok){logEv(q,ok);try{const cat=q.cat||(L&&L.cat)||"",k=cat+"|"+skName(cat,q.game||(q.match?"match":q.robot?"robot":q.kind)||"");if(!S.sk)S.sk={};const r=S.sk[k]||(S.sk[k]={n:0,r:0,f:0,d0:today(),d:"",h:""});
   r.n++;if(ok)r.r++;if(!S.dq)S.dq={};S.dq[today()]=(S.dq[today()]||0)+1;{const ks=Object.keys(S.dq).sort();while(ks.length>21)delete S.dq[ks.shift()]}const first=ok&&!q.tries;if(first)r.f++;r.d=today();r.h=(r.h+(first?"1":"0")).slice(-10)}catch(e){}}
 function skLevel(r){const ones=(r.h.match(/1/g)||[]).length,p=r.h.length?ones/r.h.length:0;return r.n<4?0:p>=.8&&r.n>=6?2:1}
 

@@ -71,7 +71,7 @@ for _f,_d in (('fa_new3.json','FA'),('en_new2.json','EN')):
     if os.path.exists(_p):
         for _w,_c in json.load(open(_p)).items():
             if os.path.exists(os.path.join(SDIR,'fa_new','out',_c+'.mp3')):(FA_SAY if _d=='FA' else EN_SAY)[_w]=_c
-B=open(os.path.join(os.path.dirname(__file__),'qengine.js')).read().replace('__STORIES__',open(os.path.join(SDIR,'watcher','stories.json')).read()).replace('__FA_SAY__',json.dumps(FA_SAY)).replace('__EVOICED__',json.dumps(EVOICED)).replace('__EN_SAY__',json.dumps(EN_SAY)).replace('__POOL__',open(os.path.join(SDIR,'watcher','pool.json')).read()).replace('__WQ__',wq).replace('__VOICED__',json.dumps(VOICED)).replace('__PIC_E__',PIC_E).replace('__WORD_E__',WORD_E)+open(os.path.join(os.path.dirname(__file__),'games.js')).read()+open(os.path.join(os.path.dirname(__file__),'games2.js')).read().replace('__GVOICE__','true' if os.path.exists('appC/audio/w/PX_G_SPY.mp3') else 'false').replace('__SK2VOICE__','true' if os.path.exists('appC/audio/w/PX_SK2_Q_k19.mp3') else 'false')
+B=open(os.path.join(os.path.dirname(__file__),'qengine.js')).read().replace('__STORIES__',open(os.path.join(SDIR,'watcher','stories.json')).read()).replace('__FA_SAY__',json.dumps(FA_SAY)).replace('__EVOICED__',json.dumps(EVOICED)).replace('__EN_SAY__',json.dumps(EN_SAY)).replace('__POOL__',open(os.path.join(SDIR,'watcher','pool.json')).read()).replace('__WQ__',wq).replace('__VOICED__',json.dumps(VOICED)).replace('__PIC_E__',PIC_E).replace('__WORD_E__',WORD_E)+open(os.path.join(os.path.dirname(__file__),'games.js')).read()+open(os.path.join(os.path.dirname(__file__),'games2.js')).read().replace('__GVOICE__','true' if os.path.exists('appC/audio/w/PX_G_SPY.mp3') else 'false').replace('__SK2VOICE__','true' if os.path.exists('appC/audio/w/PX_SK2_Q_k19.mp3') else 'false')+open(os.path.join(os.path.dirname(__file__),'pillars.js')).read()
 C=''
 
 css += r'''
@@ -426,12 +426,10 @@ function showParents(){
   const ring=(v,max,c,ic)=>{const f=Math.min(1,v/max);return `<span class="pring" style="--f:${f*360}deg;--c:${c}"><i>${ic}</i></span><small class="pnum">${Math.min(v,max)}/${max}</small>`};
   const sec=(e,t)=>`<div class="psec"><span>${e}</span>${t}</div>`;
   $("pSettings").innerHTML=`<button class="back" id="closeSettings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>Back</button>
-    <div class="phead"><span class="pav" style="background:${curPlayer().color}">${pn.trim()[0].toUpperCase()}</span><b>${pn}</b><span class="pweek">this week</span></div>
-    <div class="ptiles"><div class="pt1"><i>📅</i><b>${w.days.length}</b><small>days</small></div><div class="pt1"><i>❓</i><b>${w.q}</b><small>questions</small></div><div class="pt1"><i>⭐</i><b>${pct}%</b><small>right</small></div></div>
-    <div class="pchips">${w.topics.map(t=>`<span>${(COURSE.find(c=>c.id===t)||{}).e||""} ${SHORT[t]||t}</span>`).join("")||`<span class="dim">—</span>`}</div>
+    ${dashHTML(pn)}
+    ${sec("💬","Talk about it at home")}
     <div class="ptalk"><div>🏡 ${TRY[tp]||TRY.math}</div><div>🍽️ “${dq[dayN()%dq.length]}”</div></div>
-    ${sec("📘",`What ${pn} is learning`)}
-    ${reportHTML(pn)}
+    <h2 class="psettings">⚙️ Settings</h2>
     ${sec("🎁","Prize (optional)")}
     <p class="pnote">Promised ${pn} a toy? Add its photo and how many 🌰 acorns and 🪵 wood it costs. ${pn} sees it after every round and at the end of the path. No prize is fine too.</p>
     ${S.real.length?`<div class="plegend"><span>🌰 = right answers</span><span>🪵 = finished mounds</span></div>`:""}
@@ -468,6 +466,7 @@ function showParents(){
     <button class="qbtn sky" id="btnToday" style="margin-bottom:8px">↺ Play today's games again</button>
     <button class="preset" id="btnReset">↺ Start ${pn} over</button>
     <div id="resetConfirm" hidden class="pconf"><b>Clear 🌰 🪵 🦄 ?</b><button class="btn red" id="btnResetYes">Yes</button><button class="btn ghost" id="btnResetNo">No</button></div>`;
+  wireDash(pn);
   const P$=q=>$("pSettings").querySelectorAll(q);
   const keep=fn=>{const y=$("pSettings").scrollTop;fn();save();sfx.tap();showParents();$("pSettings").scrollTop=y};
   $("closeSettings").onclick=()=>{sfx.tap();showMap();if(S.ageUp)setTimeout(ageUpCeremony,500)};
