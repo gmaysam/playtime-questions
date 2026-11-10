@@ -146,13 +146,21 @@ const GMAP={
  "g:trace:num":G("Trace a number",["cog","math"],[FIN],"Trace a number with a finger.","Create"),
  "g:whack":G("Quick eyes",["cog","memory"],[["phys","coord"]],"Tap only the right one before it hides.","Play"),
  "g:catch":G("Catch!",["phys","coord"],[["cog","memory"]],"Move the basket to catch only the right things.","Play"),
- "g:paint":G("Colour by instruction",["cre","art"],[["lang","listen"]],"Follow spoken steps to colour shapes.","Create")};
+ "g:paint":G("Colour by instruction",["cre","art"],[["lang","listen"]],"Follow spoken steps to colour shapes.","Create"),
+ "g:puzzle":G("Jigsaw puzzle",["cog","logic"],[FIN],"Drag the pieces into place to make the picture (spatial thinking).","Play"),
+ "g:maze":G("Maze",["cog","logic"],[FIN],"Plan a way through the maze and slide the character along it.","Play"),
+ "g:parade":G("Count the parade",["cog","math"],[["cog","memory"]],"Watch characters walk by and count one kind (attention + counting).","Play"),
+ "g:lab":G("Little lab",["cre","experiment"],[["cre","science"]],"Test what lights a lamp, what a magnet picks up, which way gears turn.","Explore"),
+ "g:wsearch":G("Word search",["lang","read"],[["cog","memory"]],"Find hidden words in a grid of letters.","Play"),
+ "g:hear":G("Tap what you hear",["lang","listen"],0,"Listen, then tap pictures or words in the same order.","Practice"),
+ "g:blocks":G("Block fit",["cog","logic"],[["cog","math"]],"Turn and slide a falling block so it fills the gap (Tetris-like).","Play")};
 /* content-dependent extra pillars for the new formats */
 const GSET={sort:{fly:FM,fruit:FM,hot:FM,farm:FM,sky:FM,num:[["cog","math"]],letter:[["lang","read"]],shape:[["cog","math"]]},
  tapall:{wings:FM,water:FM,fruit:FM,red:[["lang","vocab"]],even:[["cog","math"]],shape:[["cog","math"]],letter:[["lang","read"]],planets:FM},
  swipe:{fruit:FM,fly:FM,water:FM,planet:FM,corner:[["cog","math"]],big:[["cog","math"]],flag:[["cog","curiosity"]]},
  seq:{plant:FM,chick:FM,butterfly:FM,life:FM,day:[["life","selfcare"]],week:[["life","selfcare"]],months:[["life","selfcare"]],size:[["cog","math"]],planets:FM,psize:FM},
  spy:{sky:FM,flags:[["cog","curiosity"]],map:[["cog","curiosity"]],town:[["cog","curiosity"]],kitchen:FM,paper:[["cog","math"]],farm:FM,sound:[["lang","listen"]]},
+ lab:{circuit:[["cre","science"]],magnet:[["cre","science"]],gears:[["cre","invent"]]},hear:{pic:[["lang","vocab"]],sent:[["lang","read"]]},
  whack:{letter:[["lang","read"]],num:[["cog","math"]],animal:FM},catch:{fruit:FM,big:[["cog","math"]],letter:[["lang","read"]]}};
 
 /* which game was this question? */
@@ -161,7 +169,7 @@ function gidOf(q,cat){cat=q.cat||cat||(L&&L.cat)||"";
   if(q.game){if(q.game==="trace"&&/^\d$/.test(q.ch||""))return "g:trace:num";return "g:"+q.game}
   if(cat==="story")return "story";if(cat==="memory"||cat==="robot")return q.kind==="robot"?"robot":"g:"+q.kind;
   return cat+"."+(q.kind||"")}
-function gsub(q){const g=q.game;if(!g)return "";return g==="sort"||g==="spy"?(q.set||q.bg||""):g==="tapall"?String(q.set||"").split(":")[0]:g==="swipe"?q.deck:g==="seq"?(q.s&&q.s.k):g==="whack"?(/^[A-Z]$/.test(q.t)?"letter":/^\d$/.test(q.t)?"num":"animal"):g==="catch"?(q.lbl==="fruit"?"fruit":/bigger/.test(q.lbl)?"big":"letter"):""}
+function gsub(q){const g=q.game;if(!g)return "";if(g==="lab")return q.sub;if(g==="hear")return q.mode;return g==="sort"||g==="spy"?(q.set||q.bg||""):g==="tapall"?String(q.set||"").split(":")[0]:g==="swipe"?q.deck:g==="seq"?(q.s&&q.s.k):g==="whack"?(/^[A-Z]$/.test(q.t)?"letter":/^\d$/.test(q.t)?"num":"animal"):g==="catch"?(q.lbl==="fruit"?"fruit":/bigger/.test(q.lbl)?"big":"letter"):""}
 function gameInfo(gid,sub){const m=GMAP[gid];if(!m)return null;const g=gid.startsWith("g:")?gid.slice(2):"",extra=(GSET[g]||{})[sub]||[];
   const s=[...m.s,...extra].filter((x,i,a)=>!(x[0]===m.p[0]&&x[1]===m.p[1])&&a.findIndex(y=>y[0]===x[0]&&y[1]===x[1])===i);return Object.assign({},m,{s})}
 

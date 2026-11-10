@@ -66,6 +66,10 @@ Main skill counts fully toward the score; "also" skills count half. Methods: Pla
 | `g:spy` | I spy | Memory & attention | Language & Communication → Vocabulary & storytelling | Play | Find a named thing in a busy picture. |
 | `g:trace:num` | Trace a number | Mathematics & patterns | Physical Development → Fine motor skills | Create | Trace a number with a finger. |
 | `g:whack` | Quick eyes | Memory & attention | Physical Development → Coordination & balance | Play | Tap only the right one before it hides. |
+| `g:puzzle` | Jigsaw puzzle | Logic & problem-solving | Physical Development → Fine motor skills | Play | Drag the pieces into place to make the picture (spatial thinking). |
+| `g:maze` | Maze | Logic & problem-solving | Physical Development → Fine motor skills | Play | Plan a way through the maze and slide the character along it. |
+| `g:parade` | Count the parade | Mathematics & patterns | Thinking & Understanding → Memory & attention | Play | Watch characters walk by and count one kind (attention + counting). |
+| `g:blocks` | Block fit | Logic & problem-solving | Thinking & Understanding → Mathematics & patterns | Play | Turn and slide a falling block so it fills the gap (Tetris-like). |
 
 ## 💬 Language & Communication
 
@@ -91,6 +95,8 @@ Main skill counts fully toward the score; "also" skills count half. Methods: Pla
 | `w:w` | What is this? | Vocabulary & storytelling | – | Practice | Name things from their picture. |
 | `story` | Domi's Radio stories | Speaking & listening | Language & Communication → Vocabulary & storytelling; Thinking & Understanding → Memory & attention | Explore | Listen to a story and remember what happened. |
 | `g:trace` | Trace it | Reading & writing | Physical Development → Fine motor skills | Create | Trace a letter with a finger (early writing). |
+| `g:wsearch` | Word search | Reading & writing | Thinking & Understanding → Memory & attention | Play | Find hidden words in a grid of letters. |
+| `g:hear` | Tap what you hear | Speaking & listening | – | Practice | Listen, then tap pictures or words in the same order. |
 
 ⚑ **Flagged – no game practises yet:** Expressing ideas & asking questions. Shown to parents as “Not enough data”, never as a low score.
 
@@ -138,6 +144,7 @@ Main skill counts fully toward the score; "also" skills count half. Methods: Pla
 | `paint` | Colouring pages | Art, music & imagination | Physical Development → Fine motor skills | Create | Colour a picture freely. |
 | `g:feed` | Feed the animal | Science & nature | Physical Development → Fine motor skills | Play | Drag the right food to the animal. |
 | `g:paint` | Colour by instruction | Art, music & imagination | Language & Communication → Speaking & listening | Create | Follow spoken steps to colour shapes. |
+| `g:lab` | Little lab | Experimentation | Creativity & Exploration → Science & nature | Explore | Test what lights a lamp, what a magnet picks up, which way gears turn. |
 
 ## 🧭 Practical Life Skills & Independence
 
@@ -163,6 +170,8 @@ Main skill counts fully toward the score; "also" skills count half. Methods: Pla
 - **swipe**: fruit → Creativity & Exploration → Science & nature; fly → Creativity & Exploration → Science & nature; water → Creativity & Exploration → Science & nature; planet → Creativity & Exploration → Science & nature; corner → Thinking & Understanding → Mathematics & patterns; big → Thinking & Understanding → Mathematics & patterns; flag → Thinking & Understanding → Curiosity & critical thinking
 - **seq**: plant → Creativity & Exploration → Science & nature; chick → Creativity & Exploration → Science & nature; butterfly → Creativity & Exploration → Science & nature; life → Creativity & Exploration → Science & nature; day → Practical Life Skills → Self-care & organisation; week → Practical Life Skills → Self-care & organisation; months → Practical Life Skills → Self-care & organisation; size → Thinking & Understanding → Mathematics & patterns; planets → Creativity & Exploration → Science & nature; psize → Creativity & Exploration → Science & nature
 - **spy**: sky → Creativity & Exploration → Science & nature; flags → Thinking & Understanding → Curiosity & critical thinking; map → Thinking & Understanding → Curiosity & critical thinking; town → Thinking & Understanding → Curiosity & critical thinking; kitchen → Creativity & Exploration → Science & nature; paper → Thinking & Understanding → Mathematics & patterns; farm → Creativity & Exploration → Science & nature; sound → Language & Communication → Speaking & listening
+- **lab**: circuit → Creativity & Exploration → Science & nature; magnet → Creativity & Exploration → Science & nature; gears → Creativity & Exploration → Inventing & building
+- **hear**: pic → Language & Communication → Vocabulary & storytelling; sent → Language & Communication → Reading & writing
 - **whack**: letter → Language & Communication → Reading & writing; num → Thinking & Understanding → Mathematics & patterns; animal → Creativity & Exploration → Science & nature
 - **catch**: fruit → Creativity & Exploration → Science & nature; big → Thinking & Understanding → Mathematics & patterns; letter → Language & Communication → Reading & writing
 
