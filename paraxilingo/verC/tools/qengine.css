@@ -1210,3 +1210,30 @@ body,.phone,.lesson.q2,.introC,#pSettings,.panel,.map{background:#fff!important}
 .bk i em{position:absolute;inset:0;display:grid;place-items:center;font-style:normal;font-size:calc(var(--s) * .58);line-height:1;color:#fff;font-weight:900;font-family:"Nunito",sans-serif}
 .bk .bf em{opacity:.55;filter:grayscale(.2)}
 .mx-q{font-style:normal;transform:rotate(45deg)}
+/* ===== Nov 10d: Learn with Lulu (youngest) ===== */
+.lrn{display:flex;flex-direction:column;align-items:center}
+.lr-card{width:100%;max-width:340px;border:0;background:#FFF8E6;border-radius:28px;padding:18px 14px;display:grid;justify-items:center;gap:10px;box-shadow:0 6px 0 #FFE3A3;cursor:pointer;font-family:inherit}
+.lr-card.pulse{animation:lrPulse .5s}@keyframes lrPulse{40%{transform:scale(1.04)}}
+.lr-pic{display:grid;place-items:center;min-height:150px;gap:6px}.lr-pic img{width:150px;height:150px;object-fit:contain}
+.lr-pic.sm{min-height:0}.lr-pic.sm img{width:70px;height:70px}.lr-pic.sm .lr-emo{font-size:56px}
+.lr-emo{font-size:120px;line-height:1}.lr-emo.sm{font-size:48px}
+.lr-num{font:900 96px "Nunito",sans-serif;color:#FF9600;line-height:1}.lr-row{font-size:34px;letter-spacing:2px;max-width:300px;text-align:center;line-height:1.3}
+.lr-let{font:900 110px "Nunito",sans-serif;color:#1CB0F6;line-height:1}.lr-let small{font-size:.5em;color:#84D8FF;margin-left:6px}.lr-let.sm{font-size:48px}
+.lr-pic:has(.lr-let) img{width:96px;height:96px}
+.lr-name{font:900 28px "Nunito",sans-serif;color:#4B4B4B}
+.lr-fact{font:700 16px/1.35 "Nunito",sans-serif;color:#8A6D1F;text-align:center;max-width:300px}
+.lr-dots{display:flex;gap:8px;margin:14px 0 8px}.lr-dots i{width:12px;height:12px;border-radius:50%;background:#E5E5E5}.lr-dots i.on{background:#FFC800}.lr-dots i.done{background:#58CC02}
+.lr-next{width:96px;height:72px;border-radius:24px;border:0;background:#58CC02;box-shadow:0 5px 0 #58A700;color:#fff;font:900 36px "Nunito",sans-serif;cursor:pointer}
+.lr-next:disabled{background:#E5E5E5;box-shadow:0 5px 0 #D0D0D0;color:#fff}
+.lr-tog{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:12px 0}
+.lr-t{position:relative;min-width:76px;min-height:88px;border:3px solid #E5E5E5;border-radius:22px;background:#fff;box-shadow:0 4px 0 #E5E5E5;display:grid;place-items:center;padding:6px;cursor:pointer;opacity:.55;transition:opacity .2s,transform .2s}
+.lr-t small{font:900 16px "Nunito",sans-serif;color:#58A700;min-height:18px}
+.lr-t.next{opacity:1;border-color:#FFC800;box-shadow:0 4px 0 #FFC800}.lr-t.lit{opacity:1;border-color:#58CC02;background:#F1FFE6;box-shadow:0 4px 0 #58CC02;transform:translateY(-3px)}
+.lr-t.wig{animation:lrWig .6s 2}@keyframes lrWig{25%{transform:rotate(-6deg)}75%{transform:rotate(6deg)}}
+.lr-blob{width:56px;height:56px;border-radius:50%;background:var(--c);box-shadow:inset 0 -5px 0 rgba(0,0,0,.12)}
+.lr-big{font:900 72px "Nunito",sans-serif;color:#FF9600;min-height:80px}
+.lr-two{display:flex;gap:14px;justify-content:center;margin-top:14px;width:100%}
+.lr-p{flex:1;max-width:170px;border:3px solid #E5E5E5;border-radius:26px;background:#fff;box-shadow:0 5px 0 #E5E5E5;padding:12px 6px;display:grid;justify-items:center;gap:6px;cursor:pointer}
+.lr-p .lr-pic{min-height:120px}.lr-p .lr-pic img{width:110px;height:110px}.lr-p .lr-emo{font-size:88px}.lr-p .lr-num{font-size:60px}.lr-p .lr-row{font-size:22px}.lr-p .lr-let{font-size:72px}
+.lr-p b{font:800 16px "Nunito",sans-serif;color:#4B4B4B}
+.lr-p.ok{border-color:#58CC02;box-shadow:0 5px 0 #58A700;background:#F1FFE6}.lr-p.soft{opacity:.55}.lr-p.show{animation:lrPulse .6s 2}

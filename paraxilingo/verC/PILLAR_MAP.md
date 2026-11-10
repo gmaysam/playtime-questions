@@ -66,6 +66,7 @@ Main skill counts fully toward the score; "also" skills count half. Methods: Pla
 | `g:spy` | I spy | Memory & attention | Language & Communication → Vocabulary & storytelling | Play | Find a named thing in a busy picture. |
 | `g:trace:num` | Trace a number | Mathematics & patterns | Physical Development → Fine motor skills | Create | Trace a number with a finger. |
 | `g:whack` | Quick eyes | Memory & attention | Physical Development → Coordination & balance | Play | Tap only the right one before it hides. |
+| `learn.count` | Count together | Mathematics & patterns | Language & Communication → Speaking & listening | Practice | Tap each object while Lulu counts out loud. |
 | `g:puzzle` | Jigsaw puzzle | Logic & problem-solving | Physical Development → Fine motor skills | Play | Drag the pieces into place to make the picture (spatial thinking). |
 | `g:maze` | Maze | Logic & problem-solving | Physical Development → Fine motor skills | Play | Plan a way through the maze and slide the character along it. |
 | `g:parade` | Count the parade | Mathematics & patterns | Thinking & Understanding → Memory & attention | Play | Watch characters walk by and count one kind (attention + counting). |
@@ -95,6 +96,10 @@ Main skill counts fully toward the score; "also" skills count half. Methods: Pla
 | `w:w` | What is this? | Vocabulary & storytelling | – | Practice | Name things from their picture. |
 | `story` | Domi's Radio stories | Speaking & listening | Language & Communication → Vocabulary & storytelling; Thinking & Understanding → Memory & attention | Explore | Listen to a story and remember what happened. |
 | `g:trace` | Trace it | Reading & writing | Physical Development → Fine motor skills | Create | Trace a letter with a finger (early writing). |
+| `learn.show` | Look and listen (show & tell) | Vocabulary & storytelling | Language & Communication → Speaking & listening | Explore | Lulu shows and names things, with a short fact - no quiz. |
+| `learn.abc` | Letters together | Reading & writing | Language & Communication → Speaking & listening | Practice | Letters light up as Lulu says them. |
+| `learn.names` | Say it together | Vocabulary & storytelling | Language & Communication → Speaking & listening | Practice | Tap each picture or colour and Lulu names it. |
+| `learn.find` | Your turn (gentle) | Vocabulary & storytelling | Thinking & Understanding → Memory & attention | Play | Find one of two pictures; a wrong tap just shows the right one. |
 | `g:wsearch` | Word search | Reading & writing | Thinking & Understanding → Memory & attention | Play | Find hidden words in a grid of letters. |
 | `g:hear` | Tap what you hear | Speaking & listening | – | Practice | Listen, then tap pictures or words in the same order. |
 
