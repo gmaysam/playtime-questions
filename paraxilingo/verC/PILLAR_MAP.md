@@ -67,6 +67,8 @@ Main skill counts fully toward the score; "also" skills count half. Methods: Pla
 | `g:trace:num` | Trace a number | Mathematics & patterns | Physical Development → Fine motor skills | Create | Trace a number with a finger. |
 | `g:whack` | Quick eyes | Memory & attention | Physical Development → Coordination & balance | Play | Tap only the right one before it hides. |
 | `learn.count` | Count together | Mathematics & patterns | Language & Communication → Speaking & listening | Practice | Tap each object while Lulu counts out loud. |
+| `learn.sorter` | Shape sorter | Mathematics & patterns | Physical Development → Fine motor skills | Play | Push each shape into its own hole. |
+| `learn.robowalk` | Robot walk | Logic & problem-solving | Physical Development → Fine motor skills | Play | Each arrow moves the robot at once - a first step toward coding. |
 | `g:puzzle` | Jigsaw puzzle | Logic & problem-solving | Physical Development → Fine motor skills | Play | Drag the pieces into place to make the picture (spatial thinking). |
 | `g:maze` | Maze | Logic & problem-solving | Physical Development → Fine motor skills | Play | Plan a way through the maze and slide the character along it. |
 | `g:parade` | Count the parade | Mathematics & patterns | Thinking & Understanding → Memory & attention | Play | Watch characters walk by and count one kind (attention + counting). |
@@ -100,6 +102,9 @@ Main skill counts fully toward the score; "also" skills count half. Methods: Pla
 | `learn.abc` | Letters together | Reading & writing | Language & Communication → Speaking & listening | Practice | Letters light up as Lulu says them. |
 | `learn.names` | Say it together | Vocabulary & storytelling | Language & Communication → Speaking & listening | Practice | Tap each picture or colour and Lulu names it. |
 | `learn.find` | Your turn (gentle) | Vocabulary & storytelling | Thinking & Understanding → Memory & attention | Play | Find one of two pictures; a wrong tap just shows the right one. |
+| `learn.story` | Little stories | Speaking & listening | Thinking & Understanding → Memory & attention | Explore | Listen to a tiny picture story, then answer one easy question. |
+| `learn.peek` | Peekaboo | Vocabulary & storytelling | Thinking & Understanding → Curiosity & critical thinking | Play | Tap the bushes to find who is hiding and hear its name. |
+| `learn.bubble` | Bubbles | Vocabulary & storytelling | Physical Development → Coordination & balance | Play | Pop floating bubbles and hear what was inside. |
 | `g:wsearch` | Word search | Reading & writing | Thinking & Understanding → Memory & attention | Play | Find hidden words in a grid of letters. |
 | `g:hear` | Tap what you hear | Speaking & listening | – | Practice | Listen, then tap pictures or words in the same order. |
 
@@ -149,6 +154,7 @@ Main skill counts fully toward the score; "also" skills count half. Methods: Pla
 | `paint` | Colouring pages | Art, music & imagination | Physical Development → Fine motor skills | Create | Colour a picture freely. |
 | `g:feed` | Feed the animal | Science & nature | Physical Development → Fine motor skills | Play | Drag the right food to the animal. |
 | `g:paint` | Colour by instruction | Art, music & imagination | Language & Communication → Speaking & listening | Create | Follow spoken steps to colour shapes. |
+| `learn.colorit` | Colour the balloons | Art, music & imagination | Language & Communication → Vocabulary & storytelling | Create | Pick colours and paint balloons, hearing each colour's name. |
 | `g:lab` | Little lab | Experimentation | Creativity & Exploration → Science & nature | Explore | Test what lights a lamp, what a magnet picks up, which way gears turn. |
 
 ## 🧭 Practical Life Skills & Independence
