@@ -13935,7 +13935,7 @@ body,
     };
   }
   Object.assign(GAMES, { sort: sortQ, tapall: tapallQ, tcount: tcountQ, tshow: tcountQ, swipe: swipeQ, feed: feedQ, setclock: setclockQ, seq: seqQ, dragpat: dragpatQ, balance: balanceQ, spy: spyQ, trace: traceQ, whack: whackQ, catch: catchQ, paint: paintQ });
-  const G_READY = false, SK2_READY = false;
+  const G_READY = true, SK2_READY = true;
   function formatsFor(cat) {
     const F0 = formatsFor0(cat);
     return G_READY ? F0 : F0.filter((k) => !k.startsWith("f_"));
