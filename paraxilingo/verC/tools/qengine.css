@@ -227,7 +227,7 @@
 .pcanvas{width:min(100%,520px);background:#fff;border-radius:32px;box-shadow:0 10px 28px rgba(38,51,77,.10);padding:10px}
 .pcanvas svg{width:100%;height:auto;display:block;touch-action:manipulation}
 .psvg .rg{cursor:pointer;transition:fill .2s}
-.psvg .rg.pop{animation:rgpop .35s}
+.psvg .rg.rgp{animation:rgpop .35s}
 @keyframes rgpop{50%{opacity:.75}}
 .ppal{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;width:min(100%,520px)}
 .pot{aspect-ratio:1/1;border-radius:50%;border:4px solid #fff;background:var(--c);box-shadow:0 5px 0 rgba(38,51,77,.18),inset 0 -6px 0 rgba(0,0,0,.12);transition:transform .15s}
@@ -1146,3 +1146,49 @@ body,.phone,.lesson.q2,.introC,#pSettings,.panel,.map{background:#fff!important}
 .pz-in img,.pz-ghost img{object-fit:cover;transform:scale(1.18)}
 .pz-board,.pz-p{background:#fff}
 .ws{background:#EEF3F9;padding:6px;border-radius:14px;box-sizing:border-box}
+/* Nov 10: I spy - calm one-colour town, bigger pictures */
+.bg-town{background:#DDF4FF}
+.sp-it{font-size:clamp(44px,12vw,66px);width:clamp(64px,18vw,92px)}
+/* ===== Nov 10: My treasure (kids' prize page) ===== */
+#pPrizes{background:linear-gradient(180deg,#FFF6DD 0,#FFF 46%)}
+.prz2{display:grid;gap:12px;padding-bottom:30px;font-family:"Nunito",sans-serif}
+.pz-hero{position:relative;text-align:center;background:linear-gradient(135deg,#FFC800,#FF9600);border-radius:28px;padding:16px 12px 14px;color:#fff;box-shadow:0 6px 0 #E08600}
+.pz-hero h2{margin:2px 0 10px;font:900 30px "Nunito",sans-serif;text-shadow:0 2px 0 rgba(0,0,0,.12)}
+.pz-chest{font-size:52px;display:inline-block;animation:pzBob 2.4s ease-in-out infinite}
+@keyframes pzBob{50%{transform:translateY(-6px) rotate(-4deg)}}
+.pz-cnt{display:flex;gap:8px;justify-content:center}
+.pz-cnt .pzc{height:auto;width:auto;display:flex;align-items:center;gap:4px;background:#fff;border-radius:999px;padding:6px 14px 6px 8px;box-shadow:0 3px 0 rgba(0,0,0,.12)}
+.pz-cnt .pzc i{font-style:normal;font-size:26px}.pz-cnt .pzc b{font:900 24px "Nunito",sans-serif;color:#4B4B4B}
+.pz-h{font:900 22px "Nunito",sans-serif;color:#4B4B4B;margin:10px 0 0}
+.pz-none{display:grid;justify-items:center;gap:4px;background:#fff;border:3px dashed #FFD27A;border-radius:24px;padding:18px;text-align:center}
+.pz-none span{font-size:48px}.pz-none b{font:900 19px "Nunito",sans-serif;color:#4B4B4B}.pz-none small{font:700 14px "Nunito",sans-serif;color:#999}
+.pz-card{display:grid;justify-items:center;gap:10px;width:100%;background:#fff;border:3px solid #FFE3A3;border-radius:28px;padding:16px 14px;box-shadow:0 6px 0 #FFE3A3;cursor:pointer;font-family:inherit}
+.pz-card.ready{border-color:#58CC02;box-shadow:0 6px 0 #58A700,0 0 0 6px rgba(88,204,2,.18);animation:pzGlow 1.6s ease-in-out infinite}
+@keyframes pzGlow{50%{box-shadow:0 6px 0 #58A700,0 0 0 12px rgba(88,204,2,.08)}}
+.pz-ph{position:relative;width:132px;height:132px;border-radius:50%;background:#FFF6DD;display:grid;place-items:center;overflow:visible;box-shadow:inset 0 0 0 5px #FFE3A3}
+.pz-ph img{width:118px;height:118px;border-radius:50%;object-fit:cover}.pz-ph>span:not(.pz-burst){font-size:72px}
+.pz-card.ready .pz-ph{animation:pzBob 1.8s ease-in-out infinite}
+.pz-burst{position:absolute;right:-6px;top:-6px;font-size:40px;animation:pzBob 1s infinite}
+.pz-name{font:900 22px "Nunito",sans-serif;color:#4B4B4B}
+.pz-ready{font:900 17px "Nunito",sans-serif;color:#58A700;background:#D7FFB8;border-radius:999px;padding:6px 14px}
+.pz-road{position:relative;width:100%;height:18px;background:#F1E6CC;border-radius:999px;margin:14px 0 2px}
+.pz-road>i{position:absolute;left:0;top:0;bottom:0;border-radius:999px;background:linear-gradient(90deg,#FFC800,#FF9600)}
+.pz-walker{position:absolute;top:50%;transform:translate(-50%,-62%);font-size:34px;filter:drop-shadow(0 2px 2px rgba(0,0,0,.2))}
+.pz-goal{position:absolute;right:-6px;top:50%;transform:translateY(-58%);font-size:32px}
+.pz-jars{display:flex;gap:26px;justify-content:center}
+.jar{display:grid;justify-items:center;gap:0}
+.jar-g{position:relative;width:62px;height:76px;border:4px solid #C9D4E2;border-top-width:8px;border-radius:12px 12px 20px 20px;background:#F7FBFF;overflow:hidden}
+.jar-f{position:absolute;left:0;right:0;bottom:0;transition:height .6s}
+.jar.a .jar-f{background:repeating-linear-gradient(180deg,#C8803F 0 9px,#B26F33 9px 11px)}.jar.w .jar-f{background:repeating-linear-gradient(90deg,#9A6233 0 10px,#7A4A1E 10px 12px)}
+.jar-e{position:absolute;inset:0;display:grid;place-items:center;font-size:28px}
+.jar.full .jar-g{border-color:#58CC02}
+.jar-n{font:900 22px "Nunito",sans-serif;color:#4B4B4B;line-height:1.1;margin-top:4px}.jar small{font:800 12px "Nunito",sans-serif;color:#AFAFAF}
+.pz-how{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.pz-how span{display:flex;align-items:center;gap:4px;background:#F7F7F7;border-radius:999px;padding:4px 10px;font:700 12px "Nunito",sans-serif;color:#999}.pz-how b{font-size:18px}
+.pz-book{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;background:#FFF0F7;border-radius:24px;padding:14px;box-shadow:inset 0 0 0 3px #FFD3E8}
+.pz-book button{aspect-ratio:1;border:0;border-radius:18px;background:#fff;font-size:40px;box-shadow:0 3px 8px rgba(214,82,140,.18);transform:rotate(var(--r));cursor:pointer}
+.pz-book button.empty{background:transparent;border:3px dashed #FFC2DD;box-shadow:none;font-size:20px;opacity:.55;transform:none}
+.pz-gal{display:flex;gap:12px;overflow-x:auto;padding:6px 2px 12px;scroll-snap-type:x mandatory}
+.pz-frame{flex:0 0 120px;height:120px;scroll-snap-align:start;background:#fff;border:8px solid #C8803F;border-radius:10px;box-shadow:0 4px 0 #9A6233}
+.pz-frame svg{width:100%;height:100%;display:block}
+.pz-frame .rg{stroke-width:7}

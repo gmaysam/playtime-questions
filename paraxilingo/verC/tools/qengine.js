@@ -451,7 +451,7 @@ function paintGame(pi){
   const n=pg[2].length;
   const upd=()=>{const k=fills.filter(Boolean).length;$("pDone").disabled=k<Math.ceil(n/2);$("pDone").classList.toggle("pulse",k>=Math.ceil(n/2))};
   $("pPal").querySelectorAll(".pot").forEach(b=>b.onclick=()=>{col=b.dataset.c;$("pPal").querySelectorAll(".pot").forEach(x=>x.classList.toggle("on",x===b));sfx.tap();sayseq(faSay(b.dataset.n))});
-  const bindRegions=()=>$("pCanvas").querySelectorAll(".rg").forEach(r=>r.onclick=e=>{const k=+r.dataset.k;fills[k]=col;r.setAttribute("fill",col);r.classList.remove("pop");void r.getBoundingClientRect();r.classList.add("pop");sfx.pop();upd()});
+  const bindRegions=()=>$("pCanvas").querySelectorAll(".rg").forEach(r=>r.onclick=e=>{const k=+r.dataset.k;fills[k]=col;r.setAttribute("fill",col);r.classList.remove("rgp");void r.getBoundingClientRect();r.classList.add("rgp");sfx.pop();upd()});
   bindRegions();
   $("pClear").onclick=()=>{sfx.tap();fills.length=0;$("pCanvas").innerHTML=paintSVG(pi,fills);bindRegions();upd()};
   $("pDone").onclick=()=>{sfx.tap();hush();S.paintings.push({p:pi,f:fills.slice(),d:today()});logEv({gid:"paint"},true);if(S.paintings.length>24)S.paintings.shift();S.acorns+=3;L.acorns+=3;save();renderStats();burst(140);moundDone()};

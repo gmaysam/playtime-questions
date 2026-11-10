@@ -391,18 +391,20 @@ function checkRealPrizes(){
 function showPrizes(){
   hidePanels();$("pPrizes").hidden=false;$("map").hidden=true;
   const items=S.stickers;
+  const jar=(have,need,kind)=>{const f=Math.min(1,have/need),left=Math.max(0,need-have);return `<div class="jar ${kind}${f>=1?" full":""}"><div class="jar-g"><i class="jar-f" style="height:${Math.round(f*100)}%"></i><span class="jar-e">${kind==="a"?"🌰":"🪵"}</span></div>
+    <b class="jar-n">${f>=1?"✓":left}</b><small>${f>=1?"full!":"more"}</small></div>`};
   $("pPrizes").innerHTML=`<button class="back" id="prBack"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>Back</button>
-    <div class="prz"><h2>🏆 My prizes</h2><p class="sub" style="margin:0 0 12px">You have ${S.acorns} 🌰 acorns and ${S.wood} 🪵 wood</p>
-    <h3>Big prizes</h3>
-    ${S.real.map(r=>{const ok=S.acorns>=r.a&&S.wood>=r.w,fa=Math.min(1,S.acorns/r.a),fw=Math.min(1,S.wood/r.w);
-      return `<button class="rp ${ok?"ready":""}" data-rp="${r.id}" style="width:100%;text-align:left"><span class="re">${pzI(r)}</span><b>${r.name}${ok?" · Ready! 🎉":""}</b>
-        <span><span class="bar a"><i style="width:${fa*100}%"></i></span><small>🌰 ${Math.min(S.acorns,r.a)} / ${r.a}${ok?"":` · ${Math.max(0,r.a-S.acorns)} more`}</small></span>
-        <span><span class="bar w"><i style="width:${fw*100}%"></i></span><small>🪵 ${Math.min(S.wood,r.w)} / ${r.w}${ok?"":` · ${Math.max(0,r.w-S.wood)} more`}</small></span></button>`}).join("")}
-    <div class="howto">🌰 <b>Acorns</b>: one for every right answer, two when right the first time.<br>🪵 <b>Wood</b>: one for every finished mound, three for opening Domi's big house.</div>
-    ${S.paintings.length?`<h3>My paintings (${S.paintings.length})</h3><div class="pgal">${S.paintings.slice().reverse().map(pp=>`<span class="pthumb">${paintSVG(pp.p,pp.f)}</span>`).join("")}</div>`:""}
-    <h3>My stickers (${items.length})</h3>
-    <div class="stk">${items.map((s,k)=>`<button data-st="${k}" aria-label="Sticker">${s.e}</button>`).join("")}${Array.from({length:Math.max(0,10-items.length)},()=>`<button class="empty" disabled>?</button>`).join("")}</div>
-    <p class="sub" style="margin-top:10px">A new sticker waits in the big house at the end of every day's path.</p></div>`;
+    <div class="prz prz2"><div class="pz-hero"><span class="pz-chest">🧰</span><h2>My treasure</h2>
+      <div class="pz-cnt"><span class="pzc a"><i>🌰</i><b>${S.acorns}</b></span><span class="pzc w"><i>🪵</i><b>${S.wood}</b></span><span class="pzc s"><i>🦄</i><b>${items.length}</b></span></div></div>
+    ${S.real.length?`<h3 class="pz-h">🎁 My big prizes</h3>`:`<div class="pz-none"><span>🎁</span><b>No big prize yet</b><small>Ask a grown-up to add one in the parents' corner 👨‍👩‍👧</small></div>`}
+    ${S.real.map(r=>{const ok=S.acorns>=r.a&&S.wood>=r.w,f=Math.min(1,(Math.min(1,S.acorns/r.a)+Math.min(1,S.wood/r.w))/2);
+      return `<button class="pz-card ${ok?"ready":""}" data-rp="${r.id}"><span class="pz-ph">${pzI(r)}${ok?`<span class="pz-burst">🎉</span>`:""}</span>
+        <b class="pz-name">${r.name}</b>${ok?`<span class="pz-ready">Ready! Go and tell a grown-up 🎉</span>`:`<span class="pz-road"><i style="width:${Math.round(f*100)}%"></i><span class="pz-walker" style="left:${Math.round(f*100)}%">🦫</span><span class="pz-goal">🎁</span></span>`}
+        <span class="pz-jars">${jar(S.acorns,r.a,"a")}${jar(S.wood,r.w,"w")}</span></button>`}).join("")}
+    <div class="pz-how"><span><b>🌰</b>right answer</span><span><b>🪵</b>finished mound</span><span><b>🦄</b>Domi's house</span></div>
+    <h3 class="pz-h">🦄 My sticker book</h3>
+    <div class="pz-book">${items.map((s,k)=>`<button data-st="${k}" aria-label="Sticker" style="--r:${((k*37)%17)-8}deg">${s.e}</button>`).join("")}${Array.from({length:Math.max(0,12-items.length)},()=>`<button class="empty" disabled>✨</button>`).join("")}</div>
+    ${S.paintings.length?`<h3 class="pz-h">🎨 My paintings</h3><div class="pz-gal">${S.paintings.slice().reverse().map(pp=>`<span class="pz-frame">${paintSVG(pp.p,pp.f)}</span>`).join("")}</div>`:""}</div>`;
   $("prBack").onclick=()=>{sfx.tap();showMap()};
   $("pPrizes").querySelectorAll("[data-st]").forEach(b=>b.onclick=()=>{const s=S.stickers[+b.dataset.st];reveal(s.e,"My sticker",`Won on ${s.d}`,null,"✨")});
   $("pPrizes").querySelectorAll("[data-rp]").forEach(b=>b.onclick=()=>{const r=S.real.find(x=>x.id===b.dataset.rp),ok=S.acorns>=r.a&&S.wood>=r.w;
