@@ -1039,3 +1039,39 @@ body,.phone,.lesson.q2,.introC,#pSettings,.panel,.map{background:#fff!important}
 #pSettings .r2{background:#2EB872}#pSettings .r1{background:#F4C04A}#pSettings .r0{background:#E6E9EF;box-shadow:inset 0 0 0 1.5px #C9CFDA}
 #pSettings .dk{margin:0 4px 0 10px;vertical-align:-1px}#pSettings .dk:first-child{margin-left:0}
 #pSettings .up{color:#1D8A4E}#pSettings .dn{color:#D9534F}
+/* ===== Nov 10: geography maps ===== */
+.gmap{width:100%;height:auto;display:block;border-radius:16px;background:#CFE9FB}
+.listen .gmap,.qvis .gmap{max-width:100%}
+.gmap .gsea{fill:#CFE9FB}
+.gmap .gland{fill:#BFD9A8;stroke:#fff;stroke-width:.8;transition:fill .2s}
+.gmap .gland.hi{fill:#FF8A5B}
+.gmap .gland.tap{cursor:pointer}.gmap .gland.tap:active{fill:#9CC57D}
+.gmap .gland.ok{fill:#2EB872}.gmap .gland.no{fill:#E8E1D8}
+.gmap .gcty{fill:#FF4B4B;stroke:#8E1E1E;stroke-width:1.2}
+.gmap.zoom .gland{stroke-width:.4}
+.gmap .gmark{fill:#FFC800;stroke:#fff;stroke-width:3}.gmap .gq{font:900 38px "Nunito",sans-serif;fill:#6B4A00}
+.gmap .gping{fill:none;stroke:#FFC800;stroke-width:3;animation:gping 1.4s infinite;transform-box:fill-box;transform-origin:center}
+@keyframes gping{from{opacity:.9;transform:scale(.7)}to{opacity:0;transform:scale(1.5)}}
+.gmwrap{width:100%;margin:6px 0 4px}
+.gmhint{text-align:center;font:700 16px "Nunito",sans-serif;color:#9AA7B6;margin:8px 0 0}
+#pSettings .dgrid{grid-template-columns:1fr!important}
+#pSettings .dsubt{margin:-4px 0 12px;font:600 13px/1.35 "Nunito",sans-serif;color:var(--soft)}
+#pSettings .donut li span,#pSettings .mleg li span{flex:1;min-width:0}
+#pSettings .donut li i,#pSettings .mleg li i{flex:none}
+#pSettings .donut ul{font-size:14px;gap:6px}
+#pSettings ul.mleg{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:6px;font:600 14px "Nunito",sans-serif;color:var(--soft)}
+#pSettings ul.mleg li{display:flex;align-items:center;gap:0}#pSettings ul.mleg li span b{color:var(--ink);font-weight:800}
+#pSettings ul.mleg li>b{color:var(--ink);font-weight:900;margin-left:8px}
+#pSettings ul.mleg li.z,#pSettings ul.mleg li.z b{color:#B9C0CD}
+@media (max-width:420px){#pSettings .donut{flex-direction:column}#pSettings .donut ul{width:100%}}
+.qtop2.gmapw{flex-wrap:wrap}
+.qtop2.gmapw .qvis{flex:1 1 100%;width:100%;max-height:none}
+.qtop2 .qvis svg.gmap{width:100%;max-height:none;height:auto}
+.rbgrid{container-type:inline-size}
+.rbc{font-size:min(44px,6vh,calc(100cqw / var(--n,5) * .62));min-width:0;min-height:0;overflow:hidden}
+.lesson .qtop2.gmapw .qvis{flex:1 1 100%!important;width:100%!important;max-width:none!important;max-height:none!important;align-items:stretch}
+.lesson .qtop2.gmapw .qvis svg.gmap{width:100%!important;max-height:34vh!important;height:auto!important}
+.lesson .qtop2.gmapw .qspk{position:absolute;z-index:2;margin:6px}
+.lesson .qtop2.gmapw{position:relative}
+.lesson .qtop2.gmapw .qspk{right:0;left:auto;top:0;width:48px!important;height:48px!important;min-height:0!important;border-radius:14px!important;margin:6px}
+.lesson .qtop2.gmapw .qspk svg{width:24px;height:24px}

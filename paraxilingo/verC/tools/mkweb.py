@@ -11,6 +11,9 @@ js = s[s.index('<script>') + 8:s.rindex('</script>')]
 
 # the fake phone frame is only for desktop browsers; on the iPad the app fills the screen
 css = css.replace('@media (min-width:560px) and (min-height:720px)', '@media (min-width:560px) and (min-height:720px) and (hover:hover) and (pointer:fine)')
+# wide-screen rules: on touch screens (iPad) there is no phone frame, so they apply at any height
+import re as _re2
+css = _re2.sub(r'@media (\([^{]*?) and \(max-height:719px\)\{', lambda m: '@media '+m.group(1)+' and (max-height:719px), '+m.group(1)+' and (hover:none), '+m.group(1)+' and (pointer:coarse){', css)
 css += '''
 /* iPad: keep questions and pages a comfortable width */
 .qbody,.panel{max-width:680px;margin-left:auto;margin-right:auto;width:100%}

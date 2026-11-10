@@ -49,6 +49,10 @@ Main skill counts fully toward the score; "also" skills count half. Methods: Pla
 | `people.job2` | Jobs | Curiosity & critical thinking | – | Explore | Learn what people do in their jobs. |
 | `flags.flag` | Flags of the world | Curiosity & critical thinking | Thinking & Understanding → Memory & attention | Explore | Recognise countries' flags. |
 | `flags.flag2` | Flags of the world | Curiosity & critical thinking | Thinking & Understanding → Memory & attention | Explore | Recognise countries' flags. |
+| `geo.cont` | Continents on the map | Curiosity & critical thinking | Language & Communication → Vocabulary & storytelling | Explore | Name the continent coloured on a real world map. |
+| `geo.find` | Find it on the map | Curiosity & critical thinking | Thinking & Understanding → Memory & attention | Play | Find a continent on the world map by tapping it. |
+| `geo.ocean` | Oceans | Curiosity & critical thinking | Creativity & Exploration → Science & nature | Explore | Name the oceans of the world. |
+| `geo.cty` | Countries on the map | Curiosity & critical thinking | Thinking & Understanding → Memory & attention | Explore | Recognise where countries are on the map. |
 | `w:m` | Numbers & shapes quiz | Mathematics & patterns | – | Practice | Quick questions about numbers and shapes. |
 | `g:sort` | Sort into baskets | Logic & problem-solving | Physical Development → Fine motor skills | Play | Sort things into two groups by a rule. |
 | `g:tapall` | Find them all | Memory & attention | – | Play | Find every item that fits - careful looking. |

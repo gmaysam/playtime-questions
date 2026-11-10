@@ -59,7 +59,7 @@ const CATS=[
  {id:"farm",topic:"watcher",e:"🏡",name:"Homes, food & sounds"},
  {id:"shapes",topic:"shapes",e:"🔷",name:"Shapes, colours & patterns"},
  {id:"people",topic:"people",e:"🧑‍🚒",name:"Jobs & feelings"},
- {id:"flags",topic:"flags",e:"🚩",name:"Flags of the world"},
+ {id:"flags",topic:"flags",e:"🗺️",name:"Geography & flags"},
  {id:"robot",topic:"robot",e:"🤖",name:"Robots"},
  {id:"memory",topic:"memory",e:"🧠",name:"Concentration"},
  {id:"letters",topic:"words",e:"🔤",name:"Letters & words"},
@@ -86,7 +86,7 @@ function kindsFor(cat){
   if(cat==="farm")return a<=4?["home","sound","fly","match"]:["home","food","sound","fly","water","match"];
   if(cat==="shapes")return a<=4?["shape","color","pattern","match"]:a<=6?["shape","sides","both","pattern","match"]:["sides","both","pattern","bigsmall","match"];
   if(cat==="people")return ["feel","job","job2"];
-  if(cat==="flags")return a<=5?["flag"]:["flag","flag2"];
+  if(cat==="flags")return !GEO_READY?(a<=5?["flag"]:["flag","flag2"]):a<=4?["flag","gcont","gfind"]:a<=5?["flag","gcont","gfind","gcty"]:["flag","flag2","gcont","gfind","gcty","gocean"];
   if(cat==="robot")return ["robot"];
   if(cat==="memory")return ["simon","piano","pairs"];
   return ["w"];
@@ -252,6 +252,7 @@ function buildQ0(cat,kind,used){
   if(cat==="letters")return qLetters(kind,used);
   if(cat==="read")return qRead(kind,used);
   if(cat==="shapes")return qShapes(kind,used);
+  if(cat==="flags"&&/^g/.test(kind))return qGeo(kind,used);
   if(cat==="people"||cat==="flags")return qPeople(kind,used);
   if(cat==="sky"&&Math.random()<.4){const g=qSky2(used);if(g)return g}
   if(cat==="sky"&&Math.random()<.35)return Math.random()<.5?qSkyPic(used):qPlanet(used);
@@ -293,11 +294,11 @@ function nextQ(){
     const v=tk(q.visual),a=[...tk(q.opts[q.ans].h)],others=q.opts.filter((o,i)=>i!==q.ans).map(o=>tk(o.h));
     if(a.some(x=>v.has(x)&&!others.every(o=>o.has(x))))q.visual=`<div class="listen">${cc.e||"⭐"}</div>`}
   const deco=/^<div class="listen/.test(q.visual||"")&&!/radio/.test(q.visual);
-  if(!q.style){q.style="cards";if(q.opts&&q.opts.length===4&&q.layout!=="yn"&&!q.tf&&!q.flash&&q.opts.every(o=>!/<img|<svg|class=["']?(oe|grp|ob|wp|cshape|swatch|dayb|clk|yn)/.test(o.h||""))){const r=Math.random();q.style=r<.28?"balloon":r<.48?"fish":"cards"}}
+  if(!q.style){q.style="cards";if(q.opts&&q.opts.length===4&&q.layout!=="yn"&&!q.tf&&!q.flash&&!/gmap/.test(q.visual||"")&&q.opts.every(o=>String(o.h||"").replace(/<[^>]+>/g,"").trim().length<=9)&&q.opts.every(o=>!/<img|<svg|class=["']?(oe|grp|ob|wp|cshape|swatch|dayb|clk|yn)/.test(o.h||""))){const r=Math.random();q.style=r<.28?"balloon":r<.48?"fish":"cards"}}
   /* owner's template: title, speaker + the thing asked, 4 cards in a 2 x 2 grid, big CHECK button */
   $("qBody").innerHTML=`<div class="qkick"><span class="qke">${cc.e||"⭐"}</span>${cc.name||""}</div>
     <h2 class="qtitle${(q.cap||"").length>34?" long":""}">${q.cap||"Choose the right one"}</h2>
-    <div class="qtop2${/class="(seqrow|pat|eq|coins|coinname|graph|story2|bags|clues|seq|daycard|sent)/.test(q.visual||"")?" wide":""}"><button class="qspk" id="qSpk" aria-label="Hear the question again"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></button>${deco||!q.visual?"":`<div class="qvis">${q.visual}</div>`}</div>
+    <div class="qtop2${/class="(gmap|seqrow|pat|eq|coins|coinname|graph|story2|bags|clues|seq|daycard|sent)/.test(q.visual||"")?" wide":""}${/gmap/.test(q.visual||"")?" gmapw":""}"><button class="qspk" id="qSpk" aria-label="Hear the question again"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></button>${deco||!q.visual?"":`<div class="qvis">${q.visual}</div>`}</div>
     <div class="qopts ${q.layout} ${deco?"tall":""} st-${q.style}">${q.opts.map((o,j)=>`<button class="qo t${tints[j%4]}" data-j="${j}">${o.h}</button>`).join("")}</div>
     ${q.style==="cards"?`<button class="qcheck" id="qCheck" disabled>CHECK</button>`:`<div class="qhint2">${q.style==="balloon"?"🎈 Pop the right balloon!":"🎣 Catch the right fish!"}</div><button class="qcheck" id="qCheck" disabled hidden>CHECK</button>`}`;
   $("qSpk").onclick=()=>{sfx.tap();ask(q)};
@@ -340,8 +341,10 @@ function pick(j,b){
      if(fe){if(!q.why){const et=String(q.exp&&q.exp.t||"").trim();q.why={t:et.length>2&&et.toLowerCase()!==lab&&!fe.includes(et)?et:"",v:[]}}if(!q.why.f&&!(q.why.t||"").includes(fe))q.why.f=fe}
      if(q.why)q.why.v=(q.why.v||[]).filter(c=>c&&!/LULU_ANS_IS/.test(c))}
     if(q.why){ /* short "why" after the answer: text on the card, Lulu reads it when there is a voice for it */
-      sheet("good why",(q.tf?(q.ans===0?"✅ True! ":"❌ Not true! "):"")+pickOne(PRAISE_T),(q.why.t||"")+(q.why.f?`<span class="ffact"><b>💡</b><span>${q.why.f}</span></span>`:""));
-      sayseq([pickOne(PRAISE_CLIPS),...q.why.v],()=>setTimeout(go,q.why.v.length?1600:3800));
+      /* the fact is read aloud when it has a voice; praise only now and then (always when there is nothing else to hear) */
+      const fv=factV(q.why.f),heard=q.why.v.length+fv.length,pr=!heard||Math.random()<.35;
+      sheet("good why",(q.tf?(q.ans===0?"✅ True! ":"❌ Not true! "):"")+(pr?pickOne(PRAISE_T):"💡 Did you know?"),(q.why.t||"")+(q.why.f?`<span class="ffact"><b>💡</b><span>${q.why.f}</span></span>`:""));
+      sayseq([...(pr?[pickOne(PRAISE_CLIPS)]:[]),...q.why.v,...fv],()=>setTimeout(go,heard?1600:3800));
     }else{
       /* a short fact or the worked answer under the praise (e.g. "Pig: barn", "7 + 5 = 12") */
       const fact=q.exp&&q.exp.t&&String(q.exp.t).length>2?q.exp.t:"";
@@ -674,17 +677,21 @@ function qRobot(){const a=lvl(),n=a<=4?3:a<=6?4:5;let walls=[],st,gl;
   return {robot:{n,st,gl,walls},voice:["w/LULU_RB_INTRO"],cap:"Help the robot reach the flag!",opts:[],ans:-1,kind:"robot",exp:{t:"",v:[]}}}
 function robPath(n,st,gl,walls){const key=p=>p[0]+","+p[1],seen=new Set([key(st)]);let fr=[[st,0]];
   while(fr.length){const [p,d]=fr.shift();if(p[0]===gl[0]&&p[1]===gl[1])return d;for(const [dx,dy] of [[1,0],[-1,0],[0,1],[0,-1]]){const q2=[p[0]+dx,p[1]+dy];if(q2[0]<0||q2[1]<0||q2[0]>=n||q2[1]>=n||walls.some(w=>w[0]===q2[0]&&w[1]===q2[1])||seen.has(key(q2)))continue;seen.add(key(q2));fr.push([q2,d+1])}}return -1}
+/* shrink a big element (grid, map...) until the button under it is fully on screen, on any phone */
+function fitScreen(bigId,btnId){const run=()=>{const g=$(bigId),b=$(btnId),les=$("lesson");if(!g||!b||!les)return;const lr=les.getBoundingClientRect(),lim=lr.top+Math.min(lr.height,innerHeight)-10;
+  let w=g.getBoundingClientRect().width,k=0;while(b.getBoundingClientRect().bottom>lim&&w>140&&k++<60){w-=10;g.style.width=w+"px";g.style.maxWidth=w+"px"}};
+  requestAnimationFrame(()=>{run();setTimeout(run,450)})}
 function robotQ(q){const R2=q.robot,cc=CATS.find(c=>c.id===L.cat)||{};let prog=[],pos=R2.st.slice(),running=false,miss=0;
   const ARW={r:["➡️",1,0],l:["⬅️",-1,0],u:["⬆️",0,-1],d:["⬇️",0,1]};
   const cell=(x,y)=>x===pos[0]&&y===pos[1]?"🤖":x===R2.gl[0]&&y===R2.gl[1]?"🏁":R2.walls.some(w=>w[0]===x&&w[1]===y)?"🧱":"";
   const draw=()=>{$("rbGrid").innerHTML=Array.from({length:R2.n*R2.n},(_,i)=>{const x=i%R2.n,y=Math.floor(i/R2.n);return `<div class="rbc">${cell(x,y)}</div>`}).join("");
     $("rbProg").innerHTML=prog.length?prog.map(k=>`<span>${ARW[k][0]}</span>`).join(""):`<em>Tap the arrows</em>`};
   $("qBody").innerHTML=`<div class="qkick"><span class="qke">🤖</span>Robot path</div><h2 class="qtitle">Help the robot reach the flag!</h2>
-    <div class="rbwrap"><div class="rbgrid" id="rbGrid" style="grid-template-columns:repeat(${R2.n},1fr);grid-template-rows:repeat(${R2.n},1fr)"></div>
+    <div class="rbwrap"><div class="rbgrid" id="rbGrid" style="--n:${R2.n};grid-template-columns:repeat(${R2.n},minmax(0,1fr));grid-template-rows:repeat(${R2.n},minmax(0,1fr))"></div>
     <div class="rbprog" id="rbProg"></div>
     <div class="rbpad"><button data-k="u">⬆️</button><button data-k="l">⬅️</button><button data-k="d">⬇️</button><button data-k="r">➡️</button><button class="rbdel" data-k="x">↩️</button></div></div>
     <button class="qcheck on" id="rbGo">GO ▶</button>`;
-  $("qBody").classList.remove("in");void $("qBody").offsetWidth;$("qBody").classList.add("in");draw();
+  $("qBody").classList.remove("in");void $("qBody").offsetWidth;$("qBody").classList.add("in");draw();fitScreen("rbGrid","rbGo");
   setTimeout(()=>{if(L&&L.q===q)sayseq(q.voice,()=>{})},400);
   window.__rbSolve=()=>{const key=p=>p+"",prev={},fr=[R2.st],seen=new Set([key(R2.st)]);while(fr.length){const p=fr.shift();if(p[0]===R2.gl[0]&&p[1]===R2.gl[1])break;for(const k of "rlud"){const a2=ARW[k],q2=[p[0]+a2[1],p[1]+a2[2]];if(q2[0]<0||q2[1]<0||q2[0]>=R2.n||q2[1]>=R2.n||R2.walls.some(w=>w[0]===q2[0]&&w[1]===q2[1])||seen.has(key(q2)))continue;seen.add(key(q2));prev[key(q2)]=[p,k];fr.push(q2)}}
     const path=[];let c=R2.gl;while(key(c)!==key(R2.st)){const [p,k]=prev[key(c)];path.unshift(k);c=p}prog=path;draw();$("rbGo").click()};   /* used by the automatic tests */

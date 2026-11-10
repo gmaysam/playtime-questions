@@ -108,6 +108,10 @@ const GMAP={
  "people.job2":G("Jobs",["cog","curiosity"],0,"Learn what people do in their jobs.","Explore"),
  "flags.flag":G("Flags of the world",["cog","curiosity"],[["cog","memory"]],"Recognise countries' flags.","Explore"),
  "flags.flag2":G("Flags of the world",["cog","curiosity"],[["cog","memory"]],"Recognise countries' flags.","Explore"),
+ "geo.cont":G("Continents on the map",["cog","curiosity"],[["lang","vocab"]],"Name the continent coloured on a real world map.","Explore"),
+ "geo.find":G("Find it on the map",["cog","curiosity"],[["cog","memory"]],"Find a continent on the world map by tapping it.","Play"),
+ "geo.ocean":G("Oceans",["cog","curiosity"],[["cre","science"]],"Name the oceans of the world.","Explore"),
+ "geo.cty":G("Countries on the map",["cog","curiosity"],[["cog","memory"]],"Recognise where countries are on the map.","Explore"),
  "w:a":G("Animal facts",["cre","science"],[["cog","curiosity"]],"Questions about animals and how they live.","Explore"),
  "w:d":G("Dinosaurs",["cre","science"],[["cog","curiosity"]],"Questions about dinosaurs.","Explore"),
  "w:e":G("Our Earth",["cre","science"],[["cog","curiosity"]],"Seas, deserts, volcanoes and more.","Explore"),
@@ -238,7 +242,7 @@ function lineSVG(pid){const D=trendData(pid);if(D.length<2)return `<div class="d
   else{PILLARS.forEach(P=>{if(D.some(x=>x.vals[P.id]!==null))g+=path(x=>x.vals[P.id],"lthin",P.c)});g+=path(x=>x.all,"lmain","#25324B");
     D.forEach((x,i)=>g+=`<circle cx="${X(i)}" cy="${Y(x.all)}" r="3.5" fill="#25324B"><title>${fmtDay(x.d)}: ${x.all}</title></circle>`)}
   const step=Math.ceil(D.length/5);D.forEach((x,i)=>{if(i%step===0||i===D.length-1)g+=`<text x="${X(i)}" y="${H-6}" text-anchor="${i===D.length-1?"end":i===0?"start":"middle"}" class="ltick">${fmtDay(x.d)}</text>`});
-  return `<svg viewBox="0 0 ${W} ${H}" class="lchart" role="img" aria-label="Progress over time">${g}</svg>`+(pid?"":`<div class="llegend"><span><i style="background:#25324B"></i>Overall</span>${PILLARS.filter(P=>D.some(x=>x.vals[P.id]!==null)).map(P=>`<span><i style="background:${P.c}"></i>${PSHORT[P.id]}</span>`).join("")}</div>`)}
+  return `<svg viewBox="0 0 ${W} ${H}" class="lchart" role="img" aria-label="Progress over time">${g}</svg>`+(pid?"":`<div class="llegend"><span><i style="background:#25324B;width:18px;height:4px"></i><b>Overall</b></span>${PILLARS.filter(P=>D.some(x=>x.vals[P.id]!==null)).map(P=>`<span><i style="background:${P.c}"></i>${PSHORT[P.id]}</span>`).join("")}</div>`)}
 
 /* --- donut: what the child actually did in the period (each answer counted once, for its game's main pillar) --- */
 function donutSVG(E){const cnt=Object.fromEntries(PILLARS.map(P=>[P.id,0]));E.forEach(e=>{const m=gameInfo(e[1],e[5]);if(m)cnt[m.p[0]]++});const tot=E.length;
@@ -246,10 +250,11 @@ function donutSVG(E){const cnt=Object.fromEntries(PILLARS.map(P=>[P.id,0]));E.fo
   const C=2*Math.PI*52;let off=0,g=`<circle cx="70" cy="70" r="52" class="dbg"/>`;
   PILLARS.forEach(P=>{const f=cnt[P.id]/tot;if(!f)return;g+=`<circle cx="70" cy="70" r="52" stroke="${P.c}" stroke-dasharray="${(f*C-(f<1?2:0)).toFixed(2)} ${C}" stroke-dashoffset="${(-off*C).toFixed(2)}" class="dseg"><title>${P.name}: ${Math.round(f*100)}%</title></circle>`;off+=f});
   return `<div class="donut"><svg viewBox="0 0 140 140" role="img" aria-label="Activity by pillar">${g}<text x="70" y="68" text-anchor="middle" class="dnum">${tot}</text><text x="70" y="86" text-anchor="middle" class="dsub">answers</text></svg>
-    <ul>${PILLARS.map(P=>`<li class="${cnt[P.id]?"":"z"}"><i style="background:${P.c}"></i>${PSHORT[P.id]}<b>${Math.round(cnt[P.id]/tot*100)}%</b></li>`).join("")}</ul></div>`}
+    <ul>${PILLARS.map(P=>`<li class="${cnt[P.id]?"":"z"}"><i style="background:${P.c}"></i><span>${P.e} ${P.name}</span><b>${Math.round(cnt[P.id]/tot*100)}%</b></li>`).join("")}</ul></div>`}
+const MDESC={Play:"games & puzzles",Explore:"questions about the world",Create:"colouring & tracing",Practice:"repeating skills",Reflect:"checking & explaining"};
 function methodsHTML(E){const M=["Play","Explore","Create","Practice","Reflect"],c=Object.fromEntries(M.map(m=>[m,0]));E.forEach(e=>{const g=GMAP[e[1]];if(g)c[g.m]++});const t=E.length||1;
   return `<div class="mbar">${M.map((m,i)=>c[m]?`<span style="flex:${c[m]};background:${["#5B8DEF","#2EB8A6","#F4A62A","#8E6FD8","#EC6FA0"][i]}" title="${m} ${Math.round(c[m]/t*100)}%"></span>`:"").join("")}</div>
-    <div class="mleg">${M.map((m,i)=>`<span class="${c[m]?"":"z"}"><i style="background:${["#5B8DEF","#2EB8A6","#F4A62A","#8E6FD8","#EC6FA0"][i]}"></i>${m} ${E.length?Math.round(c[m]/t*100):0}%</span>`).join("")}</div>`}
+    <ul class="mleg">${M.map((m,i)=>`<li class="${c[m]?"":"z"}"><i style="background:${["#5B8DEF","#2EB8A6","#F4A62A","#8E6FD8","#EC6FA0"][i]}"></i><span><b>${m}</b> · ${MDESC[m]}</span><b>${E.length?Math.round(c[m]/t*100):0}%</b></li>`).join("")}</ul>`}
 
 /* --- achievements, insights: only from real answers --- */
 function achievements(E,pid){const n=PER[S.dPer||"week"][0],t=evDay(),now=scoreAll(t),then=scoreAll(t-n),out=[];
@@ -292,13 +297,13 @@ function dashHTML(pn){migrateEv();const t=evDay(),cur=scoreAll(t),wk=histOK(t-7)
   <div class="dcard dradar"><h3>What ${esc(pn)} is learning</h3>
     ${radarSVG(cur,cw,cm,null)}
     <div class="rcap" id="rCap">Tap a pillar to see its score</div>
-    <div class="rleg"><span><i class="lnow"></i>Now</span>${cw?`<span><i class="lwk"></i>Last week</span>`:""}${cm?`<span><i class="lmo"></i>Last month</span>`:""}<span class="nd">○ Not enough data yet</span></div>
+    <div class="rleg"><span><i class="lnow"></i>Now (0 = centre, 100 = edge)</span>${cw?`<span><i class="lwk"></i>A week ago</span>`:""}${cm?`<span><i class="lmo"></i>A month ago</span>`:""}</div>
     <div class="plist">${PILLARS.map(P=>{const p=cur.pil[P.id];return `<button class="prow" data-pil="${P.id}"><i style="background:${P.c}1f">${P.e}</i><span><b>${P.name}</b><span class="pbar"><span style="width:${p.score??0}%;background:${P.c}"></span></span></span><em class="${p.score===null?"nd":""}">${p.score===null?(p.n?"Exploring":"Not enough data"):p.score}</em><span class="chev">›</span></button>`}).join("")}</div></div>
   <div class="dcard"><h3>Key insights</h3>${insights(cur,cw,E).map(([e,t])=>`<p class="dins"><span>${e}</span><span>${t}</span></p>`).join("")}
     <p class="dage">🎂 At ${S.age}, learning often focuses on ${ctx[2]}. Every child moves at their own pace.</p></div>
   <div class="dcard"><h3>Progress over time</h3>${lineSVG()}</div>
-  <div class="dgrid"><div class="dcard"><h3>Where the time went <small>${per[2]}</small></h3>${donutSVG(E)}</div>
-    <div class="dcard"><h3>How ${esc(pn)} learned <small>${per[2]}</small></h3>${methodsHTML(E)}<p class="dnote">Play, explore, create, practise and reflect are <i>ways</i> of learning - all of them help children learn how to learn.</p></div></div>
+  <div class="dgrid"><div class="dcard"><h3>Where the time went <small>${per[2]}</small></h3><p class="dsubt">Share of ${esc(pn)}'s answers in each learning area</p>${donutSVG(E)}</div>
+    <div class="dcard"><h3>How ${esc(pn)} learned <small>${per[2]}</small></h3><p class="dsubt">The kind of activity behind each answer</p>${methodsHTML(E)}<p class="dnote">Play, explore, create, practise and reflect are <i>ways</i> of learning - all of them help children learn how to learn.</p></div></div>
   <div class="dcard"><h3>Recent achievements <small>${per[2]}</small></h3>${ach.length?ach.map(([e,t,p])=>`<p class="dach"><span style="background:${PIL[p].c}1f">${e}</span><span>${t}</span></p>`).join(""):`<div class="dempty">🏅 Achievements show up here as ${esc(pn)} plays - each one comes from real answers.</div>`}</div>
   <details class="dcard dmap"><summary><h3>Games &amp; the skills they build</h3></summary>${PILLARS.map(P=>`<div class="mapp"><b style="color:${P.c}">${P.e} ${P.name}</b><span>${gamesFor(P.id).filter(g=>g.role==="main").map(g=>g.name).join(" · ")||"<i>No game focuses on this yet</i>"}</span></div>`).join("")}</details>
   ${HOWTO}</div>`}

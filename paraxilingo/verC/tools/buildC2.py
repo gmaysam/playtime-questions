@@ -36,7 +36,7 @@ A = rep(A, ' {id:"feel",e:"😊",name:"Feelings & Friends",soon:true},',
  {id:"radio",e:"📻",name:"Domi's Radio",desc:"Listen to a short story, then answer questions about it"},
  {id:"shapes",e:"🔷",name:"Shapes & colours",desc:"Shapes, colours, patterns, bigger or smaller"},
  {id:"people",e:"🧑‍🚒",name:"Jobs & feelings",desc:"Find the job, how does this child feel?"},
- {id:"flags",e:"🚩",name:"Flags",desc:"Flags of the world"},
+ {id:"flags",e:"🗺️",name:"Geography",desc:"Continents, oceans and countries on the world map, and flags"},
  {id:"robot",e:"🤖",name:"Robots",desc:"Help the robot reach the flag: first steps in coding"},
  {id:"memory",e:"🧠",name:"Concentration",desc:"Simon colours, piano notes, memory pairs"},
  {id:"words",e:"🔤",name:"Letters & words",desc:"ABC, first letter, English words"},
@@ -71,7 +71,7 @@ for _f,_d in (('fa_new3.json','FA'),('en_new2.json','EN')):
     if os.path.exists(_p):
         for _w,_c in json.load(open(_p)).items():
             if os.path.exists(os.path.join(SDIR,'fa_new','out',_c+'.mp3')):(FA_SAY if _d=='FA' else EN_SAY)[_w]=_c
-B=open(os.path.join(os.path.dirname(__file__),'qengine.js')).read().replace('__STORIES__',open(os.path.join(SDIR,'watcher','stories.json')).read()).replace('__FA_SAY__',json.dumps(FA_SAY)).replace('__EVOICED__',json.dumps(EVOICED)).replace('__EN_SAY__',json.dumps(EN_SAY)).replace('__POOL__',open(os.path.join(SDIR,'watcher','pool.json')).read()).replace('__WQ__',wq).replace('__VOICED__',json.dumps(VOICED)).replace('__PIC_E__',PIC_E).replace('__WORD_E__',WORD_E)+open(os.path.join(os.path.dirname(__file__),'games.js')).read()+open(os.path.join(os.path.dirname(__file__),'games2.js')).read().replace('__GVOICE__','true' if os.path.exists('appC/audio/w/PX_G_SPY.mp3') else 'false').replace('__SK2VOICE__','true' if os.path.exists('appC/audio/w/PX_SK2_Q_k19.mp3') else 'false')+open(os.path.join(os.path.dirname(__file__),'pillars.js')).read()
+B=open(os.path.join(os.path.dirname(__file__),'qengine.js')).read().replace('__STORIES__',open(os.path.join(SDIR,'watcher','stories.json')).read()).replace('__FA_SAY__',json.dumps(FA_SAY)).replace('__EVOICED__',json.dumps(EVOICED)).replace('__EN_SAY__',json.dumps(EN_SAY)).replace('__POOL__',open(os.path.join(SDIR,'watcher','pool.json')).read()).replace('__WQ__',wq).replace('__VOICED__',json.dumps(VOICED)).replace('__PIC_E__',PIC_E).replace('__WORD_E__',WORD_E)+open(os.path.join(os.path.dirname(__file__),'games.js')).read().replace('__FACTV__',json.dumps({t:c for t,c in json.load(open(os.path.join(os.path.dirname(__file__),'fact_voice.json'))).items() if os.path.exists('appC/audio/w/'+c+'.mp3')},ensure_ascii=False))+open(os.path.join(os.path.dirname(__file__),'games2.js')).read().replace('__GVOICE__','true' if os.path.exists('appC/audio/w/PX_G_SPY.mp3') else 'false').replace('__SK2VOICE__','true' if os.path.exists('appC/audio/w/PX_SK2_Q_k19.mp3') else 'false')+open(os.path.join(os.path.dirname(__file__),'geo.js')).read().replace('__GEOMAP__',open(os.path.join(os.path.dirname(__file__),'geo_map.json')).read()).replace('__GEOVOICE__','true' if os.path.exists('appC/audio/w/PX_GEO_Q_FIND.mp3') else 'false')+open(os.path.join(os.path.dirname(__file__),'pillars.js')).read()
 C=''
 
 css += r'''
@@ -242,7 +242,7 @@ function eventNow(d=new Date()){
 }
 const monthIdx=()=>S.mapMonth==="auto"?new Date().getMonth():+S.mapMonth;
 const landIdx=()=>MONTH_LAND[monthIdx()];
-const TOPIC_SYM={flags:"🚩",robot:"🤖",memory:"🧠",math:"➕",clock:"🕒",watcher:"🔎",shapes:"🔷",people:"🚩",words:"🔤",reading:"📖",radio:"📻",paint:"🎨"};
+const TOPIC_SYM={flags:"🗺️",robot:"🤖",memory:"🧠",math:"➕",clock:"🕒",watcher:"🔎",shapes:"🔷",people:"🚩",words:"🔤",reading:"📖",radio:"📻",paint:"🎨"};
 
 /* ================= today's path: the parents' daily questions split over the mounds ================= */
 const activeTopics=()=>S.topics.filter(t=>TOPIC_SYM[t]);
@@ -422,7 +422,7 @@ function showParents(){
   hidePanels();$("map").hidden=true;$("pSettings").hidden=false;
   const pn=curPlayer().name,w=wkLog(),tp=S.lastTopic||"math",dq=(DINNER[tp]||DINNER.math),names=w.topics.map(t=>(COURSE.find(c=>c.id===t)||{}).name).filter(Boolean);
   const sk=skillFor(S.age,S.diff),ex1=makeProb(sk),ex2=makeProb(sk),n=HOLES[landIdx()].length;
-  const SHORT={flags:"Flags",robot:"Robots",memory:"Focus",people:"Jobs",math:"Numbers",clock:"Clock",watcher:"World",shapes:"Shapes",words:"Letters",reading:"Read",radio:"Radio",paint:"Paint"},pct=w.q?Math.round(w.right/w.q*100):0;
+  const SHORT={flags:"Geography",robot:"Robots",memory:"Focus",people:"Jobs",math:"Numbers",clock:"Clock",watcher:"World",shapes:"Shapes",words:"Letters",reading:"Read",radio:"Radio",paint:"Paint"},pct=w.q?Math.round(w.right/w.q*100):0;
   const ring=(v,max,c,ic)=>{const f=Math.min(1,v/max);return `<span class="pring" style="--f:${f*360}deg;--c:${c}"><i>${ic}</i></span><small class="pnum">${Math.min(v,max)}/${max}</small>`};
   const sec=(e,t)=>`<div class="psec"><span>${e}</span>${t}</div>`;
   $("pSettings").innerHTML=`<button class="back" id="closeSettings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>Back</button>
@@ -568,5 +568,8 @@ head = head.replace('<title>Paraxilingo B</title>', '<title>Paraxilingo C</title
 if 'name="viewport"' not in head:  # same screen setting as the published site, so tests see real phone/iPad layouts
     head = head.replace('<title>', '<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">\n<title>', 1)
 out = head + '<style>' + css + '</style>\n' + markup + '\n<script>' + script_new + '</script>\n'
+# wide-screen rules must never apply inside the 390px phone frame (shown when the window is 560+ wide and 720+ tall)
+import re as _re
+out=_re.sub(r'@media ?\((min-width:\s*(?:680|700)px|orientation:\s*landscape)\)((?: and \([^)]*\))*) ?\{',lambda m:'@media ('+m.group(1)+')'+m.group(2)+' and (max-height:719px){',out)
 open(OUT, 'w').write(out)
 print("ok", len(out))
