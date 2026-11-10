@@ -19,7 +19,7 @@ const fs=require('fs'),path=require('path');const root=process.argv[2],age=+(pro
    for(let k=0;k<40;k++){
      const st=await p.evaluate(()=>{const L=__px.L;if(!L)return 'none';if(!document.getElementById('qResult').hidden)return 'result';if(document.getElementById('qSheet').classList.contains('show'))return 'sheet';if(document.getElementById('rDone'))return 'radio';if(document.getElementById('pCanvas'))return 'paint';return L.q&&!L.q.locked?'q':'wait'});
      if(st==='result'||st==='none')break;
-     if(st==='sheet'){if(shot<40){await p.screenshot({path:root+`/../shots/q_${String(shot++).padStart(2,'0')}_sheet.png`})}await p.click('#qNext');await p.waitForTimeout(500);continue}
+     if(st==='sheet'){if(shot<40){await p.screenshot({path:root+`/../shots/q_${String(shot++).padStart(2,'0')}_sheet.png`})}await p.click('#qNext',{force:true,timeout:3000}).catch(()=>{});await p.waitForTimeout(500);continue}
      if(st==='radio'){await p.screenshot({path:root+`/../shots/q_${String(shot++).padStart(2,'0')}_radio.png`});await p.evaluate(()=>{document.getElementById('rDone').disabled=false});await p.click('#rDone');await p.waitForTimeout(600);continue}
      if(st==='paint'){await p.screenshot({path:root+'/../shots/q_paint0.png'});const rg=await p.$$('#pCanvas .rg');const pots=await p.$$('.pot');for(let r=0;r<rg.length;r++){await pots[r%pots.length].click({force:true});await rg[r].dispatchEvent('click');}await p.waitForTimeout(300);await p.screenshot({path:root+'/../shots/q_paint1.png'});await p.click('#pDone',{force:true});await p.waitForTimeout(800);continue}
      if(st==='wait'){await p.waitForTimeout(400);continue}
