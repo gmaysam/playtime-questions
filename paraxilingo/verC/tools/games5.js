@@ -30,6 +30,8 @@ function capRound(p,cat){if(!p)return p;const fam=k=>FAMILY[k]||k,du=dayUse(),dc
   const out=[];for(const k of p){const f=fam(k);if((n[f]||0)<cap(k)){n[f]=(n[f]||0)+1;out.push(k);continue}
     const alt=pool.find(x=>(n[fam(x)]||0)<cap(x)&&x!==out[out.length-1]);if(alt){n[fam(alt)]=(n[fam(alt)]||0)+1;out.push(alt)}else{const ks=(kindsFor(cat)||[]).filter(x=>!x.startsWith("f_")&&!GAMEK.includes(x)),any=sh(ALLF()).find(x=>(n[fam(x)]||0)<cap(x)&&x!==out[out.length-1]);
       const pick=any||(ks.length?pickOne(ks):null);if(pick){n[fam(pick)]=(n[fam(pick)]||0)+1;out.push(pick)}}}
+  /* never the same kind of question twice in a row */
+  for(let i=1;i<out.length;i++)if(fam(out[i])===fam(out[i-1])){const j=out.findIndex((x,jj)=>jj>i&&fam(x)!==fam(out[i-1])&&(jj+1>=out.length||fam(out[jj+1])!==fam(out[i]))&&fam(out[jj-1])!==fam(out[i]));if(j>0)[out[i],out[j]]=[out[j],out[i]]}
   if(!window.__noDayCount){for(const k of out)du[fam(k)]=(du[fam(k)]||0)+1;try{save()}catch(e){}}
   return out}
 const _pr5=planRound;planRound=function(cat,count){return capRound(_pr5(cat,count),cat)};
