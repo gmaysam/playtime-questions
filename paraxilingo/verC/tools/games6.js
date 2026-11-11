@@ -258,3 +258,15 @@ Object.assign(GMAP,{
  "g:hop":G("Hopscotch",["cog","math"],[["phys","coord"]],"Hop the frog across stones in number order or by 2s, 5s, 10s.","Play"),
  "g:dance":G("Dance copy",["phys","gross"],[["cog","memory"],["cre","art"]],"Watch a short dance, copy it, then dance it for real.","Play"),
  "g:climb":G("Wall climb",["phys","coord"],[["cog","logic"]],"Climb by tapping left and right hands in turn.","Play")});
+/* ---------------- every game has an age window: youngest age it is offered to, and (for toddler toys) the oldest ---------------- */
+const FMIN={f_shapes:3,f_robowalk:3,f_calm:3,f_pump:3,f_basket:3,f_mix:3,f_cheer:3,f_rhythm:3,f_emomatch:3,f_hop:3,f_dance:3,simon:3,pairs:3,piano:3,f_colorit:3,
+  f_blocks:5,f_whack:5,f_trace:5,f_hear:5,f_slot:5,f_balance:5,f_tshow:5,f_ramp:5,f_shadow:5,f_lab:5,f_dragpat:5,f_setclock:5,robot:5,f_wsearch:6};
+const FMAX={f_lshow:4,f_lfind:4,f_ltog:4,f_tstory:4,f_peek:4,f_bubble:4,f_sorter:4,f_scratch:4,f_tgrow:4,f_tdrum:4,f_colorit:5,f_robowalk:4};
+const LEARN=/^f_(lshow|lfind|ltog|tstory|peek|bubble|sorter|scratch|tgrow|tdrum)$/;
+const ageOK=k=>{const a=S.age||6,mn=FMIN[k]!==undefined?FMIN[k]:(LEARN.test(k)?0:4),mx=FMAX[k]||99;return a>=mn&&a<=mx};
+const CATMIN={"flags:f_swipe":6,"flags:f_spy":6,"sky:f_tapall":5,"sky:f_swipe":5,"sky:f_seq":6,"letters:f_tapall":5,"letters:f_catch":5,"letters:f_sort":5,"letters:f_whack":5,"read:f_whack":5,"read:f_tapall":5,"read:f_catch":5,"count:f_sort":5,"count:f_whack":5,"shapes:f_swipe":5};
+const _ff7=formatsFor0;formatsFor0=function(cat){return _ff7(cat).filter(k=>ageOK(k)&&(S.age||6)>=(CATMIN[cat+":"+k]||0))};
+const _kf7=kindsFor;kindsFor=function(cat){const k=_kf7(cat);if(cat==="robot"&&(S.age||6)<5)return ["robot"];return k};
+/* content inside a game also has an age: no planets order, flags or maps for the youngest */
+const SUBMIN={"seq:planets":6,"seq:psize":6,"seq:months":6,"seq:week":5,"swipe:flag":6,"swipe:planet":5,"swipe:corner":5,"tapall:planets":5,"tapall:letter":5,"spy:map":5,"spy:flags":6,"spy:paper":5,"sort:num":5,"sort:letter":5,"catch:letter":5,"whack:letter":5};
+const _bf8=buildFormat;buildFormat=function(kind,cat){let q=null;for(let t=0;t<12;t++){q=_bf8(kind,cat);if(!q)return q;const sub=(q.game||"")+":"+(gsub(q)||"");if((S.age||6)>=(SUBMIN[sub]||0))return q}return null};

@@ -258,7 +258,7 @@ function buildQ0(cat,kind,used){
   if(cat==="flags"&&/^g/.test(kind))return qGeo(kind,used);
   if(cat==="people"||cat==="flags")return qPeople(kind,used);
   if(cat==="sky"&&Math.random()<.4){const g=qSky2(used);if(g)return g}
-  if(cat==="sky"&&Math.random()<.35)return Math.random()<.5?qSkyPic(used):qPlanet(used);
+  if(cat==="sky"&&Math.random()<.35)return (Math.random()<.5||lvl()<5)?qSkyPic(used):qPlanet(used);
   return qWatcher(cat,used);
 }
 
@@ -469,7 +469,7 @@ const FOODS=["worms","grass","seeds","bone","fish","flies","flowers","leaves","m
 const HOME_OF={bird:["nest","tree"],cow:["barn"],duck:["pond","nest"],chicken:["barn","nest"],pig:["barn"],shark:["sea"],fox:["den","cave"],dog:["doghouse","house"],frog:["pond"],bee:["hive","tree"],caterpillar:["tree"],cat:["house"],bat:["cave","tree"],snake:["rocks","cave"]};
 const FOOD_OF={bird:["worms","seeds"],cow:["grass","corn"],duck:["seeds","flies"],chicken:["corn","seeds","worms"],pig:["apples","corn","grass"],shark:["fish"],fox:["mice","eggs","apples"],dog:["bone","fish"],frog:["flies","mosquitoes"],bee:["flowers"],caterpillar:["leaves","flowers"],cat:["fish","mice","eggs"],bat:["mosquitoes","flies"],snake:["eggs","mice"]};
 const SOUNDS=["cow","dog","cat","duck","pig","frog","bee","snake","chicken"];
-const anSay=n=>{const i=AN.findIndex(a=>a[0]===n);return ["w/LULU_FA_AN"+i,...enSay(n)]};
+const anSay=n=>{const i=AN.findIndex(a=>a[0]===n);return [...(i>=0?["w/LULU_FA_AN"+i]:faSay(n)),...enSay(n)]};
 const anOpt=n=>({h:`<span class="oe big">${AN.find(a=>a[0]===n)[1]}</span><small>${n[0].toUpperCase()+n.slice(1)}</small>`,say:anSay(n)});
 function pick3(right,pool,used,key){const w=sh(pool.filter(x=>!right.includes(x))).slice(0,DK()),r=pickOne(right);const o=sh([r,...w]);return {o,ans:o.indexOf(r),r}}
 function freshAnimal(used,ok){const c=sh(AN.map(a=>a[0]).filter(ok));return c.find(n=>!used.has("an_"+n))||c[0]}

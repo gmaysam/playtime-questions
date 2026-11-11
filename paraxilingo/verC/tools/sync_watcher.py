@@ -24,6 +24,10 @@ for q in ns['QUESTIONS']:
 cat = json.load(open(os.path.join(Q, 'catalog.json')))['questions']
 retired = {c['id'] for c in cat if c.get('status') == 'retired'}
 wq = [w for w in wq if w['i'] not in retired]
+# Paraxilingo age check (Nov 11): these are too hard for a 3-year-old; raise the youngest age here (the shared pool keeps its own ages)
+AGE_UP={'p03':5,'p05':5,'p06':5,'p02':4,'p04':5,'m01':4,'m04':4,'m05':5,'m02':4,'w04':5,'x01':4,'x03':4,'n07':4,'n08':4,'f04':4,'f05':4,'a16':4,'e02':4,'e03':4,'n05':4}
+for w in wq:
+    if w['i'] in AGE_UP: w['a'] = max(w['a'], AGE_UP[w['i']])
 json.dump(wq, open(os.path.join(S, 'watcher', 'wq.json'), 'w'), ensure_ascii=False)
 # words, letters, sight words, sentences (only questions that are 'in the games')
 clips = {r['file'][:-4]: r['text'] for r in csv.DictReader(open(os.path.join(LIB, 'voices', 'clips.csv'), encoding='utf-8-sig'))}

@@ -245,7 +245,9 @@ const landIdx=()=>MONTH_LAND[monthIdx()];
 const TOPIC_SYM={flags:"🗺️",robot:"🤖",memory:"🧠",math:"➕",clock:"🕒",watcher:"🔎",shapes:"🔷",people:"🚩",words:"🔤",reading:"📖",radio:"📻",paint:"🎨"};
 
 /* ================= today's path: the parents' daily questions split over the mounds ================= */
-const activeTopics=()=>S.topics.filter(t=>TOPIC_SYM[t]);
+/* sections that need an older child: flags and countries from 5, reading from 5, clock from 4 */
+const TOPIC_MINAGE={flags:5,reading:5,clock:4};
+const activeTopics=()=>{const t=S.topics.filter(t=>TOPIC_SYM[t]&&(S.age||6)>=(TOPIC_MINAGE[t]||0));return t.length?t:["math","shapes"]};
 const activeCats=()=>CATS.filter(c=>activeTopics().includes(c.topic));
 function dayPlan(){
   if(S.day.d!==today()||!S.day.plan||S.day.v!==5||S.day.land!==landIdx()||S.day.per!==S.perDay||S.day.tops!==activeTopics().join()){
