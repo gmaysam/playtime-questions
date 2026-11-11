@@ -5,7 +5,7 @@
    ===================================================================================================== */
 const TD_READY=__TDVOICE__,TV=n=>"w/PX_TD_"+n;
 /* [id, sections, panels, English story, question, right [emoji,label], other [emoji,label]] */
-const TSTORY=[["bunny",["animals","letters","read","clock"],["🐰","😋","🥕","😊"],"Bunny was hungry. She found a big orange carrot. Crunch, crunch! Now Bunny is happy.","What did Bunny eat?",["🥕","carrot"],["🍦","ice cream"]],
+const TSTORY=[["bunny",["animals","letters","read"],["🐰","😋","🥕","😊"],"Bunny was hungry. She found a big orange carrot. Crunch, crunch! Now Bunny is happy.","What did Bunny eat?",["🥕","carrot"],["🍦","ice cream"]],
  ["hen",["farm","animals"],["🐔","🥚","💥","🐥"],"Hen sat on her nest. Crack! A little yellow chick came out. Peep, peep!","Who came out of the egg?",["🐥","chick"],["🐶","puppy"]],
  ["moon",["sky","clock"],["🌆","🌙","⭐","😴"],"Night came. The Moon came up and the stars twinkled. Everyone went to sleep.","What comes out at night?",["🌙","Moon"],["☀️","Sun"]],
  ["apples",["count","add"],["🧸","🍎","👩","🍎🍎"],"Teddy had one apple. Then Mom gave him one more. Now Teddy has two apples!","How many apples does Teddy have?",["🍎🍎","two"],["🍎🍎🍎🍎🍎","five"]],
@@ -62,17 +62,17 @@ function coloritQ(q){let cur=null,filled=0;const bal=j=>`<svg viewBox="0 0 60 90
     if(filled===3&&!q.done){q.done=true;setTimeout(()=>gameWin(q,0,s,[]),800)}});
   window.__gSolve=()=>{q.done=true;gameWin(q,0,$("qBody").querySelector(".ci-row"),[])}}
 /* ---- easy robot walk: every arrow tap moves the robot at once ---- */
-function qRoboWalk(){const two=Math.random()<.5;return two?{game:"robowalk",n:3,start:[0,2],goal:[2,0],voice:[TV("ROBOWALK")],gid:"learn.robowalk",factT:"Robots move one step at a time!"}:{game:"robowalk",n:5,row:1,start:[0,0],goal:[4,0],voice:[TV("ROBOWALK")],gid:"learn.robowalk",factT:"Robots move one step at a time!"}}
+function qRoboWalk(cat){const two=Math.random()<.5,th=typeof G4_READY!=="undefined"&&G4_READY?roboTheme(cat):"robot",v=[th==="robot"?TV("ROBOWALK"):TV("GOAL")],T=ROBO_TH[th];return two?{game:"robowalk",th,n:3,start:[0,2],goal:[2,0],voice:v,gid:"learn.robowalk",factT:"One step at a time - you did it!"}:{game:"robowalk",th,n:5,row:1,start:[0,0],goal:[4,0],voice:v,gid:"learn.robowalk",factT:"One step at a time - you did it!"}}
 function robowalkQ(q){let [x,y]=q.start;const W=q.n,H=q.row||q.n;
-  gShow(`<div class="game lrn">${gHead("🤖","Robot walk","Take the robot to the battery!")}<div class="rw" id="rwB" style="grid-template-columns:repeat(${W},1fr);--w:${W}"></div>
+  gShow(`<div class="game lrn">${gHead(ROBO_TH[q.th||"robot"][0],"Little trip",ROBO_TH[q.th||"robot"][3])}<div class="rw" id="rwB" style="grid-template-columns:repeat(${W},1fr);--w:${W}"></div>
     <div class="rw-pad${H>1?" x":""}">${(H>1?["u","l","r","d"]:["l","r"]).map(k=>`<button data-k="${k}" class="k${k}">${{u:"⬆️",l:"⬅️",r:"➡️",d:"⬇️"}[k]}</button>`).join("")}</div></div>`);gAsk(q);
-  const draw=()=>{let h="";for(let j=0;j<H;j++)for(let i=0;i<W;i++)h+=`<span class="rw-c">${i===x&&j===y?"🤖":i===q.goal[0]&&j===q.goal[1]?"🔋":""}</span>`;$("rwB").innerHTML=h};draw();
+  const draw=()=>{let h="";for(let j=0;j<H;j++)for(let i=0;i<W;i++)h+=`<span class="rw-c">${i===x&&j===y?ROBO_TH[q.th||"robot"][0]:i===q.goal[0]&&j===q.goal[1]?ROBO_TH[q.th||"robot"][1]:""}</span>`;$("rwB").innerHTML=h};draw();
   $("qBody").querySelectorAll(".rw-pad button").forEach(b=>b.onclick=()=>{if(q.done)return;const k=b.dataset.k,nx=x+(k==="r")-(k==="l"),ny=y+(k==="d")-(k==="u");
     if(nx<0||ny<0||nx>=W||ny>=H){bounce($("rwB"));return}x=nx;y=ny;sfx.tap();draw();if(x===q.goal[0]&&y===q.goal[1]){q.done=true;gameWin(q,0,$("rwB"),[])}});
   window.__gSolve=()=>{q.done=true;gameWin(q,0,$("rwB"),[])}}
 Object.assign(GAMES,{tstory:tstoryQ,peek:peekQ,bubble:bubbleQ,sorter:sorterQ,colorit:coloritQ,robowalk:robowalkQ});
 const _bf3=buildFormat;
-buildFormat=function(kind,cat){if(kind==="f_tstory")return qTStory(cat);if(kind==="f_peek")return qPeek(cat);if(kind==="f_bubble")return qBubble(cat);if(kind==="f_sorter")return qSorter();if(kind==="f_colorit")return qColorIt();if(kind==="f_robowalk")return qRoboWalk();return _bf3(kind,cat)};
+buildFormat=function(kind,cat){if(kind==="f_tstory")return qTStory(cat);if(kind==="f_peek")return qPeek(cat);if(kind==="f_bubble")return qBubble(cat);if(kind==="f_sorter")return qSorter();if(kind==="f_colorit")return qColorIt();if(kind==="f_robowalk")return qRoboWalk(cat);return _bf3(kind,cat)};
 /* the youngest: a varied round, stories first, only one look-and-listen */
 const _pr1=planRound;
 planRound=function(cat,count){if(!TD_READY||S.age>4)return _pr1(cat,count);

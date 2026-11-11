@@ -311,7 +311,7 @@ function qCatch(cat){const a=lvl();let good,bad,v,lbl;
   if(cat==="count"||cat==="add"){good=[6,7,8,9,10].map(String);bad=[1,2,3,4].map(String);v=[V("G_CATCH_BIG")];lbl="numbers bigger than 5"}
   else if(cat==="letters"||cat==="read"){const t=pickOne("ABDEGKMPRST".split(""));good=[t];bad="ABDEGKMPRSTUZ".split("").filter(x=>x!==t);v=[V("G_CATCH_THIS"),...lSay(t)];lbl=t}
   else {good=FRUIT.map(x=>x[0]);bad=[...VEG,...THINGS].map(x=>x[0]);v=[V("G_CATCH_FRUIT")];lbl="fruit"}
-  return {game:"catch",good,bad,need:a<=4?4:5,fall:a<=4?5200:a<=6?4200:3400,voice:v,lbl,factT:cat==="count"?"6, 7, 8, 9 and 10 come after 5.":lbl==="fruit"?"Fruits have seeds inside.":`You caught every ${lbl}!`}}
+  return {game:"catch",good,bad,need:a<=4?4:5,fall:a<=4?5200:a<=6?4200:3400,voice:v,lbl,factT:cat==="count"?"6, 7, 8, 9 and 10 come after 5.":lbl==="fruit"?"Fruits have seeds inside.":(/^numbers/.test(lbl)?`You caught all the ${lbl}!`:`You caught every ${lbl}!`)}}
 function catchQ(q){
   gShow(`<div class="game">${gHead("🧺","Catch!",`Catch only <b>${q.lbl}</b>`)}<div class="wk-score" id="caS">${"○".repeat(q.need)}</div>
     <div class="ca-field" id="caF"><div class="ca-bask" id="caB">🧺</div></div></div>`);

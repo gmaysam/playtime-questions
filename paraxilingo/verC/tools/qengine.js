@@ -1,3 +1,6 @@
+/* yes / no badges, drawn (no stock emoji) */
+const YES_B=`<svg viewBox="0 0 100 100" class="ynb"><defs><radialGradient id="ygr" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#9BF26B"/><stop offset="1" stop-color="#3FB31F"/></radialGradient></defs><circle cx="50" cy="52" r="42" fill="#2E8F14"/><circle cx="50" cy="48" r="42" fill="url(#ygr)"/><ellipse cx="36" cy="30" rx="14" ry="8" fill="#fff" opacity=".35"/><path d="M30 50 l13 13 l27 -29" fill="none" stroke="#fff" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const NO_B=`<svg viewBox="0 0 100 100" class="ynb"><defs><radialGradient id="ngr" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#FF9B8A"/><stop offset="1" stop-color="#F0533F"/></radialGradient></defs><rect x="10" y="12" width="80" height="80" rx="26" fill="#C23A28"/><rect x="10" y="8" width="80" height="80" rx="26" fill="url(#ngr)"/><ellipse cx="34" cy="26" rx="14" ry="7" fill="#fff" opacity=".35"/><path d="M34 32 l32 32 M66 32 l-32 32" stroke="#fff" stroke-width="11" stroke-linecap="round"/></svg>`;
 /* ================= question engine (verC): spoken, picture-first, always positive ================= */
 /* Every question is read aloud by Lulu (Farsi). Clips come from the Watcher Device library (audio/w/). */
 const WQ=__WQ__;
@@ -119,7 +122,7 @@ function qAdd(k){
   const eq=`<div class="eq"><span>${a}${dots(a)}</span><b>${op}</b><span>${b}${dots(b)}</span><b>=</b><span class="q">?</span></div>`;
   if(k==="teach"){const shown=Math.random()<.5?r:r+pickOne([1,-1,2]);const ok=shown===r;
     return {voice:spoken?[N(a),op==="+"?"w/LULU_PLUS":"w/LULU_MINUS",N(b),"w/LULU_EQUALS",N(shown),"q_teach"]:["q_teach"],cap:"Is Domi right?",
-      visual:`<div class="domisays">${bv(78)}<div class="bub"><b>${a} ${op} ${b} = ${shown}</b></div></div>`,opts:[{h:"<span class='yn'>✅</span><small>True</small>",say:["w/LULU_SK_YES"]},{h:"<span class='yn'>❌</span><small>Not true</small>",say:["w/LULU_SK_NO"]}],ans:ok?0:1,layout:"yn",hint:"dots",a,b,
+      visual:`<div class="domisays">${bv(78)}<div class="bub"><b>${a} ${op} ${b} = ${shown}</b></div></div>`,opts:[{h:"<span class='yn'>"+YES_B+"</span><small>True</small>",say:["w/LULU_SK_YES"]},{h:"<span class='yn'>"+NO_B+"</span><small>Not true</small>",say:["w/LULU_SK_NO"]}],ans:ok?0:1,layout:"yn",hint:"dots",a,b,
       exp:{t:`${a} ${op} ${b} = ${r}`,v:[N(a),op==="+"?"w/LULU_PLUS":"w/LULU_MINUS",N(b),"w/LULU_EQUALS",N(r)]}}}
   return Object.assign({voice:spoken?[N(a),op==="+"?"w/LULU_PLUS":"w/LULU_MINUS",N(b),"w/LULU_EQUALS"]:["q_choose"],cap:"",visual:eq,layout:"row3",hint:spoken&&r<=10?"dots":"elim",
     exp:{t:`${a} ${op} ${b} = ${r}`,v:spoken?[N(a),op==="+"?"w/LULU_PLUS":"w/LULU_MINUS",N(b),"w/LULU_EQUALS",N(r)]:["w/LULU_ANS_IS"]}},numOpts(r,near(r).concat([r+10,r-10])));
@@ -199,7 +202,7 @@ function extraOpt(w){
   return c||null}
 function qWatcher(cat,used){
   if(cat==="sky"&&Math.random()<.3){const k=sh([...Array(16).keys()]).find(i=>!used.has("tf"+i));if(k!==undefined){used.add("tf"+k);
-    return {gid:"skytf",tf:true,why:{t:SKY_TF_X[k],v:[]},voice:["w/LULU_TF"+k],cap:SKY_TF_T[k],visual:`<div class="bigpic">${SKY_TF_PIC(k)}</div>`,opts:[{h:"<span class='yn'>✅</span><small>True</small>",say:["w/LULU_SK_YES"]},{h:"<span class='yn'>❌</span><small>Not true</small>",say:["w/LULU_SK_NO"]}],ans:SKY_TF[k]?0:1,layout:"yn",hint:"again",exp:{t:SKY_TF_T[k]+(SKY_TF[k]?" ✅ True!":" ❌ Not true."),v:["w/LULU_ANS_IS"]}}}}
+    return {gid:"skytf",tf:true,why:{t:SKY_TF_X[k],v:[]},voice:["w/LULU_TF"+k],cap:SKY_TF_T[k],visual:`<div class="bigpic">${SKY_TF_PIC(k)}</div>`,opts:[{h:"<span class='yn'>"+YES_B+"</span><small>True</small>",say:["w/LULU_SK_YES"]},{h:"<span class='yn'>"+NO_B+"</span><small>Not true</small>",say:["w/LULU_SK_NO"]}],ans:SKY_TF[k]?0:1,layout:"yn",hint:"again",exp:{t:SKY_TF_T[k]+(SKY_TF[k]?" ✅ True!":" ❌ Not true."),v:["w/LULU_ANS_IS"]}}}}
   let pool=wPool(cat).filter(w=>!used.has(w.i)&&!S.seenW.includes(w.i));
   /* true/false only now and then: at most one per round, the rest are choose-the-answer */
   const tfDone=[...used].some(i=>(WQ.find(w=>w.i===i)||{}).k==="tf");
@@ -212,7 +215,7 @@ function qWatcher(cat,used){
   {const f=QFIX[w.i];if(f)Object.assign(w,f)}
   const v=VOICED.has(w.i),qv=v?[`w/${w.i}_q_lulu`]:["q_choose"],ev=E_VOICED.has(w.i)?[`w/${w.i}_e_lulu`]:["w/LULU_ANS_IS"];
   const why={t:w.x,v:E_VOICED.has(w.i)?[`w/${w.i}_e_lulu`]:[]};
-  if(w.k==="tf")return {wid:w.i,voice:qv,cap:w.q,tf:true,visual:`<div class="bigpic">${wEmoji(w)}</div>`,opts:[{h:"<span class='yn'>✅</span><small>True</small>",say:["w/LULU_SK_YES"]},{h:"<span class='yn'>❌</span><small>Not true</small>",say:["w/LULU_SK_NO"]}],ans:w.n,layout:"yn",hint:"again",why,exp:{t:(w.n===0?"✅ True! ":"❌ Not true. ")+w.x,v:ev}};
+  if(w.k==="tf")return {wid:w.i,voice:qv,cap:w.q,tf:true,visual:`<div class="bigpic">${wEmoji(w)}</div>`,opts:[{h:"<span class='yn'>"+YES_B+"</span><small>True</small>",say:["w/LULU_SK_YES"]},{h:"<span class='yn'>"+NO_B+"</span><small>Not true</small>",say:["w/LULU_SK_NO"]}],ans:w.n,layout:"yn",hint:"again",why,exp:{t:(w.n===0?"✅ True! ":"❌ Not true. ")+w.x,v:ev}};
   if(/what is this/i.test(w.q)&&w.p&&PIC_E[w.p])  /* the picture IS the question */
     return {wid:w.i,voice:qv,cap:w.q,visual:`<div class="bigpic">${PIC_E[w.p]}</div>`,opts:w.o.map(o=>({h:`<b class="word">${o}</b>`,say:both(o)})),ans:w.n,layout:"col",hint:"elim",why,exp:{t:`${w.o[w.n]}: ${w.x}`,v:ev}};
   if(w.o.length===3){w=Object.assign({},w,{o:w.o.slice()});const x=extraOpt(w);if(x!==null){const at=ri(0,3);w.o.splice(at,0,x);if(at<=w.n)w.n++}}
@@ -670,11 +673,15 @@ function funFact(cat,kind){const k=kind==="pattern"?"PATTERN":kind==="robot"?"RO
   const i=sh(L2.map((x,j)=>j).filter(j=>!factSeen[k].includes(j)))[0];factSeen[k].push(i);return {c:L2[i][0],t:L2[i][1]}}
 
 /* ================= Robot path (like the Watcher device): build the arrows, press GO ================= */
+/* who travels where: [hero, goal, block, title] - the robot is only one of them */
+const ROBO_TH={robot:["🤖","🔋","🧱","Help the robot reach its battery!"],car:["🚗","⛽","🚧","Drive the car to the fuel pump!"],bunny:["🐰","🥕","🪨","Hop the bunny to the carrot!"],bee:["🐝","🌻","🌵","Fly the bee to the flower!"],
+  rocket:["🚀","🪐","☄️","Fly the rocket to the planet!"],turtle:["🐢","🌊","🪨","Help the turtle reach the sea!"],dog:["🐶","🦴","🌳","Take the puppy to its bone!"],bus:["🚌","🏫","🚧","Drive the bus to school!"]};
+const roboTheme=cat=>pickOne({sky:["rocket"],animals:["bunny","bee","dog","turtle"],farm:["bunny","dog","bee"],world:["turtle","car","bus"],count:["car","bunny","bus"],shapes:["robot","car"],robot:["robot","car","rocket","bus"]}[cat]||Object.keys(ROBO_TH));
 function qRobot(){const a=lvl(),n=a<=4?3:a<=6?4:5;let walls=[],st,gl;
   for(let t=0;t<200;t++){st=[0,ri(0,n-1)];gl=[n-1,ri(0,n-1)];walls=[];const nw=a<=4?0:a<=6?2:4;
     while(walls.length<nw){const w=[ri(0,n-1),ri(0,n-1)];if(!(w[0]===st[0]&&w[1]===st[1])&&!(w[0]===gl[0]&&w[1]===gl[1])&&!walls.some(x=>x[0]===w[0]&&x[1]===w[1]))walls.push(w)}
     if(robPath(n,st,gl,walls)>0)break}
-  return {robot:{n,st,gl,walls},voice:["w/LULU_RB_INTRO"],cap:"Help the robot reach the flag!",opts:[],ans:-1,kind:"robot",exp:{t:"",v:[]}}}
+  const g4=typeof G4_READY!=="undefined"&&G4_READY,th=g4?roboTheme(L&&L.cat):"robot",T=ROBO_TH[th];return {robot:{n,st,gl,walls,th},voice:[th==="robot"?"w/LULU_RB_INTRO":"w/PX_TD_GOAL2"],cap:T[3],opts:[],ans:-1,kind:"robot",exp:{t:"",v:[]}}}
 function robPath(n,st,gl,walls){const key=p=>p[0]+","+p[1],seen=new Set([key(st)]);let fr=[[st,0]];
   while(fr.length){const [p,d]=fr.shift();if(p[0]===gl[0]&&p[1]===gl[1])return d;for(const [dx,dy] of [[1,0],[-1,0],[0,1],[0,-1]]){const q2=[p[0]+dx,p[1]+dy];if(q2[0]<0||q2[1]<0||q2[0]>=n||q2[1]>=n||walls.some(w=>w[0]===q2[0]&&w[1]===q2[1])||seen.has(key(q2)))continue;seen.add(key(q2));fr.push([q2,d+1])}}return -1}
 /* shrink a big element (grid, map...) until the button under it is fully on screen, on any phone */
@@ -683,10 +690,10 @@ function fitScreen(bigId,btnId){const run=()=>{const g=$(bigId),b=$(btnId),les=$
   requestAnimationFrame(()=>{run();setTimeout(run,450)})}
 function robotQ(q){const R2=q.robot,cc=CATS.find(c=>c.id===L.cat)||{};let prog=[],pos=R2.st.slice(),running=false,miss=0;
   const ARW={r:["➡️",1,0],l:["⬅️",-1,0],u:["⬆️",0,-1],d:["⬇️",0,1]};
-  const cell=(x,y)=>x===pos[0]&&y===pos[1]?"🤖":x===R2.gl[0]&&y===R2.gl[1]?"🏁":R2.walls.some(w=>w[0]===x&&w[1]===y)?"🧱":"";
+  const T=ROBO_TH[R2.th||"robot"];const cell=(x,y)=>x===pos[0]&&y===pos[1]?T[0]:x===R2.gl[0]&&y===R2.gl[1]?T[1]:R2.walls.some(w=>w[0]===x&&w[1]===y)?T[2]:"";
   const draw=()=>{$("rbGrid").innerHTML=Array.from({length:R2.n*R2.n},(_,i)=>{const x=i%R2.n,y=Math.floor(i/R2.n);return `<div class="rbc">${cell(x,y)}</div>`}).join("");
     $("rbProg").innerHTML=prog.length?prog.map(k=>`<span>${ARW[k][0]}</span>`).join(""):`<em>Tap the arrows</em>`};
-  $("qBody").innerHTML=`<div class="qkick"><span class="qke">🤖</span>Robot path</div><h2 class="qtitle">Help the robot reach the flag!</h2>
+  $("qBody").innerHTML=`<div class="qkick"><span class="qke">🤖</span>Robot path</div><h2 class="qtitle">${ROBO_TH[R2.th||"robot"][3]}</h2>
     <div class="rbwrap"><div class="rbgrid" id="rbGrid" style="--n:${R2.n};grid-template-columns:repeat(${R2.n},minmax(0,1fr));grid-template-rows:repeat(${R2.n},minmax(0,1fr))"></div>
     <div class="rbprog" id="rbProg"></div>
     <div class="rbpad"><button data-k="u">⬆️</button><button data-k="l">⬅️</button><button data-k="d">⬇️</button><button data-k="r">➡️</button><button class="rbdel" data-k="x">↩️</button></div></div>

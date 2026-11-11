@@ -41,16 +41,18 @@ function simonQ(q){
     <div class="smwrap"><div class="smboard" id="smB">${SMC.map((c,i)=>`<button class="smp" data-i="${i}" style="--c:${c[0]};--d:${c[1]}" aria-label="colour ${i+1}"></button>`).join("")}<div class="smmid" id="smMid">👀</div></div>
     <div class="smdots" id="smDots">${q.seq.map(()=>"<i></i>").join("")}</div></div></div>`);
   let at=0,miss=0,busy=true;const pads=[...$("qBody").querySelectorAll(".smp")];
-  const flash=(i,ms=520)=>{pads[i].classList.add("lit");smTone(SMC[i][2],ms);setTimeout(()=>pads[i].classList.remove("lit"),ms-80)};
+  let slow=1;const flash=(i,ms=520,n)=>{pads[i].classList.add("lit");if(n)$("smMid").textContent=n;smTone(SMC[i][2],ms);setTimeout(()=>pads[i].classList.remove("lit"),ms-80)};
   const dots=()=>$("smDots").querySelectorAll("i").forEach((d,k)=>d.className=k<at?"on":"");
   const show=(clip,cb)=>{busy=true;at=0;dots();$("smMid").textContent="👀";$("smB").classList.add("watch");
-    sayseq(clip?[clip]:[],()=>{let k=0;const step=()=>{if(!L||L.q!==q)return;if(k>=q.seq.length){$("smB").classList.remove("watch");$("smMid").textContent="👆";busy=false;sayseq(["w/LULU_SM_YOUR"],()=>{});cb&&cb();return}flash(q.seq[k++]);setTimeout(step,a2)};setTimeout(step,350)})};
-  const a2=lvl()<=4?800:650;
+    sayseq(clip?[clip]:[],()=>{let k=0;const step=()=>{if(!L||L.q!==q)return;if(k>=q.seq.length){$("smB").classList.remove("watch");$("smMid").textContent="👆";busy=false;sayseq(["w/LULU_SM_YOUR"],()=>{});cb&&cb();return}flash(q.seq[k],Math.round(a2*.72*slow),k+1);k++;setTimeout(step,a2*slow)};setTimeout(step,500)})};
+  /* slow and clear: one colour at a time, the step number in the middle, the others dimmed */
+  const a2=lvl()<=4?1150:950;
   pads.forEach(b=>b.onclick=()=>{if(busy||q.done)return;const i=+b.dataset.i;flash(i,360);
     if(i===q.seq[at]){at++;dots();if(at===q.seq.length){busy=true;$("smMid").textContent="🎉";gameWin(q,miss,$("smB"))}}
     else{miss++;sfx.oops();$("smB").classList.add("bump");setTimeout(()=>$("smB").classList.remove("bump"),450);
-      if(miss>=2){busy=true;setTimeout(()=>show(null,()=>{busy=true;gameLearn(q,"Watch the colours: "+q.seq.map(c=>["🔴","🔵","🟡","🟢"][c]).join(" "))}),700)}
-      else setTimeout(()=>show("w/LULU_SM_WATCH"),700)}});
+      /* three tries: each time the colours are shown again, a bit slower; only then the answer */
+      if(miss>=3){busy=true;slow=1.4;setTimeout(()=>show(null,()=>{busy=true;gameLearn(q,"Watch the colours: "+q.seq.map(c=>["🔴","🔵","🟡","🟢"][c]).join(" "))}),700)}
+      else{slow=1+miss*.2;setTimeout(()=>show("w/LULU_SM_WATCH"),700)}}});
   window.__gSolve=()=>{let k=0;const t=()=>{if(busy)return setTimeout(t,300);if(k<q.seq.length){pads[q.seq[k++]].click();setTimeout(t,120)}};t()};
   setTimeout(()=>{if(L&&L.q===q)show("w/LULU_SM_INTRO")},400);
 }

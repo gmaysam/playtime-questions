@@ -46,7 +46,7 @@ function qMaze(cat){const a=lvl(),n=a<=4?4:a<=6?5:a<=8?6:7,[s,g,f]=pickOne(MAZES
 function mazeOpen(q,c,d){const n=q.n,x=c%n,y=Math.floor(c/n),u=d%n,v=Math.floor(d/n);if(Math.abs(x-u)+Math.abs(y-v)!==1)return false;
   if(u>x)return !q.W[c].r;if(u<x)return !q.W[d].r;if(v>y)return !q.W[c].b;return !q.W[d].b}
 function mazeQ(q){const n=q.n,goal=n*n-1;let pos=0,bumps=0;const trail=new Set([0]);
-  gShow(`<div class="game">${gHead("🌀","Maze","Find the way!")}<div class="mz" id="mzB" style="grid-template-columns:repeat(${n},1fr);--n:${n}">${q.W.map((w,i)=>`<div class="mzc${w.r?" r":""}${w.b?" b":""}${i%n===0?" l":""}${i<n?" t":""}" data-i="${i}"></div>`).join("")}
+  gShow(`<div class="game">${gHead("🌀","Maze","Find the way!")}<div class="mz mzt-${q.g==="🌊"||q.g==="🐟"?"sea":q.g==="🌍"||q.g==="🪐"?"space":"grass"}" id="mzB" style="grid-template-columns:repeat(${n},1fr);--n:${n}">${q.W.map((w,i)=>`<div class="mzc${w.r?" r":""}${w.b?" b":""}${i%n===0?" l":""}${i<n?" t":""}" data-i="${i}"></div>`).join("")}
     <span class="mz-g" id="mzG">${q.g}</span><span class="mz-s" id="mzS">${q.s}</span></div><p class="gmhint">Slide your finger along the path</p></div>`);
   gAsk(q);const B=$("mzB"),cells=[...B.querySelectorAll(".mzc")];
   const place=(el,i)=>{const c=cells[i];el.style.left=c.offsetLeft+"px";el.style.top=c.offsetTop+"px";el.style.width=c.offsetWidth+"px";el.style.height=c.offsetHeight+"px"};
@@ -91,11 +91,11 @@ const LAB_TAP={float:["🛁","Which ones float on water?",[["🪵","wood"],["�
   healthy:["💪","What helps keep us healthy?",[["🧼","soap"],["🥦","broccoli"],["💧","water"],["🛌","sleep"],["🍎","apple"]],[["🍭","candy"],["🥤","soda"],["📺","TV all day"]]]};
 Object.assign(LAB_F,{float:"Wood, leaves and balloons are light, so they float. Rocks and keys sink.",grow:"A seed needs water, soil, air and sunlight to grow.",melt:"Heat from the sun melts ice, snow and chocolate.",
   light:"The Sun and stars make their own light. The Moon shines because sunlight bounces off it.",healthy:"Washing hands, good food, water and sleep keep our bodies healthy.",seesaw:"The heavier side of a seesaw goes down.",mix:"Mixing two colours makes a new colour!"});
-const LAB_BY={count:["seesaw","magnet","float"],add:["seesaw","float"],clock:["gears","melt","light"],animals:["float","grow","melt"],farm:["grow","float","magnet"],world:["circuit","magnet","float","melt","grow"],
-  sky:["light","melt"],shapes:["mix","gears","circuit","seesaw"],people:["healthy","circuit"],flags:["melt","float","light"],letters:["float","magnet","mix"],read:["float","magnet","grow"],robot:["circuit","magnet","gears"],memory:["magnet","light","circuit"]};
+const LAB_BY={count:["seesaw"],add:["seesaw"],clock:["gears","light"],animals:["float","healthy"],farm:["grow","float"],world:["circuit","magnet","float","melt","grow"],
+  sky:["light","melt"],shapes:["mix","gears","circuit","seesaw"],people:["healthy","circuit"],flags:["melt","float"],letters:["float","magnet"],read:["float","magnet","grow"],robot:["circuit","magnet","gears"],memory:["magnet","light","circuit"]};
 const MIXES=[["red","yellow","orange"],["blue","yellow","green"],["red","blue","purple"],["red","white","pink"]];
 const PCOL=n=>(PAINT_COLORS.find(x=>x[0]===n)||[n,"#ccc"])[1];
-function qLab(cat){const a=lvl(),opts=(LAB_BY[cat]||["circuit","magnet","gears"]).filter(x=>x!=="gears"||a>=6),pick=pickOne(opts.length?opts:["circuit"]),wordOnly=cat==="read"&&a>=6;
+function qLab(cat){const a=lvl(),opts=(LAB_BY[cat]||["circuit","magnet","gears"]).filter(x=>x!=="gears"||a>=6),pick=pickOne(opts.length?opts:["circuit"]),wordOnly=(cat==="read"||cat==="letters")&&a>=6;
   if(LAB_TAP[pick]){const [tg,capT,yes,no]=LAB_TAP[pick],y=sh(yes).slice(0,a<=4?2:3),items=sh([...y.map(x=>[...x,1]),...sh(no).slice(0,a<=4?2:3).map(x=>[...x,0])]);
     return {game:"lab",sub:pick,tg,capT,items,wordOnly,voice:[G3(pick.toUpperCase())],factT:LAB_F[pick]}}
   if(pick==="seesaw"){const l=ri(1,a<=4?4:8);let r=ri(1,a<=4?4:8);if(r===l)r=l+(l<3?2:-1);return {game:"lab",sub:"seesaw",l,r,voice:[G3("SEESAW")],factT:LAB_F.seesaw}}
