@@ -13415,6 +13415,50 @@ img.e3 {
 .sc-pot.big {
   height: min(34vh, 220px);
 }
+.qkick .g-rep {
+  margin-left: auto;
+  flex: none;
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  border: 0;
+  background: var(--t-blue,#1CB0F6);
+  box-shadow: 0 4px 0 var(--t-blue-d,#1899D6);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  position: relative;
+  letter-spacing: 0;
+}
+.qkick .g-rep svg {
+  width: 26px;
+  height: 26px;
+}
+.qkick .g-rep:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 var(--t-blue-d,#1899D6);
+}
+.qkick .g-rep::after {
+  content: "";
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  bottom: -6px;
+  left: -6px;
+  border-radius: 18px;
+  border: 3px solid #1CB0F6;
+  opacity: 0;
+}
+.qkick .g-rep.talking::after {
+  animation: ring 1.2s ease-out infinite;
+}
+.rt-lab {
+  font: 800 20px "Nunito", sans-serif;
+  color: #4B4B4B;
+  text-align: center;
+  margin-top: 4px;
+}
 .qbody,
 .panel {
   max-width: 680px;
@@ -13436,7 +13480,7 @@ img.e3 {
   <header class="topbar">
     <button class="course" id="tbCourse" aria-label="Players" aria-expanded="false"></button>
     <div class="stats">
-      <span class="stat flame" id="sWood" aria-label="Wood"><i class="emo" style="font-style:normal">🪵</i><span>0</span></span>
+      <span class="stat flame" id="sWood" aria-label="Wood" hidden style="display:none"><i class="emo" style="font-style:normal">🪵</i><span>0</span></span>
       <span class="stat gem" id="sAcorns" aria-label="Acorns"><i class="emo" style="font-style:normal">🌰</i><span>0</span></span>
     </div>
     <button class="tbtn" id="tbPrizes" aria-label="My prizes">🏆<span class="dotn" id="prDot" hidden>!</span></button>
@@ -14086,12 +14130,13 @@ img.e3 {
     }
     return a;
   };
-  const lvl = () => Math.max(3, Math.min(10, S.age + (S.diff - 1)));
+  const lvl = () => Math.max(3, Math.min(10, S.age + (S.diff - 1) + (window.__bst || 0)));
   const DK = () => 3;
   let seqId = 0;
   function speaking(on) {
     const b = $("qSpk");
     if (b) b.classList.toggle("talking", on);
+    document.querySelectorAll(".g-rep").forEach((x) => x.classList.toggle("talking", on));
   }
   function sayseq(list, onEnd) {
     const id = ++seqId, l = list.filter(Boolean);
@@ -14286,7 +14331,7 @@ img.e3 {
     if (["today", "tomorrow", "yesterday", "after", "before", "monthafter", "nowseason", "week", "months"].includes(k)) return qCal(k);
     if (k === "routine") {
       const r = pickOne(ROUTINES.filter((x) => !["\u2600\uFE0F", "\u{1F319}"].includes(x[0])));
-      return { voice: ["c_routine"], cap: "Morning or night?", visual: '<div class="bigemo">'.concat(r[0], "</div>"), opts: [{ h: "<span class='yn'>\u2600\uFE0F</span><small>Morning</small>", say: both("morning") }, { h: "<span class='yn'>\u{1F319}</span><small>Night</small>", say: both("night") }], ans: r[2], layout: "yn", hint: "elim", exp: { t: r[2] ? "Night \u{1F319}" : "Morning \u2600\uFE0F", v: ["w/LULU_ANS_IS"] } };
+      return { voice: ["c_routine"], cap: "Morning or night?", visual: '<div class="bigemo">'.concat(r[0], '</div><div class="rt-lab">').concat(r[1], "</div>"), opts: [{ h: "<span class='yn'>\u2600\uFE0F</span><small>Morning</small>", say: both("morning") }, { h: "<span class='yn'>\u{1F319}</span><small>Night</small>", say: both("night") }], ans: r[2], layout: "yn", hint: "elim", exp: { t: r[2] ? "Night \u{1F319}" : "Morning \u2600\uFE0F", v: ["w/LULU_ANS_IS"] } };
     }
     if (k === "season") {
       const sz = pickOne(SEASONS), SE = { Winter: "\u2744\uFE0F", Spring: "\u{1F337}", Summer: "\u{1F31E}", Autumn: "\u{1F341}" }, o2 = sh(["Winter", "Spring", "Summer", "Autumn"]);
@@ -14923,7 +14968,7 @@ img.e3 {
     const i = L.g, first = i === S.day.done;
     if (first) {
       S.day.done++;
-      S.wood += 1;
+      S.acorns += 2;
       wkLog().mounds = (wkLog().mounds || 0) + 1;
     }
     save();
@@ -14932,7 +14977,7 @@ img.e3 {
     sfx.fanfare();
     burst(160);
     sayseq([pickOne(["w/LULU_PR_A", "w/LULU_PR_E", "w/LULU_PR_D"])]);
-    r.innerHTML = '<div class="rs-sun"></div><span class="dm">'.concat(bv(170), "</span><h2>").concat(pickOne(["You did it!", "Amazing job!", "Great work!", "Hooray!"]), "</h2><p>").concat(pickOne(["Domi is so proud of you!", "Your brain is growing!", "What a great learner!"]), '</p>\n    <div class="gains"><span class="gn a">+').concat(L.acorns, " \u{1F330}</span>").concat(first ? '<span class="gn w">+1 \u{1FAB5}</span>' : "", "</div>").concat(goalCard(), '\n    <button class="qbtn good big" id="resBtn">Continue \u279C</button>');
+    r.innerHTML = '<div class="rs-sun"></div><span class="dm">'.concat(bv(170), "</span><h2>").concat(pickOne(["You did it!", "Amazing job!", "Great work!", "Hooray!"]), "</h2><p>").concat(pickOne(["Domi is so proud of you!", "Your brain is growing!", "What a great learner!"]), '</p>\n    <div class="gains"><span class="gn a">+').concat(L.acorns, " \u{1F330}</span>").concat(first ? '<span class="gn a">+2 \u{1F330}</span>' : "", "</div>").concat(goalCard(), '\n    <button class="qbtn good big" id="resBtn">Continue \u279C</button>');
     r.hidden = false;
     const leave = () => {
       closeLesson();
@@ -15149,7 +15194,7 @@ img.e3 {
   const lSay = (l) => ["w/LULU_LN_" + l];
   const wSay = (x) => ["w/LULU_WORD" + x.i];
   function pickWord(used) {
-    const c = sh(WORDS);
+    const c = sh(WORDS.filter((x) => faSay(x.w).length));
     return c.find((x) => !used.has("wd" + x.i)) || c[0];
   }
   function qLetters(k, used) {
@@ -15166,11 +15211,11 @@ img.e3 {
     const x = pickWord(used);
     used.add("wd" + x.i);
     const o = sh([x, ...sh(WORDS.filter((y) => y.i !== x.i)).slice(0, DK())]);
-    if (k === "listen") {
+    if (k === "listen" && lvl() >= 5) {
       const o4 = sh([x, ...sh(WORDS.filter((y) => y.i !== x.i)).slice(0, 3)]);
-      return { voice: ["w/LULU_W_LISTEN", ...wSay(x)], cap: "Listen and find it!", visual: '<div class="listen">\u{1F442}</div>', opts: o4.map((y) => ({ h: PIC("wd_" + y.i, "wp op") })), ans: o4.indexOf(x), layout: "grid4", hint: "elim", exp: { t: x.w, v: ["w/LULU_ANS_IS", ...wSay(x)] } };
+      return { voice: ["w/LULU_W_LISTEN", ...wSay(x), ...lvl() <= 4 ? faSay(x.w) : []], cap: "Listen and find it!", visual: '<div class="listen">\u{1F442}</div>', opts: o4.map((y) => ({ h: PIC("wd_" + y.i, "wp op") })), ans: o4.indexOf(x), layout: "grid4", hint: "elim", exp: { t: x.w, v: ["w/LULU_ANS_IS", ...wSay(x), ...faSay(x.w)] } };
     }
-    return { voice: ["w/LULU_W_LISTEN", ...wSay(x)], cap: "Listen and find it!", visual: '<div class="listen">\u{1F442}</div>', opts: o.map((y) => ({ h: PIC("wd_" + y.i, "wp op") })), ans: o.indexOf(x), layout: "row3", hint: "elim", exp: { t: x.w, v: ["w/LULU_ANS_IS", ...wSay(x)] } };
+    if (k === "listen") return { voice: ["w/LULU_W_LISTEN", ...wSay(x), ...lvl() <= 4 ? faSay(x.w) : []], cap: "Listen and find it!", visual: '<div class="listen">\u{1F442}</div>', opts: o.map((y) => ({ h: PIC("wd_" + y.i, "wp op") })), ans: o.indexOf(x), layout: "row3", hint: "elim", exp: { t: x.w, v: ["w/LULU_ANS_IS", ...wSay(x), ...faSay(x.w)] } };
     if (k === "first") {
       const r = x.w[0].toUpperCase(), lo = sh([r, ...sh(LET.split("").filter((l) => l !== r)).slice(0, DK())]);
       return { voice: ["w/LULU_W_FIRST", ...wSay(x)], cap: "First letter?", visual: PIC("wd_" + x.i, "wp big"), opts: lo.map((l) => ({ h: '<b class="num letter">'.concat(l, "</b>"), say: lSay(l) })), ans: lo.indexOf(r), layout: "row3", hint: "elim", exp: { t: "".concat(r, " \u2026 ").concat(x.w), v: ["w/LULU_ANS_IS", ...lSay(r), ...wSay(x)] } };
@@ -15376,8 +15421,8 @@ img.e3 {
   const shapeDiv = (c, f, big) => '<span class="cshape '.concat(f).concat(big ? " big" : "", '" style="--c:').concat(c < 0 ? "#C9D2DE" : CLR[c][1], '"></span>');
   function rhymeSets() {
     const by = {};
-    for (const x of WORDS.filter((x2) => !(/ow$/.test(x2.w) && !["cow", "now", "how", "wow"].includes(x2.w)) && !["one", "two", "eye"].includes(x2.w))) {
-      const k = x.w.slice(-2);
+    for (const x of WORDS.filter((x2) => !(/ow$/.test(x2.w) && !["cow", "now", "how", "wow"].includes(x2.w)) && !["one", "two", "eye"].includes(x2.w) && /^[^aeiouy]*[aeiou]+[^aeiouy]*e?$/.test(x2.w))) {
+      const k = x.w.replace(/^[^aeiou]*/, "");
       (by[k] = by[k] || []).push(x);
     }
     return Object.values(by).filter((v) => v.length >= 2);
@@ -15786,7 +15831,16 @@ img.e3 {
     const ones = (r.h.match(/1/g) || []).length, p = r.h.length ? ones / r.h.length : 0;
     return r.n < 4 ? 0 : p >= 0.8 && r.n >= 6 ? 2 : 1;
   }
-  const gHead = (e, kick, title) => '<div class="qkick"><span class="qke">'.concat(e, "</span>").concat(kick, '</div><h2 class="qtitle">').concat(title, "</h2>");
+  const gHead = (e, kick, title) => '<div class="qkick"><span class="qke">'.concat(e, "</span>").concat(kick, '<button class="g-rep" aria-label="Hear it again"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></div><h2 class="qtitle">').concat(title, "</h2>");
+  document.addEventListener("click", (e) => {
+    const b = e.target.closest && e.target.closest(".g-rep");
+    if (!b || !L || !L.q) return;
+    e.stopPropagation();
+    sfx.tap();
+    hush();
+    sayseq(L.q.voice || [], () => {
+    });
+  }, true);
   function gShow(html) {
     $("qBody").innerHTML = html;
     $("qBody").classList.remove("in");
@@ -20717,6 +20771,175 @@ img.e3 {
   MAZES.shapes.push(["\u{1F697}", "\u26FD", "Cars need fuel or electricity to drive."]);
   MAZES.robot.push(["\u{1F697}", "\u26FD", "Cars need fuel or electricity to drive."], ["\u{1F41D}", "\u{1F338}", "Bees visit flowers to collect nectar and make honey."]);
   MAZES.count.push(["\u{1F430}", "\u{1F955}", "Rabbits have long ears to hear danger far away."]);
+  var G5_READY = true;
+  function woodMig() {
+    try {
+      if (!S) return;
+      let ch = false;
+      if (S.wood) {
+        S.acorns = (S.acorns || 0) + S.wood * 2;
+        S.wood = 0;
+        ch = true;
+      }
+      (S.real || []).forEach((r) => {
+        if (r.w) {
+          r.a = (r.a || 0) + r.w * 2;
+          r.w = 0;
+          ch = true;
+        }
+      });
+      if (ch) save();
+    } catch (e) {
+    }
+  }
+  try {
+    const _ls5 = loadState;
+    loadState = function() {
+      const r = _ls5.apply(this, arguments);
+      woodMig();
+      return r;
+    };
+  } catch (e) {
+  }
+  woodMig();
+  function gidGuess(k, cat) {
+    if (k.startsWith("f_")) return "g:" + k.slice(2);
+    if (cat === "memory" || cat === "robot") return k === "robot" ? "robot" : "g:" + k;
+    return cat + "." + k;
+  }
+  function boostFor(gid) {
+    try {
+      const ev = (S.ev || []).filter((e) => e[1] === gid).slice(-8);
+      if (ev.length < 4) return 0;
+      const r = ev.map((e) => e[2]), l5 = r.slice(-5), l3 = r.slice(-3);
+      if (l3.filter((x) => x === 0).length >= 2) return S.age > 3 ? -1 : 0;
+      if (ev.length >= 8 && r.filter((x) => x === 2).length >= 7) return 2;
+      if (l5.filter((x) => x === 2).length >= 4) return 1;
+      return 0;
+    } catch (e) {
+      return 0;
+    }
+  }
+  const _bf5 = buildFormat;
+  buildFormat = function(kind, cat) {
+    window.__bst = boostFor(gidGuess(kind, cat));
+    try {
+      const q = _bf5(kind, cat);
+      if (q && window.__bst) q.boost = window.__bst;
+      return q;
+    } finally {
+      window.__bst = 0;
+    }
+  };
+  const _bq5 = buildQ;
+  buildQ = function(cat, k, used) {
+    window.__bst = boostFor(gidGuess(k || "", cat));
+    try {
+      return _bq5(cat, k, used);
+    } finally {
+      window.__bst = 0;
+    }
+  };
+  const FAMILY = { f_puzzle: "piece", f_quilt: "piece", f_dragpat: "piece", robot: "path", f_robowalk: "path", f_maze: "path" }, FAMCAP = { piece: 1, path: 2 };
+  function capRound(p, cat) {
+    if (!p) return p;
+    const fam = (k) => FAMILY[k] || k, cap = (k) => FAMCAP[fam(k)] || (k === "w" ? 4 : 2), n = {};
+    let pool = [];
+    try {
+      pool = sh([.../* @__PURE__ */ new Set([...formatsFor(cat) || [], ...kindsFor(cat) || []])]);
+    } catch (e) {
+    }
+    const out = [];
+    for (const k of p) {
+      const f = fam(k);
+      if ((n[f] || 0) < cap(k)) {
+        n[f] = (n[f] || 0) + 1;
+        out.push(k);
+        continue;
+      }
+      const alt = pool.find((x) => (n[fam(x)] || 0) < cap(x) && x !== out[out.length - 1]);
+      if (alt) {
+        n[fam(alt)] = (n[fam(alt)] || 0) + 1;
+        out.push(alt);
+      }
+    }
+    return out;
+  }
+  const _pr5 = planRound;
+  planRound = function(cat, count) {
+    return capRound(_pr5(cat, count), cat);
+  };
+  const _qpd5 = qPDet;
+  qPDet = function(cat) {
+    for (let t = 0; t < 20; t++) {
+      const q = _qpd5(cat);
+      const nn = q.seq.filter((x) => !x).length, v = q.opts[q.ans];
+      if (q.seq.length !== (q.kind === "grid" ? 9 : 6) || nn !== 1 || !v) continue;
+      if (q.kind === "num") {
+        const h = q.seq.indexOf(null), vals = q.seq.map((x, i) => x ? x[2] : v[2]), d = vals[1] - vals[0];
+        if (!vals.every((x, i) => x === vals[0] + d * i)) continue;
+        if (q.opts.filter((o) => o[2] === v[2]).length !== 1) continue;
+      }
+      return q;
+    }
+    return _qpd5(cat);
+  };
+  const simW = (a, b) => (a.length === b.length ? 2 : 0) + [...a].filter((c, i) => b[i] === c).length + (a[0] === b[0] ? 1 : 0) + [...new Set(a)].filter((c) => b.includes(c)).length * 0.5;
+  function lookAlikes(x, n) {
+    const P2 = WORDS.filter((y) => y.i !== x.i && y.w !== x.w);
+    const best = sh(P2).sort((a, b) => simW(x.w, b.w) - simW(x.w, a.w));
+    return best.slice(0, n);
+  }
+  const REALW = new Set("cab can cap car cat cot cut cub cup bad bag ban bat bed beg bet bib bid big bin bit bog box boy bud bug bun bus but dad dam den dig dim dip dog dot dug fan fat fed fig fin fit fix fog fox fun fur gap gas get got gum gun gut had ham has hat hen her hid him hip his hit hog hop hot hug hum hut jam jar jet jig job jog jot jug kid kit lab lad lap leg let lid lip lit log lot mad man map mat men met mix mob mom mop mud mug nab nag nap net nod not nut pad pan pat peg pen pet pig pin pit pod pop pot pub pup put rag ram ran rap rat red rib rid rig rim rip rob rod rot rub rug run rut sad sat set sip sit six sob sod sun tab tag tan tap ten tin tip top tot tub tug van vat vet wag web wed wet wig win wit yak yam yes yet zip cow kow saw sew sow tow bow now how row low new few dew".split(" "));
+  function misspell(w) {
+    const V2 = "aeiou", C = "bcdfghlmnprstvw", out = /* @__PURE__ */ new Set();
+    const sw = w.length > 2 ? w[0] + w[2] + w[1] + w.slice(3) : w.split("").reverse().join("");
+    if (sw !== w && !REALW.has(sw)) out.add(sw);
+    for (let t = 0; t < 40 && out.size < 5; t++) {
+      const i = ri(0, w.length - 1), c = w[i], r = V2.includes(c) ? pickOne(V2.replace(c, "").split("")) : pickOne(C.replace(c, "").split(""));
+      const m = w.slice(0, i) + r + w.slice(i + 1);
+      if (m !== w && !WORDS.some((y) => y.w === m) && !REALW.has(m)) out.add(m);
+    }
+    if (w[0] === "c" && !REALW.has("k" + w.slice(1))) out.add("k" + w.slice(1));
+    return sh([...out]).slice(0, 3);
+  }
+  function qWords6(k, used) {
+    const x = sh(WORDS.filter((y) => y.w.length >= 3 && y.w.length <= 5)).find((y) => !used.has("wd" + y.i)) || WORDS[0];
+    used.add("wd" + x.i);
+    if (k === "whear") {
+      const o2 = sh([x, ...lookAlikes(x, 3)]);
+      return { voice: ["w/LULU_W_LISTEN", ...wSay(x)], cap: "Listen! Which word is it?", visual: '<div class="listen">\u{1F442}</div>', opts: o2.map((y) => ({ h: '<b class="word">'.concat(y.w, "</b>") })), ans: o2.indexOf(x), layout: "col", hint: "elim", exp: { t: x.w, v: ["w/LULU_ANS_IS", ...wSay(x), ...faSay(x.w)] } };
+    }
+    if (k === "wspell") {
+      const o2 = sh([x.w, ...misspell(x.w)]);
+      return { voice: [G5_READY ? "w/PX_G5_SPELL" : "w/LULU_SK_WHICH"], cap: "Which word is spelled right?", visual: PIC("wd_" + x.i, "wp big"), opts: o2.map((w) => ({ h: '<b class="word">'.concat(w, "</b>") })), ans: o2.indexOf(x.w), layout: "col", hint: "elim", exp: { t: x.w, v: ["w/LULU_ANS_IS", ...wSay(x)] } };
+    }
+    const o = sh([x, ...lookAlikes(x, 3)]);
+    return { voice: ["w/LULU_SK_WHICH"], cap: "What is it?", visual: PIC("wd_" + x.i, "wp big"), opts: o.map((y) => ({ h: '<b class="word">'.concat(y.w, "</b>"), say: wSay(y) })), ans: o.indexOf(x), layout: "col", hint: "elim", exp: { t: x.w, v: ["w/LULU_ANS_IS", ...wSay(x)] } };
+  }
+  const _ql5 = qLetters;
+  qLetters = function(k, used) {
+    if (k === "whear" || k === "wspell" || k === "whatis" && lvl() >= 6) return qWords6(k, used);
+    return _ql5(k, used);
+  };
+  const _qr5 = qRead;
+  qRead = function(k, used) {
+    if (k === "whear" || k === "wspell") return qWords6(k, used);
+    return _qr5(k, used);
+  };
+  const _kf5 = kindsFor;
+  kindsFor = function(cat) {
+    const a = lvl();
+    if (cat === "letters" && a >= 6) return a >= 7 ? ["whear", "wspell", "whatis", "first", "lafter", "lbefore", "build"] : ["whear", "wspell", "whatis", "first", "lafter", "rhyme", "build"];
+    if (cat === "read" && a >= 6) return ["balloon", "flash", "sentence", "whear", "wspell"];
+    return _kf5(cat);
+  };
+  Object.assign(GMAP, {
+    "letters.whear": G("Hear the word", ["lang", "read"], [["lang", "listen"]], "Hear an English word and pick it from three look-alike words.", "Practice"),
+    "letters.wspell": G("Spelled right?", ["lang", "read"], [["cog", "memory"]], "Look at the picture and pick the word that is spelled right.", "Practice"),
+    "read.whear": G("Hear the word", ["lang", "read"], [["lang", "listen"]], "Hear an English word and pick it from three look-alike words.", "Practice"),
+    "read.wspell": G("Spelled right?", ["lang", "read"], [["cog", "memory"]], "Look at the picture and pick the word that is spelled right.", "Practice")
+  });
   const E3 = { "\u{1F3EA}": "1f3ea", "\u26F5": "26f5", "\u{1F477}": "1f477", "\u2753": "2753", "\u2B50": "2b50", "\u{1F3C6}": "1f3c6", "\u{1F433}": "1f433", "\u{1FAA8}": "1faa8", "\u2601\uFE0F": "2601-fe0f", "\u{1F955}": "1f955", "\u{1F1E6}\u{1F1FA}": "1f1e6-1f1fa", "\u{1F634}": "1f634", "\u{1F50B}": "1f50b", "\u{1F36C}": "1f36c", "\u{1F3A8}": "1f3a8", "\u{1F352}": "1f352", "\u{1F9E9}": "1f9e9", "7\uFE0F\u20E3": "37-fe0f-20e3", "\u{1F389}": "1f389", "\u{1F948}": "1f948", "\u{1F372}": "1f372", "\u2139\uFE0F": "2139-fe0f", "\u{1F69C}": "1f69c", "\u{1F48E}": "1f48e", "\u{1F347}": "1f347", "\u{1F9A9}": "1f9a9", "\u{1F353}": "1f353", "\u{1F43C}": "1f43c", "\u{1F427}": "1f427", "\u{1F382}": "1f382", "\u{1F339}": "1f339", "\u{1F3CE}\uFE0F": "1f3ce-fe0f", "\u{1F30E}": "1f30e", "\u{1F52C}": "1f52c", "\u{1F51F}": "1f51f", "\u{1F33E}": "1f33e", "\u{1F345}": "1f345", "\u{1F524}": "1f524", "\u{1FAA5}": "1faa5", "\u{1F46E}": "1f46e", "\u{1F431}": "1f431", "\u{1F96C}": "1f96c", "\u{1F528}": "1f528", "\u{1F419}": "1f419", "\u{1F414}": "1f414", "\u{1F3BE}": "1f3be", "\u{1F3A0}": "1f3a0", "\u{1F392}": "1f392", "\u{1F31F}": "1f31f", "\u{1F578}\uFE0F": "1f578-fe0f", "\u{1F3E0}": "1f3e0", "\u{1F335}": "1f335", "\u{1F343}": "1f343", "9\uFE0F\u20E3": "39-fe0f-20e3", "\u{1F436}": "1f436", "\u{1F9F0}": "1f9f0", "\u26C8\uFE0F": "26c8-fe0f", "\u{1F536}": "1f536", "\u23F3": "23f3", "\u{1F3AF}": "1f3af", "\u{1F9C1}": "1f9c1", "\u{1F692}": "1f692", "\u{1FAB5}": "1fab5", "\u{1F954}": "1f954", "\u{1F40D}": "1f40d", "\u{1F9AB}": "1f9ab", "\u{1F49C}": "1f49c", "\u{1F36A}": "1f36a", "\u{1F992}": "1f992", "\u{1F988}": "1f988", "\u{1F7F0}": "1f7f0", "\u{1F9ED}": "1f9ed", "\u{1F1EE}\u{1F1F7}": "1f1ee-1f1f7", "\u{1F440}": "1f440", "\u{1F3C5}": "1f3c5", "\u{1F423}": "1f423", "\u{1F4AF}": "1f4af", "\u{1F40C}": "1f40c", "\u{1F1FA}\u{1F1F8}": "1f1fa-1f1f8", "\u{1F56F}\uFE0F": "1f56f-fe0f", "\u{1F1EF}\u{1F1F5}": "1f1ef-1f1f5", "\u{1F9B5}": "1f9b5", "\u{1F58D}\uFE0F": "1f58d-fe0f", "\u{1F41E}": "1f41e", "\u2B06\uFE0F": "2b06-fe0f", "\u26C4": "26c4", "\u{1F300}": "1f300", "\u{1F426}": "1f426", "\u{1F4A7}": "1f4a7", "\u{1F332}": "1f332", "\u{1F680}": "1f680", "\u2B05\uFE0F": "2b05-fe0f", "\u{1F48C}": "1f48c", "\u{1F305}": "1f305", "\u{1F464}": "1f464", "\u{1F410}": "1f410", "\u267B\uFE0F": "267b-fe0f", "\u{1F50A}": "1f50a", "\u{1F340}": "1f340", "\u{1F468}\u200D\u{1F373}": "1f468-200d-1f373", "\u2728": "2728", "\u2795": "2795", "4\uFE0F\u20E3": "34-fe0f-20e3", "\u{1F41F}": "1f41f", "\u{1F576}\uFE0F": "1f576-fe0f", "\u{1F4AB}": "1f4ab", "\u{1F327}\uFE0F": "1f327-fe0f", "\u274C": "274c", "\u{1F43E}": "1f43e", "\u{1F34D}": "1f34d", "\u{1F4F7}": "1f4f7", "\u{1F3F0}": "1f3f0", "\u{1FABA}": "1faba", "\u{1F1E9}\u{1F1EA}": "1f1e9-1f1ea", "\u{1F983}": "1f983", "\u{1F9AE}": "1f9ae", "\u{1F485}": "1f485", "\u{1F50D}": "1f50d", "\u2796": "2796", "\u{1F413}": "1f413", "\u{1F36F}": "1f36f", "\u{1FAD0}": "1fad0", "\u{1F415}\u200D\u{1F9BA}": "1f415-200d-1f9ba", "\u{1F6FB}": "1f6fb", "\u{1F526}": "1f526", "\u{1F425}": "1f425", "\u{1F40B}": "1f40b", "\u{1F600}": "1f600", "\u{1F3E1}": "1f3e1", "\u{1F1EE}\u{1F1F3}": "1f1ee-1f1f3", "\u{1F9B6}": "1f9b6", "\u{1F9D1}\u200D\u{1F3EB}": "1f9d1-200d-1f3eb", "\u{1F437}": "1f437", "\u{1F3C1}": "1f3c1", "\u2696\uFE0F": "2696-fe0f", "\u{1F446}": "1f446", "\u{1F938}": "1f938", "\u{1F7E0}": "1f7e0", "\u{1F9B7}": "1f9b7", "\u{1F947}": "1f947", "\u{1F53A}": "1f53a", "\u{1F7E6}": "1f7e6", "\u{1F33B}": "1f33b", "\u{1FA9B}": "1fa9b", "\u{1F949}": "1f949", "\u{1FAB1}": "1fab1", "\u{1F30B}": "1f30b", "\u{1FA90}": "1fa90", "\u{1F33F}": "1f33f", "\u{1F1EA}\u{1F1EC}": "1f1ea-1f1ec", "\u{1F60A}": "1f60a", "\u{1F94E}": "1f94e", "\u{1F6B2}": "1f6b2", "\u{1F6CC}": "1f6cc", "\u{1F95B}": "1f95b", "\u{1F408}": "1f408", "\u{1F30D}": "1f30d", "\u{1F95A}": "1f95a", "\u{1F9D1}\u200D\u{1F692}": "1f9d1-200d-1f692", "\u{1F9FC}": "1f9fc", "\u2699\uFE0F": "2699-fe0f", "\u{1F34A}": "1f34a", "\u{1F98E}": "1f98e", "\u{1F43F}\uFE0F": "1f43f-fe0f", "\u{1F306}": "1f306", "\u{1FA81}": "1fa81", "\u{1F684}": "1f684", "\u{1F430}": "1f430", "\u{1F366}": "1f366", "\u{1F317}": "1f317", "\u{1F3A3}": "1f3a3", "\u{1FAB7}": "1fab7", "\u{1F37D}\uFE0F": "1f37d-fe0f", "\u{1F64B}": "1f64b", "\u{1F4CB}": "1f4cb", "\u{1F320}": "1f320", "\u{1F9C4}": "1f9c4", "\u{1F4F1}": "1f4f1", "\u{1F4D6}": "1f4d6", "\u{1F428}": "1f428", "\u{1F512}": "1f512", "\u{1F9E3}": "1f9e3", "\u{1F4C6}": "1f4c6", "\u{1F973}": "1f973", "\u{1F4AA}": "1f4aa", "\u{1F415}": "1f415", "\u{1F337}": "1f337", "\u{1F49A}": "1f49a", "\u{1F3DC}\uFE0F": "1f3dc-fe0f", "\u{1F9D1}\u200D\u{1F3A8}": "1f9d1-200d-1f3a8", "\u{1F4CE}": "1f4ce", "\u{1F41B}": "1f41b", "\u{1F9F7}": "1f9f7", "\u{1F451}": "1f451", "\u{1F9D2}": "1f9d2", "\u{1F9D1}\u200D\u{1F52C}": "1f9d1-200d-1f52c", "\u{1F7EB}": "1f7eb", "\u{1F49D}": "1f49d", "\u{1F6A2}": "1f6a2", "\u{1F416}": "1f416", "5\uFE0F\u20E3": "35-fe0f-20e3", "\u{1F7E2}": "1f7e2", "\u{1F443}": "1f443", "\u{1F44B}": "1f44b", "\u{1F41A}": "1f41a", "\u{1F1EE}\u{1F1F9}": "1f1ee-1f1f9", "\u{1F691}": "1f691", "\u{1F3B5}": "1f3b5", "\u{1F9F2}": "1f9f2", "\u{1F36D}": "1f36d", "\u{1F406}": "1f406", "\u{1F374}": "1f374", "\u{1F628}": "1f628", "\u{1F35E}": "1f35e", "\u{1F9D1}\u200D\u2708\uFE0F": "1f9d1-200d-2708-fe0f", "\u{1F514}": "1f514", "\u{1F3CB}\uFE0F": "1f3cb-fe0f", "\u{1F4CF}": "1f4cf", "\u{1F534}": "1f534", "\u{1F34C}": "1f34c", "2\uFE0F\u20E3": "32-fe0f-20e3", "\u2B07\uFE0F": "2b07-fe0f", "\u21A9\uFE0F": "21a9-fe0f", "\u{1F342}": "1f342", "\u{1F91D}": "1f91d", "\u{1F511}": "1f511", "\u{1F6D2}": "1f6d2", "\u2702\uFE0F": "2702-fe0f", "\u{1F6C1}": "1f6c1", "\u{1F9C0}": "1f9c0", "\u{1F334}": "1f334", "\u{1F9D1}\u200D\u{1F527}": "1f9d1-200d-1f527", "\u{1F3A9}": "1f3a9", "\u{1F6A9}": "1f6a9", "\u{1F41D}": "1f41d", "\u{1F5D3}\uFE0F": "1f5d3-fe0f", "\u{1F9D1}": "1f9d1", "\u{1F319}": "1f319", "\u{1F34B}": "1f34b", "\u{1F33D}": "1f33d", "\u{1F496}": "1f496", "\u{1F6F8}": "1f6f8", "\u{1FA80}": "1fa80", "\u{1F99F}": "1f99f", "\u{1F989}": "1f989", "\u{1F330}": "1f330", "\u{1F50E}": "1f50e", "\u{1F341}": "1f341", "\u{1F984}": "1f984", "\u{1F409}": "1f409", "\u{1F9E0}": "1f9e0", "\u{1F407}": "1f407", "\u{1F487}": "1f487", "\u26BD": "26bd", "\u{1F573}\uFE0F": "1f573-fe0f", "\u2600\uFE0F": "2600-fe0f", "\u{1F9B4}": "1f9b4", "\u{1F369}": "1f369", "\u{1F52D}": "1f52d", "\u{1F393}": "1f393", "\u{1F1F2}\u{1F1FD}": "1f1f2-1f1fd", "\u{1F42D}": "1f42d", "\u{1F60B}": "1f60b", "\u{1F1E8}\u{1F1F3}": "1f1e8-1f1f3", "\u{1F384}": "1f384", "\u{1F307}": "1f307", "\u{1F380}": "1f380", "\u{1F338}": "1f338", "\u{1FAB0}": "1fab0", "\u2708\uFE0F": "2708-fe0f", "\u{1F4DA}": "1f4da", "\u{1F476}": "1f476", "\u2B1B": "2b1b", "\u{1F450}": "1f450", "\u{1F914}": "1f914", "\u{1FA9E}": "1fa9e", "\u{1F995}": "1f995", "\u{1F355}": "1f355", "\u{1F5E3}\uFE0F": "1f5e3-fe0f", "\u{1F5FA}\uFE0F": "1f5fa-fe0f", "\u{1F422}": "1f422", "\u26A1": "26a1", "\u{1F976}": "1f976", "\u{1F9C3}": "1f9c3", "\u2614": "2614", "\u{1F69A}": "1f69a", "\u{1F0CF}": "1f0cf", "\u{1F45F}": "1f45f", "\u{1F697}": "1f697", "\u{1F9C5}": "1f9c5", "\u{1F6D6}": "1f6d6", "\u{1F32B}\uFE0F": "1f32b-fe0f", "\u2615": "2615", "\u270F\uFE0F": "270f-fe0f", "\u{1F996}": "1f996", "\u{1FABD}": "1fabd", "\u{1F418}": "1f418", "\u{1F9D1}\u200D\u{1F680}": "1f9d1-200d-1f680", "\u{1FAC0}": "1fac0", "\u{1F501}": "1f501", "\u{1F3D0}": "1f3d0", "\u{1F7E1}": "1f7e1", "\u{1F98A}": "1f98a", "6\uFE0F\u20E3": "36-fe0f-20e3", "\u{1F469}\u200D\u2695\uFE0F": "1f469-200d-2695-fe0f", "\u2604\uFE0F": "2604-fe0f", "\u{1F9F1}": "1f9f1", "\u{1F98B}": "1f98b", "\u{1FA71}": "1fa71", "\u{1F7E5}": "1f7e5", "\u{1F90D}": "1f90d", "\u{1F31B}": "1f31b", "\u{1F9E6}": "1f9e6", "\u{1F535}": "1f535", "\u27A1\uFE0F": "27a1-fe0f", "\u{1F9D1}\u200D\u2695\uFE0F": "1f9d1-200d-2695-fe0f", "\u{1F411}": "1f411", "\u{1F3D6}\uFE0F": "1f3d6-fe0f", "\u{1F981}": "1f981", "\u{1F36B}": "1f36b", "\u{1F62E}": "1f62e", "\u{1F44D}": "1f44d", "\u{1F9D1}\u200D\u{1F373}": "1f9d1-200d-1f373", "\u{1F987}": "1f987", "\u{1F551}": "1f551", "\u{1F966}": "1f966", "\u{1F577}\uFE0F": "1f577-fe0f", "\u{1F388}": "1f388", "\u{1F34E}": "1f34e", "\u{1F980}": "1f980", "\u26AA": "26aa", "\u{1F41C}": "1f41c", "\u{1FA99}": "1fa99", "\u{1F499}": "1f499", "\u{1F1E8}\u{1F1E6}": "1f1e8-1f1e6", "\u{1F552}": "1f552", "\u{1F35A}": "1f35a", "\u{1F693}": "1f693", "\u{1F4A1}": "1f4a1", "\u{1F308}": "1f308", "\u23F0": "23f0", "\u{1F3B9}": "1f3b9", "\u{1F47D}": "1f47d", "\u{1F529}": "1f529", "\u{1F35F}": "1f35f", "\u{1F331}": "1f331", "\u{1F442}": "1f442", "\u{1F682}": "1f682", "\u2705": "2705", "\u{1F42C}": "1f42c", "\u{1F438}": "1f438", "1\uFE0F\u20E3": "31-fe0f-20e3", "\u{1F30A}": "1f30a", "\u{1F4C5}": "1f4c5", "\u{1FAB6}": "1fab6", "\u{1F6F7}": "1f6f7", "\u{1F986}": "1f986", "\u{1F434}": "1f434", "\u{1F620}": "1f620", "\u{1F9E5}": "1f9e5", "\u{1F963}": "1f963", "\u{1F429}": "1f429", "\u{1F4A8}": "1f4a8", "\u{1F6F0}\uFE0F": "1f6f0-fe0f", "\u{1F525}": "1f525", "\u{1F4E4}": "1f4e4", "\u2668\uFE0F": "2668-fe0f", "\u{1F3CD}\uFE0F": "1f3cd-fe0f", "\u{1F52E}": "1f52e", "8\uFE0F\u20E3": "38-fe0f-20e3", "\u{1F315}": "1f315", "\u{1F311}": "1f311", "\u2744\uFE0F": "2744-fe0f", "\u{1F9FA}": "1f9fa", "\u{1F4AC}": "1f4ac", "\u{1F3AC}": "1f3ac", "\u{1F51B}": "1f51b", "3\uFE0F\u20E3": "33-fe0f-20e3", "\u{1F550}": "1f550", "\u{1F9C2}": "1f9c2", "\u{1F350}": "1f350", "\u{1F5A4}": "1f5a4", "\u2764\uFE0F": "2764-fe0f", "\u{1F9CA}": "1f9ca", "\u{1F1EB}\u{1F1F7}": "1f1eb-1f1f7", "\u{1F9FD}": "1f9fd", "\u{1F944}": "1f944", "\u{1F9E2}": "1f9e2", "\u{1F40A}": "1f40a", "\u{1F3B8}": "1f3b8", "\u{1F957}": "1f957", "\u{1F43B}": "1f43b", "\u{1F68C}": "1f68c", "\u{1F4E5}": "1f4e5", "\u{1F4C8}": "1f4c8", "\u{1F316}": "1f316", "\u{1F504}": "1f504", "\u{1F468}\u200D\u{1F469}\u200D\u{1F467}": "1f468-200d-1f469-200d-1f467", "\u{1F632}": "1f632", "\u{1F344}": "1f344", "\u{1F4FB}": "1f4fb", "\u{1F622}": "1f622", "\u{1F346}": "1f346", "\u{1F916}": "1f916", "\u{1F404}": "1f404", "\u{1F7E3}": "1f7e3", "\u{1F30C}": "1f30c", "\u{1F527}": "1f527", "\u{1FAE7}": "1fae7", "\u{1FA84}": "1fa84", "\u{1F1E7}\u{1F1F7}": "1f1e7-1f1f7", "\u{1F6CF}\uFE0F": "1f6cf-fe0f", "\u{1F967}": "1f967", "\u{1F349}": "1f349", "\u{1F3DE}\uFE0F": "1f3de-fe0f", "\u{1F539}": "1f539", "\u{1F32C}\uFE0F": "1f32c-fe0f", "\u{1F432}": "1f432", "\u{1F964}": "1f964", "\u{1F9D3}": "1f9d3", "\u{1FAD8}": "1fad8", "\u{1F6B6}": "1f6b6", "\u{1F3B1}": "1f3b1", "\u{1F1EC}\u{1F1E7}": "1f1ec-1f1e7", "\u26F0\uFE0F": "26f0-fe0f", "\u{1F4FA}": "1f4fa", "\u{1F699}": "1f699", "\u{1F985}": "1f985", "\u{1F31E}": "1f31e", "\u{1F30F}": "1f30f", "\u{1F522}": "1f522", "\u{1F9F8}": "1f9f8", "\u{1FA9C}": "1fa9c", "\u{1F381}": "1f381", "\u{1F537}": "1f537", "\u{1F383}": "1f383", "\u{1F333}": "1f333", "\u26AB": "26ab", "\u{1F42F}": "1f42f", "\u{1F9D1}\u200D\u{1F33E}": "1f9d1-200d-1f33e", "\u{1F469}": "1f469", "\u{1F4C4}": "1f4c4", "\u{1F4A5}": "1f4a5", "\u{1F469}\u200D\u{1F692}": "1f469-200d-1f692", "\u{1FAB4}": "1fab4", "\u{1F648}": "1f648" };
   const E3RE = new RegExp(Object.keys(E3).sort((a, b) => b.length - a.length).map((s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|"), "g");
   function e3Node(t) {
@@ -20948,7 +21171,7 @@ img.e3 {
     $("prDot").hidden = !S.real.some((r) => S.acorns >= r.a && S.wood >= r.w);
   }
   const pzI = (r, c = "") => r.img ? '<img class="pzimg '.concat(c, '" src="').concat(r.img, '" alt="">') : '<span class="pze '.concat(c, '">').concat(r.e || "\u{1F381}", "</span>");
-  const goalPct = (r) => Math.min(1, (Math.min(1, S.acorns / r.a) + Math.min(1, S.wood / r.w)) / 2);
+  const goalPct = (r) => Math.min(1, S.acorns / r.a);
   function goalPick() {
     const R = S.real || [];
     if (!R.length) return null;
@@ -20959,7 +21182,7 @@ img.e3 {
     const r = goalPick();
     if (!r) return "";
     const ok = S.acorns >= r.a && S.wood >= r.w, fa = Math.min(1, S.acorns / r.a), fw = Math.min(1, S.wood / r.w), ma = Math.max(0, r.a - S.acorns), mw = Math.max(0, r.w - S.wood), close = !ok && goalPct(r) >= 0.85;
-    return '<div class="goalc '.concat(ok ? "ok" : close ? "close" : "", '"><span class="gpic">').concat(pzI(r), '</span><div class="gtx"><b>').concat(ok ? "Your prize is ready! \u{1F389}" : close ? "Almost there! \u2728" : "Your prize: " + r.name, '</b>\n    <span class="gbar a"><i style="width:').concat(fa * 100, '%"></i></span><small>\u{1F330} ').concat(Math.min(S.acorns, r.a), " / ").concat(r.a).concat(ma ? " \xB7 ".concat(ma, " more") : " \u2713", '</small>\n    <span class="gbar w"><i style="width:').concat(fw * 100, '%"></i></span><small>\u{1FAB5} ').concat(Math.min(S.wood, r.w), " / ").concat(r.w).concat(mw ? " \xB7 ".concat(mw, " more") : " \u2713", "</small></div></div>");
+    return '<div class="goalc '.concat(ok ? "ok" : close ? "close" : "", '"><span class="gpic">').concat(pzI(r), '</span><div class="gtx"><b>').concat(ok ? "Your prize is ready! \u{1F389}" : close ? "Almost there! \u2728" : "Your prize: " + r.name, '</b>\n    <span class="gbar a"><i style="width:').concat(fa * 100, '%"></i></span><small>\u{1F330} ').concat(Math.min(S.acorns, r.a), " / ").concat(r.a).concat(ma ? " \xB7 ".concat(ma, " more") : " \u2713", "</small></div></div>");
   }
   function pzLoad(file, cb) {
     const fr = new FileReader();
@@ -21027,11 +21250,11 @@ img.e3 {
     if (S.day.house) return;
     const items = themeItems(), e = items[S.stickers.length % items.length];
     S.day.house = true;
-    S.wood += 3;
+    S.acorns += 5;
     S.stickers.push({ e, d: today(), land: landIdx() });
     save();
     say("w/LULU_BD_PRIZE_IS");
-    const rv = reveal(e, "Today's prize!", "A new sticker for your collection, and +3 \u{1FAB5} wood!", () => {
+    const rv = reveal(e, "Today's prize!", "A new sticker for your collection, and +5 \u{1F330} acorns!", () => {
       renderMap();
       checkRealPrizes();
     });
@@ -21079,10 +21302,10 @@ img.e3 {
       const f = Math.min(1, have / need), left = Math.max(0, need - have);
       return '<div class="jar '.concat(kind).concat(f >= 1 ? " full" : "", '"><div class="jar-g"><i class="jar-f" style="height:').concat(Math.round(f * 100), '%"></i><span class="jar-e">').concat(kind === "a" ? "\u{1F330}" : "\u{1FAB5}", '</span></div>\n    <b class="jar-n">').concat(f >= 1 ? "\u2713" : left, "</b><small>").concat(f >= 1 ? "full!" : "more", "</small></div>");
     };
-    $("pPrizes").innerHTML = '<button class="back" id="prBack"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>Back</button>\n    <div class="prz prz2"><div class="pz-hero"><span class="pz-chest">\u{1F9F0}</span><h2>My treasure</h2>\n      <div class="pz-cnt"><span class="pzc a"><i>\u{1F330}</i><b>'.concat(S.acorns, '</b></span><span class="pzc w"><i>\u{1FAB5}</i><b>').concat(S.wood, '</b></span><span class="pzc s"><i>\u{1F984}</i><b>').concat(items.length, "</b></span></div></div>\n    ").concat(S.real.length ? '<h3 class="pz-h">\u{1F381} My big prizes</h3>' : '<div class="pz-none"><span>\u{1F381}</span><b>No big prize yet</b><small>Ask a grown-up to add one in the parents\' corner \u{1F468}\u200D\u{1F469}\u200D\u{1F467}</small></div>', "\n    ").concat(S.real.map((r) => {
-      const ok = S.acorns >= r.a && S.wood >= r.w, f = Math.min(1, (Math.min(1, S.acorns / r.a) + Math.min(1, S.wood / r.w)) / 2);
-      return '<button class="pz-card '.concat(ok ? "ready" : "", '" data-rp="').concat(r.id, '"><span class="pz-ph">').concat(pzI(r)).concat(ok ? '<span class="pz-burst">\u{1F389}</span>' : "", '</span>\n        <b class="pz-name">').concat(r.name, "</b>").concat(ok ? '<span class="pz-ready">Ready! Go and tell a grown-up \u{1F389}</span>' : '<span class="pz-road"><i style="width:'.concat(Math.round(f * 100), '%"></i><span class="pz-walker" style="left:').concat(Math.round(f * 100), '%">\u{1F9AB}</span><span class="pz-goal">\u{1F381}</span></span>'), '\n        <span class="pz-jars">').concat(jar(S.acorns, r.a, "a")).concat(jar(S.wood, r.w, "w"), "</span></button>");
-    }).join(""), '\n    <div class="pz-how"><span><b>\u{1F330}</b>right answer</span><span><b>\u{1FAB5}</b>finished mound</span><span><b>\u{1F984}</b>Domi\'s house</span></div>\n    <h3 class="pz-h">\u{1F984} My sticker book</h3>\n    <div class="pz-book">').concat(items.map((s, k) => '<button data-st="'.concat(k, '" aria-label="Sticker" style="--r:').concat(k * 37 % 17 - 8, 'deg">').concat(s.e, "</button>")).join("")).concat(Array.from({ length: Math.max(0, 12 - items.length) }, () => '<button class="empty" disabled>\u2728</button>').join(""), "</div>\n    ").concat(S.paintings.length ? '<h3 class="pz-h">\u{1F3A8} My paintings</h3><div class="pz-gal">'.concat(S.paintings.slice().reverse().map((pp) => '<span class="pz-frame">'.concat(paintSVG(pp.p, pp.f), "</span>")).join(""), "</div>") : "", "</div>");
+    $("pPrizes").innerHTML = '<button class="back" id="prBack"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>Back</button>\n    <div class="prz prz2"><div class="pz-hero"><span class="pz-chest">\u{1F9F0}</span><h2>My treasure</h2>\n      <div class="pz-cnt"><span class="pzc a"><i>\u{1F330}</i><b>'.concat(S.acorns, '</b></span><span class="pzc s"><i>\u{1F984}</i><b>').concat(items.length, "</b></span></div></div>\n    ").concat(S.real.length ? '<h3 class="pz-h">\u{1F381} My big prizes</h3>' : '<div class="pz-none"><span>\u{1F381}</span><b>No big prize yet</b><small>Ask a grown-up to add one in the parents\' corner \u{1F468}\u200D\u{1F469}\u200D\u{1F467}</small></div>', "\n    ").concat(S.real.map((r) => {
+      const ok = S.acorns >= r.a && S.wood >= r.w, f = Math.min(1, S.acorns / r.a);
+      return '<button class="pz-card '.concat(ok ? "ready" : "", '" data-rp="').concat(r.id, '"><span class="pz-ph">').concat(pzI(r)).concat(ok ? '<span class="pz-burst">\u{1F389}</span>' : "", '</span>\n        <b class="pz-name">').concat(r.name, "</b>").concat(ok ? '<span class="pz-ready">Ready! Go and tell a grown-up \u{1F389}</span>' : '<span class="pz-road"><i style="width:'.concat(Math.round(f * 100), '%"></i><span class="pz-walker" style="left:').concat(Math.round(f * 100), '%">\u{1F9AB}</span><span class="pz-goal">\u{1F381}</span></span>'), '\n        <span class="pz-jars">').concat(jar(S.acorns, r.a, "a"), "</span></button>");
+    }).join(""), '\n    <div class="pz-how"><span><b>\u{1F330}</b>right answer</span><span><b>\u{1F330}\u{1F330}</b>finished mound</span><span><b>\u{1F984}</b>Domi\'s house</span></div>\n    <h3 class="pz-h">\u{1F984} My sticker book</h3>\n    <div class="pz-book">').concat(items.map((s, k) => '<button data-st="'.concat(k, '" aria-label="Sticker" style="--r:').concat(k * 37 % 17 - 8, 'deg">').concat(s.e, "</button>")).join("")).concat(Array.from({ length: Math.max(0, 12 - items.length) }, () => '<button class="empty" disabled>\u2728</button>').join(""), "</div>\n    ").concat(S.paintings.length ? '<h3 class="pz-h">\u{1F3A8} My paintings</h3><div class="pz-gal">'.concat(S.paintings.slice().reverse().map((pp) => '<span class="pz-frame">'.concat(paintSVG(pp.p, pp.f), "</span>")).join(""), "</div>") : "", "</div>");
     $("prBack").onclick = () => {
       sfx.tap();
       showMap();
@@ -21093,7 +21316,7 @@ img.e3 {
     });
     $("pPrizes").querySelectorAll("[data-rp]").forEach((b) => b.onclick = () => {
       const r = S.real.find((x) => x.id === b.dataset.rp), ok = S.acorns >= r.a && S.wood >= r.w;
-      reveal(pzI(r, "big"), r.name, ok ? "Ready! Ask a grown-up for your prize \u{1F389}" : "".concat(Math.max(0, r.a - S.acorns), " more \u{1F330} and ").concat(Math.max(0, r.w - S.wood), " more \u{1FAB5} to go!"), null, ok ? "\u{1F381}" : "\u{1F512}");
+      reveal(pzI(r, "big"), r.name, ok ? "Ready! Ask a grown-up for your prize \u{1F389}" : "".concat(Math.max(0, r.a - S.acorns), " more \u{1F330} to go!"), null, ok ? "\u{1F381}" : "\u{1F512}");
     });
   }
   function hidePanels() {
@@ -21132,8 +21355,8 @@ img.e3 {
     return S.wk;
   }
   function estimate(r) {
-    const perQ = 1.7, perDayA = S.perDay * perQ, perDayW = HOLES[landIdx()].length + 3;
-    const qa = Math.ceil(Math.max(0, r.a - S.acorns) / perQ), days = Math.max(Math.ceil(Math.max(0, r.a - S.acorns) / perDayA), Math.ceil(Math.max(0, r.w - S.wood) / perDayW));
+    const perQ = 1.7, perDayA = S.perDay * perQ + HOLES[landIdx()].length * 2 + 5, perDayW = HOLES[landIdx()].length + 3;
+    const qa = Math.ceil(Math.max(0, r.a - S.acorns) / perQ), days = Math.max(Math.ceil(Math.max(0, r.a - S.acorns) / perDayA), 0);
     return { qa, days, fromZeroQ: Math.ceil(r.a / perQ), fromZeroD: Math.max(Math.ceil(r.a / perDayA), Math.ceil(r.w / perDayW)) };
   }
   function showParents() {
@@ -21148,10 +21371,10 @@ img.e3 {
       return '<span class="pring" style="--f:'.concat(f * 360, "deg;--c:").concat(c, '"><i>').concat(ic, '</i></span><small class="pnum">').concat(Math.min(v, max), "/").concat(max, "</small>");
     };
     const sec = (e, t) => '<div class="psec"><span>'.concat(e, "</span>").concat(t, "</div>");
-    $("pSettings").innerHTML = '<button class="back" id="closeSettings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>Back</button>\n    '.concat(dashHTML(pn), "\n    ").concat(sec("\u{1F4AC}", "Talk about it at home"), '\n    <div class="ptalk"><div>\u{1F3E1} ').concat(TRY[tp] || TRY.math, "</div><div>\u{1F37D}\uFE0F \u201C").concat(dq[dayN() % dq.length], '\u201D</div></div>\n    <h2 class="psettings">\u2699\uFE0F Settings</h2>\n    ').concat(sec("\u{1F381}", "Prize (optional)"), '\n    <p class="pnote">Promised ').concat(pn, " a toy? Add its photo and how many \u{1F330} acorns and \u{1FAB5} wood it costs. ").concat(pn, " sees it after every round and at the end of the path. No prize is fine too.</p>\n    ").concat(S.real.length ? '<div class="plegend"><span>\u{1F330} = right answers</span><span>\u{1FAB5} = finished mounds</span></div>' : "", "\n    ").concat(S.real.map((r, k) => {
+    $("pSettings").innerHTML = '<button class="back" id="closeSettings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>Back</button>\n    '.concat(dashHTML(pn), "\n    ").concat(sec("\u{1F4AC}", "Talk about it at home"), '\n    <div class="ptalk"><div>\u{1F3E1} ').concat(TRY[tp] || TRY.math, "</div><div>\u{1F37D}\uFE0F \u201C").concat(dq[dayN() % dq.length], '\u201D</div></div>\n    <h2 class="psettings">\u2699\uFE0F Settings</h2>\n    ').concat(sec("\u{1F381}", "Prize (optional)"), '\n    <p class="pnote">Promised ').concat(pn, " a toy? Add its photo and how many \u{1F330} acorns it costs. ").concat(pn, " sees it after every round and at the end of the path. No prize is fine too.</p>\n    ").concat(S.real.length ? '<div class="plegend"><span>\u{1F330} = right answers, finished mounds and Domi\'s house</span></div>' : "", "\n    ").concat(S.real.map((r, k) => {
       const e = estimate(r), ok = S.acorns >= r.a && S.wood >= r.w;
-      return '<div class="pprize '.concat(ok ? "ok" : "", '">\n      <label class="ppe" title="Change photo">').concat(pzI(r), '<input type="file" accept="image/*" data-pic="').concat(k, '" hidden></label><b class="ppn">').concat(r.name, '</b><button class="pdel" data-del="').concat(k, '" aria-label="Remove prize">\u2715</button>\n      <div class="ppr">').concat(ring(S.acorns, r.a, "#C8803F", "\u{1F330}"), '<div class="pstep"><button class="stp" data-c="').concat(k, ':a:-10">\u2212</button><button class="stp" data-c="').concat(k, ':a:10">+</button></div></div>\n      <div class="ppr">').concat(ring(S.wood, r.w, "#7A4A1E", "\u{1FAB5}"), '<div class="pstep"><button class="stp" data-c="').concat(k, ':w:-1">\u2212</button><button class="stp" data-c="').concat(k, ':w:1">+</button></div></div>\n      ').concat(ok ? '<button class="pgive" data-give="'.concat(k, '">\u2713 Given</button>') : '<span class="pdays">\u23F3 ~'.concat(e.days, " days</span>"), "</div>");
-    }).join(""), '\n    <button class="padd" id="pzAdd">\uFF0B Add a prize</button>\n    <div class="pzform" id="pzForm" hidden>\n      <label class="pzpic"><input type="file" accept="image/*" id="pzFile" hidden><span id="pzPrev">\u{1F4F7}<small>Add a photo</small></span></label>\n      <div class="pzf2"><input id="pzName" maxlength="28" placeholder="What is it? e.g. Lego car" aria-label="Prize name">\n        <div class="pzgoal"><label>\u{1F330}<select id="pzA">').concat([50, 100, 150, 200, 300, 400, 500, 700, 1e3].map((x) => "<option ".concat(x === 200 ? "selected" : "", ">").concat(x, "</option>")).join(""), '</select></label>\n        <label>\u{1FAB5}<select id="pzW">').concat([5, 10, 15, 20, 30, 40, 60, 80].map((x) => "<option ".concat(x === 20 ? "selected" : "", ">").concat(x, "</option>")).join(""), '</select></label></div>\n        <small id="pzEst"></small></div>\n      <div class="pzbtns"><button class="btn ghost" id="pzCancel">Cancel</button><button class="btn green" id="pzSave">Save prize</button></div>\n    </div>\n    ').concat(sec("\u2753", "Questions a day"), '\n    <div class="pseg">').concat([28, 35, 42, 49].map((q) => '<button data-per="'.concat(q, '" aria-pressed="').concat(S.perDay === q, '">').concat(q, "</button>")).join(""), "</div>\n    ").concat(sec("\u{1F4DA}", "Topics"), '\n    <div class="ptopics">').concat(COURSE.filter((c) => !c.soon).map((c) => '<button data-topic="'.concat(c.id, '" aria-pressed="').concat(S.topics.includes(c.id), '"><i>').concat(c.e, "</i><small>").concat(SHORT[c.id] || c.name, "</small></button>")).join(""), "</div>\n    ").concat(sec("\u{1F382}", "Age"), '\n    <div class="pages">').concat([3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((a) => '<button data-age="'.concat(a, '" aria-pressed="').concat(S.age === a, '">').concat(a, "</button>")).join(""), "</div>\n    ").concat(sec("\u{1F4C8}", "Level"), '\n    <div class="pseg lv">').concat([["\u{1F422}", 0], ["\u{1F407}", 1], ["\u{1F680}", 2]].map(([e, d]) => '<button data-diff="'.concat(d, '" aria-pressed="').concat(S.diff === d, '">').concat(e, "</button>")).join(""), '</div>\n    <div class="psample">').concat(expr(ex1), " = ").concat(ex1.ans, " &nbsp;\xB7&nbsp; ").concat(expr(ex2), " = ").concat(ex2.ans, "</div>\n    ").concat(sec("\u{1F5FA}\uFE0F", "Map"), '\n    <div class="pmonths"><button data-mon="auto" aria-pressed="').concat(S.mapMonth === "auto", '">\u2728</button>').concat(MONTHS.map((m, k) => '<button data-mon="'.concat(k, '" aria-pressed="').concat(S.mapMonth === String(k), '"><i>').concat(ZONES[MONTH_LAND[k]].o, "</i>").concat(m.slice(0, 3), "</button>")).join(""), "</div>\n    ").concat(sec("\u{1F984}", "Stickers"), '\n    <div class="ptopics">').concat(Object.entries(REWARDS).map(([k, r]) => '<button data-rw="'.concat(k, '" aria-pressed="').concat(S.reward === k, '"><i>').concat(r.e, "</i></button>")).join(""), "</div>\n    ").concat(sec("\u{1F50A}", "Sound"), '\n    <div class="ptopics two"><button id="swVoice" aria-pressed="').concat(S.voice, '"><i>\u{1F5E3}\uFE0F</i><small>Voice</small></button><button id="swFx" aria-pressed="').concat(S.fx, '"><i>\u{1F514}</i><small>Effects</small></button></div>\n    <div style="height:22px"></div>\n    <button class="qbtn sky" id="btnToday" style="margin-bottom:8px">\u21BA Play today\'s games again</button>\n    <button class="preset" id="btnReset">\u21BA Start ').concat(pn, ' over</button>\n    <div id="resetConfirm" hidden class="pconf"><b>Clear \u{1F330} \u{1FAB5} \u{1F984} ?</b><button class="btn red" id="btnResetYes">Yes</button><button class="btn ghost" id="btnResetNo">No</button></div>');
+      return '<div class="pprize '.concat(ok ? "ok" : "", '">\n      <label class="ppe" title="Change photo">').concat(pzI(r), '<input type="file" accept="image/*" data-pic="').concat(k, '" hidden></label><b class="ppn">').concat(r.name, '</b><button class="pdel" data-del="').concat(k, '" aria-label="Remove prize">\u2715</button>\n      <div class="ppr">').concat(ring(S.acorns, r.a, "#C8803F", "\u{1F330}"), '<div class="pstep"><button class="stp" data-c="').concat(k, ':a:-10">\u2212</button><button class="stp" data-c="').concat(k, ':a:10">+</button></div></div>\n      ').concat(ok ? '<button class="pgive" data-give="'.concat(k, '">\u2713 Given</button>') : '<span class="pdays">\u23F3 ~'.concat(e.days, " days</span>"), "</div>");
+    }).join(""), '\n    <button class="padd" id="pzAdd">\uFF0B Add a prize</button>\n    <div class="pzform" id="pzForm" hidden>\n      <label class="pzpic"><input type="file" accept="image/*" id="pzFile" hidden><span id="pzPrev">\u{1F4F7}<small>Add a photo</small></span></label>\n      <div class="pzf2"><input id="pzName" maxlength="28" placeholder="What is it? e.g. Lego car" aria-label="Prize name">\n        <div class="pzgoal"><label>\u{1F330}<select id="pzA">').concat([50, 100, 150, 200, 300, 400, 500, 700, 1e3].map((x) => "<option ".concat(x === 200 ? "selected" : "", ">").concat(x, "</option>")).join(""), '</select></label></div>\n        <small id="pzEst"></small></div>\n      <div class="pzbtns"><button class="btn ghost" id="pzCancel">Cancel</button><button class="btn green" id="pzSave">Save prize</button></div>\n    </div>\n    ').concat(sec("\u2753", "Questions a day"), '\n    <div class="pseg">').concat([28, 35, 42, 49].map((q) => '<button data-per="'.concat(q, '" aria-pressed="').concat(S.perDay === q, '">').concat(q, "</button>")).join(""), "</div>\n    ").concat(sec("\u{1F4DA}", "Topics"), '\n    <div class="ptopics">').concat(COURSE.filter((c) => !c.soon).map((c) => '<button data-topic="'.concat(c.id, '" aria-pressed="').concat(S.topics.includes(c.id), '"><i>').concat(c.e, "</i><small>").concat(SHORT[c.id] || c.name, "</small></button>")).join(""), "</div>\n    ").concat(sec("\u{1F382}", "Age"), '\n    <div class="pages">').concat([3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((a) => '<button data-age="'.concat(a, '" aria-pressed="').concat(S.age === a, '">').concat(a, "</button>")).join(""), "</div>\n    ").concat(sec("\u{1F4C8}", "Level"), '\n    <div class="pseg lv">').concat([["\u{1F422}", 0], ["\u{1F407}", 1], ["\u{1F680}", 2]].map(([e, d]) => '<button data-diff="'.concat(d, '" aria-pressed="').concat(S.diff === d, '">').concat(e, "</button>")).join(""), '</div>\n    <div class="psample">').concat(expr(ex1), " = ").concat(ex1.ans, " &nbsp;\xB7&nbsp; ").concat(expr(ex2), " = ").concat(ex2.ans, "</div>\n    ").concat(sec("\u{1F5FA}\uFE0F", "Map"), '\n    <div class="pmonths"><button data-mon="auto" aria-pressed="').concat(S.mapMonth === "auto", '">\u2728</button>').concat(MONTHS.map((m, k) => '<button data-mon="'.concat(k, '" aria-pressed="').concat(S.mapMonth === String(k), '"><i>').concat(ZONES[MONTH_LAND[k]].o, "</i>").concat(m.slice(0, 3), "</button>")).join(""), "</div>\n    ").concat(sec("\u{1F984}", "Stickers"), '\n    <div class="ptopics">').concat(Object.entries(REWARDS).map(([k, r]) => '<button data-rw="'.concat(k, '" aria-pressed="').concat(S.reward === k, '"><i>').concat(r.e, "</i></button>")).join(""), "</div>\n    ").concat(sec("\u{1F50A}", "Sound"), '\n    <div class="ptopics two"><button id="swVoice" aria-pressed="').concat(S.voice, '"><i>\u{1F5E3}\uFE0F</i><small>Voice</small></button><button id="swFx" aria-pressed="').concat(S.fx, '"><i>\u{1F514}</i><small>Effects</small></button></div>\n    <div style="height:22px"></div>\n    <button class="qbtn sky" id="btnToday" style="margin-bottom:8px">\u21BA Play today\'s games again</button>\n    <button class="preset" id="btnReset">\u21BA Start ').concat(pn, ' over</button>\n    <div id="resetConfirm" hidden class="pconf"><b>Clear \u{1F330} \u{1F984} ?</b><button class="btn red" id="btnResetYes">Yes</button><button class="btn ghost" id="btnResetNo">No</button></div>');
     wireDash(pn);
     const P$ = (q) => $("pSettings").querySelectorAll(q);
     const keep = (fn) => {
@@ -21187,8 +21410,8 @@ img.e3 {
     {
       let img = "";
       const est = () => {
-        const r = { a: +$("pzA").value, w: +$("pzW").value };
-        $("pzEst").textContent = "About ".concat(estimate({ a: r.a + S.acorns, w: r.w + S.wood }).days, " days of play at ").concat(S.perDay, " questions a day");
+        const r = { a: +$("pzA").value, w: 0 };
+        $("pzEst").textContent = "About ".concat(estimate({ a: r.a + S.acorns, w: 0 }).days, " days of play at ").concat(S.perDay, " questions a day");
       };
       $("pzAdd").onclick = () => {
         sfx.tap();
@@ -21202,7 +21425,7 @@ img.e3 {
         $("pzForm").hidden = true;
         $("pzAdd").hidden = false;
       };
-      $("pzA").onchange = $("pzW").onchange = est;
+      $("pzA").onchange = est;
       $("pzFile").onchange = () => {
         const f = $("pzFile").files[0];
         if (f) pzLoad(f, (u) => {
@@ -21213,7 +21436,7 @@ img.e3 {
       $("pzSave").onclick = () => {
         const name = $("pzName").value.trim() || "A surprise";
         keep(() => {
-          S.real.push({ id: "r" + Date.now(), e: "\u{1F381}", img, name, a: +$("pzA").value + S.acorns, w: +$("pzW").value + S.wood });
+          S.real.push({ id: "r" + Date.now(), e: "\u{1F381}", img, name, a: +$("pzA").value + S.acorns, w: 0 });
         });
       };
     }
