@@ -2022,6 +2022,11 @@ img.e3{width:1.18em;height:1.18em;vertical-align:-.22em;object-fit:contain;displ
 .scr{position:relative;width:min(100%,320px,44vh);aspect-ratio:1;margin:6px auto;border-radius:24px;overflow:hidden;box-shadow:0 0 0 8px #C49A6C,0 12px 0 8px #9E7444}.scr-in{position:absolute;inset:0;display:grid;place-items:center;background:#FFF8EC}
 .scr canvas{position:absolute;inset:0;width:100%;height:100%;transition:opacity .6s;cursor:grab}
 .sc-pot.big{height:min(34vh,220px)}
+/* repeat-the-question button on every game */
+.qkick .g-rep{margin-left:auto;flex:none;width:46px;height:46px;border-radius:14px;border:0;background:var(--t-blue,#1CB0F6);box-shadow:0 4px 0 var(--t-blue-d,#1899D6);color:#fff;display:grid;place-items:center;cursor:pointer;position:relative;letter-spacing:0}
+.qkick .g-rep svg{width:26px;height:26px}.qkick .g-rep:active{transform:translateY(3px);box-shadow:0 1px 0 var(--t-blue-d,#1899D6)}
+.qkick .g-rep::after{content:"";position:absolute;inset:-6px;border-radius:18px;border:3px solid #1CB0F6;opacity:0}.qkick .g-rep.talking::after{animation:ring 1.2s ease-out infinite}
+.rt-lab{font:800 20px "Nunito",sans-serif;color:#4B4B4B;text-align:center;margin-top:4px}
 </style>
 
 <div class="stage">
@@ -2032,7 +2037,7 @@ img.e3{width:1.18em;height:1.18em;vertical-align:-.22em;object-fit:contain;displ
   <header class="topbar">
     <button class="course" id="tbCourse" aria-label="Players" aria-expanded="false"></button>
     <div class="stats">
-      <span class="stat flame" id="sWood" aria-label="Wood"><i class="emo" style="font-style:normal">🪵</i><span>0</span></span>
+      <span class="stat flame" id="sWood" aria-label="Wood" hidden style="display:none"><i class="emo" style="font-style:normal">🪵</i><span>0</span></span>
       <span class="stat gem" id="sAcorns" aria-label="Acorns"><i class="emo" style="font-style:normal">🌰</i><span>0</span></span>
     </div>
     <button class="tbtn" id="tbPrizes" aria-label="My prizes">🏆<span class="dotn" id="prDot" hidden>!</span></button>
@@ -2417,12 +2422,12 @@ const PRAISE_CLIPS=["w/LULU_PR_A","w/LULU_PR_B","w/LULU_PR_C","w/LULU_PR_D","w/L
 const PRAISE_T=["Yay!","Super!","Woohoo!","Amazing!","Brilliant!","Great job!","Fantastic!","Hooray!","So smart!","Wow!"];
 const OBJ=["🍎","🐟","⭐","🦆","🌸","🍓","🐞","🎈","🍪","🐣","🧁","🦋"];
 const sh=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
-const lvl=()=>Math.max(3,Math.min(10,S.age+(S.diff-1)));
+const lvl=()=>Math.max(3,Math.min(10,S.age+(S.diff-1)+(window.__bst||0)));
 const DK=()=>3;   /* always 4 answers in a 2 x 2 grid (owner, Nov 8) */   /* wrong answers per question: 4 answers in a 2 x 2 grid from age 4, 2 big answers at age 3 */
 
 /* ---------- sound: play a list of clips one after another ---------- */
 let seqId=0;
-function speaking(on){const b=$("qSpk");if(b)b.classList.toggle("talking",on)}
+function speaking(on){const b=$("qSpk");if(b)b.classList.toggle("talking",on);document.querySelectorAll(".g-rep").forEach(x=>x.classList.toggle("talking",on))}
 function sayseq(list,onEnd){
   const id=++seqId,l=list.filter(Boolean);let i=0;
   const next=()=>{if(id!==seqId)return;if(i>=l.length){speaking(false);onEnd&&onEnd();return}say(l[i++],()=>{if(i<l.length)setTimeout(next,230);else next()})};
@@ -2536,7 +2541,7 @@ function qCal(k){
 }
 function qClock(k){
   if(["today","tomorrow","yesterday","after","before","monthafter","nowseason","week","months"].includes(k))return qCal(k);
-  if(k==="routine"){const r=pickOne(ROUTINES.filter(x=>!["☀️","🌙"].includes(x[0])));  /* never show the sun or moon: they are the answers */return {voice:["c_routine"],cap:"Morning or night?",visual:`<div class="bigemo">${r[0]}</div>`,opts:[{h:"<span class='yn'>☀️</span><small>Morning</small>",say:both("morning")},{h:"<span class='yn'>🌙</span><small>Night</small>",say:both("night")}],ans:r[2],layout:"yn",hint:"elim",exp:{t:r[2]?"Night 🌙":"Morning ☀️",v:["w/LULU_ANS_IS"]}}}
+  if(k==="routine"){const r=pickOne(ROUTINES.filter(x=>!["☀️","🌙"].includes(x[0])));  /* never show the sun or moon: they are the answers */return {voice:["c_routine"],cap:"Morning or night?",visual:`<div class="bigemo">${r[0]}</div><div class="rt-lab">${r[1]}</div>`,opts:[{h:"<span class='yn'>☀️</span><small>Morning</small>",say:both("morning")},{h:"<span class='yn'>🌙</span><small>Night</small>",say:both("night")}],ans:r[2],layout:"yn",hint:"elim",exp:{t:r[2]?"Night 🌙":"Morning ☀️",v:["w/LULU_ANS_IS"]}}}
   if(k==="season"){const sz=pickOne(SEASONS),SE={Winter:"❄️",Spring:"🌷",Summer:"🌞",Autumn:"🍁"},o=sh(["Winter","Spring","Summer","Autumn"]);
     return {voice:["c_season"],cap:"Which season?",visual:`<div class="bigemo">${sz[0]}</div>`,opts:o.map(x=>({h:`<span class="oe">${SE[x]}</span><small>${x}</small>`,say:seaSay(["Spring","Summer","Autumn","Winter"].indexOf(x))})),ans:o.indexOf(sz[2]),layout:"grid",hint:"elim",exp:{t:sz[2],v:["w/LULU_ANS_IS"]}}}
   const h=ri(1,12),m=k==="oclock"?0:k==="half"?30:k==="quarter"?pickOne([15,45]):ri(1,11)*5;
@@ -2802,12 +2807,12 @@ function radioQ(s){
 }
 function moundDone(){
   const i=L.g,first=i===S.day.done;
-  if(first){S.day.done++;S.wood+=1;wkLog().mounds=(wkLog().mounds||0)+1}
+  if(first){S.day.done++;S.acorns+=2;wkLog().mounds=(wkLog().mounds||0)+1}
   save();renderStats();
   const r=$("qResult");sfx.fanfare();burst(160);
   sayseq([pickOne(["w/LULU_PR_A","w/LULU_PR_E","w/LULU_PR_D"])]);
   r.innerHTML=`<div class="rs-sun"></div><span class="dm">${bv(170)}</span><h2>${pickOne(["You did it!","Amazing job!","Great work!","Hooray!"])}</h2><p>${pickOne(["Domi is so proud of you!","Your brain is growing!","What a great learner!"])}</p>
-    <div class="gains"><span class="gn a">+${L.acorns} 🌰</span>${first?`<span class="gn w">+1 🪵</span>`:""}</div>${goalCard()}
+    <div class="gains"><span class="gn a">+${L.acorns} 🌰</span>${first?`<span class="gn a">+2 🌰</span>`:""}</div>${goalCard()}
     <button class="qbtn good big" id="resBtn">Continue ➜</button>`;
   r.hidden=false;
   const leave=()=>{closeLesson();L=null;setTimeout(()=>{renderMap();placeBeaver(true);setTimeout(()=>{scrollToCurrent(true);if(S.day.done>=HOLES[landIdx()].length&&!S.day.house)setTimeout(openHouse,900);else checkRealPrizes()},700)},420)};
@@ -2918,17 +2923,17 @@ const WORDS=POOL.words.map(x=>({i:x.i,w:(x.w||WORD_FALLBACK[x.i]||"").toLowerCas
 const LET="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const lSay=l=>["w/LULU_LN_"+l];
 const wSay=x=>["w/LULU_WORD"+x.i];
-function pickWord(used){const c=sh(WORDS);return c.find(x=>!used.has("wd"+x.i))||c[0]}
+function pickWord(used){const c=sh(WORDS.filter(x=>faSay(x.w).length));return c.find(x=>!used.has("wd"+x.i))||c[0]}
 function qLetters(k,used){
   if(k==="abc"){const it=sh(POOL.abc).find(x=>!used.has("abc"+x.l))||POOL.abc[0];used.add("abc"+it.l);const o=sh([it.l,...sh(POOL.abc.map(x=>x.l).filter(l=>l!==it.l)).slice(0,DK())]);
     return {voice:[...lSay(it.l),...enSay(it.w),...lSay(it.l)],cap:"Find the letter!",visual:`<div class="bigemo">${WORD_E[it.w]||optE(it.w)||"🔤"}</div>`,opts:o.map(l=>({h:`<b class="num letter">${l}</b>`,say:lSay(l)})),ans:o.indexOf(it.l),layout:"row3",hint:"elim",exp:{t:it.l,v:["w/LULU_ANS_IS",...lSay(it.l)]}}}
   if(k==="lafter"||k==="lbefore"){const i=k==="lafter"?ri(0,24):ri(1,25),r=LET[k==="lafter"?i+1:i-1],o=sh([r,...sh(LET.split("").filter(l=>l!==r&&l!==LET[i])).slice(0,DK())]);
     return {voice:[k==="lafter"?"w/LULU_AB_AFTER":"w/LULU_AB_BEFORE",...lSay(LET[i])],cap:k==="lafter"?`${LET[i]} → ?`:`? → ${LET[i]}`,visual:`<div class="seq">${k==="lafter"?`<b class="bignum sm">${LET[i]}</b><span class="arr">➜</span><b class="bignum sm q">?</b>`:`<b class="bignum sm q">?</b><span class="arr">➜</span><b class="bignum sm">${LET[i]}</b>`}</div>`,opts:o.map(l=>({h:`<b class="num letter">${l}</b>`,say:lSay(l)})),ans:o.indexOf(r),layout:"row3",hint:"elim",exp:{t:r,v:["w/LULU_ANS_IS",...lSay(r)]}}}
   const x=pickWord(used);used.add("wd"+x.i);const o=sh([x,...sh(WORDS.filter(y=>y.i!==x.i)).slice(0,DK())]);
-  if(k==="listen")   /* hear the English word, tap its picture (the pictures are not named, that is the game) */
+  if(k==="listen"&&lvl()>=5)   /* hear the English word, tap its picture (the pictures are not named, that is the game) */
     {const o4=sh([x,...sh(WORDS.filter(y=>y.i!==x.i)).slice(0,3)]);
-    return {voice:["w/LULU_W_LISTEN",...wSay(x)],cap:"Listen and find it!",visual:`<div class="listen">👂</div>`,opts:o4.map(y=>({h:PIC("wd_"+y.i,"wp op")})),ans:o4.indexOf(x),layout:"grid4",hint:"elim",exp:{t:x.w,v:["w/LULU_ANS_IS",...wSay(x)]}}}
-    return {voice:["w/LULU_W_LISTEN",...wSay(x)],cap:"Listen and find it!",visual:`<div class="listen">👂</div>`,opts:o.map(y=>({h:PIC("wd_"+y.i,"wp op")})),ans:o.indexOf(x),layout:"row3",hint:"elim",exp:{t:x.w,v:["w/LULU_ANS_IS",...wSay(x)]}};
+    return {voice:["w/LULU_W_LISTEN",...wSay(x),...(lvl()<=4?faSay(x.w):[])],cap:"Listen and find it!",visual:`<div class="listen">👂</div>`,opts:o4.map(y=>({h:PIC("wd_"+y.i,"wp op")})),ans:o4.indexOf(x),layout:"grid4",hint:"elim",exp:{t:x.w,v:["w/LULU_ANS_IS",...wSay(x),...faSay(x.w)]}}}
+  if(k==="listen")return {voice:["w/LULU_W_LISTEN",...wSay(x),...(lvl()<=4?faSay(x.w):[])],cap:"Listen and find it!",visual:`<div class="listen">👂</div>`,opts:o.map(y=>({h:PIC("wd_"+y.i,"wp op")})),ans:o.indexOf(x),layout:"row3",hint:"elim",exp:{t:x.w,v:["w/LULU_ANS_IS",...wSay(x),...faSay(x.w)]}};
   if(k==="first"){const r=x.w[0].toUpperCase(),lo=sh([r,...sh(LET.split("").filter(l=>l!==r)).slice(0,DK())]);
     return {voice:["w/LULU_W_FIRST",...wSay(x)],cap:"First letter?",visual:PIC("wd_"+x.i,"wp big"),opts:lo.map(l=>({h:`<b class="num letter">${l}</b>`,say:lSay(l)})),ans:lo.indexOf(r),layout:"row3",hint:"elim",exp:{t:`${r} … ${x.w}`,v:["w/LULU_ANS_IS",...lSay(r),...wSay(x)]}}}
   return {voice:["w/LULU_SK_WHICH"],cap:"What is it?",visual:PIC("wd_"+x.i,"wp big"),opts:o.map(y=>({h:`<b class="word">${y.w}</b>`,say:wSay(y)})),ans:o.indexOf(x),layout:"col",hint:"elim",exp:{t:x.w,v:["w/LULU_ANS_IS",...wSay(x)]}};
@@ -3006,7 +3011,7 @@ const feelSay=i=>["w/PX_FA_"+FEEL[i][0].toUpperCase(),"w/PX_EN_"+FEEL[i][0].toUp
 const SIDES=[[2,3],[1,4],[3,4],[8,5],[9,6],[10,8]];   /* [shape index, sides]: triangle, square, rectangle, pentagon, hexagon, octagon */
 const CLR=[["Red","#F25C54"],["Blue","#4A90E2"],["Yellow","#F7C548"],["Green","#5BC796"]],FORM=["circle","square","triangle"];
 const shapeDiv=(c,f,big)=>`<span class="cshape ${f}${big?" big":""}" style="--c:${c<0?"#C9D2DE":CLR[c][1]}"></span>`;
-function rhymeSets(){const by={};for(const x of WORDS.filter(x=>!(/ow$/.test(x.w)&&!["cow","now","how","wow"].includes(x.w))&&!["one","two","eye"].includes(x.w))){const k=x.w.slice(-2);(by[k]=by[k]||[]).push(x)}return Object.values(by).filter(v=>v.length>=2)}
+function rhymeSets(){const by={};for(const x of WORDS.filter(x=>!(/ow$/.test(x.w)&&!["cow","now","how","wow"].includes(x.w))&&!["one","two","eye"].includes(x.w)&&/^[^aeiouy]*[aeiou]+[^aeiouy]*e?$/.test(x.w))){const k=x.w.replace(/^[^aeiou]*/,"");(by[k]=by[k]||[]).push(x)}return Object.values(by).filter(v=>v.length>=2)}
 function qNew(k,used){
   const a=lvl(),e=pickOne(OBJ);
   if(k==="missing"){const len=5,st=a<=5?ri(1,6):a<=6?ri(1,15):ri(10,94),hole=ri(1,3),arr=Array.from({length:len},(x,i)=>st+i),r=arr[hole];
@@ -3120,7 +3125,8 @@ function logSk(q,ok){logEv(q,ok);try{const cat=q.cat||(L&&L.cat)||"",k=cat+"|"+s
 function skLevel(r){const ones=(r.h.match(/1/g)||[]).length,p=r.h.length?ones/r.h.length:0;return r.n<4?0:p>=.8&&r.n>=6?2:1}
 
 /* shared bits for the play games */
-const gHead=(e,kick,title)=>`<div class="qkick"><span class="qke">${e}</span>${kick}</div><h2 class="qtitle">${title}</h2>`;
+const gHead=(e,kick,title)=>`<div class="qkick"><span class="qke">${e}</span>${kick}<button class="g-rep" aria-label="Hear it again"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></div><h2 class="qtitle">${title}</h2>`;
+document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest(".g-rep");if(!b||!L||!L.q)return;e.stopPropagation();sfx.tap();hush();sayseq(L.q.voice||[],()=>{})},true);
 function gShow(html){$("qBody").innerHTML=html;$("qBody").classList.remove("in");void $("qBody").offsetWidth;$("qBody").classList.add("in")}
 function gameWin(q,miss,el,extra){q.done=q.locked=true;q.tries=miss?1:0;logSk(q,true);sfx.good();if(el)burstAt(el,40);L.correct++;if(!miss)L.first++;
   const n=miss?1:2;S.acorns+=n;L.acorns+=n;S.questions++;{const w=wkLog();w.q++;w.right++}save();renderStats();bump("sAcorns");setDot();L.row=(L.row||0)+1;
@@ -4800,6 +4806,62 @@ MAZES.world.push(["🐬","🌊","Dolphins live in the sea and breathe air throug
 MAZES.shapes.push(["🚗","⛽","Cars need fuel or electricity to drive."]);MAZES.robot.push(["🚗","⛽","Cars need fuel or electricity to drive."],["🐝","🌸","Bees visit flowers to collect nectar and make honey."]);
 MAZES.count.push(["🐰","🥕","Rabbits have long ears to hear danger far away."]);
 
+/* =====================================================================================================
+   Nov 11b: variety, growing difficulty, word games for 6+, acorns only
+   ===================================================================================================== */
+var G5_READY=true;
+/* ---- 1. acorns only: wood becomes acorns (1 wood was worth about 2 acorns) ---- */
+function woodMig(){try{if(!S)return;let ch=false;if(S.wood){S.acorns=(S.acorns||0)+S.wood*2;S.wood=0;ch=true}
+  (S.real||[]).forEach(r=>{if(r.w){r.a=(r.a||0)+r.w*2;r.w=0;ch=true}});if(ch)save()}catch(e){}}
+try{const _ls5=loadState;loadState=function(){const r=_ls5.apply(this,arguments);woodMig();return r}}catch(e){}
+woodMig();
+
+/* ---- 2. difficulty grows with each game: 4 of the last 5 right first time -> one step harder, 7 of 8 -> two steps;
+        two misses in the last three -> one step easier. Never more than 2 steps above the child's age. ---- */
+function gidGuess(k,cat){if(k.startsWith("f_"))return "g:"+k.slice(2);if(cat==="memory"||cat==="robot")return k==="robot"?"robot":"g:"+k;return cat+"."+k}
+function boostFor(gid){try{const ev=(S.ev||[]).filter(e=>e[1]===gid).slice(-8);if(ev.length<4)return 0;const r=ev.map(e=>e[2]),l5=r.slice(-5),l3=r.slice(-3);
+  if(l3.filter(x=>x===0).length>=2)return S.age>3?-1:0;if(ev.length>=8&&r.filter(x=>x===2).length>=7)return 2;if(l5.filter(x=>x===2).length>=4)return 1;return 0}catch(e){return 0}}
+const _bf5=buildFormat;buildFormat=function(kind,cat){window.__bst=boostFor(gidGuess(kind,cat));try{const q=_bf5(kind,cat);if(q&&window.__bst)q.boost=window.__bst;return q}finally{window.__bst=0}};
+const _bq5=buildQ;buildQ=function(cat,k,used){window.__bst=boostFor(gidGuess(k||"",cat));try{return _bq5(cat,k,used)}finally{window.__bst=0}};
+
+/* ---- 3. no more than 2 of the same kind of game in a round. "Put the pieces together" games count as one family
+        (only 1 per round), and "help it get there" games (robot, robot walk, maze) count as one family. ---- */
+const FAMILY={f_puzzle:"piece",f_quilt:"piece",f_dragpat:"piece",robot:"path",f_robowalk:"path",f_maze:"path"},FAMCAP={piece:1,path:2};
+function capRound(p,cat){if(!p)return p;const fam=k=>FAMILY[k]||k,cap=k=>FAMCAP[fam(k)]||(k==="w"?4:2),n={};
+  let pool=[];try{pool=sh([...new Set([...(formatsFor(cat)||[]),...(kindsFor(cat)||[])])])}catch(e){}
+  const out=[];for(const k of p){const f=fam(k);if((n[f]||0)<cap(k)){n[f]=(n[f]||0)+1;out.push(k);continue}
+    const alt=pool.find(x=>(n[fam(x)]||0)<cap(x)&&x!==out[out.length-1]);if(alt){n[fam(alt)]=(n[fam(alt)]||0)+1;out.push(alt)}}
+  return out}
+const _pr5=planRound;planRound=function(cat,count){return capRound(_pr5(cat,count),cat)};
+
+/* ---- 4. Pattern Detective: check every puzzle before it is shown ---- */
+const _qpd5=qPDet;qPDet=function(cat){for(let t=0;t<20;t++){const q=_qpd5(cat);const nn=q.seq.filter(x=>!x).length,v=q.opts[q.ans];
+  if(q.seq.length!==(q.kind==="grid"?9:6)||nn!==1||!v)continue;
+  if(q.kind==="num"){const h=q.seq.indexOf(null),vals=q.seq.map((x,i)=>x?x[2]:v[2]),d=vals[1]-vals[0];if(!vals.every((x,i)=>x===vals[0]+d*i))continue;if(q.opts.filter(o=>o[2]===v[2]).length!==1)continue}
+  return q}return _qpd5(cat)};
+
+/* ---- 5. words for 6 and up: hear a word and pick it from 3 look-alike words; pick the word spelled right ---- */
+const simW=(a,b)=>(a.length===b.length?2:0)+[...a].filter((c,i)=>b[i]===c).length+(a[0]===b[0]?1:0)+[...new Set(a)].filter(c=>b.includes(c)).length*.5;
+function lookAlikes(x,n){const P=WORDS.filter(y=>y.i!==x.i&&y.w!==x.w);const best=sh(P).sort((a,b)=>simW(x.w,b.w)-simW(x.w,a.w));return best.slice(0,n)}
+const REALW=new Set("cab can cap car cat cot cut cub cup bad bag ban bat bed beg bet bib bid big bin bit bog box boy bud bug bun bus but dad dam den dig dim dip dog dot dug fan fat fed fig fin fit fix fog fox fun fur gap gas get got gum gun gut had ham has hat hen her hid him hip his hit hog hop hot hug hum hut jam jar jet jig job jog jot jug kid kit lab lad lap leg let lid lip lit log lot mad man map mat men met mix mob mom mop mud mug nab nag nap net nod not nut pad pan pat peg pen pet pig pin pit pod pop pot pub pup put rag ram ran rap rat red rib rid rig rim rip rob rod rot rub rug run rut sad sat set sip sit six sob sod sun tab tag tan tap ten tin tip top tot tub tug van vat vet wag web wed wet wig win wit yak yam yes yet zip cow kow saw sew sow tow bow now how row low new few dew".split(" "));
+function misspell(w){const V="aeiou",C="bcdfghlmnprstvw",out=new Set();const sw=w.length>2?w[0]+w[2]+w[1]+w.slice(3):w.split("").reverse().join("");if(sw!==w&&!REALW.has(sw))out.add(sw);
+  for(let t=0;t<40&&out.size<5;t++){const i=ri(0,w.length-1),c=w[i],r=V.includes(c)?pickOne(V.replace(c,"").split("")):pickOne(C.replace(c,"").split(""));const m=w.slice(0,i)+r+w.slice(i+1);if(m!==w&&!WORDS.some(y=>y.w===m)&&!REALW.has(m))out.add(m)}
+  if(w[0]==="c"&&!REALW.has("k"+w.slice(1)))out.add("k"+w.slice(1));return sh([...out]).slice(0,3)}
+function qWords6(k,used){const x=sh(WORDS.filter(y=>y.w.length>=3&&y.w.length<=5)).find(y=>!used.has("wd"+y.i))||WORDS[0];used.add("wd"+x.i);
+  if(k==="whear"){const o=sh([x,...lookAlikes(x,3)]);return {voice:["w/LULU_W_LISTEN",...wSay(x)],cap:"Listen! Which word is it?",visual:`<div class="listen">👂</div>`,opts:o.map(y=>({h:`<b class="word">${y.w}</b>`})),ans:o.indexOf(x),layout:"col",hint:"elim",exp:{t:x.w,v:["w/LULU_ANS_IS",...wSay(x),...faSay(x.w)]}}}
+  if(k==="wspell"){const o=sh([x.w,...misspell(x.w)]);return {voice:[G5_READY?"w/PX_G5_SPELL":"w/LULU_SK_WHICH"],cap:"Which word is spelled right?",visual:PIC("wd_"+x.i,"wp big"),opts:o.map(w=>({h:`<b class="word">${w}</b>`})),ans:o.indexOf(x.w),layout:"col",hint:"elim",exp:{t:x.w,v:["w/LULU_ANS_IS",...wSay(x)]}}}
+  /* whatis, harder: the other words look alike */
+  const o=sh([x,...lookAlikes(x,3)]);return {voice:["w/LULU_SK_WHICH"],cap:"What is it?",visual:PIC("wd_"+x.i,"wp big"),opts:o.map(y=>({h:`<b class="word">${y.w}</b>`,say:wSay(y)})),ans:o.indexOf(x),layout:"col",hint:"elim",exp:{t:x.w,v:["w/LULU_ANS_IS",...wSay(x)]}}}
+const _ql5=qLetters;qLetters=function(k,used){if(k==="whear"||k==="wspell"||(k==="whatis"&&lvl()>=6))return qWords6(k,used);return _ql5(k,used)};
+const _qr5=qRead;qRead=function(k,used){if(k==="whear"||k==="wspell")return qWords6(k,used);return _qr5(k,used)};
+const _kf5=kindsFor;kindsFor=function(cat){const a=lvl();
+  if(cat==="letters"&&a>=6)return a>=7?["whear","wspell","whatis","first","lafter","lbefore","build"]:["whear","wspell","whatis","first","lafter","rhyme","build"];
+  if(cat==="read"&&a>=6)return ["balloon","flash","sentence","whear","wspell"];return _kf5(cat)};
+Object.assign(GMAP,{"letters.whear":G("Hear the word",["lang","read"],[["lang","listen"]],"Hear an English word and pick it from three look-alike words.","Practice"),
+ "letters.wspell":G("Spelled right?",["lang","read"],[["cog","memory"]],"Look at the picture and pick the word that is spelled right.","Practice"),
+ "read.whear":G("Hear the word",["lang","read"],[["lang","listen"]],"Hear an English word and pick it from three look-alike words.","Practice"),
+ "read.wspell":G("Spelled right?",["lang","read"],[["cog","memory"]],"Look at the picture and pick the word that is spelled right.","Practice")});
+
 /* ===== Nov 11: 3D pictures (Microsoft Fluent Emoji 3D, MIT licence) replace flat emoji everywhere on screen ===== */
 const E3={"🏪": "1f3ea", "⛵": "26f5", "👷": "1f477", "❓": "2753", "⭐": "2b50", "🏆": "1f3c6", "🐳": "1f433", "🪨": "1faa8", "☁️": "2601-fe0f", "🥕": "1f955", "🇦🇺": "1f1e6-1f1fa", "😴": "1f634", "🔋": "1f50b", "🍬": "1f36c", "🎨": "1f3a8", "🍒": "1f352", "🧩": "1f9e9", "7️⃣": "37-fe0f-20e3", "🎉": "1f389", "🥈": "1f948", "🍲": "1f372", "ℹ️": "2139-fe0f", "🚜": "1f69c", "💎": "1f48e", "🍇": "1f347", "🦩": "1f9a9", "🍓": "1f353", "🐼": "1f43c", "🐧": "1f427", "🎂": "1f382", "🌹": "1f339", "🏎️": "1f3ce-fe0f", "🌎": "1f30e", "🔬": "1f52c", "🔟": "1f51f", "🌾": "1f33e", "🍅": "1f345", "🔤": "1f524", "🪥": "1faa5", "👮": "1f46e", "🐱": "1f431", "🥬": "1f96c", "🔨": "1f528", "🐙": "1f419", "🐔": "1f414", "🎾": "1f3be", "🎠": "1f3a0", "🎒": "1f392", "🌟": "1f31f", "🕸️": "1f578-fe0f", "🏠": "1f3e0", "🌵": "1f335", "🍃": "1f343", "9️⃣": "39-fe0f-20e3", "🐶": "1f436", "🧰": "1f9f0", "⛈️": "26c8-fe0f", "🔶": "1f536", "⏳": "23f3", "🎯": "1f3af", "🧁": "1f9c1", "🚒": "1f692", "🪵": "1fab5", "🥔": "1f954", "🐍": "1f40d", "🦫": "1f9ab", "💜": "1f49c", "🍪": "1f36a", "🦒": "1f992", "🦈": "1f988", "🟰": "1f7f0", "🧭": "1f9ed", "🇮🇷": "1f1ee-1f1f7", "👀": "1f440", "🏅": "1f3c5", "🐣": "1f423", "💯": "1f4af", "🐌": "1f40c", "🇺🇸": "1f1fa-1f1f8", "🕯️": "1f56f-fe0f", "🇯🇵": "1f1ef-1f1f5", "🦵": "1f9b5", "🖍️": "1f58d-fe0f", "🐞": "1f41e", "⬆️": "2b06-fe0f", "⛄": "26c4", "🌀": "1f300", "🐦": "1f426", "💧": "1f4a7", "🌲": "1f332", "🚀": "1f680", "⬅️": "2b05-fe0f", "💌": "1f48c", "🌅": "1f305", "👤": "1f464", "🐐": "1f410", "♻️": "267b-fe0f", "🔊": "1f50a", "🍀": "1f340", "👨‍🍳": "1f468-200d-1f373", "✨": "2728", "➕": "2795", "4️⃣": "34-fe0f-20e3", "🐟": "1f41f", "🕶️": "1f576-fe0f", "💫": "1f4ab", "🌧️": "1f327-fe0f", "❌": "274c", "🐾": "1f43e", "🍍": "1f34d", "📷": "1f4f7", "🏰": "1f3f0", "🪺": "1faba", "🇩🇪": "1f1e9-1f1ea", "🦃": "1f983", "🦮": "1f9ae", "💅": "1f485", "🔍": "1f50d", "➖": "2796", "🐓": "1f413", "🍯": "1f36f", "🫐": "1fad0", "🐕‍🦺": "1f415-200d-1f9ba", "🛻": "1f6fb", "🔦": "1f526", "🐥": "1f425", "🐋": "1f40b", "😀": "1f600", "🏡": "1f3e1", "🇮🇳": "1f1ee-1f1f3", "🦶": "1f9b6", "🧑‍🏫": "1f9d1-200d-1f3eb", "🐷": "1f437", "🏁": "1f3c1", "⚖️": "2696-fe0f", "👆": "1f446", "🤸": "1f938", "🟠": "1f7e0", "🦷": "1f9b7", "🥇": "1f947", "🔺": "1f53a", "🟦": "1f7e6", "🌻": "1f33b", "🪛": "1fa9b", "🥉": "1f949", "🪱": "1fab1", "🌋": "1f30b", "🪐": "1fa90", "🌿": "1f33f", "🇪🇬": "1f1ea-1f1ec", "😊": "1f60a", "🥎": "1f94e", "🚲": "1f6b2", "🛌": "1f6cc", "🥛": "1f95b", "🐈": "1f408", "🌍": "1f30d", "🥚": "1f95a", "🧑‍🚒": "1f9d1-200d-1f692", "🧼": "1f9fc", "⚙️": "2699-fe0f", "🍊": "1f34a", "🦎": "1f98e", "🐿️": "1f43f-fe0f", "🌆": "1f306", "🪁": "1fa81", "🚄": "1f684", "🐰": "1f430", "🍦": "1f366", "🌗": "1f317", "🎣": "1f3a3", "🪷": "1fab7", "🍽️": "1f37d-fe0f", "🙋": "1f64b", "📋": "1f4cb", "🌠": "1f320", "🧄": "1f9c4", "📱": "1f4f1", "📖": "1f4d6", "🐨": "1f428", "🔒": "1f512", "🧣": "1f9e3", "📆": "1f4c6", "🥳": "1f973", "💪": "1f4aa", "🐕": "1f415", "🌷": "1f337", "💚": "1f49a", "🏜️": "1f3dc-fe0f", "🧑‍🎨": "1f9d1-200d-1f3a8", "📎": "1f4ce", "🐛": "1f41b", "🧷": "1f9f7", "👑": "1f451", "🧒": "1f9d2", "🧑‍🔬": "1f9d1-200d-1f52c", "🟫": "1f7eb", "💝": "1f49d", "🚢": "1f6a2", "🐖": "1f416", "5️⃣": "35-fe0f-20e3", "🟢": "1f7e2", "👃": "1f443", "👋": "1f44b", "🐚": "1f41a", "🇮🇹": "1f1ee-1f1f9", "🚑": "1f691", "🎵": "1f3b5", "🧲": "1f9f2", "🍭": "1f36d", "🐆": "1f406", "🍴": "1f374", "😨": "1f628", "🍞": "1f35e", "🧑‍✈️": "1f9d1-200d-2708-fe0f", "🔔": "1f514", "🏋️": "1f3cb-fe0f", "📏": "1f4cf", "🔴": "1f534", "🍌": "1f34c", "2️⃣": "32-fe0f-20e3", "⬇️": "2b07-fe0f", "↩️": "21a9-fe0f", "🍂": "1f342", "🤝": "1f91d", "🔑": "1f511", "🛒": "1f6d2", "✂️": "2702-fe0f", "🛁": "1f6c1", "🧀": "1f9c0", "🌴": "1f334", "🧑‍🔧": "1f9d1-200d-1f527", "🎩": "1f3a9", "🚩": "1f6a9", "🐝": "1f41d", "🗓️": "1f5d3-fe0f", "🧑": "1f9d1", "🌙": "1f319", "🍋": "1f34b", "🌽": "1f33d", "💖": "1f496", "🛸": "1f6f8", "🪀": "1fa80", "🦟": "1f99f", "🦉": "1f989", "🌰": "1f330", "🔎": "1f50e", "🍁": "1f341", "🦄": "1f984", "🐉": "1f409", "🧠": "1f9e0", "🐇": "1f407", "💇": "1f487", "⚽": "26bd", "🕳️": "1f573-fe0f", "☀️": "2600-fe0f", "🦴": "1f9b4", "🍩": "1f369", "🔭": "1f52d", "🎓": "1f393", "🇲🇽": "1f1f2-1f1fd", "🐭": "1f42d", "😋": "1f60b", "🇨🇳": "1f1e8-1f1f3", "🎄": "1f384", "🌇": "1f307", "🎀": "1f380", "🌸": "1f338", "🪰": "1fab0", "✈️": "2708-fe0f", "📚": "1f4da", "👶": "1f476", "⬛": "2b1b", "👐": "1f450", "🤔": "1f914", "🪞": "1fa9e", "🦕": "1f995", "🍕": "1f355", "🗣️": "1f5e3-fe0f", "🗺️": "1f5fa-fe0f", "🐢": "1f422", "⚡": "26a1", "🥶": "1f976", "🧃": "1f9c3", "☔": "2614", "🚚": "1f69a", "🃏": "1f0cf", "👟": "1f45f", "🚗": "1f697", "🧅": "1f9c5", "🛖": "1f6d6", "🌫️": "1f32b-fe0f", "☕": "2615", "✏️": "270f-fe0f", "🦖": "1f996", "🪽": "1fabd", "🐘": "1f418", "🧑‍🚀": "1f9d1-200d-1f680", "🫀": "1fac0", "🔁": "1f501", "🏐": "1f3d0", "🟡": "1f7e1", "🦊": "1f98a", "6️⃣": "36-fe0f-20e3", "👩‍⚕️": "1f469-200d-2695-fe0f", "☄️": "2604-fe0f", "🧱": "1f9f1", "🦋": "1f98b", "🩱": "1fa71", "🟥": "1f7e5", "🤍": "1f90d", "🌛": "1f31b", "🧦": "1f9e6", "🔵": "1f535", "➡️": "27a1-fe0f", "🧑‍⚕️": "1f9d1-200d-2695-fe0f", "🐑": "1f411", "🏖️": "1f3d6-fe0f", "🦁": "1f981", "🍫": "1f36b", "😮": "1f62e", "👍": "1f44d", "🧑‍🍳": "1f9d1-200d-1f373", "🦇": "1f987", "🕑": "1f551", "🥦": "1f966", "🕷️": "1f577-fe0f", "🎈": "1f388", "🍎": "1f34e", "🦀": "1f980", "⚪": "26aa", "🐜": "1f41c", "🪙": "1fa99", "💙": "1f499", "🇨🇦": "1f1e8-1f1e6", "🕒": "1f552", "🍚": "1f35a", "🚓": "1f693", "💡": "1f4a1", "🌈": "1f308", "⏰": "23f0", "🎹": "1f3b9", "👽": "1f47d", "🔩": "1f529", "🍟": "1f35f", "🌱": "1f331", "👂": "1f442", "🚂": "1f682", "✅": "2705", "🐬": "1f42c", "🐸": "1f438", "1️⃣": "31-fe0f-20e3", "🌊": "1f30a", "📅": "1f4c5", "🪶": "1fab6", "🛷": "1f6f7", "🦆": "1f986", "🐴": "1f434", "😠": "1f620", "🧥": "1f9e5", "🥣": "1f963", "🐩": "1f429", "💨": "1f4a8", "🛰️": "1f6f0-fe0f", "🔥": "1f525", "📤": "1f4e4", "♨️": "2668-fe0f", "🏍️": "1f3cd-fe0f", "🔮": "1f52e", "8️⃣": "38-fe0f-20e3", "🌕": "1f315", "🌑": "1f311", "❄️": "2744-fe0f", "🧺": "1f9fa", "💬": "1f4ac", "🎬": "1f3ac", "🔛": "1f51b", "3️⃣": "33-fe0f-20e3", "🕐": "1f550", "🧂": "1f9c2", "🍐": "1f350", "🖤": "1f5a4", "❤️": "2764-fe0f", "🧊": "1f9ca", "🇫🇷": "1f1eb-1f1f7", "🧽": "1f9fd", "🥄": "1f944", "🧢": "1f9e2", "🐊": "1f40a", "🎸": "1f3b8", "🥗": "1f957", "🐻": "1f43b", "🚌": "1f68c", "📥": "1f4e5", "📈": "1f4c8", "🌖": "1f316", "🔄": "1f504", "👨‍👩‍👧": "1f468-200d-1f469-200d-1f467", "😲": "1f632", "🍄": "1f344", "📻": "1f4fb", "😢": "1f622", "🍆": "1f346", "🤖": "1f916", "🐄": "1f404", "🟣": "1f7e3", "🌌": "1f30c", "🔧": "1f527", "🫧": "1fae7", "🪄": "1fa84", "🇧🇷": "1f1e7-1f1f7", "🛏️": "1f6cf-fe0f", "🥧": "1f967", "🍉": "1f349", "🏞️": "1f3de-fe0f", "🔹": "1f539", "🌬️": "1f32c-fe0f", "🐲": "1f432", "🥤": "1f964", "🧓": "1f9d3", "🫘": "1fad8", "🚶": "1f6b6", "🎱": "1f3b1", "🇬🇧": "1f1ec-1f1e7", "⛰️": "26f0-fe0f", "📺": "1f4fa", "🚙": "1f699", "🦅": "1f985", "🌞": "1f31e", "🌏": "1f30f", "🔢": "1f522", "🧸": "1f9f8", "🪜": "1fa9c", "🎁": "1f381", "🔷": "1f537", "🎃": "1f383", "🌳": "1f333", "⚫": "26ab", "🐯": "1f42f", "🧑‍🌾": "1f9d1-200d-1f33e", "👩": "1f469", "📄": "1f4c4", "💥": "1f4a5", "👩‍🚒": "1f469-200d-1f692", "🪴": "1fab4", "🙈": "1f648"};
 const E3RE=new RegExp(Object.keys(E3).sort((a,b)=>b.length-a.length).map(s=>s.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")).join("|"),"g");
@@ -4914,12 +4976,11 @@ function renderStats(){
 }
 /* the parents' optional prize: a photo of the toy, and how close the child is */
 const pzI=(r,c="")=>r.img?`<img class="pzimg ${c}" src="${r.img}" alt="">`:`<span class="pze ${c}">${r.e||"🎁"}</span>`;
-const goalPct=r=>Math.min(1,(Math.min(1,S.acorns/r.a)+Math.min(1,S.wood/r.w))/2);
+const goalPct=r=>Math.min(1,S.acorns/r.a);
 function goalPick(){const R=S.real||[];if(!R.length)return null;const nr=R.filter(r=>!(S.acorns>=r.a&&S.wood>=r.w));return (nr.length?nr:R).slice().sort((x,y)=>goalPct(y)-goalPct(x))[0]}
 function goalCard(){const r=goalPick();if(!r)return "";const ok=S.acorns>=r.a&&S.wood>=r.w,fa=Math.min(1,S.acorns/r.a),fw=Math.min(1,S.wood/r.w),ma=Math.max(0,r.a-S.acorns),mw=Math.max(0,r.w-S.wood),close=!ok&&goalPct(r)>=.85;
   return `<div class="goalc ${ok?"ok":close?"close":""}"><span class="gpic">${pzI(r)}</span><div class="gtx"><b>${ok?"Your prize is ready! 🎉":close?"Almost there! ✨":"Your prize: "+r.name}</b>
-    <span class="gbar a"><i style="width:${fa*100}%"></i></span><small>🌰 ${Math.min(S.acorns,r.a)} / ${r.a}${ma?` · ${ma} more`:" ✓"}</small>
-    <span class="gbar w"><i style="width:${fw*100}%"></i></span><small>🪵 ${Math.min(S.wood,r.w)} / ${r.w}${mw?` · ${mw} more`:" ✓"}</small></div></div>`}
+    <span class="gbar a"><i style="width:${fa*100}%"></i></span><small>🌰 ${Math.min(S.acorns,r.a)} / ${r.a}${ma?` · ${ma} more`:" ✓"}</small></div></div>`}
 function pzLoad(file,cb){const fr=new FileReader();fr.onload=()=>{const im=new Image();im.onload=()=>{const m=360,k=Math.min(1,m/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);
   c.getContext("2d").drawImage(im,0,0,c.width,c.height);cb(c.toDataURL("image/jpeg",.8))};im.onerror=()=>toast("Could not open that picture");im.src=fr.result};fr.readAsDataURL(file)}
 function bump(id){const e=$(id);if(!e)return;e.classList.remove("bump");void e.offsetWidth;e.classList.add("bump")}
@@ -4951,9 +5012,9 @@ function themeItems(){return (REWARDS[S.reward]||REWARDS.unicorn).items}
 function openHouse(){
   if(S.day.house)return;
   const items=themeItems(),e=items[S.stickers.length%items.length];
-  S.day.house=true;S.wood+=3;S.stickers.push({e,d:today(),land:landIdx()});save();
+  S.day.house=true;S.acorns+=5;S.stickers.push({e,d:today(),land:landIdx()});save();
   say("w/LULU_BD_PRIZE_IS");
-  const rv=reveal(e,"Today's prize!",`A new sticker for your collection, and +3 🪵 wood!`,()=>{renderMap();checkRealPrizes()});
+  const rv=reveal(e,"Today's prize!",`A new sticker for your collection, and +5 🌰 acorns!`,()=>{renderMap();checkRealPrizes()});
   const gc=goalCard();if(gc)rv.querySelector("p").insertAdjacentHTML("afterend",gc);
 }
 function reveal(item,title,text,cb,gift="🎁"){
@@ -4979,20 +5040,20 @@ function showPrizes(){
     <b class="jar-n">${f>=1?"✓":left}</b><small>${f>=1?"full!":"more"}</small></div>`};
   $("pPrizes").innerHTML=`<button class="back" id="prBack"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>Back</button>
     <div class="prz prz2"><div class="pz-hero"><span class="pz-chest">🧰</span><h2>My treasure</h2>
-      <div class="pz-cnt"><span class="pzc a"><i>🌰</i><b>${S.acorns}</b></span><span class="pzc w"><i>🪵</i><b>${S.wood}</b></span><span class="pzc s"><i>🦄</i><b>${items.length}</b></span></div></div>
+      <div class="pz-cnt"><span class="pzc a"><i>🌰</i><b>${S.acorns}</b></span><span class="pzc s"><i>🦄</i><b>${items.length}</b></span></div></div>
     ${S.real.length?`<h3 class="pz-h">🎁 My big prizes</h3>`:`<div class="pz-none"><span>🎁</span><b>No big prize yet</b><small>Ask a grown-up to add one in the parents' corner 👨‍👩‍👧</small></div>`}
-    ${S.real.map(r=>{const ok=S.acorns>=r.a&&S.wood>=r.w,f=Math.min(1,(Math.min(1,S.acorns/r.a)+Math.min(1,S.wood/r.w))/2);
+    ${S.real.map(r=>{const ok=S.acorns>=r.a&&S.wood>=r.w,f=Math.min(1,S.acorns/r.a);
       return `<button class="pz-card ${ok?"ready":""}" data-rp="${r.id}"><span class="pz-ph">${pzI(r)}${ok?`<span class="pz-burst">🎉</span>`:""}</span>
         <b class="pz-name">${r.name}</b>${ok?`<span class="pz-ready">Ready! Go and tell a grown-up 🎉</span>`:`<span class="pz-road"><i style="width:${Math.round(f*100)}%"></i><span class="pz-walker" style="left:${Math.round(f*100)}%">🦫</span><span class="pz-goal">🎁</span></span>`}
-        <span class="pz-jars">${jar(S.acorns,r.a,"a")}${jar(S.wood,r.w,"w")}</span></button>`}).join("")}
-    <div class="pz-how"><span><b>🌰</b>right answer</span><span><b>🪵</b>finished mound</span><span><b>🦄</b>Domi's house</span></div>
+        <span class="pz-jars">${jar(S.acorns,r.a,"a")}</span></button>`}).join("")}
+    <div class="pz-how"><span><b>🌰</b>right answer</span><span><b>🌰🌰</b>finished mound</span><span><b>🦄</b>Domi's house</span></div>
     <h3 class="pz-h">🦄 My sticker book</h3>
     <div class="pz-book">${items.map((s,k)=>`<button data-st="${k}" aria-label="Sticker" style="--r:${((k*37)%17)-8}deg">${s.e}</button>`).join("")}${Array.from({length:Math.max(0,12-items.length)},()=>`<button class="empty" disabled>✨</button>`).join("")}</div>
     ${S.paintings.length?`<h3 class="pz-h">🎨 My paintings</h3><div class="pz-gal">${S.paintings.slice().reverse().map(pp=>`<span class="pz-frame">${paintSVG(pp.p,pp.f)}</span>`).join("")}</div>`:""}</div>`;
   $("prBack").onclick=()=>{sfx.tap();showMap()};
   $("pPrizes").querySelectorAll("[data-st]").forEach(b=>b.onclick=()=>{const s=S.stickers[+b.dataset.st];reveal(s.e,"My sticker",`Won on ${s.d}`,null,"✨")});
   $("pPrizes").querySelectorAll("[data-rp]").forEach(b=>b.onclick=()=>{const r=S.real.find(x=>x.id===b.dataset.rp),ok=S.acorns>=r.a&&S.wood>=r.w;
-    reveal(pzI(r,"big"),r.name,ok?"Ready! Ask a grown-up for your prize 🎉":`${Math.max(0,r.a-S.acorns)} more 🌰 and ${Math.max(0,r.w-S.wood)} more 🪵 to go!`,null,ok?"🎁":"🔒")});
+    reveal(pzI(r,"big"),r.name,ok?"Ready! Ask a grown-up for your prize 🎉":`${Math.max(0,r.a-S.acorns)} more 🌰 to go!`,null,ok?"🎁":"🔒")});
 }
 function hidePanels(){closePop();closeDrop();$("pPrizes").hidden=true;$("pSettings").hidden=true}
 function showMap(){hidePanels();$("map").hidden=false;renderMap();requestAnimationFrame(()=>{placeBeaver(false);scrollToCurrent(false)})}
@@ -5007,7 +5068,7 @@ const DINNER={math:["If you had 3 cookies and shared 1, how many would be left?"
 const TRY={math:"Count things together while cooking or shopping.",clock:"Ask your child to read the clock before bedtime.",money:"Let your child pay with coins at a shop."};
 
 function wkLog(){if(!S.wk||S.wk.id!==weekId())S.wk={id:weekId(),q:0,right:0,topics:[],mounds:0,days:[]};if(!S.wk.days.includes(today()))S.wk.days.push(today());return S.wk}
-function estimate(r){const perQ=1.7,perDayA=S.perDay*perQ,perDayW=HOLES[landIdx()].length+3;const qa=Math.ceil(Math.max(0,r.a-S.acorns)/perQ),days=Math.max(Math.ceil(Math.max(0,r.a-S.acorns)/perDayA),Math.ceil(Math.max(0,r.w-S.wood)/perDayW));return {qa,days,fromZeroQ:Math.ceil(r.a/perQ),fromZeroD:Math.max(Math.ceil(r.a/perDayA),Math.ceil(r.w/perDayW))}}
+function estimate(r){const perQ=1.7,perDayA=S.perDay*perQ+HOLES[landIdx()].length*2+5,perDayW=HOLES[landIdx()].length+3;const qa=Math.ceil(Math.max(0,r.a-S.acorns)/perQ),days=Math.max(Math.ceil(Math.max(0,r.a-S.acorns)/perDayA),0);return {qa,days,fromZeroQ:Math.ceil(r.a/perQ),fromZeroD:Math.max(Math.ceil(r.a/perDayA),Math.ceil(r.w/perDayW))}}
 function showParents(){
   hidePanels();$("map").hidden=true;$("pSettings").hidden=false;
   const pn=curPlayer().name,w=wkLog(),tp=S.lastTopic||"math",dq=(DINNER[tp]||DINNER.math),names=w.topics.map(t=>(COURSE.find(c=>c.id===t)||{}).name).filter(Boolean);
@@ -5021,19 +5082,17 @@ function showParents(){
     <div class="ptalk"><div>🏡 ${TRY[tp]||TRY.math}</div><div>🍽️ “${dq[dayN()%dq.length]}”</div></div>
     <h2 class="psettings">⚙️ Settings</h2>
     ${sec("🎁","Prize (optional)")}
-    <p class="pnote">Promised ${pn} a toy? Add its photo and how many 🌰 acorns and 🪵 wood it costs. ${pn} sees it after every round and at the end of the path. No prize is fine too.</p>
-    ${S.real.length?`<div class="plegend"><span>🌰 = right answers</span><span>🪵 = finished mounds</span></div>`:""}
+    <p class="pnote">Promised ${pn} a toy? Add its photo and how many 🌰 acorns it costs. ${pn} sees it after every round and at the end of the path. No prize is fine too.</p>
+    ${S.real.length?`<div class="plegend"><span>🌰 = right answers, finished mounds and Domi's house</span></div>`:""}
     ${S.real.map((r,k)=>{const e=estimate(r),ok=S.acorns>=r.a&&S.wood>=r.w;return `<div class="pprize ${ok?"ok":""}">
       <label class="ppe" title="Change photo">${pzI(r)}<input type="file" accept="image/*" data-pic="${k}" hidden></label><b class="ppn">${r.name}</b><button class="pdel" data-del="${k}" aria-label="Remove prize">✕</button>
       <div class="ppr">${ring(S.acorns,r.a,"#C8803F","🌰")}<div class="pstep"><button class="stp" data-c="${k}:a:-10">−</button><button class="stp" data-c="${k}:a:10">+</button></div></div>
-      <div class="ppr">${ring(S.wood,r.w,"#7A4A1E","🪵")}<div class="pstep"><button class="stp" data-c="${k}:w:-1">−</button><button class="stp" data-c="${k}:w:1">+</button></div></div>
       ${ok?`<button class="pgive" data-give="${k}">✓ Given</button>`:`<span class="pdays">⏳ ~${e.days} days</span>`}</div>`}).join("")}
     <button class="padd" id="pzAdd">＋ Add a prize</button>
     <div class="pzform" id="pzForm" hidden>
       <label class="pzpic"><input type="file" accept="image/*" id="pzFile" hidden><span id="pzPrev">📷<small>Add a photo</small></span></label>
       <div class="pzf2"><input id="pzName" maxlength="28" placeholder="What is it? e.g. Lego car" aria-label="Prize name">
-        <div class="pzgoal"><label>🌰<select id="pzA">${[50,100,150,200,300,400,500,700,1000].map(x=>`<option ${x===200?"selected":""}>${x}</option>`).join("")}</select></label>
-        <label>🪵<select id="pzW">${[5,10,15,20,30,40,60,80].map(x=>`<option ${x===20?"selected":""}>${x}</option>`).join("")}</select></label></div>
+        <div class="pzgoal"><label>🌰<select id="pzA">${[50,100,150,200,300,400,500,700,1000].map(x=>`<option ${x===200?"selected":""}>${x}</option>`).join("")}</select></label></div>
         <small id="pzEst"></small></div>
       <div class="pzbtns"><button class="btn ghost" id="pzCancel">Cancel</button><button class="btn green" id="pzSave">Save prize</button></div>
     </div>
@@ -5055,7 +5114,7 @@ function showParents(){
     <div style="height:22px"></div>
     <button class="qbtn sky" id="btnToday" style="margin-bottom:8px">↺ Play today's games again</button>
     <button class="preset" id="btnReset">↺ Start ${pn} over</button>
-    <div id="resetConfirm" hidden class="pconf"><b>Clear 🌰 🪵 🦄 ?</b><button class="btn red" id="btnResetYes">Yes</button><button class="btn ghost" id="btnResetNo">No</button></div>`;
+    <div id="resetConfirm" hidden class="pconf"><b>Clear 🌰 🦄 ?</b><button class="btn red" id="btnResetYes">Yes</button><button class="btn ghost" id="btnResetNo">No</button></div>`;
   wireDash(pn);
   const P$=q=>$("pSettings").querySelectorAll(q);
   const keep=fn=>{const y=$("pSettings").scrollTop;fn();save();sfx.tap();showParents();$("pSettings").scrollTop=y};
@@ -5063,12 +5122,12 @@ function showParents(){
   P$("[data-c]").forEach(b=>b.onclick=()=>keep(()=>{const [k,f,d]=b.dataset.c.split(":");const r=S.real[+k];r[f]=Math.max(f==="a"?10:1,r[f]+ +d);S.notified=S.notified.filter(x=>x!==r.id)}));
   P$("[data-del]").forEach(b=>b.onclick=()=>keep(()=>{const r=S.real[+b.dataset.del];S.real.splice(+b.dataset.del,1);S.notified=S.notified.filter(x=>x!==r.id)}));
   P$("[data-pic]").forEach(inp=>inp.onchange=()=>{const f=inp.files[0];if(f)pzLoad(f,u=>keep(()=>{S.real[+inp.dataset.pic].img=u}))});
-  {let img="";const est=()=>{const r={a:+$("pzA").value,w:+$("pzW").value};$("pzEst").textContent=`About ${estimate({a:r.a+S.acorns,w:r.w+S.wood}).days} days of play at ${S.perDay} questions a day`};
+  {let img="";const est=()=>{const r={a:+$("pzA").value,w:0};$("pzEst").textContent=`About ${estimate({a:r.a+S.acorns,w:0}).days} days of play at ${S.perDay} questions a day`};
    $("pzAdd").onclick=()=>{sfx.tap();$("pzForm").hidden=false;$("pzAdd").hidden=true;est();$("pzName").focus()};
    $("pzCancel").onclick=()=>{sfx.tap();$("pzForm").hidden=true;$("pzAdd").hidden=false};
-   $("pzA").onchange=$("pzW").onchange=est;
+   $("pzA").onchange=est;
    $("pzFile").onchange=()=>{const f=$("pzFile").files[0];if(f)pzLoad(f,u=>{img=u;$("pzPrev").innerHTML=`<img src="${u}" alt="">`})};
-   $("pzSave").onclick=()=>{const name=$("pzName").value.trim()||"A surprise";keep(()=>{S.real.push({id:"r"+Date.now(),e:"🎁",img,name,a:+$("pzA").value+S.acorns,w:+$("pzW").value+S.wood})})}}
+   $("pzSave").onclick=()=>{const name=$("pzName").value.trim()||"A surprise";keep(()=>{S.real.push({id:"r"+Date.now(),e:"🎁",img,name,a:+$("pzA").value+S.acorns,w:0})})}}
   $("pShare")&&($("pShare").onclick=()=>{const t=reportText(pn);sfx.tap();if(navigator.share)navigator.share({title:`${pn}'s learning`,text:t}).catch(()=>{});else if(navigator.clipboard)navigator.clipboard.writeText(t).then(()=>toast("Report copied 📋"));});
   P$("[data-give]").forEach(b=>b.onclick=()=>keep(()=>{const r=S.real[+b.dataset.give];S.acorns-=r.a;S.wood-=r.w;S.notified=S.notified.filter(x=>x!==r.id);toast(`🎉 Enjoy the ${r.name}!`)}));
   P$("[data-topic]").forEach(b=>b.onclick=()=>keep(()=>{const id=b.dataset.topic,on=S.topics.includes(id);if(on&&activeTopics().length===1){toast("Keep at least one topic");return}S.topics=on?S.topics.filter(x=>x!==id):[...S.topics,id]}));

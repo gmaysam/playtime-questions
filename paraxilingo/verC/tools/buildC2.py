@@ -71,7 +71,7 @@ for _f,_d in (('fa_new3.json','FA'),('en_new2.json','EN')):
     if os.path.exists(_p):
         for _w,_c in json.load(open(_p)).items():
             if os.path.exists(os.path.join(SDIR,'fa_new','out',_c+'.mp3')):(FA_SAY if _d=='FA' else EN_SAY)[_w]=_c
-B=open(os.path.join(os.path.dirname(__file__),'qengine.js')).read().replace('__STORIES__',open(os.path.join(SDIR,'watcher','stories.json')).read()).replace('__FA_SAY__',json.dumps(FA_SAY)).replace('__EVOICED__',json.dumps(EVOICED)).replace('__EN_SAY__',json.dumps(EN_SAY)).replace('__POOL__',open(os.path.join(SDIR,'watcher','pool.json')).read()).replace('__WQ__',wq).replace('__VOICED__',json.dumps(VOICED)).replace('__PIC_E__',PIC_E).replace('__WORD_E__',WORD_E)+open(os.path.join(os.path.dirname(__file__),'games.js')).read().replace('__FACTV__',json.dumps({t:c for t,c in json.load(open(os.path.join(os.path.dirname(__file__),'fact_voice.json'))).items() if os.path.exists('appC/audio/w/'+c+'.mp3')},ensure_ascii=False))+open(os.path.join(os.path.dirname(__file__),'games2.js')).read().replace('__GVOICE__','true' if os.path.exists('appC/audio/w/PX_G_SPY.mp3') else 'false').replace('__SK2VOICE__','true' if os.path.exists('appC/audio/w/PX_SK2_Q_k19.mp3') else 'false')+open(os.path.join(os.path.dirname(__file__),'games3.js')).read().replace('__G3VOICE__','true' if os.path.exists('appC/audio/w/PX_G3_PUZZLE.mp3') else 'false')+open(os.path.join(os.path.dirname(__file__),'learn.js')).read().replace('__LRNVOICE__','true' if os.path.exists('appC/audio/w/PX_LRN_COUNT.mp3') else 'false')+open(os.path.join(os.path.dirname(__file__),'toddler.js')).read().replace('__TDVOICE__','true' if os.path.exists('appC/audio/w/PX_TD_PEEK.mp3') else 'false')+open(os.path.join(os.path.dirname(__file__),'geo.js')).read().replace('__GEOMAP__',open(os.path.join(os.path.dirname(__file__),'geo_map.json')).read()).replace('__GEOVOICE__','true' if os.path.exists('appC/audio/w/PX_GEO_Q_FIND.mp3') else 'false')+open(os.path.join(os.path.dirname(__file__),'pillars.js')).read()+open(os.path.join(os.path.dirname(__file__),'games4.js')).read().replace('__G4VOICE__','true' if os.path.exists('appC/audio/w/PX_G4_PDET.mp3') else 'false')+open(os.path.join(os.path.dirname(__file__),'e3.js')).read().replace('__E3MAP__',json.dumps({k:v for k,v in json.load(open(os.path.join(os.path.dirname(__file__),'e3map.json'))).items() if os.path.exists('appC/img/e3/'+v+'.webp')},ensure_ascii=False))
+B=open(os.path.join(os.path.dirname(__file__),'qengine.js')).read().replace('__STORIES__',open(os.path.join(SDIR,'watcher','stories.json')).read()).replace('__FA_SAY__',json.dumps(FA_SAY)).replace('__EVOICED__',json.dumps(EVOICED)).replace('__EN_SAY__',json.dumps(EN_SAY)).replace('__POOL__',open(os.path.join(SDIR,'watcher','pool.json')).read()).replace('__WQ__',wq).replace('__VOICED__',json.dumps(VOICED)).replace('__PIC_E__',PIC_E).replace('__WORD_E__',WORD_E)+open(os.path.join(os.path.dirname(__file__),'games.js')).read().replace('__FACTV__',json.dumps({t:c for t,c in json.load(open(os.path.join(os.path.dirname(__file__),'fact_voice.json'))).items() if os.path.exists('appC/audio/w/'+c+'.mp3')},ensure_ascii=False))+open(os.path.join(os.path.dirname(__file__),'games2.js')).read().replace('__GVOICE__','true' if os.path.exists('appC/audio/w/PX_G_SPY.mp3') else 'false').replace('__SK2VOICE__','true' if os.path.exists('appC/audio/w/PX_SK2_Q_k19.mp3') else 'false')+open(os.path.join(os.path.dirname(__file__),'games3.js')).read().replace('__G3VOICE__','true' if os.path.exists('appC/audio/w/PX_G3_PUZZLE.mp3') else 'false')+open(os.path.join(os.path.dirname(__file__),'learn.js')).read().replace('__LRNVOICE__','true' if os.path.exists('appC/audio/w/PX_LRN_COUNT.mp3') else 'false')+open(os.path.join(os.path.dirname(__file__),'toddler.js')).read().replace('__TDVOICE__','true' if os.path.exists('appC/audio/w/PX_TD_PEEK.mp3') else 'false')+open(os.path.join(os.path.dirname(__file__),'geo.js')).read().replace('__GEOMAP__',open(os.path.join(os.path.dirname(__file__),'geo_map.json')).read()).replace('__GEOVOICE__','true' if os.path.exists('appC/audio/w/PX_GEO_Q_FIND.mp3') else 'false')+open(os.path.join(os.path.dirname(__file__),'pillars.js')).read()+open(os.path.join(os.path.dirname(__file__),'games4.js')).read().replace('__G4VOICE__','true' if os.path.exists('appC/audio/w/PX_G4_PDET.mp3') else 'false')+open(os.path.join(os.path.dirname(__file__),'games5.js')).read().replace('__G5VOICE__','true' if os.path.exists('appC/audio/w/PX_G5_SPELL.mp3') else 'false')+open(os.path.join(os.path.dirname(__file__),'e3.js')).read().replace('__E3MAP__',json.dumps({k:v for k,v in json.load(open(os.path.join(os.path.dirname(__file__),'e3map.json'))).items() if os.path.exists('appC/img/e3/'+v+'.webp')},ensure_ascii=False))
 C=''
 
 css += r'''
@@ -187,7 +187,7 @@ markup = '''
   <header class="topbar">
     <button class="course" id="tbCourse" aria-label="Players" aria-expanded="false"></button>
     <div class="stats">
-      <span class="stat flame" id="sWood" aria-label="Wood"><i class="emo" style="font-style:normal">🪵</i><span>0</span></span>
+      <span class="stat flame" id="sWood" aria-label="Wood" hidden style="display:none"><i class="emo" style="font-style:normal">🪵</i><span>0</span></span>
       <span class="stat gem" id="sAcorns" aria-label="Acorns"><i class="emo" style="font-style:normal">🌰</i><span>0</span></span>
     </div>
     <button class="tbtn" id="tbPrizes" aria-label="My prizes">🏆<span class="dotn" id="prDot" hidden>!</span></button>
@@ -330,12 +330,11 @@ function renderStats(){
 }
 /* the parents' optional prize: a photo of the toy, and how close the child is */
 const pzI=(r,c="")=>r.img?`<img class="pzimg ${c}" src="${r.img}" alt="">`:`<span class="pze ${c}">${r.e||"🎁"}</span>`;
-const goalPct=r=>Math.min(1,(Math.min(1,S.acorns/r.a)+Math.min(1,S.wood/r.w))/2);
+const goalPct=r=>Math.min(1,S.acorns/r.a);
 function goalPick(){const R=S.real||[];if(!R.length)return null;const nr=R.filter(r=>!(S.acorns>=r.a&&S.wood>=r.w));return (nr.length?nr:R).slice().sort((x,y)=>goalPct(y)-goalPct(x))[0]}
 function goalCard(){const r=goalPick();if(!r)return "";const ok=S.acorns>=r.a&&S.wood>=r.w,fa=Math.min(1,S.acorns/r.a),fw=Math.min(1,S.wood/r.w),ma=Math.max(0,r.a-S.acorns),mw=Math.max(0,r.w-S.wood),close=!ok&&goalPct(r)>=.85;
   return `<div class="goalc ${ok?"ok":close?"close":""}"><span class="gpic">${pzI(r)}</span><div class="gtx"><b>${ok?"Your prize is ready! 🎉":close?"Almost there! ✨":"Your prize: "+r.name}</b>
-    <span class="gbar a"><i style="width:${fa*100}%"></i></span><small>🌰 ${Math.min(S.acorns,r.a)} / ${r.a}${ma?` · ${ma} more`:" ✓"}</small>
-    <span class="gbar w"><i style="width:${fw*100}%"></i></span><small>🪵 ${Math.min(S.wood,r.w)} / ${r.w}${mw?` · ${mw} more`:" ✓"}</small></div></div>`}
+    <span class="gbar a"><i style="width:${fa*100}%"></i></span><small>🌰 ${Math.min(S.acorns,r.a)} / ${r.a}${ma?` · ${ma} more`:" ✓"}</small></div></div>`}
 function pzLoad(file,cb){const fr=new FileReader();fr.onload=()=>{const im=new Image();im.onload=()=>{const m=360,k=Math.min(1,m/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);
   c.getContext("2d").drawImage(im,0,0,c.width,c.height);cb(c.toDataURL("image/jpeg",.8))};im.onerror=()=>toast("Could not open that picture");im.src=fr.result};fr.readAsDataURL(file)}
 function bump(id){const e=$(id);if(!e)return;e.classList.remove("bump");void e.offsetWidth;e.classList.add("bump")}
@@ -367,9 +366,9 @@ function themeItems(){return (REWARDS[S.reward]||REWARDS.unicorn).items}
 function openHouse(){
   if(S.day.house)return;
   const items=themeItems(),e=items[S.stickers.length%items.length];
-  S.day.house=true;S.wood+=3;S.stickers.push({e,d:today(),land:landIdx()});save();
+  S.day.house=true;S.acorns+=5;S.stickers.push({e,d:today(),land:landIdx()});save();
   say("w/LULU_BD_PRIZE_IS");
-  const rv=reveal(e,"Today's prize!",`A new sticker for your collection, and +3 🪵 wood!`,()=>{renderMap();checkRealPrizes()});
+  const rv=reveal(e,"Today's prize!",`A new sticker for your collection, and +5 🌰 acorns!`,()=>{renderMap();checkRealPrizes()});
   const gc=goalCard();if(gc)rv.querySelector("p").insertAdjacentHTML("afterend",gc);
 }
 function reveal(item,title,text,cb,gift="🎁"){
@@ -395,20 +394,20 @@ function showPrizes(){
     <b class="jar-n">${f>=1?"✓":left}</b><small>${f>=1?"full!":"more"}</small></div>`};
   $("pPrizes").innerHTML=`<button class="back" id="prBack"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>Back</button>
     <div class="prz prz2"><div class="pz-hero"><span class="pz-chest">🧰</span><h2>My treasure</h2>
-      <div class="pz-cnt"><span class="pzc a"><i>🌰</i><b>${S.acorns}</b></span><span class="pzc w"><i>🪵</i><b>${S.wood}</b></span><span class="pzc s"><i>🦄</i><b>${items.length}</b></span></div></div>
+      <div class="pz-cnt"><span class="pzc a"><i>🌰</i><b>${S.acorns}</b></span><span class="pzc s"><i>🦄</i><b>${items.length}</b></span></div></div>
     ${S.real.length?`<h3 class="pz-h">🎁 My big prizes</h3>`:`<div class="pz-none"><span>🎁</span><b>No big prize yet</b><small>Ask a grown-up to add one in the parents' corner 👨‍👩‍👧</small></div>`}
-    ${S.real.map(r=>{const ok=S.acorns>=r.a&&S.wood>=r.w,f=Math.min(1,(Math.min(1,S.acorns/r.a)+Math.min(1,S.wood/r.w))/2);
+    ${S.real.map(r=>{const ok=S.acorns>=r.a&&S.wood>=r.w,f=Math.min(1,S.acorns/r.a);
       return `<button class="pz-card ${ok?"ready":""}" data-rp="${r.id}"><span class="pz-ph">${pzI(r)}${ok?`<span class="pz-burst">🎉</span>`:""}</span>
         <b class="pz-name">${r.name}</b>${ok?`<span class="pz-ready">Ready! Go and tell a grown-up 🎉</span>`:`<span class="pz-road"><i style="width:${Math.round(f*100)}%"></i><span class="pz-walker" style="left:${Math.round(f*100)}%">🦫</span><span class="pz-goal">🎁</span></span>`}
-        <span class="pz-jars">${jar(S.acorns,r.a,"a")}${jar(S.wood,r.w,"w")}</span></button>`}).join("")}
-    <div class="pz-how"><span><b>🌰</b>right answer</span><span><b>🪵</b>finished mound</span><span><b>🦄</b>Domi's house</span></div>
+        <span class="pz-jars">${jar(S.acorns,r.a,"a")}</span></button>`}).join("")}
+    <div class="pz-how"><span><b>🌰</b>right answer</span><span><b>🌰🌰</b>finished mound</span><span><b>🦄</b>Domi's house</span></div>
     <h3 class="pz-h">🦄 My sticker book</h3>
     <div class="pz-book">${items.map((s,k)=>`<button data-st="${k}" aria-label="Sticker" style="--r:${((k*37)%17)-8}deg">${s.e}</button>`).join("")}${Array.from({length:Math.max(0,12-items.length)},()=>`<button class="empty" disabled>✨</button>`).join("")}</div>
     ${S.paintings.length?`<h3 class="pz-h">🎨 My paintings</h3><div class="pz-gal">${S.paintings.slice().reverse().map(pp=>`<span class="pz-frame">${paintSVG(pp.p,pp.f)}</span>`).join("")}</div>`:""}</div>`;
   $("prBack").onclick=()=>{sfx.tap();showMap()};
   $("pPrizes").querySelectorAll("[data-st]").forEach(b=>b.onclick=()=>{const s=S.stickers[+b.dataset.st];reveal(s.e,"My sticker",`Won on ${s.d}`,null,"✨")});
   $("pPrizes").querySelectorAll("[data-rp]").forEach(b=>b.onclick=()=>{const r=S.real.find(x=>x.id===b.dataset.rp),ok=S.acorns>=r.a&&S.wood>=r.w;
-    reveal(pzI(r,"big"),r.name,ok?"Ready! Ask a grown-up for your prize 🎉":`${Math.max(0,r.a-S.acorns)} more 🌰 and ${Math.max(0,r.w-S.wood)} more 🪵 to go!`,null,ok?"🎁":"🔒")});
+    reveal(pzI(r,"big"),r.name,ok?"Ready! Ask a grown-up for your prize 🎉":`${Math.max(0,r.a-S.acorns)} more 🌰 to go!`,null,ok?"🎁":"🔒")});
 }
 function hidePanels(){closePop();closeDrop();$("pPrizes").hidden=true;$("pSettings").hidden=true}
 function showMap(){hidePanels();$("map").hidden=false;renderMap();requestAnimationFrame(()=>{placeBeaver(false);scrollToCurrent(false)})}
@@ -419,7 +418,7 @@ $("tbParents").onclick=()=>{sfx.tap();askParents()};
 const dayN=()=>Math.floor(Date.now()/864e5);
 __TRY__
 function wkLog(){if(!S.wk||S.wk.id!==weekId())S.wk={id:weekId(),q:0,right:0,topics:[],mounds:0,days:[]};if(!S.wk.days.includes(today()))S.wk.days.push(today());return S.wk}
-function estimate(r){const perQ=1.7,perDayA=S.perDay*perQ,perDayW=HOLES[landIdx()].length+3;const qa=Math.ceil(Math.max(0,r.a-S.acorns)/perQ),days=Math.max(Math.ceil(Math.max(0,r.a-S.acorns)/perDayA),Math.ceil(Math.max(0,r.w-S.wood)/perDayW));return {qa,days,fromZeroQ:Math.ceil(r.a/perQ),fromZeroD:Math.max(Math.ceil(r.a/perDayA),Math.ceil(r.w/perDayW))}}
+function estimate(r){const perQ=1.7,perDayA=S.perDay*perQ+HOLES[landIdx()].length*2+5,perDayW=HOLES[landIdx()].length+3;const qa=Math.ceil(Math.max(0,r.a-S.acorns)/perQ),days=Math.max(Math.ceil(Math.max(0,r.a-S.acorns)/perDayA),0);return {qa,days,fromZeroQ:Math.ceil(r.a/perQ),fromZeroD:Math.max(Math.ceil(r.a/perDayA),Math.ceil(r.w/perDayW))}}
 function showParents(){
   hidePanels();$("map").hidden=true;$("pSettings").hidden=false;
   const pn=curPlayer().name,w=wkLog(),tp=S.lastTopic||"math",dq=(DINNER[tp]||DINNER.math),names=w.topics.map(t=>(COURSE.find(c=>c.id===t)||{}).name).filter(Boolean);
@@ -433,19 +432,17 @@ function showParents(){
     <div class="ptalk"><div>🏡 ${TRY[tp]||TRY.math}</div><div>🍽️ “${dq[dayN()%dq.length]}”</div></div>
     <h2 class="psettings">⚙️ Settings</h2>
     ${sec("🎁","Prize (optional)")}
-    <p class="pnote">Promised ${pn} a toy? Add its photo and how many 🌰 acorns and 🪵 wood it costs. ${pn} sees it after every round and at the end of the path. No prize is fine too.</p>
-    ${S.real.length?`<div class="plegend"><span>🌰 = right answers</span><span>🪵 = finished mounds</span></div>`:""}
+    <p class="pnote">Promised ${pn} a toy? Add its photo and how many 🌰 acorns it costs. ${pn} sees it after every round and at the end of the path. No prize is fine too.</p>
+    ${S.real.length?`<div class="plegend"><span>🌰 = right answers, finished mounds and Domi's house</span></div>`:""}
     ${S.real.map((r,k)=>{const e=estimate(r),ok=S.acorns>=r.a&&S.wood>=r.w;return `<div class="pprize ${ok?"ok":""}">
       <label class="ppe" title="Change photo">${pzI(r)}<input type="file" accept="image/*" data-pic="${k}" hidden></label><b class="ppn">${r.name}</b><button class="pdel" data-del="${k}" aria-label="Remove prize">✕</button>
       <div class="ppr">${ring(S.acorns,r.a,"#C8803F","🌰")}<div class="pstep"><button class="stp" data-c="${k}:a:-10">−</button><button class="stp" data-c="${k}:a:10">+</button></div></div>
-      <div class="ppr">${ring(S.wood,r.w,"#7A4A1E","🪵")}<div class="pstep"><button class="stp" data-c="${k}:w:-1">−</button><button class="stp" data-c="${k}:w:1">+</button></div></div>
       ${ok?`<button class="pgive" data-give="${k}">✓ Given</button>`:`<span class="pdays">⏳ ~${e.days} days</span>`}</div>`}).join("")}
     <button class="padd" id="pzAdd">＋ Add a prize</button>
     <div class="pzform" id="pzForm" hidden>
       <label class="pzpic"><input type="file" accept="image/*" id="pzFile" hidden><span id="pzPrev">📷<small>Add a photo</small></span></label>
       <div class="pzf2"><input id="pzName" maxlength="28" placeholder="What is it? e.g. Lego car" aria-label="Prize name">
-        <div class="pzgoal"><label>🌰<select id="pzA">${[50,100,150,200,300,400,500,700,1000].map(x=>`<option ${x===200?"selected":""}>${x}</option>`).join("")}</select></label>
-        <label>🪵<select id="pzW">${[5,10,15,20,30,40,60,80].map(x=>`<option ${x===20?"selected":""}>${x}</option>`).join("")}</select></label></div>
+        <div class="pzgoal"><label>🌰<select id="pzA">${[50,100,150,200,300,400,500,700,1000].map(x=>`<option ${x===200?"selected":""}>${x}</option>`).join("")}</select></label></div>
         <small id="pzEst"></small></div>
       <div class="pzbtns"><button class="btn ghost" id="pzCancel">Cancel</button><button class="btn green" id="pzSave">Save prize</button></div>
     </div>
@@ -467,7 +464,7 @@ function showParents(){
     <div style="height:22px"></div>
     <button class="qbtn sky" id="btnToday" style="margin-bottom:8px">↺ Play today's games again</button>
     <button class="preset" id="btnReset">↺ Start ${pn} over</button>
-    <div id="resetConfirm" hidden class="pconf"><b>Clear 🌰 🪵 🦄 ?</b><button class="btn red" id="btnResetYes">Yes</button><button class="btn ghost" id="btnResetNo">No</button></div>`;
+    <div id="resetConfirm" hidden class="pconf"><b>Clear 🌰 🦄 ?</b><button class="btn red" id="btnResetYes">Yes</button><button class="btn ghost" id="btnResetNo">No</button></div>`;
   wireDash(pn);
   const P$=q=>$("pSettings").querySelectorAll(q);
   const keep=fn=>{const y=$("pSettings").scrollTop;fn();save();sfx.tap();showParents();$("pSettings").scrollTop=y};
@@ -475,12 +472,12 @@ function showParents(){
   P$("[data-c]").forEach(b=>b.onclick=()=>keep(()=>{const [k,f,d]=b.dataset.c.split(":");const r=S.real[+k];r[f]=Math.max(f==="a"?10:1,r[f]+ +d);S.notified=S.notified.filter(x=>x!==r.id)}));
   P$("[data-del]").forEach(b=>b.onclick=()=>keep(()=>{const r=S.real[+b.dataset.del];S.real.splice(+b.dataset.del,1);S.notified=S.notified.filter(x=>x!==r.id)}));
   P$("[data-pic]").forEach(inp=>inp.onchange=()=>{const f=inp.files[0];if(f)pzLoad(f,u=>keep(()=>{S.real[+inp.dataset.pic].img=u}))});
-  {let img="";const est=()=>{const r={a:+$("pzA").value,w:+$("pzW").value};$("pzEst").textContent=`About ${estimate({a:r.a+S.acorns,w:r.w+S.wood}).days} days of play at ${S.perDay} questions a day`};
+  {let img="";const est=()=>{const r={a:+$("pzA").value,w:0};$("pzEst").textContent=`About ${estimate({a:r.a+S.acorns,w:0}).days} days of play at ${S.perDay} questions a day`};
    $("pzAdd").onclick=()=>{sfx.tap();$("pzForm").hidden=false;$("pzAdd").hidden=true;est();$("pzName").focus()};
    $("pzCancel").onclick=()=>{sfx.tap();$("pzForm").hidden=true;$("pzAdd").hidden=false};
-   $("pzA").onchange=$("pzW").onchange=est;
+   $("pzA").onchange=est;
    $("pzFile").onchange=()=>{const f=$("pzFile").files[0];if(f)pzLoad(f,u=>{img=u;$("pzPrev").innerHTML=`<img src="${u}" alt="">`})};
-   $("pzSave").onclick=()=>{const name=$("pzName").value.trim()||"A surprise";keep(()=>{S.real.push({id:"r"+Date.now(),e:"🎁",img,name,a:+$("pzA").value+S.acorns,w:+$("pzW").value+S.wood})})}}
+   $("pzSave").onclick=()=>{const name=$("pzName").value.trim()||"A surprise";keep(()=>{S.real.push({id:"r"+Date.now(),e:"🎁",img,name,a:+$("pzA").value+S.acorns,w:0})})}}
   $("pShare")&&($("pShare").onclick=()=>{const t=reportText(pn);sfx.tap();if(navigator.share)navigator.share({title:`${pn}'s learning`,text:t}).catch(()=>{});else if(navigator.clipboard)navigator.clipboard.writeText(t).then(()=>toast("Report copied 📋"));});
   P$("[data-give]").forEach(b=>b.onclick=()=>keep(()=>{const r=S.real[+b.dataset.give];S.acorns-=r.a;S.wood-=r.w;S.notified=S.notified.filter(x=>x!==r.id);toast(`🎉 Enjoy the ${r.name}!`)}));
   P$("[data-topic]").forEach(b=>b.onclick=()=>keep(()=>{const id=b.dataset.topic,on=S.topics.includes(id);if(on&&activeTopics().length===1){toast("Keep at least one topic");return}S.topics=on?S.topics.filter(x=>x!==id):[...S.topics,id]}));

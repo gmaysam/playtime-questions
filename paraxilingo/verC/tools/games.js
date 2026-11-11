@@ -17,7 +17,8 @@ function logSk(q,ok){logEv(q,ok);try{const cat=q.cat||(L&&L.cat)||"",k=cat+"|"+s
 function skLevel(r){const ones=(r.h.match(/1/g)||[]).length,p=r.h.length?ones/r.h.length:0;return r.n<4?0:p>=.8&&r.n>=6?2:1}
 
 /* shared bits for the play games */
-const gHead=(e,kick,title)=>`<div class="qkick"><span class="qke">${e}</span>${kick}</div><h2 class="qtitle">${title}</h2>`;
+const gHead=(e,kick,title)=>`<div class="qkick"><span class="qke">${e}</span>${kick}<button class="g-rep" aria-label="Hear it again"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></div><h2 class="qtitle">${title}</h2>`;
+document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest(".g-rep");if(!b||!L||!L.q)return;e.stopPropagation();sfx.tap();hush();sayseq(L.q.voice||[],()=>{})},true);
 function gShow(html){$("qBody").innerHTML=html;$("qBody").classList.remove("in");void $("qBody").offsetWidth;$("qBody").classList.add("in")}
 function gameWin(q,miss,el,extra){q.done=q.locked=true;q.tries=miss?1:0;logSk(q,true);sfx.good();if(el)burstAt(el,40);L.correct++;if(!miss)L.first++;
   const n=miss?1:2;S.acorns+=n;L.acorns+=n;S.questions++;{const w=wkLog();w.q++;w.right++}save();renderStats();bump("sAcorns");setDot();L.row=(L.row||0)+1;
