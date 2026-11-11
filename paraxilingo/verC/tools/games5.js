@@ -20,10 +20,15 @@ const _bq5=buildQ;buildQ=function(cat,k,used){window.__bst=boostFor(gidGuess(k||
 /* ---- 3. no more than 2 of the same kind of game in a round. "Put the pieces together" games count as one family
         (only 1 per round), and "help it get there" games (robot, robot walk, maze) count as one family. ---- */
 const FAMILY={f_puzzle:"piece",f_quilt:"piece",f_dragpat:"piece",robot:"path",f_robowalk:"path",f_maze:"path"},FAMCAP={piece:1,path:2};
-function capRound(p,cat){if(!p)return p;const fam=k=>FAMILY[k]||k,cap=k=>FAMCAP[fam(k)]||(k==="w"?4:2),n={};
+/* across the whole day (all sections): puzzle-type games at most 2, any one game at most 3, path games at most 4 */
+const DAYCAP={piece:2,path:4};
+function dayUse(){const d=new Date().toDateString();if(!S.dayUse||S.dayUse.d!==d)S.dayUse={d,c:{}};return S.dayUse.c}
+function capRound(p,cat){if(!p)return p;const fam=k=>FAMILY[k]||k,du=dayUse(),dcap=k=>DAYCAP[fam(k)]||(k.startsWith("f_")?3:99),n={};
+  const cap=k=>Math.min(FAMCAP[fam(k)]||(k==="w"?4:2),dcap(k)-(du[fam(k)]||0));
   let pool=[];try{pool=sh([...new Set([...(formatsFor(cat)||[]),...(kindsFor(cat)||[])])])}catch(e){}
   const out=[];for(const k of p){const f=fam(k);if((n[f]||0)<cap(k)){n[f]=(n[f]||0)+1;out.push(k);continue}
-    const alt=pool.find(x=>(n[fam(x)]||0)<cap(x)&&x!==out[out.length-1]);if(alt){n[fam(alt)]=(n[fam(alt)]||0)+1;out.push(alt)}}
+    const alt=pool.find(x=>(n[fam(x)]||0)<cap(x)&&x!==out[out.length-1]);if(alt){n[fam(alt)]=(n[fam(alt)]||0)+1;out.push(alt)}else{const ks=(kindsFor(cat)||[]).filter(x=>!x.startsWith("f_"));if(ks.length)out.push(pickOne(ks))}}
+  if(!window.__noDayCount){for(const k of out)du[fam(k)]=(du[fam(k)]||0)+1;try{save()}catch(e){}}
   return out}
 const _pr5=planRound;planRound=function(cat,count){return capRound(_pr5(cat,count),cat)};
 

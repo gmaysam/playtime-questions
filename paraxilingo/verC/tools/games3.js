@@ -238,24 +238,25 @@ function qBlocks(cat){const a=lvl(),W=6,H=8,turn=a>=6;
 function blocksQ(q){const {W,H}=q;let miss=0,r=q.r0,px,py,timer=null,landed=false;
   const S2=Math.floor(Math.min(36,(innerHeight*.42)/H,(($("qBody").clientWidth||340)*.62)/W));
   gShow(`<div class="game">${gHead("🧱","Block fit","Fill the gap!")}<div class="bk" id="bkB" style="width:${W*S2}px;height:${H*S2}px;--s:${S2}px"></div>
-    <div class="bk-pad">${["l",...(q.turn?["r"]:[]),"d","R"].map(k=>`<button data-k="${k}">${{l:"⬅️",r:"🔄",d:"⬇️",R:"➡️"}[k]}</button>`).join("")}</div></div>`);
+    <p class="gmhint">${q.turn?"Turn it 🔄 and slide it ⬅️ ➡️, then drop it ⬇️":"Slide it ⬅️ ➡️, then drop it ⬇️"} — no rush!</p><div class="bk-pad">${["l",...(q.turn?["r"]:[]),"d","R"].map(k=>`<button data-k="${k}" class="${k==="d"?"drop":""}">${{l:"⬅️",r:"🔄",d:"⬇️",R:"➡️"}[k]}</button>`).join("")}</div></div>`);
   gAsk(q);const B=$("bkB"),cells=()=>rot(TET[q.k],r).map(([u,v])=>[u+px,v+py]);
   const fits=(cs)=>cs.every(([x,y])=>x>=0&&x<W&&y<H&&(y<0||!q.fill.includes(y*W+x)));
   const th=q.th||["🟦"],te=i=>`<em>${th[i%th.length]}</em>`;
   const draw=()=>{let h=q.fill.map((c,i)=>`<i class="bf" style="left:${(c%W)*S2}px;top:${Math.floor(c/W)*S2}px">${te(i+2)}</i>`).join("");
+    if(!landed){let gy=py;const at=d=>cells().map(([x,y])=>[x,y+d]);let d=0;while(fits(at(d+1)))d++;if(d>0)h+=at(d).map(([x,y])=>`<i class="bg" style="left:${x*S2}px;top:${y*S2}px;border-color:${TCOL[q.k]}"></i>`).join("")}
     h+=cells().map(([x,y],i)=>`<i class="bp" style="left:${x*S2}px;top:${y*S2}px;background:${TCOL[q.k]}">${te(i)}</i>`).join("");B.innerHTML=h};
-  const reset=()=>{r=q.r0;const P=rot(TET[q.k],r);px=Math.floor((W-(Math.max(...P.map(z=>z[0]))+1))/2);py=0;landed=false;draw();clearInterval(timer);timer=setInterval(fall,q.turn?900:1100)};
+  const reset=()=>{r=q.r0;const P=rot(TET[q.k],r);px=Math.floor((W-(Math.max(...P.map(z=>z[0]))+1))/2);py=0;landed=false;draw();clearInterval(timer)};
   const lock=()=>{clearInterval(timer);landed=true;const cs=cells(),full=[];for(let y=H-q.rows;y<H;y++){let ok=true;for(let x=0;x<W;x++)if(!q.fill.includes(y*W+x)&&!cs.some(([a,b])=>a===x&&b===y))ok=false;if(ok)full.push(y)}
     if(full.length===q.rows){B.classList.add("clear");gameWin(q,miss,B,[])}
     else{miss++;sfx.oops();B.classList.add("bump");setTimeout(()=>B.classList.remove("bump"),450);toastHint("Not quite! Try again 🧱");
       if(miss>=3){q.done=true;r=q.rt;px=q.gx;py=H-q.rows;draw();gameLearn(q,"Turn it and slide it into the gap.",[])}else setTimeout(()=>{if(L.q===q&&!q.done)reset()},900)}};
   const fall=()=>{if(q.done||landed||L.q!==q){clearInterval(timer);return}py++;if(!fits(cells())){py--;draw();lock()}else draw()};
-  const move=k=>{if(q.done||landed)return;sfx.tap();if(k==="l"||k==="R"){px+=k==="l"?-1:1;if(!fits(cells()))px+=k==="l"?1:-1}
+  let busyD=false;const move=k=>{if(q.done||landed||busyD)return;sfx.tap();if(k==="l"||k==="R"){px+=k==="l"?-1:1;if(!fits(cells()))px+=k==="l"?1:-1}
     else if(k==="r"){const o=r;r=(r+1)%4;if(!fits(cells())){px--;if(!fits(cells())){px+=2;if(!fits(cells())){px--;r=o}}}}
-    else{while(fits(cells()))py++;py--;draw();lock();return}draw()};
+    else{busyD=true;const st=()=>{py++;if(!fits(cells())){py--;draw();busyD=false;lock()}else{draw();setTimeout(st,70)}};st();return}draw()};
   $("qBody").querySelectorAll(".bk-pad button").forEach(b=>b.onclick=()=>move(b.dataset.k));
-  setTimeout(()=>{if(L.q===q)reset()},900);reset();clearInterval(timer);setTimeout(()=>{if(L.q===q&&!q.done&&!landed){clearInterval(timer);timer=setInterval(fall,q.turn?900:1100)}},1200);
-  window.__gSolve=()=>{clearInterval(timer);r=q.rt;px=q.gx;py=0;draw();move("d")}}
+  reset();
+  window.__gSolve=()=>{clearInterval(timer);busyD=false;r=q.rt;px=q.gx;py=0;draw();while(fits(cells()))py++;py--;draw();lock()}}
 
 Object.assign(GAMES,{puzzle:puzzleQ,maze:mazeQ,parade:paradeQ,lab:labQ,wsearch:wsearchQ,hear:hearQ,blocks:blocksQ});
 /* where the new games appear (by topic and age) */

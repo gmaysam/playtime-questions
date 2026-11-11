@@ -42,7 +42,7 @@ const SHP=[["Circle",'<circle cx="50" cy="50" r="40"/>'],["Square",'<rect x="12"
 const SHPC=["#FF6B6B","#4DABF7","#FFC94D","#8CE99A","#B197FC","#FF8CC6"];
 const shpSVG=(k,c,cls="")=>`<svg viewBox="0 0 100 100" class="shp ${cls}"><g fill="${c}" stroke="rgba(0,0,0,.18)" stroke-width="5">${SHP[k][1]}</g><ellipse cx="38" cy="34" rx="12" ry="7" fill="#fff" opacity=".45"/></svg>`;
 const shpSay=k=>{const i=SHAPES.indexOf(SHP[k][0]);return i>=0?shSay(i):enSay(SHP[k][0].toLowerCase())};
-function qShapes(cat){const a=lvl(),free=S.age<=3,t=ri(0,a<=4?2:5),need=free?6:a<=5?3:4,others=[0,1,2,3,4,5].filter(x=>x!==t&&(a>4||x<3));
+function qShapes4(cat){const a=lvl(),free=S.age<=3,t=ri(0,a<=4?2:5),need=free?6:a<=5?3:4,others=[0,1,2,3,4,5].filter(x=>x!==t&&(a>4||x<3));
   const items=free?Array.from({length:need},()=>[pickOne(SHPC),ri(0,2)]):sh([...Array(need).fill(t),...Array.from({length:a<=5?4:6},()=>pickOne(others))]).map(k=>[pickOne(SHPC),k]);
   return {game:"shapes",t,items,free,need,voice:free?[G4("SHAPEFREE")]:[G4("SHAPECATCH"),...shpSay(t)],gid:"g:shapes",factT:free?"Circles, squares and triangles - you caught them all!":`You found every ${SHP[t][0].toLowerCase()}!`}}
 function shapesQ(q){let got=0,miss=0;
@@ -108,10 +108,10 @@ function quiltQ(q){let done=0,miss=0;const pieces=sh(q.holes.map((h,i)=>i));
 
 /* ---------- Emotion Detective: drawn faces, situations, helping ---------- */
 const SKIN=["#F6D3B3","#E9B48A","#C98C5E","#8D5A3B"],HAIR=["#3B2A20","#7A4A1E","#E0A43A","#1F1F1F","#B5462E"];
-function faceSVG(e,v=0){const sk=SKIN[v%4],hr=HAIR[(v>>1)%5],brow={happy:"M30 34 Q38 30 46 34 M54 34 Q62 30 70 34",sad:"M30 32 Q38 36 46 30 M54 30 Q62 36 70 32",angry:"M30 30 L46 37 M70 30 L54 37",scared:"M30 30 Q38 24 46 30 M54 30 Q62 24 70 30",surprised:"M30 26 Q38 20 46 26 M54 26 Q62 20 70 26"}[e];
-  const mouth={happy:'<path d="M36 62 Q50 76 64 62" fill="#fff" stroke="#7A2E2E" stroke-width="3"/>',sad:'<path d="M38 70 Q50 60 62 70" fill="none" stroke="#7A2E2E" stroke-width="3.5" stroke-linecap="round"/>',angry:'<path d="M38 68 L62 68" stroke="#7A2E2E" stroke-width="4" stroke-linecap="round"/><path d="M40 64 L60 64 L60 70 L40 70Z" fill="#fff" stroke="#7A2E2E" stroke-width="2"/>',scared:'<path d="M40 70 Q44 64 48 70 Q52 64 56 70 Q60 64 62 70" fill="none" stroke="#7A2E2E" stroke-width="3"/>',surprised:'<ellipse cx="50" cy="68" rx="7" ry="9" fill="#7A2E2E"/>'}[e];
+function faceSVG(e,v=0,me){const sk=SKIN[v%4],hr=HAIR[(v>>1)%5],brow={happy:"M30 34 Q38 30 46 34 M54 34 Q62 30 70 34",sad:"M30 32 Q38 36 46 30 M54 30 Q62 36 70 32",angry:"M30 30 L46 37 M70 30 L54 37",scared:"M30 30 Q38 24 46 30 M54 30 Q62 24 70 30",surprised:"M30 26 Q38 20 46 26 M54 26 Q62 20 70 26"}[e];
+  const mouth={happy:'<path d="M36 62 Q50 76 64 62" fill="#fff" stroke="#7A2E2E" stroke-width="3"/>',sad:'<path d="M38 70 Q50 60 62 70" fill="none" stroke="#7A2E2E" stroke-width="3.5" stroke-linecap="round"/>',angry:'<path d="M38 68 L62 68" stroke="#7A2E2E" stroke-width="4" stroke-linecap="round"/><path d="M40 64 L60 64 L60 70 L40 70Z" fill="#fff" stroke="#7A2E2E" stroke-width="2"/>',scared:'<path d="M40 70 Q44 64 48 70 Q52 64 56 70 Q60 64 62 70" fill="none" stroke="#7A2E2E" stroke-width="3"/>',surprised:'<ellipse cx="50" cy="68" rx="7" ry="9" fill="#7A2E2E"/>'}[me||e];
   const eye=e==="surprised"||e==="scared"?'<circle cx="38" cy="46" r="6" fill="#fff"/><circle cx="62" cy="46" r="6" fill="#fff"/><circle cx="38" cy="46" r="3.2" fill="#2B2B2B"/><circle cx="62" cy="46" r="3.2" fill="#2B2B2B"/>':e==="happy"?'<path d="M32 47 Q38 41 44 47 M56 47 Q62 41 68 47" fill="none" stroke="#2B2B2B" stroke-width="3.5" stroke-linecap="round"/>':'<circle cx="38" cy="46" r="3.6" fill="#2B2B2B"/><circle cx="62" cy="46" r="3.6" fill="#2B2B2B"/>';
-  const tear=e==="sad"?'<path d="M64 52 q3 6 0 9 q-3 -3 0 -9z" fill="#74C0FC"/>':"",cheek=e==="angry"?"#FF8787":"#FFB3B3";
+  const tear=e==="sad"&&(!me||me==="sad")?'<path d="M64 52 q3 6 0 9 q-3 -3 0 -9z" fill="#74C0FC"/>':"",cheek=e==="angry"?"#FF8787":"#FFB3B3";
   return `<svg viewBox="0 0 100 100" class="fc"><path d="M14 52 Q14 14 50 12 Q86 14 86 52 L86 40 Q80 18 50 18 Q20 18 14 40Z" fill="${hr}"/><circle cx="50" cy="54" r="34" fill="${sk}"/><path d="M18 46 Q22 18 50 18 Q78 18 82 46 Q72 28 50 30 Q30 30 18 46Z" fill="${hr}"/><circle cx="28" cy="60" r="6" fill="${cheek}" opacity=".55"/><circle cx="72" cy="60" r="6" fill="${cheek}" opacity=".55"/><path d="${brow}" fill="none" stroke="#3B2A20" stroke-width="3" stroke-linecap="round"/>${eye}${tear}${mouth}</svg>`}
 const EMO=["happy","sad","angry","scared","surprised"],EMO_I={happy:0,sad:1,angry:2,scared:3,surprised:4};
 const EMO_S=[["S1","Sara's ice cream fell on the ground.","sad","🍦"],["S2","It is Ali's birthday and he got lots of presents!","happy","🎁"],["S3","Someone knocked down Nima's block tower.","angry","🧱"],["S4","Suddenly there was a very loud thunder!","scared","⛈️"],["S5","She opened the door and everyone shouted: Surprise!","surprised","🎉"]];
@@ -200,7 +200,7 @@ function tgrowQ(q){let w=0,s=0;gShow(`<div class="game lrn">${gHead("🌻","Grow
 
 Object.assign(GAMES,{drum:drumQ,tdrum:tdrumQ,shapes:shapesQ,slot:slotQ,pdet:pdetQ,quilt:quiltQ,emo:emoQ,run:runQ,move:moveQ,sci:sciQ,scratch:scratchQ,tgrow:tgrowQ});
 const _bf4=buildFormat;
-buildFormat=function(kind,cat){const k=kind.slice(2),F={drum:qDrum,tdrum:qTDrum,shapes:qShapes,slot:qSlot,pdet:qPDet,quilt:qQuilt,emo:qEmo,run:qRun,move:qMove,sci:qSci,scratch:qScratch,tgrow:qTGrow}[k];return F?F(cat):_bf4(kind,cat)};
+buildFormat=function(kind,cat){const k=kind.startsWith("f_")?kind.slice(2):"",F={drum:qDrum,tdrum:qTDrum,shapes:qShapes4,slot:qSlot,pdet:qPDet,quilt:qQuilt,emo:qEmo,run:qRun,move:qMove,sci:qSci,scratch:qScratch,tgrow:qTGrow}[k];return F?F(cat):_bf4(kind,cat)};
 const _ff4=formatsFor0;
 formatsFor0=function(cat){const b=_ff4(cat);if(!G4_READY)return b;const a=lvl(),add={memory:["f_drum","f_shapes","f_pdet","f_quilt","f_move"],shapes:["f_shapes","f_pdet","f_quilt","f_drum"],count:["f_slot","f_pdet","f_shapes","f_sci"],add:["f_slot","f_pdet"],
   letters:["f_slot"],read:["f_slot",...(a>=5?["f_emo"]:[])],people:["f_emo","f_emo","f_move","f_run"],animals:["f_run","f_move","f_sci"],farm:["f_run","f_sci"],world:["f_sci","f_sci","f_run","f_emo"],sky:["f_sci","f_run"],clock:["f_sci","f_drum"],flags:["f_sci"],robot:["f_run","f_pdet","f_quilt"]}[cat]||[];

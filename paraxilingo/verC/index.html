@@ -2027,6 +2027,74 @@ img.e3{width:1.18em;height:1.18em;vertical-align:-.22em;object-fit:contain;displ
 .qkick .g-rep svg{width:26px;height:26px}.qkick .g-rep:active{transform:translateY(3px);box-shadow:0 1px 0 var(--t-blue-d,#1899D6)}
 .qkick .g-rep::after{content:"";position:absolute;inset:-6px;border-radius:18px;border:3px solid #1CB0F6;opacity:0}.qkick .g-rep.talking::after{animation:ring 1.2s ease-out infinite}
 .rt-lab{font:800 20px "Nunito",sans-serif;color:#4B4B4B;text-align:center;margin-top:4px}
+.bk .bg{position:absolute;width:var(--s);height:var(--s);box-sizing:border-box;border:3px dashed;border-radius:6px;opacity:.55}
+.bk-pad button.drop{background:#58CC02!important;box-shadow:0 5px 0 #46A302!important}
+/* ===== Nov 11c games6 ===== */
+.mx-top{display:flex;align-items:center;justify-content:center;gap:10px;font-size:20px}.mx-t{width:46px;height:46px;border-radius:50%;box-shadow:inset 0 -5px 0 rgba(0,0,0,.15),0 3px 0 #ddd}
+.mx-bowl{position:relative;width:min(70%,240px);margin:6px auto 0}.mx-bowl svg{width:100%;display:block}.mx-bowl.stir svg{animation:stir .35s linear 3}@keyframes stir{50%{transform:rotate(4deg)}}
+.mx-bowl .hov,.mx-bowl.hov{outline:3px dashed #1CB0F6;border-radius:20px}
+.mx-drop{position:absolute;left:46%;top:-30px;width:20px;height:26px;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;animation:dropIn .6s ease-in forwards}@keyframes dropIn{to{transform:translateY(60px) scale(.6);opacity:0}}
+.mx-pots{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:8px 0}.mx-p{display:flex;flex-direction:column;align-items:center;gap:2px;border:3px solid #E5E5E5;border-radius:18px;background:#fff;box-shadow:0 4px 0 #E5E5E5;padding:8px 10px;cursor:grab;touch-action:none;min-width:70px}
+.mx-p span{width:40px;height:40px;border-radius:50% 50% 45% 45%;border:3px solid rgba(0,0,0,.12)}.mx-p small{font-size:13px;color:#555}.mx-p:disabled{opacity:.35}
+.mx-row{display:flex;gap:10px;justify-content:center;align-items:center}.mx-row .qcheck{width:auto;padding:0 22px;margin:0}
+.rp{position:relative;width:min(100%,420px);margin:6px auto;border-radius:18px;background:linear-gradient(#DDF4FF,#fff);overflow:hidden}.rp-svg{width:100%;display:block}
+.rp-flag{position:absolute;bottom:12%;font-size:30px;transform:translateX(-30%)}.rp-car{position:absolute;font-size:32px;line-height:1;transform-origin:50% 100%}
+.rp-ctl{display:flex;align-items:center;justify-content:center;gap:10px;margin:8px 0;font-weight:800;color:#555}.rp-ctl b{font-size:26px;min-width:24px;text-align:center}.rp-ctl .sc-t{min-width:56px;font-size:22px;padding:6px}
+.mgp{position:relative;width:min(100%,420px);height:min(44vh,300px);margin:6px auto;border-radius:22px;background:linear-gradient(#BDE7FF 0 30%,#4DABF7 30%,#1C7ED6);overflow:hidden}
+.mg-rod{position:absolute;left:50%;top:0;--len:40px;transition:left .3s;z-index:3}.mg-rod i{display:block;width:3px;height:30px;background:#555;margin:auto;transition:height .35s}.mg-rod.down i{height:var(--len)}.mg-rod span{display:block;font-size:30px;transform:translateX(-35%)}
+.mg-i{position:absolute;left:var(--x);top:var(--y);border:0;background:none;font-size:38px;cursor:pointer;animation:bob2 var(--d) ease-in-out infinite alternate;transition:top .6s,opacity .6s}@keyframes bob2{to{transform:translateY(8px) rotate(6deg)}}
+.mg-i.up{top:-20%!important;opacity:0}.mg-i.no{animation:shk .4s}.mg-cnt{text-align:center;font-size:22px;letter-spacing:4px;font-weight:800;color:#555}
+.sh-room{position:relative;width:min(100%,420px);height:min(34vh,220px);margin:6px auto;border-radius:20px;background:linear-gradient(#FFF9DB 0 75%,#E9D8A6 75%);overflow:hidden}
+.sh-star{position:absolute;top:30%;font-size:28px;transform:translateX(-50%);opacity:.8}.sh-shadow{position:absolute;bottom:25%;height:46%;background:radial-gradient(ellipse at 50% 100%,rgba(30,30,60,.75),rgba(30,30,60,.45) 70%,transparent 72%);transform:translateX(-50%);border-radius:50% 50% 10% 10%;transition:left .1s,width .1s}
+.sh-obj{position:absolute;left:50%;bottom:22%;font-size:52px;transform:translateX(-50%);z-index:2}.sh-torch{position:absolute;bottom:4%;font-size:34px;transition:left .1s;z-index:3}.sh-beam{position:absolute;bottom:14%;height:30%;background:linear-gradient(90deg,rgba(255,236,153,.0),rgba(255,236,153,.6));pointer-events:none}
+.sh-sl{display:block;width:min(90%,380px);margin:8px auto;accent-color:#FF9600;height:34px}
+.ic{display:flex;gap:10px;justify-content:center;margin-top:10px}.ic-c{position:relative;display:flex;flex-direction:column;align-items:center;width:31%;max-width:130px;padding:10px 6px 8px;border:3px solid #E5E5E5;border-radius:20px;background:#fff;box-shadow:0 4px 0 #E5E5E5;cursor:pointer}
+.ic-c.pick{border-color:#1CB0F6;background:#DDF4FF}.ic-e{font-size:34px}.ic-cube{display:block;width:46px;height:46px;margin:10px 0 0;border-radius:9px;background:linear-gradient(135deg,#E7F5FF,#A5D8FF);box-shadow:inset -4px -4px 0 rgba(255,255,255,.7);transform-origin:50% 100%}
+.ic-cube.frost{box-shadow:0 0 0 3px #fff,0 0 12px #A5D8FF}.ic-pud{display:block;width:60px;height:8px;border-radius:50%;background:#74C0FC;opacity:.6;transform:scaleX(0)}.ic-c small{font-size:13px;color:#555;margin-top:4px}
+.bt{display:flex;gap:12px;justify-content:center;align-items:flex-end;margin:10px 0}.bt-b{position:relative;border:0;background:none;width:clamp(56px,18vw,74px);cursor:pointer;padding:0}.bt-b svg{width:100%;display:block}
+.bt-b.ring{animation:wob .4s}@keyframes wob{25%{transform:rotate(-6deg)}75%{transform:rotate(6deg)}}.bt-b.ok svg{filter:drop-shadow(0 0 6px #58CC02)}.bt-n{position:absolute;top:-6px;right:-4px;min-width:22px;height:22px;border-radius:50%;background:#58CC02;color:#fff;font-size:14px;display:grid;place-items:center}.bt-n:empty{display:none}
+.pm{position:relative;width:min(100%,300px);height:min(40vh,260px);margin:6px auto;display:grid;place-items:center}
+.pm-goal{position:absolute;width:160px;height:190px;border:3px dashed #FF6B9A;border-radius:50%;transform:scale(var(--s));opacity:.7}
+.pm-b{display:block;width:160px;transform:scale(var(--s,.3));transition:transform .25s cubic-bezier(.3,1.6,.5,1)}.pm-b svg{width:100%;display:block}.pm-b.puff{filter:brightness(1.1)}.pm-b.pop{animation:popB .5s forwards}@keyframes popB{50%{transform:scale(2);opacity:.6}to{transform:scale(.1);opacity:0}}
+.pm-pump{position:absolute;bottom:0;right:4%;font-size:34px}
+.vc{position:relative;width:min(70%,260px);margin:10px auto 0}.vc svg{width:100%;display:block}.vc-in{position:absolute;left:50%;top:-6px;transform:translateX(-50%);font-size:24px}
+.vc-foam{position:absolute;left:50%;top:18%;width:20%;height:0;transform:translateX(-50%);background:radial-gradient(circle at 30% 30%,#fff,#FFE3E3 60%,#FF8787);border-radius:50% 50% 10% 10%}
+.vc-foam.boom{animation:boom 1.4s ease-out forwards}@keyframes boom{40%{height:110%;top:-80%;width:70%}to{height:120%;top:-60%;width:90%;opacity:.9}}.vc-foam.meh{animation:meh .6s}@keyframes meh{50%{height:12%;top:10%}}
+.vc-p .vc-e{font-size:32px;width:auto;height:auto;border:0}
+.em-mem{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:min(100%,360px);margin:8px auto}.em-mem.c4{grid-template-columns:repeat(4,1fr)}
+.emc{aspect-ratio:1;border:0;background:none;padding:0;perspective:600px;cursor:pointer}.emc-in{position:relative;display:block;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}.emc.on .emc-in{transform:rotateY(180deg)}
+.emc-b,.emc-f{position:absolute;inset:0;display:grid;place-items:center;border-radius:16px;backface-visibility:hidden}.emc-b{background:linear-gradient(135deg,#B197FC,#845EF7);font-size:26px;box-shadow:0 4px 0 #6741D9}
+.emc-f{background:#fff;border:3px solid #E5E5E5;transform:rotateY(180deg);font-size:16px;color:#4B4B4B}.emc-f .em-f{width:80%}.emc.ok .emc-f{border-color:#58CC02;background:#F1FFE6}
+.mr{display:flex;flex-direction:column;align-items:center;gap:8px}.mr-face{width:min(44vw,170px,26vh)}.mr-face svg{width:100%;display:block}.mr-ctl{display:flex;gap:16px}.mr-ctl>div{display:flex;flex-direction:column;align-items:center;gap:4px}.mr-ctl>div{flex-direction:row;flex-wrap:wrap;justify-content:center;width:130px}.mr-ctl small{width:100%;text-align:center;font-weight:800;color:#555}.mr-ctl .sc-t{min-width:56px;font-size:22px}
+.cm{position:relative;display:grid;place-items:center;height:min(36vh,230px)}.cm-ring{position:absolute;width:110px;height:110px;border-radius:50%;background:radial-gradient(circle,#D0EBFF,#A5D8FF);transition:transform 3s ease-in-out}
+.cm-ring.in{transform:scale(1.9)}.cm-ring.out{transform:scale(1);transition-duration:4s}.cm-f{position:relative;font-size:52px}.cm b{position:absolute;bottom:0;font-size:18px;color:#555}
+.cm-dots{text-align:center;font-size:24px;letter-spacing:6px;color:#58CC02}.cm-btn{display:block;margin:8px auto;padding:16px 40px;border:0;border-radius:22px;background:#4DABF7;box-shadow:0 6px 0 #1C7ED6;color:#fff;font:800 22px/1 inherit;touch-action:none;user-select:none;-webkit-user-select:none}
+.kd{display:grid;place-items:center;min-height:min(30vh,200px)}.kd-card{display:flex;flex-direction:column;align-items:center;gap:6px;width:min(90%,320px);padding:16px;border-radius:24px;background:#fff;box-shadow:0 6px 0 #E5E5E5,0 0 0 3px #E5E5E5;transition:transform .4s,opacity .4s}
+.kd-card span{font-size:56px}.kd-card p{margin:0;font-size:19px;font-weight:800;color:#4B4B4B;text-align:center}.kd-card.in{animation:cardIn .35s ease-out}@keyframes cardIn{from{transform:translateY(40px) scale(.9);opacity:0}}
+.kd-card.go-r{transform:translateX(120%) rotate(20deg);opacity:0}.kd-card.go-l{transform:translateX(-120%) rotate(-20deg);opacity:0}
+.kd-btns,.bm-btns{display:flex;gap:16px;justify-content:center;margin:10px 0}.kd-b{display:flex;flex-direction:column;align-items:center;min-width:110px;padding:10px 14px;border:3px solid #E5E5E5;border-radius:20px;background:#fff;box-shadow:0 5px 0 #E5E5E5;font-size:34px;cursor:pointer}.kd-b small{font-size:14px;color:#555}
+.kd-b:active{transform:translateY(4px);box-shadow:0 1px 0 #E5E5E5}.kd-b.yes{border-color:#8CE99A}.kd-b.no{border-color:#FFA8A8}
+.ch{display:flex;flex-direction:column;align-items:center;gap:8px}.ch-f{width:min(40vw,150px,24vh);transition:transform .3s}.ch-f.bob{transform:scale(1.1)}.ch-f.hov{outline:4px dashed #FFC800;border-radius:50%}
+.ch-bar{width:min(70%,240px);height:14px;border-radius:8px;background:#F1F3F5;overflow:hidden}.ch-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#FFD43B,#FF922B);transition:width .4s}
+.ch-items{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:8px}.ch-i{display:flex;flex-direction:column;align-items:center;width:96px;padding:6px;border:3px solid #E5E5E5;border-radius:18px;background:#fff;box-shadow:0 4px 0 #E5E5E5;cursor:grab;touch-action:none}.ch-i span{font-size:32px}.ch-i small{font-size:12px;color:#555}.ch-i:disabled{opacity:.3}
+.rh{position:relative;width:min(100%,420px);height:120px;margin:16px auto;border-radius:60px;background:linear-gradient(90deg,#F3F0FF,#E5DBFF);overflow:hidden;touch-action:manipulation;cursor:pointer}
+.rh-t{position:absolute;left:12%;top:50%;width:84px;transform:translate(-50%,-50%);transition:transform .1s}.rh-t svg{width:100%}.rh-t.hit{transform:translate(-50%,-50%) scale(1.15)}
+.rh-n{position:absolute;left:100%;top:50%;font-size:34px;transform:translateY(-50%);animation:rhGo linear forwards}@keyframes rhGo{to{left:-12%}}.rh-n.got{animation-play-state:paused;transform:translateY(-50%) scale(1.8);opacity:0;transition:.3s}
+.bm{position:relative;width:min(100%,420px);height:min(34vh,220px);margin:6px auto;border-radius:20px;background:linear-gradient(#E3FAFC,#FFF)}.bm-beam{position:absolute;left:4%;right:4%;bottom:22%;height:12px;border-radius:6px;background:#C49A6C;box-shadow:0 5px 0 #9E7444}
+.bm-w{position:absolute;bottom:26%;left:8%;font-size:46px;line-height:1;transform-origin:50% 100%}.bm-w.wob{animation:shk .5s}.bm-pole{position:absolute;left:50%;top:40%;width:110px;height:5px;margin-left:-55px;background:#495057;border-radius:3px}
+.bm-prog{position:absolute;left:10%;right:10%;top:10px;height:10px;border-radius:5px;background:#F1F3F5;overflow:hidden}.bm-prog i{display:block;height:100%;width:0;background:#58CC02}
+.bs{position:relative;width:min(100%,420px);height:min(44vh,300px);margin:6px auto;border-radius:22px;background:linear-gradient(#C5F6FA,#E6FCF5 70%,#B2F2BB 70%);overflow:hidden}
+.bs-b{position:absolute;bottom:4%;left:50%;font-size:52px;transform:translateX(-50%);transition:left .05s}.bs-b.hit{transform:translateX(-50%) scale(1.15)}.bs-o{position:absolute;top:-10%;font-size:34px;transform:translateX(-50%);animation:bsFall linear forwards}@keyframes bsFall{to{top:86%}}.bs-c{position:absolute;top:6px;right:10px;font-size:16px;letter-spacing:0;background:#fff;border-radius:10px;padding:2px 8px}
+.sm2{display:grid;place-items:center;min-height:min(28vh,190px)}
+.hp{position:relative;width:min(100%,400px);height:min(46vh,310px);margin:6px auto;border-radius:22px;background:radial-gradient(circle at 30% 20%,#D3F9D8,#B2F2BB)}
+.hp-s{position:absolute;width:58px;height:50px;border:0;border-radius:50%;background:#ADB5BD;box-shadow:inset 0 -6px 0 #868E96,0 3px 0 rgba(0,0,0,.15);font:800 20px/1 inherit;color:#fff;cursor:pointer}.hp-s.ok{background:#69DB7C;box-shadow:inset 0 -6px 0 #2F9E44}
+.hp-f{position:absolute;font-size:36px;transform:translate(6px,-14px);transition:left .35s,top .35s;pointer-events:none}.hp-f.jump{animation:hopJ .35s}@keyframes hopJ{50%{transform:translate(6px,-44px) scale(1.15)}}
+.dc{position:relative;display:grid;place-items:center;height:min(30vh,190px);border-radius:22px;background:radial-gradient(circle,#FFF3BF,#FFE066 70%,#FCC419);overflow:hidden}.dc-w{font-size:76px;transition:transform .35s}.dc-sp{position:absolute;top:12%;right:18%;font-size:26px;animation:mSpin 3s linear infinite}
+.dc-w.dc-L{transform:translateX(-40px) rotate(-18deg)}.dc-w.dc-R{transform:translateX(40px) rotate(18deg)}.dc-w.dc-U{transform:translateY(-40px)}.dc-w.dc-D{transform:translateY(20px) scaleY(.75)}
+.dc-pad{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;width:min(100%,360px);margin:10px auto}.dc-b{height:64px;border:3px solid #E5E5E5;border-radius:18px;background:#fff;box-shadow:0 4px 0 #E5E5E5;font-size:30px;cursor:pointer}.dc-b.flash{background:#FFE066;border-color:#FCC419}.dc-b:disabled{opacity:.6}
+.cl{position:relative;width:min(70%,240px);height:min(42vh,280px);margin:6px auto;border-radius:20px;background:repeating-linear-gradient(0deg,#E9ECEF 0 28px,#DEE2E6 28px 30px),#E9ECEF;background-image:radial-gradient(circle,#FF922B 0 5px,transparent 6px),radial-gradient(circle,#4DABF7 0 5px,transparent 6px);background-size:60px 50px,60px 50px;background-position:10px 10px,40px 35px}
+.cl-top{position:absolute;top:4px;left:50%;transform:translateX(-50%);font-size:32px}.cl-w{position:absolute;left:50%;bottom:4%;font-size:48px;transform:translateX(-50%);transition:bottom .25s}.cl-w.flip{transform:translateX(-50%) scaleX(-1)}
+.cm b{width:100%;text-align:center;bottom:-6px}
 </style>
 
 <div class="stage">
@@ -3972,24 +4040,25 @@ function qBlocks(cat){const a=lvl(),W=6,H=8,turn=a>=6;
 function blocksQ(q){const {W,H}=q;let miss=0,r=q.r0,px,py,timer=null,landed=false;
   const S2=Math.floor(Math.min(36,(innerHeight*.42)/H,(($("qBody").clientWidth||340)*.62)/W));
   gShow(`<div class="game">${gHead("🧱","Block fit","Fill the gap!")}<div class="bk" id="bkB" style="width:${W*S2}px;height:${H*S2}px;--s:${S2}px"></div>
-    <div class="bk-pad">${["l",...(q.turn?["r"]:[]),"d","R"].map(k=>`<button data-k="${k}">${{l:"⬅️",r:"🔄",d:"⬇️",R:"➡️"}[k]}</button>`).join("")}</div></div>`);
+    <p class="gmhint">${q.turn?"Turn it 🔄 and slide it ⬅️ ➡️, then drop it ⬇️":"Slide it ⬅️ ➡️, then drop it ⬇️"} — no rush!</p><div class="bk-pad">${["l",...(q.turn?["r"]:[]),"d","R"].map(k=>`<button data-k="${k}" class="${k==="d"?"drop":""}">${{l:"⬅️",r:"🔄",d:"⬇️",R:"➡️"}[k]}</button>`).join("")}</div></div>`);
   gAsk(q);const B=$("bkB"),cells=()=>rot(TET[q.k],r).map(([u,v])=>[u+px,v+py]);
   const fits=(cs)=>cs.every(([x,y])=>x>=0&&x<W&&y<H&&(y<0||!q.fill.includes(y*W+x)));
   const th=q.th||["🟦"],te=i=>`<em>${th[i%th.length]}</em>`;
   const draw=()=>{let h=q.fill.map((c,i)=>`<i class="bf" style="left:${(c%W)*S2}px;top:${Math.floor(c/W)*S2}px">${te(i+2)}</i>`).join("");
+    if(!landed){let gy=py;const at=d=>cells().map(([x,y])=>[x,y+d]);let d=0;while(fits(at(d+1)))d++;if(d>0)h+=at(d).map(([x,y])=>`<i class="bg" style="left:${x*S2}px;top:${y*S2}px;border-color:${TCOL[q.k]}"></i>`).join("")}
     h+=cells().map(([x,y],i)=>`<i class="bp" style="left:${x*S2}px;top:${y*S2}px;background:${TCOL[q.k]}">${te(i)}</i>`).join("");B.innerHTML=h};
-  const reset=()=>{r=q.r0;const P=rot(TET[q.k],r);px=Math.floor((W-(Math.max(...P.map(z=>z[0]))+1))/2);py=0;landed=false;draw();clearInterval(timer);timer=setInterval(fall,q.turn?900:1100)};
+  const reset=()=>{r=q.r0;const P=rot(TET[q.k],r);px=Math.floor((W-(Math.max(...P.map(z=>z[0]))+1))/2);py=0;landed=false;draw();clearInterval(timer)};
   const lock=()=>{clearInterval(timer);landed=true;const cs=cells(),full=[];for(let y=H-q.rows;y<H;y++){let ok=true;for(let x=0;x<W;x++)if(!q.fill.includes(y*W+x)&&!cs.some(([a,b])=>a===x&&b===y))ok=false;if(ok)full.push(y)}
     if(full.length===q.rows){B.classList.add("clear");gameWin(q,miss,B,[])}
     else{miss++;sfx.oops();B.classList.add("bump");setTimeout(()=>B.classList.remove("bump"),450);toastHint("Not quite! Try again 🧱");
       if(miss>=3){q.done=true;r=q.rt;px=q.gx;py=H-q.rows;draw();gameLearn(q,"Turn it and slide it into the gap.",[])}else setTimeout(()=>{if(L.q===q&&!q.done)reset()},900)}};
   const fall=()=>{if(q.done||landed||L.q!==q){clearInterval(timer);return}py++;if(!fits(cells())){py--;draw();lock()}else draw()};
-  const move=k=>{if(q.done||landed)return;sfx.tap();if(k==="l"||k==="R"){px+=k==="l"?-1:1;if(!fits(cells()))px+=k==="l"?1:-1}
+  let busyD=false;const move=k=>{if(q.done||landed||busyD)return;sfx.tap();if(k==="l"||k==="R"){px+=k==="l"?-1:1;if(!fits(cells()))px+=k==="l"?1:-1}
     else if(k==="r"){const o=r;r=(r+1)%4;if(!fits(cells())){px--;if(!fits(cells())){px+=2;if(!fits(cells())){px--;r=o}}}}
-    else{while(fits(cells()))py++;py--;draw();lock();return}draw()};
+    else{busyD=true;const st=()=>{py++;if(!fits(cells())){py--;draw();busyD=false;lock()}else{draw();setTimeout(st,70)}};st();return}draw()};
   $("qBody").querySelectorAll(".bk-pad button").forEach(b=>b.onclick=()=>move(b.dataset.k));
-  setTimeout(()=>{if(L.q===q)reset()},900);reset();clearInterval(timer);setTimeout(()=>{if(L.q===q&&!q.done&&!landed){clearInterval(timer);timer=setInterval(fall,q.turn?900:1100)}},1200);
-  window.__gSolve=()=>{clearInterval(timer);r=q.rt;px=q.gx;py=0;draw();move("d")}}
+  reset();
+  window.__gSolve=()=>{clearInterval(timer);busyD=false;r=q.rt;px=q.gx;py=0;draw();while(fits(cells()))py++;py--;draw();lock()}}
 
 Object.assign(GAMES,{puzzle:puzzleQ,maze:mazeQ,parade:paradeQ,lab:labQ,wsearch:wsearchQ,hear:hearQ,blocks:blocksQ});
 /* where the new games appear (by topic and age) */
@@ -4618,7 +4687,7 @@ const SHP=[["Circle",'<circle cx="50" cy="50" r="40"/>'],["Square",'<rect x="12"
 const SHPC=["#FF6B6B","#4DABF7","#FFC94D","#8CE99A","#B197FC","#FF8CC6"];
 const shpSVG=(k,c,cls="")=>`<svg viewBox="0 0 100 100" class="shp ${cls}"><g fill="${c}" stroke="rgba(0,0,0,.18)" stroke-width="5">${SHP[k][1]}</g><ellipse cx="38" cy="34" rx="12" ry="7" fill="#fff" opacity=".45"/></svg>`;
 const shpSay=k=>{const i=SHAPES.indexOf(SHP[k][0]);return i>=0?shSay(i):enSay(SHP[k][0].toLowerCase())};
-function qShapes(cat){const a=lvl(),free=S.age<=3,t=ri(0,a<=4?2:5),need=free?6:a<=5?3:4,others=[0,1,2,3,4,5].filter(x=>x!==t&&(a>4||x<3));
+function qShapes4(cat){const a=lvl(),free=S.age<=3,t=ri(0,a<=4?2:5),need=free?6:a<=5?3:4,others=[0,1,2,3,4,5].filter(x=>x!==t&&(a>4||x<3));
   const items=free?Array.from({length:need},()=>[pickOne(SHPC),ri(0,2)]):sh([...Array(need).fill(t),...Array.from({length:a<=5?4:6},()=>pickOne(others))]).map(k=>[pickOne(SHPC),k]);
   return {game:"shapes",t,items,free,need,voice:free?[G4("SHAPEFREE")]:[G4("SHAPECATCH"),...shpSay(t)],gid:"g:shapes",factT:free?"Circles, squares and triangles - you caught them all!":`You found every ${SHP[t][0].toLowerCase()}!`}}
 function shapesQ(q){let got=0,miss=0;
@@ -4684,10 +4753,10 @@ function quiltQ(q){let done=0,miss=0;const pieces=sh(q.holes.map((h,i)=>i));
 
 /* ---------- Emotion Detective: drawn faces, situations, helping ---------- */
 const SKIN=["#F6D3B3","#E9B48A","#C98C5E","#8D5A3B"],HAIR=["#3B2A20","#7A4A1E","#E0A43A","#1F1F1F","#B5462E"];
-function faceSVG(e,v=0){const sk=SKIN[v%4],hr=HAIR[(v>>1)%5],brow={happy:"M30 34 Q38 30 46 34 M54 34 Q62 30 70 34",sad:"M30 32 Q38 36 46 30 M54 30 Q62 36 70 32",angry:"M30 30 L46 37 M70 30 L54 37",scared:"M30 30 Q38 24 46 30 M54 30 Q62 24 70 30",surprised:"M30 26 Q38 20 46 26 M54 26 Q62 20 70 26"}[e];
-  const mouth={happy:'<path d="M36 62 Q50 76 64 62" fill="#fff" stroke="#7A2E2E" stroke-width="3"/>',sad:'<path d="M38 70 Q50 60 62 70" fill="none" stroke="#7A2E2E" stroke-width="3.5" stroke-linecap="round"/>',angry:'<path d="M38 68 L62 68" stroke="#7A2E2E" stroke-width="4" stroke-linecap="round"/><path d="M40 64 L60 64 L60 70 L40 70Z" fill="#fff" stroke="#7A2E2E" stroke-width="2"/>',scared:'<path d="M40 70 Q44 64 48 70 Q52 64 56 70 Q60 64 62 70" fill="none" stroke="#7A2E2E" stroke-width="3"/>',surprised:'<ellipse cx="50" cy="68" rx="7" ry="9" fill="#7A2E2E"/>'}[e];
+function faceSVG(e,v=0,me){const sk=SKIN[v%4],hr=HAIR[(v>>1)%5],brow={happy:"M30 34 Q38 30 46 34 M54 34 Q62 30 70 34",sad:"M30 32 Q38 36 46 30 M54 30 Q62 36 70 32",angry:"M30 30 L46 37 M70 30 L54 37",scared:"M30 30 Q38 24 46 30 M54 30 Q62 24 70 30",surprised:"M30 26 Q38 20 46 26 M54 26 Q62 20 70 26"}[e];
+  const mouth={happy:'<path d="M36 62 Q50 76 64 62" fill="#fff" stroke="#7A2E2E" stroke-width="3"/>',sad:'<path d="M38 70 Q50 60 62 70" fill="none" stroke="#7A2E2E" stroke-width="3.5" stroke-linecap="round"/>',angry:'<path d="M38 68 L62 68" stroke="#7A2E2E" stroke-width="4" stroke-linecap="round"/><path d="M40 64 L60 64 L60 70 L40 70Z" fill="#fff" stroke="#7A2E2E" stroke-width="2"/>',scared:'<path d="M40 70 Q44 64 48 70 Q52 64 56 70 Q60 64 62 70" fill="none" stroke="#7A2E2E" stroke-width="3"/>',surprised:'<ellipse cx="50" cy="68" rx="7" ry="9" fill="#7A2E2E"/>'}[me||e];
   const eye=e==="surprised"||e==="scared"?'<circle cx="38" cy="46" r="6" fill="#fff"/><circle cx="62" cy="46" r="6" fill="#fff"/><circle cx="38" cy="46" r="3.2" fill="#2B2B2B"/><circle cx="62" cy="46" r="3.2" fill="#2B2B2B"/>':e==="happy"?'<path d="M32 47 Q38 41 44 47 M56 47 Q62 41 68 47" fill="none" stroke="#2B2B2B" stroke-width="3.5" stroke-linecap="round"/>':'<circle cx="38" cy="46" r="3.6" fill="#2B2B2B"/><circle cx="62" cy="46" r="3.6" fill="#2B2B2B"/>';
-  const tear=e==="sad"?'<path d="M64 52 q3 6 0 9 q-3 -3 0 -9z" fill="#74C0FC"/>':"",cheek=e==="angry"?"#FF8787":"#FFB3B3";
+  const tear=e==="sad"&&(!me||me==="sad")?'<path d="M64 52 q3 6 0 9 q-3 -3 0 -9z" fill="#74C0FC"/>':"",cheek=e==="angry"?"#FF8787":"#FFB3B3";
   return `<svg viewBox="0 0 100 100" class="fc"><path d="M14 52 Q14 14 50 12 Q86 14 86 52 L86 40 Q80 18 50 18 Q20 18 14 40Z" fill="${hr}"/><circle cx="50" cy="54" r="34" fill="${sk}"/><path d="M18 46 Q22 18 50 18 Q78 18 82 46 Q72 28 50 30 Q30 30 18 46Z" fill="${hr}"/><circle cx="28" cy="60" r="6" fill="${cheek}" opacity=".55"/><circle cx="72" cy="60" r="6" fill="${cheek}" opacity=".55"/><path d="${brow}" fill="none" stroke="#3B2A20" stroke-width="3" stroke-linecap="round"/>${eye}${tear}${mouth}</svg>`}
 const EMO=["happy","sad","angry","scared","surprised"],EMO_I={happy:0,sad:1,angry:2,scared:3,surprised:4};
 const EMO_S=[["S1","Sara's ice cream fell on the ground.","sad","🍦"],["S2","It is Ali's birthday and he got lots of presents!","happy","🎁"],["S3","Someone knocked down Nima's block tower.","angry","🧱"],["S4","Suddenly there was a very loud thunder!","scared","⛈️"],["S5","She opened the door and everyone shouted: Surprise!","surprised","🎉"]];
@@ -4776,7 +4845,7 @@ function tgrowQ(q){let w=0,s=0;gShow(`<div class="game lrn">${gHead("🌻","Grow
 
 Object.assign(GAMES,{drum:drumQ,tdrum:tdrumQ,shapes:shapesQ,slot:slotQ,pdet:pdetQ,quilt:quiltQ,emo:emoQ,run:runQ,move:moveQ,sci:sciQ,scratch:scratchQ,tgrow:tgrowQ});
 const _bf4=buildFormat;
-buildFormat=function(kind,cat){const k=kind.slice(2),F={drum:qDrum,tdrum:qTDrum,shapes:qShapes,slot:qSlot,pdet:qPDet,quilt:qQuilt,emo:qEmo,run:qRun,move:qMove,sci:qSci,scratch:qScratch,tgrow:qTGrow}[k];return F?F(cat):_bf4(kind,cat)};
+buildFormat=function(kind,cat){const k=kind.startsWith("f_")?kind.slice(2):"",F={drum:qDrum,tdrum:qTDrum,shapes:qShapes4,slot:qSlot,pdet:qPDet,quilt:qQuilt,emo:qEmo,run:qRun,move:qMove,sci:qSci,scratch:qScratch,tgrow:qTGrow}[k];return F?F(cat):_bf4(kind,cat)};
 const _ff4=formatsFor0;
 formatsFor0=function(cat){const b=_ff4(cat);if(!G4_READY)return b;const a=lvl(),add={memory:["f_drum","f_shapes","f_pdet","f_quilt","f_move"],shapes:["f_shapes","f_pdet","f_quilt","f_drum"],count:["f_slot","f_pdet","f_shapes","f_sci"],add:["f_slot","f_pdet"],
   letters:["f_slot"],read:["f_slot",...(a>=5?["f_emo"]:[])],people:["f_emo","f_emo","f_move","f_run"],animals:["f_run","f_move","f_sci"],farm:["f_run","f_sci"],world:["f_sci","f_sci","f_run","f_emo"],sky:["f_sci","f_run"],clock:["f_sci","f_drum"],flags:["f_sci"],robot:["f_run","f_pdet","f_quilt"]}[cat]||[];
@@ -4827,10 +4896,15 @@ const _bq5=buildQ;buildQ=function(cat,k,used){window.__bst=boostFor(gidGuess(k||
 /* ---- 3. no more than 2 of the same kind of game in a round. "Put the pieces together" games count as one family
         (only 1 per round), and "help it get there" games (robot, robot walk, maze) count as one family. ---- */
 const FAMILY={f_puzzle:"piece",f_quilt:"piece",f_dragpat:"piece",robot:"path",f_robowalk:"path",f_maze:"path"},FAMCAP={piece:1,path:2};
-function capRound(p,cat){if(!p)return p;const fam=k=>FAMILY[k]||k,cap=k=>FAMCAP[fam(k)]||(k==="w"?4:2),n={};
+/* across the whole day (all sections): puzzle-type games at most 2, any one game at most 3, path games at most 4 */
+const DAYCAP={piece:2,path:4};
+function dayUse(){const d=new Date().toDateString();if(!S.dayUse||S.dayUse.d!==d)S.dayUse={d,c:{}};return S.dayUse.c}
+function capRound(p,cat){if(!p)return p;const fam=k=>FAMILY[k]||k,du=dayUse(),dcap=k=>DAYCAP[fam(k)]||(k.startsWith("f_")?3:99),n={};
+  const cap=k=>Math.min(FAMCAP[fam(k)]||(k==="w"?4:2),dcap(k)-(du[fam(k)]||0));
   let pool=[];try{pool=sh([...new Set([...(formatsFor(cat)||[]),...(kindsFor(cat)||[])])])}catch(e){}
   const out=[];for(const k of p){const f=fam(k);if((n[f]||0)<cap(k)){n[f]=(n[f]||0)+1;out.push(k);continue}
-    const alt=pool.find(x=>(n[fam(x)]||0)<cap(x)&&x!==out[out.length-1]);if(alt){n[fam(alt)]=(n[fam(alt)]||0)+1;out.push(alt)}}
+    const alt=pool.find(x=>(n[fam(x)]||0)<cap(x)&&x!==out[out.length-1]);if(alt){n[fam(alt)]=(n[fam(alt)]||0)+1;out.push(alt)}else{const ks=(kindsFor(cat)||[]).filter(x=>!x.startsWith("f_"));if(ks.length)out.push(pickOne(ks))}}
+  if(!window.__noDayCount){for(const k of out)du[fam(k)]=(du[fam(k)]||0)+1;try{save()}catch(e){}}
   return out}
 const _pr5=planRound;planRound=function(cat,count){return capRound(_pr5(cat,count),cat)};
 
@@ -4861,6 +4935,266 @@ Object.assign(GMAP,{"letters.whear":G("Hear the word",["lang","read"],[["lang","
  "letters.wspell":G("Spelled right?",["lang","read"],[["cog","memory"]],"Look at the picture and pick the word that is spelled right.","Practice"),
  "read.whear":G("Hear the word",["lang","read"],[["lang","listen"]],"Hear an English word and pick it from three look-alike words.","Practice"),
  "read.wspell":G("Spelled right?",["lang","read"],[["cog","memory"]],"Look at the picture and pick the word that is spelled right.","Practice")});
+
+/* =====================================================================================================
+   Nov 11c: 20 MORE GAMES - moving, hands-on, dynamic.
+   Lab: colour mixing, ramp race, magnet fishing, shadow lab, ice melt race, singing bottles, balloon pump, volcano.
+   Feelings: feelings memory, make-a-face mirror, calm breathing, kind or unkind, cheer up a friend.
+   Movement: rhythm drums, balance beam, basket catch, Simon says, hopscotch, dance copy, wall climb.
+   ===================================================================================================== */
+var G6_READY=false;
+const G6=n=>"w/PX_G6_"+n;
+const g6tone=(f,d=.35,type="sine",v=.4)=>{try{if(!S.fx)return;const c=dac(),t=c.currentTime,o=c.createOscillator(),g=c.createGain();o.type=type;o.frequency.value=f;g.gain.setValueAtTime(v,t);g.gain.exponentialRampToValueAtTime(.001,t+d);o.connect(g);g.connect(c.destination);o.start(t);o.stop(t+d)}catch(e){}};
+const clampN=(x,a,b)=>Math.max(a,Math.min(b,x));
+
+/* ---------------- LAB 1: colour mixing ---------------- */
+const PNT6={red:"#FF4D4D",yellow:"#FFD43B",blue:"#3B8BFF",white:"#FFFFFF"},PMIX=[["orange","#FF922B",["red","yellow"]],["green","#40C057",["blue","yellow"]],["purple","#9C5DE8",["red","blue"]],["pink","#FF9EC4",["red","white"]],["light blue","#9AD3FF",["blue","white"]]];
+function qMix(){const a=lvl(),m=pickOne(PMIX.slice(0,a<=5?3:5));return {game:"mix",m,voice:[G6("MIX")],gid:"g:mix",factT:`${cap1(m[2][0])} and ${m[2][1]} make ${m[0]}!`}}
+function mixQ(q){let inB=[],miss=0;const pots=Object.keys(PNT6).filter(k=>lvl()>5||k!=="white");
+  gShow(`<div class="game">${gHead("🎨","Colour lab","Make this colour!")}<div class="mx-top"><span class="mx-t" style="background:${q.m[1]}"></span><b>${cap1(q.m[0])}</b></div>
+    <div class="mx-bowl" id="mxB"><svg viewBox="0 0 200 110"><path d="M10 20 Q100 150 190 20Z" fill="#F1F3F5" stroke="#ADB5BD" stroke-width="5"/><ellipse id="mxL" cx="100" cy="30" rx="80" ry="12" fill="#F8F9FA"/><g id="mxS" opacity="0"><path d="M60 32 q40 -18 80 0" stroke="#fff" stroke-width="4" fill="none" opacity=".7"/></g></svg></div>
+    <div class="mx-pots">${pots.map(k=>`<button class="mx-p" data-k="${k}"><span style="background:${PNT6[k]}"></span><small>${cap1(k)}</small></button>`).join("")}</div>
+    <div class="mx-row"><button class="mv-skip" id="mxC">Empty the bowl</button><button class="qcheck on" id="mxM">MIX! 🥄</button></div></div>`);gAsk(q);
+  const mixCol=()=>{if(!inB.length)return "#F8F9FA";if(inB.length===1)return PNT6[inB[0]];const f=PMIX.find(m=>m[2].every(c=>inB.includes(c)));return f?f[1]:"#8D6E63"};
+  const show=()=>$("mxL").setAttribute("fill",inB.length?PNT6[inB[inB.length-1]]:"#F8F9FA");
+  $("qBody").querySelectorAll(".mx-p").forEach(b=>{const add=()=>{if(q.done||inB.length>=2||inB.includes(b.dataset.k))return;inB.push(b.dataset.k);g6tone(300+inB.length*120,.15);const d=document.createElement("i");d.className="mx-drop";d.style.background=PNT6[b.dataset.k];$("mxB").appendChild(d);setTimeout(()=>d.remove(),700);setTimeout(show,500)};
+    dragify(b,()=>[$("mxB")],add,add)});
+  $("mxC").onclick=()=>{inB=[];show();sfx.tap()};
+  $("mxM").onclick=()=>{if(q.done)return;if(inB.length<2){toastHint("Put two paints in the bowl 🎨");return}$("mxS").setAttribute("opacity","1");$("mxB").classList.add("stir");
+    setTimeout(()=>{$("mxB").classList.remove("stir");$("mxS").setAttribute("opacity","0");$("mxL").setAttribute("fill",mixCol());const ok=q.m[2].every(c=>inB.includes(c));
+      if(ok)gameWin(q,miss,$("mxB"),[]);else{miss++;const f=PMIX.find(m=>m[2].every(c=>inB.includes(c)));toastHint(f?`That made ${f[0]}! Try again 🎨`:"That made brown! Try again 🎨");setTimeout(()=>{inB=[];show()},1400);if(miss>=3){q.done=true;gameLearn(q,`${cap1(q.m[2][0])} + ${q.m[2][1]} = ${q.m[0]}`,[])}}},1100)};
+  window.__gSolve=()=>{inB=q.m[2].slice();$("mxM").click()}}
+
+/* ---------------- LAB 2: ramp race ---------------- */
+function qRamp(){const t=ri(2,5);return {game:"ramp",t,voice:[G6("RAMP")],gid:"g:ramp",factT:"A higher ramp makes the car go faster and farther!"}}
+function rampQ(q){let h=1,miss=0,busy=false;
+  gShow(`<div class="game">${gHead("🏎️","Ramp race","Stop the car on the flag!")}<div class="rp" id="rpF"><svg viewBox="0 0 320 150" class="rp-svg"><path id="rpR" fill="#C49A6C" stroke="#9E7444" stroke-width="3"/><rect x="0" y="130" width="320" height="20" fill="#8CE99A"/>
+      ${[1,2,3,4,5].map(i=>`<line x1="${70+i*45}" y1="128" x2="${70+i*45}" y2="134" stroke="#2F9E44" stroke-width="3"/>`).join("")}</svg><span class="rp-flag" style="left:${(70+q.t*45)/320*100}%">🚩</span><span class="rp-car" id="rpC">🚗</span></div>
+    <div class="rp-ctl"><span>Ramp height</span><button class="sc-t" id="rpD">➖</button><b id="rpH">1</b><button class="sc-t" id="rpU">➕</button></div><button class="qcheck on" id="rpG">GO! 🏁</button></div>`);gAsk(q);
+  const F=$("rpF"),C=$("rpC");const draw=()=>{const top=130-h*20;$("rpR").setAttribute("d",`M0 ${top} L70 130 L0 130Z`);$("rpH").textContent=h;C.style.transition="none";C.style.left="0%";C.style.top=(top-22)/150*100+"%";C.style.transform=`rotate(${Math.atan2(h*20,70)*57}deg)`};draw();
+  $("rpU").onclick=()=>{if(!busy&&h<5){h++;sfx.tap();draw()}};$("rpD").onclick=()=>{if(!busy&&h>1){h--;sfx.tap();draw()}};
+  $("rpG").onclick=()=>{if(busy||q.done)return;busy=true;g6tone(200,.8,"sawtooth",.08);C.style.transition="left 1.6s cubic-bezier(.2,.7,.4,1),top .5s ease-in,transform .5s";C.style.top=(130-22)/150*100+"%";C.style.transform="rotate(0)";C.style.left=((70+h*45)/320*100-5)+"%";
+    setTimeout(()=>{busy=false;if(h===q.t)gameWin(q,miss,C,[]);else{miss++;toastHint(h<q.t?"Not far enough - make the ramp higher ⬆️":"Too far - make the ramp lower ⬇️");if(miss>=4){q.done=true;h=q.t;draw();gameLearn(q,"Higher ramp = farther!",[])}else setTimeout(draw,900)}},1750)};
+  window.__gSolve=()=>{h=q.t;draw();$("rpG").click()}}
+
+/* ---------------- LAB 3: magnet fishing ---------------- */
+const MAGY6=[["📎","paper clip"],["🔩","bolt"],["🧷","safety pin"],["✂️","scissors"],["🪛","screwdriver"]],MAGN6=[["🍃","leaf"],["🍎","apple"],["🦆","rubber duck"],["🪵","wood"],["🐚","shell"],["🧸","teddy"]];
+function qMag2(){const a=lvl(),y=sh(MAGY6).slice(0,a<=4?2:3),n=sh(MAGN6).slice(0,a<=4?3:4);return {game:"mag2",items:sh([...y.map(x=>[...x,1]),...n.map(x=>[...x,0])]),need:y.length,voice:[G6("MAGNET")],gid:"g:mag2",factT:"Magnets pull things made of iron and steel."}}
+function mag2Q(q){let got=0,miss=0,busy=false;
+  gShow(`<div class="game">${gHead("🧲","Magnet fishing","Fish out everything the magnet can pick up!")}<div class="mgp" id="mgP"><div class="mg-rod" id="mgR"><i></i><span>🧲</span></div>
+    ${q.items.map((x,j)=>`<button class="mg-i" data-j="${j}" style="--x:${8+(j%4)*23}%;--y:${48+Math.floor(j/4)*24}%;--d:${(2+Math.random()*2).toFixed(1)}s">${x[0]}</button>`).join("")}</div><div class="mg-cnt" id="mgC">${"⚪".repeat(q.need)}</div></div>`);gAsk(q);
+  const R=$("mgR");$("qBody").querySelectorAll(".mg-i").forEach(b=>b.onclick=()=>{if(busy||q.done||b.classList.contains("up"))return;busy=true;const x=q.items[+b.dataset.j],P=$("mgP").getBoundingClientRect(),r=b.getBoundingClientRect();
+    R.style.left=(r.left-P.left+r.width/2)+"px";R.style.setProperty("--len",(r.top-P.top)+"px");R.classList.add("down");sfx.tap();
+    setTimeout(()=>{R.classList.remove("down");if(x[2]){b.classList.add("up");g6tone(880,.2);got++;$("mgC").textContent="🟢".repeat(got)+"⚪".repeat(q.need-got);if(got===q.need)setTimeout(()=>gameWin(q,miss>2?1:0,$("mgP"),[]),700)}else{miss++;b.classList.add("no");setTimeout(()=>b.classList.remove("no"),600);toastHint(`The magnet can't pull the ${x[1]}`)}setTimeout(()=>busy=false,500)},700)});
+  window.__gSolve=()=>{q.items.forEach((x,j)=>{if(x[2]){const b=$("qBody").querySelector(`.mg-i[data-j="${j}"]`);b.classList.add("up")}});gameWin(q,0,$("mgP"),[])}}
+
+/* ---------------- LAB 4: shadow lab ---------------- */
+function qShadow(){const side=pickOne([-1,1]);return {game:"shadow",side,obj:pickOne(["🐰","🌲","🦒","🏠","🐱"]),voice:[G6("SHADOW")],gid:"g:shadow",factT:"A shadow falls on the side away from the light."}}
+function shadowQ(q){let x=50,miss=0,won=false;const goal=50+q.side*30;
+  gShow(`<div class="game">${gHead("🔦","Shadow lab","Move the torch so the shadow covers the star!")}<div class="sh-room" id="shR"><span class="sh-star" style="left:${goal}%">⭐</span><span class="sh-shadow" id="shS"></span><span class="sh-obj">${q.obj}</span><span class="sh-torch" id="shT">🔦</span><div class="sh-beam" id="shB"></div></div>
+    <input type="range" class="sh-sl" id="shX" min="5" max="95" value="50" aria-label="Move the torch"></div>`);gAsk(q);
+  const S2=$("shS"),T=$("shT"),B=$("shB");const draw=()=>{const sx=clampN(50+(50-x)*1.2,2,98);S2.style.left=sx+"%";S2.style.width=(14+Math.abs(50-x)*.5)+"%";T.style.left=x+"%";T.style.transform=`translateX(-50%) rotate(${x<50?45:x>50?-45+180:90}deg)`;B.style.left=Math.min(x,50)+"%";B.style.width=Math.abs(50-x)+"%";
+    if(!won&&Math.abs(sx-goal)<7){won=true;$("shX").disabled=true;g6tone(988,.3);setTimeout(()=>gameWin(q,miss,S2,[]),500)}};draw();
+  $("shX").oninput=e=>{x=+e.target.value;draw()};window.__gSolve=()=>{x=50-(goal-50)/1.2;draw()}}
+
+/* ---------------- LAB 5: ice melt race ---------------- */
+function qIce(){return {game:"ice",voice:[G6("ICE")],gid:"g:ice",factT:"Heat melts ice. The sunny spot is warmest, so its ice melts first."}}
+function iceQ(q){const P=[["sun","☀️","Sunny window",3],["shade","🌳","Shady tree",7],["freezer","🧊","Freezer",99]];
+  gShow(`<div class="game">${gHead("🧊","Ice race","Where will the ice melt first?")}<div class="ic">${P.map((p,j)=>`<button class="ic-c" data-j="${j}"><span class="ic-e">${p[1]}</span><span class="ic-cube" id="icC${j}"><i></i></span><span class="ic-pud" id="icP${j}"></span><small>${p[2]}</small></button>`).join("")}</div></div>`);gAsk(q);
+  $("qBody").querySelectorAll(".ic-c").forEach(b=>b.onclick=()=>{if(q.done)return;q.done=true;const j=+b.dataset.j;b.classList.add("pick");sfx.tap();
+    P.forEach((p,k)=>{const c=$("icC"+k),pd=$("icP"+k);c.style.transition=`transform ${p[3]}s linear,opacity ${p[3]}s linear`;pd.style.transition=`transform ${p[3]}s linear`;requestAnimationFrame(()=>{if(p[3]<50){c.style.transform="scale(.1)";c.style.opacity=".2";pd.style.transform="scaleX(1)"}else c.classList.add("frost")})});
+    setTimeout(()=>{q.done=false;gameWin(q,j===0?0:1,$("icC0"),[])},3300)});window.__gSolve=()=>$("qBody").querySelector('.ic-c[data-j="0"]').click()}
+
+/* ---------------- LAB 6: singing bottles ---------------- */
+function qBottle(){const n=lvl()<=5?3:4,lv=sh([20,40,60,80].slice(0,n));return {game:"bottle",lv,voice:[G6("BOTTLE")],gid:"g:bottle",factT:"When you tap a bottle, more water makes a lower sound."}}
+function bottleQ(q){const order=q.lv.map((v,i)=>[v,i]).sort((a,b)=>b[0]-a[0]).map(x=>x[1]);let at=0,miss=0;const freq=v=>1100-v*8;
+  gShow(`<div class="game">${gHead("🍾","Singing bottles","Tap them from the lowest sound to the highest!")}<div class="bt">${q.lv.map((v,i)=>`<button class="bt-b" data-i="${i}"><svg viewBox="0 0 60 130"><path d="M22 4h16v26q16 10 16 30v62q0 6-6 6H12q-6 0-6-6V60q0-20 16-30Z" fill="#E7F5FF" stroke="#74C0FC" stroke-width="3"/><clipPath id="btc${i}"><path d="M22 4h16v26q16 10 16 30v62q0 6-6 6H12q-6 0-6-6V60q0-20 16-30Z"/></clipPath><rect clip-path="url(#btc${i})" x="0" y="${128-v*1.2}" width="60" height="${v*1.2}" fill="${["#4DABF7","#FF8787","#69DB7C","#FFD43B"][i]}"/></svg><b class="bt-n"></b></button>`).join("")}</div>
+    <button class="hr-play sm" id="btL">👂</button></div>`);gAsk(q);
+  const B=[...$("qBody").querySelectorAll(".bt-b")];const ring=i=>{g6tone(freq(q.lv[i]),.6,"triangle",.35);B[i].classList.add("ring");setTimeout(()=>B[i].classList.remove("ring"),400)};
+  $("btL").onclick=()=>{let k=0;const t=()=>{if(k<B.length){ring(k++);setTimeout(t,600)}};t()};
+  B.forEach(b=>b.onclick=()=>{if(q.done)return;const i=+b.dataset.i;ring(i);if(b.classList.contains("ok"))return;if(i===order[at]){b.classList.add("ok");b.querySelector(".bt-n").textContent=at+1;at++;if(at===B.length)setTimeout(()=>gameWin(q,miss,$("qBody").querySelector(".bt"),[]),500)}
+    else{miss++;bounce(b);if(miss>=4){q.done=true;order.forEach((o,k)=>{B[o].classList.add("ok");B[o].querySelector(".bt-n").textContent=k+1});gameLearn(q,"Most water = lowest sound",[])}}});
+  window.__gSolve=()=>order.forEach(o=>{if(!B[o].classList.contains("ok"))B[o].click()})}
+
+/* ---------------- LAB 7: balloon pump ---------------- */
+function qPump(){return {game:"pump",t:ri(3,lvl()<=4?4:6),voice:[G6("PUMP")],gid:"g:pump",factT:"Air takes up space: more air makes the balloon bigger."}}
+function pumpQ(q){let n=0,miss=0;
+  gShow(`<div class="game">${gHead("🎈","Balloon pump","Pump it up to the dotted line - not more!")}<div class="pm" id="pmF"><span class="pm-goal" style="--s:${.45+q.t*.15}"></span><span class="pm-b" id="pmB"><svg viewBox="0 0 100 120"><ellipse cx="50" cy="48" rx="40" ry="46" fill="#FF6B9A"/><ellipse cx="36" cy="30" rx="10" ry="14" fill="#fff" opacity=".45"/><path d="M45 92 L55 92 L50 100Z" fill="#E0457B"/></svg></span><span class="pm-pump">🧰</span></div>
+    <div class="mx-row"><button class="qcheck on pm-btn" id="pmP">PUMP 💨</button><button class="qcheck" id="pmD" style="background:#58CC02;color:#fff">DONE ✓</button></div></div>`);gAsk(q);
+  const B=$("pmB"),sz=()=>B.style.setProperty("--s",.3+n*.15);sz();
+  $("pmP").onclick=()=>{if(q.done)return;n++;g6tone(200+n*60,.25,"triangle",.2);sz();B.classList.add("puff");setTimeout(()=>B.classList.remove("puff"),200);
+    if(n>q.t+1){miss++;B.classList.add("pop");sfx.oops();toastHint("POP! Too much air 🎈 Try again");setTimeout(()=>{B.classList.remove("pop");n=0;sz()},900)}};
+  $("pmD").onclick=()=>{if(q.done)return;if(n===q.t)gameWin(q,miss,B,[]);else{miss++;toastHint(n<q.t?"A little more air 💨":"Too big!");if(n>q.t){n=0;sz()}}};
+  window.__gSolve=()=>{n=q.t;sz();$("pmD").click()}}
+
+/* ---------------- LAB 8: volcano ---------------- */
+const VOLC6=[["🧂","baking soda",1],["🍶","vinegar",1],["💧","water",0],["🍬","sugar",0],["🏖️","sand",0]];
+function qVolc(){return {game:"volc",voice:[G6("VOLCANO")],gid:"g:volc",factT:"Baking soda and vinegar make bubbles of gas - fizz!"}}
+function volcQ(q){let pot=[],miss=0;const shelf=sh(VOLC6.slice());
+  gShow(`<div class="game">${gHead("🌋","Fizzy volcano","Which two make it erupt?")}<div class="vc" id="vcV"><span class="vc-foam" id="vcF"></span><svg viewBox="0 0 200 130"><path d="M20 128 L80 30 L120 30 L180 128Z" fill="#A9744F"/><path d="M80 30 L120 30 L112 44 L88 44Z" fill="#5C3A21"/></svg><span class="vc-in" id="vcI"></span></div>
+    <div class="mx-pots">${shelf.map((x,j)=>`<button class="mx-p vc-p" data-j="${j}"><span class="vc-e">${x[0]}</span><small>${cap1(x[1])}</small></button>`).join("")}</div></div>`);gAsk(q);
+  const go=()=>{const ok=pot.every(x=>x[2]);$("vcF").className="vc-foam "+(ok?"boom":"meh");g6tone(ok?120:300,ok?1.2:.3,"sawtooth",.08);
+    setTimeout(()=>{if(ok)gameWin(q,miss,$("vcV"),[]);else{miss++;toastHint(`${cap1(pot[0][1])} and ${pot[1][1]} don't fizz. Try others!`);pot=[];$("vcI").textContent="";$("vcF").className="vc-foam";$("qBody").querySelectorAll(".vc-p").forEach(b=>b.disabled=false);if(miss>=3){q.done=true;gameLearn(q,"Baking soda + vinegar = FIZZ!",[])}}},1600)};
+  $("qBody").querySelectorAll(".vc-p").forEach(b=>{const add=()=>{if(q.done||pot.length>=2||b.disabled)return;pot.push(shelf[+b.dataset.j]);b.disabled=true;sfx.tap();$("vcI").textContent=pot.map(x=>x[0]).join(" ");if(pot.length===2)setTimeout(go,500)};dragify(b,()=>[$("vcV")],add,add)});
+  window.__gSolve=()=>{pot=VOLC6.slice(0,2);go()}}
+
+/* ---------------- FEELINGS 1: feelings memory ---------------- */
+function qEmoMatch(){const n=lvl()<=4?3:4;return {game:"emomatch",es:sh(EMO.slice()).slice(0,n),v:ri(0,9),voice:[G6("EMOMATCH")],gid:"g:emomatch",factT:"Our faces show how we feel - and we can guess how others feel too."}}
+function emomatchQ(q){const cards=sh([...q.es.map(e=>["f",e]),...q.es.map(e=>["w",e])]);let open=[],got=0,miss=0,lock=false;
+  gShow(`<div class="game">${gHead("🃏","Feelings memory","Find each face and its feeling word!")}<div class="em-mem ${cards.length>6?"c4":""}">${cards.map((c,j)=>`<button class="emc" data-j="${j}"><span class="emc-in"><span class="emc-b">❓</span><span class="emc-f">${c[0]==="f"?`<span class="em-f">${faceSVG(c[1],q.v+j)}</span>`:`<b>${cap1(c[1])}</b>`}</span></span></button>`).join("")}</div></div>`);gAsk(q);
+  const B=[...$("qBody").querySelectorAll(".emc")];B.forEach(b=>b.onclick=()=>{if(lock||q.done||b.classList.contains("on"))return;const j=+b.dataset.j;b.classList.add("on");sfx.tap();open.push(j);
+    if(open.length===2){lock=true;const [a,c]=open;if(cards[a][1]===cards[c][1]&&cards[a][0]!==cards[c][0]){got++;hush();sayseq(feelSay(EMO_I[cards[a][1]]),()=>{});B[a].classList.add("ok");B[c].classList.add("ok");open=[];lock=false;if(got===q.es.length)setTimeout(()=>gameWin(q,miss>3?1:0,$("qBody").querySelector(".em-mem"),[]),800)}
+      else{miss++;setTimeout(()=>{B[a].classList.remove("on");B[c].classList.remove("on");open=[];lock=false},900)}}});
+  window.__gSolve=()=>{B.forEach(b=>b.classList.add("on","ok"));gameWin(q,0,$("qBody").querySelector(".em-mem"),[])}}
+
+/* ---------------- FEELINGS 2: make-a-face mirror ---------------- */
+function qMirror(){const e=pickOne(EMO);return {game:"mirror",e,v:ri(0,9),voice:[G6("MIRROR"),...feelSay(EMO_I[e])],gid:"g:mirror",factT:{happy:"We smile when we feel happy.",sad:"It's okay to feel sad sometimes - a hug can help.",angry:"When angry, take a big breath and count to 5.",scared:"Talking to someone you love helps when you're scared.",surprised:"Surprised faces have big eyes and an open mouth!"}[e]}}
+function mirrorQ(q){const st=pickOne(EMO.filter(x=>x!==q.e));let brow=EMO_I[st],mouth=EMO_I[pickOne(EMO.filter(x=>x!==q.e))],miss=0;const PARTS=EMO;  /* brow and mouth both cycle through the 5 feelings' shapes */
+  gShow(`<div class="game">${gHead("🪞","Make a face",`Make a ${q.e} face!`)}<div class="mr"><div class="mr-face" id="mrF"></div>
+    <div class="mr-ctl"><div><small>Eyebrows</small><button class="sc-t" data-p="b" data-d="-1">◀</button><button class="sc-t" data-p="b" data-d="1">▶</button></div><div><small>Mouth</small><button class="sc-t" data-p="m" data-d="-1">◀</button><button class="sc-t" data-p="m" data-d="1">▶</button></div></div></div>
+    <button class="qcheck on" id="mrC">THAT'S IT! 🪞</button></div>`);gAsk(q);
+  const draw=()=>{$("mrF").innerHTML=faceSVG(PARTS[brow],q.v,PARTS[mouth])};draw();
+  $("qBody").querySelectorAll(".mr-ctl .sc-t").forEach(b=>b.onclick=()=>{if(q.done)return;const d=+b.dataset.d;if(b.dataset.p==="b")brow=(brow+d+5)%5;else mouth=(mouth+d+5)%5;sfx.tap();draw()});
+  $("mrC").onclick=()=>{if(q.done)return;if(PARTS[mouth]===q.e&&(PARTS[brow]===q.e||(q.e==="scared"&&PARTS[brow]==="surprised")||(q.e==="surprised"&&PARTS[brow]==="scared")))gameWin(q,miss,$("mrF"),[]);else{miss++;bounce($("mrF"));toastHint(PARTS[mouth]!==q.e?"Look at the mouth 👄":"Look at the eyebrows 🤨");if(miss>=4){q.done=true;brow=mouth=EMO_I[q.e];draw();gameLearn(q,cap1(q.e),feelSay(EMO_I[q.e]))}}};
+  window.__gSolve=()=>{brow=mouth=EMO_I[q.e];draw();$("mrC").click()}}
+
+/* ---------------- FEELINGS 3: calm breathing ---------------- */
+function qCalm(){return {game:"calm",need:3,voice:[G6("CALM")],gid:"g:calm",factT:"Slow, deep breaths help our body feel calm."}}
+function calmQ(q){let n=0,hold=false,t0=0;
+  gShow(`<div class="game lrn">${gHead("🌬️","Calm breathing","Hold to breathe in, let go to breathe out")}<div class="cm"><span class="cm-ring" id="cmR"></span><span class="cm-f" id="cmF">🌸</span><b id="cmT">Hold the button</b></div><div class="cm-dots" id="cmD">${"○".repeat(q.need)}</div>
+    <button class="cm-btn" id="cmB">🫁 Breathe</button></div>`);gAsk(q);
+  const R=$("cmR"),T=$("cmT"),B=$("cmB");const down=e=>{e.preventDefault();if(q.done)return;hold=true;t0=Date.now();R.className="cm-ring in";T.textContent="Breathe in… 2… 3…"};
+  const up=()=>{if(!hold||q.done)return;hold=false;const ok=Date.now()-t0>1800;R.className="cm-ring out";T.textContent=ok?"…and breathe out 😌":"A little longer next time";if(ok){n++;$("cmD").textContent="●".repeat(n)+"○".repeat(q.need-n);g6tone(523,.6,"sine",.15);if(n>=q.need){q.done=true;setTimeout(()=>gameWin(q,0,$("cmF"),[]),1800)}}};
+  B.addEventListener("pointerdown",down);["pointerup","pointerleave","pointercancel"].forEach(k=>B.addEventListener(k,up));B.style.touchAction="none";
+  window.__gSolve=()=>{q.done=true;gameWin(q,0,$("cmF"),[])}}
+
+/* ---------------- FEELINGS 4: kind or unkind ---------------- */
+const KIND6=[["K1","🤝","Sharing your toys with a friend",1],["K2","😝","Laughing when someone falls",0],["K3","🎁","Making a card for grandma",1],["K4","🙉","Not listening when a friend talks",0],["K5","🧹","Helping to tidy up",1],["K6","🖍️","Grabbing a crayon without asking",0],["K7","🫂","Hugging a sad friend",1],["K8","🚫","Saying 'you can't play with us'",0]];
+function qKind(){const c=sh(KIND6.slice()).slice(0,4);if(!c.some(x=>x[3]))c[0]=KIND6[0];if(c.every(x=>x[3]))c[3]=KIND6[1];return {game:"kind",c,voice:[G6("KIND")],gid:"g:kind",factT:"Kind actions make everyone feel good - including you!"}}
+function kindQ(q){let at=0,miss=0;
+  gShow(`<div class="game">${gHead("💚","Kind or unkind?","Is it kind?")}<div class="kd" id="kdS"></div><div class="kd-btns"><button class="kd-b no" data-v="0">💔<small>Unkind</small></button><button class="kd-b yes" data-v="1">💚<small>Kind</small></button></div><div class="cm-dots" id="kdD">${"○".repeat(q.c.length)}</div></div>`);
+  const show=()=>{const c=q.c[at];$("kdS").innerHTML=`<div class="kd-card in"><span>${c[1]}</span><p>${c[2]}</p></div>`;hush();sayseq(at===0?[...q.voice,G6(c[0])]:[G6(c[0])],()=>{})};show();
+  $("qBody").querySelectorAll(".kd-b").forEach(b=>b.onclick=()=>{if(q.done)return;const c=q.c[at],v=+b.dataset.v,card=$("kdS").firstChild;if(v===c[3]){sfx.tap();card.classList.add(v?"go-r":"go-l");at++;$("kdD").textContent="●".repeat(at)+"○".repeat(q.c.length-at);
+      if(at===q.c.length){q.done=true;setTimeout(()=>{q.done=false;gameWin(q,miss,$("kdS"),[])},500)}else setTimeout(show,450)}else{miss++;bounce(card);toastHint(c[3]?"Hmm, that's a kind thing to do 💚":"Would that make someone feel sad? 💔")}});
+  window.__gSolve=()=>{at=q.c.length;q.done=false;gameWin(q,0,$("kdS"),[])}}
+
+/* ---------------- FEELINGS 5: cheer up a friend ---------------- */
+const CHEER6=[["🫂","A hug",1],["🧸","Share a toy",1],["🤧","A tissue",1],["🎈","A balloon",1],["😜","Make fun of them",0],["🙈","Walk away",0]];
+function qCheer(){return {game:"cheer",v:ri(0,9),voice:[G6("CHEER")],gid:"g:cheer",factT:"When we help a sad friend, they can feel happy again."}}
+function cheerQ(q){let joy=0,miss=0;const it=sh(CHEER6.slice());
+  gShow(`<div class="game">${gHead("🌈","Cheer up a friend","Give your friend what helps!")}<div class="ch"><div class="ch-f" id="chF">${faceSVG("sad",q.v)}</div><div class="ch-bar"><i id="chM"></i></div></div>
+    <div class="ch-items">${it.map((x,j)=>`<button class="ch-i" data-j="${j}"><span>${x[0]}</span><small>${x[1]}</small></button>`).join("")}</div></div>`);gAsk(q);
+  const F=$("chF");const give=b=>{if(q.done||b.disabled)return;const x=it[+b.dataset.j];b.disabled=true;
+    if(x[2]){joy++;g6tone(500+joy*120,.3);$("chM").style.width=joy/3*100+"%";F.innerHTML=faceSVG(joy>=3?"happy":joy>=2?"surprised":"sad",q.v);F.classList.add("bob");setTimeout(()=>F.classList.remove("bob"),500);if(joy>=3){q.done=true;setTimeout(()=>{q.done=false;gameWin(q,miss,F,[])},600)}}
+    else{miss++;sfx.oops();bounce(F);toastHint("That won't help 😟")}};
+  $("qBody").querySelectorAll(".ch-i").forEach(b=>dragify(b,()=>[F],()=>give(b),()=>give(b)));
+  window.__gSolve=()=>{joy=3;q.done=false;gameWin(q,0,F,[])}}
+
+/* ---------------- MOVE 1: rhythm drums ---------------- */
+function qRhythm(){const a=lvl();return {game:"rhythm",n:a<=4?5:7,need:a<=4?3:5,sp:a<=4?2.6:a<=6?2.2:1.8,voice:[G6("RHYTHM")],gid:"g:rhythm",factT:"Keeping a beat is great practice for timing!"}}
+function rhythmQ(q){let hit=0,gone=0,miss=0;
+  gShow(`<div class="game">${gHead("🥁","Rhythm drums","Tap the drum when the star reaches it!")}<div class="rh" id="rhL"><span class="rh-t" id="rhT">${drumSVG(0)}</span></div><div class="mg-cnt" id="rhC">0 / ${q.need}</div></div>`);gAsk(q);
+  const L2=$("rhL"),T=$("rhT"),notes=[];
+  const tap=()=>{if(q.done)return;drumHit(0);T.classList.add("hit");setTimeout(()=>T.classList.remove("hit"),150);const tr=T.getBoundingClientRect(),c=tr.left+tr.width/2;
+    const n=notes.find(o=>!o.dataset.d&&Math.abs(o.getBoundingClientRect().left+o.offsetWidth/2-c)<tr.width*.6);
+    if(n){n.dataset.d=1;n.classList.add("got");hit++;$("rhC").textContent=hit+" / "+q.need;if(hit>=q.need){q.done=true;setTimeout(()=>gameWin(q,miss>3?1:0,T,[]),400)}}else miss++};
+  L2.addEventListener("pointerdown",e=>{e.preventDefault();tap()});
+  let k=0;const spawn=()=>{if(!L||L.q!==q||q.done)return;if(k>=q.n+3&&hit<q.need){k=0}k++;const o=document.createElement("span");o.className="rh-n";o.textContent="⭐";o.style.animationDuration=q.sp+"s";L2.appendChild(o);notes.push(o);o.addEventListener("animationend",()=>{o.remove();notes.splice(notes.indexOf(o),1)});setTimeout(spawn,q.sp*1000*.55)};
+  setTimeout(spawn,2200);window.__gSolve=()=>{q.done=true;gameWin(q,0,T,[])}}
+
+/* ---------------- MOVE 2: balance beam ---------------- */
+function qBeam6(){const a=lvl();return {game:"beam",dur:a<=4?9:a<=6?12:15,drift:a<=4?.6:a<=6?.9:1.2,who:pickOne(["🐧","🐱","🧒","🐻"]),voice:[G6("BALANCE")],gid:"g:beam",factT:"Balancing uses your whole body - great job!"}}
+function beamQ(q){let tilt=0,v=0,prog=0,falls=0,run=true,last=performance.now();
+  gShow(`<div class="game">${gHead("🤸","Balance beam","Keep it from falling! Tap the side that goes up")}<div class="bm" id="bmF"><div class="bm-beam"></div><span class="bm-w" id="bmW">${q.who}<i class="bm-pole"></i></span><div class="bm-prog"><i id="bmP"></i></div></div>
+    <div class="bm-btns"><button class="kd-b" id="bmL">⬅️</button><button class="kd-b" id="bmR">➡️</button></div></div>`);gAsk(q);
+  const W=$("bmW");$("bmL").onclick=()=>{v-=1.6;sfx.tap()};$("bmR").onclick=()=>{v+=1.6;sfx.tap()};
+  const step=t=>{if(!run||!L||L.q!==q)return;const dt=Math.min(.05,(t-last)/1000);last=t;v+=(tilt*.9+(Math.random()-.5)*q.drift*6)*dt;v*=.97;tilt+=v*dt*20;
+    if(Math.abs(tilt)>38){falls++;sfx.oops();tilt=0;v=0;W.classList.add("wob");setTimeout(()=>W.classList.remove("wob"),500);toastHint("Whoops! Keep going 🤸")}
+    prog=Math.min(1,prog+dt/q.dur);W.style.left=(8+prog*80)+"%";W.style.transform=`translateX(-50%) rotate(${tilt}deg)`;$("bmP").style.width=prog*100+"%";
+    if(prog>=1){run=false;gameWin(q,falls>2?1:0,W,[]);return}requestAnimationFrame(step)};setTimeout(()=>{last=performance.now();requestAnimationFrame(step)},2200);
+  window.__gSolve=()=>{run=false;gameWin(q,0,W,[])}}
+
+/* ---------------- MOVE 3: basket catch ---------------- */
+function qBasket(){const a=lvl(),good=pickOne([["🍎","🍌","🍓","🍐"],["⭐","🌟"],["🥚"]]);return {game:"basket",good,bad:["🪨"],need:a<=3?4:a<=5?6:8,sp:a<=3?4:a<=5?3.2:2.6,rocks:a>3,voice:[G6("BASKET")],gid:"g:basket",factT:"Moving to catch things trains your eyes and hands to work together."}}
+function basketQ(q){let got=0,x=50,miss=0;
+  gShow(`<div class="game">${gHead("🧺","Catch them!",q.rocks?"Catch them - not the rocks!":"Catch them all!")}<div class="bs" id="bsF"><span class="bs-b" id="bsB">🧺</span><div class="mg-cnt bs-c" id="bsC">0 / ${q.need}</div></div><p class="gmhint">Slide your finger to move the basket</p></div>`);gAsk(q);
+  const F=$("bsF"),B=$("bsB");const mv=e=>{const r=F.getBoundingClientRect();x=clampN((e.clientX-r.left)/r.width*100,8,92);B.style.left=x+"%"};F.addEventListener("pointermove",mv);F.addEventListener("pointerdown",mv);F.style.touchAction="none";
+  const drop=()=>{if(!L||L.q!==q||q.done)return;const bad=q.rocks&&Math.random()<.25,o=document.createElement("span");o.className="bs-o";o.textContent=bad?"🪨":pickOne(q.good);const ox=ri(10,90);o.style.left=ox+"%";o.style.animationDuration=q.sp+"s";F.appendChild(o);
+    o.addEventListener("animationend",()=>{if(Math.abs(ox-x)<13){if(bad){miss++;sfx.oops();F.classList.add("bump");setTimeout(()=>F.classList.remove("bump"),400)}else{got++;g6tone(660+got*40,.15);$("bsC").textContent=got+" / "+q.need;B.classList.add("hit");setTimeout(()=>B.classList.remove("hit"),200);if(got>=q.need){q.done=true;gameWin(q,miss>2?1:0,B,[])}}}o.remove()});setTimeout(drop,q.sp*1000*.5)};
+  setTimeout(drop,2000);window.__gSolve=()=>{q.done=true;gameWin(q,0,B,[])}}
+
+/* ---------------- MOVE 4: Simon says (do it for real) ---------------- */
+const SIMON6=[["C1","Touch your nose","👃"],["C2","Jump","🦘"],["C3","Clap","👏"],["C4","Hands up","🙌"],["C5","Wiggle","🐛"],["C6","Sit down","🪑"]];
+function qSimon6(){const c=sh(SIMON6.slice()).slice(0,lvl()<=4?3:4).map(x=>[...x,Math.random()<.7]);if(c.every(x=>x[3]))c[ri(1,c.length-1)][3]=false;if(!c[0][3])c[0][3]=true;return {game:"simon2",c,voice:[G6("SIMON")],gid:"g:simon2",factT:"Listening carefully before you move is a super skill!"}}
+function simon2Q(q){let at=0,miss=0;
+  gShow(`<div class="game">${gHead("🙋","Simon says","Only move when Simon says!")}<div class="sm2" id="smS"></div><div class="kd-btns"><button class="kd-b" data-v="1">✅<small>I did it!</small></button><button class="kd-b" data-v="0">🧊<small>I stayed still</small></button></div><div class="cm-dots" id="smD">${"○".repeat(q.c.length)}</div></div>`);
+  const show=()=>{const c=q.c[at];$("smS").innerHTML=`<div class="kd-card in"><span>${c[2]}</span><p>${c[3]?"Simon says: ":""}${c[1]}!</p></div>`;hush();sayseq([...(at===0?q.voice:[]),...(c[3]?[G6("SAYS")]:[]),G6(c[0])],()=>{})};show();
+  $("qBody").querySelectorAll(".kd-b").forEach(b=>b.onclick=()=>{if(q.done)return;const c=q.c[at],ok=(+b.dataset.v===1)===c[3];if(ok){sfx.tap();at++;$("smD").textContent="●".repeat(at)+"○".repeat(q.c.length-at);if(at===q.c.length){q.done=true;setTimeout(()=>{q.done=false;gameWin(q,miss,$("smS"),[])},400)}else setTimeout(show,500)}
+    else{miss++;bounce($("smS"));toastHint(c[3]?"Simon said it - so do it! ✅":"Simon didn't say it - stay still! 🧊")}});
+  window.__gSolve=()=>{q.done=false;gameWin(q,0,$("smS"),[])}}
+
+/* ---------------- MOVE 5: hopscotch ---------------- */
+function qHop(){const a=lvl(),st=a<=4?1:a<=6?pickOne([1,2]):pickOne([2,5,10]),n=a<=3?3:a<=4?5:6,seq=Array.from({length:n},(_,i)=>(st===1?i+1:st*(i+1)));const ex=sh([...Array(30).keys()].map(i=>i+1).filter(x=>!seq.includes(x)&&x<=seq[n-1]+st)).slice(0,a<=4?1:3);
+  return {game:"hop",seq,ex,st,voice:[G6("HOP")],gid:"g:hop",factT:st===1?"You hopped 1, 2, 3 - in order!":`You counted by ${st}s!`}}
+function hopQ(q){let at=0,miss=0;const all=sh([...q.seq,...q.ex]);const pos=all.map((_,i)=>[8+(i%3)*30+ri(0,10),12+Math.floor(i/3)*28+ri(0,6)]);
+  gShow(`<div class="game">${gHead("🐸","Hopscotch",q.st===1?"Hop on the stones in order!":`Hop by ${q.st}s!`)}<div class="hp" id="hpF">${all.map((n,i)=>`<button class="hp-s" data-n="${n}" style="left:${pos[i][0]}%;top:${pos[i][1]}%">${n}</button>`).join("")}<span class="hp-f" id="hpG" style="left:46%;top:88%">🐸</span></div></div>`);gAsk(q);
+  const G2=$("hpG");$("qBody").querySelectorAll(".hp-s").forEach(b=>b.onclick=()=>{if(q.done||b.classList.contains("ok"))return;const n=+b.dataset.n;if(n===q.seq[at]){b.classList.add("ok");G2.style.left=b.style.left;G2.style.top=b.style.top;G2.classList.remove("jump");void G2.offsetWidth;G2.classList.add("jump");g6tone(400+at*80,.15);at++;if(at===q.seq.length)setTimeout(()=>gameWin(q,miss,G2,[]),600)}
+    else{miss++;bounce(b);if(miss>=4){q.done=true;gameLearn(q,q.seq.join(", "),[])}}});
+  window.__gSolve=()=>q.seq.slice(at).forEach(n=>$("qBody").querySelector(`.hp-s[data-n="${n}"]`).click())}
+
+/* ---------------- MOVE 6: dance copy ---------------- */
+const DMOV6=[["L","⬅️","lean"],["R","➡️","lean"],["U","⬆️","jump"],["D","⬇️","squat"]];
+function qDance(){const a=lvl(),n=a<=4?2:a<=6?3:4;return {game:"dance",seq:Array.from({length:n},()=>pickOne(DMOV6)),who:pickOne(["🐻","🐧","🐰","🤖"]),voice:[G6("DANCE")],gid:"g:dance",factT:"Dancing is a fun way to remember moves and keep your body strong!"}}
+function danceQ(q){let at=0,miss=0,ready=false;
+  gShow(`<div class="game">${gHead("💃","Dance copy","Watch the dance, then copy it!")}<div class="dc" id="dcF"><span class="dc-w" id="dcW">${q.who}</span><span class="dc-sp">✨</span></div>
+    <div class="dc-pad">${DMOV6.map(m=>`<button class="dc-b" data-k="${m[0]}" disabled>${m[1]}</button>`).join("")}</div><div class="mv-real" id="dcR" hidden><p>Now dance it for real! 🎶</p><button class="qcheck on" id="dcY">I danced! ⭐</button></div></div>`);
+  const W=$("dcW"),P=[...$("qBody").querySelectorAll(".dc-b")];const pose=k=>{W.className="dc-w dc-"+k;g6tone({L:392,R:440,U:523,D:330}[k],.25,"triangle",.2);setTimeout(()=>W.className="dc-w",420)};
+  const show=()=>{ready=false;at=0;P.forEach(b=>b.disabled=true);let k=0;const st=()=>{if(!L||L.q!==q)return;if(k>=q.seq.length){P.forEach(b=>b.disabled=false);ready=true;return}const m=q.seq[k++];pose(m[0]);P.find(b=>b.dataset.k===m[0]).classList.add("flash");setTimeout(()=>P.forEach(b=>b.classList.remove("flash")),400);setTimeout(st,800)};setTimeout(st,500)};
+  sayseq(q.voice,()=>show());
+  P.forEach(b=>b.onclick=()=>{if(!ready||q.done)return;pose(b.dataset.k);if(b.dataset.k===q.seq[at][0]){at++;if(at===q.seq.length){ready=false;$("dcR").hidden=false}}else{miss++;sfx.oops();ready=false;setTimeout(show,700)}});
+  $("dcY").onclick=()=>{if(!q.done)gameWin(q,miss>1?1:0,W,[])};window.__gSolve=()=>{gameWin(q,0,W,[])}}
+
+/* ---------------- MOVE 7: wall climb (left, right, left, right) ---------------- */
+function qClimb(){const a=lvl();return {game:"climb",need:a<=4?6:a<=6?8:10,who:pickOne(["🐒","🧗","🦎","🐱"]),voice:[G6("CLIMB")],gid:"g:climb",factT:"Climbers move one hand, then the other - left, right, left, right!"}}
+function climbQ(q){let h=0,next="L",miss=0;
+  gShow(`<div class="game">${gHead("🧗","Wall climb","Left hand, right hand - take turns!")}<div class="cl" id="clF"><span class="cl-top">🍌</span><span class="cl-w" id="clW">${q.who}</span></div>
+    <div class="bm-btns"><button class="kd-b" data-k="L">✋<small>Left</small></button><button class="kd-b" data-k="R">🤚<small>Right</small></button></div></div>`);gAsk(q);
+  const W=$("clW");const set=()=>{W.style.bottom=(4+h/q.need*78)+"%"};set();
+  $("qBody").querySelectorAll(".bm-btns .kd-b").forEach(b=>b.onclick=()=>{if(q.done)return;if(b.dataset.k===next){h++;next=next==="L"?"R":"L";g6tone(300+h*40,.1);W.classList.toggle("flip");set();if(h>=q.need){q.done=true;setTimeout(()=>{q.done=false;gameWin(q,miss>2?1:0,W,[])},500)}}
+    else{miss++;h=Math.max(0,h-1);set();bounce(W);toastHint(`Now the ${next==="L"?"left ✋":"right 🤚"} hand!`)}});
+  window.__gSolve=()=>{h=q.need;set();gameWin(q,0,W,[])}}
+
+/* ---------------- wiring ---------------- */
+const G6F={mix:qMix,ramp:qRamp,mag2:qMag2,shadow:qShadow,ice:qIce,bottle:qBottle,pump:qPump,volc:qVolc,emomatch:qEmoMatch,mirror:qMirror,calm:qCalm,kind:qKind,cheer:qCheer,rhythm:qRhythm,beam:qBeam6,basket:qBasket,simon2:qSimon6,hop:qHop,dance:qDance,climb:qClimb};
+Object.assign(GAMES,{mix:mixQ,ramp:rampQ,mag2:mag2Q,shadow:shadowQ,ice:iceQ,bottle:bottleQ,pump:pumpQ,volc:volcQ,emomatch:emomatchQ,mirror:mirrorQ,calm:calmQ,kind:kindQ,cheer:cheerQ,rhythm:rhythmQ,beam:beamQ,basket:basketQ,simon2:simon2Q,hop:hopQ,dance:danceQ,climb:climbQ});
+const _bf6=buildFormat;buildFormat=function(kind,cat){const F=kind.startsWith("f_")&&G6F[kind.slice(2)];return F?F(cat):_bf6(kind,cat)};
+const _ff6=formatsFor0;
+formatsFor0=function(cat){const b=_ff6(cat);if(!G6_READY)return b;const a=S.age,add={world:["f_mix","f_mag2","f_ice","f_volc","f_shadow","f_kind","f_cheer","f_basket"],sky:["f_shadow","f_ice","f_ramp","f_dance"],farm:["f_basket","f_hop","f_pump","f_climb"],animals:["f_climb","f_beam","f_hop","f_basket","f_dance"],
+  people:["f_emomatch","f_mirror","f_calm","f_kind","f_cheer","f_simon2","f_dance"],shapes:["f_mix","f_bottle","f_emomatch"],count:["f_hop","f_pump","f_ramp","f_rhythm"],add:["f_hop","f_ramp"],memory:["f_emomatch","f_rhythm","f_simon2","f_dance","f_bottle"],robot:["f_ramp","f_mag2","f_volc","f_beam","f_climb"],clock:["f_shadow","f_ice","f_rhythm"],flags:["f_volc","f_beam"],read:["f_kind"],letters:["f_simon2"]}[cat]||[];
+  return [...b,...add.filter(k=>a>3||["f_mix","f_pump","f_basket","f_calm","f_cheer","f_rhythm","f_emomatch","f_simon2","f_hop","f_dance"].includes(k))]};
+const _pr6=planRound;
+planRound=function(cat,count){const p=_pr6(cat,count);if(!G6_READY||S.age>3||!p)return p;const toy=sh(["f_calm","f_pump","f_basket","f_mix","f_cheer","f_rhythm"]);let j=0;return p.map((k,i)=>(i%3===2&&j<2&&!/tstory|ltog/.test(k))?toy[j++]:k)};
+Object.assign(GMAP,{
+ "g:mix":G("Colour lab",["cre","experiment"],[["cre","art"]],"Mix two paints in a bowl to make a new colour.","Explore"),
+ "g:ramp":G("Ramp race",["cre","experiment"],[["cog","logic"]],"Change the ramp height so the car stops on the flag (cause and effect).","Explore"),
+ "g:mag2":G("Magnet fishing",["cre","science"],[["phys","fine"]],"Lower a magnet to fish out only the things it can pull.","Explore"),
+ "g:shadow":G("Shadow lab",["cre","science"],[["cog","logic"]],"Move a torch and watch the shadow move the other way.","Explore"),
+ "g:ice":G("Ice race",["cre","science"],[["cog","curiosity"]],"Predict where ice melts first, then watch it happen.","Explore"),
+ "g:bottle":G("Singing bottles",["cre","science"],[["cre","art"],["lang","listen"]],"Tap bottles with different water levels and order them by sound.","Explore"),
+ "g:pump":G("Balloon pump",["cre","experiment"],[["cog","math"]],"Pump just enough air to fill the balloon to the line.","Play"),
+ "g:volc":G("Fizzy volcano",["cre","experiment"],[["cre","science"]],"Try pairs of ingredients to find the two that fizz.","Explore"),
+ "g:emomatch":G("Feelings memory",["soc","emotions"],[["cog","memory"]],"Flip cards to match each face with its feeling word.","Play"),
+ "g:mirror":G("Make a face",["soc","emotions"],[["cre","art"]],"Change eyebrows and mouth to show a feeling.","Create"),
+ "g:calm":G("Calm breathing",["soc","confidence"],[["phys","body"]],"Hold to breathe in, let go to breathe out - a calming routine.","Reflect"),
+ "g:kind":G("Kind or unkind?",["soc","empathy"],[["life","decide"]],"Decide if everyday actions are kind or unkind.","Reflect"),
+ "g:cheer":G("Cheer up a friend",["soc","empathy"],[["soc","sharing"]],"Give a sad friend the things that help, and watch them smile.","Play"),
+ "g:rhythm":G("Rhythm drums",["phys","coord"],[["cre","art"]],"Tap the drum right when the star reaches it (timing).","Play"),
+ "g:beam":G("Balance beam",["phys","coord"],[["cog","memory"]],"Keep a walker balanced on a beam by tapping left and right.","Play"),
+ "g:basket":G("Catch them!",["phys","coord"],[["phys","fine"]],"Slide a basket to catch falling things and avoid rocks.","Play"),
+ "g:simon2":G("Simon says",["phys","gross"],[["lang","listen"],["cog","memory"]],"Move for real - but only when Simon says.","Play"),
+ "g:hop":G("Hopscotch",["cog","math"],[["phys","coord"]],"Hop the frog across stones in number order or by 2s, 5s, 10s.","Play"),
+ "g:dance":G("Dance copy",["phys","gross"],[["cog","memory"],["cre","art"]],"Watch a short dance, copy it, then dance it for real.","Play"),
+ "g:climb":G("Wall climb",["phys","coord"],[["cog","logic"]],"Climb by tapping left and right hands in turn.","Play")});
 
 /* ===== Nov 11: 3D pictures (Microsoft Fluent Emoji 3D, MIT licence) replace flat emoji everywhere on screen ===== */
 const E3={"🏪": "1f3ea", "⛵": "26f5", "👷": "1f477", "❓": "2753", "⭐": "2b50", "🏆": "1f3c6", "🐳": "1f433", "🪨": "1faa8", "☁️": "2601-fe0f", "🥕": "1f955", "🇦🇺": "1f1e6-1f1fa", "😴": "1f634", "🔋": "1f50b", "🍬": "1f36c", "🎨": "1f3a8", "🍒": "1f352", "🧩": "1f9e9", "7️⃣": "37-fe0f-20e3", "🎉": "1f389", "🥈": "1f948", "🍲": "1f372", "ℹ️": "2139-fe0f", "🚜": "1f69c", "💎": "1f48e", "🍇": "1f347", "🦩": "1f9a9", "🍓": "1f353", "🐼": "1f43c", "🐧": "1f427", "🎂": "1f382", "🌹": "1f339", "🏎️": "1f3ce-fe0f", "🌎": "1f30e", "🔬": "1f52c", "🔟": "1f51f", "🌾": "1f33e", "🍅": "1f345", "🔤": "1f524", "🪥": "1faa5", "👮": "1f46e", "🐱": "1f431", "🥬": "1f96c", "🔨": "1f528", "🐙": "1f419", "🐔": "1f414", "🎾": "1f3be", "🎠": "1f3a0", "🎒": "1f392", "🌟": "1f31f", "🕸️": "1f578-fe0f", "🏠": "1f3e0", "🌵": "1f335", "🍃": "1f343", "9️⃣": "39-fe0f-20e3", "🐶": "1f436", "🧰": "1f9f0", "⛈️": "26c8-fe0f", "🔶": "1f536", "⏳": "23f3", "🎯": "1f3af", "🧁": "1f9c1", "🚒": "1f692", "🪵": "1fab5", "🥔": "1f954", "🐍": "1f40d", "🦫": "1f9ab", "💜": "1f49c", "🍪": "1f36a", "🦒": "1f992", "🦈": "1f988", "🟰": "1f7f0", "🧭": "1f9ed", "🇮🇷": "1f1ee-1f1f7", "👀": "1f440", "🏅": "1f3c5", "🐣": "1f423", "💯": "1f4af", "🐌": "1f40c", "🇺🇸": "1f1fa-1f1f8", "🕯️": "1f56f-fe0f", "🇯🇵": "1f1ef-1f1f5", "🦵": "1f9b5", "🖍️": "1f58d-fe0f", "🐞": "1f41e", "⬆️": "2b06-fe0f", "⛄": "26c4", "🌀": "1f300", "🐦": "1f426", "💧": "1f4a7", "🌲": "1f332", "🚀": "1f680", "⬅️": "2b05-fe0f", "💌": "1f48c", "🌅": "1f305", "👤": "1f464", "🐐": "1f410", "♻️": "267b-fe0f", "🔊": "1f50a", "🍀": "1f340", "👨‍🍳": "1f468-200d-1f373", "✨": "2728", "➕": "2795", "4️⃣": "34-fe0f-20e3", "🐟": "1f41f", "🕶️": "1f576-fe0f", "💫": "1f4ab", "🌧️": "1f327-fe0f", "❌": "274c", "🐾": "1f43e", "🍍": "1f34d", "📷": "1f4f7", "🏰": "1f3f0", "🪺": "1faba", "🇩🇪": "1f1e9-1f1ea", "🦃": "1f983", "🦮": "1f9ae", "💅": "1f485", "🔍": "1f50d", "➖": "2796", "🐓": "1f413", "🍯": "1f36f", "🫐": "1fad0", "🐕‍🦺": "1f415-200d-1f9ba", "🛻": "1f6fb", "🔦": "1f526", "🐥": "1f425", "🐋": "1f40b", "😀": "1f600", "🏡": "1f3e1", "🇮🇳": "1f1ee-1f1f3", "🦶": "1f9b6", "🧑‍🏫": "1f9d1-200d-1f3eb", "🐷": "1f437", "🏁": "1f3c1", "⚖️": "2696-fe0f", "👆": "1f446", "🤸": "1f938", "🟠": "1f7e0", "🦷": "1f9b7", "🥇": "1f947", "🔺": "1f53a", "🟦": "1f7e6", "🌻": "1f33b", "🪛": "1fa9b", "🥉": "1f949", "🪱": "1fab1", "🌋": "1f30b", "🪐": "1fa90", "🌿": "1f33f", "🇪🇬": "1f1ea-1f1ec", "😊": "1f60a", "🥎": "1f94e", "🚲": "1f6b2", "🛌": "1f6cc", "🥛": "1f95b", "🐈": "1f408", "🌍": "1f30d", "🥚": "1f95a", "🧑‍🚒": "1f9d1-200d-1f692", "🧼": "1f9fc", "⚙️": "2699-fe0f", "🍊": "1f34a", "🦎": "1f98e", "🐿️": "1f43f-fe0f", "🌆": "1f306", "🪁": "1fa81", "🚄": "1f684", "🐰": "1f430", "🍦": "1f366", "🌗": "1f317", "🎣": "1f3a3", "🪷": "1fab7", "🍽️": "1f37d-fe0f", "🙋": "1f64b", "📋": "1f4cb", "🌠": "1f320", "🧄": "1f9c4", "📱": "1f4f1", "📖": "1f4d6", "🐨": "1f428", "🔒": "1f512", "🧣": "1f9e3", "📆": "1f4c6", "🥳": "1f973", "💪": "1f4aa", "🐕": "1f415", "🌷": "1f337", "💚": "1f49a", "🏜️": "1f3dc-fe0f", "🧑‍🎨": "1f9d1-200d-1f3a8", "📎": "1f4ce", "🐛": "1f41b", "🧷": "1f9f7", "👑": "1f451", "🧒": "1f9d2", "🧑‍🔬": "1f9d1-200d-1f52c", "🟫": "1f7eb", "💝": "1f49d", "🚢": "1f6a2", "🐖": "1f416", "5️⃣": "35-fe0f-20e3", "🟢": "1f7e2", "👃": "1f443", "👋": "1f44b", "🐚": "1f41a", "🇮🇹": "1f1ee-1f1f9", "🚑": "1f691", "🎵": "1f3b5", "🧲": "1f9f2", "🍭": "1f36d", "🐆": "1f406", "🍴": "1f374", "😨": "1f628", "🍞": "1f35e", "🧑‍✈️": "1f9d1-200d-2708-fe0f", "🔔": "1f514", "🏋️": "1f3cb-fe0f", "📏": "1f4cf", "🔴": "1f534", "🍌": "1f34c", "2️⃣": "32-fe0f-20e3", "⬇️": "2b07-fe0f", "↩️": "21a9-fe0f", "🍂": "1f342", "🤝": "1f91d", "🔑": "1f511", "🛒": "1f6d2", "✂️": "2702-fe0f", "🛁": "1f6c1", "🧀": "1f9c0", "🌴": "1f334", "🧑‍🔧": "1f9d1-200d-1f527", "🎩": "1f3a9", "🚩": "1f6a9", "🐝": "1f41d", "🗓️": "1f5d3-fe0f", "🧑": "1f9d1", "🌙": "1f319", "🍋": "1f34b", "🌽": "1f33d", "💖": "1f496", "🛸": "1f6f8", "🪀": "1fa80", "🦟": "1f99f", "🦉": "1f989", "🌰": "1f330", "🔎": "1f50e", "🍁": "1f341", "🦄": "1f984", "🐉": "1f409", "🧠": "1f9e0", "🐇": "1f407", "💇": "1f487", "⚽": "26bd", "🕳️": "1f573-fe0f", "☀️": "2600-fe0f", "🦴": "1f9b4", "🍩": "1f369", "🔭": "1f52d", "🎓": "1f393", "🇲🇽": "1f1f2-1f1fd", "🐭": "1f42d", "😋": "1f60b", "🇨🇳": "1f1e8-1f1f3", "🎄": "1f384", "🌇": "1f307", "🎀": "1f380", "🌸": "1f338", "🪰": "1fab0", "✈️": "2708-fe0f", "📚": "1f4da", "👶": "1f476", "⬛": "2b1b", "👐": "1f450", "🤔": "1f914", "🪞": "1fa9e", "🦕": "1f995", "🍕": "1f355", "🗣️": "1f5e3-fe0f", "🗺️": "1f5fa-fe0f", "🐢": "1f422", "⚡": "26a1", "🥶": "1f976", "🧃": "1f9c3", "☔": "2614", "🚚": "1f69a", "🃏": "1f0cf", "👟": "1f45f", "🚗": "1f697", "🧅": "1f9c5", "🛖": "1f6d6", "🌫️": "1f32b-fe0f", "☕": "2615", "✏️": "270f-fe0f", "🦖": "1f996", "🪽": "1fabd", "🐘": "1f418", "🧑‍🚀": "1f9d1-200d-1f680", "🫀": "1fac0", "🔁": "1f501", "🏐": "1f3d0", "🟡": "1f7e1", "🦊": "1f98a", "6️⃣": "36-fe0f-20e3", "👩‍⚕️": "1f469-200d-2695-fe0f", "☄️": "2604-fe0f", "🧱": "1f9f1", "🦋": "1f98b", "🩱": "1fa71", "🟥": "1f7e5", "🤍": "1f90d", "🌛": "1f31b", "🧦": "1f9e6", "🔵": "1f535", "➡️": "27a1-fe0f", "🧑‍⚕️": "1f9d1-200d-2695-fe0f", "🐑": "1f411", "🏖️": "1f3d6-fe0f", "🦁": "1f981", "🍫": "1f36b", "😮": "1f62e", "👍": "1f44d", "🧑‍🍳": "1f9d1-200d-1f373", "🦇": "1f987", "🕑": "1f551", "🥦": "1f966", "🕷️": "1f577-fe0f", "🎈": "1f388", "🍎": "1f34e", "🦀": "1f980", "⚪": "26aa", "🐜": "1f41c", "🪙": "1fa99", "💙": "1f499", "🇨🇦": "1f1e8-1f1e6", "🕒": "1f552", "🍚": "1f35a", "🚓": "1f693", "💡": "1f4a1", "🌈": "1f308", "⏰": "23f0", "🎹": "1f3b9", "👽": "1f47d", "🔩": "1f529", "🍟": "1f35f", "🌱": "1f331", "👂": "1f442", "🚂": "1f682", "✅": "2705", "🐬": "1f42c", "🐸": "1f438", "1️⃣": "31-fe0f-20e3", "🌊": "1f30a", "📅": "1f4c5", "🪶": "1fab6", "🛷": "1f6f7", "🦆": "1f986", "🐴": "1f434", "😠": "1f620", "🧥": "1f9e5", "🥣": "1f963", "🐩": "1f429", "💨": "1f4a8", "🛰️": "1f6f0-fe0f", "🔥": "1f525", "📤": "1f4e4", "♨️": "2668-fe0f", "🏍️": "1f3cd-fe0f", "🔮": "1f52e", "8️⃣": "38-fe0f-20e3", "🌕": "1f315", "🌑": "1f311", "❄️": "2744-fe0f", "🧺": "1f9fa", "💬": "1f4ac", "🎬": "1f3ac", "🔛": "1f51b", "3️⃣": "33-fe0f-20e3", "🕐": "1f550", "🧂": "1f9c2", "🍐": "1f350", "🖤": "1f5a4", "❤️": "2764-fe0f", "🧊": "1f9ca", "🇫🇷": "1f1eb-1f1f7", "🧽": "1f9fd", "🥄": "1f944", "🧢": "1f9e2", "🐊": "1f40a", "🎸": "1f3b8", "🥗": "1f957", "🐻": "1f43b", "🚌": "1f68c", "📥": "1f4e5", "📈": "1f4c8", "🌖": "1f316", "🔄": "1f504", "👨‍👩‍👧": "1f468-200d-1f469-200d-1f467", "😲": "1f632", "🍄": "1f344", "📻": "1f4fb", "😢": "1f622", "🍆": "1f346", "🤖": "1f916", "🐄": "1f404", "🟣": "1f7e3", "🌌": "1f30c", "🔧": "1f527", "🫧": "1fae7", "🪄": "1fa84", "🇧🇷": "1f1e7-1f1f7", "🛏️": "1f6cf-fe0f", "🥧": "1f967", "🍉": "1f349", "🏞️": "1f3de-fe0f", "🔹": "1f539", "🌬️": "1f32c-fe0f", "🐲": "1f432", "🥤": "1f964", "🧓": "1f9d3", "🫘": "1fad8", "🚶": "1f6b6", "🎱": "1f3b1", "🇬🇧": "1f1ec-1f1e7", "⛰️": "26f0-fe0f", "📺": "1f4fa", "🚙": "1f699", "🦅": "1f985", "🌞": "1f31e", "🌏": "1f30f", "🔢": "1f522", "🧸": "1f9f8", "🪜": "1fa9c", "🎁": "1f381", "🔷": "1f537", "🎃": "1f383", "🌳": "1f333", "⚫": "26ab", "🐯": "1f42f", "🧑‍🌾": "1f9d1-200d-1f33e", "👩": "1f469", "📄": "1f4c4", "💥": "1f4a5", "👩‍🚒": "1f469-200d-1f692", "🪴": "1fab4", "🙈": "1f648"};
