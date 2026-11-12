@@ -19,7 +19,7 @@ const _bq5=buildQ;buildQ=function(cat,k,used){window.__bst=boostFor(gidGuess(k||
 
 /* ---- 3. no more than 2 of the same kind of game in a round. "Put the pieces together" games count as one family
         (only 1 per round), and "help it get there" games (robot, robot walk, maze) count as one family. ---- */
-const FAMILY={f_puzzle:"piece",f_quilt:"piece",f_dragpat:"piece",robot:"path",f_robowalk:"path",f_maze:"path"},FAMCAP={piece:1,path:2};
+const FAMILY={f_puzzle:"piece",f_quilt:"piece",f_dragpat:"piece",robot:"path",f_robowalk:"path",f_maze:"path"},FAMCAP={piece:1,path:1};
 /* across the whole day (all sections): puzzle-type games at most 2, any one game at most 3, path games at most 4 */
 const DAYCAP={piece:2,path:2},GAMEK=["robot","simon","piano","pairs","match"];
 function dayUse(){const d=new Date().toDateString();if(!S.dayUse||S.dayUse.d!==d)S.dayUse={d,c:{}};return S.dayUse.c}

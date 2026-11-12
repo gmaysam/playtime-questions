@@ -276,10 +276,46 @@ const _prF=planRound;planRound=function(cat,count){return capRound(_prF(cat,coun
 /* read short recaps aloud with the word, letter and number clips we already have:
    "Cat, Bee, Caterpillar!", "chicken → nest", "7 + 5 = 12", "K is for Key!", "KEY: k - e - y", "You found every triangle!".
    Returns [] unless EVERY part has a voice, so nothing is half-read. */
+const SWL=new Set(__SWL__),RCL=new Set(__RCL__);
 function recapV(t){const LT=c=>/^[a-z]$/i.test(c)?["w/LULU_LN_"+c.toUpperCase()]:null;t=String(t||"").replace(/<[^>]+>/g,"").replace(/[\u{1F000}-\u{1FAFF}☀-➿️]/gu,"").replace(/\s+/g," ").trim();if(!t)return [];
-  const W=x=>{x=String(x).replace(/^(the|a|an)\s+/i,"").replace(/["“”!.?]/g,"").trim();if(!x)return null;if(/^[a-z]$/i.test(x))return LT(x);const v=/^\d+$/.test(x)?(+x<=20?[N(+x)]:+x<=100?faNum(+x):null):both(x);return v&&v.length?v:null};
-  const all=parts=>{const o=[];for(const p of parts){if(!p)return [];o.push(...p)}return o};
+  const W=x=>{x=String(x).replace(/["“”!.?]/g,"").trim();if(/^the /i.test(x)){const f=faSay(x),e=enSay(x);if(f.length||e.length)return [...f,...e]}x=x.replace(/^(the|a|an)\s+/i,"");if(!x)return null;if(/^[a-z]$/i.test(x))return LT(x);const v=/^\d+$/.test(x)?(+x<=20?[N(+x)]:+x<=100?faNum(+x):null):both(x);return v&&v.length?v:null};
+  const all=parts=>{const o=[];for(const p of parts){if(!p||p.includes(null))return [];o.push(...p)}return o};
   let m;
+  /* templates with a recorded linking phrase (v11, PX_RC_*); each needs every part voiced */
+  const R=n=>RCL.has(n)?"w/PX_RC_"+n:null,NN=x=>W(String(x)),SWD=w=>{w=w.toLowerCase();const e=enSay(w);return e.length?e:(SWL.has(w)?["w/PX_SW_"+w]:null)};
+  if((m=t.match(/^You made a picture of an? (.+?)!$/)))return all([[R("PIC")],W(m[1])]);
+  if((m=t.match(/^([A-Z]) is letter number (\d+) of (?:the )?26(?: letters)?\.( \1 is a vowel\.)?$/)))return all([LT(m[1]),[R("LNUM_A")],NN(m[2]),[R("LNUM_B")],m[3]?[R("VOWEL")]:[]]);
+  if((m=t.match(/^(\w+) is month number (\d+) of the 12 months in a year\.$/)))return all([enSay(m[1]).length?enSay(m[1]):null,[R("MNUM_A")],NN(m[2]),[R("MNUM_B")]]);
+  if((m=t.match(/^A week has 7 days\. (\w+) comes after (\w+)\.$/)))return all([[R("WEEK7")],enSay(m[1]).length?enSay(m[1]):null,[R("AFTER")],enSay(m[2]).length?enSay(m[2]):null,[R("COMES")]]);
+  if((m=t.match(/^"(\w+)" has (\d+) letters and starts with ([A-Z])\.$/)))return all([SWD(m[1]),NN(m[2]),[R("LETTERS")],LT(m[3]),[R("STARTS")]]);
+  if((m=t.match(/^"(\w+)" is one of the words we read most often/)))return all([SWD(m[1]),[R("SIGHT")]]);
+  if((m=t.match(/^(\d+) is (\d+) tens and (\d+) ones\.$/)))return all([NN(m[1]),[R("MEANS")],NN(m[2]),[R("TENS"),"w/PX_VA"],NN(m[3]),[R("ONES")]]);
+  if((m=t.match(/^(\d+) is (\d+) tens\. \1 is an even number: it makes 2 equal groups of (\d+)\.$/)))return all([NN(m[1]),[R("MEANS")],NN(m[2]),[R("TENS")],NN(m[1]),[R("EVEN")],NN(m[3]),[R("EACH")]]);
+  if((m=t.match(/^(\d+) is an even number: it makes 2 equal groups of (\d+)\.$/)))return all([NN(m[1]),[R("EVEN")],NN(m[2]),[R("EACH")]]);
+  if((m=t.match(/^(\d+) is an odd number/)))return all([NN(m[1]),[R("ODD")]]);
+  if((m=t.match(/^(\d+) is (less|more) than (\d+): it comes/)))return all([NN(m[1]),[R("AZ")],NN(m[3]),[R(m[2]==="less"?"LESS":"MORE")]]);
+  if((m=t.match(/^Count by \d+s: ([\d, ]+)$/)))return all([[R("SKIP")],...m[1].split(/,\s*/).map(NN)]);
+  if(/^Counting by \d+s is faster/.test(t))return all([[R("FASTER")]]);
+  if((m=t.match(/^There are many ways to make (\d+)!$/)))return all([[R("WAYS")],NN(m[1])]);
+  if((m=t.match(/^We counted to (\d+)!$/)))return all([[R("COUNTED")],NN(m[1])]);
+  if(/^You counted by \d+s!$/.test(t))return all([[R("SKIPDONE")]]);
+  if(/^Read it all together:/.test(t))return all([[R("READALL")]]);
+  if((m=t.match(/^(\d+) shared by (\d+) friends = (\d+) each$/)))return all([NN(m[1]),[R("SHARE")],NN(m[2]),[R("FRIENDS")],NN(m[3]),[R("EACH")]]);
+  if((m=t.match(/^Rhyming words end with the same sound, like "(\w+)" and "(\w+)"\.$/)))return all([[R("RHYME")],SWD(m[1]),["w/PX_VA"],SWD(m[2])]);
+  if((m=t.match(/^(\d+) groups of (\d+): ([\d +=]+)$/))){const e=recapV(m[3]);return e.length?all([NN(m[1]),[R("GROUPS")],NN(m[2]),[R("TAYI")],e]):[]}
+  if((m=t.match(/^(\d+) × (\d+) = (\d+)$/)))return all([NN(m[1]),[R("TIMES")],NN(m[2]),["w/LULU_EQUALS"],NN(m[3])]);
+  if((m=t.match(/^([\d +=]+): carry the ten! ([\d +=]+)$/))){const a=recapV(m[1]),b=recapV(m[2]);return a.length&&b.length?all([a,[R("CARRY")],b]):[]}
+  if((m=t.match(/^(\d+):(\d\d)\s+\((.+)\)$/))){const h=+m[1],mi=+m[2],w=m[3];
+    if(/o'clock/.test(w))return all([[R("CLOCK")],NN(h)]);
+    if(/^half past (\d+)/.test(w))return all([[R("CLOCK")],NN(h),[R("HALF")]]);
+    if(/^quarter past/.test(w))return all([[R("CLOCK")],NN(h),[R("QPAST")]]);
+    if((m=w.match(/^quarter to (\d+)/)))return all([[R("QTO")],NN(m[1])]);
+    return all([[R("CLOCK")],NN(h),["w/PX_VA"],NN(mi),[R("MIN")]])}
+  if((m=t.match(/^At (\d+) o'clock the long hand points straight up to 12\.$/)))return all([[R("CLOCK")],NN(m[1]),[R("HAND12")]]);
+  if((m=t.match(/^(\w+) and (\w+) make ([\w ]+)!$/)))return all([W(m[1]),["w/PX_VA"],W(m[2]),[R("MAKE")],W(m[3])]);
+  if((m=t.match(/^(\w+) AND (\w+)$/)))return all([W(m[1]),["w/PX_VA"],W(m[2])]);
+  if((m=t.match(/^([A-Z]) … (\w+)$/)))return all([LT(m[1]),W(m[2])]);
+  if((m=t.match(/^(\w+) – (\w+)$/)))return all([SWD(m[1])||W(m[1]),SWD(m[2])||W(m[2])]);
   if((m=t.match(/^You learned: (.+?)!?$/)))t=m[1];
   if((m=t.match(/^([\d\s+\-−–=]+?)[.:!]\s/))&&/[+\-−–=]/.test(m[1]))t=m[1].trim();   /* "2 + 3 = 5. Both sides weigh the same!" -> the sum */
   if(/^[\d\s+\-−–×x=?]+$/.test(t)&&/\d/.test(t)&&/[+\-−–×=]/.test(t)){const o=[];for(const k of t.match(/\d+|[+\-−–×=]/g)){if(/\d/.test(k)){const v=W(k);if(!v)return [];o.push(...v)}else o.push(k==="+"?"w/LULU_PLUS":k==="="?"w/LULU_EQUALS":k==="×"?null:"w/LULU_MINUS")}return o.includes(null)?[]:o}
@@ -291,5 +327,5 @@ function recapV(t){const LT=c=>/^[a-z]$/i.test(c)?["w/LULU_LN_"+c.toUpperCase()]
   if((m=t.match(/^(?:You found every|That is the|That is a|It is the|It is a) (.+?)!?$/)))return all([W(m[1])]);
   if((m=t.match(/^"(\w+)" is one of the words we read most often/)))return enSay(m[1]);
   if(/,/.test(t)&&t.split(",").every(x=>x.trim().split(" ").length<=3))return all(t.replace(/!$/,"").split(",").map(W));
-  if(t.split(" ").length<=2&&!/[.]$/.test(t))return all([W(t)]);
+  if(t.split(" ").length<=4&&!/[.]$/.test(t))return all([W(t)]);
   return []}

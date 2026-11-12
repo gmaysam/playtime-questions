@@ -156,7 +156,7 @@ function swipeQ(q){
 
 /* ---------- 5. feed the animal ---------- */
 function qFeed(){const a=lvl(),an=pickOne(Object.keys(EATS).filter(x=>AN.some(z=>z[0]===x))),ok=EATS[an],r=pickOne(ok),wr=sh(FOODS.filter(f=>!ok.includes(f))).slice(0,a<=4?2:3),foods=sh([r,...wr]);
-  return {game:"feed",an,ae:AN.find(z=>z[0]===an)[1],r,foods,voice:[V("G_FEED"),...anSay(an)],factT:`${cap1(an)}s eat ${ok.join(" and ")}.`}}
+  return {game:"feed",an,ae:AN.find(z=>z[0]===an)[1],r,foods,voice:[V("G_FEED"),...anSay(an)],factT:`${cap1(/(x|sh|ch)$/.test(an)?an+"es":an+"s")} eat ${ok.map(f=>f==="bone"?"bones":f).join(" and ")}.`}}
 function feedQ(q){const FS=f=>["w/LULU_FA_FOOD"+FOODS.indexOf(f),...enSay(f)];
   gShow(`<div class="game">${gHead("🍽️","Feed me!",`What does the ${q.an} eat?`)}
     <div class="fd-an" id="fdA"><span class="fd-e">${q.ae}</span></div>
