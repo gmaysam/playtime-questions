@@ -176,7 +176,9 @@ const SKY_TF_X=["The sun is our closest star. It looks big because it is near.",
 const SKY_TF_T=["The sun is a star.","The moon is a planet.","We live on planet Earth.","Stars are there only at night.","Clouds are made of tiny drops of water.","The moon has its own light.","A rainbow has seven colours.","Astronauts float in space.","Jupiter is smaller than Earth.","Our galaxy is the Milky Way.","Thunder is the loud sound of the sky.","The sun turns off at night.","The Earth goes around the sun.","There is air to breathe on the moon.","Snow is frozen water.","A comet is a real star with a tail."];
 function wPool(cat){
   const pre={animals:["a","x"],world:["b","n"],sky:["s","p"]}[cat],young=S.age<=7;
-  return WQ.filter(w=>pre.includes(w.i[0])&&w.a<=Math.max(3,S.age)&&(!young||VOICED.has(w.i)));
+  /* Paraxilingo's own px questions go to the section that fits their topic */
+  const pxCat=t=>t==="animals"?"animals":t==="sky"?"sky":"world";
+  return WQ.filter(w=>(w.i.startsWith("px")?pxCat(w.t)===cat:pre.includes(w.i[0]))&&w.a<=Math.max(3,S.age)&&(!young||VOICED.has(w.i)));
 }
 const TEXT_E=[["tomato","🍅"],["sharing toys","🧸"],["recycled","♻️"],["nowruz","🌷"],["magnet","🧲"],["ice melts","🧊"],["light to see","💡"],["fall faster","🪶"],["t-rex","🦖"],["dinosaur","🦕"],["penguin","🐧"],["whale","🐋"],["giraffe","🦒"],["octopus","🐙"],["elephant","🐘"],["spider","🕷️"],["cheetah","🐆"],["bear","🐻"],["owl","🦉"],["hands","🧼"],["teeth","🦷"],["heart","❤️"],["bones","🦴"],["eyes","👀"],["nose","👃"],["ears","👂"],["sleep","😴"],["water","💧"],["cactus","🌵"],["mushroom","🍄"],["mountain","⛰️"],["river","🏞️"],["volcano","🌋"],["carrot","🥕"],["milk","🥛"],["moon","🌙"],["sun","☀️"],["star","⭐"],["rain","🌧️"],["fog","🌫️"],["wind","🌬️"],["planet","🪐"],["plant","🌱"],["flower","🌸"],["tree","🌳"],["bird","🐦"],["fish","🐟"],["egg","🥚"]];
 const PL_IMG=n=>{const i=PLANET_N.indexOf(String(n).toLowerCase());return i>=0?`<img class="plimg" src="img/w/pl_${i}.png" alt="${n}">`:""};
@@ -218,8 +220,8 @@ function qWatcher(cat,used){
   if(w.k==="tf")return {wid:w.i,voice:qv,cap:w.q,tf:true,visual:`<div class="bigpic">${wEmoji(w)}</div>`,opts:[{h:"<span class='yn'>"+YES_B+"</span><small>True</small>",say:["w/LULU_SK_YES"]},{h:"<span class='yn'>"+NO_B+"</span><small>Not true</small>",say:["w/LULU_SK_NO"]}],ans:w.n,layout:"yn",hint:"again",why,exp:{t:(w.n===0?"✅ True! ":"❌ Not true. ")+w.x,v:ev}};
   if(/what is this/i.test(w.q)&&w.p&&PIC_E[w.p])  /* the picture IS the question */
     return {wid:w.i,voice:qv,cap:w.q,visual:`<div class="bigpic">${PIC_E[w.p]}</div>`,opts:w.o.map(o=>({h:`<b class="word">${o}</b>`,say:both(o)})),ans:w.n,layout:"col",hint:"elim",why,exp:{t:`${w.o[w.n]}: ${w.x}`,v:ev}};
-  if(w.o.length===3){w=Object.assign({},w,{o:w.o.slice()});const x=extraOpt(w);if(x!==null){const at=ri(0,3);w.o.splice(at,0,x);if(at<=w.n)w.n++}}
-  return {wid:w.i,voice:qv,cap:w.q,visual:`<div class="listen">${(()=>{const t=w.q.toLowerCase(),oe=w.o.map(optE);if(PFIX[w.i]&&!oe.includes(PFIX[w.i]))return PFIX[w.i]==="*"?plVis("planets"):PFIX[w.i];if(/\bplanets?\b/.test(t))return catById(cat).e;for(const [k,e] of TEXT_E)if(t.includes(k)&&!oe.includes(e))return e;return catById(cat).e})()}</div>`,opts:w.o.map(o=>/^\d+$/.test(o)?numOpt(+o):({h:`<span class="oe">${optE(o)||"🔹"}</span><small>${o}</small>`,say:both(o)})),ans:w.n,layout:w.o.length>2?"row3":"yn",hint:"elim",why,exp:{t:`${w.o[w.n]}: ${w.x}`,v:ev}};
+  if(w.o.length===3&&!w.oe){w=Object.assign({},w,{o:w.o.slice()});const x=extraOpt(w);if(x!==null){const at=ri(0,3);w.o.splice(at,0,x);if(at<=w.n)w.n++}}
+  return {wid:w.i,voice:qv,cap:w.q,visual:`<div class="listen">${(()=>{const t=w.q.toLowerCase(),oe=w.o.map(optE);if(PFIX[w.i]&&!oe.includes(PFIX[w.i]))return PFIX[w.i]==="*"?plVis("planets"):PFIX[w.i];if(/\bplanets?\b/.test(t))return catById(cat).e;for(const [k,e] of TEXT_E)if(t.includes(k)&&!oe.includes(e))return e;return catById(cat).e})()}</div>`,opts:w.o.map((o,oi)=>/^\d+$/.test(o)?numOpt(+o):({h:`<span class="oe">${(w.oe&&w.oe[oi])||optE(o)||"🔹"}</span><small>${o}</small>`,say:both(o)})),ans:w.n,layout:w.o.length>2?"row3":"yn",hint:"elim",why,exp:{t:`${w.o[w.n]}: ${w.x}`,v:ev}};
 }
 /* Story time (Domi's Radio): stories and questions from the Watcher Device, 5 voices */
 const STORIES=__STORIES__;
