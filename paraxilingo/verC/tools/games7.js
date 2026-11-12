@@ -342,3 +342,84 @@ Object.assign(GMAP,{"animals.aHome":G("Who lives where?",["cre","science"],[["la
  "animals.aBaby":G("Eggs or milk?",["cre","science"],[["cog","curiosity"]],"Which animals lay eggs and which feed their babies milk.","Explore"),"animals.aLegs":G("How many legs?",["cog","math"],[["cre","science"]],"Count the legs of animals and insects.","Explore"),
  "animals.aWhere":G("Where does it live?",["cre","science"],[["cog","curiosity"]],"Pick the home of an animal: sea, ice, desert, jungle...","Explore"),
  "farm.aHome":G("Who lives where?",["cre","science"],[["lang","vocab"]],"Which animal lives in the sea, on the farm, in the forest...","Explore"),"farm.aEat":G("Who eats what?",["cre","science"],[["cog","logic"]],"Which animal eats grass, meat, fish, nectar...","Explore"),"farm.aBaby":G("Eggs or milk?",["cre","science"],[["cog","curiosity"]],"Which animals lay eggs and which feed their babies milk.","Explore")});
+
+/* ---------------- upper limits (v15): the easiest question types stop at a level, so older / advanced children never get toddler questions ---------------- */
+const KMAX={"count:find":6,"count:more":6,"count:less":6,"count:long":6,"count:order":8,"add:addPic":6,"add:subPic":7,"add:share":7,"add:left":8,"add:sum":8,"add:pizza":8,
+ "clock:routine":6,"clock:oclock":7,"clock:season":7,"letters:abc":6,"letters:match":6,"letters:listen":7,"letters:rhyme":8,"letters:first":7,"shapes:shape":6,"shapes:color":6,"shapes:match":7,
+ "farm:sound":6,"farm:match":6,"farm:fly":7,"farm:home":7,"read:balloon":8,"read:flash":9,"add:bond":8,"add:double":9,"add:make10":9,"count:measure":8,"count:compare":9,"count:oddeven":9};
+const _kfX=kindsFor;kindsFor=function(cat){const k=_kfX(cat),l=lvl(),f=k.filter(x=>l<=(KMAX[cat+":"+x]||99));return f.length?f:k};
+
+/* ---------------- maths for levels 8-12 (v15) ---------------- */
+var V15_READY=__V15VOICE__;
+const M2=n=>"w/PX_MQ2_"+n;
+const NV0=n=>n<=20?[N(n)]:faNum(n);
+function NV(n){n=Math.round(n);if(n<0)return [M2("MINUSNUM"),...NV(-n)];if(n<=100)return NV0(n);
+  if(n<1000){const h=Math.floor(n/100),r=n%100;return [M2("H"+h),...(r?["w/PX_VA",...NV0(r)]:[])]}
+  const k=Math.floor(n/1000),r=n%1000;return [...(k===1?[]:NV(k)),M2("THOUSAND"),...(r?["w/PX_VA",...NV(r)]:[])]}
+const NVd=x=>{const s=String(x);if(!s.includes("."))return NV(+s);const [a,b]=s.split(".");return [...NV(+a),M2("POINT"),...b.split("").map(d=>N(+d))]};
+const fmt=n=>String(n).replace(/\B(?=(\d{3})+(?!\d))/g,",");
+const bOpt=x=>({h:`<b class="num">${typeof x==="number"?fmt(x):x}</b>`,say:typeof x==="number"?NV(x):NVd(x)});
+const bOpts=(r,c)=>{const o=sh([r,...sh([...new Set(c.filter(x=>x!==r&&(typeof x!=="number"||x>=0||r<0)))]).slice(0,3)]);return {opts:o.map(bOpt),ans:o.indexOf(r)}};
+const eqV=(a,op,b)=>[...NV(a),op,...NV(b),MQ("HOWMUCH")];
+const FR={"1/2":[1,2,"12"],"1/3":[1,3,"13"],"1/4":[1,4,"14"],"3/4":[3,4,"34"],"2/3":[2,3,"23"],"1/5":[1,5,"15"],"2/5":[2,5,"25"],"1/10":[1,10,"110"],"1/8":[1,8,"18"]};
+const frBar=f=>{const [a,b]=FR[f];return `<span class="m2-fr"><i style="width:${a/b*100}%"></i></span>`};
+const M2GEN={
+ times(){const m=lvl()<=9?10:12,a=ri(2,m),b=ri(2,m),r=a*b;return Object.assign({voice:eqV(a,"w/PX_RC_TIMES",b),cap:"Multiply",visual:eqH(a,"×",b,"?"),layout:"row3",hint:"elim",exp:{t:`${a} × ${b} = ${r}`,v:[...NV(a),"w/PX_RC_TIMES",...NV(b),"w/LULU_EQUALS",...NV(r)]}},bOpts(r,[r+a,r-a,r+b,r-b,(a+1)*(b+1)]))},
+ divide(){const b=ri(2,lvl()<=9?10:12),c=ri(2,10),a=b*c;return Object.assign({voice:eqV(a,M2("DIV"),b),cap:"Divide",visual:eqH(a,"÷",b,"?"),layout:"row3",hint:"elim",exp:{t:`${a} ÷ ${b} = ${c} because ${b} × ${c} = ${a}`,v:[...NV(a),M2("DIV"),...NV(b),"w/LULU_EQUALS",...NV(c)]}},bOpts(c,[c+1,c-1,c+2,b]))},
+ mul2(){const a=ri(11,lvl()<=11?49:99),b=ri(2,9),r=a*b;return Object.assign({voice:eqV(a,"w/PX_RC_TIMES",b),cap:"Multiply",visual:eqH(a,"×",b,"?"),layout:"row3",hint:"elim",exp:{t:`${a} × ${b} = ${r}`,v:[...NV(a),"w/PX_RC_TIMES",...NV(b),"w/LULU_EQUALS",...NV(r)]}},bOpts(r,[r+b,r-b,r+10,r-10,a*(b+1)]))},
+ big3(){const d=lvl()>=11?4:3,lo=10**(d-1),a=ri(lo,10**d-1),plus=Math.random()<.5,b=plus?ri(lo/10|0||10,10**d-1-a>lo?10**d-1-a:lo):ri(lo/10|0||10,a-1),r=plus?a+b:a-b;
+  return Object.assign({voice:eqV(a,plus?"w/LULU_PLUS":"w/LULU_MINUS",b),cap:plus?"Add":"Subtract",visual:eqH(fmt(a),plus?"+":"−",fmt(b),"?"),layout:"row3",hint:"elim",exp:{t:`${fmt(a)} ${plus?"+":"−"} ${fmt(b)} = ${fmt(r)}`,v:[...NV(a),plus?"w/LULU_PLUS":"w/LULU_MINUS",...NV(b),"w/LULU_EQUALS",...NV(r)]}},bOpts(r,[r+10,r-10,r+100,r-100,r+1]))},
+ fracof(){const fs=lvl()<=9?["1/2","1/4","1/3"]:["1/2","1/3","1/4","3/4","2/3","1/5","2/5","1/10"],f=pickOne(fs),[a,b,c]=FR[f],n=b*ri(2,lvl()<=9?6:12),r=n/b*a;
+  return Object.assign({voice:[M2("F_"+c+"_OF"),...NV(n),MQ("HOWMUCH")],cap:`${f} of ${n}`,visual:`<div class="eq"><span>${f}</span><b>of</b><span>${n}</span><b>=</b><span class="q">?</span></div>${frBar(f)}`,layout:"row3",hint:"elim",exp:{t:`${n} ÷ ${b} = ${n/b}, so ${f} of ${n} = ${r}`,v:[...NV(n),M2("DIV"),...NV(b),"w/LULU_EQUALS",...NV(n/b)]}},bOpts(r,[n/b,r+1,r-1,n-r,r*2]))},
+ fraccmp(){const ks=Object.keys(FR);let x,y;do{x=pickOne(ks);y=pickOne(ks)}while(x===y||FR[x][0]/FR[x][1]===FR[y][0]/FR[y][1]);const big=FR[x][0]/FR[x][1]>FR[y][0]/FR[y][1]?x:y,o=sh([x,y]);
+  return {voice:[M2("FRACBIG")],cap:"Which fraction is bigger?",layout:"yn",hint:"elim",opts:o.map(f=>({h:`<b class="num">${f}</b>${frBar(f)}`,say:[M2("FR_"+FR[f][2])]})),ans:o.indexOf(big),why:{t:`${big} is bigger.`,v:[M2("FR_"+FR[big][2]),MQ("BIGGER")]}}},
+ place(){const d=lvl()>=11?5:4;let n,s,p;do{n=ri(10**(d-1),10**d-1);s=String(n);p=ri(0,d-1)}while(s[p]==="0");const dig=+s[p],pw=d-1-p,r=dig*10**pw,c=[0,1,2,3,4].filter(x=>x!==pw&&x<d).map(x=>dig*10**x);
+  return Object.assign({voice:[M2("PLACE_A"),...NV(n),M2("PLACE_B"),N(dig),M2("PLACE_C")],cap:`The value of ${dig} in ${fmt(n)}`,visual:`<div class="eq m2-pl">${s.split("").map((ch,i)=>`<span class="${i===p?"q":""}">${ch}</span>`).join("")}</div>`,layout:"row3",hint:"elim",exp:{t:`The ${dig} is worth ${fmt(r)}`,v:[...NV(r)]}},bOpts(r,c))},
+ round(){const to=lvl()>=11&&Math.random()<.4?1000:Math.random()<.5?10:100,n=ri(to===1000?1001:101,to===1000?9998:999),r=Math.round(n/to)*to;
+  return Object.assign({voice:[...NV(n),M2("ROUND"+to)],cap:`Round ${fmt(n)} to the nearest ${to}`,visual:`<div class="eq"><span>${fmt(n)}</span><b>≈</b><span class="q">?</span></div>`,layout:"row3",hint:"elim",exp:{t:`${fmt(n)} ≈ ${fmt(r)}`,v:[...NV(r)]}},bOpts(r,[r+to,r-to,Math.floor(n/to)*to===r?Math.ceil(n/to)*to:Math.floor(n/to)*to,n]))},
+ area(){const w=ri(2,8),h=ri(2,6),per=Math.random()<.5&&lvl()>=10,r=per?2*(w+h):w*h;
+  return Object.assign({voice:[M2(per?"PERIM":"AREA")],cap:per?"Perimeter (all the way round)":"Area (how many squares?)",visual:`<div class="m2-grid" style="grid-template-columns:repeat(${w},22px)">${"<i></i>".repeat(w*h)}</div><div class="m2-dim">${w} × ${h}</div>`,layout:"row3",hint:"elim",exp:{t:per?`${w} + ${h} + ${w} + ${h} = ${r}`:`${w} × ${h} = ${r}`,v:per?[...NV(w),"w/LULU_PLUS",...NV(h),"w/LULU_PLUS",...NV(w),"w/LULU_PLUS",...NV(h),"w/LULU_EQUALS",...NV(r)]:[...NV(w),"w/PX_RC_TIMES",...NV(h),"w/LULU_EQUALS",...NV(r)]}},bOpts(r,per?[w*h,w+h,r+2,r-2]:[2*(w+h),w+h,r+w,r-h]))},
+ elapsed(){const h=ri(1,11),m=pickOne([0,15,30,45,10,20,40,50]),d=pickOne(lvl()<=9?[15,30,45,60]:[15,25,35,45,50,75,90]),t=h*60+m+d,H=((Math.floor(t/60)-1)%12)+1,Mm=t%60;
+  const tv=(hh,mm)=>["w/PX_RC_CLOCK",N(hh),...(mm?["w/PX_VA",...NV(mm),"w/PX_RC_MIN"]:[])],ts=(hh,mm)=>`${hh}:${String(mm).padStart(2,"0")}`;
+  const c=[[H,(Mm+15)%60],[((H)%12)+1,Mm],[h,(m+d)%60],[H,(Mm+45)%60]].filter(x=>!(x[0]===H&&x[1]===Mm));const seen=new Set([H+":"+Mm]),cu=sh(c).filter(x=>{const k=x[0]+":"+x[1];if(seen.has(k))return false;seen.add(k);return true});const o=[[H,Mm],...cu.slice(0,2)];
+  return {voice:[M2("NOW"),N(h),...(m?["w/PX_VA",...NV(m),"w/PX_RC_MIN"]:[]),...NV(d),M2("LATER")],cap:`It is ${ts(h,m)}. What time is it ${d} minutes later?`,visual:`<div class="eq"><span>${ts(h,m)}</span><b>+</b><span>${d} min</span><b>=</b><span class="q">?</span></div>`,layout:"row3",hint:"elim",
+   opts:o.map(x=>({h:`<b class="num">${ts(x[0],x[1])}</b>`,say:tv(x[0],x[1])})),ans:0,why:{t:`${ts(h,m)} + ${d} minutes = ${ts(H,Mm)}`,v:tv(H,Mm)},_o:o}},
+ change(){const big=lvl()>=11,paid=big?1000:100,p=ri(big?101:11,paid-1);const r=paid-p;
+  return Object.assign({voice:[M2("CH_A"),...NV(p),M2("CH_B"),...NV(paid),M2("CH_C")],cap:`A book costs ${p} coins. You pay ${paid}. Change?`,visual:`<div class="eq"><span>${paid}</span><b>−</b><span>${p}</span><b>=</b><span class="q">?</span></div>`,layout:"row3",hint:"elim",exp:{t:`${paid} − ${p} = ${r}`,v:[...NV(paid),"w/LULU_MINUS",...NV(p),"w/LULU_EQUALS",...NV(r)]}},bOpts(r,[r+10,r-10,r+1,r-1]))},
+ story(){const t=ri(1,3);if(t===1){const a=ri(2,12),b=ri(2,5),c=ri(2,6),r=a+b*c;return Object.assign({voice:[M2("WP1_A"),...NV(a),M2("WP1_B"),...NV(b),M2("WP1_C"),...NV(c),M2("WP1_D")],cap:`Sara has ${a} apples. She buys ${b} bags with ${c} apples in each. How many apples now?`,layout:"row3",hint:"elim",exp:{t:`${a} + ${b} × ${c} = ${a} + ${b*c} = ${r}`,v:[...NV(a),"w/LULU_PLUS",...NV(b*c),"w/LULU_EQUALS",...NV(r)]}},bOpts(r,[(a+b)*c,a+b+c,r+c,r-c]))}
+  if(t===2){const a=ri(15,40),b=ri(3,12),c=ri(3,12),r=a-b+c;return Object.assign({voice:[M2("WP2_A"),...NV(a),M2("WP2_B"),...NV(b),M2("WP2_C"),...NV(c),M2("WP2_D")],cap:`${a} people are on a bus. At the stop ${b} get off and ${c} get on. How many now?`,layout:"row3",hint:"elim",exp:{t:`${a} − ${b} + ${c} = ${r}`,v:[...NV(a),"w/LULU_MINUS",...NV(b),"w/LULU_PLUS",...NV(c),"w/LULU_EQUALS",...NV(r)]}},bOpts(r,[a+b+c,a-b-c,r+2,r-2]))}
+  const b=ri(2,8),e=ri(3,9),a=b*e;return Object.assign({voice:[...NV(a),M2("WP3_A"),...NV(b),M2("WP3_B")],cap:`${a} stickers are shared equally between ${b} friends. How many each?`,layout:"row3",hint:"elim",exp:{t:`${a} ÷ ${b} = ${e}`,v:[...NV(a),M2("DIV"),...NV(b),"w/LULU_EQUALS",...NV(e)]}},bOpts(e,[e+1,e-1,a-b,b]))},
+ neg(){const a=ri(-5,10),b=ri(2,10),cold=Math.random()<.6,r=cold?a-b:a+b;return Object.assign({voice:[M2("T_A"),...NV(a),M2("T_B"),...NV(b),M2(cold?"T_COLD":"T_WARM")],cap:`It is ${a}°. It gets ${b}° ${cold?"colder":"warmer"}. Now?`,visual:`<div class="m2-th">🌡️ <b>${a}°</b> ${cold?"⬇️":"⬆️"} ${b}°</div>`,layout:"row3",hint:"elim",exp:{t:`${a} ${cold?"−":"+"} ${b} = ${r}`,v:[...NV(a),cold?"w/LULU_MINUS":"w/LULU_PLUS",...NV(b),"w/LULU_EQUALS",...NV(r)]}},bOpts(r,[-r,r+1,r-1,cold?a+b:a-b]))},
+ decimal(){const a=ri(10,99)/10,b=ri(10,99)/10,plus=Math.random()<.6||a<=b,r=Math.round((plus?a+b:a-b)*10)/10,f=x=>Math.round(x*10)/10;
+  const o=sh([r,...sh([f(r+1),f(r-1),f(r+0.1),f(r-0.1),f(r+10)].filter(x=>x>0&&x!==r)).slice(0,3)]);
+  return {voice:[...NVd(a),plus?"w/LULU_PLUS":"w/LULU_MINUS",...NVd(b),MQ("HOWMUCH")],cap:"Decimals",visual:eqH(a,plus?"+":"−",b,"?"),layout:"row3",hint:"elim",opts:o.map(x=>({h:`<b class="num">${x}</b>`,say:NVd(x)})),ans:o.indexOf(r),exp:{t:`${a} ${plus?"+":"−"} ${b} = ${r}`,v:[...NVd(a),plus?"w/LULU_PLUS":"w/LULU_MINUS",...NVd(b),"w/LULU_EQUALS",...NVd(r)]}}},
+ percent(){const p=pickOne([10,25,50,75,20]),n=pickOne([20,40,60,80,100,120,200].filter(x=>x*p%100===0)),r=n*p/100;
+  return Object.assign({voice:[...NV(p),M2("PCT"),...NV(n),MQ("HOWMUCH")],cap:`${p}% of ${n}`,visual:`<div class="eq"><span>${p}%</span><b>of</b><span>${n}</span><b>=</b><span class="q">?</span></div>`,layout:"row3",hint:"elim",exp:{t:`${p}% of ${n} = ${r}`,v:[...NV(p),M2("PCT"),...NV(n),"w/LULU_EQUALS",...NV(r)]}},bOpts(r,[r*2,r/2|0,n-r,r+10]))}};
+/* section and level window for each type (level = age + parent's level + how well the child does) */
+const M2WIN={"add:times":[8,12],"add:divide":[8,12],"add:mul2":[10,12],"add:big3":[9,12],"add:fracof":[9,12],"add:fraccmp":[9,12],"add:story":[9,12],"add:change":[9,12],"add:neg":[10,12],"add:decimal":[10,12],"add:percent":[11,12],
+ "count:place":[9,12],"count:round":[9,12],"shapes:area":[9,12],"clock:elapsed":[9,12]};
+const _kfM2=kindsFor;kindsFor=function(cat){const k=_kfM2(cat);if(!V15_READY)return k;const l=lvl();return [...k,...Object.keys(M2WIN).filter(x=>x.startsWith(cat+":")&&l>=M2WIN[x][0]&&l<=M2WIN[x][1]).map(x=>x.split(":")[1])]};
+const _bqM2=buildQ;buildQ=function(cat,k,used){if(M2GEN[k]){const q=M2GEN[k]();if(q._o){const o=q._o;delete q._o;const j=0,perm=sh([0,1,2]);q.opts=perm.map(i=>q.opts[i]);q.ans=perm.indexOf(0)}q.cat=cat;q.kind=k;if(!q.exp&&q.why)q.exp={t:q.why.t,v:q.why.v};if(!q.why&&q.exp)q.why={t:q.exp.t,v:q.exp.v||[]};return q}return _bqM2(cat,k,used)};
+Object.assign(GMAP,Object.fromEntries(Object.keys(M2WIN).map(x=>[x.replace(":","."),G({times:"Times tables",divide:"Division",mul2:"Multiplying big numbers",big3:"Big adding and taking away",fracof:"Fraction of a number",fraccmp:"Comparing fractions",story:"Two-step word problems",change:"Money and change",neg:"Negative numbers",decimal:"Decimals",percent:"Percent",place:"Place value",round:"Rounding",area:"Area and perimeter",elapsed:"Elapsed time"}[x.split(":")[1]],["cog","math"],[["cog","logic"]],"Maths for ages 9-12 (or children who are ahead).","Practice")])));
+
+/* ---------------- English for levels 8-12 (v15): opposites, plurals, past tense, synonyms ---------------- */
+const LW={opp:[["hot","cold"],["big","small"],["fast","slow"],["happy","sad"],["open","close"],["up","down"],["day","night"],["full","empty"],["light","dark"],["early","late"],["strong","weak"],["quiet","loud"],["hard","soft"],["young","old"],["tall","short"],["push","pull"],["win","lose"],["wet","dry"],["clean","dirty"],["first","last"]],
+ plu:[["child","children"],["mouse","mice"],["foot","feet"],["tooth","teeth"],["man","men"],["woman","women"],["box","boxes"],["baby","babies"],["leaf","leaves"],["sheep","sheep"],["person","people"],["knife","knives"],["goose","geese"],["city","cities"],["fish","fish"]],
+ past:[["go","went"],["eat","ate"],["see","saw"],["run","ran"],["swim","swam"],["write","wrote"],["sing","sang"],["take","took"],["buy","bought"],["think","thought"],["catch","caught"],["fly","flew"],["drink","drank"],["sleep","slept"],["teach","taught"]],
+ syn:[["big","large"],["small","little"],["happy","glad"],["fast","quick"],["begin","start"],["end","finish"],["smart","clever"],["angry","mad"],["scared","afraid"],["shout","yell"],["gift","present"],["hard","difficult"]]};
+const EW=w=>{const e=enSay(w);return e.length?e:["w/PX_EW_"+w.replace(/ /g,"_").toUpperCase()]};
+const LPW=(w,r)=>[...new Set([/(s|x|ch|sh)$/.test(w)?w+"s":w+"s",w])].filter(x=>x!==r).concat(r===w?[w+"s",w+"es"]:[]).slice(0,2),LTW=(w,r)=>[w+(w.endsWith("e")?"d":"ed"),w].filter(x=>x!==r);
+const LWRONG={plu:(w,r)=>[w+"s",w+"es",r.slice(0,-1)+"s"].filter(x=>x!==r&&x!==w+"s"||x!==r),past:(w,r)=>[w+"ed",w+"s",w+"ing"]};
+const LGEN={};for(const t of Object.keys(LW))LGEN["w"+t]=function(){const [w,r]=pickOne(LW[t]);let wrong;
+  if(t==="plu")wrong=LPW(w,r);else if(t==="past")wrong=LTW(w,r);
+  else wrong=sh(LW[t].flatMap(p=>p).filter(x=>x!==w&&x!==r&&!LW[t].some(p=>p.includes(w)&&p.includes(x))));
+  const o=sh([r,...[...new Set(wrong)].slice(0,2)]);
+  return {voice:[M2("L_"+t.toUpperCase()),...EW(w)],cap:{opp:"Which word means the opposite?",plu:"Which is the plural (more than one)?",past:"Which is the past tense?",syn:"Which word means the same?"}[t],visual:`<div class="eq"><span>${w}</span></div>`,layout:"col",hint:"elim",
+   opts:o.map(x=>({h:`<b class="word">${x}</b>`,say:EW(x)})),ans:o.indexOf(r),why:{t:`${w} → ${r}`,v:[...EW(w),...EW(r)]}}};
+const LWIN={"letters:wopp":[8,12],"read:wopp":[8,12],"letters:wplu":[9,12],"read:wplu":[9,12],"letters:wpast":[10,12],"read:wpast":[10,12],"letters:wsyn":[11,12],"read:wsyn":[11,12]};
+const _kfL=kindsFor;kindsFor=function(cat){const k=_kfL(cat);if(!V15_READY)return k;const l=lvl();return [...k,...Object.keys(LWIN).filter(x=>x.startsWith(cat+":")&&l>=LWIN[x][0]&&l<=LWIN[x][1]).map(x=>x.split(":")[1])]};
+const _bqL=buildQ;buildQ=function(cat,k,used){if(LGEN[k]){const q=LGEN[k]();q.cat=cat;q.kind=k;q.exp={t:q.why.t,v:q.why.v};return q}return _bqL(cat,k,used)};
+Object.assign(GMAP,Object.fromEntries(Object.keys(LWIN).map(x=>[x.replace(":","."),G({wopp:"Opposites",wplu:"Plurals",wpast:"Past tense",wsyn:"Same meaning (synonyms)"}[x.split(":")[1]],["lang","vocab"],[["lang","read"]],"English words for ages 9-12.","Practice")])));
+
+/* new 9-12 kinds: the worked answer is the fact; drop generic facts that have no voice */
+const _ffV15=factFor;factFor=function(q){const f=_ffV15(q);if(f&&q&&(M2GEN[q.kind]||LGEN[q.kind])&&!factV(f).length)return "";return f};

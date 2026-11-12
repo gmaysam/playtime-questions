@@ -2283,5 +2283,1845 @@
 "🌴",
 "🧊"
 ]
+},
+{
+"i": "px116",
+"k": "c",
+"t": "animals",
+"a": 9,
+"q": "Which animal is an amphibian?",
+"o": [
+"Lizard",
+"Shark",
+"Frog"
+],
+"n": 2,
+"x": "Amphibians like frogs start life in water and later live on land too.",
+"p": null,
+"oe": [
+"🦎",
+"🦈",
+"🐸"
+]
+},
+{
+"i": "px117",
+"k": "c",
+"t": "animals",
+"a": 9,
+"q": "What do we call an animal that eats both plants and meat?",
+"o": [
+"Herbivore",
+"Omnivore",
+"Carnivore"
+],
+"n": 1,
+"x": "Omnivores, like bears and people, eat both plants and meat.",
+"p": null,
+"oe": [
+"🐄",
+"🐻",
+"🦁"
+]
+},
+{
+"i": "px118",
+"k": "c",
+"t": "animals",
+"a": 9,
+"q": "Which of these is a mammal?",
+"o": [
+"Eagle",
+"Crocodile",
+"Bat"
+],
+"n": 2,
+"x": "Bats are the only mammals that can really fly.",
+"p": null,
+"oe": [
+"🦅",
+"🐊",
+"🦇"
+]
+},
+{
+"i": "px119",
+"k": "c",
+"t": "animals",
+"a": 9,
+"q": "What helps a fish swim and steer?",
+"o": [
+"Feathers",
+"Fur",
+"Fins"
+],
+"n": 2,
+"x": "Fish use their fins to steer and their tail to push through the water.",
+"p": null,
+"oe": [
+"🪶",
+"🧶",
+"🐟"
+]
+},
+{
+"i": "px120",
+"k": "c",
+"t": "animals",
+"a": 9,
+"q": "Which animal is the largest on Earth?",
+"o": [
+"Elephant",
+"Blue whale",
+"Giraffe"
+],
+"n": 1,
+"x": "The blue whale is the largest animal that has ever lived.",
+"p": null,
+"oe": [
+"🐘",
+"🐋",
+"🦒"
+]
+},
+{
+"i": "px121",
+"k": "c",
+"t": "animals",
+"a": 9,
+"q": "What is a baby frog called?",
+"o": [
+"Tadpole",
+"Cub",
+"Calf"
+],
+"n": 0,
+"x": "A tadpole lives in water and slowly grows legs to become a frog.",
+"p": null,
+"oe": [
+"🐸",
+"🐻",
+"🐄"
+]
+},
+{
+"i": "px122",
+"k": "c",
+"t": "animals",
+"a": 10,
+"q": "Why do some birds fly south in winter?",
+"o": [
+"To sleep",
+"To lose feathers",
+"To find food and warmth"
+],
+"n": 2,
+"x": "This long journey is called migration.",
+"p": null,
+"oe": [
+"😴",
+"🪶",
+"🐦"
+]
+},
+{
+"i": "px123",
+"k": "c",
+"t": "animals",
+"a": 10,
+"q": "What do we call a long winter sleep?",
+"o": [
+"Hibernation",
+"Camouflage",
+"Migration"
+],
+"n": 0,
+"x": "Bears and hedgehogs hibernate to save energy in winter.",
+"p": null,
+"oe": [
+"🐻",
+"🦎",
+"🐦"
+]
+},
+{
+"i": "px124",
+"k": "c",
+"t": "animals",
+"a": 10,
+"q": "Why is a polar bear's fur white?",
+"o": [
+"To hide in the snow",
+"To stay cool",
+"To look clean"
+],
+"n": 0,
+"x": "Blending into the surroundings is called camouflage.",
+"p": null,
+"oe": [
+"🐻‍❄️",
+"🌞",
+"🧼"
+]
+},
+{
+"i": "px125",
+"k": "c",
+"t": "animals",
+"a": 10,
+"q": "How many hearts does an octopus have?",
+"o": [
+"Three",
+"Two",
+"One"
+],
+"n": 0,
+"x": "An octopus has three hearts and blue blood.",
+"p": null,
+"oe": [
+"🐙",
+"💕",
+"❤️"
+]
+},
+{
+"i": "px126",
+"k": "c",
+"t": "animals",
+"a": 10,
+"q": "Which animal is an insect?",
+"o": [
+"Butterfly",
+"Snail",
+"Spider"
+],
+"n": 0,
+"x": "Insects have six legs and three body parts.",
+"p": null,
+"oe": [
+"🦋",
+"🐌",
+"🕷️"
+]
+},
+{
+"i": "px127",
+"k": "c",
+"t": "animals",
+"a": 10,
+"q": "What do bees make from nectar?",
+"o": [
+"Wax only",
+"Milk",
+"Honey"
+],
+"n": 2,
+"x": "Bees turn nectar into honey and store it in honeycombs.",
+"p": null,
+"oe": [
+"🕯️",
+"🥛",
+"🍯"
+]
+},
+{
+"i": "px128",
+"k": "c",
+"t": "animals",
+"a": 11,
+"q": "What is a food chain?",
+"o": [
+"Who eats whom in nature",
+"A chain of farms",
+"A shop chain"
+],
+"n": 0,
+"x": "For example: grass is eaten by a rabbit, and the rabbit by a fox.",
+"p": null,
+"oe": [
+"🌿",
+"🚜",
+"🏪"
+]
+},
+{
+"i": "px129",
+"k": "c",
+"t": "animals",
+"a": 11,
+"q": "What do we call animals that hunt other animals?",
+"o": [
+"Plants",
+"Prey",
+"Predators"
+],
+"n": 2,
+"x": "Lions are predators; the animals they hunt are their prey.",
+"p": null,
+"oe": [
+"🌿",
+"🐰",
+"🦁"
+]
+},
+{
+"i": "px130",
+"k": "c",
+"t": "animals",
+"a": 11,
+"q": "Which animal has a backbone?",
+"o": [
+"Snake",
+"Jellyfish",
+"Worm"
+],
+"n": 0,
+"x": "Animals with a backbone are called vertebrates.",
+"p": null,
+"oe": [
+"🐍",
+"🪼",
+"🪱"
+]
+},
+{
+"i": "px131",
+"k": "c",
+"t": "animals",
+"a": 11,
+"q": "How do whales breathe?",
+"o": [
+"Through their skin",
+"With gills",
+"Through a blowhole"
+],
+"n": 2,
+"x": "Whales come up to breathe air through a blowhole on top of their head.",
+"p": null,
+"oe": [
+"🐸",
+"🐟",
+"🐋"
+]
+},
+{
+"i": "px132",
+"k": "c",
+"t": "animals",
+"a": 11,
+"q": "Which animal is endangered (very few are left)?",
+"o": [
+"Asiatic cheetah",
+"Rat",
+"Pigeon"
+],
+"n": 0,
+"x": "Very few Asiatic cheetahs are left, and they live only in Iran. Endangered animals need our protection.",
+"p": null,
+"oe": [
+"🐆",
+"🐀",
+"🕊️"
+]
+},
+{
+"i": "px133",
+"k": "c",
+"t": "animals",
+"a": 12,
+"q": "What is it called when a caterpillar becomes a butterfly?",
+"o": [
+"Hibernation",
+"Migration",
+"Metamorphosis"
+],
+"n": 2,
+"x": "Metamorphosis means a big change in body shape as an animal grows.",
+"p": null,
+"oe": [
+"🐻",
+"🐦",
+"🦋"
+]
+},
+{
+"i": "px134",
+"k": "c",
+"t": "animals",
+"a": 12,
+"q": "Which animal is a marsupial (carries babies in a pouch)?",
+"o": [
+"Koala",
+"Panda",
+"Bear"
+],
+"n": 0,
+"x": "Marsupials like koalas and kangaroos carry their babies in a pouch.",
+"p": null,
+"oe": [
+"🐨",
+"🐼",
+"🐻"
+]
+},
+{
+"i": "px135",
+"k": "c",
+"t": "animals",
+"a": 12,
+"q": "What do we call the place where an animal naturally lives?",
+"o": [
+"Habitat",
+"Harbour",
+"Hobby"
+],
+"n": 0,
+"x": "A habitat gives an animal food, water and shelter.",
+"p": null,
+"oe": [
+"🌳",
+"⚓",
+"🎨"
+]
+},
+{
+"i": "px136",
+"k": "c",
+"t": "body",
+"a": 9,
+"q": "Which organ pumps blood around your body?",
+"o": [
+"Heart",
+"Lungs",
+"Stomach"
+],
+"n": 0,
+"x": "Your heart beats about 100,000 times every day.",
+"p": null,
+"oe": [
+"❤️",
+"🫁",
+"🍽️"
+]
+},
+{
+"i": "px137",
+"k": "c",
+"t": "body",
+"a": 9,
+"q": "Where does food go after you swallow it?",
+"o": [
+"Brain",
+"Stomach",
+"Lungs"
+],
+"n": 1,
+"x": "The stomach mixes food with juices to break it down.",
+"p": null,
+"oe": [
+"🧠",
+"🍽️",
+"🫁"
+]
+},
+{
+"i": "px138",
+"k": "c",
+"t": "body",
+"a": 9,
+"q": "What protects your brain?",
+"o": [
+"Knees",
+"Skull",
+"Ribs"
+],
+"n": 1,
+"x": "The skull is a strong bony helmet around your brain.",
+"p": null,
+"oe": [
+"🦵",
+"💀",
+"🦴"
+]
+},
+{
+"i": "px139",
+"k": "c",
+"t": "body",
+"a": 9,
+"q": "How many senses do we usually talk about?",
+"o": [
+"Three",
+"Ten",
+"Five"
+],
+"n": 2,
+"x": "Sight, hearing, smell, taste and touch.",
+"p": null,
+"oe": [
+"3️⃣",
+"🔟",
+"🖐️"
+]
+},
+{
+"i": "px140",
+"k": "c",
+"t": "body",
+"a": 10,
+"q": "What do your lungs take from the air?",
+"o": [
+"Sugar",
+"Oxygen",
+"Salt"
+],
+"n": 1,
+"x": "Your lungs take in oxygen and breathe out carbon dioxide.",
+"p": null,
+"oe": [
+"🍬",
+"🫁",
+"🧂"
+]
+},
+{
+"i": "px141",
+"k": "c",
+"t": "body",
+"a": 10,
+"q": "What connects muscles to bones?",
+"o": [
+"Hair",
+"Tendons",
+"Nails"
+],
+"n": 1,
+"x": "Tendons are strong cords that let muscles pull on bones.",
+"p": null,
+"oe": [
+"💇",
+"🦵",
+"🖐️"
+]
+},
+{
+"i": "px142",
+"k": "c",
+"t": "body",
+"a": 10,
+"q": "About how many bones does an adult have?",
+"o": [
+"206",
+"1000",
+"50"
+],
+"n": 0,
+"x": "Babies are born with about 300 bones; some join together as they grow.",
+"p": null,
+"oe": [
+"🦴",
+"🦴",
+"🦴"
+]
+},
+{
+"i": "px143",
+"k": "c",
+"t": "body",
+"a": 10,
+"q": "What carries messages from your brain to your body?",
+"o": [
+"Veins",
+"Bones",
+"Nerves"
+],
+"n": 2,
+"x": "Nerves send signals very fast, like electric wires.",
+"p": null,
+"oe": [
+"🩸",
+"🦴",
+"⚡"
+]
+},
+{
+"i": "px144",
+"k": "c",
+"t": "body",
+"a": 10,
+"q": "Why do we need to drink water?",
+"o": [
+"To see better",
+"To grow hair",
+"Our body is mostly water"
+],
+"n": 2,
+"x": "More than half of your body is water.",
+"p": null,
+"oe": [
+"👓",
+"💇",
+"💧"
+]
+},
+{
+"i": "px145",
+"k": "c",
+"t": "body",
+"a": 11,
+"q": "What does your blood carry around your body?",
+"o": [
+"Sand",
+"Air bubbles only",
+"Oxygen and food"
+],
+"n": 2,
+"x": "Red blood cells carry oxygen to every part of your body.",
+"p": null,
+"oe": [
+"🏖️",
+"🫧",
+"🩸"
+]
+},
+{
+"i": "px146",
+"k": "c",
+"t": "body",
+"a": 11,
+"q": "What fights germs in your body?",
+"o": [
+"White blood cells",
+"Teeth",
+"Hair"
+],
+"n": 0,
+"x": "White blood cells are part of your immune system.",
+"p": null,
+"oe": [
+"🛡️",
+"🦷",
+"💇"
+]
+},
+{
+"i": "px147",
+"k": "c",
+"t": "body",
+"a": 11,
+"q": "Which is the largest organ of the body?",
+"o": [
+"Liver",
+"Skin",
+"Heart"
+],
+"n": 1,
+"x": "Your skin protects you and helps keep you at the right temperature.",
+"p": null,
+"oe": [
+"🫀",
+"🖐️",
+"❤️"
+]
+},
+{
+"i": "px148",
+"k": "c",
+"t": "body",
+"a": 12,
+"q": "Where is food mostly absorbed into your body?",
+"o": [
+"Lungs",
+"Mouth",
+"Small intestine"
+],
+"n": 2,
+"x": "The small intestine is about 6 metres long, folded up inside you!",
+"p": null,
+"oe": [
+"🫁",
+"👄",
+"🌀"
+]
+},
+{
+"i": "px149",
+"k": "c",
+"t": "body",
+"a": 12,
+"q": "Which food group gives us the most energy quickly?",
+"o": [
+"Vitamins",
+"Water",
+"Carbohydrates"
+],
+"n": 2,
+"x": "Bread, rice and pasta are carbohydrates.",
+"p": null,
+"oe": [
+"🍊",
+"💧",
+"🍞"
+]
+},
+{
+"i": "px150",
+"k": "c",
+"t": "earth",
+"a": 9,
+"q": "What is the largest ocean?",
+"o": [
+"Pacific",
+"Indian",
+"Atlantic"
+],
+"n": 0,
+"x": "The Pacific Ocean is bigger than all the land on Earth put together.",
+"p": null,
+"oe": [
+"🌊",
+"🌊",
+"🌊"
+]
+},
+{
+"i": "px151",
+"k": "c",
+"t": "earth",
+"a": 9,
+"q": "How many continents are there?",
+"o": [
+"Ten",
+"Five",
+"Seven"
+],
+"n": 2,
+"x": "Asia, Africa, North America, South America, Antarctica, Europe and Oceania.",
+"p": null,
+"oe": [
+"🔟",
+"5️⃣",
+"🌍"
+]
+},
+{
+"i": "px152",
+"k": "c",
+"t": "earth",
+"a": 9,
+"q": "What is the capital of Iran?",
+"o": [
+"Tehran",
+"Tabriz",
+"Shiraz"
+],
+"n": 0,
+"x": "Tehran is the capital and the biggest city of Iran.",
+"p": null,
+"oe": [
+"🏙️",
+"🏙️",
+"🏙️"
+]
+},
+{
+"i": "px153",
+"k": "c",
+"t": "earth",
+"a": 9,
+"q": "What is the longest river in the world?",
+"o": [
+"The Nile",
+"The Danube",
+"The Thames"
+],
+"n": 0,
+"x": "The Nile flows through Africa into the Mediterranean Sea.",
+"p": null,
+"oe": [
+"🏞️",
+"🏞️",
+"🏞️"
+]
+},
+{
+"i": "px154",
+"k": "c",
+"t": "earth",
+"a": 9,
+"q": "What is the tallest mountain in the world?",
+"o": [
+"Mont Blanc",
+"Mount Damavand",
+"Mount Everest"
+],
+"n": 2,
+"x": "Mount Everest is in the Himalayas, about 8,849 metres high.",
+"p": null,
+"oe": [
+"⛰️",
+"🗻",
+"🏔️"
+]
+},
+{
+"i": "px155",
+"k": "c",
+"t": "earth",
+"a": 9,
+"q": "What is the tallest mountain in Iran?",
+"o": [
+"Sabalan",
+"Damavand",
+"Alvand"
+],
+"n": 1,
+"x": "Damavand is a volcano, about 5,600 metres high.",
+"p": null,
+"oe": [
+"⛰️",
+"🗻",
+"⛰️"
+]
+},
+{
+"i": "px156",
+"k": "c",
+"t": "earth",
+"a": 10,
+"q": "What is the capital of France?",
+"o": [
+"Rome",
+"London",
+"Paris"
+],
+"n": 2,
+"x": "The Eiffel Tower is in Paris.",
+"p": null,
+"oe": [
+"🏛️",
+"🎡",
+"🗼"
+]
+},
+{
+"i": "px157",
+"k": "c",
+"t": "earth",
+"a": 10,
+"q": "What is the capital of Japan?",
+"o": [
+"Tokyo",
+"Seoul",
+"Beijing"
+],
+"n": 0,
+"x": "Tokyo is one of the biggest cities in the world.",
+"p": null,
+"oe": [
+"🗾",
+"🏙️",
+"🏯"
+]
+},
+{
+"i": "px158",
+"k": "c",
+"t": "earth",
+"a": 10,
+"q": "What is the largest desert in the world?",
+"o": [
+"Gobi",
+"Sahara",
+"Antarctica"
+],
+"n": 2,
+"x": "A desert is a place with very little rain, so icy Antarctica counts; the Sahara is the largest hot desert.",
+"p": null,
+"oe": [
+"🏜️",
+"🏜️",
+"🧊"
+]
+},
+{
+"i": "px159",
+"k": "c",
+"t": "earth",
+"a": 10,
+"q": "What is the inside of the Earth like at the very centre?",
+"o": [
+"Very cold",
+"Very hot",
+"Full of water"
+],
+"n": 1,
+"x": "The Earth's core is as hot as the surface of the Sun.",
+"p": null,
+"oe": [
+"🧊",
+"🔥",
+"💧"
+]
+},
+{
+"i": "px160",
+"k": "c",
+"t": "earth",
+"a": 10,
+"q": "What is a shaking of the ground called?",
+"o": [
+"Flood",
+"Earthquake",
+"Tornado"
+],
+"n": 1,
+"x": "Earthquakes happen when big pieces of the Earth's crust move.",
+"p": null,
+"oe": [
+"🌊",
+"🌍",
+"🌪️"
+]
+},
+{
+"i": "px161",
+"k": "c",
+"t": "earth",
+"a": 10,
+"q": "Which sea is in the north of Iran?",
+"o": [
+"Black Sea",
+"Red Sea",
+"Caspian Sea"
+],
+"n": 2,
+"x": "The Caspian Sea is the largest lake in the world.",
+"p": null,
+"oe": [
+"🌊",
+"🌊",
+"🌊"
+]
+},
+{
+"i": "px162",
+"k": "c",
+"t": "earth",
+"a": 11,
+"q": "What are the imaginary lines around the Earth from east to west called?",
+"o": [
+"Borders",
+"Rivers",
+"Latitude lines"
+],
+"n": 2,
+"x": "The equator is the most famous line of latitude.",
+"p": null,
+"oe": [
+"🗺️",
+"🏞️",
+"🌐"
+]
+},
+{
+"i": "px163",
+"k": "c",
+"t": "earth",
+"a": 11,
+"q": "Which country has the most people?",
+"o": [
+"Canada",
+"Australia",
+"India"
+],
+"n": 2,
+"x": "India and China each have more than 1.4 billion people.",
+"p": null,
+"oe": [
+"🇨🇦",
+"🇦🇺",
+"🇮🇳"
+]
+},
+{
+"i": "px164",
+"k": "c",
+"t": "earth",
+"a": 11,
+"q": "What is the biggest country by area?",
+"o": [
+"Russia",
+"China",
+"Brazil"
+],
+"n": 0,
+"x": "Russia is so wide that it has 11 time zones.",
+"p": null,
+"oe": [
+"🇷🇺",
+"🇨🇳",
+"🇧🇷"
+]
+},
+{
+"i": "px165",
+"k": "c",
+"t": "earth",
+"a": 11,
+"q": "What is magma called when it comes out of a volcano?",
+"o": [
+"Sand",
+"Lava",
+"Ice"
+],
+"n": 1,
+"x": "Melted rock is called magma underground and lava on the surface.",
+"p": null,
+"oe": [
+"🏖️",
+"🌋",
+"🧊"
+]
+},
+{
+"i": "px166",
+"k": "c",
+"t": "earth",
+"a": 12,
+"q": "Which ancient wonder is in Egypt?",
+"o": [
+"The Great Wall",
+"The Great Pyramid",
+"Big Ben"
+],
+"n": 1,
+"x": "The Great Pyramid of Giza is over 4,500 years old.",
+"p": null,
+"oe": [
+"🧱",
+"🔺",
+"🕰️"
+]
+},
+{
+"i": "px167",
+"k": "c",
+"t": "earth",
+"a": 12,
+"q": "Persepolis was the ceremonial capital of which empire?",
+"o": [
+"The Chinese Empire",
+"The Achaemenid Empire",
+"The Roman Empire"
+],
+"n": 1,
+"x": "Persepolis, near Shiraz, was built about 2,500 years ago.",
+"p": null,
+"oe": [
+"🏯",
+"🏛️",
+"🏛️"
+]
+},
+{
+"i": "px168",
+"k": "c",
+"t": "earth",
+"a": 9,
+"q": "What can we do to save water?",
+"o": [
+"Turn off the tap while brushing",
+"Leave the tap running",
+"Take very long showers"
+],
+"n": 0,
+"x": "A running tap can waste many litres of water every minute.",
+"p": null,
+"oe": [
+"🚰",
+"💦",
+"🚿"
+]
+},
+{
+"i": "px169",
+"k": "c",
+"t": "earth",
+"a": 10,
+"q": "Which energy comes from the Sun?",
+"o": [
+"Oil",
+"Coal",
+"Solar energy"
+],
+"n": 2,
+"x": "Solar panels turn sunlight into electricity.",
+"p": null,
+"oe": [
+"🛢️",
+"⛏️",
+"☀️"
+]
+},
+{
+"i": "px170",
+"k": "c",
+"t": "earth",
+"a": 10,
+"q": "Why are trees important for the air?",
+"o": [
+"They make oxygen",
+"They make smoke",
+"They make noise"
+],
+"n": 0,
+"x": "Trees take in carbon dioxide and give out oxygen.",
+"p": null,
+"oe": [
+"🌳",
+"💨",
+"🔊"
+]
+},
+{
+"i": "px171",
+"k": "c",
+"t": "earth",
+"a": 11,
+"q": "What do we call energy that never runs out, like wind and sun?",
+"o": [
+"Fossil fuel",
+"Renewable energy",
+"Batteries"
+],
+"n": 1,
+"x": "Wind, sun and water power are renewable.",
+"p": null,
+"oe": [
+"🛢️",
+"🌬️",
+"🔋"
+]
+},
+{
+"i": "px172",
+"k": "c",
+"t": "earth",
+"a": 12,
+"q": "What is the main cause of global warming?",
+"o": [
+"The Moon",
+"Gases that trap heat",
+"Too many rainbows"
+],
+"n": 1,
+"x": "Burning coal, oil and gas adds carbon dioxide, which traps heat around the Earth.",
+"p": null,
+"oe": [
+"🌙",
+"🏭",
+"🌈"
+]
+},
+{
+"i": "px173",
+"k": "c",
+"t": "science",
+"a": 9,
+"q": "What are the three states of water?",
+"o": [
+"Rain, snow and wind",
+"Hot, warm and cold",
+"Ice, water and steam"
+],
+"n": 2,
+"x": "Water can be a solid, a liquid or a gas.",
+"p": null,
+"oe": [
+"🌧️",
+"🌡️",
+"🧊"
+]
+},
+{
+"i": "px174",
+"k": "c",
+"t": "science",
+"a": 9,
+"q": "At what temperature does water freeze?",
+"o": [
+"0 degrees Celsius",
+"10 degrees",
+"100 degrees"
+],
+"n": 0,
+"x": "Water boils at 100 degrees Celsius.",
+"p": null,
+"oe": [
+"🧊",
+"🌡️",
+"♨️"
+]
+},
+{
+"i": "px175",
+"k": "c",
+"t": "science",
+"a": 9,
+"q": "What force pulls things down to the ground?",
+"o": [
+"Gravity",
+"Magnetism",
+"Wind"
+],
+"n": 0,
+"x": "Gravity keeps us on the ground and the Moon around the Earth.",
+"p": null,
+"oe": [
+"🍎",
+"🧲",
+"🌬️"
+]
+},
+{
+"i": "px176",
+"k": "c",
+"t": "science",
+"a": 9,
+"q": "What do plants need to make their food?",
+"o": [
+"Only darkness",
+"Only soil",
+"Sunlight, water and air"
+],
+"n": 2,
+"x": "Making food from sunlight is called photosynthesis.",
+"p": null,
+"oe": [
+"🌑",
+"🪨",
+"☀️"
+]
+},
+{
+"i": "px177",
+"k": "c",
+"t": "science",
+"a": 9,
+"q": "Which material is a good conductor of electricity?",
+"o": [
+"Copper",
+"Plastic",
+"Wood"
+],
+"n": 0,
+"x": "Wires are made of copper, and covered in plastic to keep us safe.",
+"p": null,
+"oe": [
+"🔌",
+"🧴",
+"🪵"
+]
+},
+{
+"i": "px178",
+"k": "c",
+"t": "science",
+"a": 10,
+"q": "What is everything around us made of?",
+"o": [
+"Light",
+"Atoms",
+"Paper"
+],
+"n": 1,
+"x": "Atoms are far too small to see, even with a normal microscope.",
+"p": null,
+"oe": [
+"💡",
+"⚛️",
+"📄"
+]
+},
+{
+"i": "px179",
+"k": "c",
+"t": "science",
+"a": 10,
+"q": "What do we call a push or a pull?",
+"o": [
+"A force",
+"A sound",
+"A colour"
+],
+"n": 0,
+"x": "Forces can make things start, stop or change direction.",
+"p": null,
+"oe": [
+"💪",
+"🔊",
+"🎨"
+]
+},
+{
+"i": "px180",
+"k": "c",
+"t": "science",
+"a": 10,
+"q": "What travels faster, light or sound?",
+"o": [
+"They are the same",
+"Sound",
+"Light"
+],
+"n": 2,
+"x": "That is why we see lightning before we hear thunder.",
+"p": null,
+"oe": [
+"⚖️",
+"🔊",
+"💡"
+]
+},
+{
+"i": "px181",
+"k": "c",
+"t": "science",
+"a": 10,
+"q": "What does a thermometer measure?",
+"o": [
+"Temperature",
+"Weight",
+"Length"
+],
+"n": 0,
+"x": "Temperature is measured in degrees.",
+"p": null,
+"oe": [
+"🌡️",
+"⚖️",
+"📏"
+]
+},
+{
+"i": "px182",
+"k": "c",
+"t": "science",
+"a": 10,
+"q": "What is it called when a liquid turns into a gas?",
+"o": [
+"Freezing",
+"Evaporation",
+"Melting"
+],
+"n": 1,
+"x": "Puddles disappear on sunny days because the water evaporates.",
+"p": null,
+"oe": [
+"🧊",
+"♨️",
+"🫠"
+]
+},
+{
+"i": "px183",
+"k": "c",
+"t": "science",
+"a": 11,
+"q": "What is the chemical name for water?",
+"o": [
+"O2",
+"CO2",
+"H2O"
+],
+"n": 2,
+"x": "Each water molecule has two hydrogen atoms and one oxygen atom.",
+"p": null,
+"oe": [
+"🫁",
+"💨",
+"💧"
+]
+},
+{
+"i": "px184",
+"k": "c",
+"t": "science",
+"a": 11,
+"q": "Which simple machine is a ramp?",
+"o": [
+"Wheel",
+"Pulley",
+"Inclined plane"
+],
+"n": 2,
+"x": "A ramp makes it easier to lift something by moving it a longer way.",
+"p": null,
+"oe": [
+"🛞",
+"🏗️",
+"📐"
+]
+},
+{
+"i": "px185",
+"k": "c",
+"t": "science",
+"a": 11,
+"q": "What is the hardest natural material?",
+"o": [
+"Diamond",
+"Gold",
+"Glass"
+],
+"n": 0,
+"x": "Diamonds are made of carbon, squeezed deep underground.",
+"p": null,
+"oe": [
+"💎",
+"🥇",
+"🪟"
+]
+},
+{
+"i": "px186",
+"k": "c",
+"t": "science",
+"a": 11,
+"q": "What do we call a mixture where something dissolves completely, like salt in water?",
+"o": [
+"A solid",
+"A solution",
+"A puddle"
+],
+"n": 1,
+"x": "When salt dissolves you cannot see it, but you can still taste it.",
+"p": null,
+"oe": [
+"🧱",
+"🧂",
+"💧"
+]
+},
+{
+"i": "px187",
+"k": "c",
+"t": "science",
+"a": 12,
+"q": "Which gas do plants take in from the air?",
+"o": [
+"Carbon dioxide",
+"Oxygen",
+"Helium"
+],
+"n": 0,
+"x": "Plants take in carbon dioxide and give out oxygen.",
+"p": null,
+"oe": [
+"🌿",
+"🫁",
+"🎈"
+]
+},
+{
+"i": "px188",
+"k": "c",
+"t": "science",
+"a": 12,
+"q": "What did Isaac Newton describe after, the story says, seeing an apple fall?",
+"o": [
+"Gravity",
+"Magnetism",
+"Electricity"
+],
+"n": 0,
+"x": "Newton explained that the same force pulls apples down and keeps the Moon in orbit.",
+"p": null,
+"oe": [
+"🍎",
+"🧲",
+"⚡"
+]
+},
+{
+"i": "px189",
+"k": "c",
+"t": "science",
+"a": 12,
+"q": "Who invented the light bulb that lasted a long time?",
+"o": [
+"Isaac Newton",
+"Albert Einstein",
+"Thomas Edison"
+],
+"n": 2,
+"x": "Edison's team tested thousands of materials to find a long-lasting filament.",
+"p": null,
+"oe": [
+"🍎",
+"🧠",
+"💡"
+]
+},
+{
+"i": "px190",
+"k": "c",
+"t": "sky",
+"a": 9,
+"q": "How long does the Earth take to go around the Sun?",
+"o": [
+"One day",
+"One year",
+"One month"
+],
+"n": 1,
+"x": "The Earth travels around the Sun once every 365 days.",
+"p": null,
+"oe": [
+"☀️",
+"🌍",
+"🌙"
+]
+},
+{
+"i": "px191",
+"k": "c",
+"t": "sky",
+"a": 9,
+"q": "Why do we have day and night?",
+"o": [
+"Clouds cover the Sun",
+"The Earth spins",
+"The Sun turns off"
+],
+"n": 1,
+"x": "The Earth spins once every 24 hours.",
+"p": null,
+"oe": [
+"☁️",
+"🌍",
+"☀️"
+]
+},
+{
+"i": "px192",
+"k": "c",
+"t": "sky",
+"a": 9,
+"q": "Which planet is famous for its Great Red Spot?",
+"o": [
+"Mars",
+"Venus",
+"Jupiter"
+],
+"n": 2,
+"x": "The Great Red Spot is a giant storm bigger than Earth.",
+"p": null,
+"oe": [
+"🔴",
+"🟡",
+"🟠"
+]
+},
+{
+"i": "px193",
+"k": "c",
+"t": "sky",
+"a": 9,
+"q": "What is a group of stars that makes a picture in the sky called?",
+"o": [
+"Constellation",
+"Comet",
+"Planet"
+],
+"n": 0,
+"x": "The Big Dipper is part of a famous constellation.",
+"p": null,
+"oe": [
+"✨",
+"☄️",
+"🪐"
+]
+},
+{
+"i": "px194",
+"k": "c",
+"t": "sky",
+"a": 9,
+"q": "Who was the first person to walk on the Moon?",
+"o": [
+"Albert Einstein",
+"Neil Armstrong",
+"Yuri Gagarin"
+],
+"n": 1,
+"x": "Neil Armstrong stepped onto the Moon in 1969.",
+"p": null,
+"oe": [
+"🧠",
+"👨‍🚀",
+"👨‍🚀"
+]
+},
+{
+"i": "px195",
+"k": "c",
+"t": "sky",
+"a": 10,
+"q": "Who was the first person in space?",
+"o": [
+"Isaac Newton",
+"Yuri Gagarin",
+"Neil Armstrong"
+],
+"n": 1,
+"x": "Yuri Gagarin flew around the Earth in 1961.",
+"p": null,
+"oe": [
+"🍎",
+"👨‍🚀",
+"👨‍🚀"
+]
+},
+{
+"i": "px196",
+"k": "c",
+"t": "sky",
+"a": 10,
+"q": "Why does the Moon seem to change shape?",
+"o": [
+"We see different amounts of its sunny side",
+"Clouds cut it",
+"It shrinks"
+],
+"n": 0,
+"x": "These changing shapes are called the phases of the Moon.",
+"p": null,
+"oe": [
+"🌗",
+"☁️",
+"🤏"
+]
+},
+{
+"i": "px197",
+"k": "c",
+"t": "sky",
+"a": 10,
+"q": "What causes the seasons?",
+"o": [
+"The Earth is tilted",
+"The Moon moves closer",
+"The Sun gets bigger"
+],
+"n": 0,
+"x": "As the tilted Earth goes around the Sun, each half gets more or less sunlight.",
+"p": null,
+"oe": [
+"🌍",
+"🌙",
+"☀️"
+]
+},
+{
+"i": "px198",
+"k": "c",
+"t": "sky",
+"a": 10,
+"q": "What is the name of the dwarf planet that was once called the ninth planet?",
+"o": [
+"Ceres",
+"Pluto",
+"Saturn"
+],
+"n": 1,
+"x": "Pluto was called a dwarf planet in 2006.",
+"p": null,
+"oe": [
+"⚪",
+"⚪",
+"🪐"
+]
+},
+{
+"i": "px199",
+"k": "c",
+"t": "sky",
+"a": 10,
+"q": "How does rain form?",
+"o": [
+"The sea jumps up",
+"Water vapour cools into drops in clouds",
+"Clouds melt"
+],
+"n": 1,
+"x": "This is part of the water cycle.",
+"p": null,
+"oe": [
+"🌊",
+"☁️",
+"🫠"
+]
+},
+{
+"i": "px200",
+"k": "c",
+"t": "sky",
+"a": 10,
+"q": "What is the closest star to Earth?",
+"o": [
+"The North Star",
+"Sirius",
+"The Sun"
+],
+"n": 2,
+"x": "Light from the Sun takes about eight minutes to reach us.",
+"p": null,
+"oe": [
+"⭐",
+"✨",
+"☀️"
+]
+},
+{
+"i": "px201",
+"k": "c",
+"t": "sky",
+"a": 11,
+"q": "What is the water cycle?",
+"o": [
+"Water evaporates, makes clouds and falls as rain",
+"Water stays in the sea forever",
+"Water turns into sand"
+],
+"n": 0,
+"x": "The same water has been going round and round for millions of years.",
+"p": null,
+"oe": [
+"🔄",
+"🌊",
+"🏖️"
+]
+},
+{
+"i": "px202",
+"k": "c",
+"t": "sky",
+"a": 11,
+"q": "Which planet spins on its side?",
+"o": [
+"Earth",
+"Mercury",
+"Uranus"
+],
+"n": 2,
+"x": "Scientists think something huge crashed into Uranus long ago.",
+"p": null,
+"oe": [
+"🌍",
+"⚫",
+"🔵"
+]
+},
+{
+"i": "px203",
+"k": "c",
+"t": "sky",
+"a": 11,
+"q": "What is a light-year?",
+"o": [
+"The distance light travels in a year",
+"A year with lots of sun",
+"A very short time"
+],
+"n": 0,
+"x": "One light-year is about 9.5 trillion kilometres.",
+"p": null,
+"oe": [
+"💡",
+"☀️",
+"⏱️"
+]
+},
+{
+"i": "px204",
+"k": "c",
+"t": "sky",
+"a": 11,
+"q": "What is a tornado?",
+"o": [
+"A spinning column of air",
+"A kind of snow",
+"A big wave"
+],
+"n": 0,
+"x": "Tornado winds can spin faster than 300 kilometres an hour.",
+"p": null,
+"oe": [
+"🌪️",
+"❄️",
+"🌊"
+]
+},
+{
+"i": "px205",
+"k": "c",
+"t": "sky",
+"a": 12,
+"q": "Which force keeps planets going around the Sun?",
+"o": [
+"Wind",
+"Magnetism",
+"Gravity"
+],
+"n": 2,
+"x": "The Sun's gravity holds the whole solar system together.",
+"p": null,
+"oe": [
+"🌬️",
+"🧲",
+"🪐"
+]
+},
+{
+"i": "px206",
+"k": "c",
+"t": "sky",
+"a": 12,
+"q": "What is a black hole?",
+"o": [
+"A place where gravity is so strong light cannot escape",
+"A hole in the ground",
+"A dark cloud"
+],
+"n": 0,
+"x": "Black holes form when very big stars collapse.",
+"p": null,
+"oe": [
+"⚫",
+"🕳️",
+"☁️"
+]
+},
+{
+"i": "px207",
+"k": "c",
+"t": "sky",
+"a": 12,
+"q": "What is the name of our galaxy?",
+"o": [
+"Andromeda",
+"The Milky Way",
+"The Big Dipper"
+],
+"n": 1,
+"x": "The Milky Way has more than 100 billion stars.",
+"p": null,
+"oe": [
+"🌌",
+"🌌",
+"✨"
+]
 }
 ]
