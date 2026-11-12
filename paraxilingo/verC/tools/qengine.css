@@ -1454,3 +1454,13 @@ img.e3{width:1.18em;height:1.18em;vertical-align:-.22em;object-fit:contain;displ
  .mv-stage{min-height:110px}.mv-big{font-size:64px}.mv-c{width:88px;padding:6px}.mv-c span{font-size:32px}
  .dc{height:min(26vh,160px)}.bm,.rp,.sh-room{max-height:30vh}
 }
+/* one look for every question: same title font and size, speaker button in the top row */
+.lesson.q2 .qtitle,.game .qtitle{font:800 26px/1.2 "Nunito",sans-serif!important;color:#4B4B4B}
+.qkick{min-height:40px}
+.qkick #qSpk.inkick{margin-left:auto;flex:none;width:46px!important;height:46px!important;border-radius:14px!important;box-shadow:0 4px 0 var(--t-blue-d,#1899D6)!important;background:var(--t-blue,#1CB0F6)!important;color:#fff}
+.qkick #qSpk.inkick svg{width:26px!important;height:26px!important}
+.lesson.q2 .qtop2:has(> .qvis:only-child){justify-content:center}
+/* answer buttons never squash so small that their number or picture is cut off */
+.lesson.q2 #qBody .qopts.row3,.lesson.q2 #qBody .qopts.col,.lesson.q2 #qBody .qopts.grid4,.lesson.q2 #qBody .qopts.yn{grid-auto-rows:minmax(76px,min(140px,15vh))!important;flex:0 0 auto!important;align-content:start!important}
+@media (max-height:700px) and (max-width:560px){.lesson.q2 .qtitle,.game .qtitle{font-size:22px!important}.qkick #qSpk.inkick{width:40px!important;height:40px!important}}
+.lesson.q2 .qvis .story2 .grp,.lesson.q2 .qvis .grp{max-width:min(320px,88vw)!important}
