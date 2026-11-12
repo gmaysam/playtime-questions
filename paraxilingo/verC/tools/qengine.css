@@ -1527,3 +1527,12 @@ img.e3{width:1.18em;height:1.18em;vertical-align:-.22em;object-fit:contain;displ
 .g7-dish{min-height:96px;max-width:300px;margin:8px auto;border-radius:50%;background:#fff;border:6px solid #E5E5E5;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;font-size:36px;padding:8px}
 .g7-tank,.g7-cups,.g7-dish,.g7-sky{width:100%;box-sizing:border-box}.g7-dish{width:min(300px,90%)}.g7-sky{width:min(360px,94%)}
 .g7-row2{display:flex;flex-direction:column;align-items:center;gap:8px}
+.game button.saying{transform:translateY(-4px) scale(1.06);border-color:#1CB0F6!important;background:#DDF4FF!important;box-shadow:0 0 0 5px rgba(28,176,246,.35)}
+.mq-ten{display:grid;grid-template-columns:repeat(10,22px);gap:3px;justify-content:center;margin-top:8px}.mq-ten i{height:22px;border-radius:5px;border:2px solid #ADB5BD}.mq-ten i.on{background:#FF9F40;border-color:#E8590C}
+.mq-half{display:flex;gap:10px;justify-content:center;align-items:center;font-size:24px;color:#9775FA}.mq-half b{color:#ADB5BD;font-size:34px}
+.mq-pairs{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;font-size:22px;color:#1CB0F6;max-width:300px;margin:0 auto}.mq-pairs span{border:2px dashed #ADB5BD;border-radius:10px;padding:0 4px}
+.mq-line{display:flex;justify-content:center;gap:2px;overflow:hidden;max-width:100%}.mq-line span{display:flex;flex-direction:column;align-items:center;min-width:22px;font-size:18px;border-top:3px solid #4B4B4B;padding-top:2px}.mq-line span b{font:800 13px "Nunito"}.mq-line span.st{background:#E9F9DA;border-radius:6px}
+.mq-ms{display:flex;flex-direction:column;align-items:flex-start;gap:4px;margin:6px auto;width:300px}.mq-obj{height:34px;background:#FFE8CC;border-radius:17px;display:flex;align-items:center;justify-content:center;font-size:24px}
+.mq-cubes{display:flex;gap:0}.mq-cubes i{width:30px;height:30px;box-sizing:border-box;border:2px solid #ADB5BD}.mq-cubes i.on{background:#74C0FC;border-color:#1C7ED6}
+.mq-line span em{font-style:normal;color:#58CC02;font-size:16px;height:18px}.mq-obj img,.mq-obj .e3{height:28px!important;width:auto!important}
+.mq-half{flex-wrap:wrap;font-size:18px;max-width:320px;margin:0 auto}.mq-half span{max-width:130px;word-break:break-all;line-height:1.1}

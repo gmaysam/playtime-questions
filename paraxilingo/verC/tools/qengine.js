@@ -178,7 +178,9 @@ function wPool(cat){
   const pre={animals:["a","x"],world:["b","n"],sky:["s","p"]}[cat],young=S.age<=7;
   /* Paraxilingo's own px questions go to the section that fits their topic */
   const pxCat=t=>t==="animals"?"animals":t==="sky"?"sky":"world";
-  return WQ.filter(w=>(w.i.startsWith("px")?pxCat(w.t)===cat:pre.includes(w.i[0]))&&w.a<=Math.max(3,S.age)&&(!young||VOICED.has(w.i)));
+  const base=WQ.filter(w=>(w.i.startsWith("px")?pxCat(w.t)===cat:pre.includes(w.i[0]))&&w.a<=Math.max(3,S.age)&&(!young||VOICED.has(w.i)));
+  /* not too easy either: questions at most 2 years below the child's age (unless that leaves too few) */
+  const fit=base.filter(w=>w.a>=S.age-2);return fit.length>=8?fit:base.filter(w=>w.a>=S.age-3).length>=8?base.filter(w=>w.a>=S.age-3):base;
 }
 const TEXT_E=[["tomato","🍅"],["sharing toys","🧸"],["recycled","♻️"],["nowruz","🌷"],["magnet","🧲"],["ice melts","🧊"],["light to see","💡"],["fall faster","🪶"],["t-rex","🦖"],["dinosaur","🦕"],["penguin","🐧"],["whale","🐋"],["giraffe","🦒"],["octopus","🐙"],["elephant","🐘"],["spider","🕷️"],["cheetah","🐆"],["bear","🐻"],["owl","🦉"],["hands","🧼"],["teeth","🦷"],["heart","❤️"],["bones","🦴"],["eyes","👀"],["nose","👃"],["ears","👂"],["sleep","😴"],["water","💧"],["cactus","🌵"],["mushroom","🍄"],["mountain","⛰️"],["river","🏞️"],["volcano","🌋"],["carrot","🥕"],["milk","🥛"],["moon","🌙"],["sun","☀️"],["star","⭐"],["rain","🌧️"],["fog","🌫️"],["wind","🌬️"],["planet","🪐"],["plant","🌱"],["flower","🌸"],["tree","🌳"],["bird","🐦"],["fish","🐟"],["egg","🥚"]];
 const PL_IMG=n=>{const i=PLANET_N.indexOf(String(n).toLowerCase());return i>=0?`<img class="plimg" src="img/w/pl_${i}.png" alt="${n}">`:""};

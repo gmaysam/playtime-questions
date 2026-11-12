@@ -25,14 +25,22 @@ cat = json.load(open(os.path.join(Q, 'catalog.json')))['questions']
 retired = {c['id'] for c in cat if c.get('status') == 'retired'}
 wq = [w for w in wq if w['i'] not in retired]
 # Paraxilingo age check (Nov 11): these are too hard for a 3-year-old; raise the youngest age here (the shared pool keeps its own ages)
-AGE_UP={'p03':5,'p05':5,'p06':5,'p02':4,'p04':5,'m01':4,'m04':4,'m05':5,'m02':4,'w04':5,'x01':4,'x03':4,'n07':4,'n08':4,'f04':4,'f05':4,'a16':4,'e02':4,'e03':4,'n05':4}
+AGE_UP={'p03':6,'p05':6,'p06':6,'p02':5,'p04':5,'m01':4,'m04':4,'m05':4,'m02':4,'w04':5,'x01':5,'x03':4,'n07':4,'n08':4,'f04':5,'f05':5,'a16':5,'e02':5,'e03':5,'n05':5}
+# Nov 11 age review: true/false sentences need age 4+; harder facts move up, easy ones move down (AGE_SET wins over everything)
+AGE_SET={'a03':4,'a04':4,'a06':4,'a11':4,'a13':4,'b03':4,'b05':4,'b07':4,'e04':4,'f02':4,'f06':4,'l02':4,'l04':4,'n02':5,'n04':4,'n06':4,'x02':4,'x04':4,'s02':4,'s04':4,'s06':4,'s08':5,
+ 'a07':4,'b04':4,'px67':4,'l01':4,'m06':4,'p01':4,'d01':5,'px70':5,'px85':5,'x01':5,'p02':5,
+ 'a17':5,'a20':5,'a21':5,'a23':5,'a25':4,'a26':4,'a28':5,'a24':7,'b13':4,'b12':5,'b11':7,'b09':7,'b14':7,'e08':7,'e09':5,'f07':5,'f09':5,'f08':7,'f10':7,
+ 'l05':4,'l06':5,'l07':4,'m07':5,'m12':7,'m13':7,'n13':4,'n10':7,'n14':7,'x06':7,'x08':8,'s11':7,'s14':7,'p09':7,'p10':7,'p12':7,'p13':7,'p14':7,'w05':5,'w06':5,'w07':5,'w08':5}
 for w in wq:
     if w['i'] in AGE_UP: w['a'] = max(w['a'], AGE_UP[w['i']])
+    if w['i'] in AGE_SET: w['a'] = AGE_SET[w['i']]
 # Paraxilingo's own bank (tools/pxbank.json): only questions whose voice is recorded
 _px=os.path.join(os.path.dirname(os.path.abspath(__file__)),'pxbank.json')
 if os.path.exists(_px):
     _aud=os.path.join(S,'appC','audio','w')
     wq += [w for w in json.load(open(_px)) if os.path.exists(os.path.join(_aud, w['i']+'_q_lulu.mp3'))]
+for w in wq:
+    if w['i'] in AGE_SET: w['a'] = AGE_SET[w['i']]
 json.dump(wq, open(os.path.join(S, 'watcher', 'wq.json'), 'w'), ensure_ascii=False)
 # words, letters, sight words, sentences (only questions that are 'in the games')
 clips = {r['file'][:-4]: r['text'] for r in csv.DictReader(open(os.path.join(LIB, 'voices', 'clips.csv'), encoding='utf-8-sig'))}
@@ -103,7 +111,7 @@ for f in os.listdir(os.path.join(LIB, 'quiz_voices')):
 for f in glob.glob(os.path.join(S, 'fa_new', 'out', '*.mp3')): shutil.copy(f, dst); n += 1
 # the pool holds the newest take of every Paraxilingo clip (re-voiced fixes too), so it always wins over the old fa_new copies
 for f in voices:
-    if f.startswith('PX_'): shutil.copy(os.path.join(LIB, 'voices', f), os.path.join(dst, f)); n += 1
+    if f.startswith(('PX_','px')): shutil.copy(os.path.join(LIB, 'voices', f), os.path.join(dst, f)); n += 1
 pd=os.path.join(S,'appC','img','w');os.makedirs(pd,exist_ok=True)
 for f in os.listdir(os.path.join(LIB,'pictures')):
     if re.match(r'(home|food|pl|shape|sky|wd)_\d+\.png$',f): shutil.copy(os.path.join(LIB,'pictures',f),os.path.join(pd,f))

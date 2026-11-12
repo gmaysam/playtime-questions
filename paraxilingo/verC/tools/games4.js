@@ -57,20 +57,20 @@ const AB3="abcdefghijklmnoprstuwy";
 function qSlot(cat){const a=lvl();
   if(cat==="letters"||cat==="read"){const w=pickOne(WORDS.filter(x=>x.w.length===3&&[...x.w].every(c=>AB3.includes(c))));return {game:"slot",mode:"word",w,reels:3,voice:[G4("SLOTW"),...wSay(w)],gid:"g:slot",factT:`${w.w.toUpperCase()}: ${w.w.split("").join(" - ")}`}}
   const tgt=a<=4?ri(2,5):a<=6?ri(4,10):ri(8,18);return {game:"slot",mode:"num",tgt,reels:a<=4?1:2,voice:[G4("SLOTN"),...both(tgt)],gid:"g:slot",factT:a<=4?`${tgt}!`:`There are many ways to make ${tgt}!`}}
-function slotQ(q){const word=q.mode==="word",vals=word?AB3.split(""):Array.from({length:q.reels===1?10:10},(_,i)=>i),R=Array.from({length:q.reels},()=>ri(0,vals.length-1));let spun=false,miss=0;
-  const face=r=>word?vals[R[r]].toUpperCase():q.reels===1?"🔵".repeat(0)+vals[R[r]]:vals[R[r]];
+function slotQ(q){const word=q.mode==="word",vals0=word?AB3.split(""):Array.from({length:10},(_,i)=>i),VR=Array.from({length:q.reels},(_,r)=>word?sh([q.w.w[r],...sh(vals0.filter(c=>c!==q.w.w[r])).slice(0,3)]):vals0),vals=VR[0],R=Array.from({length:q.reels},(_,r)=>ri(0,VR[r].length-1));let spun=false,miss=0;
+  const face=r=>word?VR[r][R[r]].toUpperCase():VR[r][R[r]];
   gShow(`<div class="game">${gHead("🎰","Lucky slots",word?"Spin, then make the word!":`Make ${q.tgt}!`)}
     <div class="sl-top">${word?`<img src="img/w/wd_${q.w.i}.png" alt="">`:q.reels===1?`<span class="sl-dots">${"●".repeat(q.tgt)}</span>`:`<b class="sl-t">${q.tgt}</b>`}</div>
     <div class="sl-m" id="slM"><div class="sl-lights"></div><div class="sl-reels">${R.map((_,r)=>`${!word&&r===1?'<b class="sl-op">+</b>':""}<div class="sl-r"><button class="sl-a" data-r="${r}" data-d="-1">▲</button><span class="sl-w" id="slW${r}">?</span><button class="sl-a" data-r="${r}" data-d="1">▼</button></div>`).join("")}</div>
     <button class="sl-lever" id="slL"><i></i></button></div><button class="qcheck" id="slC" disabled>CHECK</button></div>`);gAsk(q);
   const draw=()=>R.forEach((_,r)=>$("slW"+r).textContent=face(r));
   $("slL").onclick=()=>{if(q.done)return;sfx.tap();$("slL").classList.add("pull");setTimeout(()=>$("slL").classList.remove("pull"),500);$("slM").classList.add("spin");
-    let t=0;const iv=setInterval(()=>{R.forEach((_,r)=>R[r]=ri(0,vals.length-1));draw();if(++t>12){clearInterval(iv);$("slM").classList.remove("spin");spun=true;$("slC").disabled=false;$("slC").classList.add("on")}},70)};
-  $("qBody").querySelectorAll(".sl-a").forEach(b=>b.onclick=()=>{if(!spun||q.done)return;const r=+b.dataset.r;R[r]=(R[r]+ +b.dataset.d+vals.length)%vals.length;sfx.tap();draw()});
-  const ok=()=>word?R.map(r=>vals[r]).join("")===q.w.w:q.reels===1?vals[R[0]]===q.tgt:vals[R[0]]+vals[R[1]]===q.tgt;
+    let t=0;const iv=setInterval(()=>{R.forEach((_,r)=>R[r]=ri(0,VR[r].length-1));draw();if(++t>12){clearInterval(iv);$("slM").classList.remove("spin");spun=true;$("slC").disabled=false;$("slC").classList.add("on")}},70)};
+  $("qBody").querySelectorAll(".sl-a").forEach(b=>b.onclick=()=>{if(!spun||q.done)return;const r=+b.dataset.r;R[r]=(R[r]+ +b.dataset.d+VR[r].length)%VR[r].length;sfx.tap();draw()});
+  const ok=()=>word?R.map((x,r)=>VR[r][x]).join("")===q.w.w:q.reels===1?vals[R[0]]===q.tgt:vals[R[0]]+vals[R[1]]===q.tgt;
   const chk=()=>{if(q.done)return;if(ok()){$("slM").classList.add("win");gameWin(q,miss,$("slM"),word?wSay(q.w):[])}else{miss++;sfx.oops();$("slM").classList.add("bump");setTimeout(()=>$("slM").classList.remove("bump"),450);
-    if(miss>=3){q.done=true;if(word)q.w.w.split("").forEach((ch,r)=>R[r]=vals.indexOf(ch));else if(q.reels===1)R[0]=q.tgt;else{R[0]=Math.min(9,q.tgt-Math.min(9,Math.floor(q.tgt/2)));R[1]=q.tgt-R[0]}draw();gameLearn(q,word?q.w.w.toUpperCase():`${q.tgt}`,word?wSay(q.w):both(q.tgt))}}};$("slC").onclick=chk;
-  window.__gSolve=()=>{spun=true;if(word)q.w.w.split("").forEach((ch,r)=>R[r]=vals.indexOf(ch));else if(q.reels===1)R[0]=q.tgt;else{R[0]=Math.min(9,Math.floor(q.tgt/2));R[1]=q.tgt-R[0]}draw();chk()}}
+    if(miss>=3){q.done=true;if(word)q.w.w.split("").forEach((ch,r)=>R[r]=VR[r].indexOf(ch));else if(q.reels===1)R[0]=q.tgt;else{R[0]=Math.min(9,q.tgt-Math.min(9,Math.floor(q.tgt/2)));R[1]=q.tgt-R[0]}draw();gameLearn(q,word?q.w.w.toUpperCase():`${q.tgt}`,word?wSay(q.w):both(q.tgt))}}};$("slC").onclick=chk;
+  window.__gSolve=()=>{spun=true;if(word)q.w.w.split("").forEach((ch,r)=>R[r]=VR[r].indexOf(ch));else if(q.reels===1)R[0]=q.tgt;else{R[0]=Math.min(9,Math.floor(q.tgt/2));R[1]=q.tgt-R[0]}draw();chk()}}
 
 /* ---------- Pattern Detective: colours, shapes, numbers, growing patterns and the 3x3 grid ---------- */
 const FAB=[["dots","#FF6B6B"],["checks","#58CC02"],["stripes","#4DABF7"],["flowers","#FFC800"],["zigzag","#B197FC"]];

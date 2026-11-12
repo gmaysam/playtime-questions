@@ -18,7 +18,7 @@ function skLevel(r){const ones=(r.h.match(/1/g)||[]).length,p=r.h.length?ones/r.
 
 /* shared bits for the play games */
 const gHead=(e,kick,title)=>`<div class="qkick"><span class="qke">${e}</span>${kick}<button class="g-rep" aria-label="Hear it again"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></div><h2 class="qtitle">${title}</h2>`;
-document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest(".g-rep");if(!b||!L||!L.q)return;e.stopPropagation();sfx.tap();hush();sayseq(L.q.voice||[],()=>{})},true);
+document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest(".g-rep");if(!b||!L||!L.q)return;e.stopPropagation();sfx.tap();hush();if(L.q.game&&typeof gReadOpts==="function"&&gReadOpts(L.q))return;sayseq(L.q.voice||[],()=>{})},true);
 function gShow(html){$("qBody").innerHTML=html;$("qBody").classList.remove("in");void $("qBody").offsetWidth;$("qBody").classList.add("in")}
 function gameWin(q,miss,el,extra){if(q._won||(L&&L.q!==q))return;q._won=true;q.done=q.locked=true;q.tries=miss?1:0;logSk(q,true);sfx.good();if(el)burstAt(el,40);L.correct++;if(!miss)L.first++;
   const n=miss?1:2;S.acorns+=n;L.acorns+=n;S.questions++;{const w=wkLog();w.q++;w.right++}save();renderStats();bump("sAcorns");setDot();L.row=(L.row||0)+1;
@@ -29,7 +29,7 @@ function gameWin(q,miss,el,extra){if(q._won||(L&&L.q!==q))return;q._won=true;q.d
 const FACT_V=__FACTV__;const factV=t=>t&&FACT_V[String(t).trim()]?["w/"+FACT_V[String(t).trim()]]:(typeof recapV==="function"?recapV(t):[]);
 function gameLearn(q,t,v){if(q._won||(L&&L.q!==q))return;q._won=true;q.done=q.locked=true;q.tries=2;logSk(q,false);S.questions++;{const w=wkLog();w.q++}save();setDot();L.row=0;
   sheet("learn","Let's learn it together!",t);let gone=false;const go=()=>{if(!gone){gone=true;nextQ()}};$("qNext").onclick=()=>{sfx.tap();go()};sayseq(v||[],()=>{})}
-const gAsk=q=>setTimeout(()=>{if(L&&L.q===q)sayseq(q.voice,()=>{})},400);
+const gAsk=q=>setTimeout(()=>{if(L&&L.q===q){if(typeof gReadOpts==="function"&&gReadOpts(q))return;sayseq(q.voice,()=>{})}},400);
 let __ac=null;function smTone(f,ms=380){try{if(!S.fx)return;__ac=__ac||new (window.AudioContext||window.webkitAudioContext)();const o=__ac.createOscillator(),g=__ac.createGain(),t=__ac.currentTime;
   o.type="triangle";o.frequency.value=f;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.35,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+ms/1000);o.connect(g).connect(__ac.destination);o.start(t);o.stop(t+ms/1000+.05)}catch(e){}}
 

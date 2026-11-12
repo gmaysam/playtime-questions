@@ -226,3 +226,47 @@ Object.assign(GMAP,{
  "g:myday":G("My day",["cog","logic"],[["lang","vocab"]],"Is it morning, afternoon or night?","Play"),
  "g:post":G("Letter post",["lang","read"],[["cog","memory"]],"Post each capital letter into its small-letter box.","Play"),
  "g:plate":G("Healthy plate",["life","decide"],[["phys","body"]],"Fill a plate with healthy food, not treats.","Play")});
+
+/* read the choices aloud in games where the child must choose between named things: each button lights up while Lulu says it */
+const OPTREAD={volc:".vc-p",mix:".mx-p",weather:".g7-c",plate:".g7-c",sil:".g7-o",train:".g7-a",seasons:".g7-s",myday:".g7-s",recycle:".g7-bin",cheer:".ch-i"};
+const optLabel=b=>{const e=b.querySelector("small,b");return (e?e.textContent:b.textContent).replace(/[^A-Za-z' -]/g,"").trim()};
+function gReadOpts(q){const sel=OPTREAD[q.game];if(!sel)return false;const bs=[...$("qBody").querySelectorAll(sel)];if(bs.length<2)return false;
+  const it=bs.map(b=>({b,c:both(optLabel(b).toLowerCase())})).filter(x=>x.c.length);if(it.length<bs.length)return false;
+  const tok={};window.__optTok=tok;const lit=b=>bs.forEach(x=>x.classList.toggle("saying",x===b));
+  const list=[{c:q.voice||[]},...it];let i=0;const step=()=>{if(window.__optTok!==tok||!L||L.q!==q||q.done){lit(null);return}
+    if(i>=list.length){lit(null);return}const x=list[i++];lit(x.b||null);sayseq(x.c,()=>setTimeout(step,x.b?150:250))};step();return true}
+
+/* question types also have an age: rhymes, hearing letters, clock faces and fair sharing are too hard for the youngest */
+const KMIN={"letters:rhyme":5,"letters:listen":4,"clock:oclock":5,"add:share":4};
+const _kf9=kindsFor;kindsFor=function(cat){const k=_kf9(cat),a=S.age||6,f=k.filter(x=>a>=(KMIN[cat+":"+x]||0));if(cat==="clock"&&a<=4&&!f.includes("season"))f.push("season");return f.length?f:k};
+
+/* ---------------- new dynamic maths questions (v13) ---------------- */
+const MQ=n=>"w/PX_MQ_"+n;
+const eqH=(a,op,b,r)=>`<div class="eq"><span>${a}</span><b>${op}</b><span>${b}</span><b>=</b><span${r==="?"?' class="q"':""}>${r}</span></div>`;
+const wordOpt=(t,say)=>({h:`<b class="word">${t.replace(/</g,"&lt;").replace(/>/g,"&gt;")}</b>`,say});
+const MQGEN={
+ bond(){const s=S.age<=5?ri(4,8):ri(6,10),a=ri(1,s-1),r=s-a;return Object.assign({voice:[N(a),MQ("PLUSWHAT"),N(s)],cap:"",visual:eqH(a,"+","?",s).replace('<span>?</span>','<span class="q">?</span>'),layout:"row3",hint:"dots",exp:{t:`${a} + ${r} = ${s}`,v:[N(a),"w/LULU_PLUS",N(r),"w/LULU_EQUALS",N(s)]}},numOpts(r,near(r)))},
+ make10(){const t=S.age>=8&&Math.random()<.4?20:10,a=ri(1,t-1),r=t-a;return Object.assign({voice:[N(a),MQ("PLUSWHAT"),N(t)],cap:`Make ${t}!`,visual:eqH(a,"+","?",t).replace('<span>?</span>','<span class="q">?</span>')+`<div class="mq-ten">${Array.from({length:t},(_,i)=>`<i class="${i<a?"on":""}"></i>`).join("")}</div>`,layout:"row3",hint:"elim",exp:{t:`${a} + ${r} = ${t}`,v:[N(a),"w/LULU_PLUS",N(r),"w/LULU_EQUALS",N(t)]}},numOpts(r,near(r)))},
+ double(){const a=ri(2,S.age<=6?5:10),r=2*a;return Object.assign({voice:[N(a),"w/LULU_PLUS",N(a),MQ("HOWMUCH")],cap:"Doubles!",visual:eqH(a,"+",a,"?"),layout:"row3",hint:"elim",exp:{t:`${a} + ${a} = ${r}`,v:[N(a),"w/LULU_PLUS",N(a),"w/LULU_EQUALS",N(r)]}},numOpts(r,near(r).concat([r+2,r-2,a])))},
+ half(){const r=ri(2,S.age<=7?6:10),n=2*r;return Object.assign({voice:[MQ("HALFOF"),N(n),MQ("HOWMUCH")],cap:`Half of ${n}`,visual:`<div class="mq-half"><span>${"●".repeat(r)}</span><b>|</b><span>${"●".repeat(r)}</span></div>`,layout:"row3",hint:"elim",exp:{t:`${r} + ${r} = ${n}`,v:[N(r),"w/LULU_PLUS",N(r),"w/LULU_EQUALS",N(n)]}},numOpts(r,near(r).concat([n,r+2])))},
+ compare(){const a=ri(1,S.age<=6?10:20),b=Math.random()<.2?a:ri(1,S.age<=6?10:20),r=a>b?">":a<b?"<":"=";const os=[[">",MQ("GT")],["<",MQ("LT")],["=",MQ("EQ")]];
+  return {voice:[MQ("COMPARE"),N(a),N(b)],cap:"Which sign fits?",visual:`<div class="eq"><span>${a}</span><span class="q">?</span><span>${b}</span></div>`,layout:"row3",hint:"elim",opts:os.map(o=>wordOpt(o[0],[o[1]])),ans:os.findIndex(o=>o[0]===r),
+   exp:{t:`${a} ${r} ${b}`,v:r==="="?[N(a),"w/PX_VA",N(b),MQ("EQUALSAME")]:[N(a),"w/PX_RC_AZ",N(b),MQ(r===">"?"BIGGER":"SMALLER")]}}},
+ oddeven(){const n=ri(1,S.age<=6?12:20),ev=n%2===0;return {voice:[N(n),MQ("ODDEVEN")],cap:`${n}: odd or even?`,visual:`<div class="mq-pairs">${Array.from({length:Math.ceil(n/2)},(_,i)=>`<span>${i*2+1<n?"●●":"●"}</span>`).join("")}</div>`,layout:"row3",hint:"elim",
+  opts:[wordOpt("Even",[MQ("EVEN")]),wordOpt("Odd",[MQ("ODD")])],ans:ev?0:1,exp:{t:`${n} is ${ev?"even":"odd"}`,v:[N(n),MQ(ev?"ISEVEN":"ISODD")]}}},
+ numline(){const a=ri(0,S.age<=6?6:10),j=ri(1,S.age<=6?4:6),r=a+j,mx=Math.max(10,r+1);return Object.assign({voice:[MQ("FROM"),N(a)||"w/LULU_N0",MQ("JUMP"),N(j),MQ("JUMPS")].filter(Boolean),cap:`Start at ${a}, jump ${j}`,
+  visual:`<div class="mq-line">${Array.from({length:mx+1},(_,i)=>`<span class="${i===a?"st":""}"><em>${i===a?"▼":""}</em><b>${i}</b></span>`).join("")}</div>`,layout:"row3",hint:"elim",exp:{t:`${a} + ${j} = ${r}`,v:[N(a),"w/LULU_PLUS",N(j),"w/LULU_EQUALS",N(r)].filter(Boolean)}},numOpts(r,near(r)))},
+ measure(){const L2=ri(2,S.age<=5?6:9),o=pickOne(["✏️","🐍","🥖","🖍️"]);return Object.assign({voice:[MQ("MEASURE")],cap:"How many blocks long?",visual:`<div class="mq-ms"><div class="mq-obj" style="width:${L2*30}px"><span>${o}</span></div><div class="mq-cubes">${Array.from({length:10},(_,i)=>`<i class="${i<L2?"on":""}"></i>`).join("")}</div></div>`,layout:"row3",hint:"elim",exp:{t:`${L2} blocks long`,v:[N(L2),MQ("CUBES")]}},numOpts(L2,near(L2)))}};
+const MQMIN={"add:bond":5,"add:make10":6,"add:double":6,"add:half":7,"add:numline":6,"count:compare":6,"count:oddeven":6,"count:measure":5};
+var MQ_READY=__MQVOICE__;
+const _kfM=kindsFor;kindsFor=function(cat){const k=_kfM(cat);if(!MQ_READY)return k;const a=S.age||6;return [...k,...Object.keys(MQMIN).filter(x=>x.startsWith(cat+":")&&a>=MQMIN[x]).map(x=>x.split(":")[1])]};
+const _bqM=buildQ;buildQ=function(cat,k,used){if(MQGEN[k]){const q=MQGEN[k]();q.cat=cat;q.kind=k;if(k==="compare"||k==="oddeven")q.why={t:q.exp.t,v:q.exp.v};return q}return _bqM(cat,k,used)};
+Object.assign(GMAP,{
+ "add.bond":G("Missing addend",["cog","math"],[["cog","logic"]],"Find the number that is missing: 3 + ? = 5.","Practice"),
+ "add.make10":G("Make 10",["cog","math"],0,"Find the partner that makes 10 (or 20).","Practice"),
+ "add.double":G("Doubles",["cog","math"],0,"Add a number to itself: 4 + 4.","Practice"),
+ "add.half":G("Halves",["cog","math"],[["cog","logic"]],"Share a number into two equal halves.","Practice"),
+ "add.numline":G("Number-line jumps",["cog","math"],[["cog","logic"]],"Start on a number line and jump forward.","Practice"),
+ "count.compare":G("Bigger, smaller or equal",["cog","math"],[["cog","logic"]],"Choose >, < or = between two numbers.","Practice"),
+ "count.oddeven":G("Odd or even",["cog","math"],0,"Pair the dots: is the number odd or even?","Practice"),
+ "count.measure":G("Measuring with blocks",["cog","math"],[["life","everyday"]],"Measure how many blocks long a thing is.","Practice")});
