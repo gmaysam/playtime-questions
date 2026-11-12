@@ -140,6 +140,7 @@ Main skill counts fully toward the score; "also" skills count half. Methods: Pla
 | `farm.food` | What animals eat | Science & nature | – | Explore | Know what animals eat. |
 | `farm.sound` | Animal sounds | Science & nature | Language & Communication → Speaking & listening | Explore | Match an animal with its sound. |
 | `match:pl` | Matching planets | Science & nature | Language & Communication → Vocabulary & storytelling | Play | Match planets with their names. |
+| `w:px` | First-knowledge questions | Science & nature | Thinking & Understanding → Curiosity & critical thinking; Language & Communication → Vocabulary & storytelling | Explore | Everyday questions for the youngest: animals, body, food, weather, home and safety. |
 | `w:a` | Animal facts | Science & nature | Thinking & Understanding → Curiosity & critical thinking | Explore | Questions about animals and how they live. |
 | `w:d` | Dinosaurs | Science & nature | Thinking & Understanding → Curiosity & critical thinking | Explore | Questions about dinosaurs. |
 | `w:e` | Our Earth | Science & nature | Thinking & Understanding → Curiosity & critical thinking | Explore | Seas, deserts, volcanoes and more. |

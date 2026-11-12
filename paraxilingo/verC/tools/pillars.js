@@ -112,6 +112,7 @@ const GMAP={
  "geo.find":G("Find it on the map",["cog","curiosity"],[["cog","memory"]],"Find a continent on the world map by tapping it.","Play"),
  "geo.ocean":G("Oceans",["cog","curiosity"],[["cre","science"]],"Name the oceans of the world.","Explore"),
  "geo.cty":G("Countries on the map",["cog","curiosity"],[["cog","memory"]],"Recognise where countries are on the map.","Explore"),
+ "w:px":G("First-knowledge questions",["cre","science"],[["cog","curiosity"],["lang","vocab"]],"Everyday questions for the youngest: animals, body, food, weather, home and safety.","Explore"),
  "w:a":G("Animal facts",["cre","science"],[["cog","curiosity"]],"Questions about animals and how they live.","Explore"),
  "w:d":G("Dinosaurs",["cre","science"],[["cog","curiosity"]],"Questions about dinosaurs.","Explore"),
  "w:e":G("Our Earth",["cre","science"],[["cog","curiosity"]],"Seas, deserts, volcanoes and more.","Explore"),
