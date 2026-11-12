@@ -238,7 +238,7 @@ function qBlocks(cat){const a=lvl(),W=6,H=8,turn=a>=6;
 function blocksQ(q){const {W,H}=q;let miss=0,r=q.r0,px,py,timer=null,landed=false;
   const S2=Math.floor(Math.min(36,(innerHeight*.42)/H,(($("qBody").clientWidth||340)*.62)/W));
   gShow(`<div class="game">${gHead("🧱","Block fit","Fill the gap!")}<div class="bk" id="bkB" style="width:${W*S2}px;height:${H*S2}px;--s:${S2}px"></div>
-    <p class="gmhint">${q.turn?"Turn it 🔄 and slide it ⬅️ ➡️, then drop it ⬇️":"Slide it ⬅️ ➡️, then drop it ⬇️"} — no rush!</p><div class="bk-pad">${["l",...(q.turn?["r"]:[]),"d","R"].map(k=>`<button data-k="${k}" class="${k==="d"?"drop":""}">${{l:"⬅️",r:"🔄",d:"⬇️",R:"➡️"}[k]}</button>`).join("")}</div></div>`);
+    <p class="gmhint">${q.turn?"Turn it 🔄 and slide it ⬅️ ➡️, then drop it ⬇️":"Slide it ⬅️ ➡️, then drop it ⬇️"} — no rush!</p><div class="bk-pad">${["l",...(q.turn?["r"]:[]),"d","R"].map(k=>`<button data-k="${k}" class="${k==="d"?"bkdrop":""}">${{l:"⬅️",r:"🔄",d:"⬇️",R:"➡️"}[k]}</button>`).join("")}</div></div>`);
   gAsk(q);const B=$("bkB"),cells=()=>rot(TET[q.k],r).map(([u,v])=>[u+px,v+py]);
   const fits=(cs)=>cs.every(([x,y])=>x>=0&&x<W&&y<H&&(y<0||!q.fill.includes(y*W+x)));
   const th=q.th||["🟦"],te=i=>`<em>${th[i%th.length]}</em>`;

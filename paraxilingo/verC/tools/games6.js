@@ -214,7 +214,7 @@ function danceQ(q){let at=0,miss=0,ready=false;
   const W=$("dcW"),P=[...$("qBody").querySelectorAll(".dc-b")];const pose=k=>{W.className="dc-w dc-"+k;g6tone({L:392,R:440,U:523,D:330}[k],.25,"triangle",.2);setTimeout(()=>W.className="dc-w",420)};
   const show=()=>{ready=false;at=0;P.forEach(b=>b.disabled=true);let k=0;const st=()=>{if(!L||L.q!==q)return;if(k>=q.seq.length){P.forEach(b=>b.disabled=false);ready=true;return}const m=q.seq[k++];pose(m[0]);P.find(b=>b.dataset.k===m[0]).classList.add("flash");setTimeout(()=>P.forEach(b=>b.classList.remove("flash")),400);setTimeout(st,800)};setTimeout(st,500)};
   sayseq(q.voice,()=>show());
-  P.forEach(b=>b.onclick=()=>{if(!ready||q.done)return;pose(b.dataset.k);if(b.dataset.k===q.seq[at][0]){at++;if(at===q.seq.length){ready=false;$("dcR").hidden=false}}else{miss++;sfx.oops();ready=false;setTimeout(show,700)}});
+  P.forEach(b=>b.onclick=()=>{if(!ready||q.done)return;pose(b.dataset.k);if(b.dataset.k===q.seq[at][0]){at++;if(at===q.seq.length){ready=false;$("qBody").querySelector(".dc-pad").style.display="none";$("dcR").hidden=false}}else{miss++;sfx.oops();ready=false;setTimeout(show,700)}});
   $("dcY").onclick=()=>{if(!q.done)gameWin(q,miss>1?1:0,W,[])};window.__gSolve=()=>{gameWin(q,0,W,[])}}
 
 /* ---------------- MOVE 7: wall climb (left, right, left, right) ---------------- */

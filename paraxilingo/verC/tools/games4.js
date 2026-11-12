@@ -148,11 +148,12 @@ function moveQ(q){let at=0,miss=0,ready=false;
     <div class="mv-cards">${q.cards.map((m,j)=>`<button class="mv-c" data-j="${j}" disabled><span>${m[2]}</span><small>${m[1]}</small></button>`).join("")}</div>
     <div class="mv-real" id="mvR" hidden><p>Now do it for real! 🙌</p><button class="qcheck on" id="mvY">I did it! ⭐</button><button class="mv-skip" id="mvN">Skip</button></div></div>`);
   const C=[...$("qBody").querySelectorAll(".mv-c")];
+  const showReal=()=>{$("qBody").querySelector(".mv-cards").style.display="none";$("mvB").textContent="🙌";$("mvB").className="mv-big";$("mvT").textContent=q.seq.map(m=>m[1]).join(" → ");$("mvR").hidden=false;sayseq([G4("MOVE_YOU")],()=>{})};
   const show=()=>{ready=false;at=0;C.forEach(c=>{c.disabled=true;c.classList.remove("ok")});let k=0;const st=()=>{if(!L||L.q!==q)return;if(k>=q.seq.length){$("mvB").textContent="👆";$("mvT").textContent="Your turn!";C.forEach(c=>c.disabled=false);ready=true;return}
     const m=q.seq[k++];$("mvB").textContent=m[2];$("mvB").className="mv-big mv-"+m[0];$("mvT").textContent=m[1];sayseq([G4(m[0])],()=>setTimeout(st,500))};st()};
   sayseq(q.voice,()=>setTimeout(show,300));
-  C.forEach(c=>c.onclick=()=>{if(!ready||q.done)return;const m=q.cards[+c.dataset.j];if(m===q.seq[at]){c.classList.add("ok");sfx.tap();at++;if(at===q.seq.length){ready=false;$("mvR").hidden=false;sayseq([G4("MOVE_YOU")],()=>{})}}
-    else{miss++;sfx.oops();bounce(c);if(miss>=3){ready=false;$("mvR").hidden=false}else setTimeout(show,700)}});
+  C.forEach(c=>c.onclick=()=>{if(!ready||q.done)return;const m=q.cards[+c.dataset.j];if(m===q.seq[at]){c.classList.add("ok");sfx.tap();at++;if(at===q.seq.length){ready=false;showReal()}}
+    else{miss++;sfx.oops();bounce(c);if(miss>=3){ready=false;showReal()}else setTimeout(show,700)}});
   const fin=()=>{if(q.done)return;gameWin(q,miss>1?1:0,$("mvS"),[])};$("mvY").onclick=fin;$("mvN").onclick=fin;
   window.__gSolve=()=>{q.done=false;fin()}}
 

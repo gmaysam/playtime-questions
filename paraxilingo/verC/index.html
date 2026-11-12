@@ -2028,7 +2028,7 @@ img.e3{width:1.18em;height:1.18em;vertical-align:-.22em;object-fit:contain;displ
 .qkick .g-rep::after{content:"";position:absolute;inset:-6px;border-radius:18px;border:3px solid #1CB0F6;opacity:0}.qkick .g-rep.talking::after{animation:ring 1.2s ease-out infinite}
 .rt-lab{font:800 20px "Nunito",sans-serif;color:#4B4B4B;text-align:center;margin-top:4px}
 .bk .bg{position:absolute;width:var(--s);height:var(--s);box-sizing:border-box;border:3px dashed;border-radius:6px;opacity:.55}
-.bk-pad button.drop{background:#58CC02!important;box-shadow:0 5px 0 #46A302!important}
+.bk-pad button.bkdrop{background:#58CC02!important;box-shadow:0 5px 0 #46A302!important}
 /* ===== Nov 11c games6 ===== */
 .mx-top{display:flex;align-items:center;justify-content:center;gap:10px;font-size:20px}.mx-t{width:46px;height:46px;border-radius:50%;box-shadow:inset 0 -5px 0 rgba(0,0,0,.15),0 3px 0 #ddd}
 .mx-bowl{position:relative;width:min(70%,240px);margin:6px auto 0}.mx-bowl svg{width:100%;display:block}.mx-bowl.stir svg{animation:stir .35s linear 3}@keyframes stir{50%{transform:rotate(4deg)}}
@@ -2095,6 +2095,15 @@ img.e3{width:1.18em;height:1.18em;vertical-align:-.22em;object-fit:contain;displ
 .cl{position:relative;width:min(70%,240px);height:min(42vh,280px);margin:6px auto;border-radius:20px;background:repeating-linear-gradient(0deg,#E9ECEF 0 28px,#DEE2E6 28px 30px),#E9ECEF;background-image:radial-gradient(circle,#FF922B 0 5px,transparent 6px),radial-gradient(circle,#4DABF7 0 5px,transparent 6px);background-size:60px 50px,60px 50px;background-position:10px 10px,40px 35px}
 .cl-top{position:absolute;top:4px;left:50%;transform:translateX(-50%);font-size:32px}.cl-w{position:absolute;left:50%;bottom:4%;font-size:48px;transform:translateX(-50%);transition:bottom .25s}.cl-w.flip{transform:translateX(-50%) scaleX(-1)}
 .cm b{width:100%;text-align:center;bottom:-6px}
+/* short phone screens (browser bars take space): tighter header so buttons stay on screen */
+@media (max-height:700px) and (max-width:560px){
+ .lesson.q2 .qtitle,.game .qtitle{font-size:22px;line-height:1.15}
+ .lesson.q2 .qspk{width:52px;height:52px;border-radius:14px}.lesson.q2 .qspk svg{width:26px;height:26px}
+ .qkick{font-size:13px}.qkick .g-rep{width:40px;height:40px}.qkick .g-rep svg{width:22px;height:22px}
+ .rbgrid{max-width:min(220px,60vw)!important;margin-left:auto;margin-right:auto}
+ .mv-stage{min-height:110px}.mv-big{font-size:64px}.mv-c{width:88px;padding:6px}.mv-c span{font-size:32px}
+ .dc{height:min(26vh,160px)}.bm,.rp,.sh-room{max-height:30vh}
+}
 </style>
 
 <div class="stage">
@@ -4042,7 +4051,7 @@ function qBlocks(cat){const a=lvl(),W=6,H=8,turn=a>=6;
 function blocksQ(q){const {W,H}=q;let miss=0,r=q.r0,px,py,timer=null,landed=false;
   const S2=Math.floor(Math.min(36,(innerHeight*.42)/H,(($("qBody").clientWidth||340)*.62)/W));
   gShow(`<div class="game">${gHead("🧱","Block fit","Fill the gap!")}<div class="bk" id="bkB" style="width:${W*S2}px;height:${H*S2}px;--s:${S2}px"></div>
-    <p class="gmhint">${q.turn?"Turn it 🔄 and slide it ⬅️ ➡️, then drop it ⬇️":"Slide it ⬅️ ➡️, then drop it ⬇️"} — no rush!</p><div class="bk-pad">${["l",...(q.turn?["r"]:[]),"d","R"].map(k=>`<button data-k="${k}" class="${k==="d"?"drop":""}">${{l:"⬅️",r:"🔄",d:"⬇️",R:"➡️"}[k]}</button>`).join("")}</div></div>`);
+    <p class="gmhint">${q.turn?"Turn it 🔄 and slide it ⬅️ ➡️, then drop it ⬇️":"Slide it ⬅️ ➡️, then drop it ⬇️"} — no rush!</p><div class="bk-pad">${["l",...(q.turn?["r"]:[]),"d","R"].map(k=>`<button data-k="${k}" class="${k==="d"?"bkdrop":""}">${{l:"⬅️",r:"🔄",d:"⬇️",R:"➡️"}[k]}</button>`).join("")}</div></div>`);
   gAsk(q);const B=$("bkB"),cells=()=>rot(TET[q.k],r).map(([u,v])=>[u+px,v+py]);
   const fits=(cs)=>cs.every(([x,y])=>x>=0&&x<W&&y<H&&(y<0||!q.fill.includes(y*W+x)));
   const th=q.th||["🟦"],te=i=>`<em>${th[i%th.length]}</em>`;
@@ -4796,11 +4805,12 @@ function moveQ(q){let at=0,miss=0,ready=false;
     <div class="mv-cards">${q.cards.map((m,j)=>`<button class="mv-c" data-j="${j}" disabled><span>${m[2]}</span><small>${m[1]}</small></button>`).join("")}</div>
     <div class="mv-real" id="mvR" hidden><p>Now do it for real! 🙌</p><button class="qcheck on" id="mvY">I did it! ⭐</button><button class="mv-skip" id="mvN">Skip</button></div></div>`);
   const C=[...$("qBody").querySelectorAll(".mv-c")];
+  const showReal=()=>{$("qBody").querySelector(".mv-cards").style.display="none";$("mvB").textContent="🙌";$("mvB").className="mv-big";$("mvT").textContent=q.seq.map(m=>m[1]).join(" → ");$("mvR").hidden=false;sayseq([G4("MOVE_YOU")],()=>{})};
   const show=()=>{ready=false;at=0;C.forEach(c=>{c.disabled=true;c.classList.remove("ok")});let k=0;const st=()=>{if(!L||L.q!==q)return;if(k>=q.seq.length){$("mvB").textContent="👆";$("mvT").textContent="Your turn!";C.forEach(c=>c.disabled=false);ready=true;return}
     const m=q.seq[k++];$("mvB").textContent=m[2];$("mvB").className="mv-big mv-"+m[0];$("mvT").textContent=m[1];sayseq([G4(m[0])],()=>setTimeout(st,500))};st()};
   sayseq(q.voice,()=>setTimeout(show,300));
-  C.forEach(c=>c.onclick=()=>{if(!ready||q.done)return;const m=q.cards[+c.dataset.j];if(m===q.seq[at]){c.classList.add("ok");sfx.tap();at++;if(at===q.seq.length){ready=false;$("mvR").hidden=false;sayseq([G4("MOVE_YOU")],()=>{})}}
-    else{miss++;sfx.oops();bounce(c);if(miss>=3){ready=false;$("mvR").hidden=false}else setTimeout(show,700)}});
+  C.forEach(c=>c.onclick=()=>{if(!ready||q.done)return;const m=q.cards[+c.dataset.j];if(m===q.seq[at]){c.classList.add("ok");sfx.tap();at++;if(at===q.seq.length){ready=false;showReal()}}
+    else{miss++;sfx.oops();bounce(c);if(miss>=3){ready=false;showReal()}else setTimeout(show,700)}});
   const fin=()=>{if(q.done)return;gameWin(q,miss>1?1:0,$("mvS"),[])};$("mvY").onclick=fin;$("mvN").onclick=fin;
   window.__gSolve=()=>{q.done=false;fin()}}
 
@@ -5158,7 +5168,7 @@ function danceQ(q){let at=0,miss=0,ready=false;
   const W=$("dcW"),P=[...$("qBody").querySelectorAll(".dc-b")];const pose=k=>{W.className="dc-w dc-"+k;g6tone({L:392,R:440,U:523,D:330}[k],.25,"triangle",.2);setTimeout(()=>W.className="dc-w",420)};
   const show=()=>{ready=false;at=0;P.forEach(b=>b.disabled=true);let k=0;const st=()=>{if(!L||L.q!==q)return;if(k>=q.seq.length){P.forEach(b=>b.disabled=false);ready=true;return}const m=q.seq[k++];pose(m[0]);P.find(b=>b.dataset.k===m[0]).classList.add("flash");setTimeout(()=>P.forEach(b=>b.classList.remove("flash")),400);setTimeout(st,800)};setTimeout(st,500)};
   sayseq(q.voice,()=>show());
-  P.forEach(b=>b.onclick=()=>{if(!ready||q.done)return;pose(b.dataset.k);if(b.dataset.k===q.seq[at][0]){at++;if(at===q.seq.length){ready=false;$("dcR").hidden=false}}else{miss++;sfx.oops();ready=false;setTimeout(show,700)}});
+  P.forEach(b=>b.onclick=()=>{if(!ready||q.done)return;pose(b.dataset.k);if(b.dataset.k===q.seq[at][0]){at++;if(at===q.seq.length){ready=false;$("qBody").querySelector(".dc-pad").style.display="none";$("dcR").hidden=false}}else{miss++;sfx.oops();ready=false;setTimeout(show,700)}});
   $("dcY").onclick=()=>{if(!q.done)gameWin(q,miss>1?1:0,W,[])};window.__gSolve=()=>{gameWin(q,0,W,[])}}
 
 /* ---------------- MOVE 7: wall climb (left, right, left, right) ---------------- */
