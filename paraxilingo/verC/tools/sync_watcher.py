@@ -28,6 +28,11 @@ wq = [w for w in wq if w['i'] not in retired]
 AGE_UP={'p03':5,'p05':5,'p06':5,'p02':4,'p04':5,'m01':4,'m04':4,'m05':5,'m02':4,'w04':5,'x01':4,'x03':4,'n07':4,'n08':4,'f04':4,'f05':4,'a16':4,'e02':4,'e03':4,'n05':4}
 for w in wq:
     if w['i'] in AGE_UP: w['a'] = max(w['a'], AGE_UP[w['i']])
+# Paraxilingo's own bank (tools/pxbank.json): only questions whose voice is recorded
+_px=os.path.join(os.path.dirname(os.path.abspath(__file__)),'pxbank.json')
+if os.path.exists(_px):
+    _aud=os.path.join(S,'appC','audio','w')
+    wq += [w for w in json.load(open(_px)) if os.path.exists(os.path.join(_aud, w['i']+'_q_lulu.mp3'))]
 json.dump(wq, open(os.path.join(S, 'watcher', 'wq.json'), 'w'), ensure_ascii=False)
 # words, letters, sight words, sentences (only questions that are 'in the games')
 clips = {r['file'][:-4]: r['text'] for r in csv.DictReader(open(os.path.join(LIB, 'voices', 'clips.csv'), encoding='utf-8-sig'))}
@@ -96,6 +101,9 @@ for f in os.listdir(os.path.join(LIB, 'quiz_voices')):
         src = qs if f.endswith('_q_lulu.mp3') and os.path.exists(os.path.join(LIB, 'quiz_voices', qs)) else f
         shutil.copy(os.path.join(LIB, 'quiz_voices', src), os.path.join(dst, f)); n += 1
 for f in glob.glob(os.path.join(S, 'fa_new', 'out', '*.mp3')): shutil.copy(f, dst); n += 1
+# the pool holds the newest take of every Paraxilingo clip (re-voiced fixes too), so it always wins over the old fa_new copies
+for f in voices:
+    if f.startswith('PX_'): shutil.copy(os.path.join(LIB, 'voices', f), os.path.join(dst, f)); n += 1
 pd=os.path.join(S,'appC','img','w');os.makedirs(pd,exist_ok=True)
 for f in os.listdir(os.path.join(LIB,'pictures')):
     if re.match(r'(home|food|pl|shape|sky|wd)_\d+\.png$',f): shutil.copy(os.path.join(LIB,'pictures',f),os.path.join(pd,f))

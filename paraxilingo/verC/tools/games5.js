@@ -25,7 +25,7 @@ const DAYCAP={piece:2,path:2},GAMEK=["robot","simon","piano","pairs","match"];
 function dayUse(){const d=new Date().toDateString();if(!S.dayUse||S.dayUse.d!==d)S.dayUse={d,c:{}};return S.dayUse.c}
 const ALLF=()=>{const o=new Set();for(const c of ["count","add","clock","animals","world","sky","farm","shapes","people","flags","robot","memory","letters","read"]){try{(formatsFor(c)||[]).forEach(k=>{if(k.startsWith("f_"))o.add(k)})}catch(e){}}return [...o]};
 function capRound(p,cat){if(!p)return p;const fam=k=>FAMILY[k]||k,du=dayUse(),dcap=k=>DAYCAP[fam(k)]||((k.startsWith("f_")||GAMEK.includes(k))?2:99),n={};
-  const cap=k=>Math.min(FAMCAP[fam(k)]||(k==="w"?4:2),dcap(k)-(du[fam(k)]||0));
+  const cap=k=>Math.min(FAMCAP[fam(k)]||(k==="w"?4:(k.startsWith("f_")||GAMEK.includes(k))?1:2),dcap(k)-(du[fam(k)]||0));
   let pool=[];try{pool=sh([...new Set([...(formatsFor(cat)||[]),...(kindsFor(cat)||[])])])}catch(e){}
   const out=[];for(const k of p){const f=fam(k);if((n[f]||0)<cap(k)){n[f]=(n[f]||0)+1;out.push(k);continue}
     const alt=pool.find(x=>(n[fam(x)]||0)<cap(x)&&x!==out[out.length-1]);if(alt){n[fam(alt)]=(n[fam(alt)]||0)+1;out.push(alt)}else{const ks=(kindsFor(cat)||[]).filter(x=>!x.startsWith("f_")&&!GAMEK.includes(x)),any=sh(ALLF()).find(x=>(n[fam(x)]||0)<cap(x)&&x!==out[out.length-1]);
@@ -34,7 +34,7 @@ function capRound(p,cat){if(!p)return p;const fam=k=>FAMILY[k]||k,du=dayUse(),dc
   for(let i=1;i<out.length;i++)if(fam(out[i])===fam(out[i-1])){const j=out.findIndex((x,jj)=>jj>i&&fam(x)!==fam(out[i-1])&&(jj+1>=out.length||fam(out[jj+1])!==fam(out[i]))&&fam(out[jj-1])!==fam(out[i]));if(j>0)[out[i],out[j]]=[out[j],out[i]]}
   if(!window.__noDayCount){for(const k of out)du[fam(k)]=(du[fam(k)]||0)+1;try{save()}catch(e){}}
   return out}
-const _pr5=planRound;planRound=function(cat,count){return capRound(_pr5(cat,count),cat)};
+/* capRound is applied last, in games6 (after every module has added its games) */
 
 /* ---- 4. Pattern Detective: check every puzzle before it is shown ---- */
 const _qpd5=qPDet;qPDet=function(cat){for(let t=0;t<20;t++){const q=_qpd5(cat);const nn=q.seq.filter(x=>!x).length,v=q.opts[q.ans];

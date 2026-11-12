@@ -270,3 +270,26 @@ const _kf7=kindsFor;kindsFor=function(cat){const k=_kf7(cat);if(cat==="robot"&&(
 /* content inside a game also has an age: no planets order, flags or maps for the youngest */
 const SUBMIN={"seq:planets":6,"seq:psize":6,"seq:months":6,"seq:week":5,"swipe:flag":6,"swipe:planet":5,"swipe:corner":5,"tapall:planets":5,"tapall:letter":5,"spy:map":5,"spy:flags":6,"spy:paper":5,"sort:num":5,"sort:letter":5,"catch:letter":5,"whack:letter":5};
 const _bf8=buildFormat;buildFormat=function(kind,cat){let q=null;for(let t=0;t<12;t++){q=_bf8(kind,cat);if(!q)return q;const sub=(q.game||"")+":"+(gsub(q)||"");if((S.age||6)>=(SUBMIN[sub]||0))return q}return null};
+/* the repeat limit runs LAST, after every module added its games: each game at most once a round, twice a day */
+const _prF=planRound;planRound=function(cat,count){return capRound(_prF(cat,count),cat)};
+
+/* read short recaps aloud with the word, letter and number clips we already have:
+   "Cat, Bee, Caterpillar!", "chicken → nest", "7 + 5 = 12", "K is for Key!", "KEY: k - e - y", "You found every triangle!".
+   Returns [] unless EVERY part has a voice, so nothing is half-read. */
+function recapV(t){const LT=c=>/^[a-z]$/i.test(c)?["w/LULU_LN_"+c.toUpperCase()]:null;t=String(t||"").replace(/<[^>]+>/g,"").replace(/[\u{1F000}-\u{1FAFF}☀-➿️]/gu,"").replace(/\s+/g," ").trim();if(!t)return [];
+  const W=x=>{x=String(x).replace(/^(the|a|an)\s+/i,"").replace(/["“”!.?]/g,"").trim();if(!x)return null;if(/^[a-z]$/i.test(x))return LT(x);const v=/^\d+$/.test(x)?(+x<=20?[N(+x)]:+x<=100?faNum(+x):null):both(x);return v&&v.length?v:null};
+  const all=parts=>{const o=[];for(const p of parts){if(!p)return [];o.push(...p)}return o};
+  let m;
+  if((m=t.match(/^You learned: (.+?)!?$/)))t=m[1];
+  if((m=t.match(/^([\d\s+\-−–=]+?)[.:!]\s/))&&/[+\-−–=]/.test(m[1]))t=m[1].trim();   /* "2 + 3 = 5. Both sides weigh the same!" -> the sum */
+  if(/^[\d\s+\-−–×x=?]+$/.test(t)&&/\d/.test(t)&&/[+\-−–×=]/.test(t)){const o=[];for(const k of t.match(/\d+|[+\-−–×=]/g)){if(/\d/.test(k)){const v=W(k);if(!v)return [];o.push(...v)}else o.push(k==="+"?"w/LULU_PLUS":k==="="?"w/LULU_EQUALS":k==="×"?null:"w/LULU_MINUS")}return o.includes(null)?[]:o}
+  if((m=t.match(/^(.+?)\s*[→:]\s*(.+)$/))&&!/ - /.test(m[2]))return all([W(m[1]),W(m[2])]);
+  if((m=t.match(/^([A-Z]) is for (.+?)!?$/)))return all([LT(m[1]),W(m[2])]);
+  if((m=t.match(/^([A-Za-z]+): ([a-z](?: - [a-z])+)$/)))return all([W(m[1]),...m[2].split(" - ").map(LT)]);
+  if((m=t.match(/^(\w+) - ([A-Z](?:, [A-Z])+)\.?$/)))return all([W(m[1]),...m[2].split(", ").map(LT)]);
+  if((m=t.match(/^You caught every ([A-Z])!$/)))return all([LT(m[1])]);
+  if((m=t.match(/^(?:You found every|That is the|That is a|It is the|It is a) (.+?)!?$/)))return all([W(m[1])]);
+  if((m=t.match(/^"(\w+)" is one of the words we read most often/)))return enSay(m[1]);
+  if(/,/.test(t)&&t.split(",").every(x=>x.trim().split(" ").length<=3))return all(t.replace(/!$/,"").split(",").map(W));
+  if(t.split(" ").length<=2&&!/[.]$/.test(t))return all([W(t)]);
+  return []}

@@ -41,7 +41,7 @@ function qLTog(cat){const T=lrThings(cat);if(!T)return null;
   if(cat==="shapes"){const c=sh(PAINT_COLORS.filter(x=>!["black","white","brown"].includes(x[0]))).slice(0,4);return {game:"ltog",mode:"color",c,voice:[LV("COLOR")],gid:"learn.names",factT:c.map(x=>cap1(x[0])).join(", ")+"!"}}
   const it=sh(T).slice(0,4);return {game:"ltog",mode:"names",items:it,voice:[LV("NAMES")],gid:"learn.names",factT:it.map(t=>t.n).join(", ")+"!"}}
 function qLFind(cat){const T=lrThings(cat);if(!T||T.length<2)return null;const [t,o]=sh(T).slice(0,2),pair=sh([t,o]);
-  return {game:"lfind",t,pair,voice:[...t.say,LV("FIND")],gid:"learn.find",factT:t.f||(/ is for /.test(t.n)?t.n+"!":/^[A-Z][a-z]+$/.test(t.n)&&COUNTRIES.some(c=>c[0]===t.n)?t.n+"!":"That is the "+t.n.toLowerCase()+"!")}}
+  return {game:"lfind",t,pair,voice:[...t.say,LV("FIND")],gid:"learn.find",factT:t.f||(/ is for /.test(t.n)?t.n+"!":/^[A-Z][a-z]+$/.test(t.n)&&COUNTRIES.some(c=>c[0]===t.n)?t.n+"!":(/^the /i.test(t.n)?t.n+"!":"That is the "+t.n.toLowerCase()+"!"))}}
 /* ---- show & tell: one thing at a time, tap to hear again, then next ---- */
 function lshowQ(q){let k=0;
   const draw=()=>{const t=q.items[k];gShow(`<div class="game lrn">${gHead("👀","Look and listen","Look and listen!")}<button class="lr-card" id="lrC">${BIGPIC(t.p)}<b class="lr-name">${t.n}</b>${t.f?`<span class="lr-fact">💡 ${t.f}</span>`:""}</button>

@@ -354,7 +354,7 @@ function pick(j,b){
       /* a short fact or the worked answer under the praise (e.g. "Pig: barn", "7 + 5 = 12") */
       const fact=q.exp&&q.exp.t&&String(q.exp.t).length>2?q.exp.t:"";
       sheet("good"+(fact?" why":""),pickOne(PRAISE_T),fact||`+${n} 🌰`);
-      sayseq([pickOne(PRAISE_CLIPS)],()=>setTimeout(go,fact?1600:500));setTimeout(go,fact?4200:3400);
+      sayseq([pickOne(PRAISE_CLIPS),...(fact?factV(fact):[])],()=>setTimeout(go,fact?1600:500));setTimeout(go,fact?4200:3400);
     }
     $("qNext").onclick=()=>{sfx.tap();go()};
     return;
@@ -422,7 +422,7 @@ function moundDone(){
   const r=$("qResult");sfx.fanfare();burst(160);
   sayseq([pickOne(["w/LULU_PR_A","w/LULU_PR_E","w/LULU_PR_D"])]);
   r.innerHTML=`<div class="rs-sun"></div><span class="dm">${bv(170)}</span><h2>${pickOne(["You did it!","Amazing job!","Great work!","Hooray!"])}</h2><p>${pickOne(["Domi is so proud of you!","Your brain is growing!","What a great learner!"])}</p>
-    <div class="gains"><span class="gn a">+${L.acorns} 🌰</span>${first?`<span class="gn a">+2 🌰</span>`:""}</div>${goalCard()}
+    <div class="gains"><span class="gn a">+${L.acorns+(first?2:0)} 🌰</span></div>${goalCard()}
     <button class="qbtn good big" id="resBtn">Continue ➜</button>`;
   r.hidden=false;
   const leave=()=>{closeLesson();L=null;setTimeout(()=>{renderMap();placeBeaver(true);setTimeout(()=>{scrollToCurrent(true);if(S.day.done>=HOLES[landIdx()].length&&!S.day.house)setTimeout(openHouse,900);else checkRealPrizes()},700)},420)};
