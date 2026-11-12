@@ -270,3 +270,75 @@ Object.assign(GMAP,{
  "count.compare":G("Bigger, smaller or equal",["cog","math"],[["cog","logic"]],"Choose >, < or = between two numbers.","Practice"),
  "count.oddeven":G("Odd or even",["cog","math"],0,"Pair the dots: is the number odd or even?","Practice"),
  "count.measure":G("Measuring with blocks",["cog","math"],[["life","everyday"]],"Measure how many blocks long a thing is.","Practice")});
+
+/* ---------------- spaced review (v14): missed questions come back after 1, 3, 7, 14 and 30 days; known fact questions get one check-up after 2 weeks ---------------- */
+const REV_INT=[1,3,7,14,30],dayNo=()=>Math.floor((Date.now()-new Date().getTimezoneOffset()*6e4)/864e5);
+const revKey=q=>q.wid?"w:"+q.wid:(q.kind&&!q.game&&!q.match&&!q.robot&&!String(q.kind).startsWith("f_")&&q.kind!=="w"?"k:"+q.cat+":"+q.kind:null);
+const _lsR=logSk;logSk=function(q,ok){try{const k=q&&q.cat&&revKey(q);if(k){const R=S.rev||(S.rev={}),r=R[k],first=ok&&!q.tries;
+  if(!first)R[k]={b:0,due:dayNo()+1,cat:q.cat,n:(r&&r.n||0)+1};
+  else if(r){r.b++;if(r.b>=REV_INT.length)delete R[k];else r.due=dayNo()+REV_INT[r.b]}
+  else if(k.startsWith("w:"))R[k]={b:3,due:dayNo()+14,cat:q.cat,n:0};
+  const ks=Object.keys(R);if(ks.length>400)ks.sort((a,b)=>R[a].due-R[b].due).slice(0,ks.length-400).forEach(x=>delete R[x])}}catch(e){}return _lsR(q,ok)};
+const _omR=openMound;openMound=function(i){_omR(i);try{if(!L||!L.queue.length||L.queue[0].radio||!S.rev)return;const cat=L.cat,now=dayNo();
+  const due=Object.entries(S.rev).filter(([k,r])=>r.cat===cat&&r.due<=now).sort((a,b)=>a[1].due-b[1].due);if(!due.length)return;
+  const slots=L.queue.map((q,j)=>j).filter(j=>j>0&&!L.queue[j].game&&!L.queue[j].radio),max=Math.max(1,Math.floor(L.queue.length/4));const used=new Set(L.queue.map(q=>q.wid).filter(Boolean));let n=0;
+  for(const [k,r] of due){if(n>=max||!slots.length)break;let q=null;
+    if(k.startsWith("w:")){const id=k.slice(2);if(used.has(id)||!wPool(cat).some(w=>w.i===id))continue;window.__fw=id;try{q=qWatcher(cat,used)}finally{window.__fw=null}if(!q||q.wid!==id)continue}
+    else{const kind=k.split(":")[2];if(!kindsFor(cat).includes(kind))continue;q=buildQ(cat,kind,new Set())}
+    if(!q)continue;q.cat=cat;q.kind=q.kind||(k.startsWith("w:")?"w":k.split(":")[2]);q.review=true;L.queue[slots.splice(ri(0,slots.length-1),1)[0]]=q;n++}}catch(e){}};
+
+/* ---------------- animal fact table -> generated knowledge questions (v14) ----------------
+   [name, emoji, homes, eats, cover, legs, can, cannot, baby]   (empty = we do not use that fact for this animal) */
+const AFT=[["cat","🐱",["house"],["fish","meat"],"fur",4,["climb","jump"],["fly"],"milk"],["dog","🐶",["house"],["meat"],"fur",4,["swim","jump"],["fly","climb"],"milk"],
+ ["cow","🐄",["farm"],["grass"],"fur",4,[],["fly","climb","jump"],"milk"],["pig","🐷",["farm"],[],"",4,[],["fly","climb"],"milk"],["hen","🐔",["farm"],["seeds"],"feathers",2,[],["swim","climb"],"eggs"],
+ ["duck","🦆",["pond"],["seeds"],"feathers",2,["fly","swim"],["climb"],"eggs"],["horse","🐴",["farm"],["grass"],"fur",4,["jump"],["fly","climb"],"milk"],["sheep","🐑",["farm"],["grass"],"",4,[],["fly","climb"],"milk"],
+ ["goat","🐐",["farm"],["grass"],"fur",4,["climb","jump"],["fly"],"milk"],["rabbit","🐰",[],["grass","carrots"],"fur",4,["jump"],["fly","climb"],"milk"],["mouse","🐭",[],["seeds"],"fur",4,["climb"],["fly"],"milk"],
+ ["lion","🦁",["grassland"],["meat"],"fur",4,[],["fly"],"milk"],["tiger","🐯",["jungle"],["meat"],"fur",4,["swim"],["fly"],"milk"],["elephant","🐘",["grassland"],["grass","leaves"],"",4,["swim"],["fly","jump","climb"],"milk"],
+ ["giraffe","🦒",["grassland"],["leaves"],"",4,[],["fly","climb"],"milk"],["zebra","🦓",["grassland"],["grass"],"",4,[],["fly","climb"],"milk"],["monkey","🐒",["jungle"],["bananas"],"fur",0,["climb","jump"],["fly"],"milk"],
+ ["bear","🐻",["forest"],["fish"],"fur",4,["climb","swim"],["fly"],"milk"],["panda","🐼",["forest"],["leaves"],"fur",4,["climb"],["fly"],"milk"],["kangaroo","🦘",["grassland"],["grass"],"fur",0,["jump"],["fly","climb"],"milk"],
+ ["camel","🐪",["desert"],[],"",4,[],["fly","climb"],"milk"],["fox","🦊",["forest"],["meat"],"fur",4,["jump"],["fly"],"milk"],["wolf","🐺",["forest"],["meat"],"fur",4,[],["fly","climb"],"milk"],
+ ["owl","🦉",["forest"],["meat"],"feathers",2,["fly"],["swim"],"eggs"],["eagle","🦅",[],["meat","fish"],"feathers",2,["fly"],[],"eggs"],["parrot","🦜",["jungle"],["seeds"],"feathers",2,["fly","climb"],["swim"],"eggs"],
+ ["penguin","🐧",["ice"],["fish"],"feathers",2,["swim"],["fly","climb"],"eggs"],["bee","🐝",["hive"],["nectar"],"",6,["fly"],["swim"],"eggs"],["butterfly","🦋",[],["nectar"],"",6,["fly"],["swim"],"eggs"],
+ ["ant","🐜",[],[],"",6,["climb"],[],"eggs"],["spider","🕷️",[],["insects"],"",8,["climb"],["fly"],"eggs"],["ladybug","🐞",[],["insects"],"",6,["fly"],["swim"],"eggs"],["snail","🐌",[],["leaves"],"shell",0,[],["fly","jump"],"eggs"],
+ ["frog","🐸",["pond"],["insects"],"",4,["jump","swim"],["fly"],"eggs"],["turtle","🐢",["pond","sea"],[],"shell",4,["swim"],["fly","jump","climb"],"eggs"],["snake","🐍",[],["meat"],"scales",0,[],["fly","jump"],""],
+ ["crocodile","🐊",["river"],["meat","fish"],"scales",4,["swim"],["fly","climb"],"eggs"],["lizard","🦎",["desert"],["insects"],"scales",4,["climb"],["fly"],"eggs"],["fish","🐟",["sea","river"],[],"scales",0,["swim"],["fly","climb","jump"],"eggs"],
+ ["shark","🦈",["sea"],["fish"],"",0,["swim"],["fly","climb"],""],["whale","🐋",["sea"],[],"",0,["swim"],["fly","climb"],"milk"],["dolphin","🐬",["sea"],["fish"],"",0,["swim","jump"],["fly","climb"],"milk"],
+ ["octopus","🐙",["sea"],[],"",0,["swim"],["fly"],"eggs"],["crab","🦀",["sea"],[],"shell",0,[],["fly"],"eggs"],["bat","🦇",["cave"],["insects"],"fur",2,["fly"],[],"milk"],
+ ["squirrel","🐿️",["forest"],["nuts"],"fur",4,["climb","jump"],["fly"],"milk"],["polar bear","🐻‍❄️",["ice"],["fish"],"fur",4,["swim"],["fly"],"milk"],["hippo","🦛",["river"],["grass"],"",4,["swim"],["fly","climb","jump"],"milk"]];
+const APL={house:"🏠",farm:"🚜",sea:"🌊",jungle:"🌴",forest:"🌲",grassland:"🌾",desert:"🏜️",ice:"🧊",pond:"🪷",river:"🏞️",hive:"🍯",cave:"🪨"};
+const inP=p=>(["farm","ice"].includes(p)?"on the ":p==="house"?"in a ":"in the ")+p,AF=n=>"w/PX_AF_"+n,AFK=s=>s.replace(/ /g,"_").toUpperCase();
+var AF_READY=__AFVOICE__;
+const aVoiced=a=>both(a[0]).length>0;
+const aOpt=a=>({h:`<span class="oe">${a[1]}</span><small>${cap1(a[0])}</small>`,say:both(a[0])});
+const aPick=(good,bad,k)=>{const g=pickOne(good.filter(aVoiced)),b=sh(bad.filter(x=>aVoiced(x)&&x!==g)).slice(0,k-1);if(!g||b.length<k-1)return null;const o=sh([g,...b]);return {g,o}};
+const AQ={
+ aHome(){const ys=S.age<=3?["house","farm","sea","pond"]:Object.keys(APL);const p=pickOne(ys.filter(p=>AFT.some(a=>a[2].includes(p)&&aVoiced(a))));
+  const GRP=[["sea","river","pond"],["forest","jungle"],["grassland","farm"]],near=GRP.find(g=>g.includes(p))||[p];const r=aPick(AFT.filter(a=>a[2].includes(p)),AFT.filter(a=>a[2].length&&!a[2].some(h=>near.includes(h))),3);if(!r)return null;
+  return {voice:[AF("Q_HOME_"+AFK(p))],cap:`Who lives ${inP(p)}? ${APL[p]}`,layout:"row3",hint:"elim",opts:r.o.map(aOpt),ans:r.o.indexOf(r.g),why:{t:`The ${r.g[0]} lives ${inP(p)}.`,v:[...both(r.g[0]),AF("F_HOME_"+AFK(p))]}}},
+ aEat(){const fs=["grass","meat","fish","leaves","seeds","nectar","bananas","insects","carrots","nuts"].filter(f=>AFT.some(a=>a[3].includes(f)&&aVoiced(a)));const f=pickOne(fs);
+  const r=aPick(AFT.filter(a=>a[3].includes(f)),AFT.filter(a=>a[3].length&&!a[3].includes(f)&&!(f==="meat"&&a[3].includes("fish"))&&!(f==="fish"&&a[3].includes("meat"))&&!(f==="grass"&&a[3].includes("leaves"))&&!(f==="leaves"&&a[3].includes("grass"))),3);if(!r)return null;
+  return {voice:[AF("Q_EAT_"+AFK(f))],cap:`Who eats ${f}?`,layout:"row3",hint:"elim",opts:r.o.map(aOpt),ans:r.o.indexOf(r.g),why:{t:`The ${r.g[0]} eats ${f}.`,v:[...both(r.g[0]),AF("F_EAT_"+AFK(f))]}}},
+ aCover(){const cs=S.age<=4?["fur","feathers","shell"]:["fur","feathers","shell","scales"];const c=pickOne(cs);
+  const r=aPick(AFT.filter(a=>a[4]===c),AFT.filter(a=>a[4]&&a[4]!==c),3);if(!r)return null;
+  return {voice:[AF("Q_COVER_"+AFK(c))],cap:`Who has ${c}?`,layout:"row3",hint:"elim",opts:r.o.map(aOpt),ans:r.o.indexOf(r.g),why:{t:`The ${r.g[0]} has ${c}.`,v:[...both(r.g[0]),AF("F_COVER_"+AFK(c))]}}},
+ aCan(){const v=pickOne(S.age<=3?["fly","swim"]:["fly","swim","jump","climb"]);const r=aPick(AFT.filter(a=>a[6].includes(v)),AFT.filter(a=>a[7].includes(v)),3);if(!r)return null;
+  return {voice:[AF("Q_CAN_"+AFK(v))],cap:`Who can ${v}?`,layout:"row3",hint:"elim",opts:r.o.map(aOpt),ans:r.o.indexOf(r.g),why:{t:`The ${r.g[0]} can ${v}.`,v:[...both(r.g[0]),AF("F_CAN_"+AFK(v))]}}},
+ aYN(){const v=pickOne(["fly","swim","jump","climb"]),yes=Math.random()<.5,pool=AFT.filter(a=>aVoiced(a)&&(yes?a[6]:a[7]).includes(v)),a=pickOne(pool);if(!a)return null;
+  return {voice:[...both(a[0]),AF("Q_CANYN_"+AFK(v))],cap:`Can a ${a[0]} ${v}?`,visual:`<div class="bigpic"><span class="oe" style="font-size:84px">${a[1]}</span></div>`,layout:"yn",hint:"again",tf:true,
+   opts:[{h:"<span class='yn'>"+YES_B+"</span><small>Yes</small>",say:["w/LULU_SK_YES"]},{h:"<span class='yn'>"+NO_B+"</span><small>No</small>",say:["w/LULU_SK_NO"]}],ans:yes?0:1,why:{t:`The ${a[0]} ${yes?"can":"cannot"} ${v}.`,v:[...both(a[0]),AF((yes?"F_CAN_":"F_CANT_")+AFK(v))]}}},
+ aBaby(){const b=pickOne(["eggs","milk"]);const r=aPick(AFT.filter(a=>a[8]===b),AFT.filter(a=>a[8]&&a[8]!==b),3);if(!r)return null;
+  return {voice:[AF(b==="eggs"?"Q_EGGS":"Q_MILK")],cap:b==="eggs"?"Who lays eggs? 🥚":"Who feeds its babies milk? 🍼",layout:"row3",hint:"elim",opts:r.o.map(aOpt),ans:r.o.indexOf(r.g),why:{t:b==="eggs"?`The ${r.g[0]} lays eggs.`:`The ${r.g[0]} feeds its babies milk.`,v:[...both(r.g[0]),AF(b==="eggs"?"F_EGGS":"F_MILK")]}}},
+ aLegs(){const a=pickOne(AFT.filter(a=>aVoiced(a)&&[2,4,6,8].includes(a[5])||(aVoiced(a)&&a[5]===0&&["snake","fish"].includes(a[0]))));if(!a)return null;const o=numOpts(a[5],[0,2,4,6,8].filter(x=>x!==a[5]),3);
+  return Object.assign({voice:[...both(a[0]),AF("Q_LEGS")],cap:`How many legs does a ${a[0]} have?`,visual:`<div class="bigpic"><span class="oe" style="font-size:84px">${a[1]}</span></div>`,layout:"row3",hint:"elim",why:{t:`A ${a[0]} has ${a[5]} legs.`,v:[...both(a[0]),...(a[5]?[N(a[5]),AF("F_LEGS")]:[AF("F_NOLEGS")])]}},o)},
+ aWhere(){const a=pickOne(AFT.filter(a=>aVoiced(a)&&a[2].length===1&&a[2][0]!=="house"));if(!a)return null;const p=a[2][0],o=sh([p,...sh(Object.keys(APL).filter(x=>x!==p&&x!=="house"&&x!=="hive"&&!(p==="sea"&&x==="river")&&!(p==="river"&&["sea","pond"].includes(x))&&!(p==="pond"&&x==="river")&&!(p==="forest"&&x==="jungle")&&!(p==="jungle"&&x==="forest"))).slice(0,2)]);
+  return {voice:[...both(a[0]),AF("Q_WHERE")],cap:`Where does the ${a[0]} live?`,visual:`<div class="bigpic"><span class="oe" style="font-size:84px">${a[1]}</span></div>`,layout:"row3",hint:"elim",opts:o.map(x=>({h:`<span class="oe">${APL[x]}</span><small>${cap1(x)}</small>`,say:both(x)})),ans:o.indexOf(p),why:{t:`The ${a[0]} lives ${inP(p)}.`,v:[...both(a[0]),AF("F_HOME_"+AFK(p))]}}}};
+const AQAGE={aHome:[3,6],aCan:[3,6],aEat:[4,7],aCover:[4,7],aYN:[4,7],aBaby:[5,9],aLegs:[5,9],aWhere:[5,9]};
+const _kfA=kindsFor;kindsFor=function(cat){const k=_kfA(cat);if(!AF_READY||!["animals","farm"].includes(cat))return k;const a=S.age||6;
+  return [...k,...Object.keys(AQAGE).filter(x=>a>=AQAGE[x][0]&&a<=AQAGE[x][1]&&(cat==="animals"||["aHome","aEat","aBaby"].includes(x)))]};
+const _bqA=buildQ;buildQ=function(cat,k,used){if(AQ[k]){for(let t=0;t<8;t++){const q=AQ[k]();if(q){q.cat=cat;q.kind=k;q.exp={t:q.why.t,v:q.why.v};return q}}return _bqA(cat,"w",used)}return _bqA(cat,k,used)};
+Object.assign(GMAP,{"animals.aHome":G("Who lives where?",["cre","science"],[["lang","vocab"]],"Which animal lives in the sea, on the farm, in the forest...","Explore"),
+ "animals.aEat":G("Who eats what?",["cre","science"],[["cog","logic"]],"Which animal eats grass, meat, fish, nectar...","Explore"),"animals.aCover":G("Fur, feathers or scales?",["cre","science"],[["cog","logic"]],"Which animal has fur, feathers, scales or a shell.","Explore"),
+ "animals.aCan":G("What can it do?",["cre","science"],[["phys","body"]],"Which animal can fly, swim, jump or climb.","Explore"),"animals.aYN":G("Can it?",["cre","science"],[["cog","logic"]],"Yes or no: can this animal fly, swim, jump or climb?","Explore"),
+ "animals.aBaby":G("Eggs or milk?",["cre","science"],[["cog","curiosity"]],"Which animals lay eggs and which feed their babies milk.","Explore"),"animals.aLegs":G("How many legs?",["cog","math"],[["cre","science"]],"Count the legs of animals and insects.","Explore"),
+ "animals.aWhere":G("Where does it live?",["cre","science"],[["cog","curiosity"]],"Pick the home of an animal: sea, ice, desert, jungle...","Explore"),
+ "farm.aHome":G("Who lives where?",["cre","science"],[["lang","vocab"]],"Which animal lives in the sea, on the farm, in the forest...","Explore"),"farm.aEat":G("Who eats what?",["cre","science"],[["cog","logic"]],"Which animal eats grass, meat, fish, nectar...","Explore"),"farm.aBaby":G("Eggs or milk?",["cre","science"],[["cog","curiosity"]],"Which animals lay eggs and which feed their babies milk.","Explore")});
