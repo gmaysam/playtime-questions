@@ -4123,5 +4123,1105 @@
 "🌌",
 "✨"
 ]
+},
+{
+"i": "px208",
+"k": "c",
+"t": "farm",
+"a": 9,
+"q": "Where does wool come from?",
+"o": [
+"Sheep",
+"Chickens",
+"Cows"
+],
+"n": 0,
+"x": "Sheep are sheared once a year, and their wool grows back.",
+"p": null,
+"oe": [
+"🐑",
+"🐔",
+"🐄"
+]
+},
+{
+"i": "px209",
+"k": "c",
+"t": "farm",
+"a": 9,
+"q": "Which part of a plant takes water from the soil?",
+"o": [
+"Roots",
+"Leaves",
+"Flowers"
+],
+"n": 0,
+"x": "Roots also hold the plant firmly in the ground.",
+"p": null,
+"oe": [
+"🌱",
+"🍃",
+"🌸"
+]
+},
+{
+"i": "px210",
+"k": "c",
+"t": "farm",
+"a": 9,
+"q": "What is bread mainly made from?",
+"o": [
+"Corn leaves",
+"Wheat flour",
+"Rice"
+],
+"n": 1,
+"x": "Wheat grains are ground into flour, then mixed with water and yeast.",
+"p": null,
+"oe": [
+"🌽",
+"🌾",
+"🍚"
+]
+},
+{
+"i": "px211",
+"k": "c",
+"t": "farm",
+"a": 9,
+"q": "Which insect helps flowers make fruit by carrying pollen?",
+"o": [
+"Mosquito",
+"Bee",
+"Ant"
+],
+"n": 1,
+"x": "Carrying pollen from flower to flower is called pollination.",
+"p": null,
+"oe": [
+"🦟",
+"🐝",
+"🐜"
+]
+},
+{
+"i": "px212",
+"k": "c",
+"t": "farm",
+"a": 9,
+"q": "Which animal makes silk?",
+"o": [
+"Silkworm",
+"Sheep",
+"Spider"
+],
+"n": 0,
+"x": "A silkworm spins a cocoon from one very long silk thread.",
+"p": null,
+"oe": [
+"🐛",
+"🐑",
+"🕷️"
+]
+},
+{
+"i": "px213",
+"k": "c",
+"t": "farm",
+"a": 9,
+"q": "Which of these grows under the ground?",
+"o": [
+"Apple",
+"Tomato",
+"Carrot"
+],
+"n": 2,
+"x": "A carrot is a root that stores food for the plant.",
+"p": null,
+"oe": [
+"🍎",
+"🍅",
+"🥕"
+]
+},
+{
+"i": "px214",
+"k": "c",
+"t": "farm",
+"a": 10,
+"q": "What do plants need to make their own food?",
+"o": [
+"Only darkness",
+"Only soil",
+"Sunlight, water and air"
+],
+"n": 2,
+"x": "Plants make food in their leaves. This is called photosynthesis.",
+"p": null,
+"oe": [
+"🌑",
+"🪨",
+"☀️"
+]
+},
+{
+"i": "px215",
+"k": "c",
+"t": "farm",
+"a": 10,
+"q": "Butter and cheese are made from what?",
+"o": [
+"Milk",
+"Honey",
+"Eggs"
+],
+"n": 0,
+"x": "Cheese is made by thickening milk and pressing it.",
+"p": null,
+"oe": [
+"🥛",
+"🍯",
+"🥚"
+]
+},
+{
+"i": "px216",
+"k": "c",
+"t": "farm",
+"a": 10,
+"q": "Which of these is a herbivore (eats only plants)?",
+"o": [
+"Wolf",
+"Cow",
+"Cat"
+],
+"n": 1,
+"x": "A cow's stomach has four parts to help it digest grass.",
+"p": null,
+"oe": [
+"🐺",
+"🐄",
+"🐱"
+]
+},
+{
+"i": "px217",
+"k": "c",
+"t": "farm",
+"a": 10,
+"q": "What is compost?",
+"o": [
+"Rotted food scraps and leaves that feed the soil",
+"A kind of rock",
+"A farm machine"
+],
+"n": 0,
+"x": "Worms and tiny living things turn old scraps into rich soil.",
+"p": null,
+"oe": [
+"🍂",
+"🪨",
+"🚜"
+]
+},
+{
+"i": "px218",
+"k": "c",
+"t": "farm",
+"a": 10,
+"q": "Which plant is used to make sugar?",
+"o": [
+"Cotton",
+"Potato",
+"Sugar cane"
+],
+"n": 2,
+"x": "Sugar is also made from sugar beet.",
+"p": null,
+"oe": [
+"🧶",
+"🥔",
+"🎋"
+]
+},
+{
+"i": "px219",
+"k": "c",
+"t": "farm",
+"a": 10,
+"q": "Which part of a plant makes seeds?",
+"o": [
+"Flower",
+"Root",
+"Stem"
+],
+"n": 0,
+"x": "After pollination, the flower turns into fruit and seeds.",
+"p": null,
+"oe": [
+"🌸",
+"🌱",
+"🌿"
+]
+},
+{
+"i": "px220",
+"k": "c",
+"t": "farm",
+"a": 11,
+"q": "In a food chain, what are plants called?",
+"o": [
+"Consumers",
+"Decomposers",
+"Producers"
+],
+"n": 2,
+"x": "Plants produce their own food from sunlight, so they are called producers.",
+"p": null,
+"oe": [
+"🐰",
+"🍄",
+"🌿"
+]
+},
+{
+"i": "px221",
+"k": "c",
+"t": "farm",
+"a": 11,
+"q": "What do decomposers like mushrooms and worms do?",
+"o": [
+"Hunt animals",
+"Break down dead things into soil",
+"Make honey"
+],
+"n": 1,
+"x": "Without decomposers, dead leaves would pile up forever.",
+"p": null,
+"oe": [
+"🦁",
+"🍄",
+"🍯"
+]
+},
+{
+"i": "px222",
+"k": "c",
+"t": "farm",
+"a": 11,
+"q": "What is cotton used for?",
+"o": [
+"Making cloth",
+"Making glass",
+"Making bread"
+],
+"n": 0,
+"x": "Cotton fibres grow around the seeds of the cotton plant.",
+"p": null,
+"oe": [
+"👕",
+"🪟",
+"🍞"
+]
+},
+{
+"i": "px223",
+"k": "c",
+"t": "farm",
+"a": 11,
+"q": "What is irrigation?",
+"o": [
+"Bringing water to crops",
+"Picking fruit",
+"Feeding cows"
+],
+"n": 0,
+"x": "In Iran, old underground channels called qanats carried water to farms.",
+"p": null,
+"oe": [
+"💧",
+"🍎",
+"🐄"
+]
+},
+{
+"i": "px224",
+"k": "c",
+"t": "farm",
+"a": 11,
+"q": "Which farm animal is NOT a mammal?",
+"o": [
+"Horse",
+"Goat",
+"Hen"
+],
+"n": 2,
+"x": "Hens are birds: they have feathers and lay eggs.",
+"p": null,
+"oe": [
+"🐴",
+"🐐",
+"🐔"
+]
+},
+{
+"i": "px225",
+"k": "c",
+"t": "farm",
+"a": 12,
+"q": "Plants give out which gas that we need to breathe?",
+"o": [
+"Oxygen",
+"Smoke",
+"Carbon dioxide"
+],
+"n": 0,
+"x": "Most of the oxygen we breathe comes from plants on land and tiny plants in the sea.",
+"p": null,
+"oe": [
+"🫁",
+"🌫️",
+"💨"
+]
+},
+{
+"i": "px226",
+"k": "c",
+"t": "farm",
+"a": 12,
+"q": "Why do farmers plant a different crop in a field each year?",
+"o": [
+"Because seeds run out",
+"To keep the soil healthy",
+"To confuse the birds"
+],
+"n": 1,
+"x": "This is called crop rotation.",
+"p": null,
+"oe": [
+"🌰",
+"🌱",
+"🐦"
+]
+},
+{
+"i": "px227",
+"k": "c",
+"t": "farm",
+"a": 12,
+"q": "What is a greenhouse used for?",
+"o": [
+"Growing plants in warm conditions",
+"Storing tractors",
+"Keeping cows"
+],
+"n": 0,
+"x": "Glass lets sunlight in and keeps the warmth inside.",
+"p": null,
+"oe": [
+"🌱",
+"🚜",
+"🐄"
+]
+},
+{
+"i": "px228",
+"k": "c",
+"t": "people",
+"a": 9,
+"q": "A classmate drops all their books. What is the kind thing to do?",
+"o": [
+"Walk past",
+"Help pick them up",
+"Laugh"
+],
+"n": 1,
+"x": "Small acts of kindness help people feel they belong.",
+"p": null,
+"oe": [
+"🚶",
+"🤝",
+"😆"
+]
+},
+{
+"i": "px229",
+"k": "c",
+"t": "people",
+"a": 9,
+"q": "Who designs buildings?",
+"o": [
+"Architect",
+"Pilot",
+"Dentist"
+],
+"n": 0,
+"x": "Architects draw the plans before the builders start.",
+"p": null,
+"oe": [
+"📐",
+"✈️",
+"🦷"
+]
+},
+{
+"i": "px230",
+"k": "c",
+"t": "people",
+"a": 9,
+"q": "A stranger online asks for your address. What should you do?",
+"o": [
+"Tell them",
+"Don't tell, and tell a grown-up",
+"Send a photo of your house"
+],
+"n": 1,
+"x": "Never share personal information online.",
+"p": null,
+"oe": [
+"📮",
+"🛑",
+"📸"
+]
+},
+{
+"i": "px231",
+"k": "c",
+"t": "people",
+"a": 9,
+"q": "You broke a friend's pencil by mistake. What is the best thing to do?",
+"o": [
+"Blame someone else",
+"Say sorry and offer to fix it",
+"Hide it"
+],
+"n": 1,
+"x": "Saying sorry and making it right keeps a friendship strong.",
+"p": null,
+"oe": [
+"👉",
+"🙏",
+"🙈"
+]
+},
+{
+"i": "px232",
+"k": "c",
+"t": "people",
+"a": 9,
+"q": "Two friends both want the same swing. What is a fair way?",
+"o": [
+"Nobody uses it ever",
+"The bigger one keeps it",
+"Take turns"
+],
+"n": 2,
+"x": "Taking turns means both friends get to have fun.",
+"p": null,
+"oe": [
+"🚫",
+"💪",
+"🔄"
+]
+},
+{
+"i": "px233",
+"k": "c",
+"t": "people",
+"a": 9,
+"q": "What does saving money mean?",
+"o": [
+"Giving it to a shop",
+"Spending it all today",
+"Keeping some money for later"
+],
+"n": 2,
+"x": "A little saved each week grows into a lot.",
+"p": null,
+"oe": [
+"🏪",
+"🛍️",
+"🐷"
+]
+},
+{
+"i": "px234",
+"k": "c",
+"t": "people",
+"a": 10,
+"q": "Your friend is upset after losing a game. What helps most?",
+"o": [
+"Ignore them",
+"Say they are bad at games",
+"Listen and say it's okay to feel sad"
+],
+"n": 2,
+"x": "Listening is one of the best ways to show you care.",
+"p": null,
+"oe": [
+"🙈",
+"😝",
+"👂"
+]
+},
+{
+"i": "px235",
+"k": "c",
+"t": "people",
+"a": 10,
+"q": "Who studies very old bones and objects to learn about the past?",
+"o": [
+"Archaeologist",
+"Mechanic",
+"Chef"
+],
+"n": 0,
+"x": "Archaeologists found a 5,000-year-old city in Iran called the Burnt City.",
+"p": null,
+"oe": [
+"🏺",
+"🔧",
+"👩‍🍳"
+]
+},
+{
+"i": "px236",
+"k": "c",
+"t": "people",
+"a": 10,
+"q": "Who works in a pharmacy and gives out medicine?",
+"o": [
+"Pharmacist",
+"Painter",
+"Farmer"
+],
+"n": 0,
+"x": "Pharmacists check that medicines are safe to take together.",
+"p": null,
+"oe": [
+"💊",
+"🎨",
+"🧑‍🌾"
+]
+},
+{
+"i": "px237",
+"k": "c",
+"t": "people",
+"a": 10,
+"q": "What is a budget?",
+"o": [
+"A kind of bird",
+"A type of shop",
+"A plan for how to spend money"
+],
+"n": 2,
+"x": "A budget helps a family pay for what they need first.",
+"p": null,
+"oe": [
+"🐦",
+"🏪",
+"📝"
+]
+},
+{
+"i": "px238",
+"k": "c",
+"t": "people",
+"a": 10,
+"q": "Someone is being teased at school. What is a brave and kind thing to do?",
+"o": [
+"Stand by them and tell a teacher",
+"Join the teasing",
+"Film it"
+],
+"n": 0,
+"x": "Speaking up for someone is called being an upstander.",
+"p": null,
+"oe": [
+"🛡️",
+"😝",
+"📱"
+]
+},
+{
+"i": "px239",
+"k": "c",
+"t": "people",
+"a": 10,
+"q": "Which of these is a need, not a want?",
+"o": [
+"A new video game",
+"Clean water",
+"Candy"
+],
+"n": 1,
+"x": "Needs are things we must have to live; wants are nice extras.",
+"p": null,
+"oe": [
+"🎮",
+"💧",
+"🍬"
+]
+},
+{
+"i": "px240",
+"k": "c",
+"t": "people",
+"a": 10,
+"q": "Which job uses a microscope to study germs?",
+"o": [
+"Scientist",
+"Pilot",
+"Firefighter"
+],
+"n": 0,
+"x": "Microbiologists study tiny living things like bacteria.",
+"p": null,
+"oe": [
+"🔬",
+"✈️",
+"🧑‍🚒"
+]
+},
+{
+"i": "px241",
+"k": "c",
+"t": "people",
+"a": 11,
+"q": "What makes a strong password?",
+"o": [
+"1234",
+"Your name",
+"Long, with letters, numbers and symbols"
+],
+"n": 2,
+"x": "Never share your password with anyone except your parents.",
+"p": null,
+"oe": [
+"🔢",
+"📛",
+"🔐"
+]
+},
+{
+"i": "px242",
+"k": "c",
+"t": "people",
+"a": 11,
+"q": "Why do people pay taxes?",
+"o": [
+"To buy toys for the mayor",
+"To pay for schools, roads and hospitals",
+"Because shops are closed"
+],
+"n": 1,
+"x": "Tax money pays for things everyone shares.",
+"p": null,
+"oe": [
+"🧸",
+"🏫",
+"🏪"
+]
+},
+{
+"i": "px243",
+"k": "c",
+"t": "people",
+"a": 11,
+"q": "What does empathy mean?",
+"o": [
+"Winning every game",
+"Understanding how someone else feels",
+"Being very fast"
+],
+"n": 1,
+"x": "Imagining yourself in someone else's place helps you understand them.",
+"p": null,
+"oe": [
+"🏆",
+"💞",
+"🏃"
+]
+},
+{
+"i": "px244",
+"k": "c",
+"t": "people",
+"a": 11,
+"q": "Who helps people with the law and speaks for them in court?",
+"o": [
+"Gardener",
+"Lawyer",
+"Baker"
+],
+"n": 1,
+"x": "The judge decides, and lawyers explain each side.",
+"p": null,
+"oe": [
+"🌻",
+"⚖️",
+"🥖"
+]
+},
+{
+"i": "px245",
+"k": "c",
+"t": "people",
+"a": 12,
+"q": "What is a volunteer?",
+"o": [
+"A kind of robot",
+"A very fast runner",
+"Someone who helps without being paid"
+],
+"n": 2,
+"x": "Volunteers help in parks, libraries and after disasters.",
+"p": null,
+"oe": [
+"🤖",
+"🏃",
+"🙋"
+]
+},
+{
+"i": "px246",
+"k": "c",
+"t": "people",
+"a": 12,
+"q": "Why should you check if news online is true?",
+"o": [
+"Some posts are false or made up",
+"To make the screen brighter",
+"Every post is true"
+],
+"n": 0,
+"x": "Checking more than one trusted source helps you find the truth.",
+"p": null,
+"oe": [
+"🔎",
+"💡",
+"✅"
+]
+},
+{
+"i": "px247",
+"k": "c",
+"t": "time",
+"a": 9,
+"q": "How many days are there in a leap year?",
+"o": [
+"365",
+"360",
+"366"
+],
+"n": 2,
+"x": "Every four years, February has 29 days.",
+"p": null,
+"oe": [
+"📅",
+"📅",
+"📅"
+]
+},
+{
+"i": "px248",
+"k": "c",
+"t": "time",
+"a": 9,
+"q": "About how many weeks are in a year?",
+"o": [
+"52",
+"12",
+"100"
+],
+"n": 0,
+"x": "A year is 52 weeks and one or two extra days.",
+"p": null,
+"oe": [
+"📅",
+"📅",
+"📅"
+]
+},
+{
+"i": "px249",
+"k": "c",
+"t": "time",
+"a": 10,
+"q": "How many years are in a century?",
+"o": [
+"100",
+"10",
+"1000"
+],
+"n": 0,
+"x": "A decade is 10 years and a millennium is 1,000 years.",
+"p": null,
+"oe": [
+"💯",
+"🔟",
+"🏛️"
+]
+},
+{
+"i": "px250",
+"k": "c",
+"t": "time",
+"a": 10,
+"q": "On a 24-hour clock, what is 15:00?",
+"o": [
+"3 in the morning",
+"3 in the afternoon",
+"5 in the afternoon"
+],
+"n": 1,
+"x": "After 12 noon, take away 12: 15 − 12 = 3.",
+"p": null,
+"oe": [
+"🌙",
+"🕒",
+"🕔"
+]
+},
+{
+"i": "px251",
+"k": "c",
+"t": "time",
+"a": 11,
+"q": "Which month usually has the fewest days?",
+"o": [
+"June",
+"April",
+"February"
+],
+"n": 2,
+"x": "February has 28 days, or 29 in a leap year.",
+"p": null,
+"oe": [
+"☀️",
+"🌷",
+"❄️"
+]
+},
+{
+"i": "px252",
+"k": "c",
+"t": "time",
+"a": 11,
+"q": "In which Iranian month does Nowruz, the new year, begin?",
+"o": [
+"Esfand",
+"Mehr",
+"Farvardin"
+],
+"n": 2,
+"x": "Nowruz starts on the first day of spring, around 20 or 21 March.",
+"p": null,
+"oe": [
+"❄️",
+"🍂",
+"🌸"
+]
+},
+{
+"i": "px253",
+"k": "c",
+"t": "time",
+"a": 12,
+"q": "How many minutes are there in a whole day?",
+"o": [
+"240",
+"1440",
+"1000"
+],
+"n": 1,
+"x": "24 hours × 60 minutes = 1,440 minutes.",
+"p": null,
+"oe": [
+"⏰",
+"⏰",
+"⏰"
+]
+},
+{
+"i": "px254",
+"k": "c",
+"t": "time",
+"a": 12,
+"q": "Why is it a different time in different countries at the same moment?",
+"o": [
+"Clocks are broken",
+"Countries choose at random",
+"The Earth spins, so the Sun rises at different times"
+],
+"n": 2,
+"x": "These areas with their own time are called time zones.",
+"p": null,
+"oe": [
+"⏰",
+"🎲",
+"🌍"
+]
+},
+{
+"i": "px255",
+"k": "c",
+"t": "geo",
+"a": 9,
+"q": "How many faces does a cube have?",
+"o": [
+"8",
+"6",
+"4"
+],
+"n": 1,
+"x": "Dice are cubes: each one has 6 square faces.",
+"p": null,
+"oe": [
+"🎲",
+"🎲",
+"🎲"
+]
+},
+{
+"i": "px256",
+"k": "c",
+"t": "geo",
+"a": 9,
+"q": "How many edges does a cube have?",
+"o": [
+"6",
+"8",
+"12"
+],
+"n": 2,
+"x": "An edge is where two faces meet.",
+"p": null,
+"oe": [
+"🧊",
+"🧊",
+"🧊"
+]
+},
+{
+"i": "px257",
+"k": "c",
+"t": "geo",
+"a": 10,
+"q": "How many corners (vertices) does a cube have?",
+"o": [
+"12",
+"8",
+"6"
+],
+"n": 1,
+"x": "A vertex is a corner where edges meet.",
+"p": null,
+"oe": [
+"🧊",
+"🧊",
+"🧊"
+]
+},
+{
+"i": "px258",
+"k": "c",
+"t": "geo",
+"a": 10,
+"q": "Which 3D shape has a circle at the bottom and a point at the top?",
+"o": [
+"Cone",
+"Cylinder",
+"Cube"
+],
+"n": 0,
+"x": "An ice-cream cone is shaped like a cone.",
+"p": null,
+"oe": [
+"🍦",
+"🥫",
+"🧊"
+]
+},
+{
+"i": "px259",
+"k": "c",
+"t": "geo",
+"a": 10,
+"q": "How many degrees are in a right angle?",
+"o": [
+"180",
+"45",
+"90"
+],
+"n": 2,
+"x": "The corner of a book page is a right angle.",
+"p": null,
+"oe": [
+"📐",
+"📐",
+"📐"
+]
+},
+{
+"i": "px260",
+"k": "c",
+"t": "geo",
+"a": 11,
+"q": "The three angles inside a triangle add up to how many degrees?",
+"o": [
+"90",
+"180",
+"360"
+],
+"n": 1,
+"x": "Tear off the corners of a paper triangle and they make a straight line.",
+"p": null,
+"oe": [
+"🔺",
+"🔺",
+"🔺"
+]
+},
+{
+"i": "px261",
+"k": "c",
+"t": "geo",
+"a": 11,
+"q": "How many faces does a pyramid with a square base have?",
+"o": [
+"4",
+"6",
+"5"
+],
+"n": 2,
+"x": "It has 4 triangle faces and 1 square base.",
+"p": null,
+"oe": [
+"🔺",
+"🔺",
+"🔺"
+]
+},
+{
+"i": "px262",
+"k": "c",
+"t": "geo",
+"a": 12,
+"q": "A full turn is how many degrees?",
+"o": [
+"180",
+"100",
+"360"
+],
+"n": 2,
+"x": "A half turn is 180 degrees.",
+"p": null,
+"oe": [
+"🔄",
+"🔄",
+"🔄"
+]
 }
 ]

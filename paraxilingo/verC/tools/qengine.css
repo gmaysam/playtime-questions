@@ -1539,3 +1539,7 @@ img.e3{width:1.18em;height:1.18em;vertical-align:-.22em;object-fit:contain;displ
 .m2-fr{display:block;width:120px;height:14px;border:2px solid #9775FA;border-radius:8px;margin:6px auto 0;overflow:hidden}.m2-fr i{display:block;height:100%;background:#CE82FF}
 .m2-pl span{min-width:30px}.m2-grid{display:grid;gap:2px;justify-content:center;margin:6px auto}.m2-grid i{width:22px;height:22px;background:#D0EBFF;border:1px solid #74C0FC}
 .m2-dim{text-align:center;font:800 16px "Nunito";color:#777}.m2-th{text-align:center;font:800 26px "Nunito"}
+
+/* v16 */
+.g8-svg{width:190px;max-width:60vw;height:auto;display:block;margin:4px auto}
+.lesson.q2 .qtop2 .qvis svg.g8-svg{max-height:22vh;width:auto;max-width:70vw}

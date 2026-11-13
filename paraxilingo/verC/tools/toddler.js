@@ -19,7 +19,7 @@ function tstoryQ(q){const [id,,pan,txt,qq,R,W]=q.s,opts=sh([R,W]);let miss=0;
     <p class="ts-txt">${txt}</p><button class="hr-play sm" id="tsP">🔊</button><div class="ts-q" id="tsQ" hidden><b>${qq}</b><div class="lr-two">${opts.map((o,j)=>`<button class="lr-p" data-j="${j}"><span class="lr-pic"><span class="lr-emo ts-o">${o[0]}</span></span><b>${o[1]}</b></button>`).join("")}</div></div></div>`);
   const P=[...$("qBody").querySelectorAll(".ts-p")];
   const tell=()=>{hush();$("tsQ").hidden=true;P.forEach(p=>p.classList.remove("in"));P.forEach((p,i)=>setTimeout(()=>p.classList.add("in"),300+i*1500));
-    sayseq([TV("S_"+id)],()=>{if(!L||L.q!==q)return;P.forEach(p=>p.classList.add("in"));$("tsQ").hidden=false;sayseq([TV("Q_"+id)],()=>{})})};
+    sayseq([TV("S_"+id)],()=>{if(!L||L.q!==q)return;P.forEach(p=>p.classList.add("in"));$("tsQ").hidden=false;if(typeof gReadList==="function"&&G8_READY&&gReadList(q,[TV("Q_"+id)],[...$("qBody").querySelectorAll(".lr-p")].map(b=>({b,c:tsSay(opts[+b.dataset.j][1])}))))return;sayseq([TV("Q_"+id)],()=>{})})};
   $("tsP").onclick=()=>{sfx.tap();tell()};setTimeout(()=>{if(L&&L.q===q)tell()},350);
   $("qBody").querySelectorAll(".lr-p").forEach(b=>b.onclick=()=>{if(q.done)return;const o=opts[+b.dataset.j];
     if(o===R){b.classList.add("ok");gameWin(q,miss,b,[])}else{miss++;q.done=true;b.classList.add("soft");const r=[...$("qBody").querySelectorAll(".lr-p")].find(x=>opts[+x.dataset.j]===R);r.classList.add("ok","show");
