@@ -15476,6 +15476,37 @@ img.e3 {
   width: auto;
   max-width: 70vw;
 }
+#pSettings .dmore {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 12px;
+  align-items: center;
+  text-align: left;
+  width: 100%;
+  border: 2px solid #E3E8F0;
+  border-bottom-width: 4px;
+  background: #fff;
+  border-radius: 18px;
+  padding: 14px 16px;
+  cursor: pointer;
+  font: inherit;
+  color: var(--ink);
+}
+#pSettings .dmore > span:first-child {
+  font-size: 26px;
+}
+#pSettings .dmore b {
+  display: block;
+  font: 800 17px "Nunito", sans-serif;
+}
+#pSettings .dmore small {
+  color: #6B7785;
+  font-size: 13px;
+}
+#pSettings .dmore .chev {
+  font-size: 22px;
+  color: #9AA5B1;
+}
 .qbody,
 .panel {
   max-width: 680px;
@@ -17179,9 +17210,10 @@ img.e3 {
   }
   const COUNTRIES = [["Iran", "\u{1F1EE}\u{1F1F7}"], ["the United States", "\u{1F1FA}\u{1F1F8}"], ["Canada", "\u{1F1E8}\u{1F1E6}"], ["Mexico", "\u{1F1F2}\u{1F1FD}"], ["Brazil", "\u{1F1E7}\u{1F1F7}"], ["the United Kingdom", "\u{1F1EC}\u{1F1E7}"], ["France", "\u{1F1EB}\u{1F1F7}"], ["Germany", "\u{1F1E9}\u{1F1EA}"], ["Italy", "\u{1F1EE}\u{1F1F9}"], ["China", "\u{1F1E8}\u{1F1F3}"], ["Japan", "\u{1F1EF}\u{1F1F5}"], ["India", "\u{1F1EE}\u{1F1F3}"], ["Egypt", "\u{1F1EA}\u{1F1EC}"], ["Australia", "\u{1F1E6}\u{1F1FA}"]];
   const JOBS = [["Doctor", "\u{1F9D1}\u200D\u2695\uFE0F"], ["Firefighter", "\u{1F9D1}\u200D\u{1F692}"], ["Police officer", "\u{1F46E}"], ["Chef", "\u{1F9D1}\u200D\u{1F373}"], ["Farmer", "\u{1F9D1}\u200D\u{1F33E}"], ["Teacher", "\u{1F9D1}\u200D\u{1F3EB}"], ["Pilot", "\u{1F9D1}\u200D\u2708\uFE0F"], ["Astronaut", "\u{1F9D1}\u200D\u{1F680}"], ["Mechanic", "\u{1F9D1}\u200D\u{1F527}"], ["Scientist", "\u{1F9D1}\u200D\u{1F52C}"], ["Artist", "\u{1F9D1}\u200D\u{1F3A8}"], ["Builder", "\u{1F477}"]];
+  const NOFLAG = /* @__PURE__ */ new Set(["Iran"]), CKEYS = () => [...COUNTRIES.keys()].filter((i) => !NOFLAG.has(COUNTRIES[i][0]));
   const ctySay = (i) => ["w/LULU_FA_CTY" + i, "w/LULU_EN_COUNTRY" + i], jobSay = (i) => ["w/LULU_FA_JOB" + i, "w/LULU_EN_JOB" + i];
   function qPeople(k, used) {
-    const flag = k.startsWith("flag"), L2 = flag ? COUNTRIES : JOBS, c = sh([...L2.keys()]), r = c.find((i) => !used.has(k[0] + i));
+    const flag = k.startsWith("flag"), L2 = flag ? COUNTRIES : JOBS, c = sh(flag ? CKEYS() : [...L2.keys()]), r = c.find((i) => !used.has(k[0] + i));
     used.add(k[0] + r);
     const o = sh([r, ...c.filter((i) => i !== r).slice(0, DK())]), say2 = flag ? ctySay : jobSay;
     return {
@@ -18908,8 +18940,8 @@ img.e3 {
     let k;
     const pk = { world: ["fruit"], farm: ["fly", "water"], animals: ["fly", "water"], sky: ["planet"], shapes: ["corner"], count: ["big"], add: ["big"] }[cat];
     if (cat === "flags") {
-      const c = sh([...COUNTRIES.keys()]).slice(0, n), cards2 = c.map((i) => {
-        const yes = Math.random() < 0.5, j = yes ? i : pickOne([...COUNTRIES.keys()].filter((x) => x !== i));
+      const c = sh(CKEYS()).slice(0, n), cards2 = c.map((i) => {
+        const yes = Math.random() < 0.5, j = yes ? i : pickOne(CKEYS().filter((x) => x !== i));
         return [COUNTRIES[j][1], COUNTRIES[i][0] + "?", yes ? 1 : 0, ctySay(i)];
       });
       return { game: "swipe", deck: "flag", q2: "Is this the right flag?", cards: cards2, voice: [V("G_SW_FLAG"), V("G_SWIPE")], factT: "Every country has its own flag with its own colours and shapes." };
@@ -19242,7 +19274,7 @@ img.e3 {
       pool = SKYN.filter((x) => skySay(x).length > 1 && !["planet", "galaxy", "full moon"].includes(x)).map((x) => [PIC("sky_" + SKYN.indexOf(x), "wp sp-pic"), x]);
       bg = "sky";
     } else if (cat === "flags") {
-      pool = COUNTRIES.map((c, i) => [c[1], c[0], i]);
+      pool = COUNTRIES.map((c, i) => [c[1], c[0], i]).filter((x) => !NOFLAG.has(x[1]));
       bg = "map";
     } else if (cat === "people") {
       pool = JOBS.map((j, i) => [j[1], j[0], i]);
@@ -20491,7 +20523,7 @@ img.e3 {
     sky: ["\u2B50", "\u{1F319}", "\u{1FA90}", "\u2600\uFE0F", "\u{1F680}", "\u2601\uFE0F"],
     shapes: ["\u{1F53A}", "\u{1F7E6}", "\u{1F7E1}", "\u{1F536}", "\u2B1B", "\u{1F7E3}"],
     people: ["\u{1F469}\u200D\u{1F692}", "\u{1F468}\u200D\u{1F373}", "\u{1F469}\u200D\u2695\uFE0F", "\u{1F600}", "\u{1F622}", "\u{1F62E}"],
-    flags: ["\u{1F1EE}\u{1F1F7}", "\u{1F1EB}\u{1F1F7}", "\u{1F1EF}\u{1F1F5}", "\u{1F1E7}\u{1F1F7}", "\u{1F1E8}\u{1F1E6}", "\u{1F1EE}\u{1F1F9}"],
+    flags: ["\u{1F1EA}\u{1F1EC}", "\u{1F1EB}\u{1F1F7}", "\u{1F1EF}\u{1F1F5}", "\u{1F1E7}\u{1F1F7}", "\u{1F1E8}\u{1F1E6}", "\u{1F1EE}\u{1F1F9}"],
     letters: ["A", "B", "C", "D", "E", "F"],
     read: ["a", "b", "c", "d", "e", "f"],
     robot: ["\u{1F916}", "\u2699\uFE0F", "\u{1F50B}", "\u{1F529}"],
@@ -20709,7 +20741,7 @@ img.e3 {
     if (cat === "sky") return SKYN.slice(0, 11).map((n, i) => ({ p: '<img src="img/w/sky_'.concat(i, '.png" alt="">'), n: cap1(n), say: skySay(n), f: F(n) })).filter((x) => x.say.length);
     if (cat === "shapes") return [0, 1, 2, 3, 4, 5].map((i) => ({ p: '<img src="img/w/shape_'.concat(i, '.png" alt="">'), n: SHAPES[i], say: shSay(i), f: "" }));
     if (cat === "people") return JOBS.slice(0, 10).map(([n, e], i) => ({ p: '<span class="lr-emo">'.concat(e, "</span>"), n, say: jobSay(i), f: "" }));
-    if (cat === "flags") return COUNTRIES.map(([n, e], i) => ({ p: '<span class="lr-emo">'.concat(e, "</span>"), n: n.replace(/^the /, "The "), say: ctySay(i), f: "" }));
+    if (cat === "flags") return COUNTRIES.map(([n, e], i) => ({ p: '<span class="lr-emo">'.concat(e, "</span>"), n: n.replace(/^the /, "The "), say: ctySay(i), f: "" })).filter((x) => !NOFLAG.has(x.n));
     if (cat === "world") return WORDS.filter((w) => FACT_EN[w.w]).slice(0, 30).map((w) => ({ p: '<img src="img/w/wd_'.concat(w.i, '.png" alt="">'), n: cap1(w.w), say: wSay(w), f: F(w.w) }));
     return null;
   }
@@ -21247,7 +21279,7 @@ img.e3 {
       };
     }
     if (k === "gcty") {
-      const c2 = sh([...COUNTRIES.keys()]), r2 = (_c = c2.find((i) => !used.has("gy" + i))) != null ? _c : c2[0];
+      const c2 = sh(CKEYS()), r2 = (_c = c2.find((i) => !used.has("gy" + i))) != null ? _c : c2[0];
       used.add("gy" + r2);
       const o = sh([r2, ...c2.filter((i) => i !== r2).slice(0, Math.min(2, DK()))]), nm = (i) => COUNTRIES[i][0].replace(/^the /, "The ");
       return {
@@ -21855,7 +21887,11 @@ img.e3 {
       var _a;
       const p = cur.pil[P2.id];
       return '<button class="prow" data-pil="'.concat(P2.id, '"><i style="background:').concat(P2.c, '1f">').concat(P2.e, "</i><span><b>").concat(P2.name, '</b><span class="pbar"><span style="width:').concat((_a = p.score) != null ? _a : 0, "%;background:").concat(P2.c, '"></span></span></span><em class="').concat(p.score === null ? "nd" : "", '">').concat(p.score === null ? p.n ? "Exploring" : "Not enough data" : p.score, '</em><span class="chev">\u203A</span></button>');
-    }).join(""), '</div></div>\n  <div class="dcard"><h3>Key insights</h3>').concat(insights(cur, cw, E).map(([e, t2]) => '<p class="dins"><span>'.concat(e, "</span><span>").concat(t2, "</span></p>")).join(""), '\n    <p class="dage">\u{1F382} At ').concat(S.age, ", learning often focuses on ").concat(ctx[2], '. Every child moves at their own pace.</p></div>\n  <div class="dcard"><h3>Progress over time</h3>').concat(lineSVG(), '</div>\n  <div class="dgrid"><div class="dcard"><h3>Where the time went <small>').concat(per[2], '</small></h3><p class="dsubt">Share of ').concat(esc(pn), "'s answers in each learning area</p>").concat(donutSVG(E), '</div>\n    <div class="dcard"><h3>How ').concat(esc(pn), " learned <small>").concat(per[2], '</small></h3><p class="dsubt">The kind of activity behind each answer</p>').concat(methodsHTML(E), '<p class="dnote">Play, explore, create, practise and reflect are <i>ways</i> of learning - all of them help children learn how to learn.</p></div></div>\n  <div class="dcard"><h3>Recent achievements <small>').concat(per[2], "</small></h3>").concat(ach.length ? ach.map(([e, t2, p]) => '<p class="dach"><span style="background:'.concat(PIL[p].c, '1f">').concat(e, "</span><span>").concat(t2, "</span></p>")).join("") : '<div class="dempty">\u{1F3C5} Achievements show up here as '.concat(esc(pn), " plays - each one comes from real answers.</div>"), '</div>\n  <details class="dcard dmap"><summary><h3>Games &amp; the skills they build</h3></summary>').concat(PILLARS.map((P2) => '<div class="mapp"><b style="color:'.concat(P2.c, '">').concat(P2.e, " ").concat(P2.name, "</b><span>").concat(gamesFor(P2.id).filter((g) => g.role === "main").map((g) => g.name).join(" \xB7 ") || "<i>No game focuses on this yet</i>", "</span></div>")).join(""), "</details>\n  ").concat(HOWTO, "</div>");
+    }).join(""), '</div></div>\n  <div class="dcard"><h3>In short</h3>').concat(insights(cur, cw, E).slice(0, 1).map(([e, t2]) => '<p class="dins"><span>'.concat(e, "</span><span>").concat(t2, "</span></p>")).join(""), '</div>\n  <button class="dmore" id="dMore"><span>\u{1F4CA}</span><span><b>Full report</b><small>Progress over time, where the time went, achievements, games and their skills</small></span><span class="chev">\u203A</span></button>\n  </div>');
+  }
+  function dashMoreHTML(pn) {
+    const E = perEv(), per = PER[S.dPer || "week"], ach = achievements(E), t = evDay(), cur = scoreAll(t), wk = histOK(t - 7), cw = wk && S.ev[0][0] <= t - 7 ? wk : null;
+    return '<div class="dash pdet"><button class="dback" id="dBack">\u2039 Back</button>\n  <div class="dcard"><h3>Key insights</h3>'.concat(insights(cur, cw, E).map(([e, t2]) => '<p class="dins"><span>'.concat(e, "</span><span>").concat(t2, "</span></p>")).join(""), '</div>\n  <div class="dcard"><h3>Progress over time</h3>').concat(lineSVG(), '</div>\n  <div class="dgrid"><div class="dcard"><h3>Where the time went <small>').concat(per[2], '</small></h3><p class="dsubt">Share of ').concat(esc(pn), "'s answers in each learning area</p>").concat(donutSVG(E), '</div>\n    <div class="dcard"><h3>How ').concat(esc(pn), " learned <small>").concat(per[2], '</small></h3><p class="dsubt">The kind of activity behind each answer</p>').concat(methodsHTML(E), '<p class="dnote">Play, explore, create, practise and reflect are <i>ways</i> of learning - all of them help children learn how to learn.</p></div></div>\n  <div class="dcard"><h3>Recent achievements <small>').concat(per[2], "</small></h3>").concat(ach.length ? ach.map(([e, t2, p]) => '<p class="dach"><span style="background:'.concat(PIL[p].c, '1f">').concat(e, "</span><span>").concat(t2, "</span></p>")).join("") : '<div class="dempty">\u{1F3C5} Achievements show up here as '.concat(esc(pn), " plays - each one comes from real answers.</div>"), '</div>\n  <details class="dcard dmap"><summary><h3>Games &amp; the skills they build</h3></summary>').concat(PILLARS.map((P2) => '<div class="mapp"><b style="color:'.concat(P2.c, '">').concat(P2.e, " ").concat(P2.name, "</b><span>").concat(gamesFor(P2.id).filter((g) => g.role === "main").map((g) => g.name).join(" \xB7 ") || "<i>No game focuses on this yet</i>", "</span></div>")).join(""), "</details>\n  ").concat(HOWTO, "</div>");
   }
   function pillarHTML(pid, pn) {
     const P2 = PIL[pid], t = evDay(), cur = scoreAll(t), wk = histOK(t - 7), p = cur.pil[pid], E = perEv(), all = S.ev || [];
@@ -21915,6 +21951,18 @@ img.e3 {
       };
     });
     root.querySelectorAll(".prow").forEach((b) => b.onclick = () => openPillar(b.dataset.pil, pn));
+    const mo = $("dMore");
+    if (mo) mo.onclick = () => openMore(pn);
+  }
+  function openMore(pn) {
+    sfx.tap();
+    const root = $("pSettings");
+    root.innerHTML = dashMoreHTML(pn);
+    root.scrollTop = 0;
+    $("dBack").onclick = () => {
+      sfx.tap();
+      showParents();
+    };
   }
   function openPillar(id, pn) {
     sfx.tap();
@@ -25890,11 +25938,11 @@ img.e3 {
     }
   };
   const G8WIN = { "count:factor": [10, 12], "count:multiple": [9, 12], "count:prime": [11, 12], "clock:convert": [9, 12], "shapes:angle": [9, 12], "shapes:lines": [9, 12], "shapes:symm": [10, 12], "letters:aorder": [9, 12], "read:aorder": [10, 12], "letters:compound": [9, 12] };
-  const PX8 = { farm: "farm", people: "people", time: "clock", geo: "shapes" }, PX8C = Object.values(PX8);
+  const PX8 = { farm: ["farm"], people: ["people"], time: ["clock"], geo: ["shapes"], english: ["letters", "read"] }, PX8C = [...new Set(Object.values(PX8).flat())];
   const _wp8 = wPool;
   wPool = function(cat) {
     if (PX8C.includes(cat)) {
-      const lv = lvl(), all = WQ.filter((w) => w.i.startsWith("px") && PX8[w.t] === cat && w.a <= Math.max(3, lv));
+      const lv = lvl(), all = WQ.filter((w) => w.i.startsWith("px") && (PX8[w.t] || []).includes(cat) && w.a <= Math.max(3, lv));
       for (const d of [2, 3, 4]) {
         const f = all.filter((w) => w.a >= lv - d);
         if (f.length >= 6) return f;
@@ -25959,6 +26007,10 @@ img.e3 {
     "clock.w": G("Calendar and time", ["cog", "math"], [["life", "everyday"]], "Grade 4-5: leap years, centuries and the 24-hour clock.", "Practice"),
     "shapes.w": G("3D shapes and angles", ["cog", "math"], [["cog", "logic"]], "Grade 4-5: faces, edges, corners and degrees.", "Practice")
   });
+  Object.assign(GMAP, {
+    "letters.w": G("English words (Grade 3-5)", ["lang", "vocab"], [["lang", "read"]], "Prefixes and suffixes, words that sound alike, idioms, similes, kinds of words.", "Practice"),
+    "read.w": G("Reading (Grade 3-5)", ["lang", "read"], [["cog", "logic"]], "Short texts: clues, main idea and the lesson of a story.", "Practice")
+  });
   const GRADE = {
     count: { find: [-2, 0], more: [-2, 0], less: [-2, 0], long: [-2, 0], order: [-1, 1], measure: [0, 1], after: [0, 1], before: [0, 1], missing: [0, 2], skip: [0, 2], compare: [1, 2], oddeven: [1, 3], graph: [1, 3], place: [2, 5], round: [2, 5], multiple: [3, 5], factor: [4, 6], prime: [4, 6] },
     add: {
@@ -25991,8 +26043,8 @@ img.e3 {
       percent: [6, 6]
     },
     clock: { routine: [-2, 0], season: [-1, 1], nowseason: [-1, 1], oclock: [0, 1], today: [0, 1], tomorrow: [0, 1], yesterday: [0, 1], week: [0, 1], half: [1, 2], after: [1, 2], before: [1, 2], months: [1, 2], monthafter: [1, 2], quarter: [2, 3], minutes: [2, 3], elapsed: [3, 5], convert: [4, 5], w: [4, 6] },
-    letters: { abc: [-2, 0], match: [-2, 0], listen: [-1, 0], rhyme: [-1, 0], first: [-1, 0], whatis: [-1, 0], lafter: [-1, 0], lbefore: [0, 1], whear: [0, 1], build: [0, 1], wspell: [0, 2], wopp: [0, 2], wplu: [1, 3], wpast: [2, 3], aorder: [2, 3], compound: [2, 3], wsyn: [2, 4] },
-    read: { balloon: [-1, 0], flash: [0, 1], whear: [0, 1], sentence: [0, 2], wspell: [0, 2], wopp: [0, 2], wplu: [1, 3], wpast: [2, 3], aorder: [2, 3], wsyn: [2, 4] },
+    letters: { abc: [-2, 0], match: [-2, 0], listen: [-1, 0], rhyme: [-1, 0], first: [-1, 0], whatis: [-1, 0], lafter: [-1, 0], lbefore: [0, 1], whear: [0, 1], build: [0, 1], wspell: [0, 2], wopp: [0, 2], wplu: [1, 3], wpast: [2, 3], aorder: [2, 3], compound: [2, 3], wsyn: [2, 4], w: [3, 6] },
+    read: { balloon: [-1, 0], flash: [0, 1], whear: [0, 1], sentence: [0, 2], wspell: [0, 2], wopp: [0, 2], wplu: [1, 3], wpast: [2, 3], aorder: [2, 3], wsyn: [2, 4], w: [3, 6] },
     farm: { sound: [-2, -1], home: [-2, 0], fly: [-2, 0], match: [-2, 0], food: [-1, 1], water: [-1, 1], w: [3, 6] },
     shapes: { color: [-2, -1], shape: [-2, 0], match: [-2, 0], bigsmall: [-2, 0], pattern: [-1, 2], sides: [0, 1], both: [0, 2], area: [3, 4], angle: [4, 5], lines: [4, 5], symm: [4, 5], w: [4, 6] },
     people: { feel: [-2, 0], job: [-1, 1], job2: [0, 2], w: [3, 6] }
@@ -26033,6 +26085,10 @@ img.e3 {
     "letters:aorder": "Grade 2: beginning dictionaries",
     "letters:compound": "Grade 2: compound words",
     "letters:wsyn": "Grade 2-4: word meanings",
+    "letters:w": "Grade 3-5 language: prefixes and suffixes, words that sound alike, idioms, similes and metaphors, kinds of words",
+    "read:w": "Grade 3-5 reading: clues, main idea, the lesson of a story",
+    "farm:w": "Grade 3-5 science: plants, food chains and webs, soil, resources",
+    "people:w": "Grade 3-5: honesty, community, jobs, money, responsibility",
     "farm:food": "PBS KIDS science PK-K: what animals need",
     "shapes:shape": "PBS KIDS 2-4: circle, square, triangle",
     "shapes:sides": "PBS KIDS 5-6: count sides and corners",
@@ -26583,7 +26639,7 @@ img.e3 {
       return '<span class="pring" style="--f:'.concat(f * 360, "deg;--c:").concat(c, '"><i>').concat(ic, '</i></span><small class="pnum">').concat(Math.min(v, max), "/").concat(max, "</small>");
     };
     const sec = (e, t) => '<div class="psec"><span>'.concat(e, "</span>").concat(t, "</div>");
-    $("pSettings").innerHTML = '<button class="back" id="closeSettings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>Back</button>\n    '.concat(dashHTML(pn), "\n    ").concat(sec("\u{1F4AC}", "Talk about it at home"), '\n    <div class="ptalk"><div>\u{1F3E1} ').concat(TRY[tp] || TRY.math, "</div><div>\u{1F37D}\uFE0F \u201C").concat(dq[dayN() % dq.length], '\u201D</div></div>\n    <h2 class="psettings">\u2699\uFE0F Settings</h2>\n    ').concat(sec("\u{1F381}", "Prize (optional)"), '\n    <p class="pnote">Promised ').concat(pn, " a toy? Add its photo and how many \u{1F330} acorns it costs. ").concat(pn, " sees it after every round and at the end of the path. No prize is fine too.</p>\n    ").concat(S.real.length ? '<div class="plegend"><span>\u{1F330} = right answers, finished mounds and Domi\'s house</span></div>' : "", "\n    ").concat(S.real.map((r, k) => {
+    $("pSettings").innerHTML = '<button class="back" id="closeSettings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>Back</button>\n    '.concat(dashHTML(pn), "\n    ").concat(sec("\u{1F4AC}", "Talk about it at home"), '\n    <div class="ptalk"><div>\u{1F3E1} ').concat(TRY[tp] || TRY.math, "</div><div>\u{1F37D}\uFE0F \u201C").concat(dq[dayN() % dq.length], '\u201D</div></div>\n    <h2 class="psettings">\u2699\uFE0F Settings</h2>\n    ').concat(sec("\u{1F381}", "Prize (optional)"), '\n    <p class="pnote">Optional: a toy with a \u{1F330} price that ').concat(pn, " works towards.</p>\n    ").concat(S.real.length ? '<div class="plegend"><span>\u{1F330} = right answers, finished mounds and Domi\'s house</span></div>' : "", "\n    ").concat(S.real.map((r, k) => {
       const e = estimate(r), ok = S.acorns >= r.a && S.wood >= r.w;
       return '<div class="pprize '.concat(ok ? "ok" : "", '">\n      <label class="ppe" title="Change photo">').concat(pzI(r), '<input type="file" accept="image/*" data-pic="').concat(k, '" hidden></label><b class="ppn">').concat(r.name, '</b><button class="pdel" data-del="').concat(k, '" aria-label="Remove prize">\u2715</button>\n      <div class="ppr">').concat(ring(S.acorns, r.a, "#C8803F", "\u{1F330}"), '<div class="pstep"><button class="stp" data-c="').concat(k, ':a:-10">\u2212</button><button class="stp" data-c="').concat(k, ':a:10">+</button></div></div>\n      ').concat(ok ? '<button class="pgive" data-give="'.concat(k, '">\u2713 Given</button>') : '<span class="pdays">\u23F3 ~'.concat(e.days, " days</span>"), "</div>");
     }).join(""), '\n    <button class="padd" id="pzAdd">\uFF0B Add a prize</button>\n    <div class="pzform" id="pzForm" hidden>\n      <label class="pzpic"><input type="file" accept="image/*" id="pzFile" hidden><span id="pzPrev">\u{1F4F7}<small>Add a photo</small></span></label>\n      <div class="pzf2"><input id="pzName" maxlength="28" placeholder="What is it? e.g. Lego car" aria-label="Prize name">\n        <div class="pzgoal"><label>\u{1F330}<select id="pzA">').concat([50, 100, 150, 200, 300, 400, 500, 700, 1e3].map((x) => "<option ".concat(x === 200 ? "selected" : "", ">").concat(x, "</option>")).join(""), '</select></label></div>\n        <small id="pzEst"></small></div>\n      <div class="pzbtns"><button class="btn ghost" id="pzCancel">Cancel</button><button class="btn green" id="pzSave">Save prize</button></div>\n    </div>\n    ').concat(sec("\u2753", "Questions a day"), '\n    <div class="pseg">').concat([28, 35, 42, 49].map((q) => '<button data-per="'.concat(q, '" aria-pressed="').concat(S.perDay === q, '">').concat(q, "</button>")).join(""), "</div>\n    ").concat(sec("\u{1F4DA}", "Topics"), '\n    <div class="ptopics">').concat(COURSE.filter((c) => !c.soon).map((c) => '<button data-topic="'.concat(c.id, '" aria-pressed="').concat(S.topics.includes(c.id), '"><i>').concat(c.e, "</i><small>").concat(SHORT[c.id] || c.name, "</small></button>")).join(""), "</div>\n    ").concat(sec("\u{1F382}", "Age"), '\n    <div class="pages">').concat([3, 4, 5, 6, 7, 8, 9, 10].map((a) => '<button data-age="'.concat(a, '" aria-pressed="').concat(S.age === a, '">').concat(a, "</button>")).join(""), "</div>\n    ").concat(sec("\u{1F4C8}", "Level"), '\n    <div class="pseg lv">').concat([["\u{1F422}", 0], ["\u{1F407}", 1], ["\u{1F680}", 2]].map(([e, d]) => '<button data-diff="'.concat(d, '" aria-pressed="').concat(S.diff === d, '">').concat(e, "</button>")).join(""), '</div>\n    <div class="psample">').concat(expr(ex1), " = ").concat(ex1.ans, " &nbsp;\xB7&nbsp; ").concat(expr(ex2), " = ").concat(ex2.ans, "</div>\n    ").concat(sec("\u{1F5FA}\uFE0F", "Map"), '\n    <div class="pmonths"><button data-mon="auto" aria-pressed="').concat(S.mapMonth === "auto", '">\u2728</button>').concat(MONTHS.map((m, k) => '<button data-mon="'.concat(k, '" aria-pressed="').concat(S.mapMonth === String(k), '"><i>').concat(ZONES[MONTH_LAND[k]].o, "</i>").concat(m.slice(0, 3), "</button>")).join(""), "</div>\n    ").concat(sec("\u{1F984}", "Stickers"), '\n    <div class="ptopics">').concat(Object.entries(REWARDS).map(([k, r]) => '<button data-rw="'.concat(k, '" aria-pressed="').concat(S.reward === k, '"><i>').concat(r.e, "</i></button>")).join(""), "</div>\n    ").concat(sec("\u{1F50A}", "Sound"), '\n    <div class="ptopics two"><button id="swVoice" aria-pressed="').concat(S.voice, '"><i>\u{1F5E3}\uFE0F</i><small>Voice</small></button><button id="swFx" aria-pressed="').concat(S.fx, '"><i>\u{1F514}</i><small>Effects</small></button></div>\n    <div style="height:22px"></div>\n    <button class="qbtn sky" id="btnToday" style="margin-bottom:8px">\u21BA Play today\'s games again</button>\n    <button class="preset" id="btnReset">\u21BA Start ').concat(pn, ' over</button>\n    <div id="resetConfirm" hidden class="pconf"><b>Clear \u{1F330} \u{1F984} ?</b><button class="btn red" id="btnResetYes">Yes</button><button class="btn ghost" id="btnResetNo">No</button></div>');
