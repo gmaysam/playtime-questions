@@ -25959,6 +25959,120 @@ img.e3 {
     "clock.w": G("Calendar and time", ["cog", "math"], [["life", "everyday"]], "Grade 4-5: leap years, centuries and the 24-hour clock.", "Practice"),
     "shapes.w": G("3D shapes and angles", ["cog", "math"], [["cog", "logic"]], "Grade 4-5: faces, edges, corners and degrees.", "Practice")
   });
+  const GRADE = {
+    count: { find: [-2, 0], more: [-2, 0], less: [-2, 0], long: [-2, 0], order: [-1, 1], measure: [0, 1], after: [0, 1], before: [0, 1], missing: [0, 2], skip: [0, 2], compare: [1, 2], oddeven: [1, 3], graph: [1, 3], place: [2, 5], round: [2, 5], multiple: [3, 5], factor: [4, 6], prime: [4, 6] },
+    add: {
+      addPic: [-2, 0],
+      subPic: [-1, 0],
+      share: [-1, 1],
+      left: [0, 1],
+      sum: [0, 1],
+      minus: [0, 1],
+      bond: [0, 1],
+      make10: [0, 1],
+      teach: [0, 2],
+      pizza: [1, 2],
+      double: [1, 2],
+      half: [1, 2],
+      numline: [1, 2],
+      carry: [2, 3],
+      groups: [2, 3],
+      big: [2, 3],
+      change: [2, 5],
+      times: [3, 5],
+      divide: [3, 5],
+      fraccmp: [3, 5],
+      fracof: [3, 5],
+      story: [3, 5],
+      big3: [3, 5],
+      mul2: [4, 6],
+      decimal: [4, 6],
+      neg: [6, 6],
+      percent: [6, 6]
+    },
+    clock: { routine: [-2, 0], season: [-1, 1], nowseason: [-1, 1], oclock: [0, 1], today: [0, 1], tomorrow: [0, 1], yesterday: [0, 1], week: [0, 1], half: [1, 2], after: [1, 2], before: [1, 2], months: [1, 2], monthafter: [1, 2], quarter: [2, 3], minutes: [2, 3], elapsed: [3, 5], convert: [4, 5], w: [4, 6] },
+    letters: { abc: [-2, 0], match: [-2, 0], listen: [-1, 0], rhyme: [-1, 0], first: [-1, 0], whatis: [-1, 0], lafter: [-1, 0], lbefore: [0, 1], whear: [0, 1], build: [0, 1], wspell: [0, 2], wopp: [0, 2], wplu: [1, 3], wpast: [2, 3], aorder: [2, 3], compound: [2, 3], wsyn: [2, 4] },
+    read: { balloon: [-1, 0], flash: [0, 1], whear: [0, 1], sentence: [0, 2], wspell: [0, 2], wopp: [0, 2], wplu: [1, 3], wpast: [2, 3], aorder: [2, 3], wsyn: [2, 4] },
+    farm: { sound: [-2, -1], home: [-2, 0], fly: [-2, 0], match: [-2, 0], food: [-1, 1], water: [-1, 1], w: [3, 6] },
+    shapes: { color: [-2, -1], shape: [-2, 0], match: [-2, 0], bigsmall: [-2, 0], pattern: [-1, 2], sides: [0, 1], both: [0, 2], area: [3, 4], angle: [4, 5], lines: [4, 5], symm: [4, 5], w: [4, 6] },
+    people: { feel: [-2, 0], job: [-1, 1], job2: [0, 2], w: [3, 6] }
+  };
+  const GRADE_SRC = {
+    "count:find": "PBS KIDS math 2-4: count objects to 10",
+    "count:after": "PBS KIDS 5-6: count on from a number; Khan Kindergarten",
+    "count:skip": "PBS KIDS 5-6: count by 2s, 5s, 10s",
+    "count:compare": "Khan 1st grade: compare numbers",
+    "count:oddeven": "PBS KIDS grade 1: odd and even",
+    "count:graph": "PBS KIDS grade 1: bar and picture graphs",
+    "count:place": "Khan 2nd-4th grade: place value",
+    "count:round": "PBS KIDS grade 2 / Khan 4th grade: rounding",
+    "count:multiple": "Khan 3rd-4th grade: multiplication, multiples",
+    "count:factor": "Khan 4th grade: factors and multiples",
+    "count:prime": "Khan 4th grade: factors, multiples, primes",
+    "add:make10": "PBS KIDS 5-6: partners that make 10",
+    "add:groups": "PBS KIDS grade 2: equal-group multiplication",
+    "add:carry": "Khan 2nd grade: add within 100",
+    "add:times": "Khan 3rd grade: multiplication and division",
+    "add:fracof": "Khan 3rd-4th grade: fractions",
+    "add:big3": "Khan 4th grade: multi-digit adding",
+    "add:mul2": "Khan 4th grade: multi-digit multiplication",
+    "add:decimal": "Khan 4th-5th grade: decimals",
+    "add:neg": "Khan 6th grade: negative numbers",
+    "add:percent": "Khan 6th grade: percent",
+    "clock:routine": "PBS KIDS 4-5: morning, afternoon, night",
+    "clock:yesterday": "PBS KIDS grade 1: today, tomorrow, yesterday",
+    "clock:oclock": "Khan 1st grade: time to the hour",
+    "clock:quarter": "PBS KIDS grade 2: quarter hours",
+    "clock:minutes": "PBS KIDS grade 2: nearest 5 minutes",
+    "clock:elapsed": "Khan 3rd grade: time",
+    "clock:convert": "Khan 4th grade: units of measurement",
+    "letters:abc": "Khan Kids preschool-K: alphabet knowledge",
+    "letters:lafter": "Khan Kids K: letter recognition",
+    "letters:wopp": "Khan Kids language: opposites",
+    "letters:wpast": "Common Core grade 2 (Khan Kids grade 2 path)",
+    "letters:aorder": "Grade 2: beginning dictionaries",
+    "letters:compound": "Grade 2: compound words",
+    "letters:wsyn": "Grade 2-4: word meanings",
+    "farm:food": "PBS KIDS science PK-K: what animals need",
+    "shapes:shape": "PBS KIDS 2-4: circle, square, triangle",
+    "shapes:sides": "PBS KIDS 5-6: count sides and corners",
+    "shapes:area": "Khan 3rd grade: area and perimeter",
+    "shapes:angle": "Khan 4th grade: angles",
+    "shapes:symm": "Khan 4th grade: lines of symmetry",
+    "people:feel": "Khan Kids / PBS KIDS social-emotional PK-K",
+    "people:job": "PBS KIDS social studies PK-K"
+  };
+  const kGrade = () => lvl() - 5;
+  const kOK = (k) => {
+    if (G8GEN[k]) return G8_READY;
+    if (M2GEN[k] || LGEN[k]) return V15_READY;
+    if (typeof MQGEN !== "undefined" && MQGEN[k]) return MQ_READY;
+    return true;
+  };
+  const _kf9g = kindsFor;
+  kindsFor = function(cat) {
+    const orig = _kf9g(cat), G2 = GRADE[cat];
+    if (!G2) return orig;
+    const g = kGrade();
+    const ok = (k) => kOK(k) && (k !== "w" || wPool(cat).length >= 4);
+    let out = [.../* @__PURE__ */ new Set([...Object.keys(G2).filter((k) => ok(k) && G2[k][0] <= g && g <= G2[k][1]), ...orig.filter((k) => !G2[k])])];
+    if (out.length < 3) {
+      const near2 = Object.keys(G2).filter((k) => ok(k) && !out.includes(k) && G2[k][1] >= g - 1 && G2[k][0] <= g + 1).sort((a, b) => Math.min(Math.abs(G2[a][1] - g), Math.abs(G2[a][0] - g)) - Math.min(Math.abs(G2[b][1] - g), Math.abs(G2[b][0] - g)) || G2[b][1] - G2[a][1]);
+      for (const k of near2) {
+        if (out.length >= 3) break;
+        out.push(k);
+      }
+    }
+    if (!out.length) out = Object.keys(G2).filter(ok).sort((a, b) => G2[b][1] - G2[a][1]).slice(0, 3);
+    return out.length ? out : orig;
+  };
+  const _bq9 = buildQ;
+  buildQ = function(cat, k, used) {
+    const q = _bq9(cat, k, used);
+    if (q && k === "teach" && !q.why && q.exp && q.exp.t) q.why = { t: q.exp.t, v: (q.exp.v || []).slice() };
+    return q;
+  };
+  window.__gradeTable = () => Object.entries(GRADE).flatMap(([c, o]) => Object.entries(o).map(([k, [lo, hi]]) => ({ cat: c, kind: k, lo, hi, src: GRADE_SRC[c + ":" + k] || "", name: (GMAP[c + "." + k] || {}).n || (GMAP[c + "." + k] || {}).name || "" })));
   const E3 = { "\u{1F3EA}": "1f3ea", "\u26F5": "26f5", "\u{1F477}": "1f477", "\u2753": "2753", "\u2B50": "2b50", "\u{1F3C6}": "1f3c6", "\u{1F433}": "1f433", "\u{1FAA8}": "1faa8", "\u2601\uFE0F": "2601-fe0f", "\u{1F955}": "1f955", "\u{1F1E6}\u{1F1FA}": "1f1e6-1f1fa", "\u{1F634}": "1f634", "\u{1F50B}": "1f50b", "\u{1F36C}": "1f36c", "\u{1F3A8}": "1f3a8", "\u{1F352}": "1f352", "\u{1F9E9}": "1f9e9", "7\uFE0F\u20E3": "37-fe0f-20e3", "\u{1F389}": "1f389", "\u{1F948}": "1f948", "\u{1F372}": "1f372", "\u2139\uFE0F": "2139-fe0f", "\u{1F69C}": "1f69c", "\u{1F48E}": "1f48e", "\u{1F347}": "1f347", "\u{1F9A9}": "1f9a9", "\u{1F353}": "1f353", "\u{1F43C}": "1f43c", "\u{1F427}": "1f427", "\u{1F382}": "1f382", "\u{1F339}": "1f339", "\u{1F3CE}\uFE0F": "1f3ce-fe0f", "\u{1F30E}": "1f30e", "\u{1F52C}": "1f52c", "\u{1F51F}": "1f51f", "\u{1F33E}": "1f33e", "\u{1F345}": "1f345", "\u{1F524}": "1f524", "\u{1FAA5}": "1faa5", "\u{1F46E}": "1f46e", "\u{1F431}": "1f431", "\u{1F96C}": "1f96c", "\u{1F528}": "1f528", "\u{1F419}": "1f419", "\u{1F414}": "1f414", "\u{1F3BE}": "1f3be", "\u{1F3A0}": "1f3a0", "\u{1F392}": "1f392", "\u{1F31F}": "1f31f", "\u{1F578}\uFE0F": "1f578-fe0f", "\u{1F3E0}": "1f3e0", "\u{1F335}": "1f335", "\u{1F343}": "1f343", "9\uFE0F\u20E3": "39-fe0f-20e3", "\u{1F436}": "1f436", "\u{1F9F0}": "1f9f0", "\u26C8\uFE0F": "26c8-fe0f", "\u{1F536}": "1f536", "\u23F3": "23f3", "\u{1F3AF}": "1f3af", "\u{1F9C1}": "1f9c1", "\u{1F692}": "1f692", "\u{1FAB5}": "1fab5", "\u{1F954}": "1f954", "\u{1F40D}": "1f40d", "\u{1F9AB}": "1f9ab", "\u{1F49C}": "1f49c", "\u{1F36A}": "1f36a", "\u{1F992}": "1f992", "\u{1F988}": "1f988", "\u{1F7F0}": "1f7f0", "\u{1F9ED}": "1f9ed", "\u{1F1EE}\u{1F1F7}": "1f1ee-1f1f7", "\u{1F440}": "1f440", "\u{1F3C5}": "1f3c5", "\u{1F423}": "1f423", "\u{1F4AF}": "1f4af", "\u{1F40C}": "1f40c", "\u{1F1FA}\u{1F1F8}": "1f1fa-1f1f8", "\u{1F56F}\uFE0F": "1f56f-fe0f", "\u{1F1EF}\u{1F1F5}": "1f1ef-1f1f5", "\u{1F9B5}": "1f9b5", "\u{1F58D}\uFE0F": "1f58d-fe0f", "\u{1F41E}": "1f41e", "\u2B06\uFE0F": "2b06-fe0f", "\u26C4": "26c4", "\u{1F300}": "1f300", "\u{1F426}": "1f426", "\u{1F4A7}": "1f4a7", "\u{1F332}": "1f332", "\u{1F680}": "1f680", "\u2B05\uFE0F": "2b05-fe0f", "\u{1F48C}": "1f48c", "\u{1F305}": "1f305", "\u{1F464}": "1f464", "\u{1F410}": "1f410", "\u267B\uFE0F": "267b-fe0f", "\u{1F50A}": "1f50a", "\u{1F340}": "1f340", "\u{1F468}\u200D\u{1F373}": "1f468-200d-1f373", "\u2728": "2728", "\u2795": "2795", "4\uFE0F\u20E3": "34-fe0f-20e3", "\u{1F41F}": "1f41f", "\u{1F576}\uFE0F": "1f576-fe0f", "\u{1F4AB}": "1f4ab", "\u{1F327}\uFE0F": "1f327-fe0f", "\u274C": "274c", "\u{1F43E}": "1f43e", "\u{1F34D}": "1f34d", "\u{1F4F7}": "1f4f7", "\u{1F3F0}": "1f3f0", "\u{1FABA}": "1faba", "\u{1F1E9}\u{1F1EA}": "1f1e9-1f1ea", "\u{1F983}": "1f983", "\u{1F9AE}": "1f9ae", "\u{1F485}": "1f485", "\u{1F50D}": "1f50d", "\u2796": "2796", "\u{1F413}": "1f413", "\u{1F36F}": "1f36f", "\u{1FAD0}": "1fad0", "\u{1F415}\u200D\u{1F9BA}": "1f415-200d-1f9ba", "\u{1F6FB}": "1f6fb", "\u{1F526}": "1f526", "\u{1F425}": "1f425", "\u{1F40B}": "1f40b", "\u{1F600}": "1f600", "\u{1F3E1}": "1f3e1", "\u{1F1EE}\u{1F1F3}": "1f1ee-1f1f3", "\u{1F9B6}": "1f9b6", "\u{1F9D1}\u200D\u{1F3EB}": "1f9d1-200d-1f3eb", "\u{1F437}": "1f437", "\u{1F3C1}": "1f3c1", "\u2696\uFE0F": "2696-fe0f", "\u{1F446}": "1f446", "\u{1F938}": "1f938", "\u{1F7E0}": "1f7e0", "\u{1F9B7}": "1f9b7", "\u{1F947}": "1f947", "\u{1F53A}": "1f53a", "\u{1F7E6}": "1f7e6", "\u{1F33B}": "1f33b", "\u{1FA9B}": "1fa9b", "\u{1F949}": "1f949", "\u{1FAB1}": "1fab1", "\u{1F30B}": "1f30b", "\u{1FA90}": "1fa90", "\u{1F33F}": "1f33f", "\u{1F1EA}\u{1F1EC}": "1f1ea-1f1ec", "\u{1F60A}": "1f60a", "\u{1F94E}": "1f94e", "\u{1F6B2}": "1f6b2", "\u{1F6CC}": "1f6cc", "\u{1F95B}": "1f95b", "\u{1F408}": "1f408", "\u{1F30D}": "1f30d", "\u{1F95A}": "1f95a", "\u{1F9D1}\u200D\u{1F692}": "1f9d1-200d-1f692", "\u{1F9FC}": "1f9fc", "\u2699\uFE0F": "2699-fe0f", "\u{1F34A}": "1f34a", "\u{1F98E}": "1f98e", "\u{1F43F}\uFE0F": "1f43f-fe0f", "\u{1F306}": "1f306", "\u{1FA81}": "1fa81", "\u{1F684}": "1f684", "\u{1F430}": "1f430", "\u{1F366}": "1f366", "\u{1F317}": "1f317", "\u{1F3A3}": "1f3a3", "\u{1FAB7}": "1fab7", "\u{1F37D}\uFE0F": "1f37d-fe0f", "\u{1F64B}": "1f64b", "\u{1F4CB}": "1f4cb", "\u{1F320}": "1f320", "\u{1F9C4}": "1f9c4", "\u{1F4F1}": "1f4f1", "\u{1F4D6}": "1f4d6", "\u{1F428}": "1f428", "\u{1F512}": "1f512", "\u{1F9E3}": "1f9e3", "\u{1F4C6}": "1f4c6", "\u{1F973}": "1f973", "\u{1F4AA}": "1f4aa", "\u{1F415}": "1f415", "\u{1F337}": "1f337", "\u{1F49A}": "1f49a", "\u{1F3DC}\uFE0F": "1f3dc-fe0f", "\u{1F9D1}\u200D\u{1F3A8}": "1f9d1-200d-1f3a8", "\u{1F4CE}": "1f4ce", "\u{1F41B}": "1f41b", "\u{1F9F7}": "1f9f7", "\u{1F451}": "1f451", "\u{1F9D2}": "1f9d2", "\u{1F9D1}\u200D\u{1F52C}": "1f9d1-200d-1f52c", "\u{1F7EB}": "1f7eb", "\u{1F49D}": "1f49d", "\u{1F6A2}": "1f6a2", "\u{1F416}": "1f416", "5\uFE0F\u20E3": "35-fe0f-20e3", "\u{1F7E2}": "1f7e2", "\u{1F443}": "1f443", "\u{1F44B}": "1f44b", "\u{1F41A}": "1f41a", "\u{1F1EE}\u{1F1F9}": "1f1ee-1f1f9", "\u{1F691}": "1f691", "\u{1F3B5}": "1f3b5", "\u{1F9F2}": "1f9f2", "\u{1F36D}": "1f36d", "\u{1F406}": "1f406", "\u{1F374}": "1f374", "\u{1F628}": "1f628", "\u{1F35E}": "1f35e", "\u{1F9D1}\u200D\u2708\uFE0F": "1f9d1-200d-2708-fe0f", "\u{1F514}": "1f514", "\u{1F3CB}\uFE0F": "1f3cb-fe0f", "\u{1F4CF}": "1f4cf", "\u{1F534}": "1f534", "\u{1F34C}": "1f34c", "2\uFE0F\u20E3": "32-fe0f-20e3", "\u2B07\uFE0F": "2b07-fe0f", "\u21A9\uFE0F": "21a9-fe0f", "\u{1F342}": "1f342", "\u{1F91D}": "1f91d", "\u{1F511}": "1f511", "\u{1F6D2}": "1f6d2", "\u2702\uFE0F": "2702-fe0f", "\u{1F6C1}": "1f6c1", "\u{1F9C0}": "1f9c0", "\u{1F334}": "1f334", "\u{1F9D1}\u200D\u{1F527}": "1f9d1-200d-1f527", "\u{1F3A9}": "1f3a9", "\u{1F6A9}": "1f6a9", "\u{1F41D}": "1f41d", "\u{1F5D3}\uFE0F": "1f5d3-fe0f", "\u{1F9D1}": "1f9d1", "\u{1F319}": "1f319", "\u{1F34B}": "1f34b", "\u{1F33D}": "1f33d", "\u{1F496}": "1f496", "\u{1F6F8}": "1f6f8", "\u{1FA80}": "1fa80", "\u{1F99F}": "1f99f", "\u{1F989}": "1f989", "\u{1F330}": "1f330", "\u{1F50E}": "1f50e", "\u{1F341}": "1f341", "\u{1F984}": "1f984", "\u{1F409}": "1f409", "\u{1F9E0}": "1f9e0", "\u{1F407}": "1f407", "\u{1F487}": "1f487", "\u26BD": "26bd", "\u{1F573}\uFE0F": "1f573-fe0f", "\u2600\uFE0F": "2600-fe0f", "\u{1F9B4}": "1f9b4", "\u{1F369}": "1f369", "\u{1F52D}": "1f52d", "\u{1F393}": "1f393", "\u{1F1F2}\u{1F1FD}": "1f1f2-1f1fd", "\u{1F42D}": "1f42d", "\u{1F60B}": "1f60b", "\u{1F1E8}\u{1F1F3}": "1f1e8-1f1f3", "\u{1F384}": "1f384", "\u{1F307}": "1f307", "\u{1F380}": "1f380", "\u{1F338}": "1f338", "\u{1FAB0}": "1fab0", "\u2708\uFE0F": "2708-fe0f", "\u{1F4DA}": "1f4da", "\u{1F476}": "1f476", "\u2B1B": "2b1b", "\u{1F450}": "1f450", "\u{1F914}": "1f914", "\u{1FA9E}": "1fa9e", "\u{1F995}": "1f995", "\u{1F355}": "1f355", "\u{1F5E3}\uFE0F": "1f5e3-fe0f", "\u{1F5FA}\uFE0F": "1f5fa-fe0f", "\u{1F422}": "1f422", "\u26A1": "26a1", "\u{1F976}": "1f976", "\u{1F9C3}": "1f9c3", "\u2614": "2614", "\u{1F69A}": "1f69a", "\u{1F0CF}": "1f0cf", "\u{1F45F}": "1f45f", "\u{1F697}": "1f697", "\u{1F9C5}": "1f9c5", "\u{1F6D6}": "1f6d6", "\u{1F32B}\uFE0F": "1f32b-fe0f", "\u2615": "2615", "\u270F\uFE0F": "270f-fe0f", "\u{1F996}": "1f996", "\u{1FABD}": "1fabd", "\u{1F418}": "1f418", "\u{1F9D1}\u200D\u{1F680}": "1f9d1-200d-1f680", "\u{1FAC0}": "1fac0", "\u{1F501}": "1f501", "\u{1F3D0}": "1f3d0", "\u{1F7E1}": "1f7e1", "\u{1F98A}": "1f98a", "6\uFE0F\u20E3": "36-fe0f-20e3", "\u{1F469}\u200D\u2695\uFE0F": "1f469-200d-2695-fe0f", "\u2604\uFE0F": "2604-fe0f", "\u{1F9F1}": "1f9f1", "\u{1F98B}": "1f98b", "\u{1FA71}": "1fa71", "\u{1F7E5}": "1f7e5", "\u{1F90D}": "1f90d", "\u{1F31B}": "1f31b", "\u{1F9E6}": "1f9e6", "\u{1F535}": "1f535", "\u27A1\uFE0F": "27a1-fe0f", "\u{1F9D1}\u200D\u2695\uFE0F": "1f9d1-200d-2695-fe0f", "\u{1F411}": "1f411", "\u{1F3D6}\uFE0F": "1f3d6-fe0f", "\u{1F981}": "1f981", "\u{1F36B}": "1f36b", "\u{1F62E}": "1f62e", "\u{1F44D}": "1f44d", "\u{1F9D1}\u200D\u{1F373}": "1f9d1-200d-1f373", "\u{1F987}": "1f987", "\u{1F551}": "1f551", "\u{1F966}": "1f966", "\u{1F577}\uFE0F": "1f577-fe0f", "\u{1F388}": "1f388", "\u{1F34E}": "1f34e", "\u{1F980}": "1f980", "\u26AA": "26aa", "\u{1F41C}": "1f41c", "\u{1FA99}": "1fa99", "\u{1F499}": "1f499", "\u{1F1E8}\u{1F1E6}": "1f1e8-1f1e6", "\u{1F552}": "1f552", "\u{1F35A}": "1f35a", "\u{1F693}": "1f693", "\u{1F4A1}": "1f4a1", "\u{1F308}": "1f308", "\u23F0": "23f0", "\u{1F3B9}": "1f3b9", "\u{1F47D}": "1f47d", "\u{1F529}": "1f529", "\u{1F35F}": "1f35f", "\u{1F331}": "1f331", "\u{1F442}": "1f442", "\u{1F682}": "1f682", "\u2705": "2705", "\u{1F42C}": "1f42c", "\u{1F438}": "1f438", "1\uFE0F\u20E3": "31-fe0f-20e3", "\u{1F30A}": "1f30a", "\u{1F4C5}": "1f4c5", "\u{1FAB6}": "1fab6", "\u{1F6F7}": "1f6f7", "\u{1F986}": "1f986", "\u{1F434}": "1f434", "\u{1F620}": "1f620", "\u{1F9E5}": "1f9e5", "\u{1F963}": "1f963", "\u{1F429}": "1f429", "\u{1F4A8}": "1f4a8", "\u{1F6F0}\uFE0F": "1f6f0-fe0f", "\u{1F525}": "1f525", "\u{1F4E4}": "1f4e4", "\u2668\uFE0F": "2668-fe0f", "\u{1F3CD}\uFE0F": "1f3cd-fe0f", "\u{1F52E}": "1f52e", "8\uFE0F\u20E3": "38-fe0f-20e3", "\u{1F315}": "1f315", "\u{1F311}": "1f311", "\u2744\uFE0F": "2744-fe0f", "\u{1F9FA}": "1f9fa", "\u{1F4AC}": "1f4ac", "\u{1F3AC}": "1f3ac", "\u{1F51B}": "1f51b", "3\uFE0F\u20E3": "33-fe0f-20e3", "\u{1F550}": "1f550", "\u{1F9C2}": "1f9c2", "\u{1F350}": "1f350", "\u{1F5A4}": "1f5a4", "\u2764\uFE0F": "2764-fe0f", "\u{1F9CA}": "1f9ca", "\u{1F1EB}\u{1F1F7}": "1f1eb-1f1f7", "\u{1F9FD}": "1f9fd", "\u{1F944}": "1f944", "\u{1F9E2}": "1f9e2", "\u{1F40A}": "1f40a", "\u{1F3B8}": "1f3b8", "\u{1F957}": "1f957", "\u{1F43B}": "1f43b", "\u{1F68C}": "1f68c", "\u{1F4E5}": "1f4e5", "\u{1F4C8}": "1f4c8", "\u{1F316}": "1f316", "\u{1F504}": "1f504", "\u{1F468}\u200D\u{1F469}\u200D\u{1F467}": "1f468-200d-1f469-200d-1f467", "\u{1F632}": "1f632", "\u{1F344}": "1f344", "\u{1F4FB}": "1f4fb", "\u{1F622}": "1f622", "\u{1F346}": "1f346", "\u{1F916}": "1f916", "\u{1F404}": "1f404", "\u{1F7E3}": "1f7e3", "\u{1F30C}": "1f30c", "\u{1F527}": "1f527", "\u{1FAE7}": "1fae7", "\u{1FA84}": "1fa84", "\u{1F1E7}\u{1F1F7}": "1f1e7-1f1f7", "\u{1F6CF}\uFE0F": "1f6cf-fe0f", "\u{1F967}": "1f967", "\u{1F349}": "1f349", "\u{1F3DE}\uFE0F": "1f3de-fe0f", "\u{1F539}": "1f539", "\u{1F32C}\uFE0F": "1f32c-fe0f", "\u{1F432}": "1f432", "\u{1F964}": "1f964", "\u{1F9D3}": "1f9d3", "\u{1FAD8}": "1fad8", "\u{1F6B6}": "1f6b6", "\u{1F3B1}": "1f3b1", "\u{1F1EC}\u{1F1E7}": "1f1ec-1f1e7", "\u26F0\uFE0F": "26f0-fe0f", "\u{1F4FA}": "1f4fa", "\u{1F699}": "1f699", "\u{1F985}": "1f985", "\u{1F31E}": "1f31e", "\u{1F30F}": "1f30f", "\u{1F522}": "1f522", "\u{1F9F8}": "1f9f8", "\u{1FA9C}": "1fa9c", "\u{1F381}": "1f381", "\u{1F537}": "1f537", "\u{1F383}": "1f383", "\u{1F333}": "1f333", "\u26AB": "26ab", "\u{1F42F}": "1f42f", "\u{1F9D1}\u200D\u{1F33E}": "1f9d1-200d-1f33e", "\u{1F469}": "1f469", "\u{1F4C4}": "1f4c4", "\u{1F4A5}": "1f4a5", "\u{1F469}\u200D\u{1F692}": "1f469-200d-1f692", "\u{1FAB4}": "1fab4", "\u{1F648}": "1f648" };
   const E3RE = new RegExp(Object.keys(E3).sort((a, b) => b.length - a.length).map((s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|"), "g");
   function e3Node(t) {
