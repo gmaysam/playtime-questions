@@ -15507,6 +15507,145 @@ img.e3 {
   font-size: 22px;
   color: #9AA5B1;
 }
+.oclk {
+  display: block;
+  width: 62px;
+  height: 62px;
+  margin: 0 auto 2px;
+}
+.oclk svg {
+  width: 100%;
+  height: 100%;
+}
+.vc2 {
+  position: relative;
+  width: min(86%, 320px);
+  margin: 6px auto 0;
+}
+.vc2-m {
+  width: 100%;
+  display: block;
+}
+.vc2-c {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.vc2 .vc-in {
+  top: -4px;
+  font-size: 26px;
+}
+.vc2 .vc-in.pour {
+  animation: vcpour .7s ease-in;
+}
+@keyframes vcpour {
+  0% {
+    transform: translate(-50%, -30px) rotate(-30deg);
+    opacity: 0;
+  }
+  60% {
+    opacity: 1;
+  }
+  to {
+    transform: translate(-50%, 0) rotate(0);
+  }
+}
+.rh2 {
+  height: 150px;
+}
+.rh2 .rh-t {
+  width: 112px;
+  left: 20%;
+}
+.rd {
+  width: 100%;
+  overflow: visible;
+}
+.rd-st {
+  transition: transform .08s;
+  transform-box: fill-box;
+}
+.rd-st.l {
+  transform-origin: 15% 5%;
+  transform: rotate(-12deg);
+}
+.rd-st.r {
+  transform-origin: 85% 5%;
+  transform: rotate(12deg);
+}
+.rh-t.hitl .rd-st.l {
+  transform: rotate(6deg);
+}
+.rh-t.hitr .rd-st.r {
+  transform: rotate(-6deg);
+}
+.rh-t.hitl .rd-rip,
+.rh-t.hitr .rd-rip {
+  animation: rdrip .35s ease-out;
+}
+@keyframes rdrip {
+  from {
+    rx: 6;
+    ry: 2;
+    opacity: 1;
+  }
+  to {
+    rx: 46;
+    ry: 12;
+    opacity: 0;
+  }
+}
+.rh-t.hitl,
+.rh-t.hitr {
+  transform: translate(-50%, -50%) scale(1.04);
+}
+.sy {
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  margin-top: 8px;
+}
+.sy-pic img {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+}
+.sy-w {
+  font: 900 40px "Nunito", sans-serif;
+  color: var(--ink);
+  letter-spacing: .02em;
+}
+.sy-mic {
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  border: 0;
+  background: #FF6B6B;
+  color: #fff;
+  font-size: 42px;
+  box-shadow: 0 6px 0 #C92A2A;
+  cursor: pointer;
+}
+.sy-mic.on {
+  animation: sypulse 1s ease-in-out infinite;
+  background: #FA5252;
+}
+@keyframes sypulse {
+  50% {
+    box-shadow: 0 6px 0 #C92A2A, 0 0 0 16px rgba(250, 82, 82, .25);
+  }
+}
+.sy-h {
+  font: 700 16px "Nunito", sans-serif;
+  color: #6B7785;
+  text-align: center;
+  min-height: 22px;
+}
 .qbody,
 .panel {
   max-width: 680px;
@@ -22974,7 +23113,7 @@ img.e3 {
   };
   function capRound(p, cat) {
     if (!p) return p;
-    const fam = (k) => FAMILY[k] || k, du = dayUse(), dcap = (k) => DAYCAP[fam(k)] || (k.startsWith("f_") || GAMEK.includes(k) ? 2 : 99), n = {};
+    const fam = (k) => FAMILY[k] || k, du = dayUse(), dcap = (k) => DAYCAP[fam(k)] || (k.startsWith("f_") || GAMEK.includes(k) ? 1 : 99), n = {};
     const cap = (k) => Math.min(FAMCAP[fam(k)] || (k === "w" ? 4 : k.startsWith("f_") || GAMEK.includes(k) ? 1 : 2), dcap(k) - (du[fam(k)] || 0));
     let pool = [];
     try {
@@ -26129,6 +26268,401 @@ img.e3 {
     return q;
   };
   window.__gradeTable = () => Object.entries(GRADE).flatMap(([c, o]) => Object.entries(o).map(([k, [lo, hi]]) => ({ cat: c, kind: k, lo, hi, src: GRADE_SRC[c + ":" + k] || "", name: (GMAP[c + "." + k] || {}).n || (GMAP[c + "." + k] || {}).name || "" })));
+  const G10_READY = false, G10 = (n) => "w/PX_G10_" + n;
+  const _qSt10 = qStory;
+  qStory = function(si, k) {
+    const q = _qSt10(si, k);
+    try {
+      if (/\btime\b/i.test(q.cap || "") && q.opts && q.opts.every((o) => /class="num"/.test(o.h))) {
+        const v = q.opts.map((o) => +o.h.replace(/<[^>]*>/g, "").replace(/\D+/g, "")), r = v[q.ans];
+        const ok = v.map((x) => x >= 1 && x <= 12 ? x : null), used = new Set(ok.filter((x) => x !== null));
+        for (let i = 0; i < ok.length; i++) if (ok[i] === null) {
+          let c = [r + 2, r - 2, r + 3, r - 3, r + 4, r - 4].map((x) => (x - 1 + 12) % 12 + 1).find((x) => !used.has(x));
+          ok[i] = c;
+          used.add(c);
+        }
+        q.opts = ok.map((h) => ({ h: '<span class="oclk">'.concat(clockSVG(h, 0), '</span><b class="num t">').concat(h, ":00</b>"), say: ["w/PX_RC_CLOCK", N(h)] }));
+        q.layout = "row3";
+      }
+    } catch (e) {
+    }
+    return q;
+  };
+  volcQ = function(q) {
+    let pot = [], miss = 0;
+    const shelf = sh(VOLC6.slice());
+    gShow('<div class="game">'.concat(gHead("\u{1F30B}", "Fizzy volcano", "Which two make it erupt?"), '<div class="vc2" id="vcV">\n    <svg viewBox="0 0 240 170" class="vc2-m" aria-hidden="true"><defs><linearGradient id="vcg" x1="0" x2="1"><stop offset="0" stop-color="#8A5A3B"/><stop offset=".55" stop-color="#B07A52"/><stop offset="1" stop-color="#6E4329"/></linearGradient>\n      <linearGradient id="vcb" x1="0" x2="1"><stop offset="0" stop-color="#cfe9ff" stop-opacity=".9"/><stop offset=".5" stop-color="#fff" stop-opacity=".7"/><stop offset="1" stop-color="#b9dcff" stop-opacity=".9"/></linearGradient></defs>\n      <ellipse cx="120" cy="164" rx="112" ry="6" fill="#000" opacity=".12"/><rect x="6" y="152" width="228" height="12" rx="4" fill="#C9A26B"/>\n      <path d="M22 154 C52 140 70 96 96 52 L144 52 C170 96 188 140 218 154Z" fill="url(#vcg)"/>\n      <path d="M50 150 C70 128 82 104 96 80" stroke="#5E3A22" stroke-width="3" fill="none" opacity=".45"/><path d="M190 150 C172 126 160 104 148 84" stroke="#5E3A22" stroke-width="3" fill="none" opacity=".45"/>\n      <circle cx="74" cy="128" r="5" fill="#7A4C30"/><circle cx="168" cy="120" r="4" fill="#7A4C30"/><circle cx="150" cy="140" r="6" fill="#7A4C30"/><path d="M96 52 L144 52 L138 62 L102 62Z" fill="#4A2D1A"/>\n      <rect x="107" y="30" width="26" height="30" rx="5" fill="url(#vcb)" stroke="#8fbfe6" stroke-width="2"/><rect x="113" y="22" width="14" height="10" rx="2" fill="url(#vcb)" stroke="#8fbfe6" stroke-width="2"/></svg>\n    <canvas class="vc2-c" id="vcC" width="480" height="340"></canvas><span class="vc-in" id="vcI"></span></div>\n    <div class="mx-pots">').concat(shelf.map((x, j) => '<button class="mx-p vc-p" data-j="'.concat(j, '"><span class="vc-e">').concat(x[0], "</span><small>").concat(cap1(x[1]), "</small></button>")).join(""), "</div></div>"));
+    gAsk(q);
+    const cv2 = $("vcC"), cx2 = cv2.getContext("2d");
+    let parts2 = [], raf2 = 0, t0 = 0, mode = "";
+    const run = (ts) => {
+      if (!cx2 || !L || L.q !== q && !q.done) {
+        cancelAnimationFrame(raf2);
+        return;
+      }
+      const t = (ts - t0) / 1e3;
+      cx2.clearRect(0, 0, 480, 340);
+      const rate = mode === "boom" ? t < 1.6 ? 26 : t < 3.2 ? 10 : t < 4.2 ? 3 : 0 : t < 0.5 ? 3 : 0;
+      for (let i = 0; i < rate; i++) {
+        const side = Math.random() < 0.5 ? -1 : 1;
+        parts2.push({ x: 240 + (Math.random() - 0.5) * 24, y: 60, vx: side * (0.6 + Math.random() * 2.2) * (mode === "boom" ? 1 : 0.3), vy: -(mode === "boom" ? 3 + Math.random() * 4 : 1 + Math.random()), r: 4 + Math.random() * 9, life: 0, flow: false });
+      }
+      for (const p of parts2) {
+        p.life += 1 / 60;
+        if (!p.flow) {
+          p.vy += 0.18;
+          p.x += p.vx;
+          p.y += p.vy;
+          if (p.y > 64 && p.vy > 0) {
+            p.flow = true;
+            p.vx = (p.x < 240 ? -1 : 1) * (0.9 + Math.random() * 0.8);
+            p.vy = 0;
+          }
+        } else {
+          p.x += p.vx;
+          const dx = Math.abs(p.x - 240), slopeY = 64 + Math.max(0, dx - 24) * 1.62;
+          p.y = Math.min(300, slopeY - p.r * 0.6);
+          p.vx *= 0.995;
+        }
+        const a = Math.max(0, 1 - p.life / 5.5);
+        cx2.globalAlpha = a;
+        const g = cx2.createRadialGradient(p.x - p.r * 0.3, p.y - p.r * 0.3, 1, p.x, p.y, p.r);
+        g.addColorStop(0, "#fff");
+        g.addColorStop(0.6, mode === "boom" ? "#FFE8E8" : "#F1F3F5");
+        g.addColorStop(1, mode === "boom" ? "#FF8FA3" : "#CED4DA");
+        cx2.fillStyle = g;
+        cx2.beginPath();
+        cx2.arc(p.x, p.y, p.r, 0, 7);
+        cx2.fill();
+        if (Math.random() < 0.02) p.r *= 0.92;
+      }
+      cx2.globalAlpha = 1;
+      parts2 = parts2.filter((p) => p.life < 5.5 && p.r > 1.5);
+      if (parts2.length || rate) raf2 = requestAnimationFrame(run);
+    };
+    const fizz = () => {
+      try {
+        if (!S.fx) return;
+        const c = dac(), n = c.sampleRate * 2.2, b = c.createBuffer(1, n, c.sampleRate), d = b.getChannelData(0);
+        for (let i = 0; i < n; i++) d[i] = (Math.random() * 2 - 1) * (Math.random() < 0.08 ? 1 : 0.25) * Math.exp(-i / n * 1.6);
+        const s = c.createBufferSource(), f = c.createBiquadFilter(), g = c.createGain();
+        s.buffer = b;
+        f.type = "highpass";
+        f.frequency.value = 2400;
+        g.gain.value = 0.35;
+        s.connect(f);
+        f.connect(g);
+        g.connect(c.destination);
+        s.start();
+      } catch (e) {
+      }
+    };
+    const go = () => {
+      const ok = pot.every((x) => x[2]);
+      mode = ok ? "boom" : "meh";
+      parts2 = [];
+      t0 = performance.now();
+      cancelAnimationFrame(raf2);
+      raf2 = requestAnimationFrame(run);
+      if (ok) fizz();
+      else g6tone(300, 0.3, "sawtooth", 0.06);
+      setTimeout(() => {
+        if (ok) gameWin(q, miss, $("vcV"), []);
+        else {
+          miss++;
+          toastHint("".concat(cap1(pot[0][1]), " and ").concat(pot[1][1], " don't fizz. Try others!"));
+          pot = [];
+          $("vcI").textContent = "";
+          $("qBody").querySelectorAll(".vc-p").forEach((b) => b.disabled = false);
+          if (miss >= 3) {
+            q.done = true;
+            gameLearn(q, "Baking soda + vinegar = FIZZ!", []);
+          }
+        }
+      }, ok ? 3200 : 1500);
+    };
+    $("qBody").querySelectorAll(".vc-p").forEach((b) => {
+      const add = () => {
+        if (q.done || pot.length >= 2 || b.disabled) return;
+        pot.push(shelf[+b.dataset.j]);
+        b.disabled = true;
+        sfx.tap();
+        const I = $("vcI");
+        I.textContent = pot.map((x) => x[0]).join(" ");
+        I.classList.remove("pour");
+        void I.offsetWidth;
+        I.classList.add("pour");
+        if (pot.length === 2) setTimeout(go, 700);
+      };
+      dragify(b, () => [$("vcV")], add, add);
+    });
+    window.__gSolve = () => {
+      pot = VOLC6.slice(0, 2);
+      go();
+    };
+  };
+  const realDrum = () => '<svg viewBox="0 0 140 130" class="rd" aria-hidden="true"><defs>\n  <linearGradient id="rdS" x1="0" x2="1"><stop offset="0" stop-color="#A61E2E"/><stop offset=".45" stop-color="#E63946"/><stop offset=".55" stop-color="#F25C67"/><stop offset="1" stop-color="#8F1724"/></linearGradient>\n  <linearGradient id="rdM" x1="0" x2="1"><stop offset="0" stop-color="#9AA5B1"/><stop offset=".5" stop-color="#F1F3F5"/><stop offset="1" stop-color="#7B8794"/></linearGradient>\n  <radialGradient id="rdH" cx=".45" cy=".4" r=".7"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".7" stop-color="#F3EFE6"/><stop offset="1" stop-color="#D9D2C3"/></radialGradient></defs>\n  <ellipse cx="70" cy="122" rx="56" ry="6" fill="#000" opacity=".15"/>\n  <path d="M16 56 L16 104 A54 16 0 0 0 124 104 L124 56Z" fill="url(#rdS)"/>\n  '.concat([24, 42, 60, 80, 98, 116].map((x) => '<rect x="'.concat(x - 3, '" y="62" width="6" height="36" rx="3" fill="url(#rdM)"/>')).join(""), '\n  <path d="M16 100 A54 16 0 0 0 124 100 L124 107 A54 16 0 0 1 16 107Z" fill="url(#rdM)"/>\n  <ellipse cx="70" cy="56" rx="54" ry="16" fill="url(#rdM)"/><ellipse cx="70" cy="56" rx="49" ry="13" fill="url(#rdH)"/>\n  <ellipse class="rd-rip" cx="70" cy="56" rx="10" ry="3" fill="none" stroke="#C9BFA8" stroke-width="1.5"/>\n  <g class="rd-st l"><line x1="22" y1="2" x2="52" y2="46" stroke="#D9A066" stroke-width="5" stroke-linecap="round"/><circle cx="52" cy="46" r="4" fill="#F2D3A0"/></g>\n  <g class="rd-st r"><line x1="118" y1="2" x2="88" y2="46" stroke="#D9A066" stroke-width="5" stroke-linecap="round"/><circle cx="88" cy="46" r="4" fill="#F2D3A0"/></g></svg>');
+  function snare() {
+    try {
+      if (!S.fx) return;
+      const c = dac(), t = c.currentTime, o = c.createOscillator(), og = c.createGain();
+      o.type = "triangle";
+      o.frequency.setValueAtTime(190, t);
+      o.frequency.exponentialRampToValueAtTime(110, t + 0.12);
+      og.gain.setValueAtTime(0.7, t);
+      og.gain.exponentialRampToValueAtTime(1e-3, t + 0.18);
+      o.connect(og);
+      og.connect(c.destination);
+      o.start(t);
+      o.stop(t + 0.2);
+      const n = c.sampleRate * 0.25, b = c.createBuffer(1, n, c.sampleRate), d = b.getChannelData(0);
+      for (let i = 0; i < n; i++) d[i] = Math.random() * 2 - 1;
+      const s = c.createBufferSource(), f = c.createBiquadFilter(), g = c.createGain();
+      s.buffer = b;
+      f.type = "highpass";
+      f.frequency.value = 1500;
+      g.gain.setValueAtTime(0.55, t);
+      g.gain.exponentialRampToValueAtTime(1e-3, t + 0.2);
+      s.connect(f);
+      f.connect(g);
+      g.connect(c.destination);
+      s.start(t);
+      s.stop(t + 0.25);
+    } catch (e) {
+    }
+  }
+  rhythmQ = function(q) {
+    let hit = 0, miss = 0, side = 0;
+    gShow('<div class="game">'.concat(gHead("\u{1F941}", "Rhythm drums", "Tap the drum when the star reaches it!"), '<div class="rh rh2" id="rhL"><span class="rh-t" id="rhT">').concat(realDrum(), '</span></div><div class="mg-cnt" id="rhC">0 / ').concat(q.need, "</div></div>"));
+    gAsk(q);
+    const L2 = $("rhL"), T = $("rhT"), notes = [];
+    const tap = () => {
+      if (q.done) return;
+      snare();
+      side ^= 1;
+      T.classList.remove("hitl", "hitr");
+      void T.offsetWidth;
+      T.classList.add(side ? "hitl" : "hitr");
+      const tr = T.getBoundingClientRect(), c = tr.left + tr.width / 2;
+      const n = notes.find((o) => !o.dataset.d && Math.abs(o.getBoundingClientRect().left + o.offsetWidth / 2 - c) < tr.width * 0.6);
+      if (n) {
+        n.dataset.d = 1;
+        n.classList.add("got");
+        hit++;
+        $("rhC").textContent = hit + " / " + q.need;
+        if (hit >= q.need) {
+          q.done = true;
+          setTimeout(() => gameWin(q, miss > 3 ? 1 : 0, T, []), 400);
+        }
+      } else miss++;
+    };
+    L2.addEventListener("pointerdown", (e) => {
+      e.preventDefault();
+      tap();
+    });
+    let k = 0;
+    const spawn = () => {
+      if (!L || L.q !== q || q.done) return;
+      if (k >= q.n + 3 && hit < q.need) {
+        k = 0;
+      }
+      k++;
+      const o = document.createElement("span");
+      o.className = "rh-n";
+      o.textContent = "\u2B50";
+      o.style.animationDuration = q.sp + "s";
+      L2.appendChild(o);
+      notes.push(o);
+      o.addEventListener("animationend", () => {
+        o.remove();
+        notes.splice(notes.indexOf(o), 1);
+      });
+      setTimeout(spawn, q.sp * 1e3 * 0.55);
+    };
+    setTimeout(spawn, 2200);
+    window.__gSolve = () => {
+      q.done = true;
+      gameWin(q, 0, T, []);
+    };
+  };
+  GAMES.volc = volcQ;
+  GAMES.rhythm = rhythmQ;
+  Object.assign(OPTREAD, { lab: ".gr-o,.mg-it,.mx-o", ice: ".ic-c", sand: ".g7-g", sci: ".gr-o,.sc-t", tapall: ".ta-it", move: ".mv-c" });
+  const optSay = (l) => {
+    l = l.toLowerCase().trim();
+    if (/^[a-z]$/.test(l)) return ["w/LULU_LN_" + l.toUpperCase()];
+    return both(l);
+  };
+  const _gro10 = gReadOpts;
+  gReadOpts = function(q) {
+    const sel = q && OPTREAD[q.game];
+    if (sel && q.game !== "emo") {
+      const bs = [...$("qBody").querySelectorAll(sel)].filter((b) => !b.disabled);
+      if (bs.length >= 2) {
+        const items = bs.map((b) => ({ b, c: optSay(optLabel(b)) })).filter((x) => x.c.length);
+        if (items.length === bs.length && gReadList(q, q.voice || [], items)) return true;
+      }
+    }
+    return _gro10(q);
+  };
+  const SUBMAX = { "tapall:letter": 5, "catch:letter": 5, "whack:letter": 5, "sort:letter": 5, "swipe:letter": 5 };
+  const _bf10 = buildFormat;
+  buildFormat = function(kind, cat) {
+    let q = null;
+    for (let t = 0; t < 12; t++) {
+      q = _bf10(kind, cat);
+      if (!q) return q;
+      const sub = (q.game || "") + ":" + (gsub(q) || "");
+      if ((S.age || 6) <= (SUBMAX[sub] || 99)) return q;
+    }
+    return null;
+  };
+  const FPROBE = {};
+  const _ff10p = formatsFor0;
+  formatsFor0 = function(cat) {
+    const b = _ff10p(cat), key = cat + "|" + (S.age || 6) + "|" + lvl();
+    return b.filter((k) => {
+      if (!/^f_(tapall|catch|whack|sort|swipe)$/.test(k)) return true;
+      const kk = key + "|" + k;
+      if (FPROBE[kk] === void 0) {
+        let ok = false;
+        for (let t = 0; t < 8 && !ok; t++) {
+          try {
+            ok = !!buildFormat(k, cat);
+          } catch (e) {
+          }
+        }
+        FPROBE[kk] = ok;
+      }
+      return FPROBE[kk];
+    });
+  };
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const sayOK = () => !!SR && G10_READY && S.mic !== false;
+  const SAYW = () => {
+    const a = lvl();
+    if (a <= 6) return WORDS.filter((x) => x.w.length <= 4).map((x) => ({ w: x.w, pic: PIC("wd_" + x.i, "wp"), say: wSay(x) }));
+    const L3 = [.../* @__PURE__ */ new Set([...Object.values(LW).flat(2), ...CPW])].filter((w) => /^[a-z]{4,11}$/.test(w) && !/^(sheep|fish|mice|men|feet|teeth|geese)$/.test(w));
+    return L3.filter((w) => a >= 9 || w.length <= 7).map((w) => ({ w, pic: "", say: EW(w) }));
+  };
+  function qSay(cat) {
+    const w = pickOne(SAYW());
+    return { game: "say", w, voice: [G10("SAY_Q"), ...w.say], gid: "g:say", factT: "Saying words out loud helps you remember them." };
+  }
+  const lev = (a, b) => {
+    const m = a.length, n = b.length, d = Array.from({ length: m + 1 }, (x, i) => [i, ...Array(n).fill(0)]);
+    for (let j = 1; j <= n; j++) d[0][j] = j;
+    for (let i = 1; i <= m; i++) for (let j = 1; j <= n; j++) d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+    return d[m][n];
+  };
+  function sayQ(q) {
+    let tries = 0, rec = null, busy = false;
+    const w = q.w.w;
+    gShow('<div class="game">'.concat(gHead("\u{1F3A4}", "Say it!", "Listen, then say it"), '<div class="sy">').concat(q.w.pic ? '<div class="sy-pic">'.concat(q.w.pic, "</div>") : "", '<div class="sy-w">').concat(w, '</div>\n    <button class="hr-play sm" id="syL" aria-label="Listen again">\u{1F50A}</button><button class="sy-mic" id="syM" aria-label="Say it">\u{1F3A4}</button><div class="sy-h" id="syH">Tap \u{1F3A4} and say the word</div><button class="mv-skip" id="syS">Skip</button></div></div>'));
+    gAsk(q);
+    const H = $("syH"), M = $("syM");
+    const done = (ok) => {
+      if (q.done) return;
+      if (ok) {
+        sayseq([G10("SAY_GOOD")], () => {
+        });
+        gameWin(q, tries > 1 ? 1 : 0, M, []);
+      } else {
+        q.done = true;
+        gameLearn(q, w, q.w.say);
+      }
+    };
+    const check = (alts) => {
+      const t = w.toLowerCase(), hit = alts.some((s) => {
+        s = s.toLowerCase().replace(/[^a-z ]/g, " ").trim();
+        return s.split(/\s+/).some((x) => x === t || t.length >= 5 && lev(x, t) <= 1) || s.replace(/\s+/g, "") === t;
+      });
+      if (hit) {
+        H.textContent = "\u2705 " + w + "!";
+        done(true);
+      } else {
+        tries++;
+        H.textContent = alts[0] ? "I heard \u201C".concat(alts[0], "\u201D. Try again!") : "I didn't hear it. Try again!";
+        if (tries >= 3) {
+          sayseq([G10("SAY_LAST"), ...q.w.say], () => {
+          });
+          done(false);
+        } else sayseq([G10("SAY_AGAIN"), ...q.w.say], () => {
+        });
+      }
+    };
+    M.onclick = () => {
+      if (q.done || busy) return;
+      hush();
+      try {
+        rec = new SR();
+        rec.lang = "en-US";
+        rec.interimResults = false;
+        rec.maxAlternatives = 5;
+        busy = true;
+        M.classList.add("on");
+        H.textContent = "Listening\u2026";
+        rec.onresult = (e) => {
+          const alts = [...e.results[0]].map((r) => r.transcript);
+          busy = false;
+          M.classList.remove("on");
+          check(alts);
+        };
+        rec.onerror = (e) => {
+          busy = false;
+          M.classList.remove("on");
+          if (e.error === "not-allowed" || e.error === "service-not-allowed") {
+            H.textContent = "The microphone is off - ask a grown-up, or tap Skip.";
+          } else H.textContent = "I didn't hear it. Try again!";
+        };
+        rec.onend = () => {
+          if (busy) {
+            busy = false;
+            M.classList.remove("on");
+            H.textContent = "I didn't hear it. Try again!";
+          }
+        };
+        rec.start();
+      } catch (e) {
+        busy = false;
+        M.classList.remove("on");
+        H.textContent = "Speaking isn't available here - tap Skip.";
+      }
+    };
+    $("syL").onclick = () => {
+      sfx.tap();
+      hush();
+      sayseq(q.w.say, () => {
+      });
+    };
+    $("syS").onclick = () => {
+      if (q.done) return;
+      try {
+        rec && rec.abort();
+      } catch (e) {
+      }
+      q.done = true;
+      gameLearn(q, w, q.w.say);
+    };
+    window.__gSolve = () => {
+      check([w]);
+    };
+  }
+  GAMES.say = sayQ;
+  const _bf10s = buildFormat;
+  buildFormat = function(kind, cat) {
+    if (kind === "f_say") return sayOK() ? qSay(cat) : null;
+    return _bf10s(kind, cat);
+  };
+  FMIN.f_say = 4;
+  const _ff10 = formatsFor0;
+  formatsFor0 = function(cat) {
+    const b = _ff10(cat);
+    return sayOK() && ["letters", "read", "animals", "farm"].includes(cat) && ageOK("f_say") ? [...b, "f_say"] : b;
+  };
+  Object.assign(GMAP, { "g:say": G("Say it!", ["lang", "listen"], [["lang", "vocab"]], "Lulu says a word and the child says it back; the phone checks the pronunciation.", "Practice") });
+  DAYCAP.piece = 1;
+  DAYCAP.path = 1;
   const E3 = { "\u{1F3EA}": "1f3ea", "\u26F5": "26f5", "\u{1F477}": "1f477", "\u2753": "2753", "\u2B50": "2b50", "\u{1F3C6}": "1f3c6", "\u{1F433}": "1f433", "\u{1FAA8}": "1faa8", "\u2601\uFE0F": "2601-fe0f", "\u{1F955}": "1f955", "\u{1F1E6}\u{1F1FA}": "1f1e6-1f1fa", "\u{1F634}": "1f634", "\u{1F50B}": "1f50b", "\u{1F36C}": "1f36c", "\u{1F3A8}": "1f3a8", "\u{1F352}": "1f352", "\u{1F9E9}": "1f9e9", "7\uFE0F\u20E3": "37-fe0f-20e3", "\u{1F389}": "1f389", "\u{1F948}": "1f948", "\u{1F372}": "1f372", "\u2139\uFE0F": "2139-fe0f", "\u{1F69C}": "1f69c", "\u{1F48E}": "1f48e", "\u{1F347}": "1f347", "\u{1F9A9}": "1f9a9", "\u{1F353}": "1f353", "\u{1F43C}": "1f43c", "\u{1F427}": "1f427", "\u{1F382}": "1f382", "\u{1F339}": "1f339", "\u{1F3CE}\uFE0F": "1f3ce-fe0f", "\u{1F30E}": "1f30e", "\u{1F52C}": "1f52c", "\u{1F51F}": "1f51f", "\u{1F33E}": "1f33e", "\u{1F345}": "1f345", "\u{1F524}": "1f524", "\u{1FAA5}": "1faa5", "\u{1F46E}": "1f46e", "\u{1F431}": "1f431", "\u{1F96C}": "1f96c", "\u{1F528}": "1f528", "\u{1F419}": "1f419", "\u{1F414}": "1f414", "\u{1F3BE}": "1f3be", "\u{1F3A0}": "1f3a0", "\u{1F392}": "1f392", "\u{1F31F}": "1f31f", "\u{1F578}\uFE0F": "1f578-fe0f", "\u{1F3E0}": "1f3e0", "\u{1F335}": "1f335", "\u{1F343}": "1f343", "9\uFE0F\u20E3": "39-fe0f-20e3", "\u{1F436}": "1f436", "\u{1F9F0}": "1f9f0", "\u26C8\uFE0F": "26c8-fe0f", "\u{1F536}": "1f536", "\u23F3": "23f3", "\u{1F3AF}": "1f3af", "\u{1F9C1}": "1f9c1", "\u{1F692}": "1f692", "\u{1FAB5}": "1fab5", "\u{1F954}": "1f954", "\u{1F40D}": "1f40d", "\u{1F9AB}": "1f9ab", "\u{1F49C}": "1f49c", "\u{1F36A}": "1f36a", "\u{1F992}": "1f992", "\u{1F988}": "1f988", "\u{1F7F0}": "1f7f0", "\u{1F9ED}": "1f9ed", "\u{1F1EE}\u{1F1F7}": "1f1ee-1f1f7", "\u{1F440}": "1f440", "\u{1F3C5}": "1f3c5", "\u{1F423}": "1f423", "\u{1F4AF}": "1f4af", "\u{1F40C}": "1f40c", "\u{1F1FA}\u{1F1F8}": "1f1fa-1f1f8", "\u{1F56F}\uFE0F": "1f56f-fe0f", "\u{1F1EF}\u{1F1F5}": "1f1ef-1f1f5", "\u{1F9B5}": "1f9b5", "\u{1F58D}\uFE0F": "1f58d-fe0f", "\u{1F41E}": "1f41e", "\u2B06\uFE0F": "2b06-fe0f", "\u26C4": "26c4", "\u{1F300}": "1f300", "\u{1F426}": "1f426", "\u{1F4A7}": "1f4a7", "\u{1F332}": "1f332", "\u{1F680}": "1f680", "\u2B05\uFE0F": "2b05-fe0f", "\u{1F48C}": "1f48c", "\u{1F305}": "1f305", "\u{1F464}": "1f464", "\u{1F410}": "1f410", "\u267B\uFE0F": "267b-fe0f", "\u{1F50A}": "1f50a", "\u{1F340}": "1f340", "\u{1F468}\u200D\u{1F373}": "1f468-200d-1f373", "\u2728": "2728", "\u2795": "2795", "4\uFE0F\u20E3": "34-fe0f-20e3", "\u{1F41F}": "1f41f", "\u{1F576}\uFE0F": "1f576-fe0f", "\u{1F4AB}": "1f4ab", "\u{1F327}\uFE0F": "1f327-fe0f", "\u274C": "274c", "\u{1F43E}": "1f43e", "\u{1F34D}": "1f34d", "\u{1F4F7}": "1f4f7", "\u{1F3F0}": "1f3f0", "\u{1FABA}": "1faba", "\u{1F1E9}\u{1F1EA}": "1f1e9-1f1ea", "\u{1F983}": "1f983", "\u{1F9AE}": "1f9ae", "\u{1F485}": "1f485", "\u{1F50D}": "1f50d", "\u2796": "2796", "\u{1F413}": "1f413", "\u{1F36F}": "1f36f", "\u{1FAD0}": "1fad0", "\u{1F415}\u200D\u{1F9BA}": "1f415-200d-1f9ba", "\u{1F6FB}": "1f6fb", "\u{1F526}": "1f526", "\u{1F425}": "1f425", "\u{1F40B}": "1f40b", "\u{1F600}": "1f600", "\u{1F3E1}": "1f3e1", "\u{1F1EE}\u{1F1F3}": "1f1ee-1f1f3", "\u{1F9B6}": "1f9b6", "\u{1F9D1}\u200D\u{1F3EB}": "1f9d1-200d-1f3eb", "\u{1F437}": "1f437", "\u{1F3C1}": "1f3c1", "\u2696\uFE0F": "2696-fe0f", "\u{1F446}": "1f446", "\u{1F938}": "1f938", "\u{1F7E0}": "1f7e0", "\u{1F9B7}": "1f9b7", "\u{1F947}": "1f947", "\u{1F53A}": "1f53a", "\u{1F7E6}": "1f7e6", "\u{1F33B}": "1f33b", "\u{1FA9B}": "1fa9b", "\u{1F949}": "1f949", "\u{1FAB1}": "1fab1", "\u{1F30B}": "1f30b", "\u{1FA90}": "1fa90", "\u{1F33F}": "1f33f", "\u{1F1EA}\u{1F1EC}": "1f1ea-1f1ec", "\u{1F60A}": "1f60a", "\u{1F94E}": "1f94e", "\u{1F6B2}": "1f6b2", "\u{1F6CC}": "1f6cc", "\u{1F95B}": "1f95b", "\u{1F408}": "1f408", "\u{1F30D}": "1f30d", "\u{1F95A}": "1f95a", "\u{1F9D1}\u200D\u{1F692}": "1f9d1-200d-1f692", "\u{1F9FC}": "1f9fc", "\u2699\uFE0F": "2699-fe0f", "\u{1F34A}": "1f34a", "\u{1F98E}": "1f98e", "\u{1F43F}\uFE0F": "1f43f-fe0f", "\u{1F306}": "1f306", "\u{1FA81}": "1fa81", "\u{1F684}": "1f684", "\u{1F430}": "1f430", "\u{1F366}": "1f366", "\u{1F317}": "1f317", "\u{1F3A3}": "1f3a3", "\u{1FAB7}": "1fab7", "\u{1F37D}\uFE0F": "1f37d-fe0f", "\u{1F64B}": "1f64b", "\u{1F4CB}": "1f4cb", "\u{1F320}": "1f320", "\u{1F9C4}": "1f9c4", "\u{1F4F1}": "1f4f1", "\u{1F4D6}": "1f4d6", "\u{1F428}": "1f428", "\u{1F512}": "1f512", "\u{1F9E3}": "1f9e3", "\u{1F4C6}": "1f4c6", "\u{1F973}": "1f973", "\u{1F4AA}": "1f4aa", "\u{1F415}": "1f415", "\u{1F337}": "1f337", "\u{1F49A}": "1f49a", "\u{1F3DC}\uFE0F": "1f3dc-fe0f", "\u{1F9D1}\u200D\u{1F3A8}": "1f9d1-200d-1f3a8", "\u{1F4CE}": "1f4ce", "\u{1F41B}": "1f41b", "\u{1F9F7}": "1f9f7", "\u{1F451}": "1f451", "\u{1F9D2}": "1f9d2", "\u{1F9D1}\u200D\u{1F52C}": "1f9d1-200d-1f52c", "\u{1F7EB}": "1f7eb", "\u{1F49D}": "1f49d", "\u{1F6A2}": "1f6a2", "\u{1F416}": "1f416", "5\uFE0F\u20E3": "35-fe0f-20e3", "\u{1F7E2}": "1f7e2", "\u{1F443}": "1f443", "\u{1F44B}": "1f44b", "\u{1F41A}": "1f41a", "\u{1F1EE}\u{1F1F9}": "1f1ee-1f1f9", "\u{1F691}": "1f691", "\u{1F3B5}": "1f3b5", "\u{1F9F2}": "1f9f2", "\u{1F36D}": "1f36d", "\u{1F406}": "1f406", "\u{1F374}": "1f374", "\u{1F628}": "1f628", "\u{1F35E}": "1f35e", "\u{1F9D1}\u200D\u2708\uFE0F": "1f9d1-200d-2708-fe0f", "\u{1F514}": "1f514", "\u{1F3CB}\uFE0F": "1f3cb-fe0f", "\u{1F4CF}": "1f4cf", "\u{1F534}": "1f534", "\u{1F34C}": "1f34c", "2\uFE0F\u20E3": "32-fe0f-20e3", "\u2B07\uFE0F": "2b07-fe0f", "\u21A9\uFE0F": "21a9-fe0f", "\u{1F342}": "1f342", "\u{1F91D}": "1f91d", "\u{1F511}": "1f511", "\u{1F6D2}": "1f6d2", "\u2702\uFE0F": "2702-fe0f", "\u{1F6C1}": "1f6c1", "\u{1F9C0}": "1f9c0", "\u{1F334}": "1f334", "\u{1F9D1}\u200D\u{1F527}": "1f9d1-200d-1f527", "\u{1F3A9}": "1f3a9", "\u{1F6A9}": "1f6a9", "\u{1F41D}": "1f41d", "\u{1F5D3}\uFE0F": "1f5d3-fe0f", "\u{1F9D1}": "1f9d1", "\u{1F319}": "1f319", "\u{1F34B}": "1f34b", "\u{1F33D}": "1f33d", "\u{1F496}": "1f496", "\u{1F6F8}": "1f6f8", "\u{1FA80}": "1fa80", "\u{1F99F}": "1f99f", "\u{1F989}": "1f989", "\u{1F330}": "1f330", "\u{1F50E}": "1f50e", "\u{1F341}": "1f341", "\u{1F984}": "1f984", "\u{1F409}": "1f409", "\u{1F9E0}": "1f9e0", "\u{1F407}": "1f407", "\u{1F487}": "1f487", "\u26BD": "26bd", "\u{1F573}\uFE0F": "1f573-fe0f", "\u2600\uFE0F": "2600-fe0f", "\u{1F9B4}": "1f9b4", "\u{1F369}": "1f369", "\u{1F52D}": "1f52d", "\u{1F393}": "1f393", "\u{1F1F2}\u{1F1FD}": "1f1f2-1f1fd", "\u{1F42D}": "1f42d", "\u{1F60B}": "1f60b", "\u{1F1E8}\u{1F1F3}": "1f1e8-1f1f3", "\u{1F384}": "1f384", "\u{1F307}": "1f307", "\u{1F380}": "1f380", "\u{1F338}": "1f338", "\u{1FAB0}": "1fab0", "\u2708\uFE0F": "2708-fe0f", "\u{1F4DA}": "1f4da", "\u{1F476}": "1f476", "\u2B1B": "2b1b", "\u{1F450}": "1f450", "\u{1F914}": "1f914", "\u{1FA9E}": "1fa9e", "\u{1F995}": "1f995", "\u{1F355}": "1f355", "\u{1F5E3}\uFE0F": "1f5e3-fe0f", "\u{1F5FA}\uFE0F": "1f5fa-fe0f", "\u{1F422}": "1f422", "\u26A1": "26a1", "\u{1F976}": "1f976", "\u{1F9C3}": "1f9c3", "\u2614": "2614", "\u{1F69A}": "1f69a", "\u{1F0CF}": "1f0cf", "\u{1F45F}": "1f45f", "\u{1F697}": "1f697", "\u{1F9C5}": "1f9c5", "\u{1F6D6}": "1f6d6", "\u{1F32B}\uFE0F": "1f32b-fe0f", "\u2615": "2615", "\u270F\uFE0F": "270f-fe0f", "\u{1F996}": "1f996", "\u{1FABD}": "1fabd", "\u{1F418}": "1f418", "\u{1F9D1}\u200D\u{1F680}": "1f9d1-200d-1f680", "\u{1FAC0}": "1fac0", "\u{1F501}": "1f501", "\u{1F3D0}": "1f3d0", "\u{1F7E1}": "1f7e1", "\u{1F98A}": "1f98a", "6\uFE0F\u20E3": "36-fe0f-20e3", "\u{1F469}\u200D\u2695\uFE0F": "1f469-200d-2695-fe0f", "\u2604\uFE0F": "2604-fe0f", "\u{1F9F1}": "1f9f1", "\u{1F98B}": "1f98b", "\u{1FA71}": "1fa71", "\u{1F7E5}": "1f7e5", "\u{1F90D}": "1f90d", "\u{1F31B}": "1f31b", "\u{1F9E6}": "1f9e6", "\u{1F535}": "1f535", "\u27A1\uFE0F": "27a1-fe0f", "\u{1F9D1}\u200D\u2695\uFE0F": "1f9d1-200d-2695-fe0f", "\u{1F411}": "1f411", "\u{1F3D6}\uFE0F": "1f3d6-fe0f", "\u{1F981}": "1f981", "\u{1F36B}": "1f36b", "\u{1F62E}": "1f62e", "\u{1F44D}": "1f44d", "\u{1F9D1}\u200D\u{1F373}": "1f9d1-200d-1f373", "\u{1F987}": "1f987", "\u{1F551}": "1f551", "\u{1F966}": "1f966", "\u{1F577}\uFE0F": "1f577-fe0f", "\u{1F388}": "1f388", "\u{1F34E}": "1f34e", "\u{1F980}": "1f980", "\u26AA": "26aa", "\u{1F41C}": "1f41c", "\u{1FA99}": "1fa99", "\u{1F499}": "1f499", "\u{1F1E8}\u{1F1E6}": "1f1e8-1f1e6", "\u{1F552}": "1f552", "\u{1F35A}": "1f35a", "\u{1F693}": "1f693", "\u{1F4A1}": "1f4a1", "\u{1F308}": "1f308", "\u23F0": "23f0", "\u{1F3B9}": "1f3b9", "\u{1F47D}": "1f47d", "\u{1F529}": "1f529", "\u{1F35F}": "1f35f", "\u{1F331}": "1f331", "\u{1F442}": "1f442", "\u{1F682}": "1f682", "\u2705": "2705", "\u{1F42C}": "1f42c", "\u{1F438}": "1f438", "1\uFE0F\u20E3": "31-fe0f-20e3", "\u{1F30A}": "1f30a", "\u{1F4C5}": "1f4c5", "\u{1FAB6}": "1fab6", "\u{1F6F7}": "1f6f7", "\u{1F986}": "1f986", "\u{1F434}": "1f434", "\u{1F620}": "1f620", "\u{1F9E5}": "1f9e5", "\u{1F963}": "1f963", "\u{1F429}": "1f429", "\u{1F4A8}": "1f4a8", "\u{1F6F0}\uFE0F": "1f6f0-fe0f", "\u{1F525}": "1f525", "\u{1F4E4}": "1f4e4", "\u2668\uFE0F": "2668-fe0f", "\u{1F3CD}\uFE0F": "1f3cd-fe0f", "\u{1F52E}": "1f52e", "8\uFE0F\u20E3": "38-fe0f-20e3", "\u{1F315}": "1f315", "\u{1F311}": "1f311", "\u2744\uFE0F": "2744-fe0f", "\u{1F9FA}": "1f9fa", "\u{1F4AC}": "1f4ac", "\u{1F3AC}": "1f3ac", "\u{1F51B}": "1f51b", "3\uFE0F\u20E3": "33-fe0f-20e3", "\u{1F550}": "1f550", "\u{1F9C2}": "1f9c2", "\u{1F350}": "1f350", "\u{1F5A4}": "1f5a4", "\u2764\uFE0F": "2764-fe0f", "\u{1F9CA}": "1f9ca", "\u{1F1EB}\u{1F1F7}": "1f1eb-1f1f7", "\u{1F9FD}": "1f9fd", "\u{1F944}": "1f944", "\u{1F9E2}": "1f9e2", "\u{1F40A}": "1f40a", "\u{1F3B8}": "1f3b8", "\u{1F957}": "1f957", "\u{1F43B}": "1f43b", "\u{1F68C}": "1f68c", "\u{1F4E5}": "1f4e5", "\u{1F4C8}": "1f4c8", "\u{1F316}": "1f316", "\u{1F504}": "1f504", "\u{1F468}\u200D\u{1F469}\u200D\u{1F467}": "1f468-200d-1f469-200d-1f467", "\u{1F632}": "1f632", "\u{1F344}": "1f344", "\u{1F4FB}": "1f4fb", "\u{1F622}": "1f622", "\u{1F346}": "1f346", "\u{1F916}": "1f916", "\u{1F404}": "1f404", "\u{1F7E3}": "1f7e3", "\u{1F30C}": "1f30c", "\u{1F527}": "1f527", "\u{1FAE7}": "1fae7", "\u{1FA84}": "1fa84", "\u{1F1E7}\u{1F1F7}": "1f1e7-1f1f7", "\u{1F6CF}\uFE0F": "1f6cf-fe0f", "\u{1F967}": "1f967", "\u{1F349}": "1f349", "\u{1F3DE}\uFE0F": "1f3de-fe0f", "\u{1F539}": "1f539", "\u{1F32C}\uFE0F": "1f32c-fe0f", "\u{1F432}": "1f432", "\u{1F964}": "1f964", "\u{1F9D3}": "1f9d3", "\u{1FAD8}": "1fad8", "\u{1F6B6}": "1f6b6", "\u{1F3B1}": "1f3b1", "\u{1F1EC}\u{1F1E7}": "1f1ec-1f1e7", "\u26F0\uFE0F": "26f0-fe0f", "\u{1F4FA}": "1f4fa", "\u{1F699}": "1f699", "\u{1F985}": "1f985", "\u{1F31E}": "1f31e", "\u{1F30F}": "1f30f", "\u{1F522}": "1f522", "\u{1F9F8}": "1f9f8", "\u{1FA9C}": "1fa9c", "\u{1F381}": "1f381", "\u{1F537}": "1f537", "\u{1F383}": "1f383", "\u{1F333}": "1f333", "\u26AB": "26ab", "\u{1F42F}": "1f42f", "\u{1F9D1}\u200D\u{1F33E}": "1f9d1-200d-1f33e", "\u{1F469}": "1f469", "\u{1F4C4}": "1f4c4", "\u{1F4A5}": "1f4a5", "\u{1F469}\u200D\u{1F692}": "1f469-200d-1f692", "\u{1FAB4}": "1fab4", "\u{1F648}": "1f648" };
   const E3RE = new RegExp(Object.keys(E3).sort((a, b) => b.length - a.length).map((s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|"), "g");
   function e3Node(t) {
@@ -26642,7 +27176,7 @@ img.e3 {
     $("pSettings").innerHTML = '<button class="back" id="closeSettings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>Back</button>\n    '.concat(dashHTML(pn), "\n    ").concat(sec("\u{1F4AC}", "Talk about it at home"), '\n    <div class="ptalk"><div>\u{1F3E1} ').concat(TRY[tp] || TRY.math, "</div><div>\u{1F37D}\uFE0F \u201C").concat(dq[dayN() % dq.length], '\u201D</div></div>\n    <h2 class="psettings">\u2699\uFE0F Settings</h2>\n    ').concat(sec("\u{1F381}", "Prize (optional)"), '\n    <p class="pnote">Optional: a toy with a \u{1F330} price that ').concat(pn, " works towards.</p>\n    ").concat(S.real.length ? '<div class="plegend"><span>\u{1F330} = right answers, finished mounds and Domi\'s house</span></div>' : "", "\n    ").concat(S.real.map((r, k) => {
       const e = estimate(r), ok = S.acorns >= r.a && S.wood >= r.w;
       return '<div class="pprize '.concat(ok ? "ok" : "", '">\n      <label class="ppe" title="Change photo">').concat(pzI(r), '<input type="file" accept="image/*" data-pic="').concat(k, '" hidden></label><b class="ppn">').concat(r.name, '</b><button class="pdel" data-del="').concat(k, '" aria-label="Remove prize">\u2715</button>\n      <div class="ppr">').concat(ring(S.acorns, r.a, "#C8803F", "\u{1F330}"), '<div class="pstep"><button class="stp" data-c="').concat(k, ':a:-10">\u2212</button><button class="stp" data-c="').concat(k, ':a:10">+</button></div></div>\n      ').concat(ok ? '<button class="pgive" data-give="'.concat(k, '">\u2713 Given</button>') : '<span class="pdays">\u23F3 ~'.concat(e.days, " days</span>"), "</div>");
-    }).join(""), '\n    <button class="padd" id="pzAdd">\uFF0B Add a prize</button>\n    <div class="pzform" id="pzForm" hidden>\n      <label class="pzpic"><input type="file" accept="image/*" id="pzFile" hidden><span id="pzPrev">\u{1F4F7}<small>Add a photo</small></span></label>\n      <div class="pzf2"><input id="pzName" maxlength="28" placeholder="What is it? e.g. Lego car" aria-label="Prize name">\n        <div class="pzgoal"><label>\u{1F330}<select id="pzA">').concat([50, 100, 150, 200, 300, 400, 500, 700, 1e3].map((x) => "<option ".concat(x === 200 ? "selected" : "", ">").concat(x, "</option>")).join(""), '</select></label></div>\n        <small id="pzEst"></small></div>\n      <div class="pzbtns"><button class="btn ghost" id="pzCancel">Cancel</button><button class="btn green" id="pzSave">Save prize</button></div>\n    </div>\n    ').concat(sec("\u2753", "Questions a day"), '\n    <div class="pseg">').concat([28, 35, 42, 49].map((q) => '<button data-per="'.concat(q, '" aria-pressed="').concat(S.perDay === q, '">').concat(q, "</button>")).join(""), "</div>\n    ").concat(sec("\u{1F4DA}", "Topics"), '\n    <div class="ptopics">').concat(COURSE.filter((c) => !c.soon).map((c) => '<button data-topic="'.concat(c.id, '" aria-pressed="').concat(S.topics.includes(c.id), '"><i>').concat(c.e, "</i><small>").concat(SHORT[c.id] || c.name, "</small></button>")).join(""), "</div>\n    ").concat(sec("\u{1F382}", "Age"), '\n    <div class="pages">').concat([3, 4, 5, 6, 7, 8, 9, 10].map((a) => '<button data-age="'.concat(a, '" aria-pressed="').concat(S.age === a, '">').concat(a, "</button>")).join(""), "</div>\n    ").concat(sec("\u{1F4C8}", "Level"), '\n    <div class="pseg lv">').concat([["\u{1F422}", 0], ["\u{1F407}", 1], ["\u{1F680}", 2]].map(([e, d]) => '<button data-diff="'.concat(d, '" aria-pressed="').concat(S.diff === d, '">').concat(e, "</button>")).join(""), '</div>\n    <div class="psample">').concat(expr(ex1), " = ").concat(ex1.ans, " &nbsp;\xB7&nbsp; ").concat(expr(ex2), " = ").concat(ex2.ans, "</div>\n    ").concat(sec("\u{1F5FA}\uFE0F", "Map"), '\n    <div class="pmonths"><button data-mon="auto" aria-pressed="').concat(S.mapMonth === "auto", '">\u2728</button>').concat(MONTHS.map((m, k) => '<button data-mon="'.concat(k, '" aria-pressed="').concat(S.mapMonth === String(k), '"><i>').concat(ZONES[MONTH_LAND[k]].o, "</i>").concat(m.slice(0, 3), "</button>")).join(""), "</div>\n    ").concat(sec("\u{1F984}", "Stickers"), '\n    <div class="ptopics">').concat(Object.entries(REWARDS).map(([k, r]) => '<button data-rw="'.concat(k, '" aria-pressed="').concat(S.reward === k, '"><i>').concat(r.e, "</i></button>")).join(""), "</div>\n    ").concat(sec("\u{1F50A}", "Sound"), '\n    <div class="ptopics two"><button id="swVoice" aria-pressed="').concat(S.voice, '"><i>\u{1F5E3}\uFE0F</i><small>Voice</small></button><button id="swFx" aria-pressed="').concat(S.fx, '"><i>\u{1F514}</i><small>Effects</small></button></div>\n    <div style="height:22px"></div>\n    <button class="qbtn sky" id="btnToday" style="margin-bottom:8px">\u21BA Play today\'s games again</button>\n    <button class="preset" id="btnReset">\u21BA Start ').concat(pn, ' over</button>\n    <div id="resetConfirm" hidden class="pconf"><b>Clear \u{1F330} \u{1F984} ?</b><button class="btn red" id="btnResetYes">Yes</button><button class="btn ghost" id="btnResetNo">No</button></div>');
+    }).join(""), '\n    <button class="padd" id="pzAdd">\uFF0B Add a prize</button>\n    <div class="pzform" id="pzForm" hidden>\n      <label class="pzpic"><input type="file" accept="image/*" id="pzFile" hidden><span id="pzPrev">\u{1F4F7}<small>Add a photo</small></span></label>\n      <div class="pzf2"><input id="pzName" maxlength="28" placeholder="What is it? e.g. Lego car" aria-label="Prize name">\n        <div class="pzgoal"><label>\u{1F330}<select id="pzA">').concat([50, 100, 150, 200, 300, 400, 500, 700, 1e3].map((x) => "<option ".concat(x === 200 ? "selected" : "", ">").concat(x, "</option>")).join(""), '</select></label></div>\n        <small id="pzEst"></small></div>\n      <div class="pzbtns"><button class="btn ghost" id="pzCancel">Cancel</button><button class="btn green" id="pzSave">Save prize</button></div>\n    </div>\n    ').concat(sec("\u2753", "Questions a day"), '\n    <div class="pseg">').concat([28, 35, 42, 49].map((q) => '<button data-per="'.concat(q, '" aria-pressed="').concat(S.perDay === q, '">').concat(q, "</button>")).join(""), "</div>\n    ").concat(sec("\u{1F4DA}", "Topics"), '\n    <div class="ptopics">').concat(COURSE.filter((c) => !c.soon).map((c) => '<button data-topic="'.concat(c.id, '" aria-pressed="').concat(S.topics.includes(c.id), '"><i>').concat(c.e, "</i><small>").concat(SHORT[c.id] || c.name, "</small></button>")).join(""), "</div>\n    ").concat(sec("\u{1F382}", "Age"), '\n    <div class="pages">').concat([3, 4, 5, 6, 7, 8, 9, 10].map((a) => '<button data-age="'.concat(a, '" aria-pressed="').concat(S.age === a, '">').concat(a, "</button>")).join(""), "</div>\n    ").concat(sec("\u{1F4C8}", "Level"), '\n    <div class="pseg lv">').concat([["\u{1F422}", 0], ["\u{1F407}", 1], ["\u{1F680}", 2]].map(([e, d]) => '<button data-diff="'.concat(d, '" aria-pressed="').concat(S.diff === d, '">').concat(e, "</button>")).join(""), '</div>\n    <div class="psample">').concat(expr(ex1), " = ").concat(ex1.ans, " &nbsp;\xB7&nbsp; ").concat(expr(ex2), " = ").concat(ex2.ans, "</div>\n    ").concat(sec("\u{1F5FA}\uFE0F", "Map"), '\n    <div class="pmonths"><button data-mon="auto" aria-pressed="').concat(S.mapMonth === "auto", '">\u2728</button>').concat(MONTHS.map((m, k) => '<button data-mon="'.concat(k, '" aria-pressed="').concat(S.mapMonth === String(k), '"><i>').concat(ZONES[MONTH_LAND[k]].o, "</i>").concat(m.slice(0, 3), "</button>")).join(""), "</div>\n    ").concat(sec("\u{1F984}", "Stickers"), '\n    <div class="ptopics">').concat(Object.entries(REWARDS).map(([k, r]) => '<button data-rw="'.concat(k, '" aria-pressed="').concat(S.reward === k, '"><i>').concat(r.e, "</i></button>")).join(""), "</div>\n    ").concat(sec("\u{1F50A}", "Sound"), '\n    <div class="ptopics two"><button id="swVoice" aria-pressed="').concat(S.voice, '"><i>\u{1F5E3}\uFE0F</i><small>Voice</small></button><button id="swFx" aria-pressed="').concat(S.fx, '"><i>\u{1F514}</i><small>Effects</small></button><button id="swMic" aria-pressed="').concat(S.mic !== false, '"><i>\u{1F3A4}</i><small>Say it</small></button></div>\n    <div style="height:22px"></div>\n    <button class="qbtn sky" id="btnToday" style="margin-bottom:8px">\u21BA Play today\'s games again</button>\n    <button class="preset" id="btnReset">\u21BA Start ').concat(pn, ' over</button>\n    <div id="resetConfirm" hidden class="pconf"><b>Clear \u{1F330} \u{1F984} ?</b><button class="btn red" id="btnResetYes">Yes</button><button class="btn ghost" id="btnResetNo">No</button></div>');
     wireDash(pn);
     const P$ = (q) => $("pSettings").querySelectorAll(q);
     const keep = (fn) => {
@@ -26748,6 +27282,12 @@ img.e3 {
     P$("[data-rw]").forEach((b) => b.onclick = () => keep(() => {
       S.reward = b.dataset.rw;
     }));
+    $("swMic").onclick = () => {
+      S.mic = S.mic === false;
+      $("swMic").setAttribute("aria-pressed", S.mic);
+      save();
+      sfx.tap();
+    };
     [["swVoice", "voice"], ["swFx", "fx"]].forEach(([id, key]) => $(id).onclick = () => {
       S[key] = !S[key];
       $(id).setAttribute("aria-pressed", S[key]);
