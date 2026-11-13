@@ -1549,3 +1549,17 @@ img.e3{width:1.18em;height:1.18em;vertical-align:-.22em;object-fit:contain;displ
 #pSettings .dmore b{display:block;font:800 17px "Nunito",sans-serif}
 #pSettings .dmore small{color:#6B7785;font-size:13px}
 #pSettings .dmore .chev{font-size:22px;color:#9AA5B1}
+
+/* v18 */
+.oclk{display:block;width:62px;height:62px;margin:0 auto 2px}.oclk svg{width:100%;height:100%}
+.vc2{position:relative;width:min(86%,320px);margin:6px auto 0}.vc2-m{width:100%;display:block}.vc2-c{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.vc2 .vc-in{top:-4px;font-size:26px}.vc2 .vc-in.pour{animation:vcpour .7s ease-in}@keyframes vcpour{0%{transform:translate(-50%,-30px) rotate(-30deg);opacity:0}60%{opacity:1}to{transform:translate(-50%,0) rotate(0)}}
+.rh2{height:150px}.rh2 .rh-t{width:112px;left:20%}.rd{width:100%;overflow:visible}.rd-st{transition:transform .08s;transform-box:fill-box}
+.rd-st.l{transform-origin:15% 5%;transform:rotate(-12deg)}.rd-st.r{transform-origin:85% 5%;transform:rotate(12deg)}
+.rh-t.hitl .rd-st.l{transform:rotate(6deg)}.rh-t.hitr .rd-st.r{transform:rotate(-6deg)}
+.rh-t.hitl .rd-rip,.rh-t.hitr .rd-rip{animation:rdrip .35s ease-out}@keyframes rdrip{from{rx:6;ry:2;opacity:1}to{rx:46;ry:12;opacity:0}}
+.rh-t.hitl,.rh-t.hitr{transform:translate(-50%,-50%) scale(1.04)}
+.sy{display:grid;justify-items:center;gap:10px;margin-top:8px}.sy-pic img{width:120px;height:120px;object-fit:contain}.sy-w{font:900 40px "Nunito",sans-serif;color:var(--ink);letter-spacing:.02em}
+.sy-mic{width:92px;height:92px;border-radius:50%;border:0;background:#FF6B6B;color:#fff;font-size:42px;box-shadow:0 6px 0 #C92A2A;cursor:pointer}
+.sy-mic.on{animation:sypulse 1s ease-in-out infinite;background:#FA5252}@keyframes sypulse{50%{box-shadow:0 6px 0 #C92A2A,0 0 0 16px rgba(250,82,82,.25)}}
+.sy-h{font:700 16px "Nunito",sans-serif;color:#6B7785;text-align:center;min-height:22px}

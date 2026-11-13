@@ -24,7 +24,7 @@ const FAMILY={f_puzzle:"piece",f_quilt:"piece",f_dragpat:"piece",robot:"path",f_
 const DAYCAP={piece:2,path:2},GAMEK=["robot","simon","piano","pairs","match"];
 function dayUse(){const d=new Date().toDateString();if(!S.dayUse||S.dayUse.d!==d)S.dayUse={d,c:{}};return S.dayUse.c}
 const ALLF=()=>{const o=new Set();for(const c of ["count","add","clock","animals","world","sky","farm","shapes","people","flags","robot","memory","letters","read"]){try{(formatsFor(c)||[]).forEach(k=>{if(k.startsWith("f_"))o.add(k)})}catch(e){}}return [...o]};
-function capRound(p,cat){if(!p)return p;const fam=k=>FAMILY[k]||k,du=dayUse(),dcap=k=>DAYCAP[fam(k)]||((k.startsWith("f_")||GAMEK.includes(k))?2:99),n={};
+function capRound(p,cat){if(!p)return p;const fam=k=>FAMILY[k]||k,du=dayUse(),dcap=k=>DAYCAP[fam(k)]||((k.startsWith("f_")||GAMEK.includes(k))?1:99),n={};
   const cap=k=>Math.min(FAMCAP[fam(k)]||(k==="w"?4:(k.startsWith("f_")||GAMEK.includes(k))?1:2),dcap(k)-(du[fam(k)]||0));
   let pool=[];try{pool=sh([...new Set([...(formatsFor(cat)||[]),...(kindsFor(cat)||[])])])}catch(e){}
   const out=[];for(const k of p){const f=fam(k);if((n[f]||0)<cap(k)){n[f]=(n[f]||0)+1;out.push(k);continue}
