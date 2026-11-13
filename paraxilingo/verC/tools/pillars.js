@@ -319,8 +319,14 @@ function dashHTML(pn){migrateEv();const t=evDay(),cur=scoreAll(t),wk=histOK(t-7)
     <div class="rcap" id="rCap">Tap a pillar to see its score</div>
     <div class="rleg"><span><i class="lnow"></i>Now (0 = centre, 100 = edge)</span>${cw?`<span><i class="lwk"></i>A week ago</span>`:""}${cm?`<span><i class="lmo"></i>A month ago</span>`:""}</div>
     <div class="plist">${PILLARS.map(P=>{const p=cur.pil[P.id];return `<button class="prow" data-pil="${P.id}"><i style="background:${P.c}1f">${P.e}</i><span><b>${P.name}</b><span class="pbar"><span style="width:${p.score??0}%;background:${P.c}"></span></span></span><em class="${p.score===null?"nd":""}">${p.score===null?(p.n?"Exploring":"Not enough data"):p.score}</em><span class="chev">›</span></button>`}).join("")}</div></div>
-  <div class="dcard"><h3>Key insights</h3>${insights(cur,cw,E).map(([e,t])=>`<p class="dins"><span>${e}</span><span>${t}</span></p>`).join("")}
-    <p class="dage">🎂 At ${S.age}, learning often focuses on ${ctx[2]}. Every child moves at their own pace.</p></div>
+  <div class="dcard"><h3>In short</h3>${insights(cur,cw,E).slice(0,1).map(([e,t])=>`<p class="dins"><span>${e}</span><span>${t}</span></p>`).join("")}</div>
+  <button class="dmore" id="dMore"><span>📊</span><span><b>Full report</b><small>Progress over time, where the time went, achievements, games and their skills</small></span><span class="chev">›</span></button>
+  </div>`}
+
+/* the full report: everything that used to make the parents' page long (owner, Nov 13: "more summarized, add them in a new page") */
+function dashMoreHTML(pn){const E=perEv(),per=PER[S.dPer||"week"],ach=achievements(E),t=evDay(),cur=scoreAll(t),wk=histOK(t-7),cw=wk&&(S.ev[0][0]<=t-7)?wk:null;
+  return `<div class="dash pdet"><button class="dback" id="dBack">‹ Back</button>
+  <div class="dcard"><h3>Key insights</h3>${insights(cur,cw,E).map(([e,t])=>`<p class="dins"><span>${e}</span><span>${t}</span></p>`).join("")}</div>
   <div class="dcard"><h3>Progress over time</h3>${lineSVG()}</div>
   <div class="dgrid"><div class="dcard"><h3>Where the time went <small>${per[2]}</small></h3><p class="dsubt">Share of ${esc(pn)}'s answers in each learning area</p>${donutSVG(E)}</div>
     <div class="dcard"><h3>How ${esc(pn)} learned <small>${per[2]}</small></h3><p class="dsubt">The kind of activity behind each answer</p>${methodsHTML(E)}<p class="dnote">Play, explore, create, practise and reflect are <i>ways</i> of learning - all of them help children learn how to learn.</p></div></div>
@@ -366,5 +372,7 @@ function wireDash(pn){const root=$("pSettings");
     if(cap)cap.innerHTML=`<b style="color:${P.c}">${P.e} ${P.name}</b> ${p.score===null?"· Not enough data yet":"· "+p.score+" / 100"} <button class="rgo" data-go="${id}">View details ›</button>`;
     const g=cap&&cap.querySelector("[data-go]");if(g)g.onclick=()=>openPillar(id,pn)};
   root.querySelectorAll(".radar [data-pil]").forEach(g=>{g.onclick=()=>{sfx.tap();pick(g.dataset.pil)};g.onmouseenter=()=>pick(g.dataset.pil);g.onkeydown=e=>{if(e.key==="Enter")openPillar(g.dataset.pil,pn)}});
-  root.querySelectorAll(".prow").forEach(b=>b.onclick=()=>openPillar(b.dataset.pil,pn))}
+  root.querySelectorAll(".prow").forEach(b=>b.onclick=()=>openPillar(b.dataset.pil,pn));
+  const mo=$("dMore");if(mo)mo.onclick=()=>openMore(pn)}
+function openMore(pn){sfx.tap();const root=$("pSettings");root.innerHTML=dashMoreHTML(pn);root.scrollTop=0;$("dBack").onclick=()=>{sfx.tap();showParents()}}
 function openPillar(id,pn){sfx.tap();const root=$("pSettings");root.innerHTML=pillarHTML(id,pn);root.scrollTop=0;$("dBack").onclick=()=>{sfx.tap();showParents()}}

@@ -5223,5 +5223,1039 @@
 "🔄",
 "🔄"
 ]
+},
+{
+"i": "px263",
+"k": "c",
+"t": "english",
+"a": 9,
+"q": "What does 'unhappy' mean?",
+"o": [
+"Not happy",
+"Very happy",
+"Happy again"
+],
+"n": 0,
+"x": "The prefix un- means 'not'.",
+"p": null,
+"oe": [
+"🙁",
+"😄",
+"🔁"
+]
+},
+{
+"i": "px264",
+"k": "c",
+"t": "english",
+"a": 9,
+"q": "What does 'rewrite' mean?",
+"o": [
+"Write again",
+"Write badly",
+"Not write"
+],
+"n": 0,
+"x": "The prefix re- means 'again'.",
+"p": null,
+"oe": [
+"🔁",
+"✏️",
+"🚫"
+]
+},
+{
+"i": "px265",
+"k": "c",
+"t": "english",
+"a": 10,
+"q": "What does 'careless' mean?",
+"o": [
+"Caring again",
+"Without care",
+"Full of care"
+],
+"n": 1,
+"x": "The suffix -less means 'without'.",
+"p": null,
+"oe": [
+"🔁",
+"🙈",
+"💗"
+]
+},
+{
+"i": "px266",
+"k": "c",
+"t": "english",
+"a": 10,
+"q": "What does 'helpful' mean?",
+"o": [
+"Full of help",
+"Without help",
+"Helping again"
+],
+"n": 0,
+"x": "The suffix -ful means 'full of'.",
+"p": null,
+"oe": [
+"🤝",
+"🚫",
+"🔁"
+]
+},
+{
+"i": "px267",
+"k": "c",
+"t": "english",
+"a": 10,
+"q": "What does 'preview' mean?",
+"o": [
+"See again",
+"Not see",
+"See before"
+],
+"n": 2,
+"x": "The prefix pre- means 'before'.",
+"p": null,
+"oe": [
+"🔁",
+"🙈",
+"👀"
+]
+},
+{
+"i": "px268",
+"k": "c",
+"t": "english",
+"a": 11,
+"q": "What does 'disagree' mean?",
+"o": [
+"Agree a lot",
+"Agree again",
+"Not agree"
+],
+"n": 2,
+"x": "The prefix dis- means 'not' or 'the opposite of'.",
+"p": null,
+"oe": [
+"👍",
+"🔁",
+"🙅"
+]
+},
+{
+"i": "px269",
+"k": "c",
+"t": "english",
+"a": 11,
+"q": "What does 'misspell' mean?",
+"o": [
+"Spell wrongly",
+"Spell again",
+"Spell quickly"
+],
+"n": 0,
+"x": "The prefix mis- means 'wrongly'.",
+"p": null,
+"oe": [
+"❌",
+"🔁",
+"⚡"
+]
+},
+{
+"i": "px270",
+"k": "c",
+"t": "english",
+"a": 9,
+"q": "The dog wagged ___ tail.",
+"o": [
+"its",
+"it's"
+],
+"n": 0,
+"x": "'It's' means 'it is'. 'Its' shows that something belongs to it.",
+"p": null,
+"oe": [
+"🐕",
+"💬"
+]
+},
+{
+"i": "px271",
+"k": "c",
+"t": "english",
+"a": 9,
+"q": "I can ___ the birds singing.",
+"o": [
+"hear",
+"here"
+],
+"n": 0,
+"x": "We hear with our ears. 'Here' means this place.",
+"p": null,
+"oe": [
+"👂",
+"📍"
+]
+},
+{
+"i": "px272",
+"k": "c",
+"t": "english",
+"a": 9,
+"q": "___ going to the park.",
+"o": [
+"They're",
+"There",
+"Their"
+],
+"n": 0,
+"x": "'They're' is short for 'they are'.",
+"p": null,
+"oe": [
+"👫",
+"📍",
+"🎒"
+]
+},
+{
+"i": "px273",
+"k": "c",
+"t": "english",
+"a": 10,
+"q": "I have ___ apples.",
+"o": [
+"too",
+"to",
+"two"
+],
+"n": 2,
+"x": "'Two' is the number 2.",
+"p": null,
+"oe": [
+"➕",
+"➡️",
+"2️⃣"
+]
+},
+{
+"i": "px274",
+"k": "c",
+"t": "english",
+"a": 10,
+"q": "Please put the books over ___.",
+"o": [
+"their",
+"they're",
+"there"
+],
+"n": 2,
+"x": "'There' points to a place.",
+"p": null,
+"oe": [
+"🎒",
+"👫",
+"📍"
+]
+},
+{
+"i": "px275",
+"k": "c",
+"t": "english",
+"a": 10,
+"q": "___ coat is this?",
+"o": [
+"Who's",
+"Whose"
+],
+"n": 1,
+"x": "'Who's' means 'who is'. 'Whose' asks who owns something.",
+"p": null,
+"oe": [
+"💬",
+"🧥"
+]
+},
+{
+"i": "px276",
+"k": "c",
+"t": "english",
+"a": 9,
+"q": "Which word means the same as 'enormous'?",
+"o": [
+"tiny",
+"huge",
+"quiet"
+],
+"n": 1,
+"x": "Enormous means very, very big.",
+"p": null,
+"oe": [
+"🐜",
+"🐘",
+"🤫"
+]
+},
+{
+"i": "px277",
+"k": "c",
+"t": "english",
+"a": 10,
+"q": "Which word means the same as 'furious'?",
+"o": [
+"very tired",
+"very angry",
+"very happy"
+],
+"n": 1,
+"x": "Furious is much stronger than angry.",
+"p": null,
+"oe": [
+"😴",
+"😡",
+"😄"
+]
+},
+{
+"i": "px278",
+"k": "c",
+"t": "english",
+"a": 10,
+"q": "Which word means the same as 'rapid'?",
+"o": [
+"slow",
+"fast",
+"loud"
+],
+"n": 1,
+"x": "A rapid river moves very fast.",
+"p": null,
+"oe": [
+"🐢",
+"⚡",
+"📢"
+]
+},
+{
+"i": "px279",
+"k": "c",
+"t": "english",
+"a": 11,
+"q": "Which word means the same as 'fragile'?",
+"o": [
+"easily broken",
+"very heavy",
+"very strong"
+],
+"n": 0,
+"x": "Glass and eggs are fragile.",
+"p": null,
+"oe": [
+"🥚",
+"🏋️",
+"💪"
+]
+},
+{
+"i": "px280",
+"k": "c",
+"t": "english",
+"a": 11,
+"q": "Which word means the same as 'brave'?",
+"o": [
+"lazy",
+"scared",
+"courageous"
+],
+"n": 2,
+"x": "Brave people do hard things even when they feel afraid.",
+"p": null,
+"oe": [
+"😴",
+"😱",
+"🦁"
+]
+},
+{
+"i": "px281",
+"k": "c",
+"t": "english",
+"a": 9,
+"q": "Which word is the opposite of 'ancient'?",
+"o": [
+"old",
+"modern",
+"broken"
+],
+"n": 1,
+"x": "Ancient means very, very old.",
+"p": null,
+"oe": [
+"🏛️",
+"📱",
+"💔"
+]
+},
+{
+"i": "px282",
+"k": "c",
+"t": "english",
+"a": 10,
+"q": "Which word is the opposite of 'generous'?",
+"o": [
+"selfish",
+"kind",
+"rich"
+],
+"n": 0,
+"x": "Generous people like to share.",
+"p": null,
+"oe": [
+"🙅",
+"💗",
+"💰"
+]
+},
+{
+"i": "px283",
+"k": "c",
+"t": "english",
+"a": 10,
+"q": "Which word is the opposite of 'whisper'?",
+"o": [
+"shout",
+"talk",
+"sing"
+],
+"n": 0,
+"x": "We whisper very quietly.",
+"p": null,
+"oe": [
+"📢",
+"💬",
+"🎤"
+]
+},
+{
+"i": "px284",
+"k": "c",
+"t": "english",
+"a": 11,
+"q": "Which word is the opposite of 'include'?",
+"o": [
+"invite",
+"add",
+"leave out"
+],
+"n": 2,
+"x": "Include means to make someone part of a group.",
+"p": null,
+"oe": [
+"💌",
+"➕",
+"🚪"
+]
+},
+{
+"i": "px285",
+"k": "c",
+"t": "english",
+"a": 10,
+"q": "'It's raining cats and dogs.' What does it mean?",
+"o": [
+"It's a little cloudy",
+"It's raining very hard",
+"Animals are falling"
+],
+"n": 1,
+"x": "An idiom means something different from its words.",
+"p": null,
+"oe": [
+"☁️",
+"🌧️",
+"🐱"
+]
+},
+{
+"i": "px286",
+"k": "c",
+"t": "english",
+"a": 10,
+"q": "'This test is a piece of cake.' What does it mean?",
+"o": [
+"It's very easy",
+"It's tasty",
+"It's very hard"
+],
+"n": 0,
+"x": "'A piece of cake' means very easy.",
+"p": null,
+"oe": [
+"😎",
+"🍰",
+"😓"
+]
+},
+{
+"i": "px287",
+"k": "c",
+"t": "english",
+"a": 11,
+"q": "'I'm feeling under the weather.' What does it mean?",
+"o": [
+"I'm very happy",
+"I'm outside",
+"I feel a bit sick"
+],
+"n": 2,
+"x": "People say this when they don't feel well.",
+"p": null,
+"oe": [
+"😄",
+"🌦️",
+"🤒"
+]
+},
+{
+"i": "px288",
+"k": "c",
+"t": "english",
+"a": 11,
+"q": "'Don't let the cat out of the bag!' What does it mean?",
+"o": [
+"Don't lose the cat",
+"Don't tell the secret",
+"Don't open the bag"
+],
+"n": 1,
+"x": "It means to keep a secret.",
+"p": null,
+"oe": [
+"🐈",
+"🤫",
+"👜"
+]
+},
+{
+"i": "px289",
+"k": "c",
+"t": "english",
+"a": 12,
+"q": "'Let's break the ice.' What does it mean?",
+"o": [
+"Make it colder",
+"Start talking so everyone feels friendly",
+"Smash some ice"
+],
+"n": 1,
+"x": "People break the ice when they meet someone new.",
+"p": null,
+"oe": [
+"❄️",
+"💬",
+"🧊"
+]
+},
+{
+"i": "px290",
+"k": "c",
+"t": "english",
+"a": 11,
+"q": "Which sentence is a simile?",
+"o": [
+"She runs fast.",
+"She is the wind.",
+"She runs as fast as the wind."
+],
+"n": 2,
+"x": "A simile compares two things using 'like' or 'as'.",
+"p": null,
+"oe": [
+"🏃",
+"💨",
+"🌬️"
+]
+},
+{
+"i": "px291",
+"k": "c",
+"t": "english",
+"a": 12,
+"q": "Which sentence is a metaphor?",
+"o": [
+"The classroom was noisy.",
+"The classroom was like a zoo.",
+"The classroom was a zoo."
+],
+"n": 2,
+"x": "A metaphor says one thing IS another thing.",
+"p": null,
+"oe": [
+"📢",
+"🦓",
+"🦁"
+]
+},
+{
+"i": "px292",
+"k": "c",
+"t": "english",
+"a": 9,
+"q": "In 'The tall girl ran', what kind of word is 'tall'?",
+"o": [
+"Noun (naming word)",
+"Verb (action word)",
+"Adjective (describing word)"
+],
+"n": 2,
+"x": "Adjectives describe nouns.",
+"p": null,
+"oe": [
+"🏷️",
+"🏃",
+"🎨"
+]
+},
+{
+"i": "px293",
+"k": "c",
+"t": "english",
+"a": 10,
+"q": "In 'He ran quickly', what kind of word is 'quickly'?",
+"o": [
+"Adjective (describing a thing)",
+"Noun (naming word)",
+"Adverb (how it is done)"
+],
+"n": 2,
+"x": "Many adverbs end in -ly.",
+"p": null,
+"oe": [
+"🎨",
+"🏷️",
+"⚡"
+]
+},
+{
+"i": "px294",
+"k": "c",
+"t": "english",
+"a": 9,
+"q": "Which word is a verb?",
+"o": [
+"chair",
+"green",
+"jump"
+],
+"n": 2,
+"x": "Verbs are action words.",
+"p": null,
+"oe": [
+"🪑",
+"🟩",
+"🤸"
+]
+},
+{
+"i": "px295",
+"k": "c",
+"t": "english",
+"a": 9,
+"q": "Sara put on her coat, hat and gloves before going out. What was the weather probably like?",
+"o": [
+"Cold",
+"Sunny and warm",
+"Very hot"
+],
+"n": 0,
+"x": "Clues in a story help us work out things it does not say.",
+"p": null,
+"oe": [
+"🥶",
+"☀️",
+"🥵"
+]
+},
+{
+"i": "px296",
+"k": "c",
+"t": "english",
+"a": 10,
+"q": "Ali's plant was dry and brown. He forgot to water it for two weeks. Why did the plant look bad?",
+"o": [
+"It had no water",
+"It was a toy",
+"It was too cold"
+],
+"n": 0,
+"x": "The second sentence gives the reason.",
+"p": null,
+"oe": [
+"💧",
+"🧸",
+"🥶"
+]
+},
+{
+"i": "px297",
+"k": "c",
+"t": "english",
+"a": 10,
+"q": "Bees visit flowers to drink nectar. While they do this, they carry pollen from flower to flower. What is the main idea?",
+"o": [
+"Flowers smell nice",
+"Bees are yellow",
+"Bees help flowers while getting food"
+],
+"n": 2,
+"x": "The main idea is what the whole text is mostly about.",
+"p": null,
+"oe": [
+"🌸",
+"🟡",
+"🐝"
+]
+},
+{
+"i": "px298",
+"k": "c",
+"t": "english",
+"a": 11,
+"q": "Nima practised the piano every day for a month. At the concert, he played without a mistake. What is the lesson?",
+"o": [
+"Concerts are long",
+"Pianos are big",
+"Practice helps us improve"
+],
+"n": 2,
+"x": "The lesson of a story is called its theme or moral.",
+"p": null,
+"oe": [
+"⏳",
+"📏",
+"🎹"
+]
+},
+{
+"i": "px299",
+"k": "c",
+"t": "farm",
+"a": 9,
+"q": "Which of these is a fruit?",
+"o": [
+"Potato",
+"Tomato",
+"Carrot"
+],
+"n": 1,
+"x": "Tomatoes have seeds inside, so scientists call them fruits.",
+"p": null,
+"oe": [
+"🥔",
+"🍅",
+"🥕"
+]
+},
+{
+"i": "px300",
+"k": "c",
+"t": "farm",
+"a": 9,
+"q": "Why do farmers put scarecrows in fields?",
+"o": [
+"To count the cows",
+"To water the plants",
+"To keep birds away from crops"
+],
+"n": 2,
+"x": "Scarecrows look like people, so birds stay away.",
+"p": null,
+"oe": [
+"🐄",
+"💧",
+"🐦"
+]
+},
+{
+"i": "px301",
+"k": "c",
+"t": "farm",
+"a": 10,
+"q": "What does a seed need to start growing?",
+"o": [
+"Salt",
+"Darkness only",
+"Water and warmth"
+],
+"n": 2,
+"x": "A seed starts to sprout when it is wet and warm.",
+"p": null,
+"oe": [
+"🧂",
+"🌑",
+"💧"
+]
+},
+{
+"i": "px302",
+"k": "c",
+"t": "farm",
+"a": 10,
+"q": "Why do many leaves change colour in autumn?",
+"o": [
+"They stop making their green colour",
+"The cold paints them",
+"Animals change them"
+],
+"n": 0,
+"x": "As days get shorter, leaves stop making green chlorophyll.",
+"p": null,
+"oe": [
+"🍂",
+"🎨",
+"🐿️"
+]
+},
+{
+"i": "px303",
+"k": "c",
+"t": "farm",
+"a": 11,
+"q": "What is a food web?",
+"o": [
+"A kind of farm",
+"Many food chains linked together",
+"A spider's web"
+],
+"n": 1,
+"x": "In a food web, one animal can be food for many others.",
+"p": null,
+"oe": [
+"🚜",
+"🕸️",
+"🕷️"
+]
+},
+{
+"i": "px304",
+"k": "c",
+"t": "farm",
+"a": 11,
+"q": "Why are earthworms good for farm soil?",
+"o": [
+"They eat all the plants",
+"Their tunnels let air and water in",
+"They make the soil dry"
+],
+"n": 1,
+"x": "Worms also turn dead leaves into food for plants.",
+"p": null,
+"oe": [
+"🌿",
+"🪱",
+"🏜️"
+]
+},
+{
+"i": "px305",
+"k": "c",
+"t": "farm",
+"a": 11,
+"q": "Which of these will never run out?",
+"o": [
+"Sunlight",
+"Oil",
+"Coal"
+],
+"n": 0,
+"x": "Sunlight is a renewable resource; coal and oil will run out one day.",
+"p": null,
+"oe": [
+"☀️",
+"🛢️",
+"⚫"
+]
+},
+{
+"i": "px306",
+"k": "c",
+"t": "farm",
+"a": 12,
+"q": "What happens to a plant kept in the dark for weeks?",
+"o": [
+"It turns blue",
+"It grows faster",
+"It turns pale and weak"
+],
+"n": 2,
+"x": "Without light, a plant cannot make its food.",
+"p": null,
+"oe": [
+"🔵",
+"🌳",
+"🥀"
+]
+},
+{
+"i": "px307",
+"k": "c",
+"t": "people",
+"a": 9,
+"q": "You find a lost wallet. What should you do?",
+"o": [
+"Keep the money",
+"Throw it away",
+"Give it to a grown-up or the police"
+],
+"n": 2,
+"x": "Giving back what is not ours is called honesty.",
+"p": null,
+"oe": [
+"💰",
+"🗑️",
+"👮"
+]
+},
+{
+"i": "px308",
+"k": "c",
+"t": "people",
+"a": 9,
+"q": "What is a good way to end an argument with a friend?",
+"o": [
+"Talk calmly and listen",
+"Never speak again",
+"Shout louder"
+],
+"n": 0,
+"x": "Listening helps both friends feel understood.",
+"p": null,
+"oe": [
+"🗣️",
+"🤐",
+"📢"
+]
+},
+{
+"i": "px309",
+"k": "c",
+"t": "people",
+"a": 10,
+"q": "Who fixes the water pipes in a house?",
+"o": [
+"Plumber",
+"Pilot",
+"Librarian"
+],
+"n": 0,
+"x": "Plumbers fix pipes, taps and toilets.",
+"p": null,
+"oe": [
+"🔧",
+"✈️",
+"📚"
+]
+},
+{
+"i": "px310",
+"k": "c",
+"t": "people",
+"a": 10,
+"q": "What is a community?",
+"o": [
+"A kind of shop",
+"A big building",
+"People who live, work or play together in one place"
+],
+"n": 2,
+"x": "Your school and your neighbourhood are communities.",
+"p": null,
+"oe": [
+"🏪",
+"🏢",
+"🏘️"
+]
+},
+{
+"i": "px311",
+"k": "c",
+"t": "people",
+"a": 11,
+"q": "You earn 10 coins and save half. How many coins do you save?",
+"o": [
+"10",
+"5",
+"2"
+],
+"n": 1,
+"x": "Half of 10 is 5.",
+"p": null,
+"oe": [
+"🪙",
+"🪙",
+"🪙"
+]
+},
+{
+"i": "px312",
+"k": "c",
+"t": "people",
+"a": 11,
+"q": "What does a journalist do?",
+"o": [
+"Cooks food",
+"Finds and writes the news",
+"Fixes cars"
+],
+"n": 1,
+"x": "Journalists check facts before they share news.",
+"p": null,
+"oe": [
+"🍳",
+"📰",
+"🔧"
+]
+},
+{
+"i": "px313",
+"k": "c",
+"t": "people",
+"a": 12,
+"q": "What does being responsible mean?",
+"o": [
+"Always winning",
+"Never helping",
+"Doing what you said you would do"
+],
+"n": 2,
+"x": "Responsible people keep their promises.",
+"p": null,
+"oe": [
+"🏆",
+"🙅",
+"✅"
+]
+},
+{
+"i": "px314",
+"k": "c",
+"t": "people",
+"a": 12,
+"q": "Why do countries trade with each other?",
+"o": [
+"To get things they cannot make themselves",
+"To make maps",
+"To change the weather"
+],
+"n": 0,
+"x": "Every country has things others need.",
+"p": null,
+"oe": [
+"🚢",
+"🗺️",
+"🌦️"
+]
 }
 ]

@@ -21,7 +21,7 @@ function qGeo(k,used){
   if(k==="gocean"){const c=sh([...OCEANS.keys()]),r=c.find(i=>!used.has("go"+i))??c[0];used.add("go"+r);const o=sh([r,...c.filter(i=>i!==r).slice(0,Math.min(3,DK()))]);
     return {gid:"geo.ocean",voice:[GV("Q_OCEAN")],cap:"Which ocean is this?",visual:mapSVG({ocean:OCEANS[r][0]}),opts:o.map(i=>({h:`<b class="word">${OCEANS[i][1]}</b>`,say:[GV("N_"+OCEANS[i][0])]})),ans:o.indexOf(r),layout:"col",hint:"elim",
       why:{t:"",f:OCEANS[r][2],v:[GV("F_"+OCEANS[r][0])]},exp:{t:OCEANS[r][1],v:[GV("N_"+OCEANS[r][0])]}}}
-  if(k==="gcty"){const c=sh([...COUNTRIES.keys()]),r=c.find(i=>!used.has("gy"+i))??c[0];used.add("gy"+r);const o=sh([r,...c.filter(i=>i!==r).slice(0,Math.min(2,DK()))]),nm=i=>COUNTRIES[i][0].replace(/^the /,"The ");
+  if(k==="gcty"){const c=sh(CKEYS()),r=c.find(i=>!used.has("gy"+i))??c[0];used.add("gy"+r);const o=sh([r,...c.filter(i=>i!==r).slice(0,Math.min(2,DK()))]),nm=i=>COUNTRIES[i][0].replace(/^the /,"The ");
     return {gid:"geo.cty",voice:[GV("Q_CTY")],cap:"Which country is red?",visual:mapSVG({cty:r,cls:"zoom"}),opts:o.map(i=>({h:`<span class="oe">${COUNTRIES[i][1]}</span><small>${nm(i)}</small>`,say:ctySay(i)})),ans:o.indexOf(r),layout:"row3",hint:"elim",
       exp:{t:nm(r),v:ctySay(r)}}}
   /* gfind: tap the continent on the map */

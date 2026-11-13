@@ -433,7 +433,7 @@ function showParents(){
     <div class="ptalk"><div>🏡 ${TRY[tp]||TRY.math}</div><div>🍽️ “${dq[dayN()%dq.length]}”</div></div>
     <h2 class="psettings">⚙️ Settings</h2>
     ${sec("🎁","Prize (optional)")}
-    <p class="pnote">Promised ${pn} a toy? Add its photo and how many 🌰 acorns it costs. ${pn} sees it after every round and at the end of the path. No prize is fine too.</p>
+    <p class="pnote">Optional: a toy with a 🌰 price that ${pn} works towards.</p>
     ${S.real.length?`<div class="plegend"><span>🌰 = right answers, finished mounds and Domi's house</span></div>`:""}
     ${S.real.map((r,k)=>{const e=estimate(r),ok=S.acorns>=r.a&&S.wood>=r.w;return `<div class="pprize ${ok?"ok":""}">
       <label class="ppe" title="Change photo">${pzI(r)}<input type="file" accept="image/*" data-pic="${k}" hidden></label><b class="ppn">${r.name}</b><button class="pdel" data-del="${k}" aria-label="Remove prize">✕</button>

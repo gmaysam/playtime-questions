@@ -130,7 +130,7 @@ function qSwipe(cat){const a=lvl(),n=a<=4?4:5,decks={
   corner:["G_SW_CORNER",[1,2,3,4,6,8,9].map(i=>[PIC("shape_"+i,"wp gsp"),SHAPES[i]]),[0,5,14].map(i=>[PIC("shape_"+i,"wp gsp"),SHAPES[i]]),"Does it have corners?"],
   big:["G_SW_BIG",[6,7,8,9,10].map(x=>[String(x),""]),[1,2,3,4].map(x=>[String(x),""]),"Is it bigger than 5?"]};
   let k;const pk={world:["fruit"],farm:["fly","water"],animals:["fly","water"],sky:["planet"],shapes:["corner"],count:["big"],add:["big"]}[cat];
-  if(cat==="flags"){const c=sh([...COUNTRIES.keys()]).slice(0,n),cards=c.map(i=>{const yes=Math.random()<.5,j=yes?i:pickOne([...COUNTRIES.keys()].filter(x=>x!==i));return [COUNTRIES[j][1],COUNTRIES[i][0]+"?",yes?1:0,ctySay(i)]});
+  if(cat==="flags"){const c=sh(CKEYS()).slice(0,n),cards=c.map(i=>{const yes=Math.random()<.5,j=yes?i:pickOne(CKEYS().filter(x=>x!==i));return [COUNTRIES[j][1],COUNTRIES[i][0]+"?",yes?1:0,ctySay(i)]});
     return {game:"swipe",deck:"flag",q2:"Is this the right flag?",cards,voice:[V("G_SW_FLAG"),V("G_SWIPE")],factT:"Every country has its own flag with its own colours and shapes."}}
   k=pickOne(pk||["fruit"]);const d=decks[k],ny=ri(Math.floor(n/2),Math.ceil(n/2)),cards=sh([...sh(d[1]).slice(0,ny).map(x=>[...x,1]),...sh(d[2]).slice(0,n-ny).map(x=>[...x,0])]);
   return {game:"swipe",deck:k,q2:d[3],cards,voice:[V(d[0]),V("G_SWIPE")],factT:{fruit:"Fruits have seeds inside.",fly:"Animals that fly have wings.",water:"Fish breathe under water with gills.",planet:"There are 8 planets. The Sun is a star and the Moon goes around the Earth.",corner:"Circles and ovals have no corners.",big:"Numbers after 5 are bigger than 5."}[k]}}
@@ -241,7 +241,7 @@ function balanceQ(q){let add=0,miss=0,over=false;
 /* ---------- 10. I spy (and animal sounds) ---------- */
 function qSpy(cat){const a=lvl(),n=a<=4?8:12;let pool,tgt,v,f="",bg="farm";
   if(cat==="sky"){pool=SKYN.filter(x=>skySay(x).length>1&&!["planet","galaxy","full moon"].includes(x)).map(x=>[PIC("sky_"+SKYN.indexOf(x),"wp sp-pic"),x]);bg="sky"}
-  else if(cat==="flags"){pool=COUNTRIES.map((c,i)=>[c[1],c[0],i]);bg="map"}
+  else if(cat==="flags"){pool=COUNTRIES.map((c,i)=>[c[1],c[0],i]).filter(x=>!NOFLAG.has(x[1]));bg="map"}
   else if(cat==="people"){pool=JOBS.map((j,i)=>[j[1],j[0],i]);bg="town"}
   else if(cat==="world"){pool=FOODS.filter(f2=>FOOD_E[f2]).map(f2=>[FOOD_E[f2],f2]);bg="kitchen"}
   else if(cat==="shapes"){pool=Object.keys(SVGSH).flatMap(s=>Object.keys(GCOLS).map(c=>[shSVG(s,GCOLS[c]),s+"|"+c]));bg="paper"}

@@ -1543,3 +1543,9 @@ img.e3{width:1.18em;height:1.18em;vertical-align:-.22em;object-fit:contain;displ
 /* v16 */
 .g8-svg{width:190px;max-width:60vw;height:auto;display:block;margin:4px auto}
 .lesson.q2 .qtop2 .qvis svg.g8-svg{max-height:22vh;width:auto;max-width:70vw}
+
+#pSettings .dmore{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;text-align:left;width:100%;border:2px solid #E3E8F0;border-bottom-width:4px;background:#fff;border-radius:18px;padding:14px 16px;cursor:pointer;font:inherit;color:var(--ink)}
+#pSettings .dmore>span:first-child{font-size:26px}
+#pSettings .dmore b{display:block;font:800 17px "Nunito",sans-serif}
+#pSettings .dmore small{color:#6B7785;font-size:13px}
+#pSettings .dmore .chev{font-size:22px;color:#9AA5B1}

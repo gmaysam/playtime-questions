@@ -2193,6 +2193,12 @@ img.e3{width:1.18em;height:1.18em;vertical-align:-.22em;object-fit:contain;displ
 /* v16 */
 .g8-svg{width:190px;max-width:60vw;height:auto;display:block;margin:4px auto}
 .lesson.q2 .qtop2 .qvis svg.g8-svg{max-height:22vh;width:auto;max-width:70vw}
+
+#pSettings .dmore{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;text-align:left;width:100%;border:2px solid #E3E8F0;border-bottom-width:4px;background:#fff;border-radius:18px;padding:14px 16px;cursor:pointer;font:inherit;color:var(--ink)}
+#pSettings .dmore>span:first-child{font-size:26px}
+#pSettings .dmore b{display:block;font:800 17px "Nunito",sans-serif}
+#pSettings .dmore small{color:#6B7785;font-size:13px}
+#pSettings .dmore .chev{font-size:22px;color:#9AA5B1}
 </style>
 
 <div class="stage">
@@ -3066,9 +3072,11 @@ function qShapes(k,used){
 }
 const COUNTRIES=[["Iran","🇮🇷"],["the United States","🇺🇸"],["Canada","🇨🇦"],["Mexico","🇲🇽"],["Brazil","🇧🇷"],["the United Kingdom","🇬🇧"],["France","🇫🇷"],["Germany","🇩🇪"],["Italy","🇮🇹"],["China","🇨🇳"],["Japan","🇯🇵"],["India","🇮🇳"],["Egypt","🇪🇬"],["Australia","🇦🇺"]];
 const JOBS=[["Doctor","🧑‍⚕️"],["Firefighter","🧑‍🚒"],["Police officer","👮"],["Chef","🧑‍🍳"],["Farmer","🧑‍🌾"],["Teacher","🧑‍🏫"],["Pilot","🧑‍✈️"],["Astronaut","🧑‍🚀"],["Mechanic","🧑‍🔧"],["Scientist","🧑‍🔬"],["Artist","🧑‍🎨"],["Builder","👷"]];
+/* no Iran flag anywhere (owner, Nov 13) */
+const NOFLAG=new Set(["Iran"]),CKEYS=()=>[...COUNTRIES.keys()].filter(i=>!NOFLAG.has(COUNTRIES[i][0]));
 const ctySay=i=>["w/LULU_FA_CTY"+i,"w/LULU_EN_COUNTRY"+i],jobSay=i=>["w/LULU_FA_JOB"+i,"w/LULU_EN_JOB"+i];
 function qPeople(k,used){
-  const flag=k.startsWith("flag"),L2=flag?COUNTRIES:JOBS,c=sh([...L2.keys()]),r=c.find(i=>!used.has(k[0]+i));used.add(k[0]+r);const o=sh([r,...c.filter(i=>i!==r).slice(0,DK())]),say=flag?ctySay:jobSay;
+  const flag=k.startsWith("flag"),L2=flag?COUNTRIES:JOBS,c=sh(flag?CKEYS():[...L2.keys()]),r=c.find(i=>!used.has(k[0]+i));used.add(k[0]+r);const o=sh([r,...c.filter(i=>i!==r).slice(0,DK())]),say=flag?ctySay:jobSay;
   return {voice:[flag?"w/LULU_GEO_FIND":"w/LULU_JOB_FIND",...say(r)],cap:flag?`Find the flag of ${L2[r][0]}`:`Find the ${L2[r][0].toLowerCase()}`,visual:`<div class="listen">${flag?"🚩":"👀"}</div>`,
     opts:o.map(i=>({h:`<span class="oe big">${L2[i][1]}</span>${flag?"":`<small>${L2[i][0]}</small>`}`,say:say(i)})),ans:o.indexOf(r),layout:"row3",hint:"elim",exp:{t:L2[r][0],v:["w/LULU_ANS_IS",...say(r)]}};
 }
@@ -3644,7 +3652,7 @@ function qSwipe(cat){const a=lvl(),n=a<=4?4:5,decks={
   corner:["G_SW_CORNER",[1,2,3,4,6,8,9].map(i=>[PIC("shape_"+i,"wp gsp"),SHAPES[i]]),[0,5,14].map(i=>[PIC("shape_"+i,"wp gsp"),SHAPES[i]]),"Does it have corners?"],
   big:["G_SW_BIG",[6,7,8,9,10].map(x=>[String(x),""]),[1,2,3,4].map(x=>[String(x),""]),"Is it bigger than 5?"]};
   let k;const pk={world:["fruit"],farm:["fly","water"],animals:["fly","water"],sky:["planet"],shapes:["corner"],count:["big"],add:["big"]}[cat];
-  if(cat==="flags"){const c=sh([...COUNTRIES.keys()]).slice(0,n),cards=c.map(i=>{const yes=Math.random()<.5,j=yes?i:pickOne([...COUNTRIES.keys()].filter(x=>x!==i));return [COUNTRIES[j][1],COUNTRIES[i][0]+"?",yes?1:0,ctySay(i)]});
+  if(cat==="flags"){const c=sh(CKEYS()).slice(0,n),cards=c.map(i=>{const yes=Math.random()<.5,j=yes?i:pickOne(CKEYS().filter(x=>x!==i));return [COUNTRIES[j][1],COUNTRIES[i][0]+"?",yes?1:0,ctySay(i)]});
     return {game:"swipe",deck:"flag",q2:"Is this the right flag?",cards,voice:[V("G_SW_FLAG"),V("G_SWIPE")],factT:"Every country has its own flag with its own colours and shapes."}}
   k=pickOne(pk||["fruit"]);const d=decks[k],ny=ri(Math.floor(n/2),Math.ceil(n/2)),cards=sh([...sh(d[1]).slice(0,ny).map(x=>[...x,1]),...sh(d[2]).slice(0,n-ny).map(x=>[...x,0])]);
   return {game:"swipe",deck:k,q2:d[3],cards,voice:[V(d[0]),V("G_SWIPE")],factT:{fruit:"Fruits have seeds inside.",fly:"Animals that fly have wings.",water:"Fish breathe under water with gills.",planet:"There are 8 planets. The Sun is a star and the Moon goes around the Earth.",corner:"Circles and ovals have no corners.",big:"Numbers after 5 are bigger than 5."}[k]}}
@@ -3755,7 +3763,7 @@ function balanceQ(q){let add=0,miss=0,over=false;
 /* ---------- 10. I spy (and animal sounds) ---------- */
 function qSpy(cat){const a=lvl(),n=a<=4?8:12;let pool,tgt,v,f="",bg="farm";
   if(cat==="sky"){pool=SKYN.filter(x=>skySay(x).length>1&&!["planet","galaxy","full moon"].includes(x)).map(x=>[PIC("sky_"+SKYN.indexOf(x),"wp sp-pic"),x]);bg="sky"}
-  else if(cat==="flags"){pool=COUNTRIES.map((c,i)=>[c[1],c[0],i]);bg="map"}
+  else if(cat==="flags"){pool=COUNTRIES.map((c,i)=>[c[1],c[0],i]).filter(x=>!NOFLAG.has(x[1]));bg="map"}
   else if(cat==="people"){pool=JOBS.map((j,i)=>[j[1],j[0],i]);bg="town"}
   else if(cat==="world"){pool=FOODS.filter(f2=>FOOD_E[f2]).map(f2=>[FOOD_E[f2],f2]);bg="kitchen"}
   else if(cat==="shapes"){pool=Object.keys(SVGSH).flatMap(s=>Object.keys(GCOLS).map(c=>[shSVG(s,GCOLS[c]),s+"|"+c]));bg="paper"}
@@ -4128,7 +4136,7 @@ function hearQ(q){let miss=0,line=[];const pic=q.mode==="pic";
 const TET={I:[[0,0],[1,0],[2,0],[3,0]],O:[[0,0],[1,0],[0,1],[1,1]],T:[[0,0],[1,0],[2,0],[1,1]],L:[[0,0],[0,1],[0,2],[1,2]],J:[[1,0],[1,1],[1,2],[0,2]],S:[[1,0],[2,0],[0,1],[1,1]],Z:[[0,0],[1,0],[1,1],[2,1]]};
 /* each section dresses the blocks in its own pictures */
 const TET_TH={count:["1️⃣","2️⃣","3️⃣","4️⃣","5️⃣","6️⃣","7️⃣","8️⃣","9️⃣"],add:["➕","➖","🟰","🔢"],clock:["🕐","🕑","🕒","⏰","☀️","🌙"],animals:["🐶","🐱","🐰","🐻","🦊","🐸"],farm:["🐄","🐖","🐑","🐔","🌾","🥕"],
-  world:["🌳","🌸","🍎","🌍","🌊","🍄"],sky:["⭐","🌙","🪐","☀️","🚀","☁️"],shapes:["🔺","🟦","🟡","🔶","⬛","🟣"],people:["👩‍🚒","👨‍🍳","👩‍⚕️","😀","😢","😮"],flags:["🇮🇷","🇫🇷","🇯🇵","🇧🇷","🇨🇦","🇮🇹"],
+  world:["🌳","🌸","🍎","🌍","🌊","🍄"],sky:["⭐","🌙","🪐","☀️","🚀","☁️"],shapes:["🔺","🟦","🟡","🔶","⬛","🟣"],people:["👩‍🚒","👨‍🍳","👩‍⚕️","😀","😢","😮"],flags:["🇪🇬","🇫🇷","🇯🇵","🇧🇷","🇨🇦","🇮🇹"],
   letters:["A","B","C","D","E","F"],read:["a","b","c","d","e","f"],robot:["🤖","⚙️","🔋","🔩"],memory:["🧠","🎹","🔴","🟢","🔵","🟡"]};
 const TCOL={I:"#1CB0F6",O:"#FFC800",T:"#CE82FF",L:"#FF9600",J:"#2B70C9",S:"#58CC02",Z:"#FF4B4B"};
 const rot=(p,k)=>{let c=p.map(x=>x.slice());for(let i=0;i<k;i++)c=c.map(([x,y])=>[-y,x]);const mx=Math.min(...c.map(z=>z[0])),my=Math.min(...c.map(z=>z[1]));return c.map(([x,y])=>[x-mx,y-my])};
@@ -4195,7 +4203,7 @@ function lrThings(cat){const a=S.age,F=n=>FACT_EN[n]||"";
   if(cat==="sky")return SKYN.slice(0,11).map((n,i)=>({p:`<img src="img/w/sky_${i}.png" alt="">`,n:cap1(n),say:skySay(n),f:F(n)})).filter(x=>x.say.length);
   if(cat==="shapes")return [0,1,2,3,4,5].map(i=>({p:`<img src="img/w/shape_${i}.png" alt="">`,n:SHAPES[i],say:shSay(i),f:""}));
   if(cat==="people")return JOBS.slice(0,10).map(([n,e],i)=>({p:`<span class="lr-emo">${e}</span>`,n,say:jobSay(i),f:""}));
-  if(cat==="flags")return COUNTRIES.map(([n,e],i)=>({p:`<span class="lr-emo">${e}</span>`,n:n.replace(/^the /,"The "),say:ctySay(i),f:""}));
+  if(cat==="flags")return COUNTRIES.map(([n,e],i)=>({p:`<span class="lr-emo">${e}</span>`,n:n.replace(/^the /,"The "),say:ctySay(i),f:""})).filter(x=>!NOFLAG.has(x.n));
   if(cat==="world")return WORDS.filter(w=>FACT_EN[w.w]).slice(0,30).map(w=>({p:`<img src="img/w/wd_${w.i}.png" alt="">`,n:cap1(w.w),say:wSay(w),f:F(w.w)}));
   return null}
 const LRN_CATS=["count","add","clock","letters","read","animals","farm","sky","shapes","people","flags","world"];
@@ -4359,7 +4367,7 @@ function qGeo(k,used){
   if(k==="gocean"){const c=sh([...OCEANS.keys()]),r=c.find(i=>!used.has("go"+i))??c[0];used.add("go"+r);const o=sh([r,...c.filter(i=>i!==r).slice(0,Math.min(3,DK()))]);
     return {gid:"geo.ocean",voice:[GV("Q_OCEAN")],cap:"Which ocean is this?",visual:mapSVG({ocean:OCEANS[r][0]}),opts:o.map(i=>({h:`<b class="word">${OCEANS[i][1]}</b>`,say:[GV("N_"+OCEANS[i][0])]})),ans:o.indexOf(r),layout:"col",hint:"elim",
       why:{t:"",f:OCEANS[r][2],v:[GV("F_"+OCEANS[r][0])]},exp:{t:OCEANS[r][1],v:[GV("N_"+OCEANS[r][0])]}}}
-  if(k==="gcty"){const c=sh([...COUNTRIES.keys()]),r=c.find(i=>!used.has("gy"+i))??c[0];used.add("gy"+r);const o=sh([r,...c.filter(i=>i!==r).slice(0,Math.min(2,DK()))]),nm=i=>COUNTRIES[i][0].replace(/^the /,"The ");
+  if(k==="gcty"){const c=sh(CKEYS()),r=c.find(i=>!used.has("gy"+i))??c[0];used.add("gy"+r);const o=sh([r,...c.filter(i=>i!==r).slice(0,Math.min(2,DK()))]),nm=i=>COUNTRIES[i][0].replace(/^the /,"The ");
     return {gid:"geo.cty",voice:[GV("Q_CTY")],cap:"Which country is red?",visual:mapSVG({cty:r,cls:"zoom"}),opts:o.map(i=>({h:`<span class="oe">${COUNTRIES[i][1]}</span><small>${nm(i)}</small>`,say:ctySay(i)})),ans:o.indexOf(r),layout:"row3",hint:"elim",
       exp:{t:nm(r),v:ctySay(r)}}}
   /* gfind: tap the continent on the map */
@@ -4698,8 +4706,14 @@ function dashHTML(pn){migrateEv();const t=evDay(),cur=scoreAll(t),wk=histOK(t-7)
     <div class="rcap" id="rCap">Tap a pillar to see its score</div>
     <div class="rleg"><span><i class="lnow"></i>Now (0 = centre, 100 = edge)</span>${cw?`<span><i class="lwk"></i>A week ago</span>`:""}${cm?`<span><i class="lmo"></i>A month ago</span>`:""}</div>
     <div class="plist">${PILLARS.map(P=>{const p=cur.pil[P.id];return `<button class="prow" data-pil="${P.id}"><i style="background:${P.c}1f">${P.e}</i><span><b>${P.name}</b><span class="pbar"><span style="width:${p.score??0}%;background:${P.c}"></span></span></span><em class="${p.score===null?"nd":""}">${p.score===null?(p.n?"Exploring":"Not enough data"):p.score}</em><span class="chev">›</span></button>`}).join("")}</div></div>
-  <div class="dcard"><h3>Key insights</h3>${insights(cur,cw,E).map(([e,t])=>`<p class="dins"><span>${e}</span><span>${t}</span></p>`).join("")}
-    <p class="dage">🎂 At ${S.age}, learning often focuses on ${ctx[2]}. Every child moves at their own pace.</p></div>
+  <div class="dcard"><h3>In short</h3>${insights(cur,cw,E).slice(0,1).map(([e,t])=>`<p class="dins"><span>${e}</span><span>${t}</span></p>`).join("")}</div>
+  <button class="dmore" id="dMore"><span>📊</span><span><b>Full report</b><small>Progress over time, where the time went, achievements, games and their skills</small></span><span class="chev">›</span></button>
+  </div>`}
+
+/* the full report: everything that used to make the parents' page long (owner, Nov 13: "more summarized, add them in a new page") */
+function dashMoreHTML(pn){const E=perEv(),per=PER[S.dPer||"week"],ach=achievements(E),t=evDay(),cur=scoreAll(t),wk=histOK(t-7),cw=wk&&(S.ev[0][0]<=t-7)?wk:null;
+  return `<div class="dash pdet"><button class="dback" id="dBack">‹ Back</button>
+  <div class="dcard"><h3>Key insights</h3>${insights(cur,cw,E).map(([e,t])=>`<p class="dins"><span>${e}</span><span>${t}</span></p>`).join("")}</div>
   <div class="dcard"><h3>Progress over time</h3>${lineSVG()}</div>
   <div class="dgrid"><div class="dcard"><h3>Where the time went <small>${per[2]}</small></h3><p class="dsubt">Share of ${esc(pn)}'s answers in each learning area</p>${donutSVG(E)}</div>
     <div class="dcard"><h3>How ${esc(pn)} learned <small>${per[2]}</small></h3><p class="dsubt">The kind of activity behind each answer</p>${methodsHTML(E)}<p class="dnote">Play, explore, create, practise and reflect are <i>ways</i> of learning - all of them help children learn how to learn.</p></div></div>
@@ -4745,7 +4759,9 @@ function wireDash(pn){const root=$("pSettings");
     if(cap)cap.innerHTML=`<b style="color:${P.c}">${P.e} ${P.name}</b> ${p.score===null?"· Not enough data yet":"· "+p.score+" / 100"} <button class="rgo" data-go="${id}">View details ›</button>`;
     const g=cap&&cap.querySelector("[data-go]");if(g)g.onclick=()=>openPillar(id,pn)};
   root.querySelectorAll(".radar [data-pil]").forEach(g=>{g.onclick=()=>{sfx.tap();pick(g.dataset.pil)};g.onmouseenter=()=>pick(g.dataset.pil);g.onkeydown=e=>{if(e.key==="Enter")openPillar(g.dataset.pil,pn)}});
-  root.querySelectorAll(".prow").forEach(b=>b.onclick=()=>openPillar(b.dataset.pil,pn))}
+  root.querySelectorAll(".prow").forEach(b=>b.onclick=()=>openPillar(b.dataset.pil,pn));
+  const mo=$("dMore");if(mo)mo.onclick=()=>openMore(pn)}
+function openMore(pn){sfx.tap();const root=$("pSettings");root.innerHTML=dashMoreHTML(pn);root.scrollTop=0;$("dBack").onclick=()=>{sfx.tap();showParents()}}
 function openPillar(id,pn){sfx.tap();const root=$("pSettings");root.innerHTML=pillarHTML(id,pn);root.scrollTop=0;$("dBack").onclick=()=>{sfx.tap();showParents()}}
 
 /* =====================================================================================================
@@ -5884,9 +5900,9 @@ const G8GEN={
   return {voice:[G8("CP_Q")],cap:"Which word is made of two smaller words?",layout:"col",hint:"elim",opts:o.map(w=>({h:`<b class="word">${w}</b>`,say:EW(w)})),ans:o.indexOf(r),why:{t:`${r}: two words joined together`,v:[G8("CP_E")]}}}};
 const G8WIN={"count:factor":[10,12],"count:multiple":[9,12],"count:prime":[11,12],"clock:convert":[9,12],"shapes:angle":[9,12],"shapes:lines":[9,12],"shapes:symm":[10,12],"letters:aorder":[9,12],"read:aorder":[10,12],"letters:compound":[9,12]};
 /* fixed Grade 4-5 questions: their own sections */
-const PX8={farm:"farm",people:"people",time:"clock",geo:"shapes"},PX8C=Object.values(PX8);
+const PX8={farm:["farm"],people:["people"],time:["clock"],geo:["shapes"],english:["letters","read"]},PX8C=[...new Set(Object.values(PX8).flat())];
 const _wp8=wPool;wPool=function(cat){
-  if(PX8C.includes(cat)){const lv=lvl(),all=WQ.filter(w=>w.i.startsWith("px")&&PX8[w.t]===cat&&w.a<=Math.max(3,lv));for(const d of [2,3,4]){const f=all.filter(w=>w.a>=lv-d);if(f.length>=6)return f}return all}
+  if(PX8C.includes(cat)){const lv=lvl(),all=WQ.filter(w=>w.i.startsWith("px")&&(PX8[w.t]||[]).includes(cat)&&w.a<=Math.max(3,lv));for(const d of [2,3,4]){const f=all.filter(w=>w.a>=lv-d);if(f.length>=6)return f}return all}
   return _wp8(cat).filter(w=>!PX8[w.t])};
 const _kf8=kindsFor;kindsFor=function(cat){let k=_kf8(cat);if(!G8_READY)return k;const l=lvl();
   const f=k.filter(x=>l<=(KMAX8[cat+":"+x]||99));
@@ -5902,6 +5918,8 @@ Object.assign(GMAP,{"farm.w":G("Plants and farms",["cre","science"],[["life","ev
  "people.w":G("People and kindness",["soc","empathy"],[["life","everyday"]],"Grade 4-5: kind choices, jobs, money and staying safe online.","Practice"),
  "clock.w":G("Calendar and time",["cog","math"],[["life","everyday"]],"Grade 4-5: leap years, centuries and the 24-hour clock.","Practice"),
  "shapes.w":G("3D shapes and angles",["cog","math"],[["cog","logic"]],"Grade 4-5: faces, edges, corners and degrees.","Practice")});
+Object.assign(GMAP,{"letters.w":G("English words (Grade 3-5)",["lang","vocab"],[["lang","read"]],"Prefixes and suffixes, words that sound alike, idioms, similes, kinds of words.","Practice"),
+ "read.w":G("Reading (Grade 3-5)",["lang","read"],[["cog","logic"]],"Short texts: clues, main idea and the lesson of a story.","Practice")});
 
 /* =====================================================================================================
    v17 (Nov 13): EVERY QUESTION TYPE HAS A SCHOOL GRADE, taken from the owner's two references:
@@ -5916,8 +5934,8 @@ const GRADE={
  add:{addPic:[-2,0],subPic:[-1,0],share:[-1,1],left:[0,1],sum:[0,1],minus:[0,1],bond:[0,1],make10:[0,1],teach:[0,2],pizza:[1,2],double:[1,2],half:[1,2],numline:[1,2],carry:[2,3],groups:[2,3],big:[2,3],change:[2,5],
   times:[3,5],divide:[3,5],fraccmp:[3,5],fracof:[3,5],story:[3,5],big3:[3,5],mul2:[4,6],decimal:[4,6],neg:[6,6],percent:[6,6]},
  clock:{routine:[-2,0],season:[-1,1],nowseason:[-1,1],oclock:[0,1],today:[0,1],tomorrow:[0,1],yesterday:[0,1],week:[0,1],half:[1,2],after:[1,2],before:[1,2],months:[1,2],monthafter:[1,2],quarter:[2,3],minutes:[2,3],elapsed:[3,5],convert:[4,5],w:[4,6]},
- letters:{abc:[-2,0],match:[-2,0],listen:[-1,0],rhyme:[-1,0],first:[-1,0],whatis:[-1,0],lafter:[-1,0],lbefore:[0,1],whear:[0,1],build:[0,1],wspell:[0,2],wopp:[0,2],wplu:[1,3],wpast:[2,3],aorder:[2,3],compound:[2,3],wsyn:[2,4]},
- read:{balloon:[-1,0],flash:[0,1],whear:[0,1],sentence:[0,2],wspell:[0,2],wopp:[0,2],wplu:[1,3],wpast:[2,3],aorder:[2,3],wsyn:[2,4]},
+ letters:{abc:[-2,0],match:[-2,0],listen:[-1,0],rhyme:[-1,0],first:[-1,0],whatis:[-1,0],lafter:[-1,0],lbefore:[0,1],whear:[0,1],build:[0,1],wspell:[0,2],wopp:[0,2],wplu:[1,3],wpast:[2,3],aorder:[2,3],compound:[2,3],wsyn:[2,4],w:[3,6]},
+ read:{balloon:[-1,0],flash:[0,1],whear:[0,1],sentence:[0,2],wspell:[0,2],wopp:[0,2],wplu:[1,3],wpast:[2,3],aorder:[2,3],wsyn:[2,4],w:[3,6]},
  farm:{sound:[-2,-1],home:[-2,0],fly:[-2,0],match:[-2,0],food:[-1,1],water:[-1,1],w:[3,6]},
  shapes:{color:[-2,-1],shape:[-2,0],match:[-2,0],bigsmall:[-2,0],pattern:[-1,2],sides:[0,1],both:[0,2],area:[3,4],angle:[4,5],lines:[4,5],symm:[4,5],w:[4,6]},
  people:{feel:[-2,0],job:[-1,1],job2:[0,2],w:[3,6]}};
@@ -5925,7 +5943,7 @@ const GRADE={
 const GRADE_SRC={"count:find":"PBS KIDS math 2-4: count objects to 10","count:after":"PBS KIDS 5-6: count on from a number; Khan Kindergarten","count:skip":"PBS KIDS 5-6: count by 2s, 5s, 10s","count:compare":"Khan 1st grade: compare numbers","count:oddeven":"PBS KIDS grade 1: odd and even","count:graph":"PBS KIDS grade 1: bar and picture graphs","count:place":"Khan 2nd-4th grade: place value","count:round":"PBS KIDS grade 2 / Khan 4th grade: rounding","count:multiple":"Khan 3rd-4th grade: multiplication, multiples","count:factor":"Khan 4th grade: factors and multiples","count:prime":"Khan 4th grade: factors, multiples, primes",
  "add:make10":"PBS KIDS 5-6: partners that make 10","add:groups":"PBS KIDS grade 2: equal-group multiplication","add:carry":"Khan 2nd grade: add within 100","add:times":"Khan 3rd grade: multiplication and division","add:fracof":"Khan 3rd-4th grade: fractions","add:big3":"Khan 4th grade: multi-digit adding","add:mul2":"Khan 4th grade: multi-digit multiplication","add:decimal":"Khan 4th-5th grade: decimals","add:neg":"Khan 6th grade: negative numbers","add:percent":"Khan 6th grade: percent",
  "clock:routine":"PBS KIDS 4-5: morning, afternoon, night","clock:yesterday":"PBS KIDS grade 1: today, tomorrow, yesterday","clock:oclock":"Khan 1st grade: time to the hour","clock:quarter":"PBS KIDS grade 2: quarter hours","clock:minutes":"PBS KIDS grade 2: nearest 5 minutes","clock:elapsed":"Khan 3rd grade: time","clock:convert":"Khan 4th grade: units of measurement",
- "letters:abc":"Khan Kids preschool-K: alphabet knowledge","letters:lafter":"Khan Kids K: letter recognition","letters:wopp":"Khan Kids language: opposites","letters:wpast":"Common Core grade 2 (Khan Kids grade 2 path)","letters:aorder":"Grade 2: beginning dictionaries","letters:compound":"Grade 2: compound words","letters:wsyn":"Grade 2-4: word meanings",
+ "letters:abc":"Khan Kids preschool-K: alphabet knowledge","letters:lafter":"Khan Kids K: letter recognition","letters:wopp":"Khan Kids language: opposites","letters:wpast":"Common Core grade 2 (Khan Kids grade 2 path)","letters:aorder":"Grade 2: beginning dictionaries","letters:compound":"Grade 2: compound words","letters:wsyn":"Grade 2-4: word meanings","letters:w":"Grade 3-5 language: prefixes and suffixes, words that sound alike, idioms, similes and metaphors, kinds of words","read:w":"Grade 3-5 reading: clues, main idea, the lesson of a story","farm:w":"Grade 3-5 science: plants, food chains and webs, soil, resources","people:w":"Grade 3-5: honesty, community, jobs, money, responsibility",
  "farm:food":"PBS KIDS science PK-K: what animals need","shapes:shape":"PBS KIDS 2-4: circle, square, triangle","shapes:sides":"PBS KIDS 5-6: count sides and corners","shapes:area":"Khan 3rd grade: area and perimeter","shapes:angle":"Khan 4th grade: angles","shapes:symm":"Khan 4th grade: lines of symmetry",
  "people:feel":"Khan Kids / PBS KIDS social-emotional PK-K","people:job":"PBS KIDS social studies PK-K"};
 const kGrade=()=>lvl()-5;
@@ -6197,7 +6215,7 @@ function showParents(){
     <div class="ptalk"><div>🏡 ${TRY[tp]||TRY.math}</div><div>🍽️ “${dq[dayN()%dq.length]}”</div></div>
     <h2 class="psettings">⚙️ Settings</h2>
     ${sec("🎁","Prize (optional)")}
-    <p class="pnote">Promised ${pn} a toy? Add its photo and how many 🌰 acorns it costs. ${pn} sees it after every round and at the end of the path. No prize is fine too.</p>
+    <p class="pnote">Optional: a toy with a 🌰 price that ${pn} works towards.</p>
     ${S.real.length?`<div class="plegend"><span>🌰 = right answers, finished mounds and Domi's house</span></div>`:""}
     ${S.real.map((r,k)=>{const e=estimate(r),ok=S.acorns>=r.a&&S.wood>=r.w;return `<div class="pprize ${ok?"ok":""}">
       <label class="ppe" title="Change photo">${pzI(r)}<input type="file" accept="image/*" data-pic="${k}" hidden></label><b class="ppn">${r.name}</b><button class="pdel" data-del="${k}" aria-label="Remove prize">✕</button>

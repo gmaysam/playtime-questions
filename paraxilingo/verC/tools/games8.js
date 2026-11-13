@@ -82,9 +82,9 @@ const G8GEN={
   return {voice:[G8("CP_Q")],cap:"Which word is made of two smaller words?",layout:"col",hint:"elim",opts:o.map(w=>({h:`<b class="word">${w}</b>`,say:EW(w)})),ans:o.indexOf(r),why:{t:`${r}: two words joined together`,v:[G8("CP_E")]}}}};
 const G8WIN={"count:factor":[10,12],"count:multiple":[9,12],"count:prime":[11,12],"clock:convert":[9,12],"shapes:angle":[9,12],"shapes:lines":[9,12],"shapes:symm":[10,12],"letters:aorder":[9,12],"read:aorder":[10,12],"letters:compound":[9,12]};
 /* fixed Grade 4-5 questions: their own sections */
-const PX8={farm:"farm",people:"people",time:"clock",geo:"shapes"},PX8C=Object.values(PX8);
+const PX8={farm:["farm"],people:["people"],time:["clock"],geo:["shapes"],english:["letters","read"]},PX8C=[...new Set(Object.values(PX8).flat())];
 const _wp8=wPool;wPool=function(cat){
-  if(PX8C.includes(cat)){const lv=lvl(),all=WQ.filter(w=>w.i.startsWith("px")&&PX8[w.t]===cat&&w.a<=Math.max(3,lv));for(const d of [2,3,4]){const f=all.filter(w=>w.a>=lv-d);if(f.length>=6)return f}return all}
+  if(PX8C.includes(cat)){const lv=lvl(),all=WQ.filter(w=>w.i.startsWith("px")&&(PX8[w.t]||[]).includes(cat)&&w.a<=Math.max(3,lv));for(const d of [2,3,4]){const f=all.filter(w=>w.a>=lv-d);if(f.length>=6)return f}return all}
   return _wp8(cat).filter(w=>!PX8[w.t])};
 const _kf8=kindsFor;kindsFor=function(cat){let k=_kf8(cat);if(!G8_READY)return k;const l=lvl();
   const f=k.filter(x=>l<=(KMAX8[cat+":"+x]||99));
@@ -100,3 +100,5 @@ Object.assign(GMAP,{"farm.w":G("Plants and farms",["cre","science"],[["life","ev
  "people.w":G("People and kindness",["soc","empathy"],[["life","everyday"]],"Grade 4-5: kind choices, jobs, money and staying safe online.","Practice"),
  "clock.w":G("Calendar and time",["cog","math"],[["life","everyday"]],"Grade 4-5: leap years, centuries and the 24-hour clock.","Practice"),
  "shapes.w":G("3D shapes and angles",["cog","math"],[["cog","logic"]],"Grade 4-5: faces, edges, corners and degrees.","Practice")});
+Object.assign(GMAP,{"letters.w":G("English words (Grade 3-5)",["lang","vocab"],[["lang","read"]],"Prefixes and suffixes, words that sound alike, idioms, similes, kinds of words.","Practice"),
+ "read.w":G("Reading (Grade 3-5)",["lang","read"],[["cog","logic"]],"Short texts: clues, main idea and the lesson of a story.","Practice")});

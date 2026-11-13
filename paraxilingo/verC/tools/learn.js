@@ -17,7 +17,7 @@ function lrThings(cat){const a=S.age,F=n=>FACT_EN[n]||"";
   if(cat==="sky")return SKYN.slice(0,11).map((n,i)=>({p:`<img src="img/w/sky_${i}.png" alt="">`,n:cap1(n),say:skySay(n),f:F(n)})).filter(x=>x.say.length);
   if(cat==="shapes")return [0,1,2,3,4,5].map(i=>({p:`<img src="img/w/shape_${i}.png" alt="">`,n:SHAPES[i],say:shSay(i),f:""}));
   if(cat==="people")return JOBS.slice(0,10).map(([n,e],i)=>({p:`<span class="lr-emo">${e}</span>`,n,say:jobSay(i),f:""}));
-  if(cat==="flags")return COUNTRIES.map(([n,e],i)=>({p:`<span class="lr-emo">${e}</span>`,n:n.replace(/^the /,"The "),say:ctySay(i),f:""}));
+  if(cat==="flags")return COUNTRIES.map(([n,e],i)=>({p:`<span class="lr-emo">${e}</span>`,n:n.replace(/^the /,"The "),say:ctySay(i),f:""})).filter(x=>!NOFLAG.has(x.n));
   if(cat==="world")return WORDS.filter(w=>FACT_EN[w.w]).slice(0,30).map(w=>({p:`<img src="img/w/wd_${w.i}.png" alt="">`,n:cap1(w.w),say:wSay(w),f:F(w.w)}));
   return null}
 const LRN_CATS=["count","add","clock","letters","read","animals","farm","sky","shapes","people","flags","world"];
