@@ -15646,6 +15646,284 @@ img.e3 {
   text-align: center;
   min-height: 22px;
 }
+.shu-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 2px 0 8px;
+}
+.shu-q {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #F3EEFF;
+  border-radius: 16px;
+  padding: 8px 12px;
+}
+.shu-cap {
+  font: 800 clamp(15px, 4vw, 20px)/1.25 "Nunito", sans-serif;
+  color: #3C2A7A;
+}
+.shu-vis {
+  max-height: 86px;
+  overflow: hidden;
+  flex: 0 0 auto;
+  transform-origin: right center;
+}
+.shu-vis > * {
+  transform: scale(.62);
+  transform-origin: center;
+  margin: -18px -24px;
+}
+.shu-sc {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  font: 800 15px "Nunito", sans-serif;
+  color: #555;
+}
+.shu-f {
+  position: relative;
+  flex: 1;
+  min-height: 340px;
+  border-radius: 24px;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      120% 80% at 50% 110%,
+      #3B2A8F 0%,
+      #1A1446 55%,
+      #0B0A22 100%);
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: grab;
+}
+.shu-sky {
+  position: absolute;
+  top: -100%;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-image:
+    radial-gradient(
+      2px 2px at 12% 18%,
+      #fff 50%,
+      transparent 52%),
+    radial-gradient(
+      1.5px 1.5px at 30% 62%,
+      #cfd8ff 50%,
+      transparent 52%),
+    radial-gradient(
+      2px 2px at 54% 30%,
+      #fff 50%,
+      transparent 52%),
+    radial-gradient(
+      1.5px 1.5px at 72% 76%,
+      #fff 50%,
+      transparent 52%),
+    radial-gradient(
+      2.5px 2.5px at 88% 12%,
+      #ffe9a8 50%,
+      transparent 52%),
+    radial-gradient(
+      1.5px 1.5px at 8% 86%,
+      #fff 50%,
+      transparent 52%),
+    radial-gradient(
+      1.5px 1.5px at 44% 92%,
+      #cfd8ff 50%,
+      transparent 52%);
+  background-size: 100% 50%;
+  animation: shuSky 6s linear infinite;
+  opacity: .9;
+}
+.shu-sky.b {
+  animation-duration: 11s;
+  opacity: .5;
+  background-position: 40px 0;
+}
+@keyframes shuSky {
+  to {
+    transform: translateY(50%);
+  }
+}
+.shu-gate {
+  position: absolute;
+  left: 3%;
+  right: 3%;
+  display: grid;
+  gap: 8px;
+  z-index: 2;
+}
+.shu-l {
+  min-height: 74px;
+  border-radius: 18px;
+  border: 3px dashed rgba(140, 220, 255, .9);
+  background: rgba(120, 200, 255, .16);
+  box-shadow: 0 0 18px rgba(120, 200, 255, .45), inset 0 0 14px rgba(120, 200, 255, .3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  transition:
+    background .2s,
+    border-color .2s,
+    transform .2s;
+}
+.shu-l.empty {
+  border-color: rgba(255, 255, 255, .15);
+  background: transparent;
+  box-shadow: none;
+  font-size: 26px;
+  opacity: .6;
+}
+.shu-l.saying {
+  border-style: solid;
+  border-color: #FFD43B;
+  background: rgba(255, 212, 59, .28);
+  transform: scale(1.05);
+}
+.shu-l.ok {
+  border-style: solid;
+  border-color: #58CC02;
+  background: rgba(88, 204, 2, .45);
+}
+.shu-l.no {
+  border-style: solid;
+  border-color: #FF4B4B;
+  background: rgba(255, 75, 75, .4);
+  animation: shuNo .4s;
+}
+@keyframes shuNo {
+  25% {
+    transform: translateX(-6px);
+  }
+  75% {
+    transform: translateX(6px);
+  }
+}
+.shu-o {
+  pointer-events: none;
+  background: #fff;
+  border-radius: 14px;
+  padding: 4px 8px;
+  min-width: 0;
+  max-width: 100%;
+  box-shadow: none;
+  border: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: .9em;
+}
+.shu-o .wp.op {
+  width: 52px;
+  height: 52px;
+}
+.shu-o .oe {
+  font-size: 30px;
+}
+.shu-o .oe.big {
+  font-size: 34px;
+}
+.shu-o small {
+  font-size: 13px;
+}
+.shu-o .num {
+  font-size: 26px;
+}
+.shu-o .dots {
+  display: none;
+}
+.shu-o svg {
+  max-width: 64px;
+  max-height: 64px;
+}
+.shu-r {
+  position: absolute;
+  bottom: 4%;
+  width: 64px;
+  height: 92px;
+  z-index: 3;
+  pointer-events: none;
+  transition: bottom .7s ease-in;
+}
+.shu-r > span {
+  display: block;
+  font-size: 56px;
+  line-height: 64px;
+  text-align: center;
+  transform: rotate(-45deg);
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, .4));
+}
+.shu-fl {
+  position: absolute;
+  left: 50%;
+  top: 58px;
+  width: 16px;
+  height: 26px;
+  margin-left: -8px;
+  border-radius: 50% 50% 60% 60%;
+  background:
+    radial-gradient(
+      circle at 50% 20%,
+      #fff 0,
+      #FFD43B 35%,
+      #FF7A00 70%,
+      transparent 72%);
+  animation: shuFl .12s infinite alternate;
+}
+@keyframes shuFl {
+  to {
+    transform: scaleY(1.35);
+    opacity: .8;
+  }
+}
+.shu-r.hit {
+  animation: shuHit .5s;
+}
+@keyframes shuHit {
+  20% {
+    transform: translateX(-50%) rotate(-25deg);
+  }
+  50% {
+    transform: translateX(-50%) rotate(25deg);
+  }
+  80% {
+    transform: translateX(-50%) rotate(-10deg);
+  }
+}
+.shu-r.away {
+  bottom: 120%;
+}
+.shu-ob {
+  position: absolute;
+  transform: translate(-50%, 0);
+  font-size: 34px;
+  pointer-events: none;
+  z-index: 1;
+}
+.shu-ob.rock {
+  font-size: 40px;
+  animation: shuSpin 2.4s linear infinite;
+}
+.shu-ob.star {
+  filter: drop-shadow(0 0 6px #FFD43B);
+}
+@keyframes shuSpin {
+  to {
+    transform: translate(-50%, 0) rotate(360deg);
+  }
+}
+@media (prefers-reduced-motion:reduce) {
+  .shu-sky {
+    animation: none;
+  }
+}
 .qbody,
 .panel {
   max-width: 680px;
@@ -16287,7 +16565,7 @@ img.e3 {
   bv = function(w) {
     return '<span class="bv" style="width:'.concat(w, "px;--w:").concat(w, 'px"><img src="').concat(domiSrc(), '" alt=""></span>');
   };
-  const FA_SAY = { "bird": "LULU_FA_AN0", "cow": "LULU_FA_AN1", "duck": "LULU_FA_AN2", "hen": "LULU_FA_AN3", "pig": "LULU_FA_AN4", "shark": "LULU_FA_AN5", "fox": "LULU_FA_AN6", "dog": "LULU_FA_AN7", "frog": "LULU_FA_AN8", "bee": "LULU_FA_AN9", "worm": "LULU_FA_FOOD0", "cat": "LULU_FA_AN11", "bat": "LULU_FA_AN12", "snake": "LULU_FA_AN13", "grass": "LULU_FA_FOOD1", "seeds": "LULU_FA_FOOD2", "bones": "LULU_FA_FOOD3", "fish": "LULU_FA_FOOD4", "fly": "LULU_FA_FOOD5", "flowers": "LULU_FA_FOOD6", "leaves": "LULU_FA_FOOD7", "mosquito": "LULU_FA_FOOD8", "apple": "LULU_FA_FOOD9", "mouse": "LULU_FA_FOOD10", "eggs": "LULU_FA_FOOD11", "corn": "LULU_FA_FOOD12", "nest": "LULU_FA_HOME0", "barn": "LULU_FA_HOME1", "pond": "LULU_FA_HOME2", "doghouse": "LULU_FA_HOME3", "house": "PX_AW_HOUSE", "hive": "LULU_FA_HOME5", "tree": "LULU_FA_HOME6", "cave": "PX_AW_CAVE", "burrow": "LULU_FA_HOME8", "sea": "LULU_FA_HOME9", "rocks": "LULU_FA_HOME10", "doctor": "LULU_FA_JOB0", "firefighter": "LULU_FA_JOB1", "police": "LULU_FA_JOB2", "chef": "LULU_FA_JOB3", "farmer": "LULU_FA_JOB4", "teacher": "LULU_FA_JOB5", "pilot": "LULU_FA_JOB6", "astronaut": "LULU_FA_JOB7", "mechanic": "LULU_FA_JOB8", "scientist": "LULU_FA_JOB9", "painter": "LULU_FA_JOB10", "builder": "LULU_FA_JOB11", "iran": "LULU_FA_CTY0", "usa": "LULU_FA_CTY1", "canada": "LULU_FA_CTY2", "mexico": "LULU_FA_CTY3", "brazil": "LULU_FA_CTY4", "england": "LULU_FA_CTY5", "france": "LULU_FA_CTY6", "germany": "LULU_FA_CTY7", "italy": "LULU_FA_CTY8", "china": "LULU_FA_CTY9", "japan": "LULU_FA_CTY10", "india": "LULU_FA_CTY11", "egypt": "LULU_FA_CTY12", "australia": "LULU_FA_CTY13", "sun": "LULU_FA_PL0", "mercury": "LULU_FA_PL1", "venus": "LULU_FA_PL2", "earth": "LULU_FA_PL3", "mars": "LULU_FA_PL4", "jupiter": "LULU_FA_PL5", "saturn": "LULU_FA_PL6", "uranus": "LULU_FA_PL7", "neptune": "LULU_FA_PL8", "moon": "LULU_FA_SKY1", "star": "LULU_FA_SKY2", "clouds": "LULU_FA_SKY3", "rain": "LULU_FA_SKY4", "rainbow": "LULU_FA_SKY5", "lightning": "LULU_FA_SKY6", "snow": "LULU_FA_SKY7", "rocket": "LULU_FA_SKY8", "telescope": "LULU_FA_SKY10", "galaxy": "LULU_FA_SKY11", "comet": "LULU_FA_SKY12", "satellite": "LULU_FA_SKY13", "planet": "LULU_FA_SKY14", "log": "LULU_FAW0", "ten": "LULU_FAW4", "box": "LULU_FAW6", "socks": "LULU_FAW7", "key": "LULU_FAW8", "mug": "LULU_FAW11", "bug": "LULU_FAW12", "hat": "LULU_FAW14", "car": "LULU_FAW17", "cake": "LULU_FAW18", "truck": "LULU_FAW21", "jet": "LULU_FAW22", "net": "LULU_FAW23", "fan": "LULU_FAW24", "can": "LULU_FAW25", "map": "LULU_FAW26", "cap": "LULU_FAW27", "fin": "LULU_FAW28", "pin": "LULU_FAW29", "lip": "LULU_FAW30", "ship": "LULU_FAW31", "cut": "LULU_FAW32", "nut": "LULU_FAW33", "cook": "LULU_FA_JOB3", "flower": "LULU_FA_FOOD6", "leaf": "LULU_FA_FOOD7", "egg": "LULU_FA_FOOD11", "cloud": "LULU_FA_SKY3", "stars": "LULU_FA_SKY2", "thunder": "LULU_FA_SKY6", "spring": "LULU_FA_SEA0", "summer": "LULU_FA_SEA1", "autumn": "LULU_FA_SEA2", "fall": "LULU_FA_SEA2", "winter": "LULU_FA_SEA3", "trees": "LULU_FA_HOME6", "ocean": "LULU_FA_HOME9", "chicken": "LULU_FA_AN3", "caterpillar": "LULU_FA_AN10", "worms": "LULU_FA_FOOD0", "bone": "LULU_FA_FOOD3", "flies": "LULU_FA_FOOD5", "mosquitoes": "LULU_FA_FOOD8", "apples": "LULU_FA_FOOD9", "mice": "LULU_FA_FOOD10", "den": "LULU_FA_HOME8", "milky way": "LULU_FA_SKY11", "police officer": "LULU_FA_JOB2", "artist": "LULU_FA_JOB10", "the united states": "LULU_FA_CTY1", "baking soda": "PX_OW_BAKING_SODA", "vinegar": "PX_OW_VINEGAR", "sugar": "PX_OW_SUGAR", "boots": "PX_OW_BOOTS", "shorts": "PX_OW_SHORTS", "scarf": "PX_OW_SCARF", "umbrella": "PX_OW_UMBRELLA", "gloves": "PX_OW_GLOVES", "woolly hat": "PX_OW_WOOLLY_HAT", "carrot": "PX_OW_CARROT", "fizzy drink": "PX_OW_FIZZY_DRINK", "broccoli": "PX_OW_BROCCOLI", "lollipop": "PX_OW_LOLLIPOP", "doughnut": "PX_OW_DOUGHNUT", "horse": "PX_OW_HORSE", "afternoon": "PX_OW_AFTERNOON", "plastic": "PX_OW_PLASTIC", "glass": "PX_OW_GLASS", "a hug": "PX_OW_A_HUG", "a balloon": "PX_OW_A_BALLOON", "share a toy": "PX_OW_SHARE_A_TOY", "make fun of them": "PX_OW_MAKE_FUN_OF_THEM", "a tissue": "PX_OW_A_TISSUE", "walk away": "PX_OW_WALK_AWAY", "sheep": "PX_AW_SHEEP", "goat": "PX_AW_GOAT", "rabbit": "PX_AW_RABBIT", "tiger": "PX_AW_TIGER", "giraffe": "PX_AW_GIRAFFE", "zebra": "PX_AW_ZEBRA", "monkey": "PX_AW_MONKEY", "panda": "PX_AW_PANDA", "kangaroo": "PX_AW_KANGAROO", "camel": "PX_AW_CAMEL", "wolf": "PX_AW_WOLF", "owl": "PX_AW_OWL", "eagle": "PX_AW_EAGLE", "parrot": "PX_AW_PARROT", "penguin": "PX_AW_PENGUIN", "spider": "PX_AW_SPIDER", "ladybug": "PX_AW_LADYBUG", "crocodile": "PX_AW_CROCODILE", "lizard": "PX_AW_LIZARD", "dolphin": "PX_AW_DOLPHIN", "octopus": "PX_AW_OCTOPUS", "squirrel": "PX_AW_SQUIRREL", "polar bear": "PX_AW_POLAR_BEAR", "hippo": "PX_AW_HIPPO", "farm": "PX_AW_FARM", "jungle": "PX_AW_JUNGLE", "grassland": "PX_AW_GRASSLAND", "ice": "PX_AW_ICE", "blueberries": "PX_OW_BLUEBERRIES", "bolt": "PX_OW_BOLT", "cherries": "PX_OW_CHERRIES", "clap your hands": "PX_OW_CLAP_YOUR_HANDS", "coin": "PX_OW_COIN", "cucumber": "PX_OW_CUCUMBER", "fire truck": "PX_OW_FIRE_TRUCK", "floats": "PX_OW_FLOATS", "freezer": "PX_OW_FREEZER", "garlic": "PX_OW_GARLIC", "grapes": "PX_OW_GRAPES", "heart": "PX_OW_HEART", "jump like a frog": "PX_OW_JUMP_LIKE_A_FROG", "lettuce": "PX_OW_LETTUCE", "onion": "PX_OW_ONION", "pear": "PX_OW_PEAR", "pineapple": "PX_OW_PINEAPPLE", "potato": "PX_OW_POTATO", "rose": "PX_OW_ROSE", "shady tree": "PX_OW_SHADY_TREE", "sinks": "PX_OW_SINKS", "soap": "PX_OW_SOAP", "soda": "PX_OW_SODA", "spin around": "PX_OW_SPIN_AROUND", "sponge": "PX_OW_SPONGE", "stand on one leg": "PX_OW_STAND_ON_ONE_LEG", "strawberry": "PX_OW_STRAWBERRY", "sunflower": "PX_OW_SUNFLOWER", "sunlight": "PX_OW_SUNLIGHT", "sunny window": "PX_OW_SUNNY_WINDOW", "teddy bear": "PX_OW_TEDDY_BEAR", "that side": "PX_OW_THAT_SIDE", "this side": "PX_OW_THIS_SIDE", "tomato": "PX_OW_TOMATO", "touch your toes": "PX_OW_TOUCH_YOUR_TOES", "tv all day": "PX_OW_TV_ALL_DAY", "walk like a bear": "PX_OW_WALK_LIKE_A_BEAR", "watermelon": "PX_OW_WATERMELON", "wood": "PX_OW_WOOD", "ice cream": "PX_G8_O_ICECREAM", "snowman": "PX_G8_O_SNOWMAN", "air": "PX_OW_AIR", "brick": "PX_OW_BRICK", "chocolate": "PX_OW_CHOCOLATE", "crayon": "PX_OW_CRAYON", "fire": "PX_OW_FIRE", "flashlight": "PX_OW_FLASHLIGHT", "glass of milk": "PX_OW_GLASS_OF_MILK", "lamp": "PX_OW_LAMP", "mirror": "PX_OW_MIRROR", "paper clip": "PX_OW_PAPER_CLIP", "phone": "PX_OW_PHONE", "safety pin": "PX_OW_SAFETY_PIN", "scissors": "PX_OW_SCISSORS", "screwdriver": "PX_OW_SCREWDRIVER", "soil": "PX_OW_SOIL", "spin earth": "PX_OW_SPIN_EARTH", "very cold": "PX_OW_VERY_COLD", "warm": "PX_OW_WARM", "wrench": "PX_OW_WRENCH", "salt": "PX_FA_SALT", "lemon": "PX_FA_LEMON", "whale": "PX_FA_WHALE", "crab": "PX_FA_CRAB", "books": "PX_FA_BOOKS", "guitar": "PX_FA_GUITAR", "ruler": "PX_FA_RULER", "scales": "PX_FA_SCALES", "alarm clock": "PX_FA_ALARM_CLOCK", "soccer ball": "PX_FA_SOCCER_BALL", "full moon": "PX_FA_FULL_MOON", "dinosaur": "PX_FA_DINOSAUR", "a low cloud": "PX_FA_A_LOW_CLOUD", "ant": "PX_FA_ANT", "baker": "PX_FA_BAKER", "ball": "PX_FA_BALL", "beach": "PX_FA_BEACH", "bear": "PX_FA_BEAR", "black": "PX_FA_BLACK", "blue": "PX_FA_BLUE", "brain": "PX_FA_BRAIN", "breathe": "PX_FA_BREATHE", "brown": "PX_FA_BROWN", "butterfly": "PX_FA_BUTTERFLY", "candy": "PX_FA_CANDY", "cars": "PX_FA_CARS", "cheetah": "PX_FA_CHEETAH", "chips": "PX_FA_CHIPS", "circle": "PX_FA_CIRCLE", "crown": "PX_FA_CROWN", "ears": "PX_FA_EARS", "elbow": "PX_FA_ELBOW", "elephant": "PX_FA_ELEPHANT", "eyes": "PX_FA_EYES", "feet": "PX_FA_FEET", "green": "PX_FA_GREEN", "hair": "PX_FA_HAIR", "hands": "PX_FA_HANDS", "knee": "PX_FA_KNEE", "lion": "PX_FA_LION", "maple": "PX_FA_MAPLE", "milk": "PX_FA_MILK", "morning": "PX_FA_MORNING", "nectar": "PX_FA_NECTAR", "night": "PX_FA_NIGHT", "nose": "PX_FA_NOSE", "orange": "PX_FA_ORANGE", "pine": "PX_FA_PINE", "pink": "PX_FA_PINK", "pizza": "PX_FA_PIZZA", "purple": "PX_FA_PURPLE", "raincoat": "PX_FA_RAINCOAT", "red": "PX_FA_RED", "salad": "PX_FA_SALAD", "sand": "PX_FA_SAND", "shoes": "PX_FA_SHOES", "shops": "PX_FA_SHOPS", "smoke": "PX_FA_SMOKE", "snail": "PX_FA_SNAIL", "square": "PX_FA_SQUARE", "swimsuit": "PX_FA_SWIMSUIT", "think": "PX_FA_THINK", "toe": "PX_FA_TOE", "toys": "PX_FA_TOYS", "train": "PX_FA_TRAIN", "triangle": "PX_FA_TRIANGLE", "turtle": "PX_FA_TURTLE", "walk": "PX_FA_WALK", "water": "PX_FA_WATER", "white": "PX_FA_WHITE", "yellow": "PX_FA_YELLOW", "bus": "PX_FA_W_BUS", "bed": "PX_FA_W_BED", "spoon": "PX_FA_W_SPOON", "ladder": "PX_FA_W_LADDER", "desert": "PX_FA_W_DESERT", "lake": "PX_FA_W_LAKE", "lava": "PX_FA_W_LAVA", "juice": "PX_FA_W_JUICE", "north pole": "PX_FA_W_NORTH_POLE", "banana": "PX_FA_W_BANANA", "bread": "PX_FA_W_BREAD", "cheese": "PX_FA_W_CHEESE", "flour": "PX_FA_W_FLOUR", "stones": "PX_FA_W_STONES", "paper": "PX_FA_W_PAPER", "rice": "PX_FA_W_RICE", "beans": "PX_FA_W_BEANS", "cold": "PX_FA_W_COLD", "big": "PX_FA_W_BIG", "fast": "PX_FA_W_FAST", "down": "PX_FA_W_DOWN", "in": "PX_FA_W_IN", "on": "PX_FA_W_ON", "dentist": "PX_FA_W_DENTIST", "clock": "PX_FA_W_CLOCK", "fork": "PX_FA_W_FORK", "brush": "PX_FA_W_BRUSH", "nails": "PX_FA_W_NAILS", "boat": "PX_FA_W_BOAT", "it steams": "PX_FA_W_IT_STEAMS", "it freezes": "PX_FA_W_IT_FREEZES", "blocking light": "PX_FA_W_BLOCKING_LIGHT", "wind": "PX_FA_W_WIND", "sleep": "PX_FA_W_SLEEP", "sunglasses": "PX_FA_W_SUNGLASSES", "river": "PX_FA_W_RIVER", "forest": "PX_FA_W_FOREST", "bike": "PX_FA_W_BIKE", "cup": "PX_FA_W_CUP", "up": "PX_FA_W_UP" };
+  const FA_SAY = { "bird": "LULU_FA_AN0", "cow": "LULU_FA_AN1", "duck": "LULU_FA_AN2", "hen": "LULU_FA_AN3", "pig": "LULU_FA_AN4", "shark": "LULU_FA_AN5", "fox": "LULU_FA_AN6", "dog": "LULU_FA_AN7", "frog": "LULU_FA_AN8", "bee": "LULU_FA_AN9", "worm": "LULU_FA_FOOD0", "cat": "LULU_FA_AN11", "bat": "LULU_FA_AN12", "snake": "LULU_FA_AN13", "grass": "LULU_FA_FOOD1", "seeds": "LULU_FA_FOOD2", "bones": "LULU_FA_FOOD3", "fish": "LULU_FA_FOOD4", "fly": "LULU_FA_FOOD5", "flowers": "LULU_FA_FOOD6", "leaves": "LULU_FA_FOOD7", "mosquito": "LULU_FA_FOOD8", "apple": "LULU_FA_FOOD9", "mouse": "LULU_FA_FOOD10", "eggs": "LULU_FA_FOOD11", "corn": "LULU_FA_FOOD12", "nest": "LULU_FA_HOME0", "barn": "LULU_FA_HOME1", "pond": "LULU_FA_HOME2", "doghouse": "LULU_FA_HOME3", "house": "PX_AW_HOUSE", "hive": "LULU_FA_HOME5", "tree": "PX_FA_W_TREE", "cave": "PX_AW_CAVE", "burrow": "LULU_FA_HOME8", "sea": "LULU_FA_HOME9", "rocks": "LULU_FA_HOME10", "doctor": "LULU_FA_JOB0", "firefighter": "LULU_FA_JOB1", "police": "LULU_FA_JOB2", "chef": "LULU_FA_JOB3", "farmer": "LULU_FA_JOB4", "teacher": "LULU_FA_JOB5", "pilot": "LULU_FA_JOB6", "astronaut": "LULU_FA_JOB7", "mechanic": "LULU_FA_JOB8", "scientist": "LULU_FA_JOB9", "painter": "LULU_FA_JOB10", "builder": "LULU_FA_JOB11", "iran": "LULU_FA_CTY0", "usa": "LULU_FA_CTY1", "canada": "LULU_FA_CTY2", "mexico": "LULU_FA_CTY3", "brazil": "LULU_FA_CTY4", "england": "LULU_FA_CTY5", "france": "LULU_FA_CTY6", "germany": "LULU_FA_CTY7", "italy": "LULU_FA_CTY8", "china": "LULU_FA_CTY9", "japan": "LULU_FA_CTY10", "india": "LULU_FA_CTY11", "egypt": "LULU_FA_CTY12", "australia": "LULU_FA_CTY13", "sun": "LULU_FA_PL0", "mercury": "LULU_FA_PL1", "venus": "LULU_FA_PL2", "earth": "LULU_FA_PL3", "mars": "LULU_FA_PL4", "jupiter": "LULU_FA_PL5", "saturn": "LULU_FA_PL6", "uranus": "LULU_FA_PL7", "neptune": "LULU_FA_PL8", "moon": "LULU_FA_SKY1", "star": "LULU_FA_SKY2", "clouds": "LULU_FA_SKY3", "rain": "LULU_FA_SKY4", "rainbow": "LULU_FA_SKY5", "lightning": "LULU_FA_SKY6", "snow": "LULU_FA_SKY7", "rocket": "LULU_FA_SKY8", "telescope": "LULU_FA_SKY10", "galaxy": "LULU_FA_SKY11", "comet": "LULU_FA_SKY12", "satellite": "LULU_FA_SKY13", "planet": "LULU_FA_SKY14", "log": "LULU_FAW0", "ten": "LULU_FAW4", "box": "LULU_FAW6", "socks": "LULU_FAW7", "key": "LULU_FAW8", "mug": "LULU_FAW11", "bug": "LULU_FAW12", "hat": "LULU_FAW14", "car": "LULU_FAW17", "cake": "LULU_FAW18", "truck": "LULU_FAW21", "jet": "LULU_FAW22", "net": "LULU_FAW23", "fan": "LULU_FAW24", "can": "LULU_FAW25", "map": "LULU_FAW26", "cap": "LULU_FAW27", "fin": "LULU_FAW28", "pin": "LULU_FAW29", "lip": "LULU_FAW30", "ship": "LULU_FAW31", "cut": "LULU_FAW32", "nut": "LULU_FAW33", "cook": "LULU_FA_JOB3", "flower": "LULU_FA_FOOD6", "leaf": "LULU_FA_FOOD7", "egg": "LULU_FA_FOOD11", "cloud": "LULU_FA_SKY3", "stars": "LULU_FA_SKY2", "thunder": "LULU_FA_SKY6", "spring": "LULU_FA_SEA0", "summer": "LULU_FA_SEA1", "autumn": "LULU_FA_SEA2", "fall": "LULU_FA_SEA2", "winter": "LULU_FA_SEA3", "trees": "LULU_FA_HOME6", "ocean": "LULU_FA_HOME9", "chicken": "LULU_FA_AN3", "caterpillar": "LULU_FA_AN10", "worms": "LULU_FA_FOOD0", "bone": "LULU_FA_FOOD3", "flies": "LULU_FA_FOOD5", "mosquitoes": "LULU_FA_FOOD8", "apples": "LULU_FA_FOOD9", "mice": "LULU_FA_FOOD10", "den": "LULU_FA_HOME8", "milky way": "LULU_FA_SKY11", "police officer": "LULU_FA_JOB2", "artist": "LULU_FA_JOB10", "the united states": "LULU_FA_CTY1", "baking soda": "PX_OW_BAKING_SODA", "vinegar": "PX_OW_VINEGAR", "sugar": "PX_OW_SUGAR", "boots": "PX_OW_BOOTS", "shorts": "PX_OW_SHORTS", "scarf": "PX_OW_SCARF", "umbrella": "PX_OW_UMBRELLA", "gloves": "PX_OW_GLOVES", "woolly hat": "PX_OW_WOOLLY_HAT", "carrot": "PX_OW_CARROT", "fizzy drink": "PX_OW_FIZZY_DRINK", "broccoli": "PX_OW_BROCCOLI", "lollipop": "PX_OW_LOLLIPOP", "doughnut": "PX_OW_DOUGHNUT", "horse": "PX_OW_HORSE", "afternoon": "PX_OW_AFTERNOON", "plastic": "PX_OW_PLASTIC", "glass": "PX_OW_GLASS", "a hug": "PX_OW_A_HUG", "a balloon": "PX_OW_A_BALLOON", "share a toy": "PX_OW_SHARE_A_TOY", "make fun of them": "PX_OW_MAKE_FUN_OF_THEM", "a tissue": "PX_OW_A_TISSUE", "walk away": "PX_OW_WALK_AWAY", "sheep": "PX_AW_SHEEP", "goat": "PX_AW_GOAT", "rabbit": "PX_AW_RABBIT", "tiger": "PX_AW_TIGER", "giraffe": "PX_AW_GIRAFFE", "zebra": "PX_AW_ZEBRA", "monkey": "PX_AW_MONKEY", "panda": "PX_AW_PANDA", "kangaroo": "PX_AW_KANGAROO", "camel": "PX_AW_CAMEL", "wolf": "PX_AW_WOLF", "owl": "PX_AW_OWL", "eagle": "PX_AW_EAGLE", "parrot": "PX_AW_PARROT", "penguin": "PX_AW_PENGUIN", "spider": "PX_AW_SPIDER", "ladybug": "PX_AW_LADYBUG", "crocodile": "PX_AW_CROCODILE", "lizard": "PX_AW_LIZARD", "dolphin": "PX_AW_DOLPHIN", "octopus": "PX_AW_OCTOPUS", "squirrel": "PX_AW_SQUIRREL", "polar bear": "PX_AW_POLAR_BEAR", "hippo": "PX_AW_HIPPO", "farm": "PX_AW_FARM", "jungle": "PX_AW_JUNGLE", "grassland": "PX_AW_GRASSLAND", "ice": "PX_AW_ICE", "blueberries": "PX_OW_BLUEBERRIES", "bolt": "PX_OW_BOLT", "cherries": "PX_OW_CHERRIES", "clap your hands": "PX_OW_CLAP_YOUR_HANDS", "coin": "PX_OW_COIN", "cucumber": "PX_OW_CUCUMBER", "fire truck": "PX_OW_FIRE_TRUCK", "floats": "PX_OW_FLOATS", "freezer": "PX_OW_FREEZER", "garlic": "PX_OW_GARLIC", "grapes": "PX_OW_GRAPES", "heart": "PX_OW_HEART", "jump like a frog": "PX_OW_JUMP_LIKE_A_FROG", "lettuce": "PX_OW_LETTUCE", "onion": "PX_OW_ONION", "pear": "PX_OW_PEAR", "pineapple": "PX_OW_PINEAPPLE", "potato": "PX_OW_POTATO", "rose": "PX_OW_ROSE", "shady tree": "PX_OW_SHADY_TREE", "sinks": "PX_OW_SINKS", "soap": "PX_OW_SOAP", "soda": "PX_OW_SODA", "spin around": "PX_OW_SPIN_AROUND", "sponge": "PX_OW_SPONGE", "stand on one leg": "PX_OW_STAND_ON_ONE_LEG", "strawberry": "PX_OW_STRAWBERRY", "sunflower": "PX_OW_SUNFLOWER", "sunlight": "PX_OW_SUNLIGHT", "sunny window": "PX_OW_SUNNY_WINDOW", "teddy bear": "PX_OW_TEDDY_BEAR", "that side": "PX_OW_THAT_SIDE", "this side": "PX_OW_THIS_SIDE", "tomato": "PX_OW_TOMATO", "touch your toes": "PX_OW_TOUCH_YOUR_TOES", "tv all day": "PX_OW_TV_ALL_DAY", "walk like a bear": "PX_OW_WALK_LIKE_A_BEAR", "watermelon": "PX_OW_WATERMELON", "wood": "PX_OW_WOOD", "ice cream": "PX_G8_O_ICECREAM", "snowman": "PX_G8_O_SNOWMAN", "air": "PX_OW_AIR", "brick": "PX_OW_BRICK", "chocolate": "PX_OW_CHOCOLATE", "crayon": "PX_OW_CRAYON", "fire": "PX_OW_FIRE", "flashlight": "PX_OW_FLASHLIGHT", "glass of milk": "PX_OW_GLASS_OF_MILK", "lamp": "PX_OW_LAMP", "mirror": "PX_OW_MIRROR", "paper clip": "PX_OW_PAPER_CLIP", "phone": "PX_OW_PHONE", "safety pin": "PX_OW_SAFETY_PIN", "scissors": "PX_OW_SCISSORS", "screwdriver": "PX_OW_SCREWDRIVER", "soil": "PX_OW_SOIL", "spin earth": "PX_OW_SPIN_EARTH", "very cold": "PX_OW_VERY_COLD", "warm": "PX_OW_WARM", "wrench": "PX_OW_WRENCH", "honey": "PX_FA_W_HONEY", "baby": "PX_FA_W_BABY", "balloon": "PX_FA_W_BALLOON", "bag": "PX_FA_W_BAG", "web": "PX_FA_W_WEB", "leg": "PX_FA_W_LEG", "salt": "PX_FA_SALT", "lemon": "PX_FA_LEMON", "whale": "PX_FA_WHALE", "crab": "PX_FA_CRAB", "books": "PX_FA_BOOKS", "guitar": "PX_FA_GUITAR", "ruler": "PX_FA_RULER", "scales": "PX_FA_SCALES", "alarm clock": "PX_FA_ALARM_CLOCK", "soccer ball": "PX_FA_SOCCER_BALL", "full moon": "PX_FA_FULL_MOON", "dinosaur": "PX_FA_DINOSAUR", "a low cloud": "PX_FA_A_LOW_CLOUD", "ant": "PX_FA_ANT", "baker": "PX_FA_BAKER", "ball": "PX_FA_BALL", "beach": "PX_FA_BEACH", "bear": "PX_FA_BEAR", "black": "PX_FA_BLACK", "blue": "PX_FA_BLUE", "brain": "PX_FA_BRAIN", "breathe": "PX_FA_BREATHE", "brown": "PX_FA_BROWN", "butterfly": "PX_FA_BUTTERFLY", "candy": "PX_FA_CANDY", "cars": "PX_FA_CARS", "cheetah": "PX_FA_CHEETAH", "chips": "PX_FA_CHIPS", "circle": "PX_FA_CIRCLE", "crown": "PX_FA_CROWN", "ears": "PX_FA_EARS", "elbow": "PX_FA_ELBOW", "elephant": "PX_FA_ELEPHANT", "eyes": "PX_FA_EYES", "feet": "PX_FA_FEET", "green": "PX_FA_GREEN", "hair": "PX_FA_HAIR", "hands": "PX_FA_HANDS", "knee": "PX_FA_KNEE", "lion": "PX_FA_LION", "maple": "PX_FA_MAPLE", "milk": "PX_FA_MILK", "morning": "PX_FA_MORNING", "nectar": "PX_FA_NECTAR", "night": "PX_FA_NIGHT", "nose": "PX_FA_NOSE", "orange": "PX_FA_ORANGE", "pine": "PX_FA_PINE", "pink": "PX_FA_PINK", "pizza": "PX_FA_PIZZA", "purple": "PX_FA_PURPLE", "raincoat": "PX_FA_RAINCOAT", "red": "PX_FA_RED", "salad": "PX_FA_SALAD", "sand": "PX_FA_SAND", "shoes": "PX_FA_SHOES", "shops": "PX_FA_SHOPS", "smoke": "PX_FA_SMOKE", "snail": "PX_FA_SNAIL", "square": "PX_FA_SQUARE", "swimsuit": "PX_FA_SWIMSUIT", "think": "PX_FA_THINK", "toe": "PX_FA_TOE", "toys": "PX_FA_TOYS", "train": "PX_FA_TRAIN", "triangle": "PX_FA_TRIANGLE", "turtle": "PX_FA_TURTLE", "walk": "PX_FA_WALK", "water": "PX_FA_WATER", "white": "PX_FA_WHITE", "yellow": "PX_FA_YELLOW", "bus": "PX_FA_W_BUS", "bed": "PX_FA_W_BED", "spoon": "PX_FA_W_SPOON", "ladder": "PX_FA_W_LADDER", "desert": "PX_FA_W_DESERT", "lake": "PX_FA_W_LAKE", "lava": "PX_FA_W_LAVA", "juice": "PX_FA_W_JUICE", "north pole": "PX_FA_W_NORTH_POLE", "banana": "PX_FA_W_BANANA", "bread": "PX_FA_W_BREAD", "cheese": "PX_FA_W_CHEESE", "flour": "PX_FA_W_FLOUR", "stones": "PX_FA_W_STONES", "paper": "PX_FA_W_PAPER", "rice": "PX_FA_W_RICE", "beans": "PX_FA_W_BEANS", "cold": "PX_FA_W_COLD", "big": "PX_FA_W_BIG", "fast": "PX_FA_W_FAST", "down": "PX_FA_W_DOWN", "in": "PX_FA_W_IN", "on": "PX_FA_W_ON", "dentist": "PX_FA_W_DENTIST", "clock": "PX_FA_W_CLOCK", "fork": "PX_FA_W_FORK", "brush": "PX_FA_W_BRUSH", "nails": "PX_FA_W_NAILS", "boat": "PX_FA_W_BOAT", "it steams": "PX_FA_W_IT_STEAMS", "it freezes": "PX_FA_W_IT_FREEZES", "blocking light": "PX_FA_W_BLOCKING_LIGHT", "wind": "PX_FA_W_WIND", "sleep": "PX_FA_W_SLEEP", "sunglasses": "PX_FA_W_SUNGLASSES", "river": "PX_FA_W_RIVER", "forest": "PX_FA_W_FOREST", "bike": "PX_FA_W_BIKE", "cup": "PX_FA_W_CUP", "up": "PX_FA_W_UP" };
   const PLANET_N = ["sun", "mercury", "venus", "earth", "mars", "jupiter", "saturn", "uranus", "neptune"];
   const DINOS = ["t-rex", "tyrannosaurus", "triceratops", "stegosaurus", "brachiosaurus", "velociraptor", "diplodocus", "pterodactyl"];
   const EN_SAY = { "bird": "LULU_WORD0", "honey": "LULU_WORD1", "cow": "LULU_WORD2", "cake": "LULU_WORD3", "rainbow": "LULU_WORD4", "key": "LULU_WORD5", "baby": "LULU_WORD6", "salad": "LULU_WORD7", "sun": "LULU_WORD8", "star": "LULU_WORD9", "balloon": "LULU_WORD10", "bed": "LULU_WORD11", "duck": "LULU_WORD12", "socks": "LULU_WORD13", "ten": "LULU_WORD14", "tree": "LULU_WORD15", "chicken": "LULU_WORD16", "bus": "LULU_WORD17", "cab": "LULU_WORD18", "mad": "LULU_WORD19", "bag": "LULU_WORD20", "ham": "LULU_WORD21", "fan": "LULU_WORD22", "map": "LULU_WORD23", "web": "LULU_WORD24", "leg": "LULU_WORD25", "hen": "LULU_WORD26", "jet": "LULU_WORD27", "bib": "LULU_WORD28", "lid": "LULU_WORD29", "pig": "LULU_WORD30", "fin": "LULU_WORD31", "lip": "LULU_WORD32", "hit": "LULU_WORD33", "mix": "LULU_WORD34", "pod": "LULU_WORD35", "log": "LULU_WORD36", "mom": "LULU_WORD37", "mop": "LULU_WORD38", "hot": "LULU_WORD39", "fox": "LULU_WORD40", "tub": "LULU_WORD41", "mud": "LULU_WORD42", "mug": "LULU_WORD43", "gum": "LULU_WORD44", "cut": "LULU_WORD45", "dog": "LULU_WORD46", "frog": "LULU_WORD47", "box": "LULU_WORD48", "bee": "LULU_WORD49", "bug": "LULU_WORD50", "cat": "LULU_WORD51", "hat": "LULU_WORD52", "bat": "LULU_WORD53", "car": "LULU_WORD54", "snake": "LULU_WORD55", "truck": "LULU_WORD56", "net": "LULU_WORD57", "can": "LULU_WORD58", "cap": "LULU_WORD59", "pin": "LULU_WORD60", "ship": "LULU_WORD61", "nut": "LULU_WORD62", "red": "LULU_COLOR0", "blue": "LULU_COLOR1", "yellow": "LULU_COLOR2", "green": "LULU_COLOR3", "orange": "LULU_COLOR4", "purple": "LULU_COLOR5", "pink": "LULU_COLOR6", "brown": "LULU_COLOR7", "black": "LULU_COLOR8", "white": "LULU_COLOR9", "circle": "LULU_EN_SH0", "square": "LULU_EN_SH1", "triangle": "LULU_EN_SH2", "rectangle": "LULU_EN_SH3", "oval": "LULU_EN_SH5", "rhombus": "LULU_EN_SH6", "trapezoid": "LULU_EN_SH7", "pentagon": "LULU_EN_SH8", "hexagon": "LULU_EN_SH9", "octagon": "LULU_EN_SH10", "parallelogram": "LULU_EN_SH11", "cube": "LULU_EN_SH12", "cylinder": "LULU_EN_SH13", "sphere": "LULU_EN_SH14", "cone": "LULU_EN_SH15", "pyramid": "LULU_EN_SH16", "rectangular prism": "LULU_EN_SH17", "iran": "LULU_EN_COUNTRY0", "the united states": "LULU_EN_COUNTRY1", "canada": "LULU_EN_COUNTRY2", "mexico": "LULU_EN_COUNTRY3", "brazil": "LULU_EN_COUNTRY4", "the united kingdom": "LULU_EN_COUNTRY5", "france": "LULU_EN_COUNTRY6", "germany": "LULU_EN_COUNTRY7", "italy": "LULU_EN_COUNTRY8", "china": "LULU_EN_COUNTRY9", "japan": "LULU_EN_COUNTRY10", "india": "LULU_EN_COUNTRY11", "egypt": "LULU_EN_COUNTRY12", "australia": "LULU_EN_COUNTRY13", "usa": "LULU_EN_COUNTRY1", "doctor": "LULU_EN_JOB0", "firefighter": "LULU_EN_JOB1", "police": "LULU_EN_JOB2", "officer": "LULU_EN_JOB3", "chef": "LULU_EN_JOB4", "farmer": "LULU_EN_JOB5", "teacher": "LULU_EN_JOB6", "pilot": "LULU_EN_JOB7", "astronaut": "LULU_EN_JOB8", "mechanic": "LULU_EN_JOB9", "scientist": "LULU_EN_JOB10", "artist": "LULU_EN_JOB11", "cook": "LULU_EN_JOB3", "monday": "LULU_EN_DAY0", "tuesday": "LULU_EN_DAY1", "wednesday": "LULU_EN_DAY2", "thursday": "LULU_EN_DAY3", "friday": "LULU_EN_DAY4", "saturday": "LULU_EN_DAY5", "sunday": "LULU_EN_DAY6", "january": "LULU_EN_MONTH0", "february": "LULU_EN_MONTH1", "march": "LULU_EN_MONTH2", "april": "LULU_EN_MONTH3", "may": "LULU_EN_MONTH4", "june": "LULU_EN_MONTH5", "july": "LULU_EN_MONTH6", "august": "LULU_EN_MONTH7", "september": "LULU_EN_MONTH8", "october": "LULU_EN_MONTH9", "november": "LULU_EN_MONTH10", "december": "LULU_EN_MONTH11", "spring": "LULU_EN_SEASON0", "summer": "LULU_EN_SEASON1", "fall": "LULU_EN_SEASON2", "winter": "LULU_EN_SEASON3", "autumn": "LULU_EN_SEASON2", "barn": "LULU_H_BARN", "cave": "LULU_H_CAVE", "den": "LULU_H_DEN", "doghouse": "LULU_H_DOGHOUSE", "house": "LULU_H_HOUSE", "nest": "LULU_H_NEST", "pond": "LULU_H_POND", "rocks": "LULU_H_ROCKS", "sea": "LULU_H_SEA", "hive": "LULU_H_HIVE", "mercury": "LULU_PL1", "venus": "LULU_PL2", "earth": "LULU_PL3", "mars": "LULU_PL4", "jupiter": "LULU_PL5", "saturn": "LULU_PL6", "uranus": "LULU_PL7", "neptune": "LULU_PL8", "alarm clock": "PX_EN_ALARM_CLOCK", "ant": "PX_EN_ANT", "apple": "PX_EN_APPLE", "baker": "PX_EN_BAKER", "beach": "PX_EN_BEACH", "bear": "PX_EN_BEAR", "flowers": "PX_EN_FLOWERS", "bone": "PX_EN_BONE", "books": "PX_EN_BOOKS", "brain": "PX_EN_BRAIN", "breathe": "PX_EN_BREATHE", "butterfly": "PX_EN_BUTTERFLY", "candy": "PX_EN_CANDY", "cars": "PX_EN_CARS", "caterpillar": "PX_EN_CATERPILLAR", "cheetah": "PX_EN_CHEETAH", "chips": "PX_EN_CHIPS", "cloud": "PX_EN_CLOUD", "comet": "PX_EN_COMET", "corn": "PX_EN_CORN", "crab": "PX_EN_CRAB", "crown": "PX_EN_CROWN", "ears": "PX_EN_EARS", "eggs": "PX_EN_EGGS", "elbow": "PX_EN_ELBOW", "elephant": "PX_EN_ELEPHANT", "eyes": "PX_EN_EYES", "feet": "PX_EN_FEET", "fish": "PX_EN_FISH", "flies": "PX_EN_FLIES", "full moon": "PX_EN_FULL_MOON", "galaxy": "PX_EN_GALAXY", "grass": "PX_EN_GRASS", "guitar": "PX_EN_GUITAR", "hair": "PX_EN_HAIR", "hands": "PX_EN_HANDS", "knee": "PX_EN_KNEE", "leaves": "PX_EN_LEAVES", "lemon": "PX_EN_LEMON", "lightning": "PX_EN_LIGHTNING", "lion": "PX_EN_LION", "maple": "PX_EN_MAPLE", "mice": "PX_EN_MICE", "milk": "PX_EN_MILK", "milky way": "PX_EN_MILKY_WAY", "moon": "PX_EN_MOON", "morning": "PX_EN_MORNING", "mosquitoes": "PX_EN_MOSQUITOES", "nectar": "PX_EN_NECTAR", "night": "PX_EN_NIGHT", "nose": "PX_EN_NOSE", "pine": "PX_EN_PINE", "pizza": "PX_EN_PIZZA", "planet": "PX_EN_PLANET", "rain": "PX_EN_RAIN", "raincoat": "PX_EN_RAINCOAT", "rocket": "PX_EN_ROCKET", "ruler": "PX_EN_RULER", "salt": "PX_EN_SALT", "sand": "PX_EN_SAND", "satellite": "PX_EN_SATELLITE", "scales": "PX_EN_SCALES", "seeds": "PX_EN_SEEDS", "shark": "PX_EN_SHARK", "shoes": "PX_EN_SHOES", "shops": "PX_EN_SHOPS", "smoke": "PX_EN_SMOKE", "snail": "PX_EN_SNAIL", "snow": "PX_EN_SNOW", "soccer ball": "PX_EN_SOCCER_BALL", "swimsuit": "PX_EN_SWIMSUIT", "telescope": "PX_EN_TELESCOPE", "think": "PX_EN_THINK", "thunder": "PX_EN_THUNDER", "toe": "PX_EN_TOE", "toys": "PX_EN_TOYS", "train": "PX_EN_TRAIN", "trees": "PX_EN_TREES", "turtle": "PX_EN_TURTLE", "walk": "PX_EN_WALK", "water": "PX_EN_WATER", "whale": "PX_EN_WHALE", "worms": "PX_EN_WORMS", "a low cloud": "PX_EN_A_LOW_CLOUD", "mouse": "PX_EN_W_MOUSE", "ocean": "PX_EN_W_OCEAN", "ball": "PX_EN_W_BALL", "spoon": "PX_EN_W_SPOON", "ladder": "PX_EN_W_LADDER", "desert": "PX_EN_W_DESERT", "lake": "PX_EN_W_LAKE", "lava": "PX_EN_W_LAVA", "juice": "PX_EN_W_JUICE", "north pole": "PX_EN_W_NORTH_POLE", "banana": "PX_EN_W_BANANA", "bread": "PX_EN_W_BREAD", "cheese": "PX_EN_W_CHEESE", "flour": "PX_EN_W_FLOUR", "stones": "PX_EN_W_STONES", "paper": "PX_EN_W_PAPER", "rice": "PX_EN_W_RICE", "beans": "PX_EN_W_BEANS", "cold": "PX_EN_W_COLD", "big": "PX_EN_W_BIG", "fast": "PX_EN_W_FAST", "down": "PX_EN_W_DOWN", "in": "PX_EN_W_IN", "on": "PX_EN_W_ON", "dentist": "PX_EN_W_DENTIST", "clock": "PX_EN_W_CLOCK", "fork": "PX_EN_W_FORK", "brush": "PX_EN_W_BRUSH", "nails": "PX_EN_W_NAILS", "boat": "PX_EN_W_BOAT", "it steams": "PX_EN_W_IT_STEAMS", "it freezes": "PX_EN_W_IT_FREEZES", "blocking light": "PX_EN_W_BLOCKING_LIGHT", "wind": "PX_EN_W_WIND", "sleep": "PX_EN_W_SLEEP", "sunglasses": "PX_EN_W_SUNGLASSES", "river": "PX_EN_W_RIVER", "forest": "PX_EN_W_FOREST", "bike": "PX_EN_W_BIKE", "cup": "PX_EN_W_CUP", "up": "PX_EN_W_UP", "brachiosaurus": "PX_EN_W_BRACHIOSAURUS", "t-rex": "PX_EN_W_T_REX" };
@@ -17415,9 +17693,9 @@ img.e3 {
     const o = sh([x, ...sh(WORDS.filter((y) => y.i !== x.i)).slice(0, DK())]);
     if (k === "listen" && lvl() >= 5) {
       const o4 = sh([x, ...sh(WORDS.filter((y) => y.i !== x.i)).slice(0, 3)]);
-      return { voice: ["w/LULU_W_LISTEN", ...wSay(x), ...lvl() <= 4 ? faSay(x.w) : []], cap: "Listen and find it!", visual: '<div class="listen">\u{1F442}</div>', opts: o4.map((y) => ({ h: PIC("wd_" + y.i, "wp op") })), ans: o4.indexOf(x), layout: "grid4", hint: "elim", exp: { t: x.w, v: ["w/LULU_ANS_IS", ...wSay(x), ...faSay(x.w)] } };
+      return { voice: ["w/PX_G11_W_LISTEN", ...wSay(x), ...lvl() <= 4 ? faSay(x.w) : []], cap: "Listen and find it!", visual: '<div class="listen">\u{1F442}</div>', opts: o4.map((y) => ({ h: PIC("wd_" + y.i, "wp op") })), ans: o4.indexOf(x), layout: "grid4", hint: "elim", exp: { t: x.w, v: ["w/LULU_ANS_IS", ...wSay(x), ...faSay(x.w)] } };
     }
-    if (k === "listen") return { voice: ["w/LULU_W_LISTEN", ...wSay(x), ...lvl() <= 4 ? faSay(x.w) : []], cap: "Listen and find it!", visual: '<div class="listen">\u{1F442}</div>', opts: o.map((y) => ({ h: PIC("wd_" + y.i, "wp op") })), ans: o.indexOf(x), layout: "row3", hint: "elim", exp: { t: x.w, v: ["w/LULU_ANS_IS", ...wSay(x), ...faSay(x.w)] } };
+    if (k === "listen") return { voice: ["w/PX_G11_W_LISTEN", ...wSay(x), ...lvl() <= 4 ? faSay(x.w) : []], cap: "Listen and find it!", visual: '<div class="listen">\u{1F442}</div>', opts: o.map((y) => ({ h: PIC("wd_" + y.i, "wp op") })), ans: o.indexOf(x), layout: "row3", hint: "elim", exp: { t: x.w, v: ["w/LULU_ANS_IS", ...wSay(x), ...faSay(x.w)] } };
     if (k === "first") {
       const r = x.w[0].toUpperCase(), lo = sh([r, ...sh(LET.split("").filter((l) => l !== r)).slice(0, DK())]);
       return { voice: ["w/LULU_W_FIRST", ...wSay(x)], cap: "First letter?", visual: PIC("wd_" + x.i, "wp big"), opts: lo.map((l) => ({ h: '<b class="num letter">'.concat(l, "</b>"), say: lSay(l) })), ans: lo.indexOf(r), layout: "row3", hint: "elim", exp: { t: "".concat(r, " \u2026 ").concat(x.w), v: ["w/LULU_ANS_IS", ...lSay(r), ...wSay(x)] } };
@@ -23193,7 +23471,7 @@ img.e3 {
     used.add("wd" + x.i);
     if (k === "whear") {
       const o2 = sh([x, ...lookAlikes(x, 3)]);
-      return { voice: ["w/LULU_W_LISTEN", ...wSay(x)], cap: "Listen! Which word is it?", visual: '<div class="listen">\u{1F442}</div>', opts: o2.map((y) => ({ h: '<b class="word">'.concat(y.w, "</b>") })), ans: o2.indexOf(x), layout: "col", hint: "elim", exp: { t: x.w, v: ["w/LULU_ANS_IS", ...wSay(x), ...faSay(x.w)] } };
+      return { voice: ["w/PX_G11_W_LISTEN", ...wSay(x)], cap: "Listen! Which word is it?", visual: '<div class="listen">\u{1F442}</div>', opts: o2.map((y) => ({ h: '<b class="word">'.concat(y.w, "</b>") })), ans: o2.indexOf(x), layout: "col", hint: "elim", exp: { t: x.w, v: ["w/LULU_ANS_IS", ...wSay(x), ...faSay(x.w)] } };
     }
     if (k === "wspell") {
       const o2 = sh([x.w, ...misspell(x.w)]);
@@ -23759,7 +24037,7 @@ img.e3 {
       gameWin(q, 0, $("cmF"), []);
     };
   }
-  const KIND6 = [["K1", "\u{1F91D}", "Sharing your toys with a friend", 1], ["K2", "\u{1F61D}", "Laughing when someone falls", 0], ["K3", "\u{1F381}", "Making a card for grandma", 1], ["K4", "\u{1F649}", "Not listening when a friend talks", 0], ["K5", "\u{1F9F9}", "Helping to tidy up", 1], ["K6", "\u{1F58D}\uFE0F", "Grabbing a crayon without asking", 0], ["K7", "\u{1FAC2}", "Hugging a sad friend", 1], ["K8", "\u{1F6AB}", "Saying 'you can't play with us'", 0]];
+  const KIND6 = [["K1", "\u{1F91D}", "Sharing your toys with a friend", 1], ["K2", "\u{1F61D}", "Laughing when someone falls", 0], ["K3", "\u{1F381}", "Making a card for grandma", 1], ["K4", "\u{1F649}", "Not listening when a friend talks", 0], ["K5", "\u{1F9F9}", "Helping to tidy up", 1], ["K6", "\u270F\uFE0F", "Grabbing a colored pencil without asking", 0], ["K7", "\u{1FAC2}", "Hugging a sad friend", 1], ["K8", "\u{1F6AB}", "Saying 'you can't play with us'", 0]];
   function qKind() {
     const c = sh(KIND6.slice()).slice(0, 4);
     if (!c.some((x) => x[3])) c[0] = KIND6[0];
@@ -26669,6 +26947,326 @@ img.e3 {
     if (f && q && q.wid && /^px/.test(q.wid) && !factV(f).length) return "";
     return f;
   };
+  const G11_READY = true, G11 = (n) => "w/PX_G11_" + n;
+  function shGate(cat, used) {
+    const ks = sh(kindsFor(cat));
+    for (let t = 0; t < 24; t++) {
+      const k = ks[t % ks.length];
+      let q = null;
+      try {
+        q = buildQ(cat, k, used);
+      } catch (e) {
+        q = null;
+      }
+      if (!q || q.game || q.match || q.flash || !q.opts || q.opts.length < 2 || !(q.ans >= 0) || q.layout === "match") continue;
+      if (q.opts.some((o) => !o.say || !o.say.length || !o.h || o.h.length > 420)) continue;
+      if (!q.voice || !q.voice.length) continue;
+      const key = q.wid || q.cap;
+      if (used.has(key)) continue;
+      used.add(key);
+      q.kind = k;
+      return q;
+    }
+    return null;
+  }
+  function qShuttle(cat) {
+    if (!G11_READY) return null;
+    const a = lvl(), used = /* @__PURE__ */ new Set(), n = a <= 6 ? 3 : 4, gates = [];
+    for (let i = 0; i < n; i++) {
+      const g = shGate(cat, used);
+      if (!g) break;
+      gates.push(g);
+    }
+    if (gates.length < 2) return null;
+    const lanes = a <= 5 ? 2 : a <= 8 ? 3 : 4;
+    return {
+      game: "shuttle",
+      gid: "g:shuttle",
+      gates,
+      lanes,
+      cat,
+      travel: a <= 5 ? 9e3 : a <= 7 ? 7500 : a <= 9 ? 6e3 : 4800,
+      /* ms for a gate to reach the rocket */
+      rockEvery: a <= 5 ? 0 : a <= 7 ? 2600 : a <= 9 ? 1900 : 1400,
+      /* the youngest children get no rocks */
+      voice: [G11("ROCKET")],
+      factT: "Rockets need a lot of power to fly into space.",
+      factV: ["w/PX_FY_188"]
+    };
+  }
+  function shuttleQ(q) {
+    const N2 = q.lanes;
+    gShow('<div class="game">'.concat(gHead("\u{1F680}", "Space run", "Fly through the right answer"), '\n    <div class="shu-top"><div class="shu-q" id="shQ"></div><div class="shu-sc"><span id="shG"></span><span class="shu-st">\u2B50 <b id="shS">0</b></span></div></div>\n    <div class="shu-f" id="shF"><div class="shu-sky"></div><div class="shu-sky b"></div><div class="shu-gate" id="shGate"></div><div class="shu-r" id="shR"><span>\u{1F680}</span><i class="shu-fl"></i></div></div></div>'));
+    const F = $("shF"), R = $("shR"), GT = $("shGate");
+    let gi = 0, miss = 0, gmiss = 0, stars = 0, rx = 50, ty = 50, gy = -30, moving = false, raf2 = 0, lastT = 0, rockT = 0, starT = 0, objs = [], hitT = 0, cur = null, lanes = [];
+    F.style.touchAction = "none";
+    const laneX = (i) => (i + 0.5) * 100 / N2, myLane = () => Math.max(0, Math.min(N2 - 1, Math.floor(rx / 100 * N2)));
+    const setR = () => {
+      R.style.left = rx + "%";
+      R.style.transform = "translateX(-50%) rotate(".concat(Math.max(-18, Math.min(18, (ty - rx) * 0.6)), "deg)");
+    };
+    const mv = (e) => {
+      const r = F.getBoundingClientRect();
+      ty = Math.max(6, Math.min(94, (e.clientX - r.left) / r.width * 100));
+    };
+    F.onpointerdown = (e) => {
+      e.preventDefault();
+      mv(e);
+      try {
+        F.setPointerCapture(e.pointerId);
+      } catch (_) {
+      }
+    };
+    F.onpointermove = (e) => {
+      if (e.buttons || e.pointerType === "touch") mv(e);
+    };
+    const key = (e) => {
+      if (!L || L.q !== q || q.done) {
+        document.removeEventListener("keydown", key);
+        return;
+      }
+      if (e.key === "ArrowLeft") ty = laneX(Math.max(0, myLane() - 1));
+      if (e.key === "ArrowRight") ty = laneX(Math.min(N2 - 1, myLane() + 1));
+    };
+    document.addEventListener("keydown", key);
+    const upd = () => {
+      $("shG").textContent = q.gates.map((x, i) => i < gi ? "\u{1F7E2}" : i === gi ? "\u{1F7E1}" : "\u26AA").join("");
+    };
+    const showGate = (again) => {
+      cur = q.gates[gi];
+      const o = cur.opts.map((x, i) => ({ x, i })), ok = o[cur.ans], rest = sh(o.filter((y) => y.i !== cur.ans)).slice(0, N2 - 1);
+      lanes = sh([ok, ...rest]);
+      while (lanes.length < N2) lanes.push(null);
+      $("shQ").innerHTML = '<div class="shu-cap">'.concat(cur.cap || "", "</div>").concat(cur.visual && cur.visual.length < 1800 && cur.visual.replace(/<[^>]*>/g, "").replace(/\s/g, "").length <= 4 ? '<div class="shu-vis">'.concat(cur.visual, "</div>") : "");
+      GT.innerHTML = lanes.map((l, i) => '<div class="shu-l'.concat(l ? "" : " empty", '" data-i="').concat(i, '">').concat(l ? '<div class="opt shu-o">'.concat(l.x.h, "</div>") : "\u2604\uFE0F", "</div>")).join("");
+      GT.style.gridTemplateColumns = "repeat(".concat(N2, ",1fr)");
+      gy = 4;
+      GT.style.top = gy + "%";
+      GT.classList.remove("pass", "bad");
+      moving = false;
+      upd();
+      read(again);
+    };
+    const read = (again) => {
+      hush();
+      const tok = {};
+      window.__optTok = tok;
+      const boxes = [...GT.querySelectorAll(".shu-l")];
+      const list = [{ c: again ? [] : gi === 0 ? [G11("ROCKET"), ...cur.voice] : cur.voice }, ...lanes.map((l, i2) => l ? { c: l.x.say, b: boxes[i2] } : null).filter(Boolean)];
+      let i = 0;
+      const lit = (b) => boxes.forEach((x) => x.classList.toggle("saying", x === b));
+      const step = () => {
+        if (window.__optTok !== tok || !L || L.q !== q || q.done) {
+          lit(null);
+          return;
+        }
+        if (i >= list.length) {
+          lit(null);
+          moving = true;
+          return;
+        }
+        const x = list[i++];
+        lit(x.b || null);
+        if (!x.c.length) {
+          step();
+          return;
+        }
+        sayseq(x.c, () => setTimeout(step, x.b ? 150 : 250));
+      };
+      step();
+    };
+    q._read = () => {
+      if (cur && !q.done && gy < 60) {
+        moving = false;
+        gy = 4;
+        GT.style.top = gy + "%";
+        read(false);
+      }
+    };
+    const spawn = (kind) => {
+      const el = document.createElement("div");
+      el.className = "shu-ob " + kind;
+      el.textContent = kind === "rock" ? pickOne(["\u{1FAA8}", "\u2604\uFE0F"]) : "\u2B50";
+      const x = kind === "rock" ? Math.random() < 0.5 ? ty : ri(8, 92) : ri(8, 92);
+      el.style.left = x + "%";
+      F.appendChild(el);
+      objs.push({ el, kind, x, y: -8, s: kind === "rock" ? ri(80, 130) / 100 : 1 });
+    };
+    const pass = () => {
+      if (!cur) return;
+      const C = cur;
+      cur = null;
+      const li = myLane(), l = lanes[li], good = l && l.i === C.ans, boxes = GT.querySelectorAll(".shu-l");
+      moving = false;
+      if (good) {
+        sfx.good();
+        GT.classList.add("pass");
+        boxes[li].classList.add("ok");
+        burstAt(boxes[li], 18);
+        gi++;
+        gmiss = 0;
+        if (gi >= q.gates.length) {
+          upd();
+          cancelAnimationFrame(raf2);
+          R.classList.add("away");
+          setTimeout(() => {
+            if (L && L.q === q) gameWin(q, miss > 1 ? 1 : 0, R, [G11("ROCKET_WIN")]);
+          }, 700);
+          return;
+        }
+        setTimeout(() => {
+          if (L && L.q === q && !q.done) showGate(false);
+        }, 900);
+      } else {
+        sfx.oops();
+        miss++;
+        gmiss++;
+        GT.classList.add("bad");
+        if (boxes[li]) boxes[li].classList.add("no");
+        bounce(R);
+        if (gmiss >= 2) {
+          const ci = lanes.findIndex((x) => x && x.i === C.ans);
+          boxes[ci].classList.add("ok");
+          hush();
+          sayseq(C.exp && C.exp.v && C.exp.v.length ? C.exp.v : lanes[ci].x.say, () => {
+          });
+          toastHint("This was the right one!");
+          gi++;
+          gmiss = 0;
+          if (gi >= q.gates.length) {
+            upd();
+            cancelAnimationFrame(raf2);
+            setTimeout(() => {
+              if (L && L.q === q) gameWin(q, 1, R, [G11("ROCKET_WIN")]);
+            }, 2600);
+            return;
+          }
+          setTimeout(() => {
+            if (L && L.q === q && !q.done) showGate(false);
+          }, 2600);
+        } else {
+          toastHint(l ? "Not that gate - try again!" : "Fly into a gate with an answer!");
+          setTimeout(() => {
+            if (L && L.q === q && !q.done) showGate(true);
+          }, 900);
+        }
+      }
+    };
+    const tick2 = (t) => {
+      if (!L || L.q !== q || q.done) {
+        cancelAnimationFrame(raf2);
+        return;
+      }
+      const dt = Math.min(50, t - (lastT || t));
+      lastT = t;
+      rx += (ty - rx) * Math.min(1, dt / 90);
+      setR();
+      if (moving && cur) {
+        gy += dt / q.travel * 76;
+        GT.style.top = gy + "%";
+        if (gy >= 74) pass();
+        if (q.rockEvery && t - rockT > q.rockEvery && gy < 52) {
+          rockT = t;
+          spawn("rock");
+        }
+        if (t - starT > 1700) {
+          starT = t;
+          spawn("star");
+        }
+      }
+      objs = objs.filter((o) => {
+        o.y += dt / q.travel * 95 * o.s;
+        o.el.style.top = o.y + "%";
+        if (o.y > 74 && o.y < 90 && Math.abs(o.x - rx) < 8) {
+          if (o.kind === "star") {
+            stars++;
+            $("shS").textContent = stars;
+            sfx.tap();
+            o.el.remove();
+            return false;
+          }
+          if (t - hitT > 900) {
+            hitT = t;
+            R.classList.remove("hit");
+            void R.offsetWidth;
+            R.classList.add("hit");
+            sfx.oops();
+            if (stars > 0) {
+              stars--;
+              $("shS").textContent = stars;
+            }
+            gy = Math.max(4, gy - 6);
+          }
+          o.el.remove();
+          return false;
+        }
+        if (o.y > 104) {
+          o.el.remove();
+          return false;
+        }
+        return true;
+      });
+      raf2 = requestAnimationFrame(tick2);
+    };
+    setR();
+    showGate(false);
+    raf2 = requestAnimationFrame(tick2);
+    window.__gSolve = () => {
+      const go = () => {
+        if (q.done || !L || L.q !== q) return;
+        if (!cur) {
+          setTimeout(go, 200);
+          return;
+        }
+        if (!moving) {
+          window.__optTok = {};
+          moving = true;
+        }
+        const ci = lanes.findIndex((x) => x && x.i === cur.ans);
+        ty = rx = laneX(ci);
+        gy = 73.9;
+        setTimeout(go, 300);
+      };
+      go();
+    };
+  }
+  GAMES.shuttle = shuttleQ;
+  if (typeof gReadOpts === "function") {
+    const _gro11 = gReadOpts;
+    gReadOpts = function(q) {
+      if (q && q.game === "shuttle") {
+        if (q._read) q._read();
+        return true;
+      }
+      return _gro11(q);
+    };
+  }
+  const _bf11 = buildFormat;
+  buildFormat = function(kind, cat) {
+    if (kind === "f_shuttle") return qShuttle(cat);
+    return _bf11(kind, cat);
+  };
+  FMIN.f_shuttle = 4;
+  const SHU_OK = {};
+  const SHU_CATS = ["count", "add", "letters", "read", "farm", "animals", "world", "sky", "shapes", "clock", "people", "flags"];
+  const _ff11 = formatsFor0;
+  formatsFor0 = function(cat) {
+    const b = _ff11(cat);
+    if (!(G11_READY && SHU_CATS.includes(cat) && ageOK("f_shuttle"))) return b;
+    const kk = cat + "|" + (S.age || 6) + "|" + lvl();
+    if (SHU_OK[kk] === void 0) {
+      let ok = false;
+      for (let t = 0; t < 4 && !ok; t++) {
+        try {
+          ok = !!qShuttle(cat);
+        } catch (e) {
+        }
+      }
+      SHU_OK[kk] = ok;
+    }
+    return SHU_OK[kk] ? [...b, "f_shuttle"] : b;
+  };
+  Object.assign(GMAP, { "g:shuttle": G("Space run", ["think", "move"], [["think", "recall"]], "The child steers a rocket through the gate with the right answer to this section's questions, dodging rocks and collecting stars. Faster, with more gates and rocks, as the child grows.", "Practice") });
   const E3 = { "\u{1F3EA}": "1f3ea", "\u26F5": "26f5", "\u{1F477}": "1f477", "\u2753": "2753", "\u2B50": "2b50", "\u{1F3C6}": "1f3c6", "\u{1F433}": "1f433", "\u{1FAA8}": "1faa8", "\u2601\uFE0F": "2601-fe0f", "\u{1F955}": "1f955", "\u{1F1E6}\u{1F1FA}": "1f1e6-1f1fa", "\u{1F634}": "1f634", "\u{1F50B}": "1f50b", "\u{1F36C}": "1f36c", "\u{1F3A8}": "1f3a8", "\u{1F352}": "1f352", "\u{1F9E9}": "1f9e9", "7\uFE0F\u20E3": "37-fe0f-20e3", "\u{1F389}": "1f389", "\u{1F948}": "1f948", "\u{1F372}": "1f372", "\u2139\uFE0F": "2139-fe0f", "\u{1F69C}": "1f69c", "\u{1F48E}": "1f48e", "\u{1F347}": "1f347", "\u{1F9A9}": "1f9a9", "\u{1F353}": "1f353", "\u{1F43C}": "1f43c", "\u{1F427}": "1f427", "\u{1F382}": "1f382", "\u{1F339}": "1f339", "\u{1F3CE}\uFE0F": "1f3ce-fe0f", "\u{1F30E}": "1f30e", "\u{1F52C}": "1f52c", "\u{1F51F}": "1f51f", "\u{1F33E}": "1f33e", "\u{1F345}": "1f345", "\u{1F524}": "1f524", "\u{1FAA5}": "1faa5", "\u{1F46E}": "1f46e", "\u{1F431}": "1f431", "\u{1F96C}": "1f96c", "\u{1F528}": "1f528", "\u{1F419}": "1f419", "\u{1F414}": "1f414", "\u{1F3BE}": "1f3be", "\u{1F3A0}": "1f3a0", "\u{1F392}": "1f392", "\u{1F31F}": "1f31f", "\u{1F578}\uFE0F": "1f578-fe0f", "\u{1F3E0}": "1f3e0", "\u{1F335}": "1f335", "\u{1F343}": "1f343", "9\uFE0F\u20E3": "39-fe0f-20e3", "\u{1F436}": "1f436", "\u{1F9F0}": "1f9f0", "\u26C8\uFE0F": "26c8-fe0f", "\u{1F536}": "1f536", "\u23F3": "23f3", "\u{1F3AF}": "1f3af", "\u{1F9C1}": "1f9c1", "\u{1F692}": "1f692", "\u{1FAB5}": "1fab5", "\u{1F954}": "1f954", "\u{1F40D}": "1f40d", "\u{1F9AB}": "1f9ab", "\u{1F49C}": "1f49c", "\u{1F36A}": "1f36a", "\u{1F992}": "1f992", "\u{1F988}": "1f988", "\u{1F7F0}": "1f7f0", "\u{1F9ED}": "1f9ed", "\u{1F1EE}\u{1F1F7}": "1f1ee-1f1f7", "\u{1F440}": "1f440", "\u{1F3C5}": "1f3c5", "\u{1F423}": "1f423", "\u{1F4AF}": "1f4af", "\u{1F40C}": "1f40c", "\u{1F1FA}\u{1F1F8}": "1f1fa-1f1f8", "\u{1F56F}\uFE0F": "1f56f-fe0f", "\u{1F1EF}\u{1F1F5}": "1f1ef-1f1f5", "\u{1F9B5}": "1f9b5", "\u{1F58D}\uFE0F": "1f58d-fe0f", "\u{1F41E}": "1f41e", "\u2B06\uFE0F": "2b06-fe0f", "\u26C4": "26c4", "\u{1F300}": "1f300", "\u{1F426}": "1f426", "\u{1F4A7}": "1f4a7", "\u{1F332}": "1f332", "\u{1F680}": "1f680", "\u2B05\uFE0F": "2b05-fe0f", "\u{1F48C}": "1f48c", "\u{1F305}": "1f305", "\u{1F464}": "1f464", "\u{1F410}": "1f410", "\u267B\uFE0F": "267b-fe0f", "\u{1F50A}": "1f50a", "\u{1F340}": "1f340", "\u{1F468}\u200D\u{1F373}": "1f468-200d-1f373", "\u2728": "2728", "\u2795": "2795", "4\uFE0F\u20E3": "34-fe0f-20e3", "\u{1F41F}": "1f41f", "\u{1F576}\uFE0F": "1f576-fe0f", "\u{1F4AB}": "1f4ab", "\u{1F327}\uFE0F": "1f327-fe0f", "\u274C": "274c", "\u{1F43E}": "1f43e", "\u{1F34D}": "1f34d", "\u{1F4F7}": "1f4f7", "\u{1F3F0}": "1f3f0", "\u{1FABA}": "1faba", "\u{1F1E9}\u{1F1EA}": "1f1e9-1f1ea", "\u{1F983}": "1f983", "\u{1F9AE}": "1f9ae", "\u{1F485}": "1f485", "\u{1F50D}": "1f50d", "\u2796": "2796", "\u{1F413}": "1f413", "\u{1F36F}": "1f36f", "\u{1FAD0}": "1fad0", "\u{1F415}\u200D\u{1F9BA}": "1f415-200d-1f9ba", "\u{1F6FB}": "1f6fb", "\u{1F526}": "1f526", "\u{1F425}": "1f425", "\u{1F40B}": "1f40b", "\u{1F600}": "1f600", "\u{1F3E1}": "1f3e1", "\u{1F1EE}\u{1F1F3}": "1f1ee-1f1f3", "\u{1F9B6}": "1f9b6", "\u{1F9D1}\u200D\u{1F3EB}": "1f9d1-200d-1f3eb", "\u{1F437}": "1f437", "\u{1F3C1}": "1f3c1", "\u2696\uFE0F": "2696-fe0f", "\u{1F446}": "1f446", "\u{1F938}": "1f938", "\u{1F7E0}": "1f7e0", "\u{1F9B7}": "1f9b7", "\u{1F947}": "1f947", "\u{1F53A}": "1f53a", "\u{1F7E6}": "1f7e6", "\u{1F33B}": "1f33b", "\u{1FA9B}": "1fa9b", "\u{1F949}": "1f949", "\u{1FAB1}": "1fab1", "\u{1F30B}": "1f30b", "\u{1FA90}": "1fa90", "\u{1F33F}": "1f33f", "\u{1F1EA}\u{1F1EC}": "1f1ea-1f1ec", "\u{1F60A}": "1f60a", "\u{1F94E}": "1f94e", "\u{1F6B2}": "1f6b2", "\u{1F6CC}": "1f6cc", "\u{1F95B}": "1f95b", "\u{1F408}": "1f408", "\u{1F30D}": "1f30d", "\u{1F95A}": "1f95a", "\u{1F9D1}\u200D\u{1F692}": "1f9d1-200d-1f692", "\u{1F9FC}": "1f9fc", "\u2699\uFE0F": "2699-fe0f", "\u{1F34A}": "1f34a", "\u{1F98E}": "1f98e", "\u{1F43F}\uFE0F": "1f43f-fe0f", "\u{1F306}": "1f306", "\u{1FA81}": "1fa81", "\u{1F684}": "1f684", "\u{1F430}": "1f430", "\u{1F366}": "1f366", "\u{1F317}": "1f317", "\u{1F3A3}": "1f3a3", "\u{1FAB7}": "1fab7", "\u{1F37D}\uFE0F": "1f37d-fe0f", "\u{1F64B}": "1f64b", "\u{1F4CB}": "1f4cb", "\u{1F320}": "1f320", "\u{1F9C4}": "1f9c4", "\u{1F4F1}": "1f4f1", "\u{1F4D6}": "1f4d6", "\u{1F428}": "1f428", "\u{1F512}": "1f512", "\u{1F9E3}": "1f9e3", "\u{1F4C6}": "1f4c6", "\u{1F973}": "1f973", "\u{1F4AA}": "1f4aa", "\u{1F415}": "1f415", "\u{1F337}": "1f337", "\u{1F49A}": "1f49a", "\u{1F3DC}\uFE0F": "1f3dc-fe0f", "\u{1F9D1}\u200D\u{1F3A8}": "1f9d1-200d-1f3a8", "\u{1F4CE}": "1f4ce", "\u{1F41B}": "1f41b", "\u{1F9F7}": "1f9f7", "\u{1F451}": "1f451", "\u{1F9D2}": "1f9d2", "\u{1F9D1}\u200D\u{1F52C}": "1f9d1-200d-1f52c", "\u{1F7EB}": "1f7eb", "\u{1F49D}": "1f49d", "\u{1F6A2}": "1f6a2", "\u{1F416}": "1f416", "5\uFE0F\u20E3": "35-fe0f-20e3", "\u{1F7E2}": "1f7e2", "\u{1F443}": "1f443", "\u{1F44B}": "1f44b", "\u{1F41A}": "1f41a", "\u{1F1EE}\u{1F1F9}": "1f1ee-1f1f9", "\u{1F691}": "1f691", "\u{1F3B5}": "1f3b5", "\u{1F9F2}": "1f9f2", "\u{1F36D}": "1f36d", "\u{1F406}": "1f406", "\u{1F374}": "1f374", "\u{1F628}": "1f628", "\u{1F35E}": "1f35e", "\u{1F9D1}\u200D\u2708\uFE0F": "1f9d1-200d-2708-fe0f", "\u{1F514}": "1f514", "\u{1F3CB}\uFE0F": "1f3cb-fe0f", "\u{1F4CF}": "1f4cf", "\u{1F534}": "1f534", "\u{1F34C}": "1f34c", "2\uFE0F\u20E3": "32-fe0f-20e3", "\u2B07\uFE0F": "2b07-fe0f", "\u21A9\uFE0F": "21a9-fe0f", "\u{1F342}": "1f342", "\u{1F91D}": "1f91d", "\u{1F511}": "1f511", "\u{1F6D2}": "1f6d2", "\u2702\uFE0F": "2702-fe0f", "\u{1F6C1}": "1f6c1", "\u{1F9C0}": "1f9c0", "\u{1F334}": "1f334", "\u{1F9D1}\u200D\u{1F527}": "1f9d1-200d-1f527", "\u{1F3A9}": "1f3a9", "\u{1F6A9}": "1f6a9", "\u{1F41D}": "1f41d", "\u{1F5D3}\uFE0F": "1f5d3-fe0f", "\u{1F9D1}": "1f9d1", "\u{1F319}": "1f319", "\u{1F34B}": "1f34b", "\u{1F33D}": "1f33d", "\u{1F496}": "1f496", "\u{1F6F8}": "1f6f8", "\u{1FA80}": "1fa80", "\u{1F99F}": "1f99f", "\u{1F989}": "1f989", "\u{1F330}": "1f330", "\u{1F50E}": "1f50e", "\u{1F341}": "1f341", "\u{1F984}": "1f984", "\u{1F409}": "1f409", "\u{1F9E0}": "1f9e0", "\u{1F407}": "1f407", "\u{1F487}": "1f487", "\u26BD": "26bd", "\u{1F573}\uFE0F": "1f573-fe0f", "\u2600\uFE0F": "2600-fe0f", "\u{1F9B4}": "1f9b4", "\u{1F369}": "1f369", "\u{1F52D}": "1f52d", "\u{1F393}": "1f393", "\u{1F1F2}\u{1F1FD}": "1f1f2-1f1fd", "\u{1F42D}": "1f42d", "\u{1F60B}": "1f60b", "\u{1F1E8}\u{1F1F3}": "1f1e8-1f1f3", "\u{1F384}": "1f384", "\u{1F307}": "1f307", "\u{1F380}": "1f380", "\u{1F338}": "1f338", "\u{1FAB0}": "1fab0", "\u2708\uFE0F": "2708-fe0f", "\u{1F4DA}": "1f4da", "\u{1F476}": "1f476", "\u2B1B": "2b1b", "\u{1F450}": "1f450", "\u{1F914}": "1f914", "\u{1FA9E}": "1fa9e", "\u{1F995}": "1f995", "\u{1F355}": "1f355", "\u{1F5E3}\uFE0F": "1f5e3-fe0f", "\u{1F5FA}\uFE0F": "1f5fa-fe0f", "\u{1F422}": "1f422", "\u26A1": "26a1", "\u{1F976}": "1f976", "\u{1F9C3}": "1f9c3", "\u2614": "2614", "\u{1F69A}": "1f69a", "\u{1F0CF}": "1f0cf", "\u{1F45F}": "1f45f", "\u{1F697}": "1f697", "\u{1F9C5}": "1f9c5", "\u{1F6D6}": "1f6d6", "\u{1F32B}\uFE0F": "1f32b-fe0f", "\u2615": "2615", "\u270F\uFE0F": "270f-fe0f", "\u{1F996}": "1f996", "\u{1FABD}": "1fabd", "\u{1F418}": "1f418", "\u{1F9D1}\u200D\u{1F680}": "1f9d1-200d-1f680", "\u{1FAC0}": "1fac0", "\u{1F501}": "1f501", "\u{1F3D0}": "1f3d0", "\u{1F7E1}": "1f7e1", "\u{1F98A}": "1f98a", "6\uFE0F\u20E3": "36-fe0f-20e3", "\u{1F469}\u200D\u2695\uFE0F": "1f469-200d-2695-fe0f", "\u2604\uFE0F": "2604-fe0f", "\u{1F9F1}": "1f9f1", "\u{1F98B}": "1f98b", "\u{1FA71}": "1fa71", "\u{1F7E5}": "1f7e5", "\u{1F90D}": "1f90d", "\u{1F31B}": "1f31b", "\u{1F9E6}": "1f9e6", "\u{1F535}": "1f535", "\u27A1\uFE0F": "27a1-fe0f", "\u{1F9D1}\u200D\u2695\uFE0F": "1f9d1-200d-2695-fe0f", "\u{1F411}": "1f411", "\u{1F3D6}\uFE0F": "1f3d6-fe0f", "\u{1F981}": "1f981", "\u{1F36B}": "1f36b", "\u{1F62E}": "1f62e", "\u{1F44D}": "1f44d", "\u{1F9D1}\u200D\u{1F373}": "1f9d1-200d-1f373", "\u{1F987}": "1f987", "\u{1F551}": "1f551", "\u{1F966}": "1f966", "\u{1F577}\uFE0F": "1f577-fe0f", "\u{1F388}": "1f388", "\u{1F34E}": "1f34e", "\u{1F980}": "1f980", "\u26AA": "26aa", "\u{1F41C}": "1f41c", "\u{1FA99}": "1fa99", "\u{1F499}": "1f499", "\u{1F1E8}\u{1F1E6}": "1f1e8-1f1e6", "\u{1F552}": "1f552", "\u{1F35A}": "1f35a", "\u{1F693}": "1f693", "\u{1F4A1}": "1f4a1", "\u{1F308}": "1f308", "\u23F0": "23f0", "\u{1F3B9}": "1f3b9", "\u{1F47D}": "1f47d", "\u{1F529}": "1f529", "\u{1F35F}": "1f35f", "\u{1F331}": "1f331", "\u{1F442}": "1f442", "\u{1F682}": "1f682", "\u2705": "2705", "\u{1F42C}": "1f42c", "\u{1F438}": "1f438", "1\uFE0F\u20E3": "31-fe0f-20e3", "\u{1F30A}": "1f30a", "\u{1F4C5}": "1f4c5", "\u{1FAB6}": "1fab6", "\u{1F6F7}": "1f6f7", "\u{1F986}": "1f986", "\u{1F434}": "1f434", "\u{1F620}": "1f620", "\u{1F9E5}": "1f9e5", "\u{1F963}": "1f963", "\u{1F429}": "1f429", "\u{1F4A8}": "1f4a8", "\u{1F6F0}\uFE0F": "1f6f0-fe0f", "\u{1F525}": "1f525", "\u{1F4E4}": "1f4e4", "\u2668\uFE0F": "2668-fe0f", "\u{1F3CD}\uFE0F": "1f3cd-fe0f", "\u{1F52E}": "1f52e", "8\uFE0F\u20E3": "38-fe0f-20e3", "\u{1F315}": "1f315", "\u{1F311}": "1f311", "\u2744\uFE0F": "2744-fe0f", "\u{1F9FA}": "1f9fa", "\u{1F4AC}": "1f4ac", "\u{1F3AC}": "1f3ac", "\u{1F51B}": "1f51b", "3\uFE0F\u20E3": "33-fe0f-20e3", "\u{1F550}": "1f550", "\u{1F9C2}": "1f9c2", "\u{1F350}": "1f350", "\u{1F5A4}": "1f5a4", "\u2764\uFE0F": "2764-fe0f", "\u{1F9CA}": "1f9ca", "\u{1F1EB}\u{1F1F7}": "1f1eb-1f1f7", "\u{1F9FD}": "1f9fd", "\u{1F944}": "1f944", "\u{1F9E2}": "1f9e2", "\u{1F40A}": "1f40a", "\u{1F3B8}": "1f3b8", "\u{1F957}": "1f957", "\u{1F43B}": "1f43b", "\u{1F68C}": "1f68c", "\u{1F4E5}": "1f4e5", "\u{1F4C8}": "1f4c8", "\u{1F316}": "1f316", "\u{1F504}": "1f504", "\u{1F468}\u200D\u{1F469}\u200D\u{1F467}": "1f468-200d-1f469-200d-1f467", "\u{1F632}": "1f632", "\u{1F344}": "1f344", "\u{1F4FB}": "1f4fb", "\u{1F622}": "1f622", "\u{1F346}": "1f346", "\u{1F916}": "1f916", "\u{1F404}": "1f404", "\u{1F7E3}": "1f7e3", "\u{1F30C}": "1f30c", "\u{1F527}": "1f527", "\u{1FAE7}": "1fae7", "\u{1FA84}": "1fa84", "\u{1F1E7}\u{1F1F7}": "1f1e7-1f1f7", "\u{1F6CF}\uFE0F": "1f6cf-fe0f", "\u{1F967}": "1f967", "\u{1F349}": "1f349", "\u{1F3DE}\uFE0F": "1f3de-fe0f", "\u{1F539}": "1f539", "\u{1F32C}\uFE0F": "1f32c-fe0f", "\u{1F432}": "1f432", "\u{1F964}": "1f964", "\u{1F9D3}": "1f9d3", "\u{1FAD8}": "1fad8", "\u{1F6B6}": "1f6b6", "\u{1F3B1}": "1f3b1", "\u{1F1EC}\u{1F1E7}": "1f1ec-1f1e7", "\u26F0\uFE0F": "26f0-fe0f", "\u{1F4FA}": "1f4fa", "\u{1F699}": "1f699", "\u{1F985}": "1f985", "\u{1F31E}": "1f31e", "\u{1F30F}": "1f30f", "\u{1F522}": "1f522", "\u{1F9F8}": "1f9f8", "\u{1FA9C}": "1fa9c", "\u{1F381}": "1f381", "\u{1F537}": "1f537", "\u{1F383}": "1f383", "\u{1F333}": "1f333", "\u26AB": "26ab", "\u{1F42F}": "1f42f", "\u{1F9D1}\u200D\u{1F33E}": "1f9d1-200d-1f33e", "\u{1F469}": "1f469", "\u{1F4C4}": "1f4c4", "\u{1F4A5}": "1f4a5", "\u{1F469}\u200D\u{1F692}": "1f469-200d-1f692", "\u{1FAB4}": "1fab4", "\u{1F648}": "1f648" };
   const E3RE = new RegExp(Object.keys(E3).sort((a, b) => b.length - a.length).map((s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|"), "g");
   function e3Node(t) {
