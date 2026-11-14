@@ -31,7 +31,7 @@
 "doghouse": "LULU_FA_HOME3",
 "house": "PX_AW_HOUSE",
 "hive": "LULU_FA_HOME5",
-"tree": "LULU_FA_HOME6",
+"tree": "PX_FA_W_TREE",
 "cave": "PX_AW_CAVE",
 "burrow": "LULU_FA_HOME8",
 "sea": "LULU_FA_HOME9",
@@ -245,5 +245,11 @@
 "spin earth": "PX_OW_SPIN_EARTH",
 "very cold": "PX_OW_VERY_COLD",
 "warm": "PX_OW_WARM",
-"wrench": "PX_OW_WRENCH"
+"wrench": "PX_OW_WRENCH",
+"honey": "PX_FA_W_HONEY",
+"baby": "PX_FA_W_BABY",
+"balloon": "PX_FA_W_BALLOON",
+"bag": "PX_FA_W_BAG",
+"web": "PX_FA_W_WEB",
+"leg": "PX_FA_W_LEG"
 }

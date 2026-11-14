@@ -132,7 +132,7 @@ function calmQ(q){let n=0,hold=false,t0=0;
   window.__gSolve=()=>{q.done=true;gameWin(q,0,$("cmF"),[])}}
 
 /* ---------------- FEELINGS 4: kind or unkind ---------------- */
-const KIND6=[["K1","🤝","Sharing your toys with a friend",1],["K2","😝","Laughing when someone falls",0],["K3","🎁","Making a card for grandma",1],["K4","🙉","Not listening when a friend talks",0],["K5","🧹","Helping to tidy up",1],["K6","🖍️","Grabbing a crayon without asking",0],["K7","🫂","Hugging a sad friend",1],["K8","🚫","Saying 'you can't play with us'",0]];
+const KIND6=[["K1","🤝","Sharing your toys with a friend",1],["K2","😝","Laughing when someone falls",0],["K3","🎁","Making a card for grandma",1],["K4","🙉","Not listening when a friend talks",0],["K5","🧹","Helping to tidy up",1],["K6","✏️","Grabbing a colored pencil without asking",0],["K7","🫂","Hugging a sad friend",1],["K8","🚫","Saying 'you can't play with us'",0]];
 function qKind(){const c=sh(KIND6.slice()).slice(0,4);if(!c.some(x=>x[3]))c[0]=KIND6[0];if(c.every(x=>x[3]))c[3]=KIND6[1];return {game:"kind",c,voice:[G6("KIND")],gid:"g:kind",factT:"Kind actions make everyone feel good - including you!"}}
 function kindQ(q){let at=0,miss=0;
   gShow(`<div class="game">${gHead("💚","Kind or unkind?","Is it kind?")}<div class="kd" id="kdS"></div><div class="kd-btns"><button class="kd-b no" data-v="0">💔<small>Unkind</small></button><button class="kd-b yes" data-v="1">💚<small>Kind</small></button></div><div class="cm-dots" id="kdD">${"○".repeat(q.c.length)}</div></div>`);

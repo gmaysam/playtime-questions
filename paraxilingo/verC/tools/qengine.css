@@ -1563,3 +1563,36 @@ img.e3{width:1.18em;height:1.18em;vertical-align:-.22em;object-fit:contain;displ
 .sy-mic{width:92px;height:92px;border-radius:50%;border:0;background:#FF6B6B;color:#fff;font-size:42px;box-shadow:0 6px 0 #C92A2A;cursor:pointer}
 .sy-mic.on{animation:sypulse 1s ease-in-out infinite;background:#FA5252}@keyframes sypulse{50%{box-shadow:0 6px 0 #C92A2A,0 0 0 16px rgba(250,82,82,.25)}}
 .sy-h{font:700 16px "Nunito",sans-serif;color:#6B7785;text-align:center;min-height:22px}
+/* v20 Space run */
+.shu-top{display:flex;align-items:center;gap:10px;margin:2px 0 8px}
+.shu-q{flex:1;min-width:0;display:flex;align-items:center;gap:10px;background:#F3EEFF;border-radius:16px;padding:8px 12px}
+.shu-cap{font:800 clamp(15px,4vw,20px)/1.25 "Nunito",sans-serif;color:#3C2A7A}
+.shu-vis{max-height:86px;overflow:hidden;flex:0 0 auto;transform-origin:right center}
+.shu-vis>*{transform:scale(.62);transform-origin:center;margin:-18px -24px}
+.shu-sc{display:flex;flex-direction:column;align-items:flex-end;gap:2px;font:800 15px "Nunito",sans-serif;color:#555}
+.shu-f{position:relative;flex:1;min-height:340px;border-radius:24px;overflow:hidden;background:radial-gradient(120% 80% at 50% 110%,#3B2A8F 0%,#1A1446 55%,#0B0A22 100%);user-select:none;-webkit-user-select:none;cursor:grab}
+.shu-sky{position:absolute;inset:-100% 0 0 0;background-image:radial-gradient(2px 2px at 12% 18%,#fff 50%,transparent 52%),radial-gradient(1.5px 1.5px at 30% 62%,#cfd8ff 50%,transparent 52%),radial-gradient(2px 2px at 54% 30%,#fff 50%,transparent 52%),radial-gradient(1.5px 1.5px at 72% 76%,#fff 50%,transparent 52%),radial-gradient(2.5px 2.5px at 88% 12%,#ffe9a8 50%,transparent 52%),radial-gradient(1.5px 1.5px at 8% 86%,#fff 50%,transparent 52%),radial-gradient(1.5px 1.5px at 44% 92%,#cfd8ff 50%,transparent 52%);background-size:100% 50%;animation:shuSky 6s linear infinite;opacity:.9}
+.shu-sky.b{animation-duration:11s;opacity:.5;background-position:40px 0}
+@keyframes shuSky{to{transform:translateY(50%)}}
+.shu-gate{position:absolute;left:3%;right:3%;display:grid;gap:8px;z-index:2}
+.shu-l{min-height:74px;border-radius:18px;border:3px dashed rgba(140,220,255,.9);background:rgba(120,200,255,.16);box-shadow:0 0 18px rgba(120,200,255,.45),inset 0 0 14px rgba(120,200,255,.3);display:flex;align-items:center;justify-content:center;padding:4px;transition:background .2s,border-color .2s,transform .2s}
+.shu-l.empty{border-color:rgba(255,255,255,.15);background:transparent;box-shadow:none;font-size:26px;opacity:.6}
+.shu-l.saying{border-style:solid;border-color:#FFD43B;background:rgba(255,212,59,.28);transform:scale(1.05)}
+.shu-l.ok{border-style:solid;border-color:#58CC02;background:rgba(88,204,2,.45)}
+.shu-l.no{border-style:solid;border-color:#FF4B4B;background:rgba(255,75,75,.4);animation:shuNo .4s}
+@keyframes shuNo{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.shu-o{pointer-events:none;background:#fff;border-radius:14px;padding:4px 8px;min-width:0;max-width:100%;box-shadow:none;border:0;margin:0;display:flex;flex-direction:column;align-items:center;font-size:.9em}
+.shu-o .wp.op{width:52px;height:52px}.shu-o .oe{font-size:30px}.shu-o .oe.big{font-size:34px}.shu-o small{font-size:13px}
+.shu-o .num{font-size:26px}.shu-o .dots{display:none}.shu-o svg{max-width:64px;max-height:64px}
+.shu-r{position:absolute;bottom:4%;width:64px;height:92px;z-index:3;pointer-events:none;transition:bottom .7s ease-in}
+.shu-r>span{display:block;font-size:56px;line-height:64px;text-align:center;transform:rotate(-45deg);filter:drop-shadow(0 4px 6px rgba(0,0,0,.4))}
+.shu-fl{position:absolute;left:50%;top:58px;width:16px;height:26px;margin-left:-8px;border-radius:50% 50% 60% 60%;background:radial-gradient(circle at 50% 20%,#fff 0,#FFD43B 35%,#FF7A00 70%,transparent 72%);animation:shuFl .12s infinite alternate}
+@keyframes shuFl{to{transform:scaleY(1.35);opacity:.8}}
+.shu-r.hit{animation:shuHit .5s}
+@keyframes shuHit{20%{transform:translateX(-50%) rotate(-25deg)}50%{transform:translateX(-50%) rotate(25deg)}80%{transform:translateX(-50%) rotate(-10deg)}}
+.shu-r.away{bottom:120%}
+.shu-ob{position:absolute;transform:translate(-50%,0);font-size:34px;pointer-events:none;z-index:1}
+.shu-ob.rock{font-size:40px;animation:shuSpin 2.4s linear infinite}
+.shu-ob.star{filter:drop-shadow(0 0 6px #FFD43B)}
+@keyframes shuSpin{to{transform:translate(-50%,0) rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.shu-sky{animation:none}}
