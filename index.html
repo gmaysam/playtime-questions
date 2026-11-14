@@ -28328,6 +28328,25 @@ img.e3 {
     if (/^\d+$/.test(w) && +w > 100 && FA_SAY[w]) return ["w/" + FA_SAY[w]];
     return _fs13(word);
   };
+  Object.assign(FMAX, { f_fishfood: 5, f_puzzle: 6, f_quilt: 5, f_say: 6, f_sci: 7, f_sort: 6, f_tapall: 5 });
+  Object.assign(FMIN, { f_setclock: 7 });
+  GRADE.count.oddeven = [2, 3];
+  GRADE.count.after = [-1, 0];
+  const _bq13 = buildQ;
+  buildQ = function(cat, k, used) {
+    let q = _bq13(cat, k, used);
+    if (q && cat === "add" && k === "big" && lvl() >= 7) {
+      for (let t = 0; t < 15; t++) {
+        const ns = String(q.visual || "").replace(/<[^>]+>/g, " ").match(/\d+/g) || [];
+        if (ns.length >= 2 && ns.every((n) => +n >= 3) && Math.max(...ns.map(Number)) >= 8) break;
+        q = _bq13(cat, k, used);
+      }
+    }
+    if (q && cat === "count" && k === "missing" && q.opts) q.opts.forEach((o) => {
+      o.h = String(o.h || "").replace(/<span class="dots"[^>]*>[\s\S]*?<\/span>/g, "");
+    });
+    return q;
+  };
   const QC_RE = /^#qc=([a-z]+):([^:]+)(?::([^:]+))?(?::([^:]+))?$/i;
   const QCM = (location.hash || "").match(QC_RE);
   if (QCM) {
