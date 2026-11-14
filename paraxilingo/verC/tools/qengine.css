@@ -1739,3 +1739,5 @@ img.e3{width:1.18em;height:1.18em;vertical-align:-.22em;object-fit:contain;displ
 .g14more{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;margin-top:8px;padding:10px;border:0;border-radius:14px;background:#EDF2FF;color:#3B5BDB;font:800 14px "Nunito",sans-serif;cursor:pointer}
 .introC img.talk{animation:none;filter:none}.introC img.talk.g14char{animation:floaty 3.5s ease-in-out infinite;filter:drop-shadow(0 10px 12px rgba(38,51,77,.18))}
 .stats #sAcorns{order:1}.stats #sWood{order:2}
+.introC video.talk{filter:none!important;animation:none!important;box-shadow:none;width:min(300px,78%);height:auto;aspect-ratio:246/234;background:#fff;border:0;outline:0;pointer-events:none}
+.g14tap{border:0;border-radius:999px;padding:12px 22px;background:#FF9600;color:#fff;font:900 18px "Nunito",sans-serif;box-shadow:0 5px 0 #CC7800;animation:g14bob 1.2s ease-in-out infinite;cursor:pointer}

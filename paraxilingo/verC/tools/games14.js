@@ -10,9 +10,21 @@ const CHARS={uni:{n:"Unicorn",img:"img/e3/1f984.webp",price:40},dino:{n:"Dino",i
 const charOf=()=>{try{return curPlayer().domi||1}catch(e){return 1}};
 domiSrc=function(){const d=charOf();return CHARS[d]?CHARS[d].img:`img/domi_${d}.svg`};
 paintDomi=function(){document.querySelectorAll(".bv img").forEach(i=>i.src=domiSrc())};
-function introTalk(on){const im=document.querySelector("#introC img.talk");if(!im)return;const d=charOf();
-  if(CHARS[d]){im.src=CHARS[d].img;im.classList.add("g14char");im.classList.toggle("bob",on);return}
-  im.src=on?"img/domi_talk.webp":"img/domi_talk0.webp"}
+/* the first screen: a small video of Domi talking (muted, so every browser plays it) and Lulu's hello.
+   If the browser blocks sound before the first tap, Domi waits for a tap and then says hello. */
+let introWait=false,introAfter=null;
+function introTalk(on){const v=document.querySelector("#introC video.talk"),im=document.querySelector("#introC img.g14char"),d=charOf();
+  if(CHARS[d]){if(v)v.hidden=true;if(im){im.hidden=false;im.src=CHARS[d].img;im.classList.toggle("bob",on)}return}
+  if(im)im.hidden=true;if(!v)return;v.hidden=false;try{if(on){v.currentTime=0;const p=v.play();p&&p.catch(()=>{})}else v.pause()}catch(e){}}
+function introHello(list,after){introAfter=after;if(!S.voice||!list.length){after();return}
+  const a=new Audio("audio/"+list[0]+".mp3");a.playbackRate=.92;
+  let ok=false;const fin=()=>{if(!ok)return;introTalk(false);after()};
+  a.onended=()=>{if(list.length>1)sayseq(list.slice(1),fin);else fin()};a.onerror=()=>{ok=true;fin()};
+  introTalk(true);const p=a.play();
+  if(p&&p.then)p.then(()=>{ok=true;voice=a}).catch(()=>{introTalk(false);introWait=true;const t=$("inTap");if(t)t.hidden=false})}
+function introTap(){if(!introWait)return false;introWait=false;const t=$("inTap");if(t)t.hidden=true;sfx.tap();introTalk(true);
+  sayseq(introList,()=>{introTalk(false);introAfter&&introAfter()});return true}
+let introList=[];
 introTalk(false);
 /* ---------- 2. two prizes: acorns for the parents' prize, wood for friends and stickers ---------- */
 woodMig=function(){};
