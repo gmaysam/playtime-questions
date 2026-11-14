@@ -16324,6 +16324,534 @@ img.e3 {
   display: block;
   margin: auto;
 }
+.g13-kids {
+  display: inline-flex;
+  gap: 2px;
+  align-items: flex-end;
+}
+.g13-kid {
+  display: block;
+}
+.g13-len {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-width: 120px;
+  height: 34px;
+}
+.g13-pen {
+  position: relative;
+  display: block;
+  height: 20px;
+  margin-left: 12px;
+  border-radius: 0 3px 3px 0;
+  background:
+    linear-gradient(
+      var(--c) 0 33%,
+      color-mix(in srgb, var(--c) 80%, #000) 33% 66%,
+      var(--c) 66%);
+  min-width: 40px;
+}
+.g13-pen::before {
+  content: "";
+  position: absolute;
+  left: -12px;
+  top: 0;
+  width: 12px;
+  height: 20px;
+  background:
+    linear-gradient(
+      90deg,
+      #343A40 0,
+      #343A40 30%,
+      #F4D6A0 30%);
+  -webkit-clip-path: polygon(0 50%, 100% 0, 100% 100%);
+  clip-path: polygon(0 50%, 100% 0, 100% 100%);
+}
+.g13-pen::after {
+  content: "";
+  position: absolute;
+  right: -10px;
+  top: 0;
+  width: 10px;
+  height: 20px;
+  border-radius: 0 6px 6px 0;
+  background:
+    linear-gradient(
+      90deg,
+      #ADB5BD 0,
+      #ADB5BD 35%,
+      #FF8FAB 35%);
+}
+.g13-graph {
+  display: grid;
+  gap: 6px;
+  width: 100%;
+  max-width: 380px;
+  margin: 0 auto;
+  padding: 10px 12px;
+  background: #F8F9FA;
+  border-radius: 16px;
+  box-sizing: border-box;
+}
+.g13-gb {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  height: auto;
+  background: none;
+  overflow: visible;
+}
+.g13-gl {
+  font-size: clamp(28px, 5vh, 40px);
+  width: clamp(36px, 6vh, 50px);
+  line-height: 1;
+  display: inline-block;
+  text-align: center;
+}
+.g13-gb i {
+  display: inline-block;
+  width: clamp(18px, 3.4vh, 28px);
+  height: clamp(18px, 3.4vh, 28px);
+  border-radius: 7px;
+  background: #4DABF7;
+  box-shadow: inset 0 -3px 0 rgba(0, 0, 0, .15);
+}
+.g13-gb:nth-child(2) i {
+  background: #FF8787;
+}
+.g13-gb:nth-child(3) i {
+  background: #69DB7C;
+}
+.g13-gb:nth-child(4) i {
+  background: #FFD43B;
+}
+.lr-row.g13-bunch {
+  display: grid;
+  grid-template-columns: repeat(var(--c), auto);
+  justify-content: center;
+  gap: 2px 6px;
+  letter-spacing: 0;
+  line-height: 1;
+  max-width: none;
+}
+.lr-row.g13-bunch i {
+  font-style: normal;
+  display: block;
+}
+.lr-card .lr-row.g13-bunch {
+  font-size: 52px;
+}
+.lr-p .lr-row.g13-bunch {
+  font-size: 30px;
+  gap: 2px;
+}
+.sy-mic,
+.fu-mic {
+  background:
+    radial-gradient(
+      circle at 35% 30%,
+      #FF8787,
+      #F03E3E 60%,
+      #C92A2A);
+  display: grid;
+  place-items: center;
+}
+.sy-mic .g13-mic {
+  width: 46%;
+  height: 46%;
+}
+.qmic-i .g13-mic {
+  width: 22px;
+  height: 22px;
+  display: block;
+}
+.qmic-i {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background:
+    radial-gradient(
+      circle at 35% 30%,
+      #FF8787,
+      #E64980);
+}
+.fu-vis {
+  width: 100%;
+  min-height: 118px;
+  display: grid;
+  place-items: center;
+  background: #F8F7FF;
+  border-radius: 18px;
+  padding: 8px;
+  box-sizing: border-box;
+}
+.fu-vis img,
+.fu-vis .bigpic {
+  max-height: 110px;
+}
+.g13-runner {
+  display: inline-block;
+  font-style: normal;
+  font-size: 56px;
+  filter: drop-shadow(0 4px 2px rgba(0, 0, 0, .18));
+}
+.g13-runner.flip {
+  transform: scaleX(-1);
+}
+.g13-pw {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+}
+.g13-pw .g7-plant {
+  line-height: 1;
+  margin-bottom: -14px;
+  position: relative;
+  z-index: 1;
+}
+.g13-pot {
+  display: block;
+}
+.g7-pot {
+  height: auto;
+  min-height: 150px;
+}
+.g13-table {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin: 8px auto;
+  padding: 14px 10px;
+  border-radius: 22px;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      #FFF4E6 0,
+      #FFF4E6 18px,
+      #FFE8CC 18px,
+      #FFE8CC 36px);
+  max-width: 360px;
+}
+.g13-table .g7-dish {
+  margin: 0;
+  aspect-ratio: 1/1;
+  width: min(210px, 56vw) !important;
+  min-height: 0;
+  border: 0;
+  background:
+    radial-gradient(
+      circle,
+      #fff 0,
+      #fff 56%,
+      #E9ECEF 57%,
+      #E9ECEF 59%,
+      #F8F9FA 60%,
+      #F8F9FA 72%,
+      #fff 73%);
+  box-shadow:
+    0 0 0 4px #fff,
+    0 0 0 7px #DEE2E6,
+    0 10px 16px rgba(0, 0, 0, .12);
+  align-content: center;
+  font-size: 32px;
+  padding: 30px;
+}
+.g7-road.g13-road {
+  width: 200px;
+  height: 120px;
+  border-radius: 12px;
+  overflow: hidden;
+  background:
+    linear-gradient(
+      90deg,
+      #CED4DA 0,
+      #CED4DA 30px,
+      #495057 30px,
+      #495057 170px,
+      #CED4DA 170px);
+  font-size: 36px;
+}
+.g13-road::before {
+  content: "";
+  position: absolute;
+  left: 99px;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: repeating-linear-gradient(#FFD43B 0 10px, transparent 10px 20px);
+}
+.g13-zebra {
+  position: absolute;
+  left: 30px;
+  right: 30px;
+  top: 36px;
+  height: 48px;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      #fff 0,
+      #fff 12px,
+      #495057 12px,
+      #495057 22px);
+  z-index: 1;
+}
+.g13-road span {
+  z-index: 2;
+  top: 40px !important;
+}
+.g13-road span.x {
+  animation: g13cross 1.1s forwards;
+}
+@keyframes g13cross {
+  to {
+    left: 162px;
+  }
+}
+.g7-br.g13-br {
+  height: 140px;
+  width: min(360px, 96%);
+  border-radius: 18px;
+  overflow: hidden;
+  background:
+    linear-gradient(
+      #D0EBFF,
+      #E7F5FF 60%,
+      #4DABF7 60%,
+      #339AF0);
+  align-items: flex-start;
+  padding-top: 52px;
+  box-sizing: border-box;
+}
+.g13-br .g7-bank {
+  height: 88px;
+  flex: 1;
+  max-width: 110px;
+  border-radius: 0;
+  background:
+    linear-gradient(
+      #51CF66 0,
+      #51CF66 10px,
+      #A47148 10px,
+      #A47148 22px,
+      #8B5A2B 22px);
+}
+.g13-br .g7-bank:first-of-type {
+  border-radius: 0 0 20px 0;
+}
+.g13-br .g7-bank:nth-of-type(2) {
+  border-radius: 0 0 0 20px;
+}
+.g13-br .g7-gap {
+  height: 16px;
+  background: none;
+}
+.g13-br .g7-car {
+  bottom: auto;
+  top: 26px;
+  font-size: 0;
+}
+.g13-br .g7-car.go {
+  left: calc(100% - 60px);
+}
+.g13-bm {
+  background:
+    linear-gradient(#FFF3BF 0 8%, transparent 8%),
+    repeating-linear-gradient(
+      90deg,
+      #FFE3E3 0,
+      #FFE3E3 26px,
+      #FFF5F5 26px,
+      #FFF5F5 52px);
+  overflow: hidden;
+}
+.g13-bm::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 16%;
+  background: #748FFC;
+  border-top: 4px solid #5C7CFA;
+}
+.g13-bm .bm-beam {
+  background: linear-gradient(#DDA15E, #BC6C25);
+  box-shadow: 0 4px 0 #8B5A2B;
+  z-index: 1;
+}
+.g13-bm .bm-beam::before,
+.g13-bm .bm-beam::after {
+  content: "";
+  position: absolute;
+  bottom: -34px;
+  width: 10px;
+  height: 34px;
+  background: #8B5A2B;
+  border-radius: 2px;
+}
+.g13-bm .bm-beam::before {
+  left: 12%;
+}
+.g13-bm .bm-beam::after {
+  right: 12%;
+}
+.g13-bm .bm-w {
+  z-index: 2;
+  filter: drop-shadow(0 3px 2px rgba(0, 0, 0, .2));
+}
+.ca-field.g13-sky {
+  background:
+    radial-gradient(
+      circle at 86% 12%,
+      #FFE066 0 26px,
+      rgba(255, 224, 102, .35) 27px 40px,
+      transparent 41px),
+    radial-gradient(
+      ellipse 50px 16px at 22% 18%,
+      #fff 98%,
+      transparent),
+    radial-gradient(
+      ellipse 36px 12px at 30% 14%,
+      #fff 98%,
+      transparent),
+    radial-gradient(
+      ellipse 44px 14px at 62% 30%,
+      #fff 98%,
+      transparent),
+    linear-gradient(
+      #74C0FC,
+      #D0EBFF 82%,
+      #8CE99A 82%,
+      #51CF66);
+}
+.g13-sky .ca-it {
+  display: grid;
+  place-items: center;
+  min-width: 54px;
+  height: 54px;
+  padding: 0 6px;
+  border-radius: 27px;
+  background: #fff;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, .12);
+  color: #1971C2;
+}
+.g13-sky .ca-bask {
+  filter: drop-shadow(0 5px 3px rgba(0, 0, 0, .25));
+}
+.sp-scene.g13-spy.bg-farm {
+  background:
+    radial-gradient(
+      circle at 88% 12%,
+      #FFE066 0 24px,
+      transparent 25px),
+    radial-gradient(
+      ellipse 70% 30% at 20% 42%,
+      #8CE99A 98%,
+      transparent),
+    radial-gradient(
+      ellipse 70% 30% at 85% 44%,
+      #69DB7C 98%,
+      transparent),
+    linear-gradient(
+      #A5D8FF 0,
+      #A5D8FF 36%,
+      #B2F2BB 36%,
+      #8CE99A);
+}
+.sp-scene.g13-spy.bg-town {
+  background:
+    linear-gradient(
+      transparent 60%,
+      #ADB5BD 60%,
+      #ADB5BD 62%,
+      #CED4DA 62%),
+    linear-gradient(
+      90deg,
+      #FFC9C9 0 18%,
+      transparent 18% 22%,
+      #D0EBFF 22% 40%,
+      transparent 40% 44%,
+      #FFEC99 44% 62%,
+      transparent 62% 66%,
+      #D3F9D8 66% 84%,
+      transparent 84%) 0 30%/100% 30% no-repeat,
+    linear-gradient(#E7F5FF, #E7F5FF);
+}
+.sp-scene.g13-spy.bg-kitchen {
+  background:
+    linear-gradient(transparent 70%, #E9C46A 70%),
+    repeating-linear-gradient(
+      90deg,
+      #FFF9DB 0,
+      #FFF9DB 30px,
+      #FFF3BF 30px,
+      #FFF3BF 60px);
+}
+.sp-scene.g13-spy.bg-map {
+  background:
+    radial-gradient(
+      ellipse 30% 20% at 30% 35%,
+      #B2F2BB 98%,
+      transparent),
+    radial-gradient(
+      ellipse 25% 18% at 70% 65%,
+      #B2F2BB 98%,
+      transparent),
+    #A5D8FF;
+}
+.g13-spy .sp-it {
+  background:
+    radial-gradient(
+      circle,
+      #fff 0,
+      #fff 62%,
+      rgba(255, 255, 255, .85) 63%);
+  border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, .12);
+}
+.g13-spy.bg-sky .sp-it {
+  background:
+    radial-gradient(
+      circle,
+      rgba(255, 255, 255, .18) 0 70%,
+      transparent 71%);
+  box-shadow: none;
+}
+.g7-sil.h1 span {
+  transform: scaleX(-1);
+}
+.g7-sil.h2 span {
+  transform: scaleX(-1) rotate(14deg);
+}
+.g7-sil.h3 span {
+  transform: scaleX(-1) rotate(-18deg) scale(.8);
+}
+.g13-rp .g13-rpc {
+  display: block;
+  width: 12.5%;
+  font-size: 0;
+  transform-origin: 50% 100%;
+}
+.g13-rpc .g13-car {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.lr-row.g13-bunch img {
+  width: 1em !important;
+  height: 1em !important;
+  display: block;
+}
+.g13-kids .g13-kid {
+  width: 58px !important;
+  height: 106px !important;
+  max-width: none !important;
+}
 .qbody,
 .panel {
   max-width: 680px;
@@ -28346,6 +28874,200 @@ img.e3 {
       o.h = String(o.h || "").replace(/<span class="dots"[^>]*>[\s\S]*?<\/span>/g, "");
     });
     return q;
+  };
+  const CAR_SVG = '<svg class="g13-car" viewBox="0 0 64 36" width="48" height="27" aria-hidden="true"><path d="M6 24 L8 14 Q10 10 16 10 L24 4 Q27 2 32 2 L42 2 Q47 2 50 6 L55 12 Q61 13 62 18 L62 24 Z" fill="#FA5252"/><path d="M27 6 L32 5 L41 5 Q44 5 46 8 L49 12 L23 12 Z" fill="#D0EBFF"/><rect x="34" y="5" width="3" height="7" fill="#FA5252"/><circle cx="17" cy="26" r="7" fill="#343A40"/><circle cx="17" cy="26" r="3" fill="#CED4DA"/><circle cx="49" cy="26" r="7" fill="#343A40"/><circle cx="49" cy="26" r="3" fill="#CED4DA"/><rect x="58" y="16" width="4" height="3" rx="1" fill="#FFE066"/></svg>';
+  const MIC13 = '<svg class="g13-mic" viewBox="0 0 24 24" width="1em" height="1em" aria-hidden="true"><rect x="8" y="2" width="8" height="13" rx="4" fill="#fff"/><path d="M5 11a7 7 0 0 0 14 0" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/><path d="M12 18v3.5M8.5 21.5h7" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/><rect x="10" y="4.5" width="2" height="5" rx="1" fill="#FFC9C9"/></svg>';
+  const KID_C = ["#4DABF7", "#FF8787", "#69DB7C", "#FFD43B", "#B197FC"], KID_H = ["#5C3A1E", "#212529", "#E8590C", "#5C3A1E", "#F08C00"];
+  const KID_SVG = (i) => '<svg class="g13-kid" viewBox="0 0 40 72" width="34" height="62" aria-hidden="true"><circle cx="20" cy="14" r="10" fill="#FFD8A8"/><path d="M10 13 Q10 3 20 3 Q30 3 30 13 Q26 8 20 8 Q14 8 10 13Z" fill="'.concat(KID_H[i % 5], '"/><circle cx="16.5" cy="15" r="1.4" fill="#343A40"/><circle cx="23.5" cy="15" r="1.4" fill="#343A40"/><path d="M16.5 19 Q20 22 23.5 19" stroke="#C92A2A" stroke-width="1.4" fill="none" stroke-linecap="round"/><path d="M9 30 Q9 25 14 25 L26 25 Q31 25 31 30 L31 46 L9 46Z" fill="').concat(KID_C[i % 5], '"/><path d="M9 30 L4 42 M31 30 L36 42" stroke="#FFD8A8" stroke-width="4" stroke-linecap="round"/><rect x="12" y="46" width="6" height="20" rx="3" fill="#495057"/><rect x="22" y="46" width="6" height="20" rx="3" fill="#495057"/><ellipse cx="14" cy="67" rx="5" ry="3" fill="#343A40"/><ellipse cx="26" cy="67" rx="5" ry="3" fill="#343A40"/></svg>');
+  const PEN_C = ["#FFD43B", "#74C0FC", "#FF8787", "#8CE99A"];
+  const _bq13c = buildQ;
+  buildQ = function(cat, k, used) {
+    let q = _bq13c(cat, k, used);
+    if (!q) return q;
+    if (cat === "add" && k === "share" && q.visual) q.visual = q.visual.replace(/<span class="grp">((?:🧒)+)<\/span>/, (m, s) => '<span class="grp g13-kids">'.concat(Array.from({ length: [...s].length / [..."\u{1F9D2}"].length }, (_, i) => KID_SVG(i)).join(""), "</span>"));
+    if (cat === "count" && k === "long" && q.opts) q.opts.forEach((o, i) => {
+      const w = (String(o.h).match(/width:(\d+)%/) || [])[1] || 50;
+      o.h = '<span class="g13-len"><span class="g13-pen" style="width:'.concat(w, "%;--c:").concat(PEN_C[i % 4], '"></span></span>');
+    });
+    if (cat === "count" && k === "long") q.style = "cards";
+    if (cat === "count" && k === "graph" && q.visual) q.visual = q.visual.replace('class="graph"', 'class="g13-graph"').replace(/class="gbar"/g, 'class="g13-gb"').replace(/<span class="gl">/g, '<span class="g13-gl">');
+    if (cat === "count" && k === "after") {
+      const r = S.sk && S.sk["count|" + skName("count", "after")], tier = Math.min(3, Math.floor((r && r.f || 0) / 5)) + (lvl() >= 7 ? 1 : 0);
+      if (tier >= 1) {
+        const top = [0, 30, 60, 100, 100][tier], lo = tier >= 2 ? 20 : 10, n = ri(lo, top - 1);
+        q = Object.assign({}, q, { voice: ["w/LULU_C_AFTER1", ...fNum(n)], cap: "".concat(n, " \u2192 ?"), visual: '<div class="seq"><b class="bignum sm">'.concat(n, '</b><span class="arr">\u279C</span><b class="bignum sm q">?</b></div>'), line: null, hint: "elim", exp: { t: "".concat(n, " \u2192 ").concat(n + 1), v: ["w/LULU_ANS_IS", ...fNum(n + 1)] } }, numOpts(n + 1, [n, n + 2, n + 10, n - 1].filter((x) => x > 0 && x !== n + 1)));
+      }
+    }
+    return q;
+  };
+  const _lrT13 = lrThings;
+  lrThings = function(cat) {
+    const r = _lrT13(cat);
+    if (r && (cat === "count" || cat === "add" || cat === "clock")) r.forEach((t) => {
+      const n = t.num || 1, c = n <= 3 ? n : n === 4 ? 2 : n <= 6 ? 3 : n <= 8 ? 4 : n === 9 ? 3 : 5;
+      t.p = t.p.replace('<span class="lr-row">', '<span class="lr-row g13-bunch" style="--c:'.concat(c, '">')).replace(/<span class="lr-row g13-bunch" style="--c:\d+">([^<]*)<\/span>/, (m, s) => m.replace(s, [...s.matchAll(new RegExp("\\p{Extended_Pictographic}\\uFE0F?", "gu"))].map((x) => "<i>".concat(x[0], "</i>")).join("")));
+    });
+    return r;
+  };
+  const micFix = (root) => {
+    (root || document).querySelectorAll(".sy-mic,.qmic-i").forEach((b) => {
+      if (b.textContent.trim() === "\u{1F3A4}") b.innerHTML = MIC13;
+    });
+  };
+  try {
+    new MutationObserver(() => micFix()).observe(document.body, { childList: true, subtree: true });
+  } catch (e) {
+  }
+  const g13wrap = (name, fn) => {
+    const o = GAMES[name];
+    if (o) GAMES[name] = function(q) {
+      const r = o(q);
+      try {
+        fn(q);
+      } catch (e) {
+      }
+      return r;
+    };
+  };
+  const FLIP13 = /* @__PURE__ */ new Set(["\u{1F415}", "\u{1F407}", "\u{1F408}", "\u{1F3C3}", "\u{1F422}", "\u{1F429}"]);
+  Object.assign(RUNNERS, { animals: ["\u{1F407}", "\u{1FAB5}"], farm: ["\u{1F415}", "\u{1F335}"], people: ["\u{1F3C3}", "\u{1FAA8}"], memory: ["\u{1F408}", "\u{1F335}"] });
+  g13wrap("run", (q) => {
+    const h = $("rnH");
+    if (h) {
+      h.innerHTML = '<i class="g13-runner'.concat(FLIP13.has(q.h) ? " flip" : "", '">').concat(q.h, "</i>");
+    }
+  });
+  g13wrap("grow", (q) => {
+    const p = $("grP");
+    if (!p) return;
+    p.innerHTML = '<svg viewBox="0 0 60 30" width="60" height="30"><ellipse cx="30" cy="24" rx="28" ry="8" fill="#8B5A2B"/><ellipse cx="30" cy="18" rx="7" ry="5" fill="#C08457" stroke="#7A4A1E" stroke-width="1.5"/></svg>';
+    const w = document.createElement("span");
+    w.className = "g13-pw";
+    p.parentNode.insertBefore(w, p);
+    w.appendChild(p);
+    w.insertAdjacentHTML("beforeend", '<svg class="g13-pot" viewBox="0 0 100 70" width="110" height="77"><rect x="4" y="0" width="92" height="16" rx="5" fill="#E8590C"/><path d="M12 16 L88 16 L78 68 L22 68Z" fill="#FD7E14"/><path d="M20 30 L80 30" stroke="#E8590C" stroke-width="3"/><rect x="4" y="0" width="92" height="6" rx="3" fill="#8B5A2B"/></svg>');
+  });
+  g13wrap("plate", (q) => {
+    const d = $("plD");
+    if (!d) return;
+    const t = document.createElement("div");
+    t.className = "g13-table";
+    d.parentNode.insertBefore(t, d);
+    t.innerHTML = '<svg viewBox="0 0 20 110" width="18" height="100" aria-hidden="true"><path d="M3 4v26q0 8 7 8t7-8V4M10 4v24" stroke="#ADB5BD" stroke-width="3" fill="none" stroke-linecap="round"/><rect x="7.5" y="36" width="5" height="70" rx="2.5" fill="#ADB5BD"/></svg>';
+    t.appendChild(d);
+    t.insertAdjacentHTML("beforeend", '<svg viewBox="0 0 20 110" width="18" height="100" aria-hidden="true"><path d="M10 4 Q18 10 16 50 L10 50Z" fill="#CED4DA"/><rect x="7" y="48" width="6" height="58" rx="3" fill="#ADB5BD"/></svg>');
+  });
+  g13wrap("traffic", (q) => {
+    const r = $("qBody").querySelector(".g7-road");
+    if (r) {
+      r.classList.add("g13-road");
+      r.insertAdjacentHTML("afterbegin", '<b class="g13-zebra"></b>');
+    }
+  });
+  g13wrap("bridge", (q) => {
+    const c = $("brC");
+    if (c) c.innerHTML = CAR_SVG;
+    const b = $("qBody").querySelector(".g7-br");
+    if (b) b.classList.add("g13-br");
+  });
+  g13wrap("beam", (q) => {
+    const f = $("bmF");
+    if (f) f.classList.add("g13-bm");
+  });
+  g13wrap("catch", (q) => {
+    const f = $("caF");
+    if (f) f.classList.add("g13-sky");
+  });
+  g13wrap("spy", (q) => {
+    const f = $("qBody").querySelector(".sp-scene");
+    if (f) f.classList.add("g13-spy");
+  });
+  const _qb13 = qBeam6;
+  qBeam6 = function() {
+    const q = _qb13();
+    q.who = pickOne(["\u{1F427}", "\u{1F9F8}", "\u{1F9A9}", "\u{1F425}"]);
+    return q;
+  };
+  G6F.beam = qBeam6;
+  const _qs7 = qShadow7;
+  qShadow7 = function() {
+    const q = _qs7(), g = gxOf("sil") + (lvl() >= 7 ? 1 : 0);
+    if (g >= 1) {
+      const pool = sh(SIL.filter((a) => both(a[0]).length && a !== q.t));
+      q.o = sh([q.t, ...pool.slice(0, g >= 2 ? 5 : 4)]);
+      q.hard = g;
+    }
+    return q;
+  };
+  G7F.sil = qShadow7;
+  g13wrap("sil", (q) => {
+    const s = $("qBody").querySelector(".g7-sil");
+    if (s && q.hard) s.classList.add(q.hard >= 3 ? "h3" : q.hard >= 2 ? "h2" : "h1");
+  });
+  GAMES.ramp = function(q) {
+    let h = 1, miss = 0, busy = false;
+    gShow('<div class="game">'.concat(gHead("\u{1F3CE}\uFE0F", "Ramp race", "Stop the car on the flag!"), '<div class="rp g13-rp" id="rpF"><svg viewBox="0 0 320 150" class="rp-svg"><path id="rpR" fill="#C49A6C" stroke="#9E7444" stroke-width="3"/><rect x="0" y="130" width="320" height="20" fill="#8CE99A"/>\n      ').concat([1, 2, 3, 4, 5].map((i) => '<line x1="'.concat(70 + i * 45, '" y1="128" x2="').concat(70 + i * 45, '" y2="134" stroke="#2F9E44" stroke-width="3"/>')).join(""), '</svg><span class="rp-flag" style="left:').concat((70 + q.t * 45) / 320 * 100, '%">\u{1F6A9}</span><span class="rp-car g13-rpc" id="rpC">').concat(CAR_SVG, '</span></div>\n    <div class="rp-ctl"><span>Ramp height</span><button class="sc-t" id="rpD">\u2796</button><b id="rpH">1</b><button class="sc-t" id="rpU">\u2795</button></div><button class="qcheck on" id="rpG">GO! \u{1F3C1}</button></div>'));
+    gAsk(q);
+    const C = $("rpC"), CW = 40, CH = 24;
+    let anim = null;
+    const at = (x, y, a) => ({ left: (x - CW / 2) / 320 * 100 + "%", top: (y - CH) / 150 * 100 + "%", transform: "rotate(".concat(a, "deg)") });
+    const geo = () => {
+      const top = 130 - h * 20, a = Math.atan2(h * 20, 70) * 180 / Math.PI;
+      return { top, a };
+    };
+    const draw = () => {
+      const { top, a } = geo();
+      $("rpR").setAttribute("d", "M0 ".concat(top, " L70 130 L0 130Z"));
+      $("rpH").textContent = h;
+      if (anim) {
+        anim.cancel();
+        anim = null;
+      }
+      Object.assign(C.style, at(CW / 2 * Math.cos(a / 57.3), top + CW / 2 * Math.sin(a / 57.3), a));
+    };
+    draw();
+    $("rpU").onclick = () => {
+      if (!busy && h < 5) {
+        h++;
+        sfx.tap();
+        draw();
+      }
+    };
+    $("rpD").onclick = () => {
+      if (!busy && h > 1) {
+        h--;
+        sfx.tap();
+        draw();
+      }
+    };
+    $("rpG").onclick = () => {
+      if (busy || q.done) return;
+      busy = true;
+      g6tone(200, 0.8, "sawtooth", 0.08);
+      const { top, a } = geo(), end = 70 + h * 45 - 6;
+      const k = [at(CW / 2 * Math.cos(a / 57.3), top + CW / 2 * Math.sin(a / 57.3), a), Object.assign(at(70 - CW / 2 * Math.cos(a / 57.3) * 0.6, 130 - CW / 2 * Math.sin(a / 57.3) * 0.6, a), { offset: 0.32, easing: "linear" }), Object.assign(at(78, 130, 0), { offset: 0.4, easing: "cubic-bezier(.2,.6,.35,1)" }), at(end, 130, 0)];
+      k[0].easing = "cubic-bezier(.5,0,1,1)";
+      anim = C.animate(k, { duration: 2200, fill: "forwards" });
+      setTimeout(() => {
+        busy = false;
+        if (h === q.t) gameWin(q, miss, C, []);
+        else {
+          miss++;
+          toastHint(h < q.t ? "Not far enough - make the ramp higher \u2B06\uFE0F" : "Too far - make the ramp lower \u2B07\uFE0F");
+          if (miss >= 4) {
+            q.done = true;
+            h = q.t;
+            draw();
+            gameLearn(q, "Higher ramp = farther!", []);
+          } else setTimeout(draw, 900);
+        }
+      }, 2300);
+    };
+    window.__gSolve = () => {
+      h = q.t;
+      draw();
+      $("rpG").click();
+    };
   };
   const QC_RE = /^#qc=([a-z]+):([^:]+)(?::([^:]+))?(?::([^:]+))?$/i;
   const QCM = (location.hash || "").match(QC_RE);
