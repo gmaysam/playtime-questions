@@ -92,6 +92,18 @@ main .wrap{padding-top:16px;display:flex;flex-direction:column;gap:14px}
 .sample .cap{font-size:16px}
 .sample .opts{grid-template-columns:repeat(auto-fill,minmax(96px,1fr))}
 .rule{font-size:14px}
+.qv{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-start}
+.shot{flex:0 0 auto;max-width:100%;border-radius:18px;border:1px solid var(--line);background-color:#fff;background-repeat:no-repeat;box-shadow:0 2px 10px rgba(40,30,80,.08)}
+.noshot{width:300px;height:120px;border:1px dashed var(--line);border-radius:18px;display:flex;align-items:center;justify-content:center;color:var(--mute)}
+.det{flex:1 1 260px;min-width:0;display:flex;flex-direction:column;gap:10px}
+.opts{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1.5px solid var(--line);border-radius:999px;padding:4px 10px;font:700 13px var(--font);background:var(--card)}
+.chip.ans{border-color:var(--ok);background:var(--ok-bg);color:var(--ok)}
+.chip.saying{outline:3px solid var(--accent);outline-offset:1px}
+.applink{align-self:flex-start;text-decoration:none}
+.playin{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.playin select{font:600 14px var(--font);color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:6px 8px}
+.samples{grid-template-columns:repeat(auto-fill,minmax(310px,1fr))!important}
 .empty{padding:40px;text-align:center;color:var(--mute)}
 .more{align-self:center}
 button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
@@ -105,13 +117,13 @@ button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-vis
     <select id="fAge" aria-label="Age"></select>
     <input type="search" id="fQ" placeholder="Search words, ids…" aria-label="Search">
     <label><input type="checkbox" id="fMute"> options not read aloud</label>
-    <label><input type="checkbox" id="fNote"> with my notes</label>
+    <select id="fNote" aria-label="My notes"><option value="">All items</option><option value="any">With my notes</option><option value="open">Notes waiting for Claude</option><option value="done">Notes Claude has done</option></select>
   </div>
 </div></header>
 <main><div class="wrap" id="list"></div></main>
 
 <script>
-const D=__DATA__;const AU=__AUDIO__;
+const D=__DATA__;const AU=__AUDIO__;const SHOTS=__SHOTS__;
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const strip=h=>String(h||"").replace(/<[^>]+>/g," ").replace(/\s+/g," ").trim();
@@ -134,11 +146,16 @@ function sayRow(label,v,en){const cs=clips(v),sp=special(v);const id="p"+Math.ra
   return `<div class="sayrow"><span class="lab">${label}</span><button class="play" data-play="${esc(JSON.stringify(cs))}" ${cs.length?"":"disabled"} aria-label="Play ${esc(label)}">${PLAY}</button>
    <div>${cs.length?`<div class="fa">${esc(faOf(v))||"<span class='miss'>(no text on file)</span>"}</div>`:`<div class="miss">${sp.length?"Read by the app's built-in phrase ("+esc(sp.join(", "))+")":"No Farsi voice"}</div>`}${en?`<div class="en">${esc(en)}</div>`:""}</div></div>`}
 /* ---------- render one question as the child sees it ---------- */
-function qHTML(q,{optSay=true}={}){if(!q)return `<div class="miss">This question could not be built.</div>`;
-  if(q.match)return `<p class="cap">${esc(q.cap)}</p><div class="opts">${q.match.map(m=>`<div class="opt">${m.pic}<small>${esc(m.word)}</small>${m.ps.length||m.ws.length?"":'<span class="mute" title="Not read aloud">🔇</span>'}</div>`).join("")}</div>`;
-  const opts=q.opts.map((o,i)=>`<div class="opt${i===q.ans?" ans":""}" data-oi="${i}">${i===q.ans?'<span class="tick">✓</span>':""}${o.say.length?"":'<span class="mute" title="This answer is not read aloud">🔇</span>'}${o.h}</div>`).join("");
-  return `<div class="qline"><p class="cap">${esc(q.cap)}</p></div>${q.visual?`<div class="vis">${q.visual}</div>`:""}<div class="opts">${opts}</div>`}
-const optLabels=q=>q&&q.opts?q.opts.map((o,i)=>strip(o.h)||("Answer "+(i+1))):[];
+/* ---------- one question: the app's own screen (a picture taken from the app) + its answers ---------- */
+const APP="https://gmaysam.github.io/playtime-questions/#qc=";
+const SHW=300;
+function shot(id){const p=SHOTS[id];if(!p)return `<div class="noshot">No picture</div>`;const k=SHW/390;
+  return `<div class="shot" style="width:${SHW}px;height:${Math.round(p[4]*k)}px;background-image:url(shot/s${p[0]}.webp);background-size:${Math.round(1950*k)}px auto;background-position:-${Math.round(p[1]*k)}px -${Math.round(p[2]*k)}px" role="img" aria-label="The question as it looks in the app"></div>`}
+function ansHTML(q){if(!q)return `<div class="miss">This question could not be built.</div>`;
+  if(q.match)return `<div class="opts">${q.match.map(m=>`<span class="chip">${m.say.length?"":"🔇 "}${esc(m.t)}</span>`).join("")}</div><div class="note">Match the pairs</div>`;
+  return `<div class="opts">${q.opts.map((o,i)=>`<span class="chip${i===q.ans?" ans":""}">${i===q.ans?"✓ ":""}${o.say.length?"":"🔇 "}${esc(o.t||("Answer "+(i+1)))}</span>`).join("")}</div>`}
+function appLink(h,label){return `<a class="btn ghost applink" href="${APP}${h}" target="_blank" rel="noopener">${label||"Open in the app ↗"}</a>`}
+const optLabels=q=>q&&q.opts?q.opts.map((o,i)=>o.t||("Answer "+(i+1))):[];
 /* ---------- the review panel ---------- */
 const AGES=[3,4,5,6,7,8,9,10,11,12];
 function rvHTML(id,o){const ans=o.answers||[];const ageNow=o.age;
@@ -154,19 +171,22 @@ function rvHTML(id,o){const ans=o.answers||[];const ageNow=o.age;
 const ITEMS=[];
 for(const f of D.fixed){const q=f.q;ITEMS.push({id:"q:"+f.id,tab:"fixed",cat:f.cat,age:f.age,search:(f.id+" "+(q?q.cap:"")+" "+optLabels(q).join(" ")+" "+f.x).toLowerCase(),mute:q&&q.opts.some(o=>!o.say.length),
   html:()=>`<div class="q"><div class="meta"><span class="pill">${esc(SEC[f.cat]||f.cat)}</span><span>Age <b>${f.age}+</b></span><span>Grade <b>${f.age-5<1?(f.age-5<0?"Pre-K":"K"):f.age-5}</b></span><span>${esc(f.id)}</span><span>${esc(f.src)}</span>${f.extraRandom?'<span class="pill warn" title="The app adds a 4th answer from another question at random">4th answer random</span>':""}${q&&q.tf?'<span class="pill">True / not true</span>':""}</div>
-   ${qHTML(q)}<div class="say">${sayRow("Question",q?q.voice:[],"")}${q&&q.why?sayRow("Fact",q.why.v,q.why.t):sayRow("Fact",[],f.x)}${optRead(q)}</div></div>${rvHTML("q:"+f.id,{age:f.age,answers:optLabels(q)})}`})}
-for(const t of D.tf){ITEMS.push({id:"tf:"+t.id,tab:"fixed",cat:"sky",age:4,search:(t.cap+" "+t.x).toLowerCase(),mute:false,
+   <div class="qv">${shot("q:"+f.id)}<div class="det">${ansHTML(q)}<div class="say">${sayRow("Question",q?q.voice:[],"")}${q&&q.why?sayRow("Fact",q.why.v,q.why.t):sayRow("Fact",[],f.x)}${optRead(q)}</div>${appLink("w:"+f.id)}</div></div></div>${rvHTML("q:"+f.id,{age:f.age,answers:optLabels(q)})}`})}
+for(const t of D.tf){const q=t.q;ITEMS.push({id:"tf:"+t.id,tab:"fixed",cat:"sky",age:4,search:(t.cap+" "+t.x).toLowerCase(),mute:false,
   html:()=>`<div class="q"><div class="meta"><span class="pill">Sky & space</span><span>Age <b>4+</b></span><span>${t.id}</span><span class="pill">True / not true</span></div>
-   <p class="cap">${esc(t.cap)}</p><div class="opts"><div class="opt${t.ans?" ans":""}">${t.ans?'<span class="tick">✓</span>':""}<span class="oe">👍</span><small>True</small></div><div class="opt${t.ans?"":" ans"}">${t.ans?"":'<span class="tick">✓</span>'}<span class="oe">👎</span><small>Not true</small></div></div>
-   <div class="say">${sayRow("Question",t.voice,"")}${sayRow("Fact",[],t.x)}</div></div>${rvHTML("tf:"+t.id,{age:4,answers:["True","Not true"]})}`})}
-for(const s of D.stories){const q=s.q;ITEMS.push({id:"st:"+s.id,tab:"stories",cat:"",age:5,search:(s.story+" "+(q?q.cap:"")).toLowerCase(),mute:q&&q.opts.some(o=>!o.say.length),
-  html:()=>`<div class="q"><div class="meta"><span class="pill">Story time</span><span>Story <b>${esc(s.story)}</b></span><span>${esc(s.id)}</span></div>${qHTML(q)}<div class="say">${sayRow("Question",q?q.voice:[],"")}${optRead(q)}</div></div>${rvHTML("st:"+s.id,{answers:optLabels(q)})}`})}
+   <div class="qv">${shot("tf:"+t.id)}<div class="det">${ansHTML(q)}<div class="say">${sayRow("Question",t.voice,"")}${sayRow("Fact",[],t.x)}${optRead(q)}</div>${appLink("tf:"+t.id.slice(2))}</div></div></div>${rvHTML("tf:"+t.id,{age:4,answers:["True","Not true"]})}`})}
+for(const s of D.stories){const q=s.q,[si,k]=s.id.slice(2).split("_");ITEMS.push({id:"st:"+s.id,tab:"stories",cat:"",age:5,search:(s.story+" "+(q?q.cap:"")).toLowerCase(),mute:q&&q.opts.some(o=>!o.say.length),
+  html:()=>`<div class="q"><div class="meta"><span class="pill">Story time</span><span>Story <b>${esc(s.story)}</b></span><span>${esc(s.id)}</span></div><div class="qv">${shot("st:"+s.id)}<div class="det">${ansHTML(q)}<div class="say">${sayRow("Question",q?q.voice:[],"")}${optRead(q)}</div>${appLink("st:"+si+":"+k)}</div></div></div>${rvHTML("st:"+s.id,{answers:optLabels(q)})}`})}
 for(const g of D.gen){const lo=Math.max(3,g.lo+5),hi=g.hi+5;ITEMS.push({id:"gen:"+g.cat+"."+g.kind,tab:"gen",cat:g.cat,age:lo,ageHi:hi,search:(g.cat+" "+g.kind+" "+g.name+" "+g.desc+" "+g.src+" "+g.samples.map(x=>x.cap).join(" ")).toLowerCase(),mute:g.samples.some(x=>x.opts.some(o=>!o.say.length)),
   html:()=>`<div class="q"><div class="meta"><span class="pill">${esc(SEC[g.cat]||g.cat)}</span><span>Ages <b>${lo}–${hi}</b></span><span>Grades <b>${gr(g.lo)}–${gr(g.hi)}</b></span><span>type <b>${esc(g.kind)}</b></span></div>
    <p class="cap">${esc(g.name)}</p><div class="rule">${esc(g.desc)||"<span class='note'>No description yet.</span>"}${g.src?`<div class="note">Reference: ${esc(g.src)}</div>`:""}<div class="note">The app makes a new question of this type each time. Three examples:</div></div>
-   <div class="samples">${g.samples.map(x=>`<div class="sample"><div class="meta"><span>Example at age <b>${x.age}</b></span></div>${qHTML(x)}<div class="say">${sayRow("Question",x.voice,"")}${x.exp?sayRow("Answer",x.exp.v,x.exp.t):""}${optRead(x)}</div></div>`).join("")}</div></div>${rvHTML("gen:"+g.cat+"."+g.kind,{age:lo})}`})}
+   <div class="samples">${g.samples.map((x,i)=>`<div class="sample"><div class="meta"><span>Example at age <b>${x.age}</b></span></div>${shot("gen:"+g.cat+"."+g.kind+"#"+i)}${ansHTML(x)}<div class="say">${sayRow("Question",x.voice,"")}${x.exp?sayRow("Answer",x.exp.v,x.exp.t):""}${optRead(x)}</div>${appLink("g:"+g.cat+":"+g.kind+":"+x.age,"Try a new one in the app ↗")}</div>`).join("")}</div></div>${rvHTML("gen:"+g.cat+"."+g.kind,{age:lo})}`})}
 for(const g of D.games){ITEMS.push({id:"game:"+g.f,tab:"games",cat:"",cats:g.cats,age:g.amin,ageHi:g.amax,search:(g.f+" "+g.name+" "+g.desc+" "+g.cats.join(" ")).toLowerCase(),mute:false,
-  html:()=>`<div class="q"><div class="meta"><span>Ages <b>${g.amin}–${g.amax}${g.amax>=12?"+":""}</b></span><span>${esc(g.f)}</span></div><p class="cap">${esc(g.name)}</p><div class="rule">${esc(g.desc)}</div><div class="note">Shows up in: ${g.cats.map(c=>esc(SEC[c]||c)).join(", ")}</div></div>${rvHTML("game:"+g.f,{age:g.amin})}`})}
+  html:()=>{const ages=[];for(let a=g.amin;a<=g.amax;a++)ages.push(a);const a0=Math.max(g.amin,Math.min(g.amax,6));
+   return `<div class="q"><div class="meta"><span>Ages <b>${g.amin}–${g.amax}${g.amax>=12?"+":""}</b></span><span>${esc(g.f)}</span></div><p class="cap">${esc(g.name)}</p>
+   <div class="qv">${shot("game:"+g.f)}<div class="det"><div class="rule">${esc(g.desc)}</div><div class="note">Shows up in: ${g.cats.map(c=>esc(SEC[c]||c)).join(", ")}</div><div class="note">Picture: ${esc(SEC[g.cats[0]]||g.cats[0])}, age ${a0}</div>
+    <div class="playin" data-f="${esc(g.f)}"><select class="gsec" aria-label="Section">${g.cats.map(c=>`<option value="${c}">${esc(SEC[c]||c)}</option>`).join("")}</select><select class="gage" aria-label="Age">${ages.map(a=>`<option value="${a}"${a===a0?" selected":""}>Age ${a}</option>`).join("")}</select>${appLink("f:"+g.f+":"+g.cats[0]+":"+a0,"Play in the app ↗")}</div></div></div></div>${rvHTML("game:"+g.f,{age:g.amin})}`}})}
+document.addEventListener("change",e=>{const p=e.target.closest(".playin");if(!p)return;p.querySelector("a").href=APP+"f:"+p.dataset.f+":"+p.querySelector(".gsec").value+":"+p.querySelector(".gage").value});
 function gr(g){return g<=-2?"Preschool":g===-1?"Pre-K":g===0?"K":String(g)}
 function optRead(q){if(!q||!q.opts||!q.opts.length)return "";const all=q.opts.flatMap(o=>o.say);const n=q.opts.filter(o=>!o.say.length).length;
   return `<div class="sayrow"><span class="lab">Answers</span><button class="play" data-opts="1" ${q.opts.some(o=>o.say.length)?"":"disabled"} aria-label="Play the answers">${PLAY}</button><div>${n?`<span class="miss">${n} of ${q.opts.length} answers are not read aloud (🔇)</span>`:'<span class="note">Each answer is read with its box lit</span>'}</div></div>`}
@@ -176,8 +196,8 @@ let tab="fixed",NOTES={},shown=60;
 try{const h=location.hash.slice(1);if(TABS.some(t=>t[0]===h))tab=h}catch(e){}
 function counts(){const c={};ITEMS.forEach(i=>c[i.tab]=(c[i.tab]||0)+1);return c}
 function renderTabs(){const c=counts();$("tabs").innerHTML=TABS.map(([k,n])=>`<button class="tab" role="tab" aria-selected="${k===tab}" data-tab="${k}">${n}<span class="n">${c[k]||0}</span></button>`).join("")}
-function filtered(){const s=$("fSec").value,a=$("fAge").value,t=$("fQ").value.trim().toLowerCase(),m=$("fMute").checked,n=$("fNote").checked;
-  return ITEMS.filter(i=>i.tab===tab&&(!s||i.cat===s||(i.cats&&i.cats.includes(s)))&&(!a||(i.ageHi?(+a>=i.age&&+a<=i.ageHi):i.age==+a))&&(!t||i.search.includes(t))&&(!m||i.mute)&&(!n||NOTES[i.id]))}
+function filtered(){const s=$("fSec").value,a=$("fAge").value,t=$("fQ").value.trim().toLowerCase(),m=$("fMute").checked,n=$("fNote").value;
+  return ITEMS.filter(i=>i.tab===tab&&(!s||i.cat===s||(i.cats&&i.cats.includes(s)))&&(!a||(i.ageHi?(+a>=i.age&&+a<=i.ageHi):i.age==+a))&&(!t||i.search.includes(t))&&(!m||i.mute)&&(!n||(NOTES[i.id]&&(n==="any"||(n==="done")===(NOTES[i.id].status==="done")))))}
 function render(){const L=filtered();const box=$("list");
   box.innerHTML=L.length?L.slice(0,shown).map(i=>`<article class="item" id="it-${esc(i.id)}" data-id="${esc(i.id)}">${i.html()}</article>`).join("")+(L.length>shown?`<button class="btn ghost more" id="more">Show ${Math.min(60,L.length-shown)} more (${L.length-shown} left)</button>`:""):`<div class="empty">Nothing matches these filters.</div>`;
   box.querySelectorAll(".item").forEach(fillNote);
@@ -194,14 +214,14 @@ document.addEventListener("click",e=>{const b=e.target.closest(".play");if(!b||b
     playList(list,b,k=>boxes.forEach((x,j)=>x.classList.toggle("saying",k>=0&&owner[k]===j)));return}
   playList(JSON.parse(b.dataset.play),b)});
 function findQ(id,b){const [k,rest]=[id.split(":")[0],id.slice(id.indexOf(":")+1)];
-  if(k==="q")return (D.fixed.find(f=>f.id===rest)||{}).q;if(k==="st")return (D.stories.find(f=>f.id===rest)||{}).q;
+  if(k==="q")return (D.fixed.find(f=>f.id===rest)||{}).q;if(k==="tf")return (D.tf.find(t=>t.id===rest)||{}).q;if(k==="st")return (D.stories.find(f=>f.id===rest)||{}).q;
   if(k==="gen"){const g=D.gen.find(x=>x.cat+"."+x.kind===rest);const si=[...b.closest(".samples").children].indexOf(b.closest(".sample"));return g&&g.samples[si]}return null}
 /* ---------- notes in the shared store (Claude reads them and updates the app) ---------- */
 let db=null;
 function fillNote(el){const id=el.dataset.id,n=NOTES[id],rv=el.querySelector(".rv");if(!rv)return;el.classList.toggle("has",!!n&&n.status!=="done");el.classList.toggle("done",!!n&&n.status==="done");
   rv.querySelectorAll("[data-f]").forEach(f=>{if(document.activeElement!==f)f.value=n&&n[f.dataset.f]!=null?n[f.dataset.f]:""});
   rv.querySelector("[data-clear]").hidden=!n;
-  rv.querySelector("[data-st]").textContent=n?(n.status==="done"?"✅ Done by Claude"+(n.reply?": "+n.reply:""):"Saved · waiting for Claude"):(db?"":"Notes are not connected here");
+  rv.querySelector("[data-st]").textContent=n?(n.status==="done"?"✅ Done by Claude"+(n.doneAt?" on "+n.doneAt.slice(0,10):"")+(n.reply?": "+n.reply:"")+" · change it and save to ask again":"Saved · waiting for Claude"):(db?"":"Notes are not connected here");
   rv.querySelector("[data-save]").disabled=!db}
 document.addEventListener("click",async e=>{const s=e.target.closest("[data-save],[data-clear]");if(!s)return;const rv=s.closest(".rv"),id=rv.dataset.id,st=rv.querySelector("[data-st]");if(!db){st.textContent="Notes are not connected here";return}
   const ref=db.collection("qc").doc(id.replace(/[\/]/g,"_"));

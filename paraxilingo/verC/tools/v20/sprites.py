@@ -1,6 +1,6 @@
 import json,re,os,subprocess,wave,csv,sys
 S='/tmp/claude-0/-home-claude/4b546809-d061-5b8c-bae2-78a259824393/scratchpad'
-d=json.load(open(f'{S}/sh8/dump.json'))
+d=json.load(open(sys.argv[1] if len(sys.argv)>1 else f'{S}/sh8/dump.json'))
 txt={}
 for r in csv.reader(open('/home/claude/playtime-library/library/voices/clips.csv',encoding='utf-8-sig')):
     if len(r)>=4: txt[r[0][:-4]]=r[3]
@@ -29,4 +29,5 @@ for g,cl in groups.items():
     with wave.open(out,'wb') as wf: wf.setnchannels(1);wf.setsampwidth(2);wf.setframerate(SR);wf.writeframes(bytes(frames))
     subprocess.run(['ffmpeg','-v','error','-y','-i',out,'-c:a','libmp3lame','-b:a','40k','-ar',str(SR),f'{S}/qc/site/aud/{g}.mp3'],check=True)
     print(g,len(cl),round(os.path.getsize(f'{S}/qc/site/aud/{g}.mp3')/1e6,2),'MB')
-json.dump({'idx':index,'txt':{c:txt.get(c,'') for c in index}},open(f'{S}/qc/build/audio.json','w'),ensure_ascii=False)
+old=json.load(open(f'{S}/qc/build/audio.json'))['txt'] if os.path.exists(f'{S}/qc/build/audio.json') else {}
+json.dump({'idx':index,'txt':{c:txt.get(c,'') or old.get(c,'') for c in index}},open(f'{S}/qc/build/audio.json','w'),ensure_ascii=False)
