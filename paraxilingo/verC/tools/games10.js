@@ -116,3 +116,5 @@ const _ff10=formatsFor0;formatsFor0=function(cat){const b=_ff10(cat);return sayO
 Object.assign(GMAP,{"g:say":G("Say it!",["lang","listen"],[["lang","vocab"]],"Lulu says a word and the child says it back; the phone checks the pronunciation.","Practice")});
 /* puzzle-type and path-type games also at most once a day */
 DAYCAP.piece=1;DAYCAP.path=1;
+/* fixed questions already end with their own spoken fact: no extra unspoken one (e.g. "206 is an even number") */
+const _ff10f=factFor;factFor=function(q){const f=_ff10f(q);if(f&&q&&q.wid&&/^px/.test(q.wid)&&!factV(f).length)return "";return f};
