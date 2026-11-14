@@ -583,5 +583,20 @@ out = head + '<style>' + css + '</style>\n' + markup + '\n<script>' + script_new
 # wide-screen rules must never apply inside the 390px phone frame (shown when the window is 560+ wide and 720+ tall)
 import re as _re
 out=_re.sub(r'@media ?\((min-width:\s*(?:680|700)px|orientation:\s*landscape)\)((?: and \([^)]*\))*) ?\{',lambda m:'@media ('+m.group(1)+')'+m.group(2)+' and (max-height:719px){',out)
+
+# ---- v23: talking Domi, wood, friends, stickers, seasonal house, players (games14.js) ----
+def _rep(o,a,c,n=1):
+    assert o.count(a)>=1, 'missing: '+a[:60]
+    return o.replace(a,c,n)
+G14V=sorted(f[:-4] for f in os.listdir('appC/audio/w') if f.startswith('PX_G14_'))
+g14=open(os.path.join(os.path.dirname(__file__),'games14.js')).read().replace('__G14V__',json.dumps(G14V))
+out=_rep(out,'/* ================= start: Domi tells what month or event it is ================= */',g14+'\n/* ================= start: Domi tells what month or event it is ================= */')
+out=_rep(out,'<img class="talk" src="img/domi_1.svg" alt="Domi the beaver">','<img class="talk" src="img/domi_talk0.webp" alt="Domi says hello">')
+out=_rep(out,'document.querySelectorAll("img.talk,.bv img").forEach(i=>i.src=domiSrc())','document.querySelectorAll(".bv img").forEach(i=>i.src=domiSrc())')
+out=_rep(out,'setTimeout(()=>sayseq([ev?ev.clip:"z"+Z.a,"w/LULU_BD_PRIZE"],later),400);','setTimeout(()=>{introTalk(true);sayseq([...G14("HELLO"),...(ev?[ev.clip]:G14("HELLO").length?[]:["z"+Z.a])],()=>{introTalk(false);later()})},400);')
+out=_rep(out,'function woodMig(){try{if(!S)return;','function woodMig(){return;try{if(!S)return;')
+out=_rep(out,'setTimeout(()=>{$("rvGift").classList.add("open");setTimeout(()=>{$("rvGift").remove();','setTimeout(()=>{if(!v.isConnected)return;$("rvGift").classList.add("open");setTimeout(()=>{if(!v.isConnected)return;$("rvGift").remove();')
+out=_rep(out,'setTimeout(go,9000);','setTimeout(go,12000);')
+out=_rep(out,'if(first){S.day.done++;S.acorns+=2;','if(first){S.day.done++;S.acorns+=2;S.wood=(S.wood||0)+3;')
 open(OUT, 'w').write(out)
 print("ok", len(out))

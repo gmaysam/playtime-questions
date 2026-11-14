@@ -1701,3 +1701,41 @@ img.e3{width:1.18em;height:1.18em;vertical-align:-.22em;object-fit:contain;displ
 .g13-rp .g13-rpc{display:block;width:12.5%;font-size:0;transform-origin:50% 100%}.g13-rpc .g13-car{width:100%;height:auto;display:block}
 .lr-row.g13-bunch img{width:1em!important;height:1em!important;display:block}
 .g13-kids .g13-kid{width:58px!important;height:106px!important;max-width:none!important}
+/* ---------- v23: talking Domi, wood, friends, sticker book, players ---------- */
+.introC img.talk{width:min(330px,86%);max-width:none;height:auto;border-radius:0}
+.introC img.talk.g14char{width:180px;mix-blend-mode:normal}.introC img.talk.bob{animation:g14bob .5s ease-in-out infinite}
+@keyframes g14bob{50%{transform:translateY(-8px) rotate(-3deg) scale(1.03)}}
+.dh .g14w{float:right;font-size:14px;background:#FFF4E6;border-radius:999px;padding:2px 10px;color:#8B5A2B;text-transform:none;letter-spacing:0}
+.g14domis{display:grid!important;grid-template-columns:repeat(4,1fr);gap:8px}
+.dpick.g14c{position:relative}.dpick.g14c img{object-fit:contain}
+.dpick.lock img{filter:grayscale(.7) brightness(1.05);opacity:.55}
+.g14lk{position:absolute;inset:auto 2px 2px;display:flex;align-items:center;justify-content:center;gap:2px;background:#fff;border-radius:999px;font:900 11px "Nunito",sans-serif;color:#8B5A2B;box-shadow:0 1px 3px rgba(0,0,0,.15);padding:1px 4px}.g14lk b{font-size:11px}
+.g14lk img.e3,.g14w img.e3,.g14p img.e3{width:1.1em;height:1.1em;vertical-align:-2px}
+.g14rv{width:150px;height:150px;object-fit:contain}
+.pzc.w{background:#FFF4E6}
+.g14two{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}.g14two div{background:#fff;border:2px solid #F1E3D3;border-radius:16px;padding:10px;display:flex;flex-direction:column;gap:2px;text-align:center}.g14two b{font:900 15px "Nunito",sans-serif}.g14two small{color:#888;font-weight:700;font-size:12px;line-height:1.25}
+.g14wk{width:30px;height:30px;object-fit:contain;transform:translateX(-50%)}
+.g14friends{display:flex;align-items:center;gap:12px;width:100%;margin:14px 0 4px;padding:12px 14px;border:2px solid #E5DBFF;border-radius:20px;background:linear-gradient(90deg,#F3F0FF,#FFF0F6);text-align:left;cursor:pointer;font-family:inherit}
+.g14friends b{display:block;font:900 17px "Nunito",sans-serif;color:#5F3DC4}.g14friends small{color:#7950F2;font-weight:700}
+.g14fi{display:flex}.g14fi img{width:40px;height:40px;object-fit:contain;margin-right:-8px;filter:drop-shadow(0 2px 2px rgba(0,0,0,.15))}
+.g14tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin:6px 0 10px}
+.g14tabs button{border:2px solid #E5E5E5;border-radius:16px;background:#fff;padding:6px 2px;display:flex;flex-direction:column;align-items:center;gap:1px;cursor:pointer;font-family:inherit}
+.g14tabs button[aria-pressed=true]{background:var(--tc);border-color:color-mix(in srgb,var(--tc) 60%,#999)}
+.g14tabs i{font-style:normal;font-size:26px;line-height:1}.g14tabs i img.e3{width:30px;height:30px}.g14tabs small{font:800 10px "Nunito",sans-serif;color:#666}.g14tabs em{font:900 10px "Nunito",sans-serif;font-style:normal;color:#999}
+.g14book{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:14px;border-radius:24px;background:var(--bc);box-shadow:inset 0 0 0 3px rgba(255,255,255,.7)}
+.g14s{position:relative;aspect-ratio:1;border:0;border-radius:18px;background:rgba(255,255,255,.75);display:grid;place-items:center;cursor:pointer;transform:rotate(var(--r));transition:transform .2s}
+.g14s .g14e{font-size:40px;line-height:1}.g14s .g14e img.e3{width:52px;height:52px;filter:drop-shadow(0 0 0 #fff) drop-shadow(2px 0 0 #fff) drop-shadow(-2px 0 0 #fff) drop-shadow(0 2px 0 #fff) drop-shadow(0 -2px 0 #fff) drop-shadow(0 3px 3px rgba(0,0,0,.18))}
+.g14s.own{background:#fff;box-shadow:0 4px 0 rgba(0,0,0,.08)}
+.g14s.lock .g14e{filter:grayscale(1) opacity(.35)}.g14s.lock{border:2px dashed rgba(0,0,0,.12)}
+.g14s.can{border-color:#FAB005;animation:g14can 1.6s ease-in-out infinite}@keyframes g14can{50%{transform:rotate(var(--r)) scale(1.05)}}
+.g14p{position:absolute;bottom:-6px;left:50%;transform:translateX(-50%);background:#fff;border-radius:999px;padding:1px 7px;font:900 11px "Nunito",sans-serif;color:#8B5A2B;white-space:nowrap;box-shadow:0 1px 3px rgba(0,0,0,.15)}
+.g14pl{display:flex;flex-direction:column;gap:8px}
+.g14pr{display:flex;align-items:center;gap:10px;padding:10px 12px;border:2px solid #E5E5E5;border-radius:16px;background:#fff}
+.g14pr .ci{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;color:#fff;font:900 16px "Nunito",sans-serif;flex:none}
+.g14pn{flex:1;min-width:0}.g14pn b{display:block;font:900 16px "Nunito",sans-serif}.g14pn small{color:#999;font-weight:700;font-size:12px}
+.g14del{border:2px solid #FFC9C9;background:#FFF5F5;color:#E03131;border-radius:12px;padding:6px 12px;font:800 13px "Nunito",sans-serif;cursor:pointer}
+.g14add{margin-top:10px;display:flex;gap:8px}.g14add input{flex:1;min-width:0;border:2px solid #E5E5E5;border-radius:14px;padding:10px 12px;font:700 15px "Nunito",sans-serif}
+.dradar.g14open{cursor:pointer}
+.g14more{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;margin-top:8px;padding:10px;border:0;border-radius:14px;background:#EDF2FF;color:#3B5BDB;font:800 14px "Nunito",sans-serif;cursor:pointer}
+.introC img.talk{animation:none;filter:none}.introC img.talk.g14char{animation:floaty 3.5s ease-in-out infinite;filter:drop-shadow(0 10px 12px rgba(38,51,77,.18))}
+.stats #sAcorns{order:1}.stats #sWood{order:2}
