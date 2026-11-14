@@ -51,7 +51,7 @@ const WEAF={sunny:"On sunny days a hat and sunglasses protect us from the sun.",
 function qWeather(){const w=pickOne(Object.keys(WEA)),need=lvl()<=4?2:3,good=WEA[w][1].slice(0,need),bad=sh(Object.keys(WEA).filter(x=>x!==w).flatMap(x=>WEA[x][1])).slice(0,need===2?2:3);
   return {game:"weather",w,good,items:sh([...good,...bad]),voice:[G7("WEATHER"),G7("W_"+w.toUpperCase())],gid:"g:weather",factT:WEAF[w]}}
 function weatherQ(q){let miss=0,got=0;gShow(`<div class="game">${gHead(WEA[q.w][0],"Dress for the weather",`It is <b>${q.w}</b>! What do we wear?`)}
-  <div class="g7-sky g7-${q.w}"><span>${WEA[q.w][0]}</span><span class="g7-kid">🧒</span></div>
+  <div class="g7-sky g7-${q.w}"><span>${WEA[q.w][0]}</span><span class="g7-kid">🧸</span></div>
   <div class="g7-clo">${q.items.map((it,i)=>`<button class="g7-c" data-i="${i}"><span>${it[1]}</span><small>${cap1(it[0])}</small></button>`).join("")}</div></div>`);gAsk(q);
   tapAll(".g7-c",b=>{if(q.done||b.dataset.done)return;const it=q.items[+b.dataset.i];if(q.good.includes(it)){b.dataset.done=1;b.classList.add("ok");sfx.tap();got++;if(got===q.good.length)setTimeout(()=>gameWin(q,miss>1?1:0,b,[]),300)}else{miss++;sfx.oops();b.classList.add("no");setTimeout(()=>b.classList.remove("no"),400);toastHint(`Not for ${q.w} weather!`)}});
   g7solve(()=>$("qBody").querySelectorAll(".g7-c").forEach(b=>{if(q.good.includes(q.items[+b.dataset.i]))fire7(b)}))}

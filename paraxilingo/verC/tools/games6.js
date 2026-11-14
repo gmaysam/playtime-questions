@@ -15,16 +15,18 @@ const PNT6={red:"#FF4D4D",yellow:"#FFD43B",blue:"#3B8BFF",white:"#FFFFFF"},PMIX=
 function qMix(){const a=lvl(),m=pickOne(PMIX.slice(0,a<=5?3:5));return {game:"mix",m,voice:[G6("MIX")],gid:"g:mix",factT:`${cap1(m[2][0])} and ${m[2][1]} make ${m[0]}!`}}
 function mixQ(q){let inB=[],miss=0;const pots=Object.keys(PNT6).filter(k=>lvl()>5||k!=="white");
   gShow(`<div class="game">${gHead("🎨","Colour lab","Make this colour!")}<div class="mx-top"><span class="mx-t" style="background:${q.m[1]}"></span><b>${cap1(q.m[0])}</b></div>
-    <div class="mx-bowl" id="mxB"><svg viewBox="0 0 200 110"><path d="M10 20 Q100 150 190 20Z" fill="#F1F3F5" stroke="#ADB5BD" stroke-width="5"/><ellipse id="mxL" cx="100" cy="30" rx="80" ry="12" fill="#F8F9FA"/><g id="mxS" opacity="0"><path d="M60 32 q40 -18 80 0" stroke="#fff" stroke-width="4" fill="none" opacity=".7"/></g></svg></div>
+    <div class="mx-bowl" id="mxB"><svg viewBox="0 0 200 110"><path id="mxP" d="M10 20 Q100 150 190 20Z" fill="#F1F3F5" stroke="#ADB5BD" stroke-width="5"/><ellipse id="mxL" cx="100" cy="30" rx="80" ry="12" fill="#F8F9FA"/><g id="mxS" opacity="0"><path d="M60 32 q40 -18 80 0" stroke="#fff" stroke-width="4" fill="none" opacity=".7"/></g></svg></div>
     <div class="mx-pots">${pots.map(k=>`<button class="mx-p" data-k="${k}"><span style="background:${PNT6[k]}"></span><small>${cap1(k)}</small></button>`).join("")}</div>
     <div class="mx-row"><button class="mv-skip" id="mxC">Empty the bowl</button><button class="qcheck on" id="mxM">MIX! 🥄</button></div></div>`);gAsk(q);
   const mixCol=()=>{if(!inB.length)return "#F8F9FA";if(inB.length===1)return PNT6[inB[0]];const f=PMIX.find(m=>m[2].every(c=>inB.includes(c)));return f?f[1]:"#8D6E63"};
-  const show=()=>$("mxL").setAttribute("fill",inB.length?PNT6[inB[inB.length-1]]:"#F8F9FA");
+  /* v22: the paint fills the whole bowl, not just the top */
+  const paint=c=>{$("mxL").setAttribute("fill",c||"#F8F9FA");$("mxP").setAttribute("fill",c||"#F1F3F5")};
+  const show=()=>paint(inB.length?PNT6[inB[inB.length-1]]:null);
   $("qBody").querySelectorAll(".mx-p").forEach(b=>{const add=()=>{if(q.done||inB.length>=2||inB.includes(b.dataset.k))return;inB.push(b.dataset.k);g6tone(300+inB.length*120,.15);const d=document.createElement("i");d.className="mx-drop";d.style.background=PNT6[b.dataset.k];$("mxB").appendChild(d);setTimeout(()=>d.remove(),700);setTimeout(show,500)};
     dragify(b,()=>[$("mxB")],add,add)});
   $("mxC").onclick=()=>{inB=[];show();sfx.tap()};
   $("mxM").onclick=()=>{if(q.done)return;if(inB.length<2){toastHint("Put two paints in the bowl 🎨");return}$("mxS").setAttribute("opacity","1");$("mxB").classList.add("stir");
-    setTimeout(()=>{$("mxB").classList.remove("stir");$("mxS").setAttribute("opacity","0");$("mxL").setAttribute("fill",mixCol());const ok=q.m[2].every(c=>inB.includes(c));
+    setTimeout(()=>{$("mxB").classList.remove("stir");$("mxS").setAttribute("opacity","0");paint(mixCol());const ok=q.m[2].every(c=>inB.includes(c));
       if(ok)gameWin(q,miss,$("mxB"),[]);else{miss++;const f=PMIX.find(m=>m[2].every(c=>inB.includes(c)));toastHint(f?`That made ${f[0]}! Try again 🎨`:"That made brown! Try again 🎨");setTimeout(()=>{inB=[];show()},1400);if(miss>=3){q.done=true;gameLearn(q,`${cap1(q.m[2][0])} + ${q.m[2][1]} = ${q.m[0]}`,[])}}},1100)};
   window.__gSolve=()=>{inB=q.m[2].slice();$("mxM").click()}}
 
@@ -44,7 +46,7 @@ function rampQ(q){let h=1,miss=0,busy=false;
 const MAGY6=[["📎","paper clip"],["🔩","bolt"],["🧷","safety pin"],["✂️","scissors"],["🪛","screwdriver"]],MAGN6=[["🍃","leaf"],["🍎","apple"],["🦆","rubber duck"],["🪵","wood"],["🐚","shell"],["🧸","teddy"]];
 function qMag2(){const a=lvl(),y=sh(MAGY6).slice(0,a<=4?2:3),n=sh(MAGN6).slice(0,a<=4?3:4);return {game:"mag2",items:sh([...y.map(x=>[...x,1]),...n.map(x=>[...x,0])]),need:y.length,voice:[G6("MAGNET")],gid:"g:mag2",factT:"Magnets pull things made of iron and steel."}}
 function mag2Q(q){let got=0,miss=0,busy=false;
-  gShow(`<div class="game">${gHead("🧲","Magnet fishing","Fish out everything the magnet can pick up!")}<div class="mgp" id="mgP"><div class="mg-rod" id="mgR"><i></i><span>🧲</span></div>
+  gShow(`<div class="game">${gHead("🧲","Magnet fishing","Fish out everything the magnet can pick up!")}<div class="mgp" id="mgP"><div class="mg-rod" id="mgR"><i></i><span><svg viewBox="0 0 40 44" width="40" height="44" aria-hidden="true"><path d="M8 4 v18 a12 12 0 0 0 24 0 V4" fill="none" stroke="#E03131" stroke-width="10"/><rect x="3" y="2" width="10" height="9" rx="2" fill="#CED4DA"/><rect x="27" y="2" width="10" height="9" rx="2" fill="#CED4DA"/><circle cx="20" cy="34" r="3" fill="#555"/></svg></span></div>
     ${q.items.map((x,j)=>`<button class="mg-i" data-j="${j}" style="--x:${8+(j%4)*23}%;--y:${48+Math.floor(j/4)*24}%;--d:${(2+Math.random()*2).toFixed(1)}s">${x[0]}</button>`).join("")}</div><div class="mg-cnt" id="mgC">${"⚪".repeat(q.need)}</div></div>`);gAsk(q);
   const R=$("mgR");$("qBody").querySelectorAll(".mg-i").forEach(b=>b.onclick=()=>{if(busy||q.done||b.classList.contains("up"))return;busy=true;const x=q.items[+b.dataset.j],P=$("mgP").getBoundingClientRect(),r=b.getBoundingClientRect();
     R.style.left=(r.left-P.left+r.width/2)+"px";R.style.setProperty("--len",(r.top-P.top)+"px");R.classList.add("down");sfx.tap();
@@ -126,8 +128,8 @@ function qCalm(){return {game:"calm",need:3,voice:[G6("CALM")],gid:"g:calm",fact
 function calmQ(q){let n=0,hold=false,t0=0;
   gShow(`<div class="game lrn">${gHead("🌬️","Calm breathing","Hold to breathe in, let go to breathe out")}<div class="cm"><span class="cm-ring" id="cmR"></span><span class="cm-f" id="cmF">🌸</span><b id="cmT">Hold the button</b></div><div class="cm-dots" id="cmD">${"○".repeat(q.need)}</div>
     <button class="cm-btn" id="cmB">🫁 Breathe</button></div>`);gAsk(q);
-  const R=$("cmR"),T=$("cmT"),B=$("cmB");const down=e=>{e.preventDefault();if(q.done)return;hold=true;t0=Date.now();R.className="cm-ring in";T.textContent="Breathe in… 2… 3…"};
-  const up=()=>{if(!hold||q.done)return;hold=false;const ok=Date.now()-t0>1800;R.className="cm-ring out";T.textContent=ok?"…and breathe out 😌":"A little longer next time";if(ok){n++;$("cmD").textContent="●".repeat(n)+"○".repeat(q.need-n);g6tone(523,.6,"sine",.15);if(n>=q.need){q.done=true;setTimeout(()=>gameWin(q,0,$("cmF"),[]),1800)}}};
+  const R=$("cmR"),T=$("cmT"),B=$("cmB");const down=e=>{e.preventDefault();if(q.done)return;hold=true;t0=Date.now();R.className="cm-ring in";T.textContent="Breathe in… 2… 3…";if(typeof G13_READY!=="undefined"&&G13_READY){hush();sayseq([G13("CALM_IN")],()=>{})}};
+  const up=()=>{if(!hold||q.done)return;hold=false;const ok=Date.now()-t0>1800;R.className="cm-ring out";T.textContent=ok?"…and breathe out 😌":"A little longer next time";if(ok&&typeof G13_READY!=="undefined"&&G13_READY){hush();sayseq([G13("CALM_OUT")],()=>{})}if(ok){n++;$("cmD").textContent="●".repeat(n)+"○".repeat(q.need-n);g6tone(523,.6,"sine",.15);if(n>=q.need){q.done=true;setTimeout(()=>gameWin(q,0,$("cmF"),[]),1800)}}};
   B.addEventListener("pointerdown",down);["pointerup","pointerleave","pointercancel"].forEach(k=>B.addEventListener(k,up));B.style.touchAction="none";
   window.__gSolve=()=>{q.done=true;gameWin(q,0,$("cmF"),[])}}
 

@@ -20,26 +20,28 @@ function skLevel(r){const ones=(r.h.match(/1/g)||[]).length,p=r.h.length?ones/r.
 const gHead=(e,kick,title)=>`<div class="qkick"><span class="qke">${e}</span>${kick}<button class="g-rep" aria-label="Hear it again"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></div><h2 class="qtitle">${title}</h2>`;
 document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest(".g-rep");if(!b||!L||!L.q)return;e.stopPropagation();sfx.tap();hush();if(L.q.game&&typeof gReadOpts==="function"&&gReadOpts(L.q))return;sayseq(L.q.voice||[],()=>{})},true);
 function gShow(html){$("qBody").innerHTML=html;$("qBody").classList.remove("in");void $("qBody").offsetWidth;$("qBody").classList.add("in")}
-function gameWin(q,miss,el,extra){if(q._won||(L&&L.q!==q))return;q._won=true;q.done=q.locked=true;q.tries=miss?1:0;logSk(q,true);sfx.good();if(el)burstAt(el,40);L.correct++;if(!miss)L.first++;
+/* v22: a game gets one step harder each time it is won with no mistakes (up to +3), one step easier after a hard time */
+const gxOf=g=>(S.gx&&S.gx[g])||0,gxSet=(g,d)=>{if(!g)return;S.gx=S.gx||{};S.gx[g]=Math.max(0,Math.min(3,gxOf(g)+d))};
+function gameWin(q,miss,el,extra){if(q._won||(L&&L.q!==q))return;q._won=true;gxSet(q.game,!miss?1:miss>1?-1:0);q.done=q.locked=true;q.tries=miss?1:0;logSk(q,true);sfx.good();if(el)burstAt(el,40);L.correct++;if(!miss)L.first++;
   const n=miss?1:2;S.acorns+=n;L.acorns+=n;S.questions++;{const w=wkLog();w.q++;w.right++}save();renderStats();bump("sAcorns");setDot();L.row=(L.row||0)+1;
   const fv=q.factV||factV(q.factT),pr=!fv.length||Math.random()<.35;
   setTimeout(()=>{sheet("good",pr?pickOne(PRAISE_T):"💡 Did you know?",`+${n} 🌰`+(q.factT?`<span class="ffact"><b>💡</b><span>${q.factT}</span></span>`:""));let gone=false;const go=()=>{if(!gone){gone=true;nextQ()}};$("qNext").onclick=()=>{sfx.tap();go()};
     sayseq([...(extra||[]),...(pr?[pickOne(PRAISE_CLIPS)]:[]),...fv],()=>{if(!q.stay)setTimeout(go,fv.length?1400:q.factT?2600:900)})},q.stay?0:extra&&extra.length?200:600)}
 /* Farsi voice for a fact text, when one has been recorded (tools/fact_voice.json: text -> clip) */
 const FACT_V=__FACTV__;const factV=t=>t&&FACT_V[String(t).trim()]?["w/"+FACT_V[String(t).trim()]]:(typeof recapV==="function"?recapV(t):[]);
-function gameLearn(q,t,v){if(q._won||(L&&L.q!==q))return;q._won=true;q.done=q.locked=true;q.tries=2;logSk(q,false);S.questions++;{const w=wkLog();w.q++}save();setDot();L.row=0;
+function gameLearn(q,t,v){if(q._won||(L&&L.q!==q))return;q._won=true;gxSet(q.game,-1);q.done=q.locked=true;q.tries=2;logSk(q,false);S.questions++;{const w=wkLog();w.q++}save();setDot();L.row=0;
   sheet("learn","Let's learn it together!",t);let gone=false;const go=()=>{if(!gone){gone=true;nextQ()}};$("qNext").onclick=()=>{sfx.tap();go()};sayseq(v||[],()=>{})}
 const gAsk=q=>setTimeout(()=>{if(L&&L.q===q){if(typeof gReadOpts==="function"&&gReadOpts(q))return;sayseq(q.voice,()=>{})}},400);
 let __ac=null;function smTone(f,ms=380){try{if(!S.fx)return;__ac=__ac||new (window.AudioContext||window.webkitAudioContext)();const o=__ac.createOscillator(),g=__ac.createGain(),t=__ac.currentTime;
   o.type="triangle";o.frequency.value=f;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.35,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+ms/1000);o.connect(g).connect(__ac.destination);o.start(t);o.stop(t+ms/1000+.05)}catch(e){}}
 
 /* ---- Simon colours: watch the pads light up, then tap them in the same order ---- */
-const SMC=[["#FF4B4B","#D33131",330],["#1CB0F6","#1899D6",392],["#FFC800","#E0A800",494],["#58CC02","#46A302",587]];
-function qSimon(){const a=lvl(),len=a<=3?2:a<=4?3:a<=6?4:5;let seq=[];for(let i=0;i<len;i++){let c;do{c=ri(0,3)}while(seq.length&&c===seq[seq.length-1]&&Math.random()<.7);seq.push(c)}
-  return {game:"simon",seq,voice:["w/LULU_SM_INTRO"]}}
+const SMC=[["#FF4B4B","#D33131",330],["#1CB0F6","#1899D6",392],["#FFC800","#E0A800",494],["#58CC02","#46A302",587],["#A66BFF","#8445E6",440],["#FF9600","#E07F00",523]];
+function qSimon(){const a=lvl(),gx=gxOf("simon"),nc=a>=7||gx>=2?6:4,len=(a<=3?2:a<=4?3:a<=6?4:5)+Math.min(2,gx);let seq=[];for(let i=0;i<len;i++){let c;do{c=ri(0,nc-1)}while(seq.length&&c===seq[seq.length-1]&&Math.random()<.7);seq.push(c)}
+  return {game:"simon",seq,nc,voice:["w/LULU_SM_INTRO"]}}
 function simonQ(q){
   gShow(`<div class="game">${gHead("🎵","Simon colours","Watch, then tap the same colours!")}
-    <div class="smwrap"><div class="smboard" id="smB">${SMC.map((c,i)=>`<button class="smp" data-i="${i}" style="--c:${c[0]};--d:${c[1]}" aria-label="colour ${i+1}"></button>`).join("")}<div class="smmid" id="smMid">👀</div></div>
+    <div class="smwrap"><div class="smboard${(q.nc||4)>4?" six":""}" id="smB">${SMC.slice(0,q.nc||4).map((c,i)=>`<button class="smp" data-i="${i}" style="--c:${c[0]};--d:${c[1]}" aria-label="colour ${i+1}"></button>`).join("")}<div class="smmid" id="smMid">👀</div></div>
     <div class="smdots" id="smDots">${q.seq.map(()=>"<i></i>").join("")}</div></div></div>`);
   let at=0,miss=0,busy=true;const pads=[...$("qBody").querySelectorAll(".smp")];
   let slow=1;const flash=(i,ms=520,n)=>{pads[i].classList.add("lit");if(n)$("smMid").textContent=n;smTone(SMC[i][2],ms);setTimeout(()=>pads[i].classList.remove("lit"),ms-80)};
@@ -52,16 +54,16 @@ function simonQ(q){
     if(i===q.seq[at]){at++;dots();if(at===q.seq.length){busy=true;$("smMid").textContent="🎉";gameWin(q,miss,$("smB"))}}
     else{miss++;sfx.oops();$("smB").classList.add("bump");setTimeout(()=>$("smB").classList.remove("bump"),450);
       /* three tries: each time the colours are shown again, a bit slower; only then the answer */
-      if(miss>=3){busy=true;slow=1.4;setTimeout(()=>show(null,()=>{busy=true;gameLearn(q,"Watch the colours: "+q.seq.map(c=>["🔴","🔵","🟡","🟢"][c]).join(" "))}),700)}
+      if(miss>=3){busy=true;slow=1.4;setTimeout(()=>show(null,()=>{busy=true;gameLearn(q,"Watch the colours: "+q.seq.map(c=>["🔴","🔵","🟡","🟢","🟣","🟠"][c]).join(" "))}),700)}
       else{slow=1+miss*.2;setTimeout(()=>show("w/LULU_SM_WATCH"),700)}}});
   window.__gSolve=()=>{let k=0;const t=()=>{if(busy)return setTimeout(t,300);if(k<q.seq.length){pads[q.seq[k++]].click();setTimeout(t,120)}};t()};
   setTimeout(()=>{if(L&&L.q===q)show("w/LULU_SM_INTRO")},400);
 }
 
 /* ---- Memory pairs: flip the cards and find the two that match ---- */
-function qPairs(){const a=lvl(),np=a<=4?3:a<=6?4:6;const items=sh(AN.filter(x=>enSay(x[0]).length)).slice(0,np).map(x=>({e:x[1],w:x[0],v:["w/LULU_FA_AN"+AN.indexOf(x),...enSay(x[0])]}));
+function qPairs(){const a=lvl(),np=Math.min(8,(a<=4?3:a<=6?4:6)+gxOf("pairs"));const items=sh(AN.filter(x=>enSay(x[0]).length)).slice(0,np).map(x=>({e:x[1],w:x[0],v:["w/LULU_FA_AN"+AN.indexOf(x),...enSay(x[0])]}));
   return {game:"pairs",items,voice:["w/LULU_SM_PAIRS"]}}
-function pairsQ(q){const cards=sh([...q.items.keys(),...q.items.keys()]),cols=cards.length<=6?3:4;
+function pairsQ(q){const cards=sh([...q.items.keys(),...q.items.keys()]),cols=cards.length<=6?3:cards.length<=12?4:4;
   gShow(`<div class="game">${gHead("🃏","Memory","Find the pairs!")}
     <div class="pgrid" style="grid-template-columns:repeat(${cols},1fr)">${cards.map((k,j)=>`<button class="pc" data-k="${k}" data-j="${j}"><span class="pcb">?</span><span class="pcf">${q.items[k].e}</span></button>`).join("")}</div></div>`);
   gAsk(q);let open=[],found=0,miss=0,busy=false;const bs=[...$("qBody").querySelectorAll(".pc")];
@@ -214,7 +216,7 @@ const PIANO=[["C","Do","#FF5A5F",262],["D","Re","#FF9F1C",294],["E","Mi","#FFD23
 let __pac=null;function pianoTone(f,ms=700){try{__pac=__pac||new (window.AudioContext||window.webkitAudioContext)();const t=__pac.currentTime,g=__pac.createGain();g.connect(__pac.destination);
   g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.45,t+.01);g.gain.exponentialRampToValueAtTime(.0001,t+ms/1000);
   [[1,1],[2,.35],[3,.12]].forEach(([m,v])=>{const o=__pac.createOscillator(),gg=__pac.createGain();o.type="sine";o.frequency.value=f*m;gg.gain.value=v;o.connect(gg).connect(g);o.start(t);o.stop(t+ms/1000+.05)})}catch(e){}}
-function qPiano(){const a=lvl(),keys=a<=4?5:8,len=a<=3?2:a<=5?3:a<=7?4:5;let seq=[];for(let i=0;i<len;i++){let k;do{k=ri(0,keys-1)}while(seq.length&&k===seq[seq.length-1]);seq.push(k)}
+function qPiano(){const a=lvl(),gx=gxOf("piano"),keys=a<=4&&!gx?5:8,len=Math.min(7,(a<=3?2:a<=5?3:a<=7?4:5)+gx);let seq=[];for(let i=0;i<len;i++){let k;do{k=ri(0,keys-1)}while(seq.length&&k===seq[seq.length-1]);seq.push(k)}
   return {game:"piano",seq,keys,voice:["w/PX_PIANO"]}}
 function pianoQ(q){
   gShow(`<div class="game">${gHead("🎹","Piano","Listen, then play the same notes!")}

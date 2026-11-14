@@ -37,7 +37,7 @@ const MAZES={animals:[["🐝","🌸","Bees visit flowers to collect nectar and m
   farm:[["🐄","🌾","A cow eats grass for many hours every day."],["🐝","🌸","Bees visit flowers to collect nectar and make honey."],["🐶","🦴","Dogs can smell things from very far away."]],
   sky:[["🚀","🌍","Astronauts come back home to Earth after their trip to space."]],world:[["🐢","🌊","Sea turtles swim in the ocean but lay their eggs on the beach."],["🐿️","🌰","Squirrels hide nuts in the ground to eat in winter."],["🐛","🍃","Caterpillars eat lots of leaves before they become butterflies."]],
   robot:[["🤖","🔋","Robots need energy from a battery to move."]],count:[["🐸","🪷","Frogs can jump far with their strong back legs."]],shapes:[["🤖","🔋","Robots need energy from a battery to move."]]};
-function qMaze(cat){const a=lvl(),n=a<=4?4:a<=6?5:a<=8?6:7,[s,g,f]=pickOne(MAZES[cat]||MAZES.animals);
+function qMaze(cat){const a=lvl(),n=Math.min(9,(a<=4?4:a<=6?5:a<=8?6:7)+gxOf("maze")),[s,g,f]=pickOne(MAZES[cat]||MAZES.animals);
   /* a perfect maze: random depth-first walk, so there is exactly one way through */
   const W=Array.from({length:n*n},()=>({r:1,b:1})),seen=new Set([0]),st=[0];
   while(st.length){const c=st[st.length-1],x=c%n,y=Math.floor(c/n),nb=[[x+1,y],[x-1,y],[x,y+1],[x,y-1]].filter(([u,v])=>u>=0&&v>=0&&u<n&&v<n&&!seen.has(v*n+u));
