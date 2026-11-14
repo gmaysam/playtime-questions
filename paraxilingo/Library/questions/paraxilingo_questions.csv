@@ -1,0 +1,7 @@
+id,game,kind,age,question,question_farsi,options,answer,explanation,voice
+x01,Dinosaurs,choose,4+,Which dinosaur had a very long neck?,کدوم دایناسور گردنِ خیلی درازی داشت؟ Brachiosaurus یا T-Rex؟,Brachiosaurus | T-Rex,Brachiosaurus,Brachiosaurus had a very long neck to eat leaves from tall trees.,x01_q_lulu.mp3
+x02,Dinosaurs,true/false,4+,T-Rex ate plants.,T-Rex گیاه می‌خورد. درسته یا غلط؟,True | False,False,"T-Rex ate meat. It had big, sharp teeth.",x02_q_lulu.mp3
+x03,Dinosaurs,choose,4+,Where do baby dinosaurs come from?,بچه دایناسورها از کجا میان؟ از تخم، از درخت یا از ابر؟,Eggs | Trees | Clouds,Eggs,"Baby dinosaurs hatched from eggs, like chicks.",x03_q_lulu.mp3
+x04,Dinosaurs,true/false,4+,"Dinosaurs lived a very, very long time ago.",دایناسورها خیلی خیلی سال پیش زندگی می‌کردن. درسته یا غلط؟,True | False,True,"Dinosaurs lived millions of years ago, long before people.",x04_q_lulu.mp3
+x05,Dinosaurs,choose,4+,What do we find from dinosaurs today?,امروز از دایناسورها چی پیدا می‌کنیم؟ استخون، اسباب‌بازی یا ماشین؟,Bones | Toys | Cars,Bones,"We find dinosaur bones, called fossils, in the ground.",x05_q_lulu.mp3
+x06,Dinosaurs,true/false,4+,"T-Rex had big, sharp teeth.",T-Rex دندون‌های بزرگ و تیزی داشت. درسته یا غلط؟,True | False,True,"T-Rex had huge, sharp teeth for eating meat.",x06_q_lulu.mp3

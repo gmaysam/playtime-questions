@@ -1,0 +1,7 @@
+const {chromium}=require('/opt/npm-tools/node_modules/playwright');const fs=require('fs'),path=require('path');const root=process.argv[2],out=process.argv[3];
+(async()=>{const b=await chromium.launch();const p=await b.newPage({viewport:{width:375,height:740}});
+ await p.route('http://app.test/**',r=>{let f=decodeURIComponent(new URL(r.request().url()).pathname.slice(1));const fp=path.join(root,f);if(!fs.existsSync(fp))return r.fulfill({status:404,body:''});
+  let body=fs.readFileSync(fp);if(f==='index.html')body=body.toString().replace('let L=null;','let L=null;window.__go=(id,cat,st)=>{S.age=7;let q;if(id.startsWith("tf")){const u=new Set([...Array(16).keys()].filter(i=>"tf"+i!==id).map(i=>"tf"+i));const R=Math.random;Math.random=()=>.1;q=qWatcher("sky",u);Math.random=R}else{window.__fw=id;q=qWatcher(cat,new Set());window.__fw=null}q.cat=cat;q.kind="w";if(st)q.style=st;L={g:0,cat,correct:0,first:0,acorns:0,k:0,queue:[q],total:1};$("lesson").classList.add("open");nextQ();hush()};');r.fulfill({body,contentType:f.endsWith('.html')?'text/html; charset=utf-8':undefined})});
+ await p.goto('http://app.test/index.html');await p.waitForTimeout(600);await p.click('#introC').catch(()=>{});await p.waitForTimeout(800);
+ const L=JSON.parse(process.env.G);for(const [id,cat,st] of L){await p.evaluate(([i,c,s])=>__go(i,c,s),[id,cat,st||""]);await p.waitForTimeout(1500);await p.screenshot({path:`${out}/w_${id}.png`})}
+ await b.close()})();

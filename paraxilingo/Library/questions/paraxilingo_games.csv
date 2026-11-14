@@ -1,0 +1,7 @@
+game,ages,how,for Watcher?
+Coins,5+,"made up: coin values, count the money, same amount",yes (needs coin pictures)
+Clock,5+,"made up: o'clock, half past, quarter, morning/night",yes (needs a clock face)
+Painting,3+,colour a picture tap by tap (painting_pages.js),big screen only
+Dinosaurs,4+,fixed: paraxilingo_questions.csv,yes
+Radio,3+,Watcher stories,from Watcher
+"Homes & food, sounds, shapes, colours, patterns, flags, jobs, sky, calendar",3+,rebuilt from Watcher clips and pictures,from Watcher
