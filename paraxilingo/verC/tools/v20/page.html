@@ -104,6 +104,11 @@ main .wrap{padding-top:16px;display:flex;flex-direction:column;gap:14px}
 .playin{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
 .playin select{font:600 14px var(--font);color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:6px 8px}
 .samples{grid-template-columns:repeat(auto-fill,minmax(310px,1fr))!important}
+.item{position:relative}
+.item.isnew{border-color:var(--warn);box-shadow:0 0 0 2px var(--warn-bg)}
+.item.checked{border-color:var(--ok)}
+.newtag{position:absolute;top:10px;right:12px;z-index:1;font:900 11px/1 var(--font);letter-spacing:.06em;padding:5px 8px;border-radius:999px;background:var(--warn);color:var(--card)}
+@media (min-width:821px){.newtag{right:356px}}
 .empty{padding:40px;text-align:center;color:var(--mute)}
 .more{align-self:center}
 button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
@@ -117,13 +122,13 @@ button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-vis
     <select id="fAge" aria-label="Age"></select>
     <input type="search" id="fQ" placeholder="Search words, ids…" aria-label="Search">
     <label><input type="checkbox" id="fMute"> options not read aloud</label>
-    <select id="fNote" aria-label="My notes"><option value="">All items</option><option value="any">With my notes</option><option value="open">Notes waiting for Claude</option><option value="done">Notes Claude has done</option></select>
+    <select id="fNote" aria-label="My notes"><option value="">All items</option><option value="any">With my notes</option><option value="open">Notes waiting for Claude</option><option value="done">Notes Claude has done</option><option value="new">New, not checked yet</option><option value="checked">Checked, looks good</option></select>
   </div>
 </div></header>
 <main><div class="wrap" id="list"></div></main>
 
 <script>
-const D=__DATA__;const AU=__AUDIO__;const SHOTS=__SHOTS__;
+const D=__DATA__;const AU=__AUDIO__;const SHOTS=__SHOTS__;const BASE=new Set(__BASE__);
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const strip=h=>String(h||"").replace(/<[^>]+>/g," ").replace(/\s+/g," ").trim();
@@ -166,7 +171,7 @@ function rvHTML(id,o){const ans=o.answers||[];const ageNow=o.age;
     ${ans.length?`<label style="grid-column:1/-1">Correct answer<select data-f="correct"><option value="">OK as is</option>${ans.map((a,i)=>`<option value="${i}">${esc(a)}</option>`).join("")}<option value="other">Something else (write below)</option></select></label>`:""}
    </div>
    <label>Note<textarea data-f="note" placeholder="What should change?"></textarea></label>
-   <div class="acts"><button class="btn" data-save>Save note</button><button class="btn ghost" data-clear hidden>Clear</button><span class="saved" data-st></span></div></div>`}
+   <div class="acts"><button class="btn" data-save>Save note</button><button class="btn ghost" data-ok>Looks good ✓</button><button class="btn ghost" data-clear hidden>Clear</button><span class="saved" data-st></span></div></div>`}
 /* ---------- items ---------- */
 const ITEMS=[];
 for(const f of D.fixed){const q=f.q;ITEMS.push({id:"q:"+f.id,tab:"fixed",cat:f.cat,age:f.age,search:(f.id+" "+(q?q.cap:"")+" "+optLabels(q).join(" ")+" "+f.x).toLowerCase(),mute:q&&q.opts.some(o=>!o.say.length),
@@ -197,13 +202,16 @@ try{const h=location.hash.slice(1);if(TABS.some(t=>t[0]===h))tab=h}catch(e){}
 function counts(){const c={};ITEMS.forEach(i=>c[i.tab]=(c[i.tab]||0)+1);return c}
 function renderTabs(){const c=counts();$("tabs").innerHTML=TABS.map(([k,n])=>`<button class="tab" role="tab" aria-selected="${k===tab}" data-tab="${k}">${n}<span class="n">${c[k]||0}</span></button>`).join("")}
 function filtered(){const s=$("fSec").value,a=$("fAge").value,t=$("fQ").value.trim().toLowerCase(),m=$("fMute").checked,n=$("fNote").value;
-  return ITEMS.filter(i=>i.tab===tab&&(!s||i.cat===s||(i.cats&&i.cats.includes(s)))&&(!a||(i.ageHi?(+a>=i.age&&+a<=i.ageHi):i.age==+a))&&(!t||i.search.includes(t))&&(!m||i.mute)&&(!n||(NOTES[i.id]&&(n==="any"||(n==="done")===(NOTES[i.id].status==="done")))))}
+  return ITEMS.filter(i=>i.tab===tab&&(!s||i.cat===s||(i.cats&&i.cats.includes(s)))&&(!a||(i.ageHi?(+a>=i.age&&+a<=i.ageHi):i.age==+a))&&(!t||i.search.includes(t))&&(!m||i.mute)&&(!n||(n==="new"?isNew(i):n==="checked"?(NOTES[i.id]&&NOTES[i.id].status==="checked"):(NOTES[i.id]&&NOTES[i.id].status!=="checked"&&(n==="any"||(n==="done")===(NOTES[i.id].status==="done"))))))
+   .sort((x,y)=>(BASE.has(x.id)?0:1)-(BASE.has(y.id)?0:1))}
+const isNew=i=>!BASE.has(i.id)&&!NOTES[i.id];
 function render(){const L=filtered();const box=$("list");
-  box.innerHTML=L.length?L.slice(0,shown).map(i=>`<article class="item" id="it-${esc(i.id)}" data-id="${esc(i.id)}">${i.html()}</article>`).join("")+(L.length>shown?`<button class="btn ghost more" id="more">Show ${Math.min(60,L.length-shown)} more (${L.length-shown} left)</button>`:""):`<div class="empty">Nothing matches these filters.</div>`;
+  box.innerHTML=L.length?L.slice(0,shown).map(i=>`<article class="item${BASE.has(i.id)?"":" isnew"}" id="it-${esc(i.id)}" data-id="${esc(i.id)}">${BASE.has(i.id)?"":`<span class="newtag">NEW</span>`}${i.html()}</article>`).join("")+(L.length>shown?`<button class="btn ghost more" id="more">Show ${Math.min(60,L.length-shown)} more (${L.length-shown} left)</button>`:""):`<div class="empty">Nothing matches these filters.</div>`;
   box.querySelectorAll(".item").forEach(fillNote);
   const mo=$("more");if(mo)mo.onclick=()=>{shown+=60;render()};
-  const nn=Object.keys(NOTES).length,open=Object.values(NOTES).filter(x=>x.status!=="done").length;
-  $("sum").textContent=`${L.length} shown · ${nn} notes (${open} waiting for Claude)`}
+  sumLine(L.length)}
+function sumLine(n){const v=Object.values(NOTES),nn=v.filter(x=>x.status!=="checked").length,open=v.filter(x=>x.status==="open").length,nw=ITEMS.filter(isNew).length,ck=v.filter(x=>x.status==="checked").length;
+  $("sum").textContent=`${n} shown · ${nn} notes (${open} waiting for Claude) · ${ck} checked`+(nw?` · ${nw} new to check`:"")}
 $("fSec").innerHTML=`<option value="">All sections</option>`+Object.entries(SEC).map(([k,v])=>`<option value="${k}">${v}</option>`).join("");
 $("fAge").innerHTML=`<option value="">All ages</option>`+AGES.map(a=>`<option value="${a}">Age ${a}</option>`).join("");
 ["fSec","fAge","fMute","fNote"].forEach(x=>$(x).onchange=()=>{shown=60;render()});$("fQ").oninput=()=>{shown=60;render()};
@@ -218,14 +226,15 @@ function findQ(id,b){const [k,rest]=[id.split(":")[0],id.slice(id.indexOf(":")+1
   if(k==="gen"){const g=D.gen.find(x=>x.cat+"."+x.kind===rest);const si=[...b.closest(".samples").children].indexOf(b.closest(".sample"));return g&&g.samples[si]}return null}
 /* ---------- notes in the shared store (Claude reads them and updates the app) ---------- */
 let db=null;
-function fillNote(el){const id=el.dataset.id,n=NOTES[id],rv=el.querySelector(".rv");if(!rv)return;el.classList.toggle("has",!!n&&n.status!=="done");el.classList.toggle("done",!!n&&n.status==="done");
+function fillNote(el){const id=el.dataset.id,n=NOTES[id],rv=el.querySelector(".rv");if(!rv)return;el.classList.toggle("has",!!n&&n.status==="open");el.classList.toggle("done",!!n&&n.status==="done");el.classList.toggle("checked",!!n&&n.status==="checked");const tg=el.querySelector(".newtag");if(tg)tg.hidden=!!n;
   rv.querySelectorAll("[data-f]").forEach(f=>{if(document.activeElement!==f)f.value=n&&n[f.dataset.f]!=null?n[f.dataset.f]:""});
   rv.querySelector("[data-clear]").hidden=!n;
-  rv.querySelector("[data-st]").textContent=n?(n.status==="done"?"✅ Done by Claude"+(n.doneAt?" on "+n.doneAt.slice(0,10):"")+(n.reply?": "+n.reply:"")+" · change it and save to ask again":"Saved · waiting for Claude"):(db?"":"Notes are not connected here");
+  rv.querySelector("[data-ok]").hidden=!!n&&n.status!=="done";rv.querySelector("[data-st]").textContent=n?(n.status==="checked"?"✓ You checked this · it looks good":n.status==="done"?"✅ Done by Claude"+(n.doneAt?" on "+n.doneAt.slice(0,10):"")+(n.reply?": "+n.reply:"")+" · change it and save to ask again":"Saved · waiting for Claude"):(db?"":"Notes are not connected here");
   rv.querySelector("[data-save]").disabled=!db}
-document.addEventListener("click",async e=>{const s=e.target.closest("[data-save],[data-clear]");if(!s)return;const rv=s.closest(".rv"),id=rv.dataset.id,st=rv.querySelector("[data-st]");if(!db){st.textContent="Notes are not connected here";return}
+document.addEventListener("click",async e=>{const s=e.target.closest("[data-save],[data-clear],[data-ok]");if(!s)return;const rv=s.closest(".rv"),id=rv.dataset.id,st=rv.querySelector("[data-st]");if(!db){st.textContent="Notes are not connected here";return}
   const ref=db.collection("qc").doc(id.replace(/[\/]/g,"_"));
   try{if(s.dataset.clear!==undefined){await ref.delete();st.textContent="Cleared";return}
+    if(s.dataset.ok!==undefined){const old=NOTES[id];s.disabled=true;await ref.set(Object.assign({},old||{},{item:id,status:"checked",checkedAt:new Date().toISOString()}));st.textContent="✓ You checked this";return}
     const v={};rv.querySelectorAll("[data-f]").forEach(f=>v[f.dataset.f]=f.value);if(!v.age&&!v.format&&!v.correct&&!v.note.trim()){st.textContent="Pick something or write a note first";return}
     s.disabled=true;await ref.set(Object.assign(v,{item:id,status:"open",at:new Date().toISOString()}));st.textContent="Saved · waiting for Claude"}catch(err){st.textContent="Could not save: "+(err&&err.message||"try again")}finally{s.disabled=false}});
 renderTabs();render();
@@ -234,6 +243,6 @@ renderTabs();render();
   if(!db){clearTimeout(t);$("dbst").innerHTML='<span class="pill bad">Notes unavailable here</span>';render();return}
   db.collection("qc").onSnapshot(snap=>{clearTimeout(t);NOTES={};snap.docs.forEach(d=>{const x=d.data();if(x&&x.item)NOTES[x.item]=x});
     $("dbst").innerHTML='<span class="pill ok">Notes saved for Claude</span>';
-    document.querySelectorAll(".item").forEach(fillNote);const nn=Object.keys(NOTES).length,open=Object.values(NOTES).filter(x=>x.status!=="done").length;$("sum").textContent=`${filtered().length} shown · ${nn} notes (${open} waiting for Claude)`},
+    document.querySelectorAll(".item").forEach(fillNote);sumLine(filtered().length)},
    err=>{clearTimeout(t);$("dbst").innerHTML='<span class="pill bad">Notes could not load</span>'})})();
 </script>

@@ -21,5 +21,5 @@ import re as _r;a['txt']={k:_r.sub(r'\[[^\]]*\]\s*','',v).strip() for k,v in a['
 # audio for any new clips not in the sprites
 s=json.dumps(d);need=set(re.findall(r'"w/([A-Za-z0-9_]+)"',s));print('clips missing from sprites',len(need-set(a['idx'])))
 js=lambda o:json.dumps(o,ensure_ascii=False,separators=(',',':')).replace('</','<\\/')
-open(f'{S}/qc/site/index.html','w').write(open(f'{S}/qc/page.html').read().replace('__DATA__',js(d)).replace('__AUDIO__',js(a)).replace('__SHOTS__',js(sh)))
+open(f'{S}/qc/site/index.html','w').write(open(f'{S}/qc/page.html').read().replace('__DATA__',js(d)).replace('__AUDIO__',js(a)).replace('__SHOTS__',js(sh)).replace('__BASE__',js(json.load(open(f'{S}/qc/build/baseline.json')))))
 json.dump(sorted(need-set(a['idx'])),open(f'{S}/qc/build/needclips.json','w'))
