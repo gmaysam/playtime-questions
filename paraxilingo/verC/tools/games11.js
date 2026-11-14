@@ -43,7 +43,7 @@ function shuttleQ(q){const N=q.lanes;
     read(again)};
   /* read the question, then every answer with its gate lit; the gate starts flying when the reading is done */
   const read=(again)=>{hush();const tok={};window.__optTok=tok;const boxes=[...GT.querySelectorAll(".shu-l")];
-    const list=[{c:again?[]:(gi===0?[G11("ROCKET"),...cur.voice]:cur.voice)},...lanes.map((l,i)=>l?{c:l.x.say,b:boxes[i]}:null).filter(Boolean)];let i=0;
+    const list=[{c:again?[]:(gi===0?[G11("ROCKET"),...(q._voice?[G12("VOICE_STEER")]:[]),...cur.voice]:cur.voice)},...lanes.map((l,i)=>l?{c:l.x.say,b:boxes[i]}:null).filter(Boolean)];let i=0;
     const lit=b=>boxes.forEach(x=>x.classList.toggle("saying",x===b));
     const step=()=>{if(window.__optTok!==tok||!L||L.q!==q||q.done){lit(null);return}if(i>=list.length){lit(null);moving=true;return}const x=list[i++];lit(x.b||null);
       if(!x.c.length){step();return}sayseq(x.c,()=>setTimeout(step,x.b?150:250))};step()};
@@ -70,6 +70,11 @@ function shuttleQ(q){const N=q.lanes;
         if(t-hitT>900){hitT=t;R.classList.remove("hit");void R.offsetWidth;R.classList.add("hit");sfx.oops();if(stars>0){stars--;$("shS").textContent=stars}gy=Math.max(4,gy-6)}o.el.remove();return false}
       if(o.y>104){o.el.remove();return false}return true});
     raf=requestAnimationFrame(tick)};
+  /* age 6+: say an answer and the rocket flies to its gate */
+  if(typeof voiceOK==="function"&&voiceOK()){const mb=document.createElement("button");mb.className="qmic shu-mic";mb.innerHTML=`<span class="qmic-i">🎤</span><span class="qmic-t">Say it</span>`;$("shQ").parentNode.appendChild(mb);
+    mb.onclick=()=>{if(q.done||mb.classList.contains("on")||!cur)return;sfx.tap();vListen(mb,alts=>{const items=lanes.map(l=>l?vItem(l.x):{lab:"",en:[],fa:[],num:null,time:null});const j=vMatch(alts,items);
+      if(j<0){toastHint(alts[0]?`I heard “${alts[0]}”. Say it again!`:vFailText("quiet"));return}ty=laneX(j);if(!moving){window.__optTok={};moving=true}},w=>toastHint(vFailText(w)))};
+    q._voice=true}
   setR();showGate(false);raf=requestAnimationFrame(tick);
   window.__gSolve=()=>{const go=()=>{if(q.done||!L||L.q!==q)return;if(!cur){setTimeout(go,200);return}if(!moving){window.__optTok={};moving=true}const ci=lanes.findIndex(x=>x&&x.i===cur.ans);ty=rx=laneX(ci);gy=73.9;setTimeout(go,300)};go()}}
 GAMES.shuttle=shuttleQ;
