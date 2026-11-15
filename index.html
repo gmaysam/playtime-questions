@@ -17754,6 +17754,21 @@ img.e3 {
   width: 130px;
   height: 130px;
 }
+.introC img.g17gif {
+  width: min(360px, 90%);
+  height: auto;
+  max-width: none;
+  mix-blend-mode: multiply;
+  filter: none !important;
+  animation: none !important;
+  transform: none !important;
+}
+.introC {
+  background: #FAFAF7 !important;
+}
+.introC img.g17gif {
+  mix-blend-mode: normal;
+}
 .qbody,
 .panel {
   max-width: 680px;
@@ -17805,7 +17820,7 @@ img.e3 {
   <div class="toast" id="toast"></div>
 
   <div class="introC" id="introC">
-    <video class="talk" poster="img/domi_talk0.jpg" muted playsinline webkit-playsinline loop preload="auto" aria-label="Domi says hello"><source src="img/domi_talk.mp4" type="video/mp4"><source src="img/domi_talk.webm" type="video/webm"></video><img class="talk g14char" hidden alt=""><button class="g14tap" id="inTap" hidden>👋 Tap to hear Domi!</button>
+    <img class="talk g17gif" src="img/domi_talk.gif" alt="Domi says hello"><img class="talk g14char" hidden alt=""><button class="g14tap" id="inTap" hidden>👋 Tap to hear Domi!</button>
     <div class="inev" id="inEv"></div>
   </div>
 
@@ -31561,32 +31576,19 @@ img.e3 {
     }
     return r;
   };
+  let introSet = false;
   introTalk = function(on) {
-    const v = document.querySelector("#introC video.talk"), im = document.querySelector("#introC img.g14char"), d = charOf();
+    if (introSet) return;
+    introSet = true;
+    const g = document.querySelector("#introC img.g17gif"), im = document.querySelector("#introC img.g14char"), d = charOf();
     if (CHARS[d]) {
-      if (v) v.hidden = true;
+      if (g) g.style.display = "none";
       if (im) {
         im.hidden = false;
         im.src = CHARS[d].img;
-        im.classList.toggle("bob", on);
+        im.classList.add("bob");
       }
-      return;
-    }
-    if (im) im.hidden = true;
-    if (!v) return;
-    v.hidden = false;
-    try {
-      if (on) {
-        v.currentTime = 0;
-        const p = v.play();
-        p && p.catch(() => {
-        });
-      } else {
-        v.pause();
-        v.currentTime = 0;
-      }
-    } catch (e) {
-    }
+    } else if (im) im.hidden = true;
   };
   introHello = function(list, after) {
     introAfter = after;
@@ -31594,7 +31596,7 @@ img.e3 {
       after();
       return;
     }
-    const v = document.querySelector("#introC video.talk"), a = new Audio("audio/" + list[0] + ".mp3");
+    const a = new Audio("audio/" + list[0] + ".mp3");
     a.preload = "auto";
     a.playbackRate = 0.92;
     voice = a;
@@ -31642,7 +31644,8 @@ img.e3 {
       if (++ready >= 2) kick();
     };
     a.addEventListener("canplaythrough", one, { once: true });
-    if (v && !v.hidden && v.readyState < 3) v.addEventListener("canplay", one, { once: true });
+    const g = document.querySelector("#introC img.g17gif");
+    if (g && !g.complete) g.addEventListener("load", one, { once: true });
     else one();
     setTimeout(kick, 1200);
     setTimeout(() => {
