@@ -17769,6 +17769,18 @@ img.e3 {
 .introC img.g17gif {
   mix-blend-mode: normal;
 }
+.introC img.g17gif {
+  width: min(300px, 72vw);
+}
+.g17ver {
+  position: absolute;
+  bottom: max(14px, env(safe-area-inset-bottom));
+  left: 0;
+  right: 0;
+  text-align: center;
+  font: 700 12px "Nunito", sans-serif;
+  color: #bbb;
+}
 .qbody,
 .panel {
   max-width: 680px;
@@ -17821,7 +17833,7 @@ img.e3 {
 
   <div class="introC" id="introC">
     <img class="talk g17gif" src="img/domi_dance.gif" alt="Domi dances hello"><img class="talk g14char" hidden alt=""><button class="g14tap" id="inTap" hidden>👋 Tap to hear Domi!</button>
-    <div class="inev" id="inEv"></div>
+    <div class="inev" id="inEv"></div><small class="g17ver">version Nov 15 14:27</small>
   </div>
 
   <canvas class="fx" id="fx"></canvas>
