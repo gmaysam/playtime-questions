@@ -207,39 +207,55 @@ function micListen(M,H,onAlts){if(M.dataset.busy==="1")return;hush();let rec;try
   return rec}
 const wordHit=(alts,t)=>alts.some(s=>normW(s).split(" ").some(x=>x===t||x===t+"s"||t===x+"s"||(t.length>=4&&lev(x,t)<=1))||normW(s).replace(/ /g,"")===t);
 /* a speaking round: shows the thing, listens up to 3 times, then shows and says the answer */
-function speakGame(q,o){let tries=0,rec=null;
-  gShow(`<div class="game">${gHead(o.icon,o.title,o.sub)}<div class="sy g16sy">${o.body}
-    ${o.listen?`<button class="hr-play sm" id="syL" aria-label="Listen again">🔊</button>`:""}<button class="sy-mic" id="syM" aria-label="Say it">🎤</button><div class="sy-h" id="syH">${o.hint}</div><button class="mv-skip" id="syS">Skip</button></div></div>`);gAsk(q);
-  const H=$("syH"),M=$("syM");if(o.tts)setTimeout(()=>enTTS(o.tts),(q.voice||[]).length?1800:300);
-  const fin=ok=>{if(q.done)return;if(ok){sayseq([G10("SAY_GOOD")],()=>{});gameWin(q,tries>1?1:0,M,[])}else{q.done=true;o.reveal&&o.reveal();gameLearn(q,o.answer,o.answerSay)}};
-  const got=alts=>{const r=o.check(alts);if(r.ok){H.textContent="✅ "+o.answer;fin(true);return}
-    tries++;H.textContent=alts[0]?`I heard “${alts[0]}”. Try again!`:"I didn't hear it. Try again!";
-    if(tries>=3){sayseq([G10("SAY_LAST"),...o.answerSay],()=>{if(o.tts)enTTS(o.tts)});fin(false)}else sayseq([G10("SAY_AGAIN"),...(o.again||[])],()=>{if(o.tts)enTTS(o.tts)})};
-  M.onclick=()=>{if(!q.done)rec=micListen(M,H,got)};
-  const L=$("syL");if(L)L.onclick=()=>{sfx.tap();hush();if(o.tts)enTTS(o.tts);else sayseq(o.answerSay,()=>{})};
-  $("syS").onclick=()=>{if(q.done)return;try{rec&&rec.abort()}catch(e){}q.done=true;o.reveal&&o.reveal();gameLearn(q,o.answer,o.answerSay)};
-  window.__gSolve=()=>got([o.answer])}
-/* Name it! a picture only; the child says its English name */
+/* a speaking game is 5 rounds: say 5 things, then the game is done (parent, Nov 15) */
+const ROUNDS16=5;
+function speakRounds(q,mk){const items=q.items;let i=0,good=0,rec=null,tries=0,busyNext=false;
+  const dots=()=>`<div class="g16dots">${items.map((_,k)=>`<i class="${k<i?"done":k===i?"now":""}"></i>`).join("")}</div>`;
+  const finish=()=>{if(q.done)return;const M=$("syM");if(good>=Math.ceil(items.length/2))gameWin(q,Math.min(2,items.length-good),M,[]);else{q.done=true;gameLearn(q,"Great practice! Let's say more next time.",[])}};
+  const next=d=>{busyNext=true;setTimeout(()=>{busyNext=false;i++;if(i>=items.length)finish();else round()},d)};
+  const round=()=>{const o=mk(items[i],i);tries=0;
+    gShow(`<div class="game">${gHead(o.icon,o.title,o.sub)}${dots()}<div class="sy g16sy">${o.body}
+      ${o.listen?`<button class="hr-play sm" id="syL" aria-label="Listen again">🔊</button>`:""}<button class="sy-mic" id="syM" aria-label="Say it">🎤</button><div class="sy-h" id="syH">${o.hint}</div><button class="mv-skip" id="syS">Skip</button></div></div>`);
+    if(i===0)gAsk(q);else{hush();sayseq(o.voice||[],()=>{})}
+    const H=$("syH"),M=$("syM");if(o.tts)setTimeout(()=>enTTS(o.tts),(o.voice||[]).length?1800:300);
+    const got=alts=>{if(busyNext||q.done)return;const r=o.check(alts);
+      if(r.ok){good++;H.textContent="✅ "+o.answer;try{sfx.good&&sfx.good()}catch(e){}sayseq([G10("SAY_GOOD")],()=>{});const d=document.querySelector(".g16dots i.now");if(d)d.classList.add("ok");next(1600);return}
+      tries++;H.textContent=alts[0]?`I heard “${alts[0]}”. Try again!`:"I didn't hear it. Try again!";
+      if(tries>=3){o.reveal&&o.reveal();H.textContent="Let's say it together: "+o.answer;sayseq([G10("SAY_LAST"),...o.answerSay],()=>{if(o.tts)enTTS(o.tts);next(o.tts?2600:900)})}
+      else sayseq([G10("SAY_AGAIN"),...(o.again||[])],()=>{if(o.tts)enTTS(o.tts)})};
+    M.onclick=()=>{if(!q.done&&!busyNext)rec=micListen(M,H,got)};
+    const L=$("syL");if(L)L.onclick=()=>{sfx.tap();hush();if(o.tts)enTTS(o.tts);else sayseq(o.answerSay,()=>{})};
+    $("syS").onclick=()=>{if(q.done||busyNext)return;try{rec&&rec.abort()}catch(e){}o.reveal&&o.reveal();sayseq(o.answerSay,()=>{});next(1400)};
+    window.__gSolve=()=>got([o.answer])};
+  round()}
+const pick5=a=>sh(a).slice(0,ROUNDS16);
+/* Name it! Lulu asks "what is it? say it in English", then says the name; the child says it */
 const NUMW=/^(one|two|three|four|five|six|seven|eight|nine|ten|zero)$/;const nameWords=()=>{const a=lvl();return WORDS.filter(x=>!NUMW.test(x.w)&&(a>=7?x.w.length<=8:x.w.length<=5)).map(x=>({w:x.w,pic:PIC("wd_"+x.i,"wp"),say:wSay(x)}))};
-function qSayName(){const w=pickOne(nameWords());return {game:"sayname",w,voice:[...w.say,...(G16("NAME_Q").length?G16("NAME_Q"):[G10("SAY_Q")])],gid:"g:sayname",factT:"Naming things out loud builds your English words."}}
-GAMES.sayname=q=>{const w=q.w.w;speakGame(q,{icon:"🗣️",title:"Name it!",sub:"Listen, then say its name",listen:true,again:q.w.say,
-  body:`<div class="sy-pic g16pic">${q.w.pic}</div><div class="sy-w" id="g16W">${w}</div>`,hint:"Tap 🎤 and say its name",answer:w,answerSay:q.w.say,
-  reveal:()=>{const e=$("g16W");if(e)e.classList.remove("g16hide")},check:alts=>({ok:wordHit(alts,w)})})};
+const NAMEQ=()=>G16("NAME_Q").length?G16("NAME_Q"):[G10("SAY_Q")];
+function qSayName(){const items=pick5(nameWords());return {game:"sayname",items,w:items[0],voice:[...NAMEQ(),...items[0].say],gid:"g:sayname",factT:"Naming things out loud builds your English words."}}
+GAMES.sayname=q=>speakRounds(q,x=>({icon:"🗣️",title:"Name it!",sub:"What is it? Say it in English",listen:true,again:x.say,voice:[...NAMEQ(),...x.say],
+  body:`<div class="sy-pic g16pic">${x.pic}</div><div class="sy-w">${x.w}</div>`,hint:"Tap 🎤 and say its name",answer:x.w,answerSay:x.say,check:alts=>({ok:wordHit(alts,x.w)})}));
 /* Read it! a word in big letters; the child reads it out loud, then Lulu says it */
 const readWords=()=>{const a=lvl(),pool=WORDS.map(x=>({w:x.w,say:wSay(x)}));
   return a<=5?pool.filter(x=>x.w.length===3):a<=6?pool.filter(x=>x.w.length<=4):pool.filter(x=>x.w.length>=4)};
-function qReadIt(){const w=pickOne(readWords());return {game:"readit",w,voice:G16("READ_Q").length?G16("READ_Q"):[G10("SAY_Q")],gid:"g:readit",factT:"Reading out loud makes you a stronger reader."}}
-GAMES.readit=q=>{const w=q.w.w;speakGame(q,{icon:"📖",title:"Read it!",sub:"Read the word out loud",
-  body:`<div class="sy-w g16big">${w.split("").map(c=>`<i>${c}</i>`).join("")}</div>`,hint:"Tap 🎤 and read the word",answer:w,answerSay:q.w.say,check:alts=>({ok:wordHit(alts,w)})})};
+const READQ=()=>G16("READ_Q").length?G16("READ_Q"):[G10("SAY_Q")];
+function qReadIt(){const items=pick5(readWords());return {game:"readit",items,w:items[0],voice:READQ(),gid:"g:readit",factT:"Reading out loud makes you a stronger reader."}}
+GAMES.readit=q=>speakRounds(q,(x,i)=>({icon:"📖",title:"Read it!",sub:"Read the word out loud",voice:i?[]:READQ(),
+  body:`<div class="sy-w g16big">${x.w.split("").map(c=>`<i>${c}</i>`).join("")}</div>`,hint:"Tap 🎤 and read the word",answer:x.w,answerSay:x.say,check:alts=>({ok:wordHit(alts,x.w)})}));
 /* Say the sentence: Lulu says a short English sentence; the child says it back; each word lights up when heard */
-function qSaySent(){const a=lvl(),pool=SENTS.filter(s=>a<=6?s.a<=5:s.a>=7);const s=pickOne(pool.length?pool:SENTS);
-  return {game:"saysent",s,voice:[...(G16("SENT_Q").length?G16("SENT_Q"):[G10("SAY_Q")]),...sentSay(s)],gid:"g:saysent",factT:"Saying whole sentences helps you speak English."}}
-GAMES.saysent=q=>{const s=q.s,words=normW(s.s).split(" ");speakGame(q,{icon:"💬",title:"Say the sentence",sub:"Listen, then say it",listen:true,
+const SENTQ=()=>G16("SENT_Q").length?G16("SENT_Q"):[G10("SAY_Q")];
+function qSaySent(){const a=lvl(),pool=SENTS.filter(s=>a<=6?s.a<=5:s.a>=7);const items=pick5(pool.length?pool:SENTS);
+  return {game:"saysent",items,s:items[0],voice:[...SENTQ(),...sentSay(items[0])],gid:"g:saysent",factT:"Saying whole sentences helps you speak English."}}
+GAMES.saysent=q=>speakRounds(q,(s,i)=>{const words=normW(s.s).split(" ");return {icon:"💬",title:"Say the sentence",sub:"Listen, then say it",listen:true,voice:i?sentSay(s):[...SENTQ(),...sentSay(s)],
   body:`<div class="sy-pic g16pic"><span class="g16e">${s.e}</span></div><div class="g16sent">${s.s.split(" ").map((x,k)=>`<span data-k="${k}">${x}</span>`).join(" ")}</div>`,
   hint:"Tap 🎤 and say the sentence",answer:s.s,answerSay:sentSay(s),again:sentSay(s),tts:s.has?null:s.s,
   check:alts=>{let best=0,bestSet=[];alts.forEach(al=>{const h=normW(al).split(" ");const set=words.map(t=>h.some(x=>x===t||(t.length>=4&&lev(x,t)<=1)));const n=set.filter(Boolean).length;if(n>best){best=n;bestSet=set}});
     bestSet.forEach((v,k)=>{const e=document.querySelector(`.g16sent [data-k="${k}"]`);if(e)e.classList.toggle("ok",v)});
-    return {ok:best>=Math.ceil(words.length*.75)}}})};
+    return {ok:best>=Math.ceil(words.length*.75)}}}});
+/* Say it! (the first speaking game) is 5 words too */
+const _qSay16=qSay;qSay=function(cat){const items=pick5(SAYW());return {game:"say",items,w:items[0],voice:[G10("SAY_Q"),...items[0].say],gid:"g:say",factT:"Saying words out loud helps you remember them."}};
+GAMES.say=q=>{if(!q.items)q.items=[q.w];speakRounds(q,(x,i)=>({icon:"🎤",title:"Say it!",sub:"Listen, then say it",listen:true,again:x.say,voice:i?x.say:[G10("SAY_Q"),...x.say],
+  body:`${x.pic?`<div class="sy-pic">${x.pic}</div>`:""}<div class="sy-w">${x.w}</div>`,hint:"Tap 🎤 and say the word",answer:x.w,answerSay:x.say,check:alts=>({ok:wordHit(alts,x.w)})}))};
 const _bf16=buildFormat;buildFormat=function(kind,cat){if(kind==="f_sayname")return sayOK()?qSayName():null;if(kind==="f_readit")return sayOK()?qReadIt():null;if(kind==="f_saysent")return sayOK()&&(SENTS.some(s=>s.has)||"speechSynthesis" in window)?qSaySent():null;return _bf16(kind,cat)};
 const SPK16={f_say:["letters","read","animals","farm","people"],f_sayname:["animals","farm","world","people","letters"],f_readit:["letters","read"],f_saysent:["read","letters","people","farm","world"]};
 const _ff16=formatsFor0;formatsFor0=function(cat){let b=_ff16(cat).filter(k=>k!=="f_say");if(!sayOK())return b;
