@@ -1741,3 +1741,39 @@ img.e3{width:1.18em;height:1.18em;vertical-align:-.22em;object-fit:contain;displ
 .stats #sAcorns{order:1}.stats #sWood{order:2}
 .introC video.talk{filter:none!important;animation:none!important;box-shadow:none;width:min(300px,78%);height:auto;aspect-ratio:246/234;background:#fff;border:0;outline:0;pointer-events:none}
 .g14tap{border:0;border-radius:999px;padding:12px 22px;background:#FF9600;color:#fff;font:900 18px "Nunito",sans-serif;box-shadow:0 5px 0 #CC7800;animation:g14bob 1.2s ease-in-out infinite;cursor:pointer}
+/* ---------- v24 ---------- */
+.sw-card b .g15map{display:block;width:100%;margin-top:6px}.g15map svg{display:block;width:100%;height:auto;border-radius:12px}
+.g15pin{animation:g15pin 1.2s ease-in-out infinite;transform-box:fill-box;transform-origin:center}@keyframes g15pin{50%{transform:scale(1.5);opacity:.4}}
+.sw-card:has(.g15map) .sw-e{font-size:clamp(60px,17vw,96px)}
+.g15bar{position:relative;display:block;width:100%;height:30px;margin-top:10px;border-radius:999px;background:#F1F3F5;overflow:hidden;box-shadow:inset 0 2px 0 rgba(0,0,0,.06)}
+.g15bar i{position:absolute;inset:0 auto 0 0;border-radius:999px;background:linear-gradient(90deg,#FFC078,#E8590C);transition:width .6s}
+.g15bar.full i{background:linear-gradient(90deg,#8CE99A,#37B24D)}
+.g15bar b{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:900 15px "Nunito",sans-serif;color:#3D2B1F;text-shadow:0 1px 0 rgba(255,255,255,.7)}
+.g15bar b img.e3{width:20px;height:20px;margin-right:3px}
+.g15left{display:block;margin-top:6px;color:#8B5A2B;font:800 13px "Nunito",sans-serif}
+.g15tip{text-align:center;color:#999;font:700 13px "Nunito",sans-serif;margin:8px 0 0}
+.g15show{position:fixed;inset:0;z-index:300;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:24px;background:radial-gradient(circle,#fff 0 30%,var(--bg) 70%);animation:g15in .3s ease-out;overflow:hidden;text-align:center}
+.g15show.out{animation:g15in .25s reverse forwards}@keyframes g15in{from{opacity:0;transform:scale(.9)}}
+.g15rays{position:absolute;left:50%;top:38%;width:900px;height:900px;margin:-450px 0 0 -450px;background:repeating-conic-gradient(rgba(255,255,255,.55) 0 10deg,transparent 10deg 20deg);animation:g15rot 18s linear infinite;pointer-events:none}@keyframes g15rot{to{transform:rotate(360deg)}}
+.g15x{position:absolute;top:max(14px,env(safe-area-inset-top));right:14px;width:44px;height:44px;border-radius:50%;border:0;background:#fff;font:900 20px "Nunito",sans-serif;color:#666;box-shadow:0 3px 0 rgba(0,0,0,.1);z-index:2;cursor:pointer}
+.g15big{position:relative;border:0;background:none;cursor:pointer;z-index:1;animation:g15pop .6s cubic-bezier(.3,1.6,.5,1)}
+@keyframes g15pop{from{transform:scale(0) rotate(-40deg)}}
+.g15big .g15e{font-size:150px;line-height:1;display:block}.g15big .g15e img.e3{width:190px;height:190px;filter:drop-shadow(0 0 0 #fff) drop-shadow(3px 0 0 #fff) drop-shadow(-3px 0 0 #fff) drop-shadow(0 3px 0 #fff) drop-shadow(0 -3px 0 #fff) drop-shadow(0 10px 10px rgba(0,0,0,.2))}
+.g15big.spin{animation:g15spin .8s ease-in-out}.g15big.jump{animation:g15jump .8s ease-out}.g15big.wiggle{animation:g15wig .7s ease-in-out}.g15big.grow{animation:g15grow .8s ease-in-out}.g15big.flip{animation:g15flip .8s ease-in-out}
+@keyframes g15spin{to{transform:rotate(360deg)}}@keyframes g15jump{30%{transform:translateY(-90px) scale(1.05,.95)}60%{transform:translateY(0) scale(1.15,.85)}80%{transform:translateY(-20px)}}
+@keyframes g15wig{20%{transform:rotate(-14deg)}40%{transform:rotate(12deg)}60%{transform:rotate(-8deg)}80%{transform:rotate(5deg)}}@keyframes g15grow{50%{transform:scale(1.35)}}@keyframes g15flip{50%{transform:scaleX(-1)}}
+.g15p{position:absolute;left:50%;top:50%;font-size:34px;line-height:1;pointer-events:none;animation:g15fly 1s ease-out forwards}.g15p img.e3{width:40px;height:40px}
+@keyframes g15fly{from{transform:translate(-50%,-50%) scale(.4);opacity:1}to{transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) rotate(var(--rt)) scale(.9);opacity:0}}
+.g15n{position:relative;z-index:1;margin:6px 0 0;font:900 34px "Fredoka","Nunito",sans-serif;color:#3D2B1F}
+.g15f{position:relative;z-index:1;max-width:420px;margin:0;font:800 19px/1.4 "Nunito",sans-serif;color:#555;background:rgba(255,255,255,.85);padding:12px 16px;border-radius:18px}
+.g15btns{position:relative;z-index:1;display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:6px}
+.g15btns button{border:0;border-radius:999px;padding:12px 20px;font:900 17px "Nunito",sans-serif;cursor:pointer;box-shadow:0 4px 0 rgba(0,0,0,.15)}
+.g15hear{background:#fff;color:#1C7ED6}.g15dance{background:#FF9600;color:#fff}
+.pseg.lv:has(+ .g15lv){display:none}
+.g15lv{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.g15lc{display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 6px;border:2px solid #E5E5E5;border-radius:16px;background:#fff;cursor:pointer;font-family:inherit;text-align:center}
+.g15lc.on{border-color:#1CB0F6;background:#EAF7FF;box-shadow:0 3px 0 #1899D6}
+.g15lc i{font-style:normal;font-size:26px}.g15lc b{font:900 14px "Nunito",sans-serif}.g15lc small{color:#888;font-weight:800;font-size:12px}
+.g15m{font:900 17px/1.35 "Nunito",sans-serif;color:#3D2B1F;background:#FFF9DB;border-radius:10px;padding:6px 8px;margin:3px 0;width:100%;box-sizing:border-box}
+.g15lc em{font-style:normal;color:#777;font-weight:700;font-size:11px;line-height:1.3}
+.g15lc em.g15same{color:#E8590C}

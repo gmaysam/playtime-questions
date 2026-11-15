@@ -589,7 +589,7 @@ def _rep(o,a,c,n=1):
     assert o.count(a)>=1, 'missing: '+a[:60]
     return o.replace(a,c,n)
 G14V=sorted(f[:-4] for f in os.listdir('appC/audio/w') if f.startswith('PX_G14_'))
-g14=open(os.path.join(os.path.dirname(__file__),'games14.js')).read().replace('__G14V__',json.dumps(G14V))
+g14=open(os.path.join(os.path.dirname(__file__),'games14.js')).read().replace('__G14V__',json.dumps(G14V)).replace('__STKD__',json.dumps([x for x in json.load(open(os.path.join(os.path.dirname(__file__),'stk14.json'))) if os.path.exists('appC/audio/w/'+x['clip']+'.mp3')],ensure_ascii=False)).replace('__WORLD__',open(os.path.join(os.path.dirname(__file__),'worldmap.json')).read())
 out=_rep(out,'/* ================= start: Domi tells what month or event it is ================= */',g14+'\n/* ================= start: Domi tells what month or event it is ================= */')
 out=_rep(out,'<img class="talk" src="img/domi_1.svg" alt="Domi the beaver">','<video class="talk" poster="img/domi_talk0.jpg" muted playsinline webkit-playsinline loop preload="auto" aria-label="Domi says hello"><source src="img/domi_talk.mp4" type="video/mp4"><source src="img/domi_talk.webm" type="video/webm"></video><img class="talk g14char" hidden alt=""><button class="g14tap" id="inTap" hidden>👋 Tap to hear Domi!</button>')
 out=_rep(out,'document.querySelectorAll("img.talk,.bv img").forEach(i=>i.src=domiSrc())','document.querySelectorAll(".bv img").forEach(i=>i.src=domiSrc())')

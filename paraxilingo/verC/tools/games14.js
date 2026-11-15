@@ -6,7 +6,7 @@
    ===================================================================================================== */
 const G14V=new Set(__G14V__),G14=n=>G14V.has("PX_G14_"+n)?["w/PX_G14_"+n]:[];
 /* ---------- 1. talking Domi on the first screen ---------- */
-const CHARS={uni:{n:"Unicorn",img:"img/e3/1f984.webp",price:40},dino:{n:"Dino",img:"img/e3/1f995.webp",price:40}};
+const CHARS={dino:{n:"Dino",img:"img/e3/1f995.webp",price:40},robot:{n:"Robot",img:"img/e3/1f916.webp",price:40},bike:{n:"Bicycle",img:"img/e3/1f6b2.webp",price:40}};
 const charOf=()=>{try{return curPlayer().domi||1}catch(e){return 1}};
 domiSrc=function(){const d=charOf();return CHARS[d]?CHARS[d].img:`img/domi_${d}.svg`};
 paintDomi=function(){document.querySelectorAll(".bv img").forEach(i=>i.src=domiSrc())};
@@ -21,7 +21,11 @@ function introHello(list,after){introAfter=after;if(!S.voice||!list.length){afte
   let ok=false;const fin=()=>{if(!ok)return;introTalk(false);after()};
   a.onended=()=>{if(list.length>1)sayseq(list.slice(1),fin);else fin()};a.onerror=()=>{ok=true;fin()};
   introTalk(true);const p=a.play();
-  if(p&&p.then)p.then(()=>{ok=true;voice=a}).catch(()=>{introTalk(false);introWait=true;const t=$("inTap");if(t)t.hidden=false})}
+  if(p&&p.then)p.then(()=>{ok=true;voice=a}).catch(()=>{
+    /* the browser blocks sound until the first touch: Domi keeps talking (no sound), the app goes on by itself,
+       and Lulu says hello at the child's first touch, unless something else starts talking then */
+    setTimeout(after,1800);const once=()=>{document.removeEventListener("pointerdown",once,true);
+      setTimeout(()=>{if(S.voice&&!(voice&&!voice.paused))sayseq(introList,()=>{})},450)};document.addEventListener("pointerdown",once,true)})}
 function introTap(){if(!introWait)return false;introWait=false;const t=$("inTap");if(t)t.hidden=true;sfx.tap();introTalk(true);
   sayseq(introList,()=>{introTalk(false);introAfter&&introAfter()});return true}
 let introList=[];
@@ -42,50 +46,68 @@ openHouse=function(){if(S.day.house)return;S.day.house=true;S.acorns+=5;S.wood=(
   const gc=goalCard();if(gc)rv.querySelector("p").insertAdjacentHTML("afterend",gc)};
 /* ---------- 3. pick your friend: Domi the beaver (5 colours) or a unicorn or dino bought with wood ---------- */
 domiPicker=function(){const cur=charOf(),have=charsHave(),w=S.wood||0;
-  return `<p class="dh">Pick your Domi <span class="g14w">🪵 ${w}</span></p><div class="domis g14domis">`+DOMIS.map(([n,i])=>`<button class="dpick ${i===cur?"on":""}" data-domi="${i}" aria-label="Domi ${n}"><img src="img/domi_${i}.svg" alt=""></button>`).join("")
+  return `<p class="dh">Pick your Domi <span class="g14w">🪵 ${w}</span></p><div class="domis g14domis">`+`<button class="dpick ${cur===1?"on":""}" data-domi="1" aria-label="Domi the beaver"><img src="img/domi_1.svg" alt=""></button>`
     +Object.entries(CHARS).map(([k,c])=>{const own=have.includes(k);return `<button class="dpick g14c ${k===cur?"on":""} ${own?"":"lock"}" data-domi="${k}" aria-label="${c.n}"><img src="${c.img}" alt="">${own?"":`<span class="g14lk"><b>🔒</b>${c.price} 🪵</span>`}</button>`}).join("")+`</div>`};
 wireDomi=function(){document.querySelectorAll("[data-domi]").forEach(b=>b.onclick=e=>{e.stopPropagation();const k=b.dataset.domi,c=CHARS[k];
   if(c&&!charsHave().includes(k)){const w=S.wood||0;if(w<c.price){sfx.bad&&sfx.bad();toast(`You need ${c.price-w} more 🪵 wood for the ${c.n}. Finish mounds to get wood!`);return}
     S.wood=w-c.price;charsHave().push(k);save();renderStats();closeDrop();sfx.unlock&&sfx.unlock();hush();sayseq(G14("CHAR"),()=>{});
     reveal(`<img class="g14rv" src="${c.img}" alt="">`,`${c.n} is your new friend!`,`${c.n} will walk with you on the path.`,()=>{const p=curPlayer();p.domi=k;savePlayers();paintDomi();showMap()},"🎁");return}
   const p=curPlayer();p.domi=c?k:+k;savePlayers();sfx.tap();document.querySelectorAll("[data-domi]").forEach(x=>x.classList.toggle("on",x===b));paintDomi()})};
-/* ---------- 4. prizes page: acorns, wood, sticker book by kind ---------- */
+/* ---------- 4. prizes page: acorns (with a bar to the parents' prize), wood, one sticker book ---------- */
 let stkTab=null;
-showPrizes=function(){hidePanels();$("pPrizes").hidden=false;$("map").hidden=true;
-  const have=stkHave(),w=S.wood||0,tab=stkTab||Object.keys(STK)[0],T=STK[tab],old=S.stickers||[];
-  const jar=(hv,need)=>{const f=Math.min(1,hv/need),left=Math.max(0,need-hv);return `<div class="jar a${f>=1?" full":""}"><div class="jar-g"><i class="jar-f" style="height:${Math.round(f*100)}%"></i><span class="jar-e">🌰</span></div><b class="jar-n">${f>=1?"✓":left}</b><small>${f>=1?"full!":"more"}</small></div>`};
+const STKD=__STKD__,stkInfo=(cat,i)=>STKD.find(x=>x.cat===cat&&x.i===i);
+function stkMigrate(){if(S.stkMig)return;const have=stkHave(),more=[];(S.stickers||[]).forEach(s=>{let hit=null;for(const [k,c] of Object.entries(STK)){const i=c.items.indexOf(s.e);if(i>=0){hit=k+":"+i;break}}
+  if(hit){if(!have.includes(hit))have.push(hit)}else if(!more.includes(s.e))more.push(s.e)});S.stkMore=more;S.stkMig=1;save()}
+function stkShow(e,name,fact,clip,bg){const old=document.querySelector(".g15show");if(old)old.remove();
+  const d=document.createElement("div");d.className="g15show";d.style.setProperty("--bg",bg||"#FFF3BF");
+  d.innerHTML=`<div class="g15rays"></div><button class="g15x" aria-label="Close">✕</button>
+    <button class="g15big" aria-label="Make it dance"><span class="g15e">${e}</span></button>
+    <h2 class="g15n">${name}</h2>${fact?`<p class="g15f">${fact}</p>`:""}
+    <div class="g15btns">${clip?`<button class="g15hear">🔊 Hear it</button>`:""}<button class="g15dance">✨ Make it dance!</button></div>`;
+  document.body.appendChild(d);sfx.good&&sfx.good();
+  const big=d.querySelector(".g15big"),tricks=["spin","jump","wiggle","grow","flip"];let t=0;
+  const burst=()=>{for(let k=0;k<10;k++){const p=document.createElement("span");p.className="g15p";p.innerHTML=e;const a=k/10*Math.PI*2+Math.random()*.4,r=110+Math.random()*70;
+      p.style.setProperty("--dx",Math.cos(a)*r+"px");p.style.setProperty("--dy",Math.sin(a)*r+"px");p.style.setProperty("--rt",(Math.random()*540-270)+"deg");big.appendChild(p);setTimeout(()=>p.remove(),1000)}};
+  const dance=()=>{const c=tricks[t++%tricks.length];big.classList.remove(...tricks);void big.offsetWidth;big.classList.add(c);burst();try{tone([[523,0,.12,"triangle",.08],[659,.1,.12,"triangle",.08],[784,.2,.2,"triangle",.08]])}catch(_){}};
+  const hear=()=>{if(clip){hush();sayseq([clip],()=>{})}};
+  big.onclick=dance;d.querySelector(".g15dance").onclick=dance;const h=d.querySelector(".g15hear");if(h)h.onclick=hear;
+  const close=()=>{hush();d.classList.add("out");setTimeout(()=>d.remove(),250)};d.querySelector(".g15x").onclick=close;d.onclick=ev=>{if(ev.target===d)close()};
+  setTimeout(()=>{burst();hear()},350)}
+showPrizes=function(){hidePanels();$("pPrizes").hidden=false;$("map").hidden=true;stkMigrate();
+  const have=stkHave(),w=S.wood||0,more=S.stkMore||[],tabs=Object.entries(STK).concat(more.length?[["more",{n:"More",e:"✨",c:"#FFF9DB",items:more}]]:[]),tab=(stkTab&&tabs.some(x=>x[0]===stkTab))?stkTab:tabs[0][0],T=tabs.find(x=>x[0]===tab)[1];
   $("pPrizes").innerHTML=`<button class="back" id="prBack"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>Back</button>
     <div class="prz prz2"><div class="pz-hero"><span class="pz-chest">🧰</span><h2>My treasure</h2>
       <div class="pz-cnt"><span class="pzc a"><i>🌰</i><b>${S.acorns}</b></span><span class="pzc w"><i>🪵</i><b>${w}</b></span></div></div>
     <div class="g14two"><div><b>🌰 Acorns</b><small>for the prize your grown-up picked</small></div><div><b>🪵 Wood</b><small>to unlock new friends and stickers</small></div></div>
     ${S.real.length?`<h3 class="pz-h">🎁 My big prizes</h3>`:`<div class="pz-none"><span>🎁</span><b>No big prize yet</b><small>Ask a grown-up to add one in the parents' corner 👨‍👩‍👧</small></div>`}
-    ${S.real.map(r=>{const ok=S.acorns>=r.a,f=Math.min(1,S.acorns/r.a);
+    ${S.real.map(r=>{const ok=S.acorns>=r.a,f=Math.min(1,S.acorns/r.a),left=Math.max(0,r.a-S.acorns);
       return `<button class="pz-card ${ok?"ready":""}" data-rp="${r.id}"><span class="pz-ph">${pzI(r)}${ok?`<span class="pz-burst">🎉</span>`:""}</span>
-        <b class="pz-name">${r.name}</b>${ok?`<span class="pz-ready">Ready! Go and tell a grown-up 🎉</span>`:`<span class="pz-road"><i style="width:${Math.round(f*100)}%"></i><span class="pz-walker" style="left:${Math.round(f*100)}%"><img class="g14wk" src="${domiSrc()}" alt=""></span><span class="pz-goal">🎁</span></span>`}
-        <span class="pz-jars">${jar(S.acorns,r.a)}</span></button>`}).join("")}
+        <b class="pz-name">${r.name}</b>${ok?`<span class="pz-ready">Ready! Go and tell a grown-up 🎉</span>`:""}
+        <span class="g15bar ${ok?"full":""}"><i style="width:${Math.max(6,Math.round(f*100))}%"></i><b>🌰 ${Math.min(S.acorns,r.a)} / ${r.a}</b></span>
+        <small class="g15left">${ok?"The jar is full!":`${left} more 🌰 to go`}</small></button>`}).join("")}
     <div class="pz-how"><span><b>🌰</b>right answer</span><span><b>🪵×${W14.mound}</b>finished mound</span><span><b>🪵×${W14.house}</b>Domi's house</span></div>
-    <button class="g14friends" id="g14Fr"><span class="g14fi">${Object.values(CHARS).map(c=>`<img src="${c.img}" alt="">`).join("")}<img src="img/domi_1.svg" alt=""></span><span><b>My friends</b><small>Unlock a unicorn or a dino with 🪵 wood</small></span><span class="chev">›</span></button>
     <h3 class="pz-h">📒 My sticker book</h3>
-    <div class="g14tabs">${Object.entries(STK).map(([k,c])=>`<button data-tab="${k}" aria-pressed="${k===tab}" style="--tc:${c.c}"><i>${c.e}</i><small>${c.n}</small><em>${c.items.filter((_,i)=>have.includes(k+":"+i)).length}/12</em></button>`).join("")}</div>
-    <div class="g14book" style="--bc:${T.c}">${T.items.map((e,i)=>{const id=tab+":"+i,own=have.includes(id),pr=stkPrice(i);
+    <div class="g14tabs" style="grid-template-columns:repeat(${tabs.length},1fr)">${tabs.map(([k,c])=>`<button data-tab="${k}" aria-pressed="${k===tab}" style="--tc:${c.c}"><i>${c.e}</i><small>${c.n}</small><em>${k==="more"?c.items.length:c.items.filter((_,i)=>have.includes(k+":"+i)).length+"/12"}</em></button>`).join("")}</div>
+    <div class="g14book" style="--bc:${T.c}">${T.items.map((e,i)=>{const id=tab+":"+i,own=tab==="more"||have.includes(id),pr=stkPrice(i);
       return `<button class="g14s ${own?"own":"lock"} ${!own&&w>=pr?"can":""}" data-sk="${i}" style="--r:${((i*37)%13)-6}deg"><span class="g14e">${e}</span>${own?"":`<span class="g14p">${pr} 🪵</span>`}</button>`}).join("")}</div>
-    ${old.length?`<h3 class="pz-h">✨ Stickers I won before</h3><div class="pz-book">${old.map((s,k)=>`<button data-st="${k}" aria-label="Sticker" style="--r:${((k*37)%17)-8}deg">${s.e}</button>`).join("")}</div>`:""}
+    <p class="g15tip">Tap a sticker you have to meet it! ✨</p>
     ${S.paintings.length?`<h3 class="pz-h">🎨 My paintings</h3><div class="pz-gal">${S.paintings.slice().reverse().map(pp=>`<span class="pz-frame">${paintSVG(pp.p,pp.f)}</span>`).join("")}</div>`:""}</div>`;
   $("prBack").onclick=()=>{sfx.tap();showMap()};
-  $("g14Fr").onclick=()=>{sfx.tap();showMap();setTimeout(openDrop,250)};
   $("pPrizes").querySelectorAll("[data-tab]").forEach(b=>b.onclick=()=>{sfx.tap();stkTab=b.dataset.tab;const y=$("pPrizes").scrollTop;showPrizes();$("pPrizes").scrollTop=y});
   $("pPrizes").querySelectorAll("[data-sk]").forEach(b=>b.onclick=()=>{const i=+b.dataset.sk,id=tab+":"+i,e=T.items[i];
-    if(have.includes(id)){reveal(e,"My sticker",`${T.n} sticker`,null,"✨");return}
+    if(tab==="more"){stkShow(e,"My sticker","A sticker from Domi's house.",null,T.c);return}
+    const inf=stkInfo(tab,i);
+    if(have.includes(id)){stkShow(e,inf?inf.n:"My sticker",inf?inf.f:"",inf&&inf.clip?"w/"+inf.clip:null,T.c);return}
     const pr=stkPrice(i),w2=S.wood||0;if(w2<pr){sfx.bad&&sfx.bad();toast(`You need ${pr-w2} more 🪵 wood for this sticker`);return}
-    S.wood=w2-pr;have.push(id);save();renderStats();hush();sayseq(G14("STICKER"),()=>{});
-    reveal(e,"New sticker!",`You used ${pr} 🪵 wood.`,()=>{const y=$("pPrizes").scrollTop;showPrizes();$("pPrizes").scrollTop=y},"🎁")});
-  $("pPrizes").querySelectorAll("[data-st]").forEach(b=>b.onclick=()=>{const s=old[+b.dataset.st];reveal(s.e,"My sticker",`Won on ${s.d}`,null,"✨")});
+    S.wood=w2-pr;have.push(id);save();renderStats();const y=$("pPrizes").scrollTop;showPrizes();$("pPrizes").scrollTop=y;
+    stkShow(e,inf?inf.n:"New sticker!",(inf?inf.f+" ":"")+`(You used ${pr} 🪵)`,inf&&inf.clip?"w/"+inf.clip:G14("STICKER")[0],T.c)});
   $("pPrizes").querySelectorAll("[data-rp]").forEach(b=>b.onclick=()=>{const r=S.real.find(x=>x.id===b.dataset.rp),ok=S.acorns>=r.a;
     reveal(pzI(r,"big"),r.name,ok?"Ready! Ask a grown-up for your prize 🎉":`${Math.max(0,r.a-S.acorns)} more 🌰 to go!`,null,ok?"🎁":"🔒")})};
 $("tbPrizes").onclick=()=>{sfx.tap();showPrizes()};
 /* ---------- 5. the map follows the date by itself; the house dresses up for the season or the holiday ---------- */
-const _ls14=loadState;loadState=function(){const r=_ls14.apply(this,arguments);try{S.mapMonth="auto"}catch(e){}return r};
-try{S.mapMonth="auto"}catch(e){}
+const _ls14=loadState;loadState=function(){const r=_ls14.apply(this,arguments);try{S.mapMonth="auto";charMig()}catch(e){}return r};
+function charMig(){if(S.chars&&S.chars.includes("uni")){S.chars=S.chars.filter(x=>x!=="uni");S.wood=(S.wood||0)+40;save()}try{const p=curPlayer();if(p.domi==="uni"||[2,3,4,5].includes(p.domi)){p.domi=1;savePlayers()}}catch(e){}}
+try{S.mapMonth="auto";charMig()}catch(e){}
 function seasonKey(d=new Date()){const ev=eventNow(d);if(ev)return ev.id;const m=d.getMonth();return m===11||m<=1?"winter":m<=4?"spring":m<=7?"summer":"autumn"}
 const SEAS14={
  winter:`<path d="M27 112 C30 64 62 33 100 33 C138 33 170 64 173 112 C160 98 150 106 138 94 C124 104 112 92 100 101 C88 92 76 104 62 94 C50 106 40 98 27 112Z" fill="#fff"/><ellipse cx="100" cy="152" rx="98" ry="14" fill="#fff"/><g fill="#fff"><circle cx="16" cy="40" r="3"/><circle cx="186" cy="30" r="3.5"/><circle cx="40" cy="12" r="2.5"/><circle cx="160" cy="8" r="2.5"/><circle cx="190" cy="80" r="2.5"/><circle cx="8" cy="90" r="2.5"/></g><g transform="translate(176 118)"><circle cy="20" r="13" fill="#fff" stroke="#D0EBFF" stroke-width="2"/><circle cy="0" r="9" fill="#fff" stroke="#D0EBFF" stroke-width="2"/><path d="M0 1 l7 2 -7 2z" fill="#FD7E14"/><circle cx="-3" cy="-2" r="1.3" fill="#343A40"/><circle cx="3" cy="-2" r="1.3" fill="#343A40"/></g>`,
@@ -125,3 +147,20 @@ function skillsHTML(pn){const t=document.createElement("template");t.innerHTML=_
 const _wd14=wireDash;wireDash=function(pn){_wd14(pn);try{const root=$("pSettings"),R=root.querySelector(".dradar.g14open");if(!R)return;
   const go=e=>{e.stopPropagation();e.preventDefault();sfx.tap();root.innerHTML=skillsHTML(pn);root.scrollTop=0;$("dBack").onclick=()=>{sfx.tap();showParents()};_wd14(pn)};
   R.addEventListener("click",go,true)}catch(e){}};
+/* ---------- v24: the flag game shows where the country is on a world map ---------- */
+const WMAP=__WORLD__;
+const mapOf=n=>{const c=WMAP.c[n];if(!c)return "";const small=c.d.length<900;
+  return `<span class="g15map"><svg viewBox="0 0 ${WMAP.W} ${WMAP.H}" aria-label="${n} on the world map"><image href="img/world.svg" width="${WMAP.W}" height="${WMAP.H}"/><path d="${c.d}" fill="#FF922B" stroke="#D9480F" stroke-width=".8"/>${small?`<circle class="g15pin" cx="${c.x}" cy="${c.y}" r="9" fill="none" stroke="#E8590C" stroke-width="2.2"/>`:""}</svg></span>`};
+const _qsw15=qSwipe;qSwipe=function(cat){const q=_qsw15(cat);try{if(q&&q.deck==="flag")q.cards.forEach(c=>{const n=String(c[1]).replace(/\?$/,"");if(WMAP.c[n])c[1]=`${c[1]}${mapOf(n)}`})}catch(e){}return q};
+/* ---------- v24: the prizes button is the trophy again ---------- */
+const _rs15=renderStats;renderStats=function(){const r=_rs15.apply(this,arguments);try{const b=$("tbPrizes"),dot=$("prDot"),h=dot?dot.hidden:true;b.classList.remove("hasg");b.innerHTML=`🏆<span class="dotn" id="prDot"${h?" hidden":""}>!</span>`}catch(e){}return r};
+try{renderStats()}catch(e){}
+/* ---------- v24: parents' level: three clear examples side by side ---------- */
+const SK_EX=[["2 + 1","4 + 1"],["6 + 3","4 + 5"],["9 − 4","7 + 2"],["14 + 5","18 − 6"],["35 − 12","5 × 4"],["72 + 19","6 × 7"],["56 ÷ 8","9 × 7"],["11 × 12","450 + 380"]];
+const SK_T=["Adding to 5","Adding to 10","+ and − to 10","+ and − to 20","To 50, first × tables","To 100, × to 6","× and ÷ to 10","× and ÷ to 12, numbers to 1000"];
+const CNT_T=a=>a<=3?"counts to 5":a<=4?"counts to 10":a<=5?"counts to 20":a<=6?"counts to 50":a<=7?"counts to 100":"big numbers, place value";
+const RD_T=a=>a<=4?"finds letters":a<=5?"first sounds":a<=6?"reads short words":a<=8?"reads sentences":"reads short stories";
+const _sp15=showParents;showParents=function(){const r=_sp15.apply(this,arguments);try{const ps=$("pSettings").querySelector(".psample");if(ps){
+  const a=S.age||5;ps.outerHTML=`<div class="g15lv">${[["🐢","Easier",0],["🐇","Just right",1],["🚀","Harder",2]].map(([e,t,d])=>{const sk=skillFor(a,d),la=Math.max(3,Math.min(12,a+d-1));
+    return `<button class="g15lc ${S.diff===d?"on":""}" data-diff15="${d}"><i>${e}</i><b>${t}</b><small>Like age ${la}</small><span class="g15m">${SK_EX[sk][0]}<br>${SK_EX[sk][1]}</span><em>${SK_T[sk]}</em><em>${CNT_T(la)} · ${RD_T(la)}</em>${d!==1&&sk===skillFor(a,1)&&la===Math.max(3,Math.min(12,a))?`<em class="g15same">Same as Just right at age ${a}</em>`:""}</button>`}).join("")}</div>`;
+  $("pSettings").querySelectorAll("[data-diff15]").forEach(b=>b.onclick=()=>{const y=$("pSettings").scrollTop;const t=$("pSettings").querySelector(`[data-diff="${b.dataset.diff15}"]`);if(t)t.click();setTimeout(()=>{$("pSettings").scrollTop=y},0)})}}catch(e){console.warn(e)}return r};
