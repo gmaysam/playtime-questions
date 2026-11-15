@@ -597,6 +597,9 @@ out=_rep(out,'setTimeout(()=>sayseq([ev?ev.clip:"z"+Z.a,"w/LULU_BD_PRIZE"],later
 out=_rep(out,'function woodMig(){try{if(!S)return;','function woodMig(){return;try{if(!S)return;')
 out=_rep(out,'setTimeout(()=>{$("rvGift").classList.add("open");setTimeout(()=>{$("rvGift").remove();','setTimeout(()=>{if(!v.isConnected)return;$("rvGift").classList.add("open");setTimeout(()=>{if(!v.isConnected)return;$("rvGift").remove();')
 out=_rep(out,'<title>Paraxilingo C</title>','<title>Paraxilingo C</title><link rel="preload" href="img/domi_dance.gif" as="image">')
+import datetime
+BUILD_STAMP=datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=-8))).strftime('%b %d %H:%M')
+out=_rep(out,'<div class="inev" id="inEv"></div>','<div class="inev" id="inEv"></div><small class="g17ver">version '+BUILD_STAMP+'</small>')
 out=_rep(out,'setTimeout(go,9000);','setTimeout(()=>{if(!introWait)go()},12000);')
 out=_rep(out,'$("introC").addEventListener("pointerdown",()=>{sfx.tap();go()});','$("introC").addEventListener("pointerdown",()=>{if(introTap())return;sfx.tap();go()});')
 out=_rep(out,'if(first){S.day.done++;S.acorns+=2;','if(first){S.day.done++;S.acorns+=2;S.wood=(S.wood||0)+3;')
