@@ -221,9 +221,9 @@ function speakGame(q,o){let tries=0,rec=null;
   window.__gSolve=()=>got([o.answer])}
 /* Name it! a picture only; the child says its English name */
 const NUMW=/^(one|two|three|four|five|six|seven|eight|nine|ten|zero)$/;const nameWords=()=>{const a=lvl();return WORDS.filter(x=>!NUMW.test(x.w)&&(a>=7?x.w.length<=8:x.w.length<=5)).map(x=>({w:x.w,pic:PIC("wd_"+x.i,"wp"),say:wSay(x)}))};
-function qSayName(){const w=pickOne(nameWords());return {game:"sayname",w,voice:G16("NAME_Q").length?G16("NAME_Q"):[G10("SAY_Q"),...faSay(w.w)],gid:"g:sayname",factT:"Naming things out loud builds your English words."}}
-GAMES.sayname=q=>{const w=q.w.w;speakGame(q,{icon:"🗣️",title:"Name it!",sub:"What is it? Say it in English",
-  body:`<div class="sy-pic g16pic">${q.w.pic}</div><div class="sy-w g16hide" id="g16W">${w}</div>`,hint:"Tap 🎤 and say its name",answer:w,answerSay:q.w.say,
+function qSayName(){const w=pickOne(nameWords());return {game:"sayname",w,voice:[...w.say,...(G16("NAME_Q").length?G16("NAME_Q"):[G10("SAY_Q")])],gid:"g:sayname",factT:"Naming things out loud builds your English words."}}
+GAMES.sayname=q=>{const w=q.w.w;speakGame(q,{icon:"🗣️",title:"Name it!",sub:"Listen, then say its name",listen:true,again:q.w.say,
+  body:`<div class="sy-pic g16pic">${q.w.pic}</div><div class="sy-w" id="g16W">${w}</div>`,hint:"Tap 🎤 and say its name",answer:w,answerSay:q.w.say,
   reveal:()=>{const e=$("g16W");if(e)e.classList.remove("g16hide")},check:alts=>({ok:wordHit(alts,w)})})};
 /* Read it! a word in big letters; the child reads it out loud, then Lulu says it */
 const readWords=()=>{const a=lvl(),pool=WORDS.map(x=>({w:x.w,say:wSay(x)}));
