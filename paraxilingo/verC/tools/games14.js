@@ -76,10 +76,10 @@ function stkShow(e,name,fact,clip,bg){const old=document.querySelector(".g15show
 showPrizes=function(){hidePanels();$("pPrizes").hidden=false;$("map").hidden=true;stkMigrate();
   const have=stkHave(),w=S.wood||0,more=S.stkMore||[],tabs=Object.entries(STK).concat(more.length?[["more",{n:"More",e:"✨",c:"#FFF9DB",items:more}]]:[]),tab=(stkTab&&tabs.some(x=>x[0]===stkTab))?stkTab:tabs[0][0],T=tabs.find(x=>x[0]===tab)[1];
   $("pPrizes").innerHTML=`<button class="back" id="prBack"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>Back</button>
-    <div class="prz prz2"><div class="pz-hero"><span class="pz-chest">🧰</span><h2>My treasure</h2>
-      <div class="pz-cnt"><span class="pzc a"><i>🌰</i><b>${S.acorns}</b></span><span class="pzc w"><i>🪵</i><b>${w}</b></span></div></div>
-    <div class="g14two"><div><b>🌰 Acorns</b><small>for the prize your grown-up picked</small></div><div><b>🪵 Wood</b><small>to unlock new friends and stickers</small></div></div>
-    ${S.real.length?`<h3 class="pz-h">🎁 My big prizes</h3>`:`<div class="pz-none"><span>🎁</span><b>No big prize yet</b><small>Ask a grown-up to add one in the parents' corner 👨‍👩‍👧</small></div>`}
+    <div class="prz prz2"><div class="g16bank"><div class="g16t a"><span class="g16i">🌰</span><b>${S.acorns}</b><small>Acorns</small><em>for my prize</em></div>
+      <div class="g16t w"><span class="g16i">🪵</span><b>${w}</b><small>Wood</small><em>for friends and stickers</em></div></div>
+    <h3 class="pz-h">🎁 ${S.real.length>1?"My prizes":"My prize"}</h3>
+    ${S.real.length?"":`<button class="pz-card g16empty" id="g16Pick"><span class="pz-ph g16ph"><span>🎁</span></span><b class="pz-name">Prize</b><small class="g15left">Grown-ups: tap to choose the prize and its picture</small></button>`}
     ${S.real.map(r=>{const ok=S.acorns>=r.a,f=Math.min(1,S.acorns/r.a),left=Math.max(0,r.a-S.acorns);
       return `<button class="pz-card ${ok?"ready":""}" data-rp="${r.id}"><span class="pz-ph">${pzI(r)}${ok?`<span class="pz-burst">🎉</span>`:""}</span>
         <b class="pz-name">${r.name}</b>${ok?`<span class="pz-ready">Ready! Go and tell a grown-up 🎉</span>`:""}
@@ -93,6 +93,7 @@ showPrizes=function(){hidePanels();$("pPrizes").hidden=false;$("map").hidden=tru
     <p class="g15tip">Tap a sticker you have to meet it! ✨</p>
     ${S.paintings.length?`<h3 class="pz-h">🎨 My paintings</h3><div class="pz-gal">${S.paintings.slice().reverse().map(pp=>`<span class="pz-frame">${paintSVG(pp.p,pp.f)}</span>`).join("")}</div>`:""}</div>`;
   $("prBack").onclick=()=>{sfx.tap();showMap()};
+  const pk=$("g16Pick");if(pk)pk.onclick=()=>{sfx.tap();window.__goPrize=1;askParents()};
   $("pPrizes").querySelectorAll("[data-tab]").forEach(b=>b.onclick=()=>{sfx.tap();stkTab=b.dataset.tab;const y=$("pPrizes").scrollTop;showPrizes();$("pPrizes").scrollTop=y});
   $("pPrizes").querySelectorAll("[data-sk]").forEach(b=>b.onclick=()=>{const i=+b.dataset.sk,id=tab+":"+i,e=T.items[i];
     if(tab==="more"){stkShow(e,"My sticker","A sticker from Domi's house.",null,T.c);return}
@@ -160,7 +161,87 @@ const SK_EX=[["2 + 1","4 + 1"],["6 + 3","4 + 5"],["9 − 4","7 + 2"],["14 + 5","
 const SK_T=["Adding to 5","Adding to 10","+ and − to 10","+ and − to 20","To 50, first × tables","To 100, × to 6","× and ÷ to 10","× and ÷ to 12, numbers to 1000"];
 const CNT_T=a=>a<=3?"counts to 5":a<=4?"counts to 10":a<=5?"counts to 20":a<=6?"counts to 50":a<=7?"counts to 100":"big numbers, place value";
 const RD_T=a=>a<=4?"finds letters":a<=5?"first sounds":a<=6?"reads short words":a<=8?"reads sentences":"reads short stories";
-const _sp15=showParents;showParents=function(){const r=_sp15.apply(this,arguments);try{const ps=$("pSettings").querySelector(".psample");if(ps){
+const _sp15=showParents;showParents=function(){const r=_sp15.apply(this,arguments);if(window.__goPrize){window.__goPrize=0;setTimeout(()=>{const P2=$("pSettings"),h=[...P2.querySelectorAll(".psec")].find(x=>/Prize/.test(x.textContent));if(h)P2.scrollTop=h.getBoundingClientRect().top+P2.scrollTop-80},60)}try{const ps=$("pSettings").querySelector(".psample");if(ps){
   const a=S.age||5;ps.outerHTML=`<div class="g15lv">${[["🐢","Easier",0],["🐇","Just right",1],["🚀","Harder",2]].map(([e,t,d])=>{const sk=skillFor(a,d),la=Math.max(3,Math.min(12,a+d-1));
-    return `<button class="g15lc ${S.diff===d?"on":""}" data-diff15="${d}"><i>${e}</i><b>${t}</b><small>Like age ${la}</small><span class="g15m">${SK_EX[sk][0]}<br>${SK_EX[sk][1]}</span><em>${SK_T[sk]}</em><em>${CNT_T(la)} · ${RD_T(la)}</em>${d!==1&&sk===skillFor(a,1)&&la===Math.max(3,Math.min(12,a))?`<em class="g15same">Same as Just right at age ${a}</em>`:""}</button>`}).join("")}</div>`;
+    return `<button class="g15lc ${S.diff===d?"on":""}" data-diff15="${d}"><i>${e}</i><b>${t}</b></button>`}).join("")}</div>`;
   $("pSettings").querySelectorAll("[data-diff15]").forEach(b=>b.onclick=()=>{const y=$("pSettings").scrollTop;const t=$("pSettings").querySelector(`[data-diff="${b.dataset.diff15}"]`);if(t)t.click();setTimeout(()=>{$("pSettings").scrollTop=y},0)})}}catch(e){console.warn(e)}return r};
+
+/* ---------- v25: the first screen: Domi just waves (no talking) ---------- */
+introTalk=function(on){const im=document.querySelector("#introC img.g14char"),wv=document.querySelector("#introC img.g16wave"),d=charOf();
+  if(CHARS[d]){if(wv)wv.hidden=true;if(im){im.hidden=false;im.src=CHARS[d].img}}else{if(im)im.hidden=true;if(wv)wv.hidden=false}};
+introHello=function(list,after){introTalk(false);after()};
+introTalk(false);
+/* ---------- v25: voices start without a wait: clips are kept ready, and the next ones load while one plays ---------- */
+const CLIPC=new Map();
+const clipEl=name=>{let a=CLIPC.get(name);if(!a){a=new Audio("audio/"+name+".mp3");a.preload="auto";try{a.load()}catch(e){}CLIPC.set(name,a);if(CLIPC.size>120){const k=CLIPC.keys().next().value;CLIPC.delete(k)}}return a};
+window.__pre=list=>{(list||[]).filter(Boolean).forEach(n=>{if(typeof n==="string")clipEl(n)})};
+say=function(name,onEnd,rate=.92){
+  if(voice){voice.onended=null;voice.onerror=null;try{voice.pause()}catch(e){}voice=null}
+  speakBtns(false);if(!S.voice){onEnd&&onEnd();return}
+  let a=clipEl(name);if(!a.paused||a.ended===false&&a.currentTime>0){try{a.pause()}catch(e){}}
+  try{a.currentTime=0}catch(e){}voice=a;a.playbackRate=rate;try{a.preservesPitch=true;a.webkitPreservesPitch=true}catch(e){}
+  if(name.startsWith("q_"))speakBtns(true);
+  const end=()=>{a.onended=null;a.onerror=null;speakBtns(false);onEnd&&onEnd()};a.onended=end;a.onerror=()=>{CLIPC.delete(name);end()};
+  const p=a.play();p&&p.catch&&p.catch(()=>speakBtns(false))};
+sayseq=function(list,onEnd){const id=++seqId,l=list.filter(Boolean);let i=0;window.__pre(l);
+  const next=()=>{if(id!==seqId)return;if(i>=l.length){speaking(false);onEnd&&onEnd();return}say(l[i++],()=>{if(i<l.length)setTimeout(next,110);else next()})};
+  speaking(true);next()};
+/* get the next question's voice ready while the child is still on the map or the answer screen */
+const _gs16=gShow;gShow=function(){const r=_gs16.apply(this,arguments);try{const q=window.__curQ;if(q){window.__pre(q.voice);(q.opts||[]).forEach(o=>window.__pre(o.say))}}catch(e){}return r};
+/* ---------- v25: more speaking games for 5 to 8: name it, read it, say the sentence (the phone checks the words) ---------- */
+const SENTS=__SENTS__,G16V=new Set(__G16V__),G16=n=>G16V.has("PX_G16_"+n)?["w/PX_G16_"+n]:[];
+/* English sentences: Lulu's recording when it is there, otherwise the device's own English voice */
+const enTTS=t=>{try{const u=new SpeechSynthesisUtterance(t);u.lang="en-US";u.rate=.8;u.pitch=1.15;speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}};
+const sentSay=s=>s.has?["w/"+s.clip]:[];
+Object.assign(FMIN,{f_say:4,f_sayname:5,f_readit:5,f_saysent:5});Object.assign(FMAX,{f_say:8,f_sayname:8,f_readit:8,f_saysent:8});
+const normW=s=>String(s).toLowerCase().replace(/[^a-z' ]/g," ").replace(/\s+/g," ").trim();
+/* one tap on the mic: listen once, give back what was heard (several guesses) */
+function micListen(M,H,onAlts){if(M.dataset.busy==="1")return;hush();let rec;try{rec=new SR()}catch(e){H.textContent="Speaking isn't available here - tap Skip.";return}
+  rec.lang="en-US";rec.interimResults=false;rec.maxAlternatives=5;M.dataset.busy="1";M.classList.add("on");H.textContent="Listening…";
+  const stop=()=>{M.dataset.busy="";M.classList.remove("on")};
+  rec.onresult=e=>{stop();onAlts([...e.results[0]].map(r=>r.transcript))};
+  rec.onerror=e=>{stop();H.textContent=(e.error==="not-allowed"||e.error==="service-not-allowed")?"The microphone is off - ask a grown-up, or tap Skip.":"I didn't hear it. Try again!"};
+  rec.onend=()=>{if(M.dataset.busy==="1"){stop();H.textContent="I didn't hear it. Try again!"}};try{rec.start()}catch(e){stop()}
+  return rec}
+const wordHit=(alts,t)=>alts.some(s=>normW(s).split(" ").some(x=>x===t||x===t+"s"||t===x+"s"||(t.length>=4&&lev(x,t)<=1))||normW(s).replace(/ /g,"")===t);
+/* a speaking round: shows the thing, listens up to 3 times, then shows and says the answer */
+function speakGame(q,o){let tries=0,rec=null;
+  gShow(`<div class="game">${gHead(o.icon,o.title,o.sub)}<div class="sy g16sy">${o.body}
+    ${o.listen?`<button class="hr-play sm" id="syL" aria-label="Listen again">🔊</button>`:""}<button class="sy-mic" id="syM" aria-label="Say it">🎤</button><div class="sy-h" id="syH">${o.hint}</div><button class="mv-skip" id="syS">Skip</button></div></div>`);gAsk(q);
+  const H=$("syH"),M=$("syM");if(o.tts)setTimeout(()=>enTTS(o.tts),(q.voice||[]).length?1800:300);
+  const fin=ok=>{if(q.done)return;if(ok){sayseq([G10("SAY_GOOD")],()=>{});gameWin(q,tries>1?1:0,M,[])}else{q.done=true;o.reveal&&o.reveal();gameLearn(q,o.answer,o.answerSay)}};
+  const got=alts=>{const r=o.check(alts);if(r.ok){H.textContent="✅ "+o.answer;fin(true);return}
+    tries++;H.textContent=alts[0]?`I heard “${alts[0]}”. Try again!`:"I didn't hear it. Try again!";
+    if(tries>=3){sayseq([G10("SAY_LAST"),...o.answerSay],()=>{if(o.tts)enTTS(o.tts)});fin(false)}else sayseq([G10("SAY_AGAIN"),...(o.again||[])],()=>{if(o.tts)enTTS(o.tts)})};
+  M.onclick=()=>{if(!q.done)rec=micListen(M,H,got)};
+  const L=$("syL");if(L)L.onclick=()=>{sfx.tap();hush();if(o.tts)enTTS(o.tts);else sayseq(o.answerSay,()=>{})};
+  $("syS").onclick=()=>{if(q.done)return;try{rec&&rec.abort()}catch(e){}q.done=true;o.reveal&&o.reveal();gameLearn(q,o.answer,o.answerSay)};
+  window.__gSolve=()=>got([o.answer])}
+/* Name it! a picture only; the child says its English name */
+const NUMW=/^(one|two|three|four|five|six|seven|eight|nine|ten|zero)$/;const nameWords=()=>{const a=lvl();return WORDS.filter(x=>!NUMW.test(x.w)&&(a>=7?x.w.length<=8:x.w.length<=5)).map(x=>({w:x.w,pic:PIC("wd_"+x.i,"wp"),say:wSay(x)}))};
+function qSayName(){const w=pickOne(nameWords());return {game:"sayname",w,voice:G16("NAME_Q").length?G16("NAME_Q"):[G10("SAY_Q"),...faSay(w.w)],gid:"g:sayname",factT:"Naming things out loud builds your English words."}}
+GAMES.sayname=q=>{const w=q.w.w;speakGame(q,{icon:"🗣️",title:"Name it!",sub:"What is it? Say it in English",
+  body:`<div class="sy-pic g16pic">${q.w.pic}</div><div class="sy-w g16hide" id="g16W">${w}</div>`,hint:"Tap 🎤 and say its name",answer:w,answerSay:q.w.say,
+  reveal:()=>{const e=$("g16W");if(e)e.classList.remove("g16hide")},check:alts=>({ok:wordHit(alts,w)})})};
+/* Read it! a word in big letters; the child reads it out loud, then Lulu says it */
+const readWords=()=>{const a=lvl(),pool=WORDS.map(x=>({w:x.w,say:wSay(x)}));
+  return a<=5?pool.filter(x=>x.w.length===3):a<=6?pool.filter(x=>x.w.length<=4):pool.filter(x=>x.w.length>=4)};
+function qReadIt(){const w=pickOne(readWords());return {game:"readit",w,voice:G16("READ_Q").length?G16("READ_Q"):[G10("SAY_Q")],gid:"g:readit",factT:"Reading out loud makes you a stronger reader."}}
+GAMES.readit=q=>{const w=q.w.w;speakGame(q,{icon:"📖",title:"Read it!",sub:"Read the word out loud",
+  body:`<div class="sy-w g16big">${w.split("").map(c=>`<i>${c}</i>`).join("")}</div>`,hint:"Tap 🎤 and read the word",answer:w,answerSay:q.w.say,check:alts=>({ok:wordHit(alts,w)})})};
+/* Say the sentence: Lulu says a short English sentence; the child says it back; each word lights up when heard */
+function qSaySent(){const a=lvl(),pool=SENTS.filter(s=>a<=6?s.a<=5:s.a>=7);const s=pickOne(pool.length?pool:SENTS);
+  return {game:"saysent",s,voice:[...(G16("SENT_Q").length?G16("SENT_Q"):[G10("SAY_Q")]),...sentSay(s)],gid:"g:saysent",factT:"Saying whole sentences helps you speak English."}}
+GAMES.saysent=q=>{const s=q.s,words=normW(s.s).split(" ");speakGame(q,{icon:"💬",title:"Say the sentence",sub:"Listen, then say it",listen:true,
+  body:`<div class="sy-pic g16pic"><span class="g16e">${s.e}</span></div><div class="g16sent">${s.s.split(" ").map((x,k)=>`<span data-k="${k}">${x}</span>`).join(" ")}</div>`,
+  hint:"Tap 🎤 and say the sentence",answer:s.s,answerSay:sentSay(s),again:sentSay(s),tts:s.has?null:s.s,
+  check:alts=>{let best=0,bestSet=[];alts.forEach(al=>{const h=normW(al).split(" ");const set=words.map(t=>h.some(x=>x===t||(t.length>=4&&lev(x,t)<=1)));const n=set.filter(Boolean).length;if(n>best){best=n;bestSet=set}});
+    bestSet.forEach((v,k)=>{const e=document.querySelector(`.g16sent [data-k="${k}"]`);if(e)e.classList.toggle("ok",v)});
+    return {ok:best>=Math.ceil(words.length*.75)}}})};
+const _bf16=buildFormat;buildFormat=function(kind,cat){if(kind==="f_sayname")return sayOK()?qSayName():null;if(kind==="f_readit")return sayOK()?qReadIt():null;if(kind==="f_saysent")return sayOK()&&(SENTS.some(s=>s.has)||"speechSynthesis" in window)?qSaySent():null;return _bf16(kind,cat)};
+const SPK16={f_say:["letters","read","animals","farm","people"],f_sayname:["animals","farm","world","people","letters"],f_readit:["letters","read"],f_saysent:["read","letters","people","farm","world"]};
+const _ff16=formatsFor0;formatsFor0=function(cat){let b=_ff16(cat).filter(k=>k!=="f_say");if(!sayOK())return b;
+  Object.entries(SPK16).forEach(([k,cs])=>{if(cs.includes(cat)&&ageOK(k)&&!b.includes(k))b=[...b,k]});return b};
+Object.assign(GMAP,{"g:sayname":G("Name it!",["lang","listen"],[["lang","vocab"]],"A picture appears and the child says its English name; the phone checks the word.","Practice"),
+  "g:readit":G("Read it!",["lang","listen"],[["lang","vocab"]],"The child reads a word out loud; the phone checks it, then Lulu says it.","Practice"),
+  "g:saysent":G("Say the sentence",["lang","listen"],[["lang","vocab"]],"Lulu says a short English sentence and the child repeats it; each word lights up when the phone hears it.","Practice")});
