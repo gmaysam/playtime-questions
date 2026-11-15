@@ -171,17 +171,7 @@ const _sp15=showParents;showParents=function(){const r=_sp15.apply(this,argument
 let introSet=false;
 introTalk=function(on){if(introSet)return;introSet=true;const g=document.querySelector("#introC img.g17gif"),im=document.querySelector("#introC img.g14char"),d=charOf();
   if(CHARS[d]){if(g)g.style.display="none";if(im){im.hidden=false;im.src=CHARS[d].img;im.classList.add("bob")}}else if(im)im.hidden=true};
-introHello=function(list,after){introAfter=after;
-  /* the hello was already started by a tiny script right under the beaver, before the rest of the app loaded */
-  const a=window.__hello;let gone=false;const go=()=>{if(gone)return;gone=true;after()};
-  if(!a||!S.voice||!list.length){if(a)try{a.pause()}catch(e){}go();return}
-  voice=a;const rest=list.slice(1);
-  const fin=()=>{if(rest.length)sayseq(rest,go);else setTimeout(go,300)};
-  if(a.ended){fin();return}
-  a.onended=fin;a.onerror=()=>go();
-  if(window.__helloBlocked||a.paused&&a.currentTime===0&&window.__helloTried){setTimeout(go,1500);return}
-  setTimeout(()=>{if(a.paused&&!a.ended)go()},2500);   /* never wait long if it did not start */
-  setTimeout(go,9000)};
+introHello=function(list,after){introAfter=after;after()};   /* no voice on the first screen (parent, Nov 15): the dancing Domi is enough */
 introTalk(false);
 /* ---------- v25: voices start without a wait: clips are kept ready, and the next ones load while one plays ---------- */
 const CLIPC=new Map();
