@@ -6,8 +6,9 @@ SRC, OUT, ESB = sys.argv[1:4]
 s = open(os.path.join(SRC, 'index.html'), encoding='utf-8').read()
 head = s[:s.index('<style>')]
 css = s[s.index('<style>') + 7:s.index('</style>')]
-body = s[s.index('</style>') + 8:s.index('<script>')]
-js = s[s.index('<script>') + 8:s.rindex('</script>')]
+_se = s.index('</style>'); _si = s.index('<script>', _se)   # the main script comes after the styles (a tiny one may sit in the head)
+body = s[_se + 8:_si]
+js = s[_si + 8:s.rindex('</script>')]
 
 # the fake phone frame is only for desktop browsers; on the iPad the app fills the screen
 css = css.replace('@media (min-width:560px) and (min-height:720px)', '@media (min-width:560px) and (min-height:720px) and (hover:hover) and (pointer:fine)')

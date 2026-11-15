@@ -171,27 +171,17 @@ const _sp15=showParents;showParents=function(){const r=_sp15.apply(this,argument
 let introSet=false;
 introTalk=function(on){if(introSet)return;introSet=true;const g=document.querySelector("#introC img.g17gif"),im=document.querySelector("#introC img.g14char"),d=charOf();
   if(CHARS[d]){if(g)g.style.display="none";if(im){im.hidden=false;im.src=CHARS[d].img;im.classList.add("bob")}}else if(im)im.hidden=true};
-introHello=function(list,after){introAfter=after;if(!S.voice||!list.length){after();return}
-  const a=new Audio("audio/"+list[0]+".mp3");a.preload="auto";a.playbackRate=.92;voice=a;
-  let started=false,gone=false;const go=()=>{if(gone)return;gone=true;after()};
-  /* the mouth moves only while Lulu is really talking */
-  a.onplaying=()=>{started=true;introTalk(true)};
-  a.onended=()=>{introTalk(false);if(list.length>1)sayseq(list.slice(1),go);else setTimeout(go,300)};a.onerror=()=>{introTalk(false);go()};
-  /* Safari and most browsers only allow sound right inside a touch. If the hello could not play by itself,
-     it plays at the child's first touch, started inside that touch, on its own player so nothing cuts it off. */
-  let heard=false;a.addEventListener("playing",()=>{heard=true},{once:true});
-  const ev=["touchend","pointerup","click","keydown"];
-  const firstTouch=()=>{ev.forEach(n=>document.removeEventListener(n,firstTouch,true));if(heard||!S.voice)return;heard=true;
-    try{const h=new Audio("audio/"+list[0]+".mp3");h.playbackRate=.92;h.play().catch(()=>{})}catch(e){}};
-  ev.forEach(n=>document.addEventListener(n,firstTouch,true));
-  const start=()=>{const p=a.play();if(p&&p.catch)p.catch(()=>{introTalk(false);setTimeout(go,1500)})};
-  /* wait until both the voice and the video can play (never longer than 1.2 s), so they stay together */
-  let ready=0,fired=false;const kick=()=>{if(fired)return;fired=true;start()};
-  const one=()=>{if(++ready>=2)kick()};a.addEventListener("canplaythrough",one,{once:true});
-  const g=document.querySelector("#introC img.g17gif");if(g&&!g.complete)g.addEventListener("load",one,{once:true});else one();
-  setTimeout(kick,1200);
-  /* safety: the first screen never stays longer than 9 s */
-  setTimeout(()=>{if(!started)go()},9000)};
+introHello=function(list,after){introAfter=after;
+  /* the hello was already started by a tiny script right under the beaver, before the rest of the app loaded */
+  const a=window.__hello;let gone=false;const go=()=>{if(gone)return;gone=true;after()};
+  if(!a||!S.voice||!list.length){if(a)try{a.pause()}catch(e){}go();return}
+  voice=a;const rest=list.slice(1);
+  const fin=()=>{if(rest.length)sayseq(rest,go);else setTimeout(go,300)};
+  if(a.ended){fin();return}
+  a.onended=fin;a.onerror=()=>go();
+  if(window.__helloBlocked||a.paused&&a.currentTime===0&&window.__helloTried){setTimeout(go,1500);return}
+  setTimeout(()=>{if(a.paused&&!a.ended)go()},2500);   /* never wait long if it did not start */
+  setTimeout(go,9000)};
 introTalk(false);
 /* ---------- v25: voices start without a wait: clips are kept ready, and the next ones load while one plays ---------- */
 const CLIPC=new Map();
