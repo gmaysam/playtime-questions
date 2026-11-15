@@ -31619,19 +31619,29 @@ img.e3 {
       introTalk(false);
       go();
     };
+    let heard = false;
+    a.addEventListener("playing", () => {
+      heard = true;
+    }, { once: true });
+    const ev = ["touchend", "pointerup", "click", "keydown"];
+    const firstTouch = () => {
+      ev.forEach((n) => document.removeEventListener(n, firstTouch, true));
+      if (heard || !S.voice) return;
+      heard = true;
+      try {
+        const h = new Audio("audio/" + list[0] + ".mp3");
+        h.playbackRate = 0.92;
+        h.play().catch(() => {
+        });
+      } catch (e) {
+      }
+    };
+    ev.forEach((n) => document.addEventListener(n, firstTouch, true));
     const start = () => {
       const p = a.play();
       if (p && p.catch) p.catch(() => {
         introTalk(false);
         setTimeout(go, 1500);
-        const once = () => {
-          document.removeEventListener("pointerdown", once, true);
-          setTimeout(() => {
-            if (S.voice && !(voice && !voice.paused)) sayseq(introList, () => {
-            });
-          }, 450);
-        };
-        document.addEventListener("pointerdown", once, true);
       });
     };
     let ready = 0, fired = false;
