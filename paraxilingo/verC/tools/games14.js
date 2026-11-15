@@ -166,10 +166,26 @@ const _sp15=showParents;showParents=function(){const r=_sp15.apply(this,argument
     return `<button class="g15lc ${S.diff===d?"on":""}" data-diff15="${d}"><i>${e}</i><b>${t}</b></button>`}).join("")}</div>`;
   $("pSettings").querySelectorAll("[data-diff15]").forEach(b=>b.onclick=()=>{const y=$("pSettings").scrollTop;const t=$("pSettings").querySelector(`[data-diff="${b.dataset.diff15}"]`);if(t)t.click();setTimeout(()=>{$("pSettings").scrollTop=y},0)})}}catch(e){console.warn(e)}return r};
 
-/* ---------- v25: the first screen: Domi just waves (no talking) ---------- */
-introTalk=function(on){const im=document.querySelector("#introC img.g14char"),wv=document.querySelector("#introC img.g16wave"),d=charOf();
-  if(CHARS[d]){if(wv)wv.hidden=true;if(im){im.hidden=false;im.src=CHARS[d].img}}else{if(im)im.hidden=true;if(wv)wv.hidden=false}};
-introHello=function(list,after){introTalk(false);after()};
+/* ---------- v25b: the first screen: Domi's talking video and Lulu's hello start together and stop together ---------- */
+introTalk=function(on){const v=document.querySelector("#introC video.talk"),im=document.querySelector("#introC img.g14char"),d=charOf();
+  if(CHARS[d]){if(v)v.hidden=true;if(im){im.hidden=false;im.src=CHARS[d].img;im.classList.toggle("bob",on)}return}
+  if(im)im.hidden=true;if(!v)return;v.hidden=false;try{if(on){v.currentTime=0;const p=v.play();p&&p.catch(()=>{})}else{v.pause();v.currentTime=0}}catch(e){}};
+introHello=function(list,after){introAfter=after;if(!S.voice||!list.length){after();return}
+  const v=document.querySelector("#introC video.talk"),a=new Audio("audio/"+list[0]+".mp3");a.preload="auto";a.playbackRate=.92;voice=a;
+  let started=false,gone=false;const go=()=>{if(gone)return;gone=true;after()};
+  /* the mouth moves only while Lulu is really talking */
+  a.onplaying=()=>{started=true;introTalk(true)};
+  a.onended=()=>{introTalk(false);if(list.length>1)sayseq(list.slice(1),go);else setTimeout(go,300)};a.onerror=()=>{introTalk(false);go()};
+  const start=()=>{const p=a.play();if(p&&p.catch)p.catch(()=>{
+    /* the browser wants a touch first: the app goes on by itself and Lulu says hello at the first touch */
+    introTalk(false);setTimeout(go,1500);const once=()=>{document.removeEventListener("pointerdown",once,true);setTimeout(()=>{if(S.voice&&!(voice&&!voice.paused))sayseq(introList,()=>{})},450)};document.addEventListener("pointerdown",once,true)})};
+  /* wait until both the voice and the video can play (never longer than 1.2 s), so they stay together */
+  let ready=0,fired=false;const kick=()=>{if(fired)return;fired=true;start()};
+  const one=()=>{if(++ready>=2)kick()};a.addEventListener("canplaythrough",one,{once:true});
+  if(v&&!v.hidden&&v.readyState<3)v.addEventListener("canplay",one,{once:true});else one();
+  setTimeout(kick,1200);
+  /* safety: the first screen never stays longer than 9 s */
+  setTimeout(()=>{if(!started)go()},9000)};
 introTalk(false);
 /* ---------- v25: voices start without a wait: clips are kept ready, and the next ones load while one plays ---------- */
 const CLIPC=new Map();
