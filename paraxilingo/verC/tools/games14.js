@@ -167,11 +167,12 @@ const _sp15=showParents;showParents=function(){const r=_sp15.apply(this,argument
   $("pSettings").querySelectorAll("[data-diff15]").forEach(b=>b.onclick=()=>{const y=$("pSettings").scrollTop;const t=$("pSettings").querySelector(`[data-diff="${b.dataset.diff15}"]`);if(t)t.click();setTimeout(()=>{$("pSettings").scrollTop=y},0)})}}catch(e){console.warn(e)}return r};
 
 /* ---------- v25b: the first screen: Domi's talking video and Lulu's hello start together and stop together ---------- */
-introTalk=function(on){const v=document.querySelector("#introC video.talk"),im=document.querySelector("#introC img.g14char"),d=charOf();
-  if(CHARS[d]){if(v)v.hidden=true;if(im){im.hidden=false;im.src=CHARS[d].img;im.classList.toggle("bob",on)}return}
-  if(im)im.hidden=true;if(!v)return;v.hidden=false;try{if(on){v.currentTime=0;const p=v.play();p&&p.catch(()=>{})}else{v.pause();v.currentTime=0}}catch(e){}};
+/* the first screen shows the parent's own GIF, untouched; nothing is swapped or restarted, so nothing blinks */
+let introSet=false;
+introTalk=function(on){if(introSet)return;introSet=true;const g=document.querySelector("#introC img.g17gif"),im=document.querySelector("#introC img.g14char"),d=charOf();
+  if(CHARS[d]){if(g)g.style.display="none";if(im){im.hidden=false;im.src=CHARS[d].img;im.classList.add("bob")}}else if(im)im.hidden=true};
 introHello=function(list,after){introAfter=after;if(!S.voice||!list.length){after();return}
-  const v=document.querySelector("#introC video.talk"),a=new Audio("audio/"+list[0]+".mp3");a.preload="auto";a.playbackRate=.92;voice=a;
+  const a=new Audio("audio/"+list[0]+".mp3");a.preload="auto";a.playbackRate=.92;voice=a;
   let started=false,gone=false;const go=()=>{if(gone)return;gone=true;after()};
   /* the mouth moves only while Lulu is really talking */
   a.onplaying=()=>{started=true;introTalk(true)};
@@ -182,7 +183,7 @@ introHello=function(list,after){introAfter=after;if(!S.voice||!list.length){afte
   /* wait until both the voice and the video can play (never longer than 1.2 s), so they stay together */
   let ready=0,fired=false;const kick=()=>{if(fired)return;fired=true;start()};
   const one=()=>{if(++ready>=2)kick()};a.addEventListener("canplaythrough",one,{once:true});
-  if(v&&!v.hidden&&v.readyState<3)v.addEventListener("canplay",one,{once:true});else one();
+  const g=document.querySelector("#introC img.g17gif");if(g&&!g.complete)g.addEventListener("load",one,{once:true});else one();
   setTimeout(kick,1200);
   /* safety: the first screen never stays longer than 9 s */
   setTimeout(()=>{if(!started)go()},9000)};

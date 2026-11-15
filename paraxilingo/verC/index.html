@@ -2449,6 +2449,8 @@ img.e3{width:1.18em;height:1.18em;vertical-align:-.22em;object-fit:contain;displ
 .g16big i:nth-child(2){animation-delay:.08s}.g16big i:nth-child(3){animation-delay:.16s}.g16big i:nth-child(4){animation-delay:.24s}.g16big i:nth-child(5){animation-delay:.32s}.g16big i:nth-child(6){animation-delay:.4s}
 @keyframes g16pop{from{transform:scale(0)}}
 .g16pic .g16e{font-size:110px;line-height:1}.g16pic .g16e img.e3{width:130px;height:130px}
+.introC img.g17gif{width:min(360px,90%);height:auto;max-width:none;mix-blend-mode:multiply;filter:none!important;animation:none!important;transform:none!important}
+.introC{background:#FAFAF7!important}.introC img.g17gif{mix-blend-mode:normal}
 </style>
 
 <div class="stage">
@@ -2489,7 +2491,7 @@ img.e3{width:1.18em;height:1.18em;vertical-align:-.22em;object-fit:contain;displ
   <div class="toast" id="toast"></div>
 
   <div class="introC" id="introC">
-    <video class="talk" poster="img/domi_talk0.jpg" muted playsinline webkit-playsinline loop preload="auto" aria-label="Domi says hello"><source src="img/domi_talk.mp4" type="video/mp4"><source src="img/domi_talk.webm" type="video/webm"></video><img class="talk g14char" hidden alt=""><button class="g14tap" id="inTap" hidden>👋 Tap to hear Domi!</button>
+    <img class="talk g17gif" src="img/domi_talk.gif" alt="Domi says hello"><img class="talk g14char" hidden alt=""><button class="g14tap" id="inTap" hidden>👋 Tap to hear Domi!</button>
     <div class="inev" id="inEv"></div>
   </div>
 
@@ -7303,11 +7305,12 @@ const _sp15=showParents;showParents=function(){const r=_sp15.apply(this,argument
   $("pSettings").querySelectorAll("[data-diff15]").forEach(b=>b.onclick=()=>{const y=$("pSettings").scrollTop;const t=$("pSettings").querySelector(`[data-diff="${b.dataset.diff15}"]`);if(t)t.click();setTimeout(()=>{$("pSettings").scrollTop=y},0)})}}catch(e){console.warn(e)}return r};
 
 /* ---------- v25b: the first screen: Domi's talking video and Lulu's hello start together and stop together ---------- */
-introTalk=function(on){const v=document.querySelector("#introC video.talk"),im=document.querySelector("#introC img.g14char"),d=charOf();
-  if(CHARS[d]){if(v)v.hidden=true;if(im){im.hidden=false;im.src=CHARS[d].img;im.classList.toggle("bob",on)}return}
-  if(im)im.hidden=true;if(!v)return;v.hidden=false;try{if(on){v.currentTime=0;const p=v.play();p&&p.catch(()=>{})}else{v.pause();v.currentTime=0}}catch(e){}};
+/* the first screen shows the parent's own GIF, untouched; nothing is swapped or restarted, so nothing blinks */
+let introSet=false;
+introTalk=function(on){if(introSet)return;introSet=true;const g=document.querySelector("#introC img.g17gif"),im=document.querySelector("#introC img.g14char"),d=charOf();
+  if(CHARS[d]){if(g)g.style.display="none";if(im){im.hidden=false;im.src=CHARS[d].img;im.classList.add("bob")}}else if(im)im.hidden=true};
 introHello=function(list,after){introAfter=after;if(!S.voice||!list.length){after();return}
-  const v=document.querySelector("#introC video.talk"),a=new Audio("audio/"+list[0]+".mp3");a.preload="auto";a.playbackRate=.92;voice=a;
+  const a=new Audio("audio/"+list[0]+".mp3");a.preload="auto";a.playbackRate=.92;voice=a;
   let started=false,gone=false;const go=()=>{if(gone)return;gone=true;after()};
   /* the mouth moves only while Lulu is really talking */
   a.onplaying=()=>{started=true;introTalk(true)};
@@ -7318,7 +7321,7 @@ introHello=function(list,after){introAfter=after;if(!S.voice||!list.length){afte
   /* wait until both the voice and the video can play (never longer than 1.2 s), so they stay together */
   let ready=0,fired=false;const kick=()=>{if(fired)return;fired=true;start()};
   const one=()=>{if(++ready>=2)kick()};a.addEventListener("canplaythrough",one,{once:true});
-  if(v&&!v.hidden&&v.readyState<3)v.addEventListener("canplay",one,{once:true});else one();
+  const g=document.querySelector("#introC img.g17gif");if(g&&!g.complete)g.addEventListener("load",one,{once:true});else one();
   setTimeout(kick,1200);
   /* safety: the first screen never stays longer than 9 s */
   setTimeout(()=>{if(!started)go()},9000)};
