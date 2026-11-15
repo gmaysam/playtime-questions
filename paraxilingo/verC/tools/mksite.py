@@ -43,7 +43,7 @@ self.addEventListener("activate",e=>{e.waitUntil(caches.keys().then(ks=>Promise.
 self.addEventListener("fetch",e=>{
   const r=e.request;if(r.method!=="GET"||!r.url.startsWith(self.location.origin))return;
   if(r.mode==="navigate"){e.respondWith(fetch(r,{cache:"no-store"}).then(n=>{const c=n.clone();caches.open(V).then(x=>x.put("./",c));return n}).catch(()=>caches.match("./")));return}
-  e.respondWith(caches.match(r,{ignoreSearch:true}).then(m=>m||fetch(r).then(n=>{if(n.ok){const c=n.clone();caches.open(V).then(x=>x.put(r,c))}return n})));
+  e.respondWith(caches.match(r,{ignoreSearch:true}).then(m=>m||fetch(r).then(n=>{if(n.ok&&n.status===200){const c=n.clone();caches.open(V).then(x=>x.put(r,c))}return n})).catch(()=>fetch(r)));
 });
 ''' % (ver, json.dumps(files))
 open(os.path.join(SITE, 'sw.js'), 'w').write(sw)
