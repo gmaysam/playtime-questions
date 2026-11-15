@@ -7,7 +7,7 @@
 <link rel="apple-touch-icon" href="icon180.png">
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#E6F3FF">
-<title>Paraxilingo C</title>
+<title>Paraxilingo C</title><link rel="preload" href="audio/w/PX_G14_HELLO.mp3" as="audio"><link rel="preload" href="img/domi_talk.gif" as="image"><script>(function(){try{var st={};try{st=JSON.parse(localStorage.getItem("paraxilingo-v5")||"{}")}catch(e){}if(st.voice===false)return;var a=new Audio("audio/w/PX_G14_HELLO.mp3");a.preload="auto";a.playbackRate=.92;window.__hello=a;window.__helloTried=1;var p=a.play();if(p&&p.catch)p.catch(function(){window.__helloBlocked=1;var ev=["touchend","pointerup","click","keydown"],t=function(){ev.forEach(function(n){document.removeEventListener(n,t,true)});if(!a.paused)return;try{a.currentTime=0;a.play()}catch(e){}};ev.forEach(function(n){document.addEventListener(n,t,true)})})}catch(e){}})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=M+PLUS+Rounded+1c:wght@500;700;800&display=swap">
@@ -31592,75 +31592,41 @@ img.e3 {
   };
   introHello = function(list, after) {
     introAfter = after;
-    if (!S.voice || !list.length) {
-      after();
-      return;
-    }
-    const a = new Audio("audio/" + list[0] + ".mp3");
-    a.preload = "auto";
-    a.playbackRate = 0.92;
-    voice = a;
-    let started = false, gone = false;
+    const a = window.__hello;
+    let gone = false;
     const go = () => {
       if (gone) return;
       gone = true;
       after();
     };
-    a.onplaying = () => {
-      started = true;
-      introTalk(true);
-    };
-    a.onended = () => {
-      introTalk(false);
-      if (list.length > 1) sayseq(list.slice(1), go);
-      else setTimeout(go, 300);
-    };
-    a.onerror = () => {
-      introTalk(false);
-      go();
-    };
-    let heard = false;
-    a.addEventListener("playing", () => {
-      heard = true;
-    }, { once: true });
-    const ev = ["touchend", "pointerup", "click", "keydown"];
-    const firstTouch = () => {
-      ev.forEach((n) => document.removeEventListener(n, firstTouch, true));
-      if (heard || !S.voice) return;
-      heard = true;
-      try {
-        const h = new Audio("audio/" + list[0] + ".mp3");
-        h.playbackRate = 0.92;
-        h.play().catch(() => {
-        });
+    if (!a || !S.voice || !list.length) {
+      if (a) try {
+        a.pause();
       } catch (e) {
       }
+      go();
+      return;
+    }
+    voice = a;
+    const rest = list.slice(1);
+    const fin = () => {
+      if (rest.length) sayseq(rest, go);
+      else setTimeout(go, 300);
     };
-    ev.forEach((n) => document.addEventListener(n, firstTouch, true));
-    const start = () => {
-      const p = a.play();
-      if (p && p.catch) p.catch(() => {
-        introTalk(false);
-        setTimeout(go, 1500);
-      });
-    };
-    let ready = 0, fired = false;
-    const kick = () => {
-      if (fired) return;
-      fired = true;
-      start();
-    };
-    const one = () => {
-      if (++ready >= 2) kick();
-    };
-    a.addEventListener("canplaythrough", one, { once: true });
-    const g = document.querySelector("#introC img.g17gif");
-    if (g && !g.complete) g.addEventListener("load", one, { once: true });
-    else one();
-    setTimeout(kick, 1200);
+    if (a.ended) {
+      fin();
+      return;
+    }
+    a.onended = fin;
+    a.onerror = () => go();
+    if (window.__helloBlocked || a.paused && a.currentTime === 0 && window.__helloTried) {
+      setTimeout(go, 1500);
+      return;
+    }
     setTimeout(() => {
-      if (!started) go();
-    }, 9e3);
+      if (a.paused && !a.ended) go();
+    }, 2500);
+    setTimeout(go, 9e3);
   };
   introTalk(false);
   const CLIPC = /* @__PURE__ */ new Map();
