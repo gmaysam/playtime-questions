@@ -98,7 +98,7 @@ function sayQ(q){let tries=0,rec=null,busy=false;const w=q.w.w;
   gShow(`<div class="game">${gHead("🎤","Say it!","Listen, then say it")}<div class="sy">${q.w.pic?`<div class="sy-pic">${q.w.pic}</div>`:""}<div class="sy-w">${w}</div>
     <button class="hr-play sm" id="syL" aria-label="Listen again">🔊</button><button class="sy-mic" id="syM" aria-label="Say it">🎤</button><div class="sy-h" id="syH">Tap 🎤 and say the word</div><button class="mv-skip" id="syS">Skip</button></div></div>`);gAsk(q);
   const H=$("syH"),M=$("syM");
-  const done=ok=>{if(q.done)return;if(ok){sayseq([G10("SAY_GOOD")],()=>{});gameWin(q,tries>1?1:0,M,[])}else{q.done=true;gameLearn(q,w,q.w.say)}};
+  const done=ok=>{if(q.done)return;if(ok){q.done=true;let w=false;const win=()=>{if(w)return;w=true;q.done=false;gameWin(q,tries>1?1:0,M,[])};setTimeout(win,4200);sayseq([G10("SAY_GOOD")],win)}else{q.done=true;gameLearn(q,w,q.w.say)}};
   const check=alts=>{const t=w.toLowerCase(),hit=alts.some(s=>{s=s.toLowerCase().replace(/[^a-z ]/g," ").trim();return s.split(/\s+/).some(x=>x===t||(t.length>=5&&lev(x,t)<=1))||s.replace(/\s+/g,"")===t});
     if(hit){H.textContent="✅ "+w+"!";done(true)}else{tries++;H.textContent=alts[0]?`I heard “${alts[0]}”. Try again!`:"I didn't hear it. Try again!";
       if(tries>=3){sayseq([G10("SAY_LAST"),...q.w.say],()=>{});done(false)}else sayseq([G10("SAY_AGAIN"),...q.w.say],()=>{})}};

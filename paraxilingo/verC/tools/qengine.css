@@ -1823,3 +1823,27 @@ img.e3{width:1.18em;height:1.18em;vertical-align:-.22em;object-fit:contain;displ
 .beaver.g27bv.popin .g27s{animation:none}
 .g27dbg{position:fixed;left:12px;right:12px;bottom:12px;z-index:9999;background:#fff;border-radius:14px;padding:10px 14px;box-shadow:0 4px 16px rgba(0,0,0,.2);display:flex;gap:10px;align-items:center}
 .g27dbg input{flex:1}.g27dbg b{font:800 14px/1 system-ui;min-width:52px;text-align:right}
+
+/* v29: today's wood prize shows the number of logs won */
+.g29wood{display:flex;flex-direction:column;align-items:center;gap:6px}
+.g29logs{font-size:30px;line-height:1.1;max-width:260px;text-align:center;word-break:break-all}
+.g29wood b{font:900 56px/1 inherit;color:#8B5A2B;text-shadow:0 3px 0 rgba(0,0,0,.12)}
+
+/* v29: a finished mound needs no badge on its sign - the colourful symbol is enough */
+.zone .hole.sg.done .ok{display:none}
+.zone .hole.sg.done{background:none!important;box-shadow:none!important;border:0!important}
+/* v29: look back at a finished mound */
+.g29rev{position:absolute;inset:0;z-index:60;background:#FFFDF8;display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0px)}
+.g29rh{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:2px solid #F0E6D6;font:800 18px/1.2 inherit;color:#4B3621}
+.g29x{width:40px;height:40px;border-radius:50%;border:0;background:#F3EDE3;font-size:18px;color:#4B3621}
+.g29rl{flex:1;overflow:auto;padding:12px 16px 30px;display:flex;flex-direction:column;gap:12px}
+.g29ri{background:#fff;border:2px solid #EFE5D5;border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:8px}
+.g29rq{font:800 15px/1.3 inherit;color:#3C3C3C;display:flex;gap:8px;align-items:flex-start}
+.g29n{flex:none;width:24px;height:24px;border-radius:50%;background:#FFC531;color:#3B2E22;display:grid;place-items:center;font-size:13px}
+.g29rv{max-height:120px;overflow:hidden;display:flex;justify-content:center;transform-origin:top center}
+.g29rv img{max-height:100px;width:auto}
+.g29ra{display:flex;align-items:center;gap:8px;background:#EAF7DF;border-radius:12px;padding:8px 10px;font:800 15px/1.2 inherit;color:#3B6E1E}
+.g29ra img{height:44px;width:auto}.g29ra small{font-size:14px}
+.g29ra>span{width:22px;height:22px;border-radius:50%;background:#58CC02;color:#fff;display:grid;place-items:center;font-size:13px;flex:none}
+.g29rs{font:700 12.5px/1 inherit;color:#8A7F72}
+.pop .g29see{margin-top:8px}

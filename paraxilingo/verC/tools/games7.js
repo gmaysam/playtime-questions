@@ -173,10 +173,10 @@ function cupsQ(q){let pos=[0,1,2],at=ri(0,2),ready=false,miss=0;gShow(`<div clas
 /* 18. My day (age 4+) - morning, afternoon or night? */
 const DAYI=[["wake up","🌅","morning"],["breakfast","🥣","morning"],["brush teeth","🪥","morning"],["lunch","🍽️","afternoon"],["play in the park","🛝","afternoon"],["moon and stars","🌙","night"],["go to bed","🛏️","night"],["pyjamas","🧸","night"]];
 const DAYP={morning:"🌅",afternoon:"☀️",night:"🌙"};
-function qMyDay(){const it=[];for(const p of sh(Object.keys(DAYP)))it.push(pickOne(DAYI.filter(x=>x[2]===p)));return {game:"myday",items:it,voice:[G7("MYDAY")],gid:"g:myday",factT:"We wake up in the morning and sleep at night."}}
+function qMyDay(){const it=[];for(const p of sh(Object.keys(DAYP)))it.push(pickOne(DAYI.filter(x=>x[2]===p)));return {game:"myday",items:it,voice:[G7("MYDAY"),"w/PX_G19_D_"+it[0][0].toUpperCase().replace(/[^A-Z]+/g,"_")],gid:"g:myday",factT:"We wake up in the morning and sleep at night."}}
 function mydayQ(q){let k=0,miss=0;gShow(`<div class="game">${gHead("🕰️","My day","When do we do this?")}
   <div class="g7-rit" id="mdI"></div><div class="g7-seas">${Object.keys(DAYP).map(s=>`<button class="g7-s" data-s="${s}"><span>${DAYP[s]}</span><b>${cap1(s)}</b></button>`).join("")}</div></div>`);gAsk(q);
-  const show=()=>{const it=q.items[k];$("mdI").innerHTML=`<span>${it[1]}</span><small>${cap1(it[0])}</small>`};show();
+  const show=()=>{const it=q.items[k];$("mdI").innerHTML=`<span>${it[1]}</span><small>${cap1(it[0])}</small>`;if(k>0){hush();sayseq(["w/PX_G19_D_"+it[0].toUpperCase().replace(/[^A-Z]+/g,"_")],()=>{})}};show();
   tapAll(".g7-s",b=>{if(q.done)return;const it=q.items[k];if(b.dataset.s===it[2]){sfx.tap();k++;if(k===q.items.length)gameWin(q,miss>1?1:0,b,[]);else show()}else{miss++;sfx.oops();toastHint("Think about your day 🤔")}});
   g7solve(()=>{const t=()=>{if(q.done)return;fire7([...$("qBody").querySelectorAll(".g7-s")].find(b=>b.dataset.s===q.items[k][2]));setTimeout(t,80)};t()})}
 

@@ -149,7 +149,7 @@ function qCal(k){
 }
 function qClock(k){
   if(["today","tomorrow","yesterday","after","before","monthafter","nowseason","week","months"].includes(k))return qCal(k);
-  if(k==="routine"){const r=pickOne(ROUTINES.filter(x=>!["☀️","🌙"].includes(x[0])));  /* never show the sun or moon: they are the answers */return {voice:["c_routine"],cap:"Morning or night?",visual:`<div class="bigemo">${r[0]}</div><div class="rt-lab">${r[1]}</div>`,opts:[{h:"<span class='yn'>☀️</span><small>Morning</small>",say:both("morning")},{h:"<span class='yn'>🌙</span><small>Night</small>",say:both("night")}],ans:r[2],layout:"yn",hint:"elim",exp:{t:r[2]?"Night 🌙":"Morning ☀️",v:["w/LULU_ANS_IS"]}}}
+  if(k==="routine"){const r=pickOne(ROUTINES.filter(x=>!["☀️","🌙"].includes(x[0])));  /* never show the sun or moon: they are the answers */return {voice:["c_routine","w/PX_G19_R_"+r[1].toUpperCase().replace(/[^A-Z]+/g,"_")],cap:"Morning or night?",visual:`<div class="bigemo">${r[0]}</div><div class="rt-lab">${r[1]}</div>`,opts:[{h:"<span class='yn'>☀️</span><small>Morning</small>",say:both("morning")},{h:"<span class='yn'>🌙</span><small>Night</small>",say:both("night")}],ans:r[2],layout:"yn",hint:"elim",exp:{t:r[2]?"Night 🌙":"Morning ☀️",v:["w/LULU_ANS_IS"]}}}
   if(k==="season"){const sz=pickOne(SEASONS),SE={Winter:"❄️",Spring:"🌷",Summer:"🌞",Autumn:"🍁"},o=sh(["Winter","Spring","Summer","Autumn"]);
     return {voice:["c_season"],cap:"Which season?",visual:`<div class="bigemo">${sz[0]}</div>`,opts:o.map(x=>({h:`<span class="oe">${SE[x]}</span><small>${x}</small>`,say:seaSay(["Spring","Summer","Autumn","Winter"].indexOf(x))})),ans:o.indexOf(sz[2]),layout:"grid",hint:"elim",exp:{t:sz[2],v:["w/LULU_ANS_IS"]}}}
   const h=ri(1,12),m=k==="oclock"?0:k==="half"?30:k==="quarter"?pickOne([15,45]):ri(1,11)*5;
@@ -313,7 +313,9 @@ function nextQ(){
   $("qSpk").onclick=()=>{sfx.tap();ask(q)};
   /* tap = choose (Lulu says it), CHECK = answer */
   const chk=$("qCheck");
-  const choose=b=>{if(q.done||b.classList.contains("faded"))return;sfx.tap();
+  const choose=b=>{if(q.done||b.classList.contains("faded"))return;askTok++;bsSay(-1);
+    /* tapping the chosen answer again answers it, like pressing CHECK (parent tapped Summer again and again) */
+    if(q.style==="cards"&&b.classList.contains("sel")&&Date.now()-(b._selAt||0)>350){chk.onclick();return}b._selAt=Date.now();sfx.tap();
     if(q.style==="balloon"||q.style==="fish"){hush();q.locked=false;b.classList.add(q.style==="balloon"?"popped":"caught");pick(+b.dataset.j,b);return}
     $("qBody").querySelectorAll(".qo.sel").forEach(x=>x.classList.remove("sel"));b.classList.add("sel");
     hush();sayseq((q.opts[+b.dataset.j]||{}).say||[],()=>{});chk.disabled=false;chk.classList.add("on")};
@@ -323,9 +325,9 @@ function nextQ(){
   chk.onclick=()=>{const b=$("qBody").querySelector(".qo.sel");if(!b||q.done)return;hush();q.locked=false;b.classList.remove("sel");chk.disabled=true;chk.classList.remove("on");pick(+b.dataset.j,b)};
   $("qBody").classList.remove("in");void $("qBody").offsetWidth;$("qBody").classList.add("in");
   if(q.flash)setTimeout(()=>{const f=$("qBody").querySelector(".flash");if(f)f.classList.add("hid")},2200);
-  setTimeout(()=>{if(L&&L.q===q)ask(q)},350);
+  setTimeout(()=>{if(L&&L.q===q)ask(q)},150);
 }
-let askTok=0;
+let askTok=0;const bsSay=j=>{try{$("qBody").querySelectorAll(".qo").forEach((b,k)=>b.classList.toggle("saying",k===j))}catch(e){}};
 function ask(q,done){
   const tok=++askTok,bs=[...$("qBody").querySelectorAll(".qo")];
   const lit=j=>bs.forEach((b,k)=>b.classList.toggle("saying",k===j));
@@ -358,7 +360,7 @@ function pick(j,b){
       /* a short fact or the worked answer under the praise (e.g. "Pig: barn", "7 + 5 = 12") */
       const fact=q.exp&&q.exp.t&&String(q.exp.t).length>2?q.exp.t:"";
       sheet("good"+(fact?" why":""),pickOne(PRAISE_T),fact||`+${n} 🌰`);
-      sayseq([pickOne(PRAISE_CLIPS),...(fact?factV(fact):[])],()=>setTimeout(go,fact?1600:500));setTimeout(go,fact?4200:3400);
+      sayseq([pickOne(PRAISE_CLIPS),...(fact?factV(fact):[])],()=>setTimeout(go,fact?1600:500));setTimeout(go,9000);  /* the voice moves on; this is only a safety net, long enough not to cut Lulu off */
     }
     $("qNext").onclick=()=>{sfx.tap();go()};
     return;

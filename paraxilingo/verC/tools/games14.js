@@ -41,8 +41,10 @@ const STK={unicorn:{n:"Unicorn",e:"🦄",c:"#FFE3F1",items:["🦄","🌈","🧁"
 const stkPrice=i=>4+2*Math.floor(i/3);
 const stkHave=()=>S.stk||(S.stk=[]),charsHave=()=>S.chars||(S.chars=[]);
 const W14={mound:3,house:6};
-openHouse=function(){if(S.day.house)return;S.day.house=true;S.acorns+=5;S.wood=(S.wood||0)+W14.house;save();say("w/LULU_BD_PRIZE_IS");
-  const rv=reveal("🪵","Today's prize!",`+${W14.house} 🪵 wood and +5 🌰 acorns! Use wood to unlock new friends and stickers.`,()=>{renderMap();checkRealPrizes()});
+openHouse=function(){if(S.day.house)return;S.day.house=true;S.acorns+=5;S.wood=(S.wood||0)+W14.house;S.day.wood=(S.day.wood||0)+W14.house;save();say("w/LULU_BD_PRIZE_IS");
+  /* show how much wood the child won today, not one log (parent, Nov 15) */
+  const tw=S.day.wood||W14.house,logs=`<div class="g29wood"><div class="g29logs">${"🪵".repeat(Math.min(tw,12))}</div><b>${tw}</b></div>`;
+  const rv=reveal(logs,"Today's prize!",`You won ${tw} 🪵 wood today, and +5 🌰 acorns! Use wood to unlock new friends and stickers.`,()=>{renderMap();checkRealPrizes()});
   const gc=goalCard();if(gc)rv.querySelector("p").insertAdjacentHTML("afterend",gc)};
 /* ---------- 3. pick your friend: Domi the beaver (5 colours) or a unicorn or dino bought with wood ---------- */
 domiPicker=function(){const cur=charOf(),have=charsHave(),w=S.wood||0;
@@ -175,7 +177,7 @@ introHello=function(list,after){introAfter=after;after()};   /* no voice on the 
 introTalk(false);
 /* ---------- v25: voices start without a wait: clips are kept ready, and the next ones load while one plays ---------- */
 const CLIPC=new Map();
-const clipEl=name=>{let a=CLIPC.get(name);if(!a){a=new Audio("audio/"+name+".mp3");a.preload="auto";try{a.load()}catch(e){}CLIPC.set(name,a);if(CLIPC.size>120){const k=CLIPC.keys().next().value;CLIPC.delete(k)}}return a};
+const clipEl=name=>{let a=CLIPC.get(name);if(!a){a=new Audio("audio/"+name+".mp3");a.preload="auto";try{a.load()}catch(e){}CLIPC.set(name,a);if(CLIPC.size>60){const k=CLIPC.keys().next().value,old=CLIPC.get(k);CLIPC.delete(k);try{if(old&&old.paused&&old!==voice){old.removeAttribute("src");old.load()}}catch(e){}}}else{CLIPC.delete(name);CLIPC.set(name,a)}return a};
 window.__pre=list=>{(list||[]).filter(Boolean).forEach(n=>{if(typeof n==="string")clipEl(n)})};
 say=function(name,onEnd,rate=.92){
   if(voice){voice.onended=null;voice.onerror=null;try{voice.pause()}catch(e){}voice=null}
@@ -221,7 +223,9 @@ function speakRounds(q,mk){const items=q.items;let i=0,good=0,rec=null,tries=0,b
     if(i===0)gAsk(q);else{hush();sayseq(o.voice||[],()=>{})}
     const H=$("syH"),M=$("syM");if(o.tts)setTimeout(()=>enTTS(o.tts),(o.voice||[]).length?1800:300);
     const got=alts=>{if(busyNext||q.done)return;const r=o.check(alts);
-      if(r.ok){good++;H.textContent="✅ "+o.answer;try{sfx.good&&sfx.good()}catch(e){}sayseq([G10("SAY_GOOD")],()=>{});const d=document.querySelector(".g16dots i.now");if(d)d.classList.add("ok");next(1600);return}
+      if(r.ok){good++;H.textContent="✅ "+o.answer;try{sfx.good&&sfx.good()}catch(e){}const d=document.querySelector(".g16dots i.now");if(d)d.classList.add("ok");busyNext=true;
+        /* let Lulu finish the praise before the next word comes (parent, Nov 15) */
+        let moved=false;const mv=()=>{if(moved)return;moved=true;next(350)};setTimeout(mv,4200);sayseq([G10("SAY_GOOD")],mv);return}
       tries++;H.textContent=alts[0]?`I heard “${alts[0]}”. Try again!`:"I didn't hear it. Try again!";
       if(tries>=3){o.reveal&&o.reveal();H.textContent="Let's say it together: "+o.answer;sayseq([G10("SAY_LAST"),...o.answerSay],()=>{if(o.tts)enTTS(o.tts);next(o.tts?2600:900)})}
       else sayseq([G10("SAY_AGAIN"),...(o.again||[])],()=>{if(o.tts)enTTS(o.tts)})};
@@ -352,3 +356,23 @@ const _qHop18=qHop;qHop=function(){const q=_qHop18.apply(this,arguments);if([1,2
 const _qRk18=qRocket;qRocket=function(){const q=_qRk18.apply(this,arguments);if(q.top===5||q.top===10)q.voice=[G18("ROCKET"+q.top)];return q};
 const _qMv18=qMove;qMove=function(){const q=_qMv18.apply(this,arguments);q.voice=[G18("MOVE_WATCH")];return q};
 try{G6F.hop=qHop;G7F.rocket=qRocket}catch(e){}
+
+/* v29 (parent, Nov 15): for 5-7 year olds Lulu reads the whole sentence and the child finds the word; "Look! Then find it" now says to find it */
+const G19=n=>"w/PX_G19_"+n;
+const _qRead19=qRead;qRead=function(k,used){const q=_qRead19.apply(this,arguments);try{
+  if(k==="sentence"&&(S.age||6)<=7){const id=String(q.voice[1]||"").replace("w/PX_SENT_","");if(id)q.voice=[G19("SENT_YOUNG"),"w/PX_HEAR_"+id]}
+  if(k==="flash")q.voice=[G19("FLASH")]}catch(e){}return q};
+
+/* v29: the parent can look back at a finished mound: what was asked and the right answer (no new questions) */
+const rev29=()=>S.day.rev||(S.day.rev={});
+function rec29(){try{if(!L||!L.q||L.q.radio!==undefined||L.q._rec)return;const q=L.q,qb=$("qBody");if(!qb)return;q._rec=1;let e;
+  if(q.game){const t=qb.querySelector(".qtitle"),k=qb.querySelector(".qkick");e={t:(k?k.textContent.trim():"Game")+(t&&t.textContent.trim()?": "+t.textContent.trim():""),ok:q._won?(q.tries?1:2):0,g:1}}
+  else{const a=q.opts&&q.opts[q.ans]?q.opts[q.ans].h:"";e={t:q.cap||"",v:String(q.visual||"").length<1500?q.visual||"":"",a:String(a).length<1500?a:"",ok:q.done?(q.tries?1:2):0}}
+  const r=rev29();(r[L.g]=r[L.g]||[]).push(e);if(r[L.g].length>14)r[L.g].shift();save()}catch(err){}}
+const _nq29=nextQ;nextQ=function(){rec29();return _nq29.apply(this,arguments)};
+function showRev29(i){const list=(rev29()[i]||[]);const c=catById(dayPlan()[i].cat);
+  const v=document.createElement("div");v.className="g29rev";
+  v.innerHTML=`<div class="g29rh"><b>${c.e} ${c.name}</b><button class="g29x" aria-label="Close">✕</button></div><div class="g29rl">${list.map((e,k)=>`<div class="g29ri"><div class="g29rq"><span class="g29n">${k+1}</span>${e.t||"Question"}</div>${e.v?`<div class="g29rv">${e.v}</div>`:""}${e.a?`<div class="g29ra"><span>✓</span>${e.a}</div>`:""}<div class="g29rs">${e.ok===2?"⭐ Right first time":e.ok===1?"👍 Right on the second try":e.g?"🤝 Learned it together":"🤝 Learned the answer"}</div></div>`).join("")||"<p>No answers saved for this mound.</p>"}</div>`;
+  $("phone").appendChild(v);v.querySelector(".g29x").onclick=()=>{sfx.tap();v.remove()}}
+const _sp29=showPop;showPop=function(i){_sp29.apply(this,arguments);try{if(i<S.day.done&&popEl&&(rev29()[i]||[]).length){popEl.querySelector("p").insertAdjacentHTML("afterend",`<button class="btn g29see">See my answers</button>`);
+  popEl.querySelector(".g29see").onclick=e=>{e.stopPropagation();closePop();sfx.tap();showRev29(i)}}}catch(e){}};
