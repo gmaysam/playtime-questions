@@ -265,7 +265,7 @@ Object.assign(GMAP,{"g:sayname":G("Name it!",["lang","listen"],[["lang","vocab"]
   "g:saysent":G("Say the sentence",["lang","listen"],[["lang","vocab"]],"Lulu says a short English sentence and the child repeats it; each word lights up when the phone hears it.","Practice")});
 /* ---------- v26: the parent's new land picture (Land_Beaver): 7 mounds on one path, the big house at the top ---------- */
 const LAND26={src:"img/w/land_beaver.webp",h:1920,
-  holes:[[65.9,80.5],[33.4,70.6],[67.1,61.4],[34.5,52.4],[67.2,44.6],[35.1,37.1],[65.2,30.5]],
+  holes:[[71.6,69.9],[27.5,60.4],[72.5,51.4],[29,43.4],[72,35.6],[29,29.3],[69.4,24]],   /* on the sign above each mound */
   stand:[[48,85],[50,74.5],[48,64.5],[51,55.5],[48,47.5],[52,39.5],[49,33]],start:[44,95],house:[50,19]};
 for(let z=0;z<HOLES.length;z++){HOLES[z]=LAND26.holes.map(p=>p.slice());MOUNDS[z]=LAND26.stand.map(p=>p.slice());TILE_H[z]=LAND26.h}
 try{STARTS.length=0;TOTAL=0;HOLES.forEach((h,z)=>{STARTS[z]=TOTAL;TOTAL+=h.length})}catch(e){}

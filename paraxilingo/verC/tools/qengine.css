@@ -1809,3 +1809,5 @@ img.e3{width:1.18em;height:1.18em;vertical-align:-.22em;object-fit:contain;displ
 .house.g26house{position:absolute;left:15%;right:15%;top:0;height:22%;background:none;z-index:3;cursor:pointer}
 .house.g26house svg.lodge{display:none}
 .house.g26house .htag{position:absolute;left:50%;top:auto;bottom:2%;height:auto;transform:translateX(-50%);white-space:nowrap}
+.house.g26house .htag{display:none}
+.zone .hole{transform:translate(-50%,-50%) scale(.82)}
