@@ -184,7 +184,9 @@ say=function(name,onEnd,rate=.92){
   try{a.currentTime=0}catch(e){}voice=a;a.playbackRate=rate;try{a.preservesPitch=true;a.webkitPreservesPitch=true}catch(e){}
   if(name.startsWith("q_"))speakBtns(true);
   const end=()=>{a.onended=null;a.onerror=null;speakBtns(false);onEnd&&onEnd()};a.onended=end;a.onerror=()=>{CLIPC.delete(name);end()};
-  const p=a.play();p&&p.catch&&p.catch(()=>speakBtns(false))};
+  const p=a.play();p&&p.catch&&p.catch(e=>{speakBtns(false);
+    /* the phone refused to play (no tap just before): don't leave the game waiting for a voice that never comes */
+    if(voice===a&&!(e&&e.name==="AbortError"))setTimeout(()=>{if(voice===a&&a.paused)end()},250)})};
 sayseq=function(list,onEnd){const id=++seqId,l=list.filter(Boolean);let i=0;window.__pre(l);
   const next=()=>{if(id!==seqId)return;if(i>=l.length){speaking(false);onEnd&&onEnd();return}say(l[i++],()=>{if(i<l.length)setTimeout(next,110);else next()})};
   speaking(true);next()};
@@ -334,3 +336,11 @@ window.beaverRoad={get:()=>R27.p,set:p=>{R27.p=p;draw27()},goTo:p=>walk27(p)};
 if(/[?&#]road=1/.test(location.href))addEventListener("load",()=>{const d=document.createElement("div");d.className="g27dbg";
   d.innerHTML='<input type="range" min="0" max="1000" value="0"><b>0%</b>';document.body.appendChild(d);const r=d.querySelector("input"),b=d.querySelector("b");
   let tm=0;r.oninput=()=>{b.textContent=(r.value/10).toFixed(1)+"%";clearTimeout(tm);tm=setTimeout(()=>walk27(r.value/1000),60)}});
+
+/* v27b: game sounds (drums, xylophone, piano) are made by the phone's sound chip. iPhones keep it asleep until a tap
+   and mute it with the silent switch, so wake it on every tap and ask for "playback" sound like music apps do */
+(function(){const wake=()=>{try{if(navigator.audioSession&&navigator.audioSession.type!=="playback")navigator.audioSession.type="playback"}catch(e){}
+  try{const c=dac();if(c.state!=="running")c.resume()}catch(e){}
+  [typeof __ac!=="undefined"?__ac:null,typeof __pac!=="undefined"?__pac:null].forEach(c=>{try{c&&c.state!=="running"&&c.resume()}catch(e){}})};
+  ["pointerdown","touchend","keydown"].forEach(ev=>addEventListener(ev,wake,{capture:true,passive:true}));
+  document.addEventListener("visibilitychange",()=>{if(!document.hidden)wake()})})();
