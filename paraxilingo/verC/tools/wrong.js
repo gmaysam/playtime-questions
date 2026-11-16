@@ -1,0 +1,23 @@
+const {chromium}=require('/opt/npm-tools/node_modules/playwright');
+const fs=require('fs'),path=require('path');const root=process.argv[2];
+(async()=>{
+ const b=await chromium.launch();const p=await b.newPage({viewport:{width:390,height:844}});
+ const errs=[];p.on('pageerror',e=>errs.push('PE '+e.message));
+ await p.route('http://app.test/**',r=>{let f=decodeURIComponent(new URL(r.request().url()).pathname.slice(1));const fp=path.join(root,f);
+   if(!fs.existsSync(fp))return r.fulfill({status:404,body:''});
+   let body=fs.readFileSync(fp);if(f==='index.html')body=body.toString().replace('let L=null;','let L=null;window.__px={get L(){return L},get S(){return S},openMound:(i)=>openMound(i),dayPlan:()=>dayPlan()};');
+   r.fulfill({body,contentType:f.endsWith('.html')?'text/html; charset=utf-8':undefined})});
+ await p.goto('http://app.test/index.html');await p.waitForTimeout(800);await p.click('#inSkip');await p.waitForTimeout(800);
+ const wi=await p.evaluate(()=>__px.dayPlan().findIndex(x=>x.topic==='watcher'));
+ await p.evaluate(i=>__px.openMound(i),wi);await p.waitForTimeout(900);
+ const n=await p.evaluate(()=>__px.L.ex.w.n);
+ const wrong=async()=>{const bs=await p.$$("#lBody .ans:not([disabled])");for(const b of bs){if(+(await b.getAttribute('data-v'))!==n){await b.click();return}}};
+ await wrong();await p.waitForTimeout(1600);await p.screenshot({path:root+'/../shots/w1.png'});
+ await wrong();await p.waitForTimeout(900);await p.screenshot({path:root+'/../shots/w2.png'});
+ await p.click('#fbBtn');await p.waitForTimeout(900);
+ const ex2=await p.evaluate(()=>__px.L.ex&&__px.L.ex.type);
+ await p.screenshot({path:root+'/../shots/w3.png'});
+ await p.evaluate(()=>__px.openMound(0));await p.waitForTimeout(600);
+ await p.click('#lClose');await p.waitForTimeout(300);
+ await p.evaluate(()=>{__px.S.day.done=7;});await p.evaluate(()=>{document.querySelector('#tbPrizes').click()});await p.waitForTimeout(300);await p.screenshot({path:root+'/../shots/w4.png'});
+ console.log('next',ex2,errs.join('\n')||'no errors');await b.close();})();

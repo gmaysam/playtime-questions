@@ -1,0 +1,30 @@
+<svg viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
+<g stroke="#5B3A22" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
+<ellipse cx="58" cy="206" rx="34" ry="18" fill="#7A4E2D" transform="rotate(25 58 206)"/>
+<ellipse cx="186" cy="150" rx="12" ry="20" fill="#B57744" transform="rotate(35 186 150)"/>
+<ellipse cx="120" cy="192" rx="50" ry="40" fill="#C2814E"/>
+<ellipse cx="96" cy="229" rx="15" ry="8" fill="#7A4E2D"/>
+<ellipse cx="144" cy="229" rx="15" ry="8" fill="#7A4E2D"/>
+<circle cx="64" cy="56" r="16" fill="#C2814E"/>
+<circle cx="176" cy="56" r="16" fill="#C2814E"/>
+</g>
+<path d="M200 118 Q210 124 212 134 M206 108 Q220 116 224 130" fill="none" stroke="#9DB4D8" stroke-width="3.5" stroke-linecap="round"/>
+<ellipse cx="120" cy="200" rx="30" ry="25" fill="#F6E0C4"/>
+<circle cx="66" cy="58" r="7.5" fill="#F4A9A0"/><circle cx="174" cy="58" r="7.5" fill="#F4A9A0"/>
+<ellipse cx="120" cy="104" rx="70" ry="60" fill="#C2814E" stroke="#5B3A22" stroke-width="4"/>
+<path d="M120 164 L100 154 L100 176 Z M120 164 L140 154 L140 176 Z" fill="#4A90E2" stroke="#2D5F9E" stroke-width="3" stroke-linejoin="round"/>
+<circle cx="120" cy="165" r="6" fill="#2D5F9E"/>
+<ellipse cx="104" cy="190" rx="10" ry="11" fill="#B57744" stroke="#5B3A22" stroke-width="3"/>
+<ellipse cx="120" cy="130" rx="32" ry="22" fill="#F6E0C4"/>
+<path d="M78 80 Q88 74 98 78 M142 78 Q152 74 162 80" fill="none" stroke="#5B3A22" stroke-width="3.5" stroke-linecap="round"/>
+<ellipse cx="90" cy="100" rx="12" ry="15" fill="#2B1A10"/><ellipse cx="150" cy="100" rx="12" ry="15" fill="#2B1A10"/>
+<circle cx="94" cy="94" r="4.5" fill="#fff"/><circle cx="154" cy="94" r="4.5" fill="#fff"/>
+<circle cx="86" cy="106" r="2.2" fill="#fff"/><circle cx="146" cy="106" r="2.2" fill="#fff"/>
+<ellipse cx="66" cy="124" rx="11" ry="7" fill="#FF8FA0" opacity=".55"/><ellipse cx="174" cy="124" rx="11" ry="7" fill="#FF8FA0" opacity=".55"/>
+<path d="M111 117 Q120 110 129 117 Q127 125 120 126 Q113 125 111 117Z" fill="#3A2214"/>
+<path d="M102 132 Q120 160 138 132 Z" fill="#8E3B3B" stroke="#5B3A22" stroke-width="3" stroke-linejoin="round"/>
+<path d="M110 146 Q120 140 130 146 Q126 153 120 153 Q114 153 110 146Z" fill="#F07C8A"/>
+<rect x="113" y="132" width="14" height="9" rx="2" fill="#fff"/>
+<path d="M30 70 l4 9 9 4 -9 4 -4 9 -4 -9 -9 -4 9 -4z" fill="#FFC93C"/>
+<path d="M206 36 l3 6 6 3 -6 3 -3 6 -3 -6 -6 -3 6 -3z" fill="#FFC93C"/>
+</svg>

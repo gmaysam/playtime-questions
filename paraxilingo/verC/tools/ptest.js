@@ -1,0 +1,23 @@
+const {chromium}=require('/opt/npm-tools/node_modules/playwright');
+const fs=require('fs'),path=require('path');const root=process.argv[2],out=root+'/../shots9';
+(async()=>{
+ const b=await chromium.launch();const p=await b.newPage({viewport:{width:390,height:844},deviceScaleFactor:1});
+ const errs=[];p.on('pageerror',e=>errs.push('PE '+e.message));
+ await p.route('http://app.test/**',r=>{let f=decodeURIComponent(new URL(r.request().url()).pathname.slice(1));const fp=path.join(root,f);
+   if(!fs.existsSync(fp))return r.fulfill({status:404,body:''});
+   let body=fs.readFileSync(fp);if(f==='index.html')body=body.toString().replace('let L=null;','let L=null;window.__px={get L(){return L},get S(){return S},showParents:()=>showParents(),dayStr:d=>dayStr(d),openMound:i=>openMound(i),moundDone:()=>moundDone(),renderStats:()=>renderStats(),openHouse:()=>openHouse()};');
+   r.fulfill({body,contentType:f.endsWith('.html')?'text/html; charset=utf-8':f.endsWith('.svg')?'image/svg+xml':f.endsWith('.woff2')?'font/woff2':undefined})});
+ await p.goto('http://app.test/index.html');await p.waitForTimeout(600);await p.click('#introC');await p.waitForTimeout(1200);
+ console.log('real at start',JSON.stringify(await p.evaluate(()=>__px.S.real)),'perDay',await p.evaluate(()=>__px.S.perDay));
+ await p.evaluate(()=>{const S=__px.S;S.acorns=170;S.wood=12;{const d=new Date();S.dq={};[22,30,0,28,12,35,9].forEach((n,i)=>{const x=new Date();x.setDate(d.getDate()-6+i);if(n)S.dq[__px.dayStr(x)]=n})};S.sk={"count|Counting things":{n:14,r:13,f:12,h:"1111111011",d:"",d0:""},"count|Putting numbers in order":{n:5,r:4,f:3,h:"10110",d:"",d0:""},"add|Halves and quarters":{n:3,r:2,f:1,h:"100",d:"",d0:""},"letters|Spelling words":{n:8,r:7,f:4,h:"10101100",d:"",d0:""},"clock|Time: o'clock":{n:9,r:9,f:8,h:"111111101",d:"",d0:""},"farm|Animal homes":{n:7,r:7,f:7,h:"1111111",d:"",d0:""},"read|Sight words":{n:12,r:11,f:9,h:"1101111011",d:"",d0:""},"shapes|Memory (colours in order)":{n:2,r:2,f:1,h:"10",d:"",d0:""}};__px.showParents()});
+ await p.waitForTimeout(500);
+ await p.click('#pzAdd');await p.setInputFiles('#pzFile',out+'/toy.jpg');await p.fill('#pzName','Red fire truck');await p.selectOption('#pzA','50');await p.selectOption('#pzW','5');await p.waitForTimeout(600);
+ await p.screenshot({path:out+'/p_form.png',fullPage:false});
+ await p.click('#pzSave');await p.waitForTimeout(500);
+ const h=await p.evaluate(()=>document.getElementById('pSettings').scrollHeight);await p.setViewportSize({width:390,height:h});await p.waitForTimeout(300);
+ await p.screenshot({path:out+'/p_full.png'});await p.setViewportSize({width:390,height:844});
+ console.log('real',JSON.stringify(await p.evaluate(()=>__px.S.real.map(r=>({n:r.name,a:r.a,w:r.w,img:r.img.length})))));
+ await p.click('#closeSettings');await p.waitForTimeout(800);await p.screenshot({path:out+'/p_map.png'});
+ await p.evaluate(()=>{__px.openMound(0);});await p.waitForTimeout(800);await p.evaluate(()=>{__px.S.acorns=205;__px.moundDone()});await p.waitForTimeout(800);await p.screenshot({path:out+'/p_result.png'});
+ await p.evaluate(()=>{__px.S.day.house=false;__px.openHouse()});await p.waitForTimeout(3500);await p.screenshot({path:out+'/p_house.png'});
+ console.log(errs.join('\n')||'no errors');await b.close();})();

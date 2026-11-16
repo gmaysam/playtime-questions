@@ -1,0 +1,782 @@
+@font-face{font-family:"Nunito";font-style:normal;font-weight:600;font-display:swap;src:url(img/fonts/nunito-latin-600-normal.woff2) format("woff2")}
+@font-face{font-family:"Nunito";font-style:normal;font-weight:700;font-display:swap;src:url(img/fonts/nunito-latin-700-normal.woff2) format("woff2")}
+@font-face{font-family:"Nunito";font-style:normal;font-weight:800;font-display:swap;src:url(img/fonts/nunito-latin-800-normal.woff2) format("woff2")}
+@font-face{font-family:"Nunito";font-style:normal;font-weight:900;font-display:swap;src:url(img/fonts/nunito-latin-900-normal.woff2) format("woff2")}
+
+/* ===================== verC question pages: "Candy Meadow" palette =====================
+   Soft sky-to-cream background, white cards, four pastel answer tints (lilac, mint, peach, sky),
+   sunshine-yellow speaker, mint for right, gentle coral for "try again" (never harsh red). */
+:root{
+  --q-ink:#26334D;--q-soft:#6B7890;--q-card:#FFFFFF;
+  --q-sun:#FFC93C;--q-sun-d:#E7A400;
+  --q-mint:#3DBE86;--q-mint-d:#2A9A6A;--q-mint-t:#E2F7EC;
+  --q-sky:#4E9BEA;--q-sky-d:#3878C4;--q-sky-t:#E6F1FF;
+  --q-coral:#FF8C82;--q-coral-t:#FFF0EE;
+  --q-lilac:#8E7CF0;
+}
+.lesson.q2{background:linear-gradient(180deg,#E6F3FF 0%,#F4F8FF 38%,#FFF7EC 100%);color:var(--q-ink)}
+.lesson.q2 .lhead{display:flex;align-items:center;gap:12px;padding:12px 16px 4px}
+.lesson.q2 .lclose{width:40px;height:40px;border-radius:50%;background:#fff;color:var(--q-soft);border:0;box-shadow:0 3px 10px rgba(38,51,77,.10);display:grid;place-items:center;flex:none}
+.lesson.q2 .lclose svg{width:18px;height:18px}
+.qdots{flex:1;display:flex;gap:6px;justify-content:center;flex-wrap:wrap}
+.qdots i{width:14px;height:14px;border-radius:50%;background:#fff;box-shadow:inset 0 0 0 2.5px #D5DEEC;transition:.3s}
+.qdots i.on{background:var(--q-mint);box-shadow:0 0 0 3px #C9F0DD;transform:scale(1.1)}
+.qbody{flex:1;overflow-y:auto;padding:6px 18px 120px;display:flex;flex-direction:column;justify-content:center;gap:18px}
+.qbody.in>*{animation:qin .45s cubic-bezier(.3,1.4,.5,1) both}
+.qbody.in>*:nth-child(2){animation-delay:.06s}.qbody.in>*:nth-child(3){animation-delay:.12s}
+@keyframes qin{from{opacity:0;transform:translateY(16px) scale(.97)}}
+.qtop{display:flex;align-items:center;gap:12px;justify-content:center;min-height:76px}
+.qspk{position:relative;width:76px;height:76px;border-radius:50%;border:0;flex:none;color:#5A3B00;
+  background:radial-gradient(circle at 35% 30%,#FFE58A,var(--q-sun) 60%);box-shadow:0 6px 0 var(--q-sun-d),0 10px 22px rgba(231,164,0,.35);display:grid;place-items:center}
+.qspk svg{width:38px;height:38px}
+.qspk:active{transform:translateY(4px);box-shadow:0 2px 0 var(--q-sun-d)}
+.qspk::after{content:"";position:absolute;inset:-8px;border-radius:50%;border:4px solid var(--q-sun);opacity:0}
+.qspk.talking::after{animation:ring 1.2s ease-out infinite}
+@keyframes ring{from{opacity:.9;transform:scale(.92)}to{opacity:0;transform:scale(1.35)}}
+.qtop .cap{font-weight:800;font-size:15px;color:var(--q-soft);max-width:220px;line-height:1.3}
+.qvis{background:var(--q-card);border-radius:28px;box-shadow:0 10px 28px rgba(38,51,77,.08);padding:20px 14px;min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;position:relative}
+.qvis .clk{width:170px;height:170px}
+.qvis .clk.hintclk line:last-of-type{stroke:#FF8C82;filter:drop-shadow(0 0 4px #FF8C82)}
+.bignum{font-family:var(--f-display);font-weight:700;font-size:96px;line-height:1;color:var(--q-lilac);text-shadow:0 5px 0 #E4DEFF}
+.bignum.sm{font-size:72px}
+.bignum.q{color:#C3CCDB;text-shadow:0 5px 0 #EEF2F8}
+.seq{display:flex;align-items:center;gap:14px}.seq .arr{font-size:34px;color:#B9C3D3}
+.bigemo{font-size:88px;line-height:1}.bigemo.soft{opacity:.85;font-size:64px}
+.listen{width:120px;height:120px;border-radius:50%;background:linear-gradient(160deg,#F1ECFF,#E6F1FF);display:grid;place-items:center;font-size:66px;box-shadow:inset 0 -6px 0 rgba(142,124,240,.12)}
+.listen.radio{background:linear-gradient(160deg,#FFF0E6,#FFF7D6)}
+.domisays{display:flex;align-items:flex-end;gap:6px}
+.domisays .bub{background:var(--q-sky-t);border-radius:24px 24px 24px 6px;padding:14px 18px;font-family:var(--f-display);font-size:34px;color:var(--q-ink)}
+.domisays.big .pe{font-size:84px;line-height:1;display:block}
+.grp{display:flex;flex-wrap:wrap;gap:2px 4px;justify-content:center;max-width:220px}
+.grp .ob{font-style:normal;font-size:30px;line-height:1.1;position:relative;transition:transform .2s}
+.qvis .grp .ob{font-size:38px}
+.ob.gone{opacity:.25;filter:grayscale(1);transform:translateY(-6px) rotate(-12deg)}
+.ob.counted{transform:scale(1.15)}
+.ob.counted::after{content:attr(data-n);position:absolute;top:-10px;right:-8px;min-width:20px;height:20px;border-radius:10px;background:var(--q-sky);color:#fff;font:700 12px/20px var(--f-display);text-align:center;font-style:normal;box-shadow:0 2px 0 var(--q-sky-d)}
+.ob.dot{font-size:14px;color:var(--q-lilac)}
+.story2{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center}
+.story2 .op{font-family:var(--f-display);font-size:40px;color:var(--q-sun-d)}
+.story2 .gift{font-family:var(--f-display);font-size:26px;background:var(--q-coral-t);border-radius:16px;padding:4px 10px;color:#C2554B}
+.qvis .eq{display:flex;flex-direction:row;background:none;padding:0;border:0;box-shadow:none;width:auto;align-items:flex-start;gap:10px;font-family:var(--f-display);font-weight:700;font-size:64px;line-height:1}
+.qvis .eq>span{display:flex;flex-direction:column;align-items:center;gap:6px}
+.qvis .eq>b{color:var(--q-sun-d);font-weight:700}
+.qvis .eq .q{color:#C3CCDB}
+.dots{font-size:11px;letter-spacing:2px;color:var(--q-lilac);max-width:70px;line-height:1.2;text-align:center;word-break:break-all;font-family:system-ui}
+.coinname{font-family:var(--f-display);font-size:24px;color:var(--q-soft)}
+.ctag{font:700 14px var(--f-display);background:var(--q-sun);color:#5A3B00;border-radius:999px;padding:1px 8px;margin:-8px 2px 0}
+.nline{display:flex;gap:6px;margin-top:6px}
+.nline span{width:34px;height:34px;border-radius:10px;background:#F2F5FA;display:grid;place-items:center;font:700 17px var(--f-display);color:var(--q-soft)}
+.nline span.hi{background:var(--q-sky);color:#fff}
+/* answers */
+.qopts{display:grid;gap:12px}
+.qopts.row3{grid-template-columns:repeat(3,1fr)}
+.qopts.row,.qopts.yn{grid-template-columns:1fr 1fr}
+.qopts.grid{grid-template-columns:1fr 1fr}
+.qopts.col{grid-template-columns:1fr}
+.qo{--bg:#fff;--bd:#E2E8F2;--sh:#C9D3E3;--ink:var(--q-ink);position:relative;border:3px solid var(--bd);background:var(--bg);color:var(--ink);border-radius:24px;box-shadow:0 6px 0 var(--sh);min-height:108px;padding:10px 6px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;transition:transform .12s,box-shadow .12s,opacity .3s,filter .3s;font-family:var(--f-display)}
+.qo:active{transform:translateY(4px);box-shadow:0 2px 0 var(--sh)}
+.qo.t0{--bg:#F3EFFF;--bd:#CFC2FF;--sh:#A898F5;--ink:#4B3A99}
+.qo.t1{--bg:#E8F9F1;--bd:#A6E6C9;--sh:#5BC796;--ink:#1E6B4D}
+.qo.t2{--bg:#FFF2E9;--bd:#FFCDB0;--sh:#F3A274;--ink:#8A4423}
+.qo.t3{--bg:#EAF4FF;--bd:#B3D5FF;--sh:#6EA8EC;--ink:#23528F}
+.qo .num{font-size:46px;line-height:1;font-weight:700}
+.qo .num.t{font-size:30px}
+.qo .yn{font-size:52px;line-height:1}
+.qo .oe{font-size:44px;line-height:1}
+.qo small{font:700 14px var(--f-body,inherit);opacity:.85}
+.qo .grp .ob{font-size:26px}
+.qopts.col .qo{min-height:72px;flex-direction:row}
+.qo.right{--bg:var(--q-mint-t);--bd:var(--q-mint);--sh:var(--q-mint-d);animation:pop .4s}
+.qo.right::after,.qo.show::after{content:"✓";position:absolute;top:-10px;right:-8px;width:30px;height:30px;border-radius:50%;background:var(--q-mint);color:#fff;font:700 18px/30px var(--f-display);text-align:center;box-shadow:0 3px 0 var(--q-mint-d)}
+.qo.show{--bg:var(--q-mint-t);--bd:var(--q-mint);--sh:var(--q-mint-d);animation:glowq 1.2s ease-in-out infinite}
+.qo.wrong{--bd:var(--q-coral);animation:shake .4s}
+.qo.faded{opacity:.35;filter:grayscale(.6);pointer-events:none}
+@keyframes pop{50%{transform:scale(1.08)}}
+@keyframes glowq{50%{box-shadow:0 6px 0 var(--q-mint-d),0 0 0 8px rgba(61,190,134,.25)}}
+@keyframes shake{20%,60%{transform:translateX(-7px)}40%,80%{transform:translateX(7px)}}
+.qhint{position:absolute;left:50%;top:76px;transform:translateX(-50%);z-index:30;background:#fff;color:var(--q-ink);font-weight:800;border-radius:999px;padding:10px 18px;box-shadow:0 8px 24px rgba(38,51,77,.18);white-space:nowrap;animation:qin .35s both}
+/* bottom sheet */
+.qsheet{position:absolute;left:0;right:0;bottom:0;z-index:25;padding:16px 16px calc(18px + env(safe-area-inset-bottom,0px));border-radius:28px 28px 0 0;transform:translateY(110%);transition:transform .35s cubic-bezier(.3,1.3,.5,1);box-shadow:0 -8px 30px rgba(38,51,77,.12)}
+.qsheet.show{transform:none}
+.qsheet.good{background:#E3F8EE}.qsheet.learn{background:#E8F2FF}
+.qsrow{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.qsrow .qsf{width:62px;height:62px;border-radius:50%;background:#fff;display:grid;place-items:center;flex:none;overflow:hidden}
+.qsrow b{display:block;font-family:var(--f-display);font-size:26px;line-height:1.1}
+.qsheet.good b{color:#1F8A5B}.qsheet.learn b{color:#2D62B5}
+.qsrow span span{display:block;font-weight:800;font-size:17px;color:var(--q-ink);margin-top:3px;line-height:1.35}
+.qbtn{width:100%;border:0;border-radius:20px;min-height:56px;font:700 20px var(--f-display);color:#fff;letter-spacing:.3px;transition:transform .1s,box-shadow .1s}
+.qbtn:active{transform:translateY(4px)}
+.qbtn.good{background:var(--q-mint);box-shadow:0 5px 0 var(--q-mint-d)}
+.qbtn.learn,.qbtn.sky{background:var(--q-sky);box-shadow:0 5px 0 var(--q-sky-d)}
+.qbtn:disabled{background:#D7DEE9;box-shadow:0 5px 0 #BCC6D6}
+.qbtn.big{min-height:62px;font-size:22px}
+.qbtn.pulse{animation:pop 1s ease-in-out infinite}
+/* radio */
+.radio{display:flex;flex-direction:column;align-items:center;gap:16px;padding-top:10px}
+.rbox{position:relative;width:170px;height:170px;border-radius:40px;background:linear-gradient(160deg,#FFE7D1,#FFD3B0);display:grid;place-items:center;box-shadow:0 8px 0 #F3A274,0 16px 30px rgba(243,162,116,.35)}
+.rbox .remo{font-size:96px}
+.rbox .rwave{position:absolute;inset:-12px;border-radius:50px;border:5px solid #FFB98A;opacity:0}
+.rbox.on .rwave{animation:wavec 1.4s ease-out infinite}.rbox.on .r2{animation-delay:.7s}
+@keyframes wavec{from{transform:scale(.9);opacity:.9}to{transform:scale(1.3);opacity:0}}
+.rtitle{font-family:var(--f-display);font-size:28px;color:var(--q-ink)}
+.rbtns{display:grid;grid-template-columns:1fr 1.4fr;gap:12px;width:100%;max-width:340px}
+/* praise dance */
+.dance{position:absolute;inset:0;z-index:28;display:grid;place-items:center;pointer-events:none}
+.dance .bv{animation:dancea .45s ease-in-out 4 alternate}
+.dance .tx{position:absolute;bottom:30%;font-family:var(--f-display);font-weight:700;font-size:32px;color:#F29A00;text-shadow:0 3px 0 #fff}
+@keyframes dancea{from{transform:rotate(-12deg) translateY(0)}to{transform:rotate(12deg) translateY(-24px)}}
+/* end of a mound: always a party, never a score */
+.qresult{position:absolute;inset:0;z-index:40;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:24px;text-align:center;background:linear-gradient(180deg,#FFF6DA,#FFE9F1 60%,#E9F1FF);overflow:hidden}
+.qresult .rs-sun{position:absolute;top:8%;width:420px;height:420px;border-radius:50%;background:repeating-conic-gradient(rgba(255,201,60,.35) 0 10deg,transparent 10deg 24deg);animation:spin 14s linear infinite}
+.qresult .dm{position:relative;animation:dancea .5s ease-in-out 6 alternate}
+.qresult h2{position:relative;margin:0;font-family:var(--f-display);font-size:38px;color:#F29A00;text-shadow:0 3px 0 #fff}
+.qresult p{position:relative;margin:0;font-weight:800;font-size:18px;color:var(--q-soft)}
+.gains{position:relative;display:flex;gap:10px;margin:6px 0 10px}
+.gn{font-family:var(--f-display);font-size:28px;background:#fff;border-radius:20px;padding:8px 18px;box-shadow:0 5px 0 rgba(38,51,77,.08)}
+.qresult .qbtn{position:relative;max-width:320px}
+/* top bar and intro, softer */
+.topbar{background:#fff;box-shadow:0 4px 16px rgba(38,51,77,.06);border-bottom:0}
+.stat{background:#FFF4E2;border-radius:999px;padding:5px 12px 5px 8px}
+.stat#sWood{background:#F4EBE2}
+.tbtn{border:0;background:#F3F6FB;box-shadow:0 3px 0 #DCE3EE}
+.introC{background:linear-gradient(180deg,#E6F3FF 0%,#FFF7EC 100%)}
+.introC .mcard{background:#fff;border:0;box-shadow:0 10px 28px rgba(38,51,77,.08);border-radius:28px}
+.introC .mcard b{color:var(--q-ink)}
+.introC .mcard .mm{color:var(--q-lilac)}
+.introC .btn.green{background:var(--q-mint);box-shadow:0 5px 0 var(--q-mint-d);border-radius:20px}
+.introC .talk{animation:floaty 3.5s ease-in-out infinite}
+
+.domisays .bub.q{font-size:64px;color:var(--q-lilac);padding:6px 26px}
+.tgrp{display:flex;gap:10px;align-items:center;margin-top:6px}
+.tgrp .op{font:700 28px var(--f-display);color:var(--q-sun-d)}
+
+.qvis .bigpic{font-size:110px;line-height:1;filter:drop-shadow(0 6px 4px rgba(38,51,77,.12))}
+.qsrow .qsf{font-size:34px}
+/* intro: just Domi */
+.introC .talk{width:260px;max-width:70%}
+.introC .inev{font-size:44px;min-height:10px}
+/* parents: graphic */
+#pSettings{background:linear-gradient(180deg,#F4F8FF,#FFF8EF)}
+.phead{display:flex;align-items:center;gap:10px;margin:6px 0 12px}
+.phead .pav{width:44px;height:44px;border-radius:50%;color:#fff;display:grid;place-items:center;font:700 22px var(--f-display)}
+.phead b{font:700 26px var(--f-display);color:var(--q-ink)}
+.phead .pweek{margin-left:auto;font-weight:800;font-size:13px;color:var(--q-soft);background:#fff;border-radius:999px;padding:4px 10px}
+.ptiles{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.pt1{background:#fff;border-radius:20px;padding:12px 6px;text-align:center;box-shadow:0 6px 18px rgba(38,51,77,.06)}
+.pt1 i{font-style:normal;font-size:24px;display:block}
+.pt1 b{display:block;font:700 30px var(--f-display);color:var(--q-ink);line-height:1.1}
+.pt1 small{font-weight:800;color:var(--q-soft);font-size:12px}
+.pchips{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0 8px}
+.pchips span{background:#fff;border-radius:999px;padding:5px 12px;font-weight:800;font-size:14px;box-shadow:0 3px 10px rgba(38,51,77,.05)}
+.ptalk{display:grid;gap:6px}
+.ptalk div{background:#FFF4DC;border-radius:16px;padding:10px 12px;font-weight:700;font-size:14px;line-height:1.35;color:#6B4A00}
+.ptalk div+div{background:#EDE8FF;color:#43349A}
+.psec{display:flex;align-items:center;gap:8px;margin:24px 0 10px;font:700 19px var(--f-display);color:var(--q-ink)}
+.psec span{width:34px;height:34px;border-radius:12px;background:#fff;display:grid;place-items:center;font-size:19px;box-shadow:0 3px 10px rgba(38,51,77,.06)}
+.plegend{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.plegend span{font-weight:800;font-size:13px;color:var(--q-soft);background:#fff;border-radius:999px;padding:4px 10px}
+.pprize{display:grid;grid-template-columns:56px 1fr 1fr auto;align-items:center;gap:8px;background:#fff;border-radius:22px;padding:10px 12px;margin-bottom:10px;box-shadow:0 6px 18px rgba(38,51,77,.06)}
+.pprize.ok{box-shadow:0 0 0 3px var(--q-mint),0 6px 18px rgba(38,51,77,.06)}
+.ppe{font-size:40px;text-align:center}
+.ppr{display:flex;flex-direction:column;align-items:center;gap:2px}
+.pring{width:48px;height:48px;border-radius:50%;background:conic-gradient(var(--c) var(--f),#EEF1F6 0);display:grid;place-items:center}
+.pring i{font-style:normal;width:36px;height:36px;border-radius:50%;background:#fff;display:grid;place-items:center;font-size:18px}
+.pnum{font:700 12px var(--f-display);color:var(--q-soft)}
+.pstep{display:flex;gap:4px}
+.pstep .stp{width:28px;height:24px;border-radius:8px;border:0;background:#F1F4F9;font-weight:900;color:var(--q-soft)}
+.pdays{font-weight:800;font-size:13px;color:var(--q-soft);white-space:nowrap}
+.pgive{border:0;border-radius:14px;background:var(--q-mint);color:#fff;font:700 14px var(--f-display);padding:10px 10px;box-shadow:0 3px 0 var(--q-mint-d)}
+.pseg{display:grid;grid-template-columns:repeat(4,1fr);background:#fff;border-radius:18px;padding:5px;gap:5px;box-shadow:0 6px 18px rgba(38,51,77,.06)}
+.pseg.lv{grid-template-columns:repeat(3,1fr)}
+.pseg button{border:0;border-radius:14px;background:transparent;min-height:46px;font:700 20px var(--f-display);color:var(--q-soft)}
+.pseg.lv button{font-size:26px}
+.pseg button[aria-pressed="true"]{background:var(--q-sky);color:#fff;box-shadow:0 3px 0 var(--q-sky-d)}
+.ptopics{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.ptopics.two{grid-template-columns:1fr 1fr}
+.ptopics button{border:0;border-radius:18px;background:#fff;padding:10px 4px;display:flex;flex-direction:column;align-items:center;gap:2px;box-shadow:0 4px 0 #E3E8F0;opacity:.55;filter:grayscale(.7);transition:.15s}
+.ptopics button i{font-style:normal;font-size:28px}
+.ptopics button small{font-weight:800;font-size:11px;color:var(--q-ink)}
+.ptopics button[aria-pressed="true"]{opacity:1;filter:none;box-shadow:0 0 0 3px var(--q-mint),0 4px 0 var(--q-mint-d)}
+.pages{display:flex;flex-wrap:wrap;gap:6px}
+.pages button{width:44px;height:44px;border-radius:50%;border:0;background:#fff;font:700 18px var(--f-display);color:var(--q-soft);box-shadow:0 3px 0 #E3E8F0}
+.pages button[aria-pressed="true"]{background:var(--q-lilac);color:#fff;box-shadow:0 3px 0 #6A57D6;transform:scale(1.1)}
+.psample{margin-top:8px;text-align:center;font:700 18px var(--f-display);color:var(--q-soft)}
+.pmonths{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.pmonths button{border:0;border-radius:14px;background:#fff;padding:6px 2px;font-weight:800;font-size:12px;color:var(--q-soft);display:flex;flex-direction:column;align-items:center;box-shadow:0 3px 0 #E3E8F0}
+.pmonths button i{font-style:normal;font-size:20px}
+.pmonths button[aria-pressed="true"]{box-shadow:0 0 0 3px var(--q-sky),0 3px 0 var(--q-sky-d);color:var(--q-ink)}
+.preset{width:100%;border:0;background:transparent;color:#C2554B;font-weight:800;font-size:15px;padding:12px}
+.pconf{display:grid;grid-template-columns:1fr 80px 80px;gap:8px;align-items:center}
+.pconf[hidden]{display:none}
+/* tablets: bigger everything */
+@media (min-width:700px){
+  .qspk{width:100px;height:100px}.qspk svg{width:50px;height:50px}
+  .qtop .cap{font-size:19px;max-width:360px}
+  .qvis{min-height:300px;border-radius:36px}
+  .bignum{font-size:140px}.bignum.sm{font-size:100px}
+  .bigemo,.qvis .bigpic{font-size:150px}.listen{width:170px;height:170px;font-size:96px}
+  .qvis .clk{width:240px;height:240px}
+  .qvis .eq{font-size:96px}.qvis .grp .ob{font-size:54px}.grp{max-width:340px}
+  .qo{min-height:150px;border-radius:30px}.qo .num{font-size:64px}.qo .yn{font-size:76px}.qo .oe{font-size:64px}.qo small{font-size:18px}.qo .grp .ob{font-size:38px}
+  .qopts{gap:18px}.qdots i{width:18px;height:18px}
+  .qsheet{max-width:680px;margin:0 auto}
+  .introC .talk{width:340px}
+}
+/* painting */
+.paint{display:flex;flex-direction:column;align-items:center;gap:16px;width:100%}
+.pcanvas{width:min(100%,520px);background:#fff;border-radius:32px;box-shadow:0 10px 28px rgba(38,51,77,.10);padding:10px}
+.pcanvas svg{width:100%;height:auto;display:block;touch-action:manipulation}
+.psvg .rg{cursor:pointer;transition:fill .2s}
+.psvg .rg.pop{animation:rgpop .35s}
+@keyframes rgpop{50%{opacity:.75}}
+.ppal{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;width:min(100%,520px)}
+.pot{aspect-ratio:1/1;border-radius:50%;border:4px solid #fff;background:var(--c);box-shadow:0 5px 0 rgba(38,51,77,.18),inset 0 -6px 0 rgba(0,0,0,.12);transition:transform .15s}
+.pot.on{transform:scale(1.15);box-shadow:0 0 0 4px var(--q-ink),0 5px 0 rgba(38,51,77,.18)}
+.pot[data-n="white"]{border-color:#DDE3EC}
+.pbtns{display:grid;grid-template-columns:1fr 3fr;gap:12px;width:min(100%,520px)}
+.pgal{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:6px}
+.pthumb{background:#fff;border-radius:14px;padding:4px;box-shadow:0 3px 10px rgba(38,51,77,.08)}
+.pthumb svg{width:100%;height:auto;display:block}
+.pthumb .rg{stroke-width:7}
+/* the option being read aloud */
+.qo.saying{transform:translateY(-4px) scale(1.04);box-shadow:0 10px 0 var(--sh),0 0 0 5px rgba(255,201,60,.55)}
+/* new Domi */
+.bv img{width:100%;height:auto;display:block}
+.introC .talk{animation:hopi 1.6s ease-in-out infinite;filter:drop-shadow(0 14px 16px rgba(38,51,77,.18))}
+@keyframes hopi{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-14px) rotate(2deg)}}
+.introC{cursor:pointer}
+.zbg img.gr{filter:saturate(.3) brightness(1.08) contrast(.95)}
+/* Watcher pictures, swatches, patterns */
+.wp{display:block;width:120px;height:120px;object-fit:contain}
+.wp.op{width:72px;height:72px}
+.wp.big{width:170px;height:170px}
+.qo .oe.big{font-size:56px}
+.swatch{width:56px;height:56px;border-radius:50%;background:var(--c);border:3px solid rgba(0,0,0,.08);box-shadow:inset 0 -6px 0 rgba(0,0,0,.12)}
+.pat{display:flex;gap:6px;align-items:center;font-size:44px;flex-wrap:wrap;justify-content:center}
+.pat .q{font-family:var(--f-display);color:#C3CCDB;font-size:52px}
+.daycard{font-family:var(--f-display);font-size:40px;color:var(--q-lilac);background:#F3EFFF;border-radius:20px;padding:10px 22px}
+.qo small.dn{font-size:20px}
+@media (min-width:700px){.wp.op{width:110px;height:110px}.wp{width:180px;height:180px}.wp.big{width:240px;height:240px}.qo .oe.big{font-size:80px}.swatch{width:84px;height:84px}.pat{font-size:64px}}
+/* white backgrounds everywhere */
+body,.phone,.lesson.q2,.introC,#pSettings,.panel,.map{background:#fff!important}
+.qvis{box-shadow:0 4px 18px rgba(38,51,77,.08);border:2px solid #EEF2F7}
+.qresult{background:#fff}
+/* letters, words, reading */
+.qo .num.letter{font-size:52px}
+.word{font-family:var(--f-display);font-size:30px;font-weight:700;letter-spacing:.5px}
+.word.big{font-size:64px;color:var(--q-lilac)}
+.sent{font-family:var(--f-display);font-size:30px;text-align:center;line-height:1.4;color:var(--q-ink)}
+.sent .gap{display:inline-block;min-width:70px;border-bottom:4px dashed var(--q-sun-d);color:#C3CCDB}
+.flash{transition:opacity .4s,filter .4s}.flash.hid{opacity:0;filter:blur(8px)}
+.balloon{display:grid;place-items:center;width:84px;height:100px;border-radius:50% 50% 46% 46%;background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.55),transparent 40%),var(--bd);position:relative}
+.balloon::after{content:"";position:absolute;bottom:-14px;left:50%;width:2px;height:14px;background:#B9C3D3}
+@media (min-width:700px){.word{font-size:42px}.word.big{font-size:96px}.sent{font-size:44px}.balloon{width:120px;height:140px}.qo .num.letter{font-size:76px}}
+
+/* Domi picker in the players menu */
+.domis{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin:4px 0 14px}
+.dpick{border:3px solid transparent;border-radius:18px;background:#F6F8FC;padding:4px;aspect-ratio:1;display:grid;place-items:center;cursor:pointer}
+.dpick img{width:100%;height:100%}
+.dpick.on{border-color:var(--q-sun-d,#F5B400);background:#FFF6DA}
+
+/* ===================== quiz template (owner's example, Nov 7): plain white page, rounded sans font,
+   purple kicker, big dark-grey title, blue square speaker, white cards with a grey edge, light-blue pick ===================== */
+@font-face{font-family:"Nunito";font-weight:600;font-display:swap;src:url(img/fonts/nunito-latin-600-normal.woff2) format("woff2")}
+@font-face{font-family:"Nunito";font-weight:700;font-display:swap;src:url(img/fonts/nunito-latin-700-normal.woff2) format("woff2")}
+@font-face{font-family:"Nunito";font-weight:800;font-display:swap;src:url(img/fonts/nunito-latin-800-normal.woff2) format("woff2")}
+.lesson.q2{--f-display:"Nunito",system-ui,sans-serif;--f-body:"Nunito",system-ui,sans-serif;font-family:"Nunito",system-ui,sans-serif;background:#fff;color:#4B4B4B;
+  --t-ink:#4B4B4B;--t-soft:#777;--t-line:#E5E5E5;--t-blue:#1CB0F6;--t-blue-d:#1899D6;--t-blue-t:#DDF4FF;--t-blue-b:#84D8FF;--t-purple:#CE82FF}
+.lesson.q2 .qbody{justify-content:flex-start;padding-top:14px;gap:16px}
+.qkick{display:flex;align-items:center;gap:8px;font:800 15px "Nunito",sans-serif;letter-spacing:1.2px;text-transform:uppercase;color:var(--t-purple)}
+.qkick .qke{width:28px;height:28px;border-radius:8px;background:#F3E3FF;display:grid;place-items:center;font-size:16px;letter-spacing:0}
+.lesson.q2 .qtop{justify-content:flex-start;min-height:0;gap:14px}
+.lesson.q2 .qspk{width:64px;height:64px;border-radius:16px;color:#fff;background:var(--t-blue);box-shadow:0 5px 0 var(--t-blue-d)}
+.lesson.q2 .qspk svg{width:32px;height:32px}
+.lesson.q2 .qspk:active{box-shadow:0 1px 0 var(--t-blue-d)}
+.lesson.q2 .qspk::after{border-radius:20px;border-color:var(--t-blue-b)}
+.lesson.q2 .qtop .cap{font:800 26px/1.2 "Nunito",sans-serif;color:var(--t-ink);max-width:none}
+.lesson.q2 .qvis{border:2px solid var(--t-line);box-shadow:0 4px 0 var(--t-line);border-radius:18px;background:#fff}
+.lesson.q2 .qopts{gap:14px}
+.lesson.q2 .qo,.lesson.q2 .qo.t0,.lesson.q2 .qo.t1,.lesson.q2 .qo.t2,.lesson.q2 .qo.t3{--bg:#fff;--bd:var(--t-line);--sh:var(--t-line);--ink:var(--t-ink);
+  border-width:2px;border-radius:18px;box-shadow:0 4px 0 var(--sh);font-family:"Nunito",sans-serif;font-weight:700;min-height:120px}
+.lesson.q2 .qo small,.lesson.q2 .qo .dn{font:600 18px "Nunito",sans-serif;color:var(--t-ink);opacity:1}
+.lesson.q2 .qo .num,.lesson.q2 .qo .word{font-family:"Nunito",sans-serif;font-weight:800;color:var(--t-ink)}
+.lesson.q2 .qo.saying{--bg:var(--t-blue-t);--bd:var(--t-blue-b);--sh:var(--t-blue-b);--ink:var(--t-blue-d)}
+.lesson.q2 .qo.saying small,.lesson.q2 .qo.saying .num,.lesson.q2 .qo.saying .word,.lesson.q2 .qo.saying .dn{color:var(--t-blue-d)}
+.lesson.q2 .qo.right,.lesson.q2 .qo.show{--bg:#E2F7EC;--bd:#7FD8A9;--sh:#5BC796;--ink:#1F8A5B}
+.lesson.q2 .qo.wrong{--bd:#FF9C93;--sh:#FF9C93}
+.lesson.q2 .qopts.col .qo{min-height:68px}
+.lesson.q2 .qo .wp.op{width:84%;max-width:150px;height:auto;aspect-ratio:1}
+.lesson.q2 .word.big{color:var(--t-ink)}
+.lesson.q2 .bignum{color:var(--t-ink);text-shadow:none}
+.lesson.q2 .bignum.q{color:#C7C7C7}
+.lesson.q2 .qdots i.on{background:#58CC4A;box-shadow:none}
+@media (min-width:700px){.lesson.q2 .qtop .cap{font-size:34px}.lesson.q2 .qspk{width:80px;height:80px;border-radius:20px}.lesson.q2 .qspk svg{width:40px;height:40px}
+  .qkick{font-size:18px}.lesson.q2 .qo{min-height:170px}.lesson.q2 .qo small,.lesson.q2 .qo .dn{font-size:24px}.lesson.q2 .qo .wp.op{max-width:220px}}
+.lesson.q2 .qopts .qo[data-j]{min-height:150px}
+.lesson.q2 .qopts.tall .qo[data-j]{min-height:210px}
+.lesson.q2 .qo .oe{font-size:60px}
+.lesson.q2 .qo .num{font-size:54px}
+.lesson.q2 .qo .wp.op{width:92%;max-width:170px}
+.lesson.q2 .qopts.col .qo[data-j]{min-height:76px}
+@media (min-width:700px){.lesson.q2 .qopts .qo[data-j]{min-height:230px}.lesson.q2 .qopts.tall .qo[data-j]{min-height:320px}.lesson.q2 .qo .oe{font-size:96px}.lesson.q2 .qo .num{font-size:80px}.lesson.q2 .qo .wp.op{max-width:240px}.lesson.q2 .qopts.col .qo[data-j]{min-height:96px}}
+/* layout fixes (Nov 7): nothing in the question page may squeeze or overlap, long questions get a smaller title, the picture card never takes over the page */
+.lesson.q2 .qbody>*{flex-shrink:0}
+.lesson.q2 .qspk{flex:0 0 auto}
+.lesson.q2 .qtop .cap{flex:1 1 auto;min-width:0;overflow-wrap:anywhere}
+.lesson.q2 .qtop.long .cap{font-size:21px;line-height:1.25}
+.lesson.q2 .qvis{max-height:30vh;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.lesson.q2 .qvis .bigemo{font-size:min(110px,20vh);line-height:1.1}
+.lesson.q2 .qvis img{max-height:26vh;width:auto;max-width:100%}
+.lesson.q2 .qo{overflow:hidden}
+.lesson.q2 .qo>*{max-width:100%}
+@media (min-width:700px){.lesson.q2 .qtop.long .cap{font-size:28px}}
+@media (max-height:500px){.lesson.q2 .qopts .qo[data-j],.lesson.q2 .qopts.tall .qo[data-j]{min-height:90px}.lesson.q2 .qvis{max-height:24vh}.lesson.q2 .qtop .cap{font-size:20px}.lesson.q2 .qspk{width:48px;height:48px}}
+/* sideways screens: shorter cards and picture so the whole question fits without scrolling */
+@media (orientation:landscape){.lesson.q2 .qopts .qo[data-j],.lesson.q2 .qopts.tall .qo[data-j]{min-height:min(170px,22vh)}.lesson.q2 .qopts.col .qo[data-j]{min-height:min(76px,11vh)}
+  .lesson.q2 .qvis{max-height:24vh}.lesson.q2 .qvis img{max-height:20vh}.lesson.q2 .qvis .bigemo{font-size:min(110px,16vh)}.lesson.q2 .qbody{gap:10px}}
+@media (orientation:landscape){.lesson.q2 .qopts.col{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+  .lesson.q2 .qopts.col .qo[data-j]{min-height:min(150px,20vh)}
+  .lesson.q2 .qvis{max-height:20vh;min-height:0;padding-top:8px;padding-bottom:8px}.lesson.q2 .qvis img{max-height:17vh}.lesson.q2 .qvis .bigemo{font-size:min(100px,13vh)}}
+/* ===== Nov 7 b: 2 x 2 picture grid, why card, true/false labels, matching pairs ===== */
+.lesson.q2 .qopts.grid4{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.lesson.q2 .qopts.grid4 .qo[data-j]{min-height:min(190px,22vh);flex-direction:column;gap:6px}
+.lesson.q2 .qopts.grid4 .qo .wp.op{max-width:min(150px,15vh)}
+.lesson.q2 .qopts.yn .qo small{display:block;font:800 22px "Nunito",sans-serif;color:var(--t-ink);margin-top:4px}
+.qsheet.why .qsrow>span>span{display:block;font:600 19px/1.35 "Nunito",sans-serif;color:#3B4A5E;margin-top:4px}
+.qsheet.why .qsf{display:none}
+.mboard{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;width:100%}
+.mc{border:2px solid #E5E5E5;border-radius:18px;background:#fff;box-shadow:0 4px 0 #E5E5E5;min-height:min(120px,14vh);display:grid;place-items:center;padding:8px;font:700 24px "Nunito",sans-serif;color:#4B4B4B;cursor:pointer;transition:background .15s,border-color .15s,opacity .3s}
+.mc .wp.mp{height:min(84px,10vh);width:auto;max-width:100%}
+.mc .oe.big{font-size:min(64px,8vh)}
+.mc.sel{background:#DDF4FF;border-color:#84D8FF;box-shadow:0 4px 0 #84D8FF;color:#1899D6}
+.mc.ok{background:#E2F7EC;border-color:#7FD8A9;box-shadow:0 4px 0 #5BC796;color:#1F8A5B;opacity:.55}
+.mc.wrong{animation:qshake .4s;border-color:#FF9C93}
+@keyframes qshake{20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+@media (min-width:700px){.mc{font-size:34px;min-height:min(160px,15vh)}.mc .wp.mp{height:min(120px,11vh)}.qsheet.why .qsrow>span>span{font-size:24px}.lesson.q2 .qopts.yn .qo small{font-size:30px}}
+.dayb{display:inline-grid;place-items:center;width:52px;height:52px;border-radius:50%;background:var(--c);color:#fff;font:800 22px "Nunito",sans-serif;flex:0 0 auto}
+@media (min-width:700px){.dayb{width:68px;height:68px;font-size:28px}}
+.mboard{grid-auto-rows:minmax(min(150px,15vh),auto)}
+.mc{min-height:min(150px,15vh)}
+.mc .wp.mp{height:min(100px,10vh)}
+.mc .oe.big{font-size:min(76px,9vh)}
+.qsheet.why .qsrow>span>span{font-size:21px}
+@media (min-width:700px){.mboard{grid-auto-rows:minmax(min(190px,16vh),auto)}.mc .wp.mp{height:min(140px,11vh)}}
+@media (orientation:landscape){.mboard{grid-auto-rows:minmax(min(120px,14vh),auto);gap:10px}.mc{min-height:min(120px,14vh);padding:4px}.mc .wp.mp{height:min(90px,10vh)}.mc .oe.big{font-size:min(60px,8vh)}}
+/* ===== Nov 8: answers as big cards in 2 columns that fill the page (owner's template) ===== */
+.lesson.q2 .qopts.row3,.lesson.q2 .qopts.col,.lesson.q2 .qopts.grid4,.lesson.q2 .qopts.yn{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:1fr;gap:14px;flex:1 0 auto;align-content:stretch}
+.lesson.q2 .qopts .qo[data-j]{flex-direction:column;justify-content:center;gap:10px;min-height:min(170px,20vh);padding:14px 10px}
+.lesson.q2 .qopts .qo[data-j]:nth-child(3):last-child{grid-column:1 / 3;justify-self:center;width:calc(50% - 7px)}
+.lesson.q2 .qopts .qo .oe{font-size:min(72px,8vh)}
+.lesson.q2 .qopts .qo small,.lesson.q2 .qopts .qo .dn{font:600 20px "Nunito",sans-serif;color:var(--t-ink);text-align:center}
+.lesson.q2 .qopts .qo .grp{justify-content:center;flex-wrap:wrap}
+.lesson.q2 .qopts .qo .wp.op{width:auto;max-width:90%;height:min(130px,14vh);aspect-ratio:1}
+@media (min-width:700px){.lesson.q2 .qopts .qo small,.lesson.q2 .qopts .qo .dn{font-size:28px}.lesson.q2 .qopts .qo .oe{font-size:min(110px,9vh)}.lesson.q2 .qopts .qo .wp.op{height:min(200px,15vh)}}
+@media (orientation:landscape){.lesson.q2 .qopts.row3,.lesson.q2 .qopts.col,.lesson.q2 .qopts.grid4{grid-template-columns:repeat(4,minmax(0,1fr))}.lesson.q2 .qopts .qo[data-j]:nth-child(3):last-child{grid-column:auto;width:auto}.lesson.q2 .qopts .qo[data-j]{min-height:min(150px,22vh)}}
+/* Nov 8 new formats */
+.seqrow{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.seqrow .tile{display:grid;place-items:center;min-width:58px;height:64px;padding:0 8px;border-radius:14px;background:#F3F6FB;border:2px solid #E5E5E5;font:800 30px "Nunito",sans-serif;color:#4B4B4B}
+.seqrow .tile.q{background:#FFF6DA;border-color:#F5C542;color:#C99A00}
+.lbar{display:flex;align-items:center;justify-content:flex-end;height:26px;border-radius:13px;background:linear-gradient(90deg,#FFD36E,#FFB238);min-width:40px;align-self:flex-start}
+.lbar i{font-style:normal;font-size:30px;margin-right:-8px}
+.graph{display:flex;flex-direction:column;gap:8px;align-items:flex-start;width:100%;padding:0 12px}
+.gbar{display:flex;align-items:center;gap:4px}.gbar .gl{font-size:34px;width:44px}
+.gbar i{width:22px;height:22px;border-radius:6px;background:#84D8FF;display:inline-block}
+.bags{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.bag{border:3px dashed #D7C2A0;border-radius:18px;padding:6px 8px;background:#FFF9EE}
+.bag .grp{max-width:120px}
+.cshape{display:inline-block;width:44px;height:44px;background:var(--c)}
+.cshape.big{width:86px;height:86px}
+.cshape.circle{border-radius:50%}.cshape.square{border-radius:8px}
+.cshape.triangle{clip-path:polygon(50% 4%,96% 92%,4% 92%)}
+.clues{display:flex;align-items:center;gap:14px;justify-content:center}.clue{display:flex;flex-direction:column;align-items:center;gap:4px}.clue small{font:700 16px "Nunito",sans-serif;color:#4B4B4B}
+@media (min-width:700px){.seqrow .tile{min-width:80px;height:88px;font-size:42px}.cshape.big{width:130px;height:130px}.gbar i{width:32px;height:32px}.gbar .gl{font-size:48px;width:60px}}
+.lesson.q2 .qopts.row3,.lesson.q2 .qopts.col,.lesson.q2 .qopts.grid4,.lesson.q2 .qopts.yn{grid-auto-rows:minmax(min(150px,18vh),min(250px,28vh));align-content:center}
+.lesson.q2 .qopts.bars{display:flex;flex-direction:column;gap:14px}
+.lesson.q2 .qopts.bars .qo[data-j]{min-height:90px;align-items:flex-start;padding:20px 26px}
+.lesson.q2 .qopts.bars .lbar{height:28px}
+.lesson.q2 .qopts.bars{flex:0 0 auto}
+.lesson.q2 .qopts.bars .qo[data-j]{flex:0 0 120px;height:120px;justify-content:center}
+.lesson.q2 .qopts.bars .lbar{height:34px}.lesson.q2 .qopts.bars .lbar i{font-size:40px}
+.lesson.q2 .qopts.row3,.lesson.q2 .qopts.col,.lesson.q2 .qopts.grid4,.lesson.q2 .qopts.yn{grid-auto-rows:min(230px,25vh);align-content:start;flex:0 0 auto}
+.lesson.q2 .qopts.tall.row3,.lesson.q2 .qopts.tall.col,.lesson.q2 .qopts.tall.grid4{grid-auto-rows:min(270px,30vh)}
+@media (orientation:landscape){.lesson.q2 .qopts.row3,.lesson.q2 .qopts.col,.lesson.q2 .qopts.grid4,.lesson.q2 .qopts.yn{grid-auto-rows:min(200px,30vh)}}
+/* fit the screen: answer cards take what is left under the question and shrink when needed (no scrolling) */
+.lesson.q2 .qbody{overflow:hidden}
+.lesson.q2 .qopts.row3,.lesson.q2 .qopts.col,.lesson.q2 .qopts.grid4,.lesson.q2 .qopts.yn{flex:0 1 auto;min-height:0;grid-auto-rows:minmax(0,min(250px,27vh));align-content:start}
+.lesson.q2 .qopts.tall.row3,.lesson.q2 .qopts.tall.col,.lesson.q2 .qopts.tall.grid4{grid-auto-rows:minmax(0,min(290px,32vh))}
+.lesson.q2 .qopts.row3 .qo[data-j],.lesson.q2 .qopts.col .qo[data-j],.lesson.q2 .qopts.grid4 .qo[data-j],.lesson.q2 .qopts.yn .qo[data-j]{min-height:0;height:100%;overflow:hidden}
+.lesson.q2 .qvis{flex:0 1 auto;min-height:72px;max-height:26vh}
+.lesson.q2 .qvis .bigpic{font-size:min(110px,14vh)}
+.lesson.q2 .qopts .grp .ob{font-size:min(30px,4vh)}
+@media (orientation:landscape){.lesson.q2 .qopts.row3,.lesson.q2 .qopts.col,.lesson.q2 .qopts.grid4,.lesson.q2 .qopts.yn{grid-auto-rows:minmax(0,min(200px,30vh))}.lesson.q2 .qvis{max-height:22vh}}
+.lesson.q2 .qvis .bag .ob{font-size:min(20px,2.6vh)}.lesson.q2 .qvis .bag{padding:4px}.lesson.q2 .qvis .bags{gap:6px}
+.lesson.q2 .qvis .story2 .ob{font-size:min(24px,3vh)}.lesson.q2 .qvis .story2{flex-wrap:wrap;justify-content:center}
+.lesson.q2 .qvis .graph{gap:4px}.lesson.q2 .qvis .gbar i{width:min(22px,2.6vh);height:min(22px,2.6vh)}.lesson.q2 .qvis .gbar .gl{font-size:min(34px,4vh)}
+.lesson.q2 .qvis .coins{flex-wrap:wrap;justify-content:center;gap:4px}
+.lesson.q2 .qvis .graph .gbar i{width:min(18px,2.2vh);height:min(18px,2.2vh)}.lesson.q2 .qvis .graph{gap:2px}.lesson.q2 .qvis .gbar .gl{font-size:min(28px,3.4vh);width:36px}
+/* ===== Nov 8: lively answers, like the Watcher device (cards pop in, float, wiggle, jump when right) ===== */
+@keyframes qpop{0%{transform:scale(.4) translateY(30px);opacity:0}60%{transform:scale(1.08) translateY(-6px);opacity:1}80%{transform:scale(.97)}100%{transform:scale(1)}}
+@keyframes qfloat{0%,100%{transform:translateY(0) rotate(0)}25%{transform:translateY(-6px) rotate(-1.2deg)}75%{transform:translateY(4px) rotate(1.2deg)}}
+@keyframes qbob{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-8px) scale(1.05)}}
+@keyframes qsay{0%,100%{transform:scale(1.06) rotate(0)}30%{transform:scale(1.1) rotate(-2deg)}70%{transform:scale(1.1) rotate(2deg)}}
+@keyframes qjump{0%{transform:scale(1)}30%{transform:scale(1.18) translateY(-18px) rotate(-4deg)}55%{transform:scale(.95) translateY(0) rotate(3deg)}75%{transform:scale(1.06)}100%{transform:scale(1.04)}}
+@keyframes qno{0%,100%{transform:translateX(0) rotate(0)}20%{transform:translateX(-10px) rotate(-4deg)}40%{transform:translateX(10px) rotate(4deg)}60%{transform:translateX(-6px) rotate(-2deg)}80%{transform:translateX(6px) rotate(2deg)}}
+@keyframes qsquish{0%{transform:scale(1)}40%{transform:scale(.9,1.05)}70%{transform:scale(1.05,.95)}100%{transform:scale(1)}}
+.lesson.q2 .qopts .qo[data-j]{animation:qpop .55s cubic-bezier(.2,1.4,.4,1) both,qfloat 3.6s ease-in-out .6s infinite;will-change:transform}
+.lesson.q2 .qopts .qo[data-j]:nth-child(2){animation-delay:.1s,.9s;animation-duration:.55s,4.1s}
+.lesson.q2 .qopts .qo[data-j]:nth-child(3){animation-delay:.2s,1.2s;animation-duration:.55s,3.3s}
+.lesson.q2 .qopts .qo[data-j]:nth-child(4){animation-delay:.3s,1.5s;animation-duration:.55s,3.9s}
+.lesson.q2 .qopts .qo[data-j] .oe,.lesson.q2 .qopts .qo[data-j] .wp,.lesson.q2 .qopts .qo[data-j] .grp,.lesson.q2 .qopts .qo[data-j] .num,.lesson.q2 .qopts .qo[data-j] .word,.lesson.q2 .qopts .qo[data-j] .cshape{animation:qbob 2.4s ease-in-out infinite;display:inline-block}
+.lesson.q2 .qopts .qo[data-j]:nth-child(2) .oe,.lesson.q2 .qopts .qo[data-j]:nth-child(2) .wp{animation-delay:.4s}
+.lesson.q2 .qopts .qo[data-j]:nth-child(3) .oe,.lesson.q2 .qopts .qo[data-j]:nth-child(3) .wp{animation-delay:.8s}
+.lesson.q2 .qopts .qo[data-j]:nth-child(4) .oe,.lesson.q2 .qopts .qo[data-j]:nth-child(4) .wp{animation-delay:1.2s}
+.lesson.q2 .qopts .qo[data-j].saying{animation:qsay .7s ease-in-out infinite;z-index:2}
+.lesson.q2 .qopts .qo[data-j]:active{animation:qsquish .3s}
+.lesson.q2 .qopts .qo[data-j].right,.lesson.q2 .qopts .qo[data-j].show{animation:qjump .7s cubic-bezier(.2,1.4,.4,1) both;z-index:3}
+.lesson.q2 .qopts .qo[data-j].wrong{animation:qno .5s ease both}
+.lesson.q2 .qopts .qo[data-j].faded{animation:none;transform:scale(.9);opacity:.35;transition:all .4s}
+.lesson.q2 .qvis .bigpic,.lesson.q2 .qvis .bigemo,.lesson.q2 .qvis .wp.big{animation:qbob 3s ease-in-out infinite}
+.mc{animation:qpop .5s cubic-bezier(.2,1.4,.4,1) both}
+.mc:nth-child(2n){animation-delay:.08s}.mc:nth-child(3n){animation-delay:.16s}
+.mc.sel{animation:qsay .7s ease-in-out infinite}
+.mc.ok{animation:qjump .6s both}
+@media (prefers-reduced-motion:reduce){.lesson.q2 .qopts .qo[data-j],.lesson.q2 .qopts .qo[data-j] *,.mc{animation:none!important}}
+.lesson.q2 .qopts .qo .grp{display:flex!important;flex-wrap:wrap;max-width:100%;justify-content:center;gap:2px;border:0;background:none}
+.lesson.q2 .qopts .qo .grp .ob{font-size:min(26px,3.4vh)}
+/* ===== Nov 8 (3rd request): ALWAYS a 2 x 2 grid of big tall cards that fills the screen, like the owner's example ===== */
+.lesson.q2 .qbody{align-items:stretch;width:100%;max-width:880px;margin:0 auto;box-sizing:border-box;padding-bottom:28px}
+.lesson.q2 .qopts.row3,.lesson.q2 .qopts.col,.lesson.q2 .qopts.grid4,.lesson.q2 .qopts.yn,.lesson.q2 .qopts.row,.lesson.q2 .qopts.grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;grid-auto-rows:minmax(0,1fr)!important;flex:1 1 auto!important;min-height:0;width:100%;align-content:stretch;gap:16px;margin:0}
+.lesson.q2 .qopts .qo[data-j]{height:100%;min-height:0;width:auto!important;grid-column:auto!important;justify-self:stretch!important;flex-direction:column;justify-content:center;gap:12px;border-radius:20px}
+.lesson.q2 .qopts .qo[data-j] small,.lesson.q2 .qopts .qo[data-j] .dn{margin-top:auto;padding-bottom:6px}
+.lesson.q2 .qopts .qo[data-j] .oe{font-size:min(84px,9vh)}
+.lesson.q2 .qopts .qo[data-j] .wp.op{height:min(160px,15vh);max-width:80%}
+.lesson.q2 .qvis{flex:0 0 auto;max-height:22vh}
+@media (min-width:700px){.lesson.q2 .qopts .qo[data-j] .oe{font-size:min(130px,11vh)}.lesson.q2 .qopts .qo[data-j] .wp.op{height:min(220px,17vh)}.lesson.q2 .qopts{gap:22px}}
+/* sideways iPad: still 2 x 2, question on the left, the 4 big cards on the right */
+@media (orientation:landscape) and (min-width:900px){
+  .lesson.q2 .qbody{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);grid-template-rows:auto auto 1fr;column-gap:28px;max-width:1200px}
+  .lesson.q2 .qbody>.qkick,.lesson.q2 .qbody>.qtop,.lesson.q2 .qbody>.qvis{grid-column:1}
+  .lesson.q2 .qbody>.qopts{grid-column:2;grid-row:1 / span 3}
+  .lesson.q2 .qvis{max-height:none;align-self:start}
+}
+.lesson.q2 .qopts .qo[data-j]{justify-content:center;padding:14px 10px 12px}
+.lesson.q2 .qopts .qo[data-j]>:first-child{flex:1 1 auto;display:flex!important;align-items:center;justify-content:center;min-height:0}
+.lesson.q2 .qopts .qo[data-j] small,.lesson.q2 .qopts .qo[data-j] .dn{margin-top:0;flex:0 0 auto}
+@media (orientation:landscape) and (min-width:900px){.lesson.q2 .qbody{padding-top:22px}.lesson.q2 .qbody>.qopts{margin-top:8px;max-height:calc(100vh - 150px)}}
+.lesson.q2 .qopts .qo[data-j]>.lbar:first-child{flex:0 0 34px;align-self:flex-start;margin:auto 0}
+/* ===== Nov 8 (template, exact): title, speaker + item, 2 x 2 cards, CHECK ===== */
+.lesson.q2 .qtitle{margin:2px 0 0;font:800 27px/1.2 "Nunito",sans-serif;color:#4B4B4B;flex:0 0 auto}
+.lesson.q2 .qtitle.long{font-size:22px}
+.lesson.q2 .qtop2{display:flex;align-items:center;gap:16px;flex:0 0 auto;min-height:64px}
+.lesson.q2 .qtop2 .qspk{flex:0 0 auto}
+.lesson.q2 .qtop2 .qvis{flex:1 1 auto;border:0;box-shadow:none;background:none;padding:0;margin:0;min-height:0;max-height:15vh;justify-content:flex-start;overflow:visible}
+.lesson.q2 .qtop2 .qvis .bigpic,.lesson.q2 .qtop2 .qvis .bigemo{font-size:min(84px,11vh);line-height:1}
+.lesson.q2 .qtop2 .qvis .wp.big,.lesson.q2 .qtop2 .qvis img{max-height:14vh;height:auto}
+.lesson.q2 .qtop2 .qvis .seqrow,.lesson.q2 .qtop2 .qvis .eq,.lesson.q2 .qtop2 .qvis .graph,.lesson.q2 .qtop2 .qvis .clues{justify-content:flex-start;transform-origin:left center}
+.lesson.q2 .qtop2 .qvis svg{max-height:15vh;width:auto}
+.lesson.q2 .qopts .qo[data-j].sel{--bg:#DDF4FF;--bd:#84D8FF;--sh:#84D8FF;--ink:#1899D6;background:#DDF4FF;border-color:#84D8FF;box-shadow:0 4px 0 #84D8FF}
+.lesson.q2 .qopts .qo[data-j].sel small,.lesson.q2 .qopts .qo[data-j].sel .num,.lesson.q2 .qopts .qo[data-j].sel .word,.lesson.q2 .qopts .qo[data-j].sel .dn{color:#1899D6}
+.qcheck{flex:0 0 auto;width:100%;height:58px;border:0;border-radius:16px;background:#E5E5E5;color:#AFAFAF;font:800 20px "Nunito",sans-serif;letter-spacing:1.5px;box-shadow:0 4px 0 #D0D0D0;cursor:pointer;margin-top:4px;transition:background .2s,color .2s}
+.qcheck.on{background:#58CC02;color:#fff;box-shadow:0 4px 0 #46A302;animation:qsquish .35s}
+.qcheck.on:active{transform:translateY(3px);box-shadow:0 1px 0 #46A302}
+@media (min-width:700px){.lesson.q2 .qtitle{font-size:36px}.lesson.q2 .qtitle.long{font-size:29px}.qcheck{height:70px;font-size:26px}}
+@media (orientation:landscape) and (min-width:900px){
+  .lesson.q2 .qbody{grid-template-rows:auto auto auto 1fr auto}
+  .lesson.q2 .qbody>.qkick,.lesson.q2 .qbody>.qtitle,.lesson.q2 .qbody>.qtop2{grid-column:1}
+  .lesson.q2 .qbody>.qopts{grid-column:2;grid-row:1 / span 4}
+  .lesson.q2 .qbody>.qcheck{grid-column:2;grid-row:5}
+  .lesson.q2 .qtop2{flex-wrap:wrap}.lesson.q2 .qtop2 .qvis{max-height:40vh}
+}
+/* the item next to the speaker: sized to fit (no spilling) */
+.lesson.q2 .qtop2 .qvis{max-height:none;min-width:0;flex-wrap:wrap}
+.lesson.q2 .qtop2 .qvis .bigemo,.lesson.q2 .qtop2 .qvis .bigpic{width:auto;height:auto;padding:0;margin:0;background:none!important;box-shadow:none;font-size:min(68px,8.5vh)!important;line-height:1.1}
+.lesson.q2 .qtop2 .qvis .wp.big,.lesson.q2 .qtop2 .qvis img{height:min(100px,12vh)!important;width:auto;max-width:100%}
+.lesson.q2 .qtop2 .qvis .seqrow{gap:6px;flex-wrap:wrap}.lesson.q2 .qtop2 .qvis .seqrow .tile{min-width:40px;height:44px;font-size:22px;padding:0 4px}
+.lesson.q2 .qtop2 .qvis .eq{font-size:30px;gap:6px;flex-wrap:wrap}.lesson.q2 .qtop2 .qvis .eq *{font-size:inherit}
+.lesson.q2 .qtop2 .qvis .graph{padding:0}.lesson.q2 .qtop2 .qvis .gbar .gl{font-size:22px;width:28px}.lesson.q2 .qtop2 .qvis .gbar i{width:14px;height:14px}
+.lesson.q2 .qtop2 .qvis .pat{transform:scale(.8);transform-origin:left center;flex-wrap:wrap}
+.lesson.q2 .qtop2 .qvis .coins,.lesson.q2 .qtop2 .qvis .coinname{flex-wrap:wrap;max-width:100%}.lesson.q2 .qtop2 .qvis .coins svg{height:40px;width:auto}
+.lesson.q2 .qtop2 .qvis .story2,.lesson.q2 .qtop2 .qvis .bags{flex-wrap:wrap;justify-content:flex-start}
+.lesson.q2 .qtop2 .qvis svg{max-height:12vh}
+@media (min-width:700px){.lesson.q2 .qtop2 .qvis .bigemo,.lesson.q2 .qtop2 .qvis .bigpic{font-size:min(96px,9vh)!important}.lesson.q2 .qtop2 .qvis .seqrow .tile{min-width:56px;height:60px;font-size:30px}.lesson.q2 .qtop2 .qvis .eq{font-size:42px}}
+.lesson.q2 .qopts.yn{grid-auto-rows:min(250px,32vh)!important;flex:0 0 auto!important;margin-bottom:auto}
+/* owner, Nov 8 evening: question ON TOP, the 2 x 2 answers UNDER it, on every screen (no side-by-side on a sideways iPad) */
+@media (orientation:landscape) and (min-width:900px){
+  .lesson.q2 .qbody{display:flex!important;flex-direction:column;max-width:900px}
+  .lesson.q2 .qbody>.qopts{grid-column:auto;grid-row:auto;max-height:none;margin-top:0;width:min(100%,calc((100vh - 290px) * 1.45));align-self:center}
+  .lesson.q2 .qbody>.qcheck{width:min(100%,calc((100vh - 290px) * 1.45));align-self:center}
+  .lesson.q2 .qtop2{flex-wrap:nowrap}.lesson.q2 .qtop2 .qvis{max-height:15vh}
+}
+@media (orientation:landscape){.lesson.q2 .qopts.row3,.lesson.q2 .qopts.col,.lesson.q2 .qopts.grid4{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+/* ===== Nov 8 evening ===== */
+/* wide question pictures (patterns, sequences, sums, coins...) get their own full row: never over the answers */
+.lesson.q2 .qtop2.wide{flex-wrap:wrap}
+.lesson.q2 .qtop2.wide .qvis{flex:1 1 100%;order:2;max-height:none;justify-content:center}
+.lesson.q2 .qtop2 .qvis .pat{transform:none!important;font-size:min(40px,5vh);gap:4px;flex-wrap:wrap;justify-content:center}
+.lesson.q2 .qtop2 .qvis .pat *{font-size:inherit}
+/* fun fact on the answer card */
+.ffact{display:flex;gap:8px;align-items:flex-start;margin-top:8px;padding:10px 12px;border-radius:14px;background:#FFF8E1;font:600 18px/1.5 "Vazirmatn","Nunito",sans-serif;color:#5B4A1E;text-align:right}
+.ffact b{flex:0 0 auto}.ffact span{flex:1}
+/* balloons to pop */
+@keyframes bRise{0%{transform:translateY(60vh) scale(.6);opacity:0}100%{transform:translateY(0) scale(1);opacity:1}}
+@keyframes bSway{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-14px) rotate(3deg)}}
+@keyframes bPop{0%{transform:scale(1)}40%{transform:scale(1.35)}100%{transform:scale(0);opacity:0}}
+.lesson.q2 .qopts.st-balloon .qo[data-j]{border:0!important;box-shadow:none!important;background:radial-gradient(circle at 32% 28%,rgba(255,255,255,.75),transparent 34%),var(--bc,#FF8A80)!important;border-radius:50% 50% 47% 47% / 55% 55% 45% 45%!important;margin:0 8% 22px;overflow:visible!important;position:relative;
+  animation:bRise .9s cubic-bezier(.2,1.2,.4,1) both,bSway 3s ease-in-out .9s infinite!important}
+.lesson.q2 .qopts.st-balloon .qo[data-j]::after{content:"";position:absolute;bottom:-22px;left:50%;width:2px;height:22px;background:#B7C0CC}
+.lesson.q2 .qopts.st-balloon .qo[data-j]::before{content:"";position:absolute;bottom:-4px;left:calc(50% - 6px);border:6px solid transparent;border-top-color:var(--bc,#FF8A80)}
+.lesson.q2 .qopts.st-balloon .qo[data-j]:nth-child(1){--bc:#FF8A80}.lesson.q2 .qopts.st-balloon .qo[data-j]:nth-child(2){--bc:#81D4FA;animation-delay:.12s,1.3s!important}
+.lesson.q2 .qopts.st-balloon .qo[data-j]:nth-child(3){--bc:#FFE082;animation-delay:.24s,.6s!important}.lesson.q2 .qopts.st-balloon .qo[data-j]:nth-child(4){--bc:#A5D6A7;animation-delay:.36s,1.6s!important}
+.lesson.q2 .qopts.st-balloon .qo[data-j] small,.lesson.q2 .qopts.st-balloon .qo[data-j] .num,.lesson.q2 .qopts.st-balloon .qo[data-j] .word{color:#3A3A3A}
+.lesson.q2 .qopts.st-balloon .qo[data-j].right{animation:bPop .5s ease-in forwards!important}
+.lesson.q2 .qopts.st-balloon .qo[data-j].wrong{animation:qno .5s!important}
+/* fish to catch: they swim left and right */
+@keyframes fSwim{0%,100%{transform:translateX(-10%) scaleX(1)}49%{transform:translateX(10%) scaleX(1)}50%{transform:translateX(10%) scaleX(-1)}99%{transform:translateX(-10%) scaleX(-1)}}
+@keyframes fIn{0%{transform:translateX(-120%);opacity:0}100%{transform:none;opacity:1}}
+.lesson.q2 .qopts.st-fish{background:linear-gradient(#E3F4FF,#C9E8FF);border-radius:22px;padding:12px;position:relative}
+.lesson.q2 .qopts.st-fish .qo[data-j]{background:#FFB74D!important;border:0!important;box-shadow:0 3px 0 #F09A22!important;border-radius:50% 20% 20% 50% / 50% 40% 40% 50%!important;position:relative;overflow:visible!important;
+  animation:fIn .7s ease-out both,fSwim 5s ease-in-out .7s infinite!important}
+.lesson.q2 .qopts.st-fish .qo[data-j]::after{content:"";position:absolute;right:-18px;top:calc(50% - 18px);border:18px solid transparent;border-left:22px solid #FFB74D}
+.lesson.q2 .qopts.st-fish .qo[data-j]::before{content:"";position:absolute;left:14%;top:28%;width:10px;height:10px;border-radius:50%;background:#333;box-shadow:0 0 0 3px #fff}
+.lesson.q2 .qopts.st-fish .qo[data-j]:nth-child(2){animation-delay:.1s,1.6s!important;background:#F48FB1!important}.lesson.q2 .qopts.st-fish .qo[data-j]:nth-child(2)::after{border-left-color:#F48FB1}
+.lesson.q2 .qopts.st-fish .qo[data-j]:nth-child(3){animation-delay:.2s,.9s!important;background:#9FA8DA!important}.lesson.q2 .qopts.st-fish .qo[data-j]:nth-child(3)::after{border-left-color:#9FA8DA}
+.lesson.q2 .qopts.st-fish .qo[data-j]:nth-child(4){animation-delay:.3s,2.2s!important;background:#80CBC4!important}.lesson.q2 .qopts.st-fish .qo[data-j]:nth-child(4)::after{border-left-color:#80CBC4}
+.lesson.q2 .qopts.st-fish .qo[data-j].right{animation:qjump .7s both!important}
+.lesson.q2 .qopts.st-fish .qo[data-j].wrong{animation:qno .5s!important}
+.qhint2{flex:0 0 auto;text-align:center;font:800 20px "Nunito",sans-serif;color:#A16AE8;padding:6px 0}
+/* robot path */
+.rbwrap{display:flex;flex-direction:column;align-items:center;gap:12px;flex:1 1 auto;min-height:0}
+.rbgrid{display:grid;gap:6px;width:min(100%,46vh);aspect-ratio:1;background:#EEF4FB;border-radius:18px;padding:8px;box-sizing:border-box}
+.rbgrid.bump{animation:qno .5s}
+.rbc{background:#fff;border-radius:10px;display:grid;place-items:center;font-size:min(44px,6vh);box-shadow:0 2px 0 #DDE6F0}
+.rbprog{min-height:44px;display:flex;flex-wrap:wrap;gap:4px;justify-content:center;font-size:28px;color:#9AA7B6;font-family:"Nunito",sans-serif}
+.rbpad{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.rbpad button{width:70px;height:70px;border-radius:18px;border:2px solid #E5E5E5;box-shadow:0 4px 0 #E5E5E5;background:#fff;font-size:34px;cursor:pointer}
+.rbpad button:active{transform:translateY(3px);box-shadow:0 1px 0 #E5E5E5}
+.rbpad .rbdel{background:#FFF3F0}
+@media (min-width:700px){.rbpad button{width:92px;height:92px;font-size:44px}.ffact{font-size:22px}.qhint2{font-size:26px}}
+@keyframes fSwim{0%,100%{transform:translateX(-4%) scaleX(1)}49%{transform:translateX(4%) scaleX(1)}50%{transform:translateX(4%) scaleX(-1)}99%{transform:translateX(-4%) scaleX(-1)}}
+.lesson.q2 .qopts.st-fish{padding:12px 26px 12px 12px}
+.rbgrid{width:min(100%,38vh)}
+.rbpad{flex-wrap:nowrap;gap:8px}.rbpad button{width:min(60px,15vw);height:min(60px,15vw);font-size:28px}
+.rbprog{min-height:36px;font-size:24px}
+@media (min-width:700px){.rbgrid{width:min(100%,46vh)}.rbpad button{width:88px;height:88px;font-size:42px}}
+/* ===== Nov 8 night: everything inside a card stays inside it ===== */
+.lesson.q2 .qopts .qo[data-j]{overflow:hidden!important}
+.lesson.q2 .qopts .qo[data-j] .oe,.lesson.q2 .qopts .qo[data-j] .wp,.lesson.q2 .qopts .qo[data-j] .grp,.lesson.q2 .qopts .qo[data-j] .num,.lesson.q2 .qopts .qo[data-j] .word,.lesson.q2 .qopts .qo[data-j] .cshape{animation:none!important}
+.lesson.q2 .qopts .qo[data-j]>:first-child{max-height:calc(100% - 34px);overflow:hidden}
+.lesson.q2 .qopts .qo[data-j] .oe{font-size:min(64px,7vh)!important;line-height:1.1}
+.lesson.q2 .qopts .qo[data-j] .wp.op{height:min(100px,10vh)!important;width:auto;max-width:85%}
+.lesson.q2 .qopts .qo[data-j] .cshape.big{width:min(70px,8vh);height:min(70px,8vh)}
+.lesson.q2 .qopts .qo[data-j] img{max-height:100%;max-width:100%;object-fit:contain}
+.lesson.q2 .qopts .qo[data-j] small,.lesson.q2 .qopts .qo[data-j] .dn{font-size:19px;line-height:1.2}
+@media (min-width:700px){.lesson.q2 .qopts .qo[data-j] .oe{font-size:min(100px,9vh)!important}.lesson.q2 .qopts .qo[data-j] .wp.op{height:min(160px,12vh)!important}.lesson.q2 .qopts .qo[data-j] small,.lesson.q2 .qopts .qo[data-j] .dn{font-size:26px}}
+/* the radio and other "listen" pictures: small, next to the speaker */
+.lesson.q2 .qtop2 .qvis .listen{width:auto!important;height:auto!important;padding:0!important;background:none!important;box-shadow:none!important;font-size:min(56px,7vh)!important;line-height:1}
+.ffact{direction:ltr;text-align:left;font-family:"Nunito",sans-serif}
+/* fish v2: tidy grid, tail and eye inside the card, gentle swim */
+.lesson.q2 .qopts.st-fish{box-sizing:border-box;padding:12px;gap:14px}
+@keyframes fSwim{0%,100%{transform:translateX(-3px) rotate(-1.5deg)}50%{transform:translateX(3px) rotate(1.5deg)}}
+.lesson.q2 .qopts.st-fish .qo[data-j]{border-radius:46% 22% 22% 46% / 50% 30% 30% 50%!important;padding:10px 34px 10px 18px!important;overflow:hidden!important;width:100%!important;box-sizing:border-box}
+.lesson.q2 .qopts.st-fish .qo[data-j]::after{right:4px!important;top:calc(50% - 14px)!important;border-width:14px 0 14px 20px!important;border-style:solid!important;border-color:transparent transparent transparent rgba(0,0,0,.18)!important}
+.lesson.q2 .qopts.st-fish .qo[data-j]::before{left:12%!important;top:22%!important}
+/* balloons v2: sized to their cell, never over the hint */
+.lesson.q2 .qopts.st-balloon{gap:10px 18px}
+.lesson.q2 .qopts.st-balloon .qo[data-j]{width:min(100%,24vh)!important;max-height:calc(100% - 22px);aspect-ratio:.86;justify-self:center!important;align-self:center;margin:0 auto 20px!important;padding:8px!important}
+
+/* ===== Nov 9: Watcher-style play games ===== */
+.game{display:flex;flex-direction:column;flex:1;min-height:0;gap:10px}
+.game .qtitle{margin:2px 0 0;font:800 25px/1.2 "Nunito",sans-serif;color:#4B4B4B}
+@keyframes gBump{20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
+.game .bump{animation:gBump .4s}
+/* simon */
+.smwrap{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;min-height:0}
+.smboard{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:12px;width:min(100%,380px,46vh);aspect-ratio:1}
+.smp{border:0;border-radius:28px;background:var(--c);box-shadow:0 7px 0 var(--d);opacity:.55;transition:opacity .12s,transform .12s,filter .12s}
+.smp:nth-child(1){border-top-left-radius:50%}.smp:nth-child(2){border-top-right-radius:50%}.smp:nth-child(3){border-bottom-left-radius:50%}.smp:nth-child(4){border-bottom-right-radius:50%}
+.smp.lit{opacity:1;filter:brightness(1.18) saturate(1.2);transform:scale(1.05);box-shadow:0 0 0 6px #fff,0 0 30px var(--c)}
+.smboard:not(.watch) .smp{opacity:.9}.smboard:not(.watch) .smp:active{transform:translateY(5px);box-shadow:0 2px 0 var(--d)}
+.smmid{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:30%;aspect-ratio:1;border-radius:50%;background:#fff;display:grid;place-items:center;font-size:clamp(26px,7vw,44px);box-shadow:0 4px 14px rgba(0,0,0,.15);pointer-events:none}
+.smdots{display:flex;gap:10px}.smdots i{width:16px;height:16px;border-radius:50%;background:#E5E5E5}.smdots i.on{background:#58CC02}
+/* memory pairs */
+.pgrid{flex:1;display:grid;gap:10px;align-content:center;min-height:0}
+.pc{position:relative;aspect-ratio:3/4;max-height:24vh;border:0;background:transparent;perspective:600px;padding:0}
+.pc span{position:absolute;inset:0;border-radius:18px;display:grid;place-items:center;backface-visibility:hidden;transition:transform .35s}
+.pcb{background:linear-gradient(135deg,#1CB0F6,#8E6CEF);color:#fff;font:900 34px "Nunito",sans-serif;box-shadow:0 5px 0 #1899D6}
+.pcf{background:#fff;border:2px solid #E5E5E5;box-shadow:0 4px 0 #E5E5E5;font-size:clamp(34px,10vw,58px);transform:rotateY(180deg)}
+.pc.up .pcb{transform:rotateY(180deg)}.pc.up .pcf{transform:rotateY(0)}
+.pc.got .pcf{border-color:#58CC02;background:#D7FFB8;box-shadow:0 4px 0 #58CC02}
+/* put in order */
+.odslots{display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:nowrap}
+.odslots i{font-style:normal;color:#AFAFAF;font:900 22px "Nunito",sans-serif}
+.ods{position:relative;width:min(19vw,82px);aspect-ratio:1;border-radius:18px;border:3px dashed #CFCFCF;display:grid;place-items:center;font:900 32px "Nunito",sans-serif;color:#4B4B4B}
+.ods small{position:absolute;top:-20px;font:800 12px "Nunito",sans-serif;color:#AFAFAF}
+.ods.ok{border:3px solid #58CC02;background:#D7FFB8;animation:pop .3s}
+.odball{flex:1;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:16px;min-height:0;padding:10px 0}
+.odb{width:min(24vw,104px);aspect-ratio:.86;border:0;border-radius:50% 50% 46% 46%;background:hsl(var(--h) 85% 60%);color:#fff;font:900 34px "Nunito",sans-serif;text-shadow:0 2px 0 rgba(0,0,0,.18);box-shadow:inset -8px -10px 0 rgba(0,0,0,.12);animation:odFloat 2.6s ease-in-out var(--dl) infinite;position:relative}
+.odb::after{content:"";position:absolute;left:50%;bottom:-16px;width:2px;height:16px;background:#BDBDBD}
+@keyframes odFloat{50%{transform:translateY(-10px)}}
+.odb.wrong{animation:gBump .4s}.odb.gone{visibility:hidden}
+/* pizza */
+.pzwrap{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;min-height:0;position:relative}
+.pzwrap #pzBox{width:min(100%,330px,40vh);aspect-ratio:1}
+.pz{width:100%;height:100%}
+.pzs{fill:#FFE29A;stroke:#C77B30;stroke-width:3;cursor:pointer;transition:fill .15s}
+.pzs.on{fill:#FF7A59}
+.pep{fill:#E9C77A}.pep.on{fill:#B3261E}
+.pzf{position:absolute;top:0;right:4%;font:900 46px "Nunito",sans-serif;color:#FF7A59}
+.pzn{font:800 16px "Nunito",sans-serif;color:#777}
+/* build the word */
+.bdtop{display:flex;align-items:center;justify-content:center;gap:14px}
+.bdtop .qspk{width:58px;height:58px;font-size:26px}
+.bdpic{width:min(34vw,150px);height:min(34vw,150px);object-fit:contain}
+.bdslots{display:flex;justify-content:center;gap:8px}
+.bds{width:min(15vw,64px);height:min(17vw,72px);border-bottom:5px solid #CFCFCF;display:grid;place-items:center;font:900 40px "Nunito",sans-serif;color:#4B4B4B}
+.bds.ok{border-color:#58CC02;color:#58A700}
+.bdtiles{flex:1;display:flex;flex-wrap:wrap;justify-content:center;align-content:center;gap:10px;min-height:0}
+.bdt{width:min(17vw,74px);aspect-ratio:1;border-radius:16px;border:2px solid #E5E5E5;background:#fff;box-shadow:0 4px 0 #E5E5E5;font:900 36px "Nunito",sans-serif;color:#4B4B4B}
+.bdt:active{transform:translateY(3px);box-shadow:0 1px 0 #E5E5E5}
+.bdt.wrong{animation:gBump .4s;border-color:#FF4B4B}.bdt.gone{visibility:hidden}
+
+/* ===== Nov 9: parents area - white, Duolingo-like type ===== */
+#pSettings{background:#fff;font-family:"Nunito","M PLUS Rounded 1c",system-ui,sans-serif;color:#4B4B4B}
+#pSettings *{font-family:inherit}
+#pSettings .back{color:#AFAFAF;font-weight:800}
+#pSettings .phead b{font:900 28px "Nunito",sans-serif;color:#4B4B4B}
+#pSettings .phead .pweek{background:#F7F7F7;color:#AFAFAF;border:2px solid #E5E5E5}
+#pSettings .psec{font:800 21px "Nunito",sans-serif;color:#4B4B4B;margin:28px 0 12px}
+#pSettings .psec span{background:#fff;border:2px solid #E5E5E5;box-shadow:none}
+#pSettings .pt1,#pSettings .pprize,#pSettings .pseg,#pSettings .ptopics button,#pSettings .pages button,#pSettings .pmonths button{background:#fff;border:2px solid #E5E5E5;box-shadow:0 4px 0 #E5E5E5}
+#pSettings .pt1 b{font-weight:900;color:#4B4B4B}#pSettings .pt1 small{color:#AFAFAF;font-weight:800}
+#pSettings .pchips span{background:#F7F7F7;border:2px solid #E5E5E5;box-shadow:none;color:#777}
+#pSettings .ptalk div{border-radius:16px;font-weight:700;background:#FFF5D3;color:#8A6100}
+#pSettings .ptalk div+div{background:#DDF4FF;color:#1477A8}
+#pSettings .pseg button{color:#AFAFAF;font-weight:800}
+#pSettings .pseg button[aria-pressed="true"],#pSettings .pages button[aria-pressed="true"],#pSettings .pmonths button[aria-pressed="true"]{background:#DDF4FF;color:#1CB0F6;box-shadow:inset 0 0 0 2px #84D8FF}
+#pSettings .ptopics button[aria-pressed="true"]{background:#DDF4FF;border-color:#84D8FF;box-shadow:0 4px 0 #84D8FF;opacity:1;filter:none}
+#pSettings .ptopics button small{color:#4B4B4B;font-weight:800}
+#pSettings .plegend span{background:#F7F7F7;border:2px solid #E5E5E5;color:#777}
+#pSettings .preset{color:#FF4B4B;font-weight:800}
+.pnote{margin:0 0 12px;font-weight:700;font-size:15px;line-height:1.4;color:#777}
+/* prizes with a photo */
+#pSettings .pprize{grid-template-columns:64px 1fr 1fr auto;grid-template-areas:"pic name name del" "pic ra rw give";row-gap:6px;border-radius:20px}
+#pSettings .pprize.ok{border-color:#58CC02;box-shadow:0 4px 0 #58CC02}
+.pprize .ppe{grid-area:pic;width:64px;height:64px;border-radius:16px;overflow:hidden;display:grid;place-items:center;background:#F7F7F7;cursor:pointer;font-size:38px}
+.pprize .ppr:nth-of-type(1){grid-area:ra}.pprize .ppr:nth-of-type(2){grid-area:rw}
+.ppn{grid-area:name;font:800 17px "Nunito",sans-serif;color:#4B4B4B;align-self:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pdel{grid-area:del;justify-self:end;border:0;background:transparent;color:#AFAFAF;font-size:18px;font-weight:900;width:34px;height:34px;border-radius:10px}
+.pgive,.pdays{grid-area:give;align-self:center}
+.pzimg{width:100%;height:100%;object-fit:cover;display:block}
+.pze{font-size:inherit;line-height:1}
+.padd{width:100%;border:2px dashed #CFCFCF;background:#fff;border-radius:16px;min-height:52px;font:800 17px "Nunito",sans-serif;color:#1CB0F6;margin-top:4px}
+.padd.share{border-style:solid;border-color:#E5E5E5;box-shadow:0 4px 0 #E5E5E5;margin-top:10px}
+.pzform{display:grid;grid-template-columns:110px 1fr;gap:12px;border:2px solid #E5E5E5;border-radius:20px;padding:12px;margin-top:8px}
+.pzpic{width:110px;height:110px;border-radius:18px;border:2px dashed #CFCFCF;display:grid;place-items:center;overflow:hidden;cursor:pointer;background:#F7F7F7;font-size:34px;text-align:center}
+.pzpic small{display:block;font:800 12px "Nunito",sans-serif;color:#AFAFAF}
+.pzpic img{width:100%;height:100%;object-fit:cover}
+.pzf2{display:flex;flex-direction:column;gap:8px;min-width:0}
+.pzf2 input{border:2px solid #E5E5E5;border-radius:14px;background:#F7F7F7;min-height:46px;padding:0 12px;font:700 16px "Nunito",sans-serif;color:#4B4B4B;min-width:0}
+.pzgoal{display:flex;gap:8px}.pzgoal label{flex:1;display:flex;align-items:center;gap:4px;font-size:20px}
+.pzgoal select{flex:1;min-width:0;border:2px solid #E5E5E5;border-radius:12px;min-height:42px;font:800 16px "Nunito",sans-serif;color:#4B4B4B;background:#fff}
+.pzf2 small{font-weight:700;color:#AFAFAF;font-size:13px}
+.pzbtns{grid-column:1/-1;display:grid;grid-template-columns:1fr 2fr;gap:8px}
+/* learning report */
+.rsum{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}
+.rsum div{border:2px solid #E5E5E5;border-radius:16px;padding:8px 4px;text-align:center}
+.rsum b{display:block;font:900 26px "Nunito",sans-serif}.rsum small{font-weight:800;font-size:12px;color:#777}
+.rsum .rs2 b{color:#58CC02}.rsum .rs1 b{color:#FF9600}.rsum .rs0 b{color:#1CB0F6}
+.rtip{border-radius:16px;background:#FFF5D3;padding:10px 12px;margin-bottom:8px;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.rtip b{width:100%;font-weight:900;color:#8A6100}.rtip span{background:#fff;border-radius:999px;padding:4px 10px;font-weight:800;font-size:14px;color:#4B4B4B}
+.rtip.up{background:#D7FFB8}.rtip.up b{color:#58A700}.rtip.up span{background:transparent;padding:0;font-weight:700}
+.rarea{border:2px solid #E5E5E5;border-radius:18px;padding:6px 12px;margin-top:10px}
+.rah{font:900 16px "Nunito",sans-serif;padding:6px 0;color:#4B4B4B}
+.rrow{display:flex;align-items:center;gap:10px;padding:8px 0;border-top:2px solid #F0F0F0}
+.rlv{font-size:22px;width:28px;text-align:center}
+.rnm{flex:1;min-width:0}.rnm b{display:block;font-weight:800;font-size:15px}.rnm small{font-weight:700;color:#AFAFAF;font-size:12px}
+.rh{display:flex;gap:2px}.rh i{width:6px;height:16px;border-radius:3px;background:#E5E5E5}.rh i.y{background:#58CC02}.rh i.n{background:#FFC800}
+/* the child sees the promised toy */
+.goalc{display:flex;align-items:center;gap:12px;background:#fff;border:2px solid #E5E5E5;border-radius:20px;padding:10px 12px;margin:12px auto 14px;max-width:340px;text-align:left;box-shadow:0 4px 0 #E5E5E5;color:#4B4B4B}
+.goalc.close{border-color:#FFC800;box-shadow:0 4px 0 #FFC800;animation:pop 1.2s ease-in-out 2}
+.goalc.ok{border-color:#58CC02;box-shadow:0 4px 0 #58CC02}
+.goalc .gpic{width:72px;height:72px;flex:0 0 72px;border-radius:16px;overflow:hidden;display:grid;place-items:center;background:#F7F7F7;font-size:44px}
+.goalc .gtx{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.goalc b{font:900 16px "Nunito",sans-serif}
+.goalc small{font:800 12px "Nunito",sans-serif;color:#777}
+.gbar{display:block;height:10px;border-radius:99px;background:#EFEFEF;overflow:hidden}.gbar i{display:block;height:100%;border-radius:99px}
+.gbar.a i{background:#C8803F}.gbar.w i{background:#7A4A1E}
+.reveal .goalc{position:relative;z-index:3;margin:6px 16px 10px}
+.reveal .item .pzimg.big,.chest .pzimg{width:150px;height:150px;border-radius:28px;object-fit:cover;box-shadow:0 6px 0 rgba(0,0,0,.12)}
+.re .pzimg{width:56px;height:56px;border-radius:14px}
+.tbtn.hasg{padding:0}
+.tbg{width:38px;height:38px;border-radius:50%;background:conic-gradient(#58CC02 var(--f),#E5E5E5 0);display:grid;place-items:center}
+.tbg .pzimg.sm,.tbg .pze.sm{width:30px;height:30px;border-radius:50%;object-fit:cover;background:#fff;display:grid;place-items:center;font-size:18px}
+/* ===== Nov 9b: answers never cut, one tap is enough =====
+   iPad Safari cut the text of cards that grow from a small size or tilt while they float, and the first-child
+   max-height clipped big letters and numbers. Cards now slide in (no scaling), stand still, and size their text to the card. */
+@keyframes qin2{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes qok{0%,100%{transform:none}40%{transform:translateY(-10px)}}
+@keyframes qno2{20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
+@keyframes bRise{0%{transform:translateY(40vh);opacity:0}100%{transform:none;opacity:1}}
+@keyframes bSway{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes fSwim{0%,100%{transform:translateX(-4px)}50%{transform:translateX(4px)}}
+@keyframes fIn{0%{transform:translateX(-60px);opacity:0}100%{transform:none;opacity:1}}
+@keyframes bPop{0%{opacity:1}100%{opacity:0;transform:translateY(-30px)}}
+.lesson.q2 .qopts .qo[data-j]{animation:qin2 .35s ease-out both;will-change:auto;touch-action:manipulation;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent;container-type:size;overflow:hidden}
+.lesson.q2 .qopts .qo[data-j]:nth-child(2){animation-delay:.05s}.lesson.q2 .qopts .qo[data-j]:nth-child(3){animation-delay:.1s}.lesson.q2 .qopts .qo[data-j]:nth-child(4){animation-delay:.15s}
+.lesson.q2 .qopts .qo[data-j]:active{animation:none;transform:translateY(3px)}
+.lesson.q2 .qopts .qo[data-j].saying{animation:none}
+.lesson.q2 .qopts .qo[data-j].right,.lesson.q2 .qopts .qo[data-j].show{animation:qok .5s ease both}
+.lesson.q2 .qopts .qo[data-j].wrong{animation:qno2 .4s ease both}
+.lesson.q2 .qopts .qo[data-j].faded{transform:none}
+.lesson.q2 .qopts .qo[data-j]>:first-child{max-height:none;overflow:visible}
+.lesson.q2 .qopts .qo[data-j] *{animation:none!important}
+.lesson.q2 .qopts .qo[data-j] b.num{line-height:1.15;font-size:min(46cqh,calc(150cqw / var(--n,2)),120px)}
+.lesson.q2 .qopts .qo[data-j] b.num.letter{font-size:min(50cqh,60cqw,120px)}
+.lesson.q2 .qopts .qo[data-j] .word{line-height:1.2;font-size:min(30cqh,calc(150cqw / var(--n,4)),64px)}
+.lesson.q2 .qopts .qo[data-j] .oe{font-size:min(44cqh,50cqw,100px)!important;line-height:1.15}
+.lesson.q2 .qopts .qo[data-j] small{font-size:min(15cqh,calc(150cqw / var(--n,6)),26px);line-height:1.2}
+.lesson.q2 .qopts .qo[data-j] .dots{font-size:min(10cqh,calc(90cqw / var(--n,5)),20px);line-height:1.2;white-space:nowrap}
+.lesson.q2 .qopts .qo[data-j] .wp.op{height:min(60cqh,160px)!important}
+/* balloons and fish move gently up/down or side to side only (no tilting) and keep the word inside */
+.lesson.q2 .qopts.st-balloon .qo[data-j]{animation:bRise .7s ease-out both,bSway 3s ease-in-out .7s infinite!important;overflow:visible!important}
+.lesson.q2 .qopts.st-balloon .qo[data-j] .word,.lesson.q2 .qopts.st-balloon .qo[data-j] b.num{font-size:min(36cqh,calc(120cqw / var(--n,4)),56px)}
+.lesson.q2 .qopts.st-balloon .qo[data-j].right{animation:bPop .45s ease-in forwards!important}
+.lesson.q2 .qopts.st-balloon .qo[data-j].wrong,.lesson.q2 .qopts.st-fish .qo[data-j].wrong{animation:qno2 .4s!important}
+.lesson.q2 .qopts.st-fish .qo[data-j]{animation:fIn .6s ease-out both,fSwim 3s ease-in-out .6s infinite!important}
+.lesson.q2 .qopts.st-fish .qo[data-j].right{animation:qok .5s both!important}
+.lesson.q2 .qopts.st-fish .qo[data-j] .word,.lesson.q2 .qopts.st-fish .qo[data-j] b.num{font-size:min(40cqh,calc(110cqw / var(--n,4)),56px)}
+.mc{touch-action:manipulation}.mc.sel{animation:none;box-shadow:0 0 0 4px #84D8FF}
+
+/* ===== Nov 9b: the learning report, as pictures ===== */
+.rhero{display:flex;align-items:center;gap:14px;border:2px solid #E5E5E5;border-radius:20px;padding:14px;box-shadow:0 4px 0 #E5E5E5}
+.rbig{font:900 46px/1 "Nunito",sans-serif;color:#58CC02;text-align:center;min-width:70px}.rbig small{display:block;font:800 14px "Nunito",sans-serif;color:#AFAFAF}
+.rht{flex:1;min-width:0}.rht b{font-weight:800;font-size:16px}
+.rstack{display:flex;height:16px;border-radius:99px;overflow:hidden;background:#EFEFEF;margin:8px 0 6px;gap:2px}
+.rstack i,.rleg i{display:block}.s2{background:#58CC02}.s1{background:#FF9600}.s0{background:#1CB0F6}
+.rleg{display:flex;flex-wrap:wrap;gap:4px 12px;font-weight:800;font-size:13px;color:#777}.rleg span{display:flex;align-items:center;gap:5px}.rleg i{width:11px;height:11px;border-radius:50%}
+.rweek{border:2px solid #E5E5E5;border-radius:20px;padding:12px 14px 8px;margin-top:12px;box-shadow:0 4px 0 #E5E5E5}
+.rwh{display:flex;align-items:baseline;justify-content:space-between;gap:8px}.rwh b{font-weight:800}.rwh small{font-weight:700;color:#AFAFAF;font-size:12px}
+.rbars{position:relative;display:grid;grid-template-columns:repeat(7,1fr);gap:8px;height:130px;margin-top:8px}
+.rb{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:3px;min-width:0}
+.rb i{width:70%;max-width:34px;border-radius:8px 8px 4px 4px;background:#E5E5E5;max-height:calc(100% - 40px)}
+.rb i.some{background:#84D8FF}.rb i.full{background:#58CC02}
+.rbn{font:800 12px "Nunito",sans-serif;color:#777;min-height:14px}.rb small{font:800 12px "Nunito",sans-serif;color:#AFAFAF;height:18px}
+.rgoal{display:none}
+.rgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.rcard{border:2px solid #E5E5E5;border-radius:20px;box-shadow:0 4px 0 #E5E5E5;padding:12px 10px;min-width:0}
+.rcard[open]{grid-column:1/-1}
+.rcard summary{list-style:none;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;text-align:center}
+.rcard summary::-webkit-details-marker{display:none}
+.rring{width:64px;height:64px;border-radius:50%;background:conic-gradient(#58CC02 var(--f),#EFEFEF 0);display:grid;place-items:center}
+.rring i{font-style:normal;width:48px;height:48px;border-radius:50%;background:#fff;display:grid;place-items:center;font-size:24px}
+.rcard summary b{font-weight:800;font-size:15px;line-height:1.2}.rcard summary small{font-weight:800;color:#AFAFAF;font-size:12px}
+.rlist{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;justify-content:center}
+.rlist span{border-radius:999px;padding:5px 10px;font-weight:800;font-size:13px}
+.rlist .l2{background:#D7FFB8;color:#58A700}.rlist .l1{background:#FFF0D5;color:#C76E00}.rlist .l0{background:#DDF4FF;color:#1477A8}
+.rhow{font-weight:700;font-size:12px;color:#AFAFAF;line-height:1.5;margin:10px 2px 0}
+/* balloons: two rows that always fit the space left under the question, string included */
+.lesson.q2 .qopts.st-balloon{container-type:size;flex:1 1 0;min-height:0;grid-template-rows:1fr 1fr!important;grid-auto-rows:auto!important;align-items:start}
+.lesson.q2 .qopts.st-balloon .qo[data-j]{min-height:0!important;height:min(calc(50cqh - 34px),calc((50cqw - 20px) / .86))!important;width:auto!important;max-width:100%;max-height:none!important;aspect-ratio:.86;margin:0 auto 0!important;align-self:start!important}
+.lesson.q2 .qopts.st-balloon .qo[data-j] .dots,.lesson.q2 .qopts.st-fish .qo[data-j] .dots{display:none}
+.lesson.q2 .qopts.st-balloon .balloon{background:none!important;width:auto;height:auto}
+.lesson.q2 .qopts.st-balloon .qo[data-j]::before{bottom:-5px}
