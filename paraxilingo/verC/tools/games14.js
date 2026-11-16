@@ -287,3 +287,50 @@ const _om26=openMound;openMound=function(i){if(!landEl||i!==S.day.done)return _o
   beaverTo26(LAND26.stand[i],true,()=>_om26.apply(self,args))};
 const _sc26=scrollToCurrent;scrollToCurrent=function(smooth){try{const n=HOLES[landIdx()].length,map=$("map");const y=S.day.done>=n?0:landEl.offsetTop+LAND26.stand[S.day.done][1]/100*landEl.offsetHeight;
   map.scrollTo({top:Math.max(0,journey.offsetTop+y-map.clientHeight/2),behavior:smooth?"smooth":"auto"})}catch(e){_sc26(smooth)}};
+
+/* ---------- v27: Domi walks along the real road (parent, Nov 15). The map stays a still picture; Domi is a separate
+   layer whose place is one number: progress along the road, 0 = START, 1 = the big house. The road line was traced from
+   the dirt path in Land_Beaver; each mound's stop is the road point nearest its door. ---------- */
+const ROAD27={pts:[[51.26,94.53],[51.66,93.69],[51.97,92.84],[52.17,91.99],[52.19,91.13],[51.97,90.28],[51.4,89.45],[50.45,88.67],[49.13,87.98],[47.52,87.37],[45.74,86.83],[43.88,86.33],[41.98,85.86],[40.09,85.38],[38.23,84.88],[36.47,84.33],[34.9,83.71],[33.74,82.98],[33.34,82.14],[33.76,81.3],[34.73,80.53],[36.07,79.83],[37.66,79.22],[39.42,78.67],[41.27,78.17],[43.12,77.67],[44.94,77.15],[46.65,76.58],[48.2,75.95],[49.6,75.28],[50.85,74.56],[51.99,73.82],[53.03,73.05],[53.9,72.26],[54.21,71.42],[53.45,70.62],[51.98,69.97],[50.31,69.38],[48.61,68.81],[46.97,68.21],[45.5,67.56],[44.23,66.85],[43.26,66.07],[42.67,65.25],[42.64,64.39],[43.31,63.58],[44.64,62.88],[46.35,62.32],[48.21,61.82],[50.11,61.34],[51.97,60.85],[53.74,60.3],[55.32,59.69],[56.65,58.99],[57.56,58.21],[57.84,57.36],[57.37,56.53],[56.36,55.76],[55.02,55.07],[53.5,54.43],[51.85,53.84],[50.13,53.27],[48.35,52.73],[46.55,52.21],[44.78,51.67],[43.14,51.07],[41.89,50.36],[41.47,49.52],[41.87,48.68],[42.81,47.9],[44.07,47.19],[45.53,46.53],[47.1,45.91],[48.74,45.31],[50.38,44.71],[52.01,44.11],[53.57,43.49],[55.02,42.83],[56.29,42.11],[57.32,41.35],[58.01,40.53],[58.25,39.68],[57.9,38.84],[56.92,38.07],[55.4,37.43],[53.57,36.92],[51.6,36.48],[49.59,36.08],[47.58,35.67],[45.64,35.22],[44.02,34.62],[43.77,33.81],[44.98,33.08],[46.56,32.47],[48.26,31.9],[50.0,31.34],[51.73,30.78],[53.4,30.19],[54.92,29.56],[56.01,28.81],[55.84,27.98],[54.46,27.3],[52.7,26.76],[50.8,26.28],[48.88,25.82],[46.98,25.34],[45.22,24.79],[43.88,24.11],[43.43,23.27],[44.06,22.46],[45.35,21.75],[46.96,21.15],[48.75,20.61],[50.64,20.13],[52.55,19.66],[54.39,19.16],[55.93,18.53],[56.15,17.71],[54.74,17.05],[52.84,16.57],[50.81,16.18]],stops:[0.233, 0.333, 0.442, 0.55, 0.65, 0.75, 0.825]};
+const R27={p:0,face:1,lean:0,raf:0,moving:false,dist:0,box:null};
+function geo27(){const w=landEl.offsetWidth,h=landEl.offsetHeight;if(R27.box&&R27.box.w===w&&R27.box.h===h)return R27.box;
+  const P=ROAD27.pts.map(([x,y])=>[x/100*w,y/100*h]),L=[0];for(let i=1;i<P.length;i++)L[i]=L[i-1]+Math.hypot(P[i][0]-P[i-1][0],P[i][1]-P[i-1][1]);
+  return R27.box={w,h,P,L,len:L[L.length-1]}}
+function at27(t){const g=geo27(),s=Math.max(0,Math.min(1,t))*g.len;let i=1;while(i<g.L.length-1&&g.L[i]<s)i++;
+  const a=g.P[i-1],b=g.P[i],k=(s-g.L[i-1])/((g.L[i]-g.L[i-1])||1);return[a[0]+(b[0]-a[0])*k,a[1]+(b[1]-a[1])*k]}
+function tan27(t,dir){const d=.02,a=at27(t-d),b=at27(t+d);let x=(b[0]-a[0])*dir,y=(b[1]-a[1])*dir;const n=Math.hypot(x,y)||1;return[x/n,y/n]}
+const isBeaver27=()=>!CHARS[charOf()];
+function paint27(){if(!beaver)return;beaver.classList.add("g27");beaver.classList.toggle("g27bv",isBeaver27());
+  if(isBeaver27()&&!beaver.querySelector(".g27s"))beaver.innerHTML='<span class="g27o"><span class="g27s"></span></span>';
+  beaver.classList.remove("away");draw27()}
+function draw27(){if(!landEl||!beaver)return;if(beaver.parentNode!==landEl)landEl.appendChild(beaver);
+  const[x,y]=at27(R27.p);beaver.style.transition="none";beaver.style.left=x+"px";beaver.style.top=y+"px";
+  beaver.style.setProperty("--face",R27.face);beaver.style.setProperty("--lean",R27.lean.toFixed(2)+"deg");
+  const s=beaver.querySelector(".g27s");if(s){const f=R27.moving?1+Math.floor(R27.dist/9)%8:0;s.style.backgroundPositionX=(f*12.5)+"%"}
+  beaver.classList.toggle("walking",R27.moving);beaver.classList.toggle("moving",R27.moving)}
+/* aim the face and the lean from the road's direction; ease both so curves never snap */
+function steer27(dir,k){const[tx,ty]=tan27(R27.p,dir);if(tx>.22)R27.face=1;else if(tx<-.22)R27.face=-1;
+  const head=Math.atan2(tx,-ty)*180/Math.PI;const want=Math.max(-15,Math.min(15,(Math.abs(head)>90?(head>0?180-head:-180-head):head)*.35));
+  R27.lean+=(want-R27.lean)*k}
+function walk27(to,then){cancelAnimationFrame(R27.raf);to=Math.max(0,Math.min(1,to));const from=R27.p;
+  if(!landEl||Math.abs(to-from)<.002){R27.p=to;R27.moving=false;draw27();then&&then();return}
+  const g=geo27(),dir=to>from?1:-1,px=Math.abs(to-from)*g.len,speed=Math.max(120,g.w*.4),dur=Math.max(500,px/speed*1000);
+  let t0=0,last=0,stepAt=0;R27.moving=true;
+  const tick=ts=>{if(!t0){t0=ts;last=ts}const u=Math.min(1,(ts-t0)/dur),e=u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2;
+    const np=from+(to-from)*e;R27.dist+=Math.abs(np-R27.p)*g.len;R27.p=np;steer27(dir,Math.min(1,(ts-last)/120));last=ts;
+    if(R27.dist-stepAt>36){stepAt=R27.dist;try{sfx.step()}catch(_){}}
+    draw27();if(u<1)R27.raf=requestAnimationFrame(tick);else{R27.moving=false;R27.lean*=.4;draw27();then&&then()}};
+  R27.raf=requestAnimationFrame(tick)}
+const restP27=()=>{const n=HOLES[landIdx()].length,d=S.day.done;return d>=n?1:d===0?0:ROAD27.stops[d-1]};
+placeBeaver=function(animate){if(!landEl)return;paint27();if(animate)walk27(restP27());else{R27.p=restP27();steer27(1,1);draw27()}};
+openMound=function(i){if(!landEl||i!==S.day.done)return _om26.apply(this,arguments);const args=arguments,self=this;
+  walk27(ROAD27.stops[i],()=>{try{sfx.pop()}catch(_){}setTimeout(()=>_om26.apply(self,args),180)})};
+scrollToCurrent=function(smooth){try{const map=$("map");const y=landEl.offsetTop+at27(restP27())[1];
+  map.scrollTo({top:Math.max(0,journey.offsetTop+y-map.clientHeight*.6),behavior:smooth?"smooth":"auto"})}catch(e){_sc26(smooth)}};
+const _rm27=renderMap;renderMap=function(){const r=_rm27.apply(this,arguments);try{paint27()}catch(e){}return r};
+addEventListener("resize",()=>{R27.box=null;try{draw27()}catch(e){}});
+/* a hidden test slider: open the app with ?road=1 to drag Domi along the road (forward and back) */
+window.beaverRoad={get:()=>R27.p,set:p=>{R27.p=p;draw27()},goTo:p=>walk27(p)};
+if(/[?&#]road=1/.test(location.href))addEventListener("load",()=>{const d=document.createElement("div");d.className="g27dbg";
+  d.innerHTML='<input type="range" min="0" max="1000" value="0"><b>0%</b>';document.body.appendChild(d);const r=d.querySelector("input"),b=d.querySelector("b");
+  let tm=0;r.oninput=()=>{b.textContent=(r.value/10).toFixed(1)+"%";clearTimeout(tm);tm=setTimeout(()=>walk27(r.value/1000),60)}});
