@@ -263,3 +263,27 @@ const _ff16=formatsFor0;formatsFor0=function(cat){let b=_ff16(cat).filter(k=>k!=
 Object.assign(GMAP,{"g:sayname":G("Name it!",["lang","listen"],[["lang","vocab"]],"A picture appears and the child says its English name; the phone checks the word.","Practice"),
   "g:readit":G("Read it!",["lang","listen"],[["lang","vocab"]],"The child reads a word out loud; the phone checks it, then Lulu says it.","Practice"),
   "g:saysent":G("Say the sentence",["lang","listen"],[["lang","vocab"]],"Lulu says a short English sentence and the child repeats it; each word lights up when the phone hears it.","Practice")});
+/* ---------- v26: the parent's new land picture (Land_Beaver): 7 mounds on one path, the big house at the top ---------- */
+const LAND26={src:"img/w/land_beaver.webp",h:1920,
+  holes:[[65.9,80.5],[33.4,70.6],[67.1,61.4],[34.5,52.4],[67.2,44.6],[35.1,37.1],[65.2,30.5]],
+  stand:[[48,85],[50,74.5],[48,64.5],[51,55.5],[48,47.5],[52,39.5],[49,33]],start:[44,95],house:[50,19]};
+for(let z=0;z<HOLES.length;z++){HOLES[z]=LAND26.holes.map(p=>p.slice());MOUNDS[z]=LAND26.stand.map(p=>p.slice());TILE_H[z]=LAND26.h}
+try{STARTS.length=0;TOTAL=0;HOLES.forEach((h,z)=>{STARTS[z]=TOTAL;TOTAL+=h.length})}catch(e){}
+const LAND_SRC=z=>LAND26.src;
+const _dp26=dayPlan;dayPlan=function(){try{if(S.day&&S.day.plan&&S.day.plan.length!==HOLES[landIdx()].length)S.day.v=0}catch(e){}return _dp26()};
+landEl=null;
+/* the big house is in the picture now: the old drawn house becomes an invisible door over it */
+const _bm26=buildMap;buildMap=function(){_bm26();try{houseEl.classList.add("g26house");landEl.appendChild(houseEl)}catch(e){}};
+/* Domi starts at the beginning of the path and walks to the first mound when the map opens */
+let walkedIn26=false;
+const _pb26=placeBeaver;placeBeaver=function(animate){const n=HOLES[landIdx()].length,done=S.day.done;
+  if(!landEl)return _pb26(animate);if(beaver.parentNode!==landEl)landEl.appendChild(beaver);
+  const W=64,H=58,at=([x,y])=>({left:x/100*landEl.offsetWidth-W/2,top:y/100*landEl.offsetHeight-H+10});
+  const go=(p,anim)=>{const q=at(p);if(!anim){beaver.style.transition="none";beaver.style.left=q.left+"px";beaver.style.top=q.top+"px";void beaver.offsetWidth;beaver.style.transition="";return}
+    beaver.classList.add("walking");beaver.style.left=q.left+"px";beaver.style.top=q.top+"px";let k=0;const t=setInterval(()=>{sfx.step();if(++k>3)clearInterval(t)},260);
+    setTimeout(()=>{beaver.classList.remove("walking");void beaver.offsetWidth;beaver.classList.add("popin");sfx.pop()},1150)};
+  if(done>=n){go(LAND26.house,animate);return}
+  if(done===0&&!walkedIn26){walkedIn26=true;go(LAND26.start,false);setTimeout(()=>{if(S.day.done===0&&!$("map").hidden)go(LAND26.stand[0],true)},900);return}
+  go(LAND26.stand[done],animate)};
+const _sc26=scrollToCurrent;scrollToCurrent=function(smooth){try{const n=HOLES[landIdx()].length,map=$("map");const y=S.day.done>=n?0:landEl.offsetTop+LAND26.stand[S.day.done][1]/100*landEl.offsetHeight;
+  map.scrollTo({top:Math.max(0,journey.offsetTop+y-map.clientHeight/2),behavior:smooth?"smooth":"auto"})}catch(e){_sc26(smooth)}};

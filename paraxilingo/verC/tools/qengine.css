@@ -1805,3 +1805,7 @@ img.e3{width:1.18em;height:1.18em;vertical-align:-.22em;object-fit:contain;displ
 .g17ver{position:absolute;bottom:max(14px,env(safe-area-inset-bottom));left:0;right:0;text-align:center;font:700 12px "Nunito",sans-serif;color:#bbb}
 .g16dots{display:flex;justify-content:center;gap:8px;margin:2px 0 6px}.g16dots i{width:14px;height:14px;border-radius:50%;background:#E9ECEF;transition:all .3s}
 .g16dots i.now{background:#FFD43B;transform:scale(1.25)}.g16dots i.done,.g16dots i.ok{background:#51CF66}
+/* v26: the big house is part of the land picture */
+.house.g26house{position:absolute;left:15%;right:15%;top:0;height:22%;background:none;z-index:3;cursor:pointer}
+.house.g26house svg.lodge{display:none}
+.house.g26house .htag{position:absolute;left:50%;top:auto;bottom:2%;height:auto;transform:translateX(-50%);white-space:nowrap}
