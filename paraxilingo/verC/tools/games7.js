@@ -133,7 +133,7 @@ function seasonsQ(q){let k=0,miss=0;gShow(`<div class="game">${gHead("🍂","Fou
 
 /* 14. Rocket countdown (age 4+) - tap the numbers counting DOWN */
 function qRocket(){const top=lvl()<=5?5:10;return {game:"rocket",top,voice:[G7("ROCKET")],gid:"g:rocket",factT:"Rockets launch after a countdown!"}}
-function rocketQ(q){let k=q.top,miss=0;const ns=sh(Array.from({length:q.top},(_,i)=>i+1));gShow(`<div class="game">${gHead("🚀","Rocket countdown",`Count down from ${q.top} to 1!`)}
+function rocketQ(q){let k=q.top,miss=0;const ns=sh(Array.from({length:q.top},(_,i)=>i+1));gShow(`<div class="game">${gHead("🚀","Rocket countdown",`Count down! Tap ${q.top}, ${q.top-1}, ${q.top-2}… down to 1`)}
   <div class="g7-pad"><span class="g7-rk" id="rkR">🚀</span></div><div class="g7-nums">${ns.map(n=>`<button class="g7-n" data-n="${n}">${n}</button>`).join("")}</div></div>`);gAsk(q);
   tapAll(".g7-n",b=>{if(q.done||b.dataset.done)return;const n=+b.dataset.n;if(n===k){b.dataset.done=1;b.classList.add("ok");sfx.tap();sayseq([N(n)].filter(Boolean),()=>{});k--;if(!k){$("rkR").classList.add("go");setTimeout(()=>gameWin(q,miss>1?1:0,$("rkR"),[]),1100)}}else{miss++;sfx.oops();toastHint(`Next is ${k}`)}});
   g7solve(()=>{const t=()=>{if(q.done||!k)return;fire7([...$("qBody").querySelectorAll(".g7-n")].find(b=>+b.dataset.n===k));setTimeout(t,60)};t()})}

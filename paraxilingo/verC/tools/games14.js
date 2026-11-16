@@ -344,3 +344,11 @@ if(/[?&#]road=1/.test(location.href))addEventListener("load",()=>{const d=docume
   [typeof __ac!=="undefined"?__ac:null,typeof __pac!=="undefined"?__pac:null].forEach(c=>{try{c&&c.state!=="running"&&c.resume()}catch(e){}})};
   ["pointerdown","touchend","keydown"].forEach(ev=>addEventListener(ev,wake,{capture:true,passive:true}));
   document.addEventListener("visibilitychange",()=>{if(!document.hidden)wake()})})();
+
+/* v28 (QC Nov 15): Lulu now says exactly how to play hopscotch (count by 1s, 2s, 5s or 10s), the rocket countdown
+   (which numbers to tap) and Move with me (watch, then tap the moves in order) */
+const G18=n=>"w/PX_G18_"+n;
+const _qHop18=qHop;qHop=function(){const q=_qHop18.apply(this,arguments);if([1,2,5,10].includes(q.st))q.voice=[G18("HOP"+q.st)];return q};
+const _qRk18=qRocket;qRocket=function(){const q=_qRk18.apply(this,arguments);if(q.top===5||q.top===10)q.voice=[G18("ROCKET"+q.top)];return q};
+const _qMv18=qMove;qMove=function(){const q=_qMv18.apply(this,arguments);q.voice=[G18("MOVE_WATCH")];return q};
+try{G6F.hop=qHop;G7F.rocket=qRocket}catch(e){}
