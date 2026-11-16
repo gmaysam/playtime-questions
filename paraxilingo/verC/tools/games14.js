@@ -265,7 +265,7 @@ Object.assign(GMAP,{"g:sayname":G("Name it!",["lang","listen"],[["lang","vocab"]
   "g:saysent":G("Say the sentence",["lang","listen"],[["lang","vocab"]],"Lulu says a short English sentence and the child repeats it; each word lights up when the phone hears it.","Practice")});
 /* ---------- v26: the parent's new land picture (Land_Beaver): 7 mounds on one path, the big house at the top ---------- */
 const LAND26={src:"img/w/land_beaver.webp",h:1920,
-  holes:[[71.6,69.9],[27.5,60.4],[72.5,51.4],[29,43.4],[72,35.6],[29,29.3],[69.4,24]],   /* on the sign above each mound */
+  holes:[[71.4,70.3],[27.8,60.6],[72.3,51.9],[29.5,43.9],[72.2,36.4],[30.1,30.1],[69.2,23.9]],   /* the middle of the sign above each mound */
   stand:[[48,85],[50,74.5],[48,64.5],[51,55.5],[48,47.5],[52,39.5],[49,33]],start:[44,95],house:[50,19]};
 for(let z=0;z<HOLES.length;z++){HOLES[z]=LAND26.holes.map(p=>p.slice());MOUNDS[z]=LAND26.stand.map(p=>p.slice());TILE_H[z]=LAND26.h}
 try{STARTS.length=0;TOTAL=0;HOLES.forEach((h,z)=>{STARTS[z]=TOTAL;TOTAL+=h.length})}catch(e){}
@@ -274,16 +274,16 @@ const _dp26=dayPlan;dayPlan=function(){try{if(S.day&&S.day.plan&&S.day.plan.leng
 landEl=null;
 /* the big house is in the picture now: the old drawn house becomes an invisible door over it */
 const _bm26=buildMap;buildMap=function(){_bm26();try{houseEl.classList.add("g26house");landEl.appendChild(houseEl)}catch(e){}};
-/* Domi starts at the beginning of the path and walks to the first mound when the map opens */
-let walkedIn26=false;
-const _pb26=placeBeaver;placeBeaver=function(animate){const n=HOLES[landIdx()].length,done=S.day.done;
-  if(!landEl)return _pb26(animate);if(beaver.parentNode!==landEl)landEl.appendChild(beaver);
-  const W=64,H=58,at=([x,y])=>({left:x/100*landEl.offsetWidth-W/2,top:y/100*landEl.offsetHeight-H+10});
-  const go=(p,anim)=>{const q=at(p);if(!anim){beaver.style.transition="none";beaver.style.left=q.left+"px";beaver.style.top=q.top+"px";void beaver.offsetWidth;beaver.style.transition="";return}
-    beaver.classList.add("walking");beaver.style.left=q.left+"px";beaver.style.top=q.top+"px";let k=0;const t=setInterval(()=>{sfx.step();if(++k>3)clearInterval(t)},260);
-    setTimeout(()=>{beaver.classList.remove("walking");void beaver.offsetWidth;beaver.classList.add("popin");sfx.pop()},1150)};
-  if(done>=n){go(LAND26.house,animate);return}
-  if(done===0&&!walkedIn26){walkedIn26=true;go(LAND26.start,false);setTimeout(()=>{if(S.day.done===0&&!$("map").hidden)go(LAND26.stand[0],true)},900);return}
-  go(LAND26.stand[done],animate)};
+/* Domi waits at the start of the road (or at the mound he last finished); when the child starts a mound he walks
+   there first, and then the game opens (parent, Nov 15) */
+const at26=([x,y])=>({left:x/100*landEl.offsetWidth-32,top:y/100*landEl.offsetHeight-48});
+function beaverTo26(p,anim,then){const q=at26(p);if(beaver.parentNode!==landEl)landEl.appendChild(beaver);
+  if(!anim){beaver.style.transition="none";beaver.style.left=q.left+"px";beaver.style.top=q.top+"px";void beaver.offsetWidth;beaver.style.transition="";then&&then();return}
+  beaver.classList.add("walking");beaver.style.left=q.left+"px";beaver.style.top=q.top+"px";let k=0;const t=setInterval(()=>{sfx.step();if(++k>3)clearInterval(t)},260);
+  setTimeout(()=>{beaver.classList.remove("walking");void beaver.offsetWidth;beaver.classList.add("popin");sfx.pop();then&&then()},1150)}
+const rest26=()=>{const n=HOLES[landIdx()].length,d=S.day.done;return d>=n?LAND26.house:d===0?LAND26.start:LAND26.stand[d-1]};
+placeBeaver=function(animate){if(!landEl)return;beaverTo26(rest26(),animate)};
+const _om26=openMound;openMound=function(i){if(!landEl||i!==S.day.done)return _om26.apply(this,arguments);const args=arguments,self=this;
+  beaverTo26(LAND26.stand[i],true,()=>_om26.apply(self,args))};
 const _sc26=scrollToCurrent;scrollToCurrent=function(smooth){try{const n=HOLES[landIdx()].length,map=$("map");const y=S.day.done>=n?0:landEl.offsetTop+LAND26.stand[S.day.done][1]/100*landEl.offsetHeight;
   map.scrollTo({top:Math.max(0,journey.offsetTop+y-map.clientHeight/2),behavior:smooth?"smooth":"auto"})}catch(e){_sc26(smooth)}};
