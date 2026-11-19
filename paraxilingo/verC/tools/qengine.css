@@ -1943,3 +1943,20 @@ img.e3{width:1.18em;height:1.18em;vertical-align:-.22em;object-fit:contain;displ
 .q31-b .oe{font-size:34px}.q31-b small{font-size:14px;font-weight:800}.q31-b .num{font-size:30px}.q31-b .word{font-size:20px}
 .q31-b img.e3{height:44px!important;width:44px!important}.q31-b .wp{width:56px;height:56px}
 .q31-o.col .q31-b .oe{font-size:26px}.q31-o.col .q31-b img.e3{height:32px!important;width:32px!important}
+
+/* ===================== v32 animation games ===================== */
+.v32-gif{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:18px;background:#EAF6FF}
+.v32-play{margin-top:12px}
+.v32-bar{height:8px;border-radius:4px;background:#F1F1F1;margin-top:8px;overflow:hidden}.v32-bar i{display:block;height:100%;width:0;background:#1CB0F6}
+.v32-slots{display:grid;grid-template-columns:repeat(auto-fit,minmax(70px,1fr));gap:6px;margin-top:12px}
+.v32-slot{position:relative;aspect-ratio:16/9;border:2px dashed #AFAFAF;border-radius:10px;display:grid;place-items:center;overflow:hidden;background:#F7F7F7}
+.v32-slot b{position:absolute;left:4px;top:2px;font-size:13px;font-weight:900;color:#777;background:rgba(255,255,255,.85);border-radius:6px;padding:0 5px}
+.v32-slot img{width:100%;height:100%;object-fit:cover}.v32-slot.full{border-style:solid;border-color:#58CC02}
+.v32-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+.v32-card{padding:0;border:3px solid #E5E5E5;border-bottom-width:5px;border-radius:14px;overflow:hidden;background:#fff;aspect-ratio:16/9;cursor:pointer}
+.v32-card img{width:100%;height:100%;object-fit:cover;display:block}
+.v32-card.used{visibility:hidden}.v32-card.no{border-color:#FF4B4B}.v32-card.hint{border-color:#58CC02;box-shadow:0 0 0 4px #D7FFB8}
+.q31-b.hint{border-color:#58CC02!important;box-shadow:0 0 0 4px #D7FFB8}
+.v32-over{position:fixed;inset:0;z-index:9000;background:rgba(20,20,40,.82);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:16px}
+.v32-over .v32-gif.big{max-width:560px}
+.v32-skip{color:#fff;font-weight:800;font-size:15px;opacity:.85}

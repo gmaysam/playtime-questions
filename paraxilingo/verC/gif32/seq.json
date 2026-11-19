@@ -1,0 +1,271 @@
+{
+"caterpillar-to-butterfly": {
+"sec": "animals",
+"f": [
+0,
+24,
+36,
+59
+]
+},
+"caterpillar-yellow": {
+"sec": "animals",
+"f": [
+0,
+24,
+36,
+59
+]
+},
+"chick-basket": {
+"sec": "farm",
+"f": [
+0,
+12,
+24,
+59
+]
+},
+"chick-nest": {
+"sec": "farm",
+"f": [
+0,
+12,
+24,
+59
+]
+},
+"chick-sun": {
+"sec": "farm",
+"f": [
+0,
+12,
+24,
+48
+]
+},
+"tadpole-waterfall": {
+"sec": "animals",
+"f": [
+0,
+24,
+59
+]
+},
+"seed-daisy": {
+"sec": "world",
+"f": [
+0,
+24,
+36,
+59
+]
+},
+"seed-rose": {
+"sec": "world",
+"f": [
+0,
+24,
+36,
+59
+]
+},
+"seed-sunflower": {
+"sec": "world",
+"f": [
+0,
+24,
+36,
+59
+]
+},
+"seed-tulip": {
+"sec": "world",
+"f": [
+0,
+24,
+36,
+59
+]
+},
+"mushroom-forest": {
+"sec": "world",
+"f": [
+0,
+12,
+24,
+59
+]
+},
+"mushroom-meadow": {
+"sec": "world",
+"f": [
+0,
+12,
+24,
+59
+]
+},
+"apple-four-seasons": {
+"sec": "clock",
+"f": [
+0,
+24,
+59
+]
+},
+"maple-four-seasons": {
+"sec": "clock",
+"f": [
+0,
+24,
+36,
+59
+]
+},
+"day-night-house": {
+"sec": "clock",
+"f": [
+0,
+24,
+36,
+59
+]
+},
+"day-night-tree": {
+"sec": "clock",
+"f": [
+0,
+24,
+36,
+59
+]
+},
+"rain-rainbow-garden": {
+"sec": "sky",
+"f": [
+0,
+24,
+59
+]
+},
+"rain-rainbow-hill": {
+"sec": "sky",
+"f": [
+0,
+24,
+59
+]
+},
+"rain-rainbow-house": {
+"sec": "sky",
+"f": [
+0,
+24,
+59
+]
+},
+"water-cycle-ocean": {
+"sec": "sky",
+"f": [
+0,
+24,
+36,
+52
+]
+},
+"water-cycle-puddle": {
+"sec": "sky",
+"f": [
+0,
+24,
+36,
+52
+]
+},
+"snowman-park": {
+"sec": "sky",
+"f": [
+0,
+24,
+36,
+59
+]
+},
+"snowman-yard": {
+"sec": "sky",
+"f": [
+0,
+24,
+36,
+59
+]
+},
+"rocket-launch": {
+"sec": "sky",
+"f": [
+0,
+12,
+24,
+59
+]
+},
+"rocket-red": {
+"sec": "sky",
+"f": [
+0,
+12,
+24,
+59
+]
+},
+"rocket-sunset": {
+"sec": "sky",
+"f": [
+0,
+12,
+24,
+59
+]
+},
+"volcano-ash": {
+"sec": "world",
+"f": [
+0,
+12,
+36
+]
+},
+"volcano-classic": {
+"sec": "world",
+"f": [
+0,
+12,
+36
+]
+},
+"penguin-hill": {
+"sec": "animals",
+"f": [
+0,
+12,
+48
+]
+},
+"balloon-fields": {
+"sec": "sky",
+"f": [
+0,
+24,
+59
+]
+},
+"balloon-sunrise": {
+"sec": "sky",
+"f": [
+0,
+24,
+59
+]
+}
+}

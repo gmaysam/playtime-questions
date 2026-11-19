@@ -597,6 +597,14 @@ out=_rep(out,'/* ================= start: Domi tells what month or event it is =
 _en31={k:'w/'+v[0] for k,v in json.load(open(os.path.join(SDIR,'v31','opt_en.json'))).items() if os.path.exists('appC/audio/w/'+v[0]+'.mp3')}
 g15=open(os.path.join(os.path.dirname(__file__),'games15.js')).read().replace('__EN31__',json.dumps(_en31))
 out=_rep(out,'/* ================= start: Domi tells what month or event it is ================= */',g15+'\n/* ================= start: Domi tells what month or event it is ================= */')
+# ---- v32: games with the new animations (games16.js) ----
+_seq=json.load(open(os.path.join(SDIR,'gif32','seq.json')))
+_seq32={n:[v['sec'],len(v['f'])] for n,v in _seq.items() if os.path.exists(os.path.join(SDIR,'appC','img','gif',n+'.webp')) and all(os.path.exists(os.path.join(SDIR,'appC','img','gif','s','%s_%d.webp'%(n,k))) for k in range(len(v['f'])))}
+g16=open(os.path.join(os.path.dirname(__file__),'games16.js')).read()
+_cl=set(re.findall(r'"w/([A-Za-z0-9_]+)"',g16))|set(re.findall(r'G32\("([A-Z_]+)"\)',g16) and ['PX_G32_'+x for x in re.findall(r'G32\("([A-Z_]+)"\)',g16)])|set(re.findall(r'O32\("[^"]*","[^"]*","([A-Za-z0-9_]+)"\)',g16))
+_v32=sorted(c for c in _cl if os.path.exists(os.path.join(SDIR,'appC','audio','w',c+'.mp3')))
+g16=g16.replace('__SEQ32__',json.dumps(_seq32)).replace('__VOICED32__',json.dumps(_v32))
+out=_rep(out,'/* ================= start: Domi tells what month or event it is ================= */',g16+'\n/* ================= start: Domi tells what month or event it is ================= */')
 out=_rep(out,'<img class="talk" src="img/domi_1.svg" alt="Domi the beaver">','<img class="talk g17gif" src="data:image/gif;base64,'+__import__('base64').b64encode(open('appC/img/domi_dance.gif','rb').read()).decode()+'" alt="Domi dances hello"><img class="talk g14char" hidden alt=""><button class="g14tap" id="inTap" hidden>👋 Tap to hear Domi!</button>')
 out=_rep(out,'document.querySelectorAll("img.talk,.bv img").forEach(i=>i.src=domiSrc())','document.querySelectorAll(".bv img").forEach(i=>i.src=domiSrc())')
 out=_rep(out,'setTimeout(()=>sayseq([ev?ev.clip:"z"+Z.a,"w/LULU_BD_PRIZE"],later),400);','setTimeout(()=>{introList=[...G14("HELLO"),...(ev?[ev.clip]:G14("HELLO").length?[]:["z"+Z.a])];introHello(introList,later)},300);')
