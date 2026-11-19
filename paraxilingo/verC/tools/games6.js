@@ -93,7 +93,7 @@ function pumpQ(q){let n=0,miss=0;
   window.__gSolve=()=>{n=q.t;sz();$("pmD").click()}}
 
 /* ---------------- LAB 8: volcano ---------------- */
-const VOLC6=[["🧂","baking soda",1],["🍶","vinegar",1],["💧","water",0],["🍬","sugar",0],["🏖️","sand",0]];
+const VOLC6=[["🧂","baking soda",1],["🍶","vinegar",1],["💧","water",0],["🍬","sugar",0],["🏝️","sand",0]];
 function qVolc(){return {game:"volc",voice:[G6("VOLCANO")],gid:"g:volc",factT:"Baking soda and vinegar make bubbles of gas - fizz!"}}
 function volcQ(q){let pot=[],miss=0;const shelf=sh(VOLC6.slice());
   gShow(`<div class="game">${gHead("🌋","Fizzy volcano","Which two make it erupt?")}<div class="vc" id="vcV"><span class="vc-foam" id="vcF"></span><svg viewBox="0 0 200 130"><path d="M20 128 L80 30 L120 30 L180 128Z" fill="#A9744F"/><path d="M80 30 L120 30 L112 44 L88 44Z" fill="#5C3A21"/></svg><span class="vc-in" id="vcI"></span></div>
