@@ -75,6 +75,8 @@ EVOICED=sorted(set(f.split('_')[0] for f in os.listdir(os.path.join(os.path.dirn
 # Paraxilingo's own dinosaur questions are now in the pool as d01-d06 (no separate merge)
 SDIR=os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 FA_SAY=json.load(open(os.path.join(SDIR,'tools','fa_have.json')));EN_SAY=json.load(open(os.path.join(SDIR,'tools','en_have.json')));EN_SAY.update(json.load(open(os.path.join(SDIR,'fa_new','en_new.json'))));FA_SAY.update(json.load(open(os.path.join(SDIR,'fa_new','fa_new2.json'))));FA_SAY.update(json.load(open(os.path.join(SDIR,'fa_new','fa_new.json'))))
+for _k,_v in json.load(open(os.path.join(SDIR,'v31','opt_fa.json'))).items():
+    if os.path.exists(os.path.join(SDIR,'appC','audio','w',_v[0]+'.mp3')):FA_SAY[_k]=_v[0]
 
 for _f,_d in (('fa_new3.json','FA'),('en_new2.json','EN')):
     _p=os.path.join(SDIR,'fa_new',_f)
@@ -591,6 +593,10 @@ def _rep(o,a,c,n=1):
 G14V=sorted(f[:-4] for f in os.listdir('appC/audio/w') if f.startswith('PX_G14_'))
 g14=open(os.path.join(os.path.dirname(__file__),'games14.js')).read().replace('__G14V__',json.dumps(G14V)).replace('__STKD__',json.dumps([x for x in json.load(open(os.path.join(os.path.dirname(__file__),'stk14.json'))) if os.path.exists('appC/audio/w/'+x['clip']+'.mp3')],ensure_ascii=False)).replace('__SENTS__',json.dumps([dict(x,has=os.path.exists('appC/audio/w/'+x['clip']+'.mp3')) for x in json.load(open(os.path.join(os.path.dirname(__file__),'sent16.json')))],ensure_ascii=False)).replace('__G16V__',json.dumps(sorted(f[:-4] for f in os.listdir('appC/audio/w') if f.startswith('PX_G16_')))).replace('__WORLD__',open(os.path.join(os.path.dirname(__file__),'worldmap.json')).read())
 out=_rep(out,'/* ================= start: Domi tells what month or event it is ================= */',g14+'\n/* ================= start: Domi tells what month or event it is ================= */')
+# ---- v31: quiz games + more questions (games15.js) ----
+_en31={k:'w/'+v[0] for k,v in json.load(open(os.path.join(SDIR,'v31','opt_en.json'))).items() if os.path.exists('appC/audio/w/'+v[0]+'.mp3')}
+g15=open(os.path.join(os.path.dirname(__file__),'games15.js')).read().replace('__EN31__',json.dumps(_en31))
+out=_rep(out,'/* ================= start: Domi tells what month or event it is ================= */',g15+'\n/* ================= start: Domi tells what month or event it is ================= */')
 out=_rep(out,'<img class="talk" src="img/domi_1.svg" alt="Domi the beaver">','<img class="talk g17gif" src="data:image/gif;base64,'+__import__('base64').b64encode(open('appC/img/domi_dance.gif','rb').read()).decode()+'" alt="Domi dances hello"><img class="talk g14char" hidden alt=""><button class="g14tap" id="inTap" hidden>👋 Tap to hear Domi!</button>')
 out=_rep(out,'document.querySelectorAll("img.talk,.bv img").forEach(i=>i.src=domiSrc())','document.querySelectorAll(".bv img").forEach(i=>i.src=domiSrc())')
 out=_rep(out,'setTimeout(()=>sayseq([ev?ev.clip:"z"+Z.a,"w/LULU_BD_PRIZE"],later),400);','setTimeout(()=>{introList=[...G14("HELLO"),...(ev?[ev.clip]:G14("HELLO").length?[]:["z"+Z.a])];introHello(introList,later)},300);')
