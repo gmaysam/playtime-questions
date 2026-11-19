@@ -376,3 +376,46 @@ function showRev29(i){const list=(rev29()[i]||[]);const c=catById(dayPlan()[i].c
   $("phone").appendChild(v);v.querySelector(".g29x").onclick=()=>{sfx.tap();v.remove()}}
 const _sp29=showPop;showPop=function(i){_sp29.apply(this,arguments);try{if(i<S.day.done&&popEl&&(rev29()[i]||[]).length){popEl.querySelector("p").insertAdjacentHTML("afterend",`<button class="btn g29see">See my answers</button>`);
   popEl.querySelector(".g29see").onclick=e=>{e.stopPropagation();closePop();sfx.tap();showRev29(i)}}}catch(e){}};
+
+/* ---------- v30: Match the pairs (parent, Nov 18, like Duolingo): two columns of cards; tap one on each side that belong
+   together. What sits on each side changes with the topic and the age: picture-word, animal-shadow, animal-home,
+   number-dots, number-word, big-small letter, flag-country, job-name, colour-word ---------- */
+const G30=n=>"w/PX_G30_"+n;
+const NW30=["zero","one","two","three","four","five","six","seven","eight","nine","ten","eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen","nineteen","twenty"];
+const uniq30=(arr,key)=>{const s=new Set();return arr.filter(x=>{const k=key(x);if(s.has(k))return false;s.add(k);return true})};
+const MT30={
+  word:{t:"Match each picture to its word",mk:n=>sh(nameWords()).slice(0,n).map(x=>({L:x.pic,R:`<b class="m30w">${x.w}</b>`,say:x.say,rsay:1}))},
+  shadow:{t:"Match each animal to its shadow",mk:n=>{const LOOK=["cat","fox","dog","tiger","lion","cheetah","bear","rabbit","mouse"];let one=false;   /* only one of the look-alike shapes */
+    return sh(AN.filter(x=>enSay(x[0]).length)).filter(x=>{if(!LOOK.includes(x[0]))return true;if(one)return false;one=true;return true}).slice(0,n).map(x=>({L:`<span class="m30e">${x[1]}</span>`,R:`<span class="m30e m30sh">${x[1]}</span>`,say:["w/LULU_FA_AN"+AN.indexOf(x),...enSay(x[0])]}))}},
+  home:{t:"Match each animal to its home",mk:n=>(()=>{const pk=[];sh(AN.filter(x=>HOME_OF[x[0]])).forEach(x=>{const h=HOME_OF[x[0]][0];   /* no animal may also live in another picked home */
+    if(pk.length<n&&!pk.some(o=>o.h===h||HOME_OF[x[0]].includes(o.h)||HOME_OF[o.x[0]].includes(h)))pk.push({x,h})});return pk})().map(({x,h})=>({L:`<span class="m30e">${x[1]}</span>`,R:PIC("home_"+HOMES.indexOf(h),"m30p"),say:["w/LULU_FA_AN"+AN.indexOf(x),"w/LULU_FA_HOME"+HOMES.indexOf(h)]}))},
+  dots:{t:"Match each number to its dots",mk:n=>sh([...Array(lvl()<=4?5:10).keys()].map(i=>i+1)).slice(0,n).map(k=>({L:`<b class="m30n">${k}</b>`,R:`<span class="m30dots${k>5?" m30d2":""}">${"<i></i>".repeat(k)}</span>`,say:["w/LULU_EN"+k]}))},
+  numw:{t:"Match each number to its word",mk:n=>sh([...Array(lvl()>=8?20:12).keys()].map(i=>i+1)).slice(0,n).map(k=>({L:`<b class="m30n">${k}</b>`,R:`<b class="m30w">${NW30[k]}</b>`,say:["w/LULU_EN"+k],rsay:1}))},
+  case:{t:"Match the big and small letters",mk:n=>sh("ABDEFGHJLMNQRT".split("")).slice(0,n).map(c=>({L:`<b class="m30l">${c}</b>`,R:`<b class="m30l">${c.toLowerCase()}</b>`,say:["w/LULU_LN_"+c]}))},
+  flag:{t:"Match each flag to its country",mk:n=>sh(COUNTRIES.map((x,i)=>[x,i])).slice(0,n).map(([x,i])=>({L:`<span class="m30e">${x[1]}</span>`,R:`<b class="m30w m30s">${x[0].replace(/^the /,"")}</b>`,say:["w/LULU_EN_COUNTRY"+i],rsay:1}))},
+  job:{t:"Match each job to its name",mk:n=>sh(JOBS.map((x,i)=>[x,i])).slice(0,n).map(([x,i])=>({L:`<span class="m30e">${x[1]}</span>`,R:`<b class="m30w m30s">${x[0]}</b>`,say:["w/LULU_EN_JOB"+i],rsay:1}))},
+  color:{t:"Match each colour to its word",mk:n=>sh(COLS.map((x,i)=>[x,i])).slice(0,n).map(([x,i])=>({L:`<span class="m30c" style="background:${x[1]}"></span>`,R:`<b class="m30w">${x[0].toLowerCase()}</b>`,say:colSay(i),rsay:1}))}};
+function mt30Kinds(cat){const a=lvl();return ({read:a>=5?["word"]:[],letters:[...(a>=4?["case"]:[]),...(a>=5?["word"]:[])],
+  count:[...(a<=6?["dots"]:[]),...(a>=6?["numw"]:[])],add:[...(a<=6?["dots"]:[]),...(a>=6?["numw"]:[])],
+  animals:a<=4?["shadow"]:a<=6?["shadow","home"]:["home","word"],farm:a<=4?["shadow"]:a<=6?["shadow","home"]:["home","word"],
+  world:a>=6?["flag"]:[],flags:a>=6?["flag"]:[],people:a>=5?["job"]:[],shapes:a>=5?["color"]:[]})[cat]||[]}
+function qMatch(cat){let ks=mt30Kinds(cat);if(!ks.length)return null;if(ks.length>1&&S.m30)ks=ks.filter(k=>k!==S.m30);const kind=pickOne(ks);S.m30=kind;
+  const a=lvl(),n=Math.min(6,(a<=4?3:a<=6?4:5)+(gxOf("match")>=2?1:0)),pairs=MT30[kind].mk(n);if(pairs.length<3)return null;
+  return {game:"match",kind,pairs,title:MT30[kind].t,voice:[G30("MT_"+kind.toUpperCase())],gid:"g:match",factT:"Matching two things that belong together trains memory and new words."}}
+GAMES.match=q=>{const P=q.pairs,Ls=sh(P.map((p,i)=>i)),Rs=sh(P.map((p,i)=>i));
+  gShow(`<div class="game">${gHead("🔗","Match the pairs",q.title)}<div class="m30 m30k-${q.kind}"><div class="m30col">${Ls.map(i=>`<button class="m30b" data-s="L" data-i="${i}">${P[i].L}</button>`).join("")}</div><div class="m30col">${Rs.map(i=>`<button class="m30b" data-s="R" data-i="${i}">${P[i].R}</button>`).join("")}</div></div></div>`);
+  gAsk(q);let sel=null,miss=0,got=0,busy=false;const bs=[...$("qBody").querySelectorAll(".m30b")];
+  const tap=b=>{if(q.done||busy||b.classList.contains("got"))return;
+    if(!sel||sel.dataset.s===b.dataset.s){sfx.tap();if(sel)sel.classList.remove("on");sel=b;b.classList.add("on");
+      if(b.dataset.s==="R"&&P[+b.dataset.i].rsay){hush();sayseq(P[+b.dataset.i].say,()=>{})}return}   /* a word card says its word */
+    const a=sel;sel=null;a.classList.remove("on");
+    if(a.dataset.i===b.dataset.i){got++;[a,b].forEach(x=>x.classList.add("ok"));sfx.good();hush();sayseq(P[+a.dataset.i].say,()=>{});
+      setTimeout(()=>[a,b].forEach(x=>{x.classList.remove("ok");x.classList.add("got")}),650);
+      if(got===P.length)setTimeout(()=>gameWin(q,miss>=2?1:0,$("qBody").querySelector(".m30")),1400)}
+    else{miss++;busy=true;try{sfx.oops()}catch(e){}[a,b].forEach(x=>x.classList.add("no"));setTimeout(()=>{[a,b].forEach(x=>x.classList.remove("no"));busy=false},600)}};
+  bs.forEach(b=>b.onclick=()=>tap(b));
+  window.__gSolve=()=>{let k=0;const go=()=>{if(k>=P.length||q.done)return;const l=bs.find(b=>b.dataset.s==="L"&&+b.dataset.i===k),r=bs.find(b=>b.dataset.s==="R"&&+b.dataset.i===k);k++;tap(l);tap(r);setTimeout(go,450)};go()}};
+Object.assign(FMIN,{f_match:3});Object.assign(FMAX,{f_match:8});
+const _bf30=buildFormat;buildFormat=function(kind,cat){if(kind==="f_match")return qMatch(cat);return _bf30(kind,cat)};
+const _ff30=formatsFor0;formatsFor0=function(cat){const b=_ff30(cat);return mt30Kinds(cat).length&&!b.includes("f_match")?[...b,"f_match"]:b};
+Object.assign(GMAP,{"g:match":G("Match the pairs",["lang","read"],[["cog","memory"]],"Two columns of cards; the child taps one on each side that belong together (picture and word, animal and shadow or home, number and dots or word, big and small letter, flag and country, job and name, colour and word).","Practice")});
