@@ -63,10 +63,10 @@ const GQ34=[
  {g:["snowman-park","snowman-yard"],s:["sky"],ids:["s06","n08","px55"]},
  {g:["snowflake-sky","snowflake-village"],s:["sky"],ids:["px29","s06","n07","s12"]},
  {g:["rocket-launch","rocket-red","rocket-sunset"],s:["sky"],ids:["p01","px104","p06","px175","px194","px195"]},
- {g:["apple-four-seasons","maple-four-seasons"],s:["clock","world"],ids:["n04","n05","n07","px55","px97","s13"]},
+ {g:["apple-four-seasons","maple-four-seasons"],s:["clock","world"],ids:["n05","n07","px55","px97","s13"]},
  {g:["octopus-reef","octopus-swim"],s:["animals"],ids:["px62","a28","px125"]},
  {g:["mushroom-forest","mushroom-meadow"],s:["world"],ids:["n14","px221"]},
- {g:["snail-garden","snail-log"],s:["animals"],ids:["px60","px10","px455"]},
+ {g:["snail-garden","snail-log"],s:["animals"],ids:["px10"]},
  {g:["kite-beach","kite-sunset"],s:["sky"],ids:["s08","px79"]},
  {g:["bee-garden","bee-wildflowers"],s:["animals","farm"],ids:["a05","px73","px12","px326","n09","a24","px211","px127"]},
  {g:["penguin-pond","penguin-spin","penguin-belly","penguin-hill"],s:["animals"],ids:["a20","px345","px113","px459"]}];
