@@ -6,6 +6,8 @@ cd $S
 git -C /home/claude/playtime-library pull -q --rebase || true
 python3 tools/sync_watcher.py /home/claude/playtime-library/library .
 cp tools/picover/*.png appC/img/w/   # Paraxilingo's 3D pictures over the pool's flat ones
+# new or changed pictures from Image/App_Pictures_Updated (stage the folder from the Mac into pics/ first)
+[ -d pics/App_Pictures_Updated ] && python3 tools/sync_pics.py pics/App_Pictures_Updated appC
 python3 tools/normaudio.py appC/audio/w norm/cache   # same loudness for every clip
 python3 tools/trimaudio.py appC/audio/w norm/trim   # Lulu starts talking right away
 python3 tools/buildC2.py appB/index.html appC/index.html watcher/wq.json

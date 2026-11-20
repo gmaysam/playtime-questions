@@ -559,7 +559,7 @@ const clk=()=>{const d=new Date();$("clock").textContent=d.getHours()+":"+String
 dayPlan();showMap();
 (function intro(){
   const ev=eventNow(),z=landIdx(),Z=ZONES[z],t0=Date.now();
-  $("inEv").textContent=ev?ev.e:"";
+  $("inEv").textContent="";  /* v34: the first page shows only Domi */
   let gone=false;
   const go=()=>{if(gone)return;gone=true;hush();$("introC").classList.add("gone");setTimeout(()=>$("introC").hidden=true,420);S.seen=true;save();
     showMap();const n2=HOLES[landIdx()].length;setTimeout(()=>{if(S.day.done<n2)showPop(S.day.done)},700)};
@@ -605,6 +605,11 @@ _cl=set(re.findall(r'"w/([A-Za-z0-9_]+)"',g16))|set(re.findall(r'G32\("([A-Z_]+)
 _v32=sorted(c for c in _cl if os.path.exists(os.path.join(SDIR,'appC','audio','w',c+'.mp3')))
 g16=g16.replace('__SEQ32__',json.dumps(_seq32)).replace('__VOICED32__',json.dumps(_v32))
 out=_rep(out,'/* ================= start: Domi tells what month or event it is ================= */',g16+'\n/* ================= start: Domi tells what month or event it is ================= */')
+# ---- v34: more games with the animations, by age (games17.js) ----
+g17=open(os.path.join(os.path.dirname(__file__),'games17.js')).read()
+_c17=sorted(set(re.findall(r'"((?:PX|LULU)_[A-Za-z0-9_]+)"',g17)))
+g17=g17.replace('__VOICED34__',json.dumps([c for c in _c17 if os.path.exists(os.path.join(SDIR,'appC','audio','w',c+'.mp3'))])).replace('__GIFS34__',json.dumps(sorted(f[:-5] for f in os.listdir(os.path.join(SDIR,'appC','img','gif')) if f.endswith('.webp'))))
+out=_rep(out,'/* ================= start: Domi tells what month or event it is ================= */',g17+'\n/* ================= start: Domi tells what month or event it is ================= */')
 out=_rep(out,'<img class="talk" src="img/domi_1.svg" alt="Domi the beaver">','<img class="talk g17gif" src="data:image/gif;base64,'+__import__('base64').b64encode(open('appC/img/domi_dance.gif','rb').read()).decode()+'" alt="Domi dances hello"><img class="talk g14char" hidden alt=""><button class="g14tap" id="inTap" hidden>👋 Tap to hear Domi!</button>')
 out=_rep(out,'document.querySelectorAll("img.talk,.bv img").forEach(i=>i.src=domiSrc())','document.querySelectorAll(".bv img").forEach(i=>i.src=domiSrc())')
 out=_rep(out,'setTimeout(()=>sayseq([ev?ev.clip:"z"+Z.a,"w/LULU_BD_PRIZE"],later),400);','setTimeout(()=>{introList=[...G14("HELLO"),...(ev?[ev.clip]:G14("HELLO").length?[]:["z"+Z.a])];introHello(introList,later)},300);')

@@ -154,7 +154,7 @@
 .qsrow .qsf{font-size:34px}
 /* intro: just Domi */
 .introC .talk{width:260px;max-width:70%}
-.introC .inev{font-size:44px;min-height:10px}
+.introC .inev{display:none}.introC .g17ver{display:none}
 /* parents: graphic */
 #pSettings{background:linear-gradient(180deg,#F4F8FF,#FFF8EF)}
 .phead{display:flex;align-items:center;gap:10px;margin:6px 0 12px}
@@ -1960,3 +1960,14 @@ img.e3{width:1.18em;height:1.18em;vertical-align:-.22em;object-fit:contain;displ
 .v32-over{position:fixed;inset:0;z-index:9000;background:rgba(20,20,40,.82);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:16px}
 .v32-over .v32-gif.big{max-width:560px}
 .v32-skip{color:#fff;font-weight:800;font-size:15px;opacity:.85}
+/* v34 Find it! */
+.v34-say{display:flex;justify-content:center;margin-top:10px}
+.v34-ear{width:56px;height:56px;border-radius:50%;border:0;background:#1CB0F6;color:#fff;font-size:26px;box-shadow:0 4px 0 #1899D6;cursor:pointer}
+.v34-grid{display:grid;grid-template-columns:1fr;gap:10px;margin-top:12px}
+.v34-m{padding:0;border:3px solid #E5E5E5;border-bottom-width:5px;border-radius:16px;overflow:hidden;background:#fff;cursor:pointer;display:block}
+.v34-gif{display:block;width:100%;aspect-ratio:16/9;object-fit:cover}
+.v34-grid.n3 .v34-gif{aspect-ratio:16/7}
+.v34-m.ok{border-color:#58CC02;box-shadow:0 0 0 4px #D7FFB8}
+.v34-m.no{border-color:#FF4B4B;opacity:.55}
+.v34-m.hint{border-color:#58CC02;animation:shuBob 1s ease-in-out infinite}
+
