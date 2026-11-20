@@ -691,7 +691,7 @@ function qRobot(){const a=lvl(),n=a<=4?3:a<=6?4:5;let walls=[],st,gl;
   for(let t=0;t<200;t++){st=[0,ri(0,n-1)];gl=[n-1,ri(0,n-1)];walls=[];const nw=a<=4?0:a<=6?2:4;
     while(walls.length<nw){const w=[ri(0,n-1),ri(0,n-1)];if(!(w[0]===st[0]&&w[1]===st[1])&&!(w[0]===gl[0]&&w[1]===gl[1])&&!walls.some(x=>x[0]===w[0]&&x[1]===w[1]))walls.push(w)}
     if(robPath(n,st,gl,walls)>0)break}
-  const g4=typeof G4_READY!=="undefined"&&G4_READY,th=g4?roboTheme(L&&L.cat):"robot",T=ROBO_TH[th];return {robot:{n,st,gl,walls,th},voice:[th==="robot"?"w/LULU_RB_INTRO":"w/PX_TD_GOAL2"],cap:T[3],opts:[],ans:-1,kind:"robot",exp:{t:"",v:[]}}}
+  const g4=typeof G4_READY!=="undefined"&&G4_READY,th=g4?roboTheme(L&&L.cat):"robot",T=ROBO_TH[th];return {robot:{n,st,gl,walls,th},voice:["w/PX_TD_GOAL2"],cap:T[3],opts:[],ans:-1,kind:"robot",exp:{t:"",v:[]}}}
 function robPath(n,st,gl,walls){const key=p=>p[0]+","+p[1],seen=new Set([key(st)]);let fr=[[st,0]];
   while(fr.length){const [p,d]=fr.shift();if(p[0]===gl[0]&&p[1]===gl[1])return d;for(const [dx,dy] of [[1,0],[-1,0],[0,1],[0,-1]]){const q2=[p[0]+dx,p[1]+dy];if(q2[0]<0||q2[1]<0||q2[0]>=n||q2[1]>=n||walls.some(w=>w[0]===q2[0]&&w[1]===q2[1])||seen.has(key(q2)))continue;seen.add(key(q2));fr.push([q2,d+1])}}return -1}
 /* shrink a big element (grid, map...) until the button under it is fully on screen, on any phone */
