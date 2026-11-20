@@ -4836,8 +4836,10 @@ body {
   max-width: 70%;
 }
 .introC .inev {
-  font-size: 44px;
-  min-height: 10px;
+  display: none;
+}
+.introC .g17ver {
+  display: none;
 }
 #pSettings {
   background:
@@ -18785,6 +18787,59 @@ img.e3 {
   font-size: 15px;
   opacity: .85;
 }
+.v34-say {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+.v34-ear {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 0;
+  background: #1CB0F6;
+  color: #fff;
+  font-size: 26px;
+  box-shadow: 0 4px 0 #1899D6;
+  cursor: pointer;
+}
+.v34-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin-top: 12px;
+}
+.v34-m {
+  padding: 0;
+  border: 3px solid #E5E5E5;
+  border-bottom-width: 5px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #fff;
+  cursor: pointer;
+  display: block;
+}
+.v34-gif {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+}
+.v34-grid.n3 .v34-gif {
+  aspect-ratio: 16/7;
+}
+.v34-m.ok {
+  border-color: #58CC02;
+  box-shadow: 0 0 0 4px #D7FFB8;
+}
+.v34-m.no {
+  border-color: #FF4B4B;
+  opacity: .55;
+}
+.v34-m.hint {
+  border-color: #58CC02;
+  animation: shuBob 1s ease-in-out infinite;
+}
 .qbody,
 .panel {
   max-width: 680px;
@@ -29931,16 +29986,25 @@ img.e3 {
     const N2 = q.lanes;
     gShow('<div class="game">'.concat(gHead("\u{1F680}", "Space run", "Drag the rocket into the gate with the right answer"), '\n    <div class="shu-top"><div class="shu-q" id="shQ"></div><div class="shu-sc"><span id="shG"></span><span class="shu-st">\u2B50 <b id="shS">0</b></span></div></div>\n    <div class="shu-f" id="shF"><div class="shu-sky"></div><div class="shu-sky b"></div><div class="shu-gate" id="shGate"></div><div class="shu-r" id="shR"><span>\u{1F680}</span><i class="shu-fl"></i></div></div></div>'));
     const F = $("shF"), R = $("shR"), GT = $("shGate");
-    let gi = 0, miss = 0, gmiss = 0, stars = 0, rx = 50, ty = 50, gy = -30, moving = false, raf2 = 0, lastT = 0, rockT = 0, starT = 0, objs = [], hitT = 0, cur = null, lanes = [];
+    let gi = 0, miss = 0, gmiss = 0, stars = 0, rx = 50, ty = 50, ry = 4, tyY = 4, gy = -30, moving = false, raf2 = 0, lastT = 0, rockT = 0, starT = 0, objs = [], hitT = 0, cur = null, lanes = [];
     F.style.touchAction = "none";
     const laneX = (i) => (i + 0.5) * 100 / N2, myLane = () => Math.max(0, Math.min(N2 - 1, Math.floor(rx / 100 * N2)));
     const setR = () => {
       R.style.left = rx + "%";
+      if (!R.classList.contains("away")) {
+        R.style.transition = "none";
+        R.style.bottom = ry + "%";
+      } else {
+        R.style.transition = "";
+        R.style.bottom = "";
+      }
+      ;
       R.style.transform = "translateX(-50%) rotate(".concat(Math.max(-18, Math.min(18, (ty - rx) * 0.6)), "deg)");
     };
     const mv = (e) => {
       const r = F.getBoundingClientRect();
       ty = Math.max(6, Math.min(94, (e.clientX - r.left) / r.width * 100));
+      tyY = Math.max(4, Math.min(45, (1 - (e.clientY - r.top) / r.height) * 100 - 12));
     };
     F.onpointerdown = (e) => {
       e.preventDefault();
@@ -29961,6 +30025,8 @@ img.e3 {
       }
       if (e.key === "ArrowLeft") ty = laneX(Math.max(0, myLane() - 1));
       if (e.key === "ArrowRight") ty = laneX(Math.min(N2 - 1, myLane() + 1));
+      if (e.key === "ArrowUp") tyY = Math.min(45, tyY + 10);
+      if (e.key === "ArrowDown") tyY = Math.max(4, tyY - 10);
     };
     document.addEventListener("keydown", key);
     const upd = () => {
@@ -29981,7 +30047,7 @@ img.e3 {
       F.classList.add("tut");
       tutEl = document.createElement("div");
       tutEl.className = "shu-tut";
-      tutEl.innerHTML = '<span class="shu-drag">Drag me! \u2194</span><span class="shu-hand" style="--from:'.concat(rx, "%;--to:").concat(laneX(ci), '%">\u{1F446}</span>');
+      tutEl.innerHTML = '<span class="shu-drag">Drag me! \u2194 \u2195</span><span class="shu-hand" style="--from:'.concat(rx, "%;--to:").concat(laneX(ci), '%">\u{1F446}</span>');
       F.appendChild(tutEl);
     };
     const showGate = (again) => {
@@ -29993,6 +30059,7 @@ img.e3 {
       GT.innerHTML = lanes.map((l, i) => '<div class="shu-l'.concat(l ? "" : " empty", '" data-i="').concat(i, '">').concat(l ? '<div class="opt shu-o">'.concat(l.x.h, "</div>") : "\u2604\uFE0F", "</div>")).join("");
       GT.style.gridTemplateColumns = "repeat(".concat(N2, ",1fr)");
       gy = 4;
+      tyY = 4;
       GT.style.top = gy + "%";
       GT.classList.remove("pass", "bad");
       moving = false;
@@ -30063,6 +30130,8 @@ img.e3 {
         if (gi >= q.gates.length) {
           upd();
           cancelAnimationFrame(raf2);
+          R.style.transition = "";
+          R.style.bottom = "";
           R.classList.add("away");
           setTimeout(() => {
             if (L && L.q === q) gameWin(q, miss > 1 ? 1 : 0, R, [G11("ROCKET_WIN")]);
@@ -30115,11 +30184,13 @@ img.e3 {
       const dt = Math.min(50, t - (lastT || t));
       lastT = t;
       rx += (ty - rx) * Math.min(1, dt / 90);
+      ry += (tyY - ry) * Math.min(1, dt / 90);
       setR();
+      const up = ry - 4;
       if (moving && cur) {
         gy += dt / (q.travel * (gi === 0 ? 1.6 : 1)) * 76;
         GT.style.top = gy + "%";
-        if (gy >= 74) pass();
+        if (gy >= 74 - up) pass();
         if (q.rockEvery && t - rockT > q.rockEvery && gy < 52) {
           rockT = t;
           spawn("rock");
@@ -30132,7 +30203,7 @@ img.e3 {
       objs = objs.filter((o) => {
         o.y += dt / q.travel * 95 * o.s;
         o.el.style.top = o.y + "%";
-        if (o.y > 74 && o.y < 90 && Math.abs(o.x - rx) < 8) {
+        if (o.y > 74 - up && o.y < 90 - up && Math.abs(o.x - rx) < 8) {
           if (o.kind === "star") {
             stars++;
             $("shS").textContent = stars;
@@ -34540,6 +34611,291 @@ img.e3 {
     "g:watch32": G("Watch and answer", ["cre", "science"], [["lang", "listen"]], "A short movie plays (a caterpillar becoming a butterfly, rain then a rainbow, a snowman melting...), then Lulu asks one question about it.", "Practice")
   });
   window.__w32 = () => WQ32.map((w) => w.g[0] + ":" + (ok32(w) ? "ok" : "NO " + [...w.q, ...w.x, ...w.o.map((o) => "w/" + o.fa)].filter((c) => !VOICED32.includes(c.replace(/^w\//, ""))).join(",")));
+  const FIND34 = {
+    butterfly: ["PX_FA_BUTTERFLY", "PX_EN_BUTTERFLY", ["caterpillar-to-butterfly", "caterpillar-yellow"], ["animals"]],
+    frog: ["LULU_FA_AN8", "LULU_WORD47", ["tadpole-waterfall", "tadpole-cycle"], ["animals"]],
+    chick: ["PX_G32_O_CHICK", "", ["chick-basket", "chick-nest", "chick-sun"], ["farm", "animals"]],
+    bee: ["LULU_FA_AN9", "LULU_WORD49", ["bee-garden", "bee-wildflowers"], ["animals", "farm"]],
+    snail: ["PX_FA_SNAIL", "PX_EN_SNAIL", ["snail-garden", "snail-log"], ["animals"]],
+    octopus: ["PX_AW_OCTOPUS", "", ["octopus-reef", "octopus-swim"], ["animals"]],
+    penguin: ["PX_AW_PENGUIN", "", ["penguin-pond", "penguin-spin", "penguin-belly", "penguin-hill"], ["animals"]],
+    volcano: ["PX_SW_A_VOLCANO", "", ["volcano-ash", "volcano-classic"], ["world"]],
+    mushroom: ["PX_G32_O_MUSH", "", ["mushroom-forest", "mushroom-meadow"], ["world"]],
+    rainbow: ["LULU_FA_SKY5", "LULU_WORD4", ["rain-rainbow-garden", "rain-rainbow-hill", "rain-rainbow-house"], ["sky"]],
+    snowman: ["PX_G8_O_SNOWMAN", "PX_EW_SNOWMAN", ["snowman-park", "snowman-yard"], ["sky"]],
+    rocket: ["LULU_FA_SKY8", "PX_EN_ROCKET", ["rocket-launch", "rocket-red", "rocket-sunset"], ["sky"]]
+  };
+  const NOPAIR34 = {};
+  const VOICED34 = ["LULU_FA_AN8", "LULU_FA_AN9", "LULU_FA_SKY1", "LULU_FA_SKY5", "LULU_FA_SKY8", "LULU_WORD4", "LULU_WORD47", "LULU_WORD49", "PX_AW_OCTOPUS", "PX_AW_PENGUIN", "PX_EN_BUTTERFLY", "PX_EN_MOON", "PX_EN_ROCKET", "PX_EN_SNAIL", "PX_EW_SNOWMAN", "PX_FA_BUTTERFLY", "PX_FA_SNAIL", "PX_G32_O_CHICK", "PX_G32_O_MUSH", "PX_G8_O_SNOWMAN", "PX_SW_A_VOLCANO"], GIFS34 = ["apple-four-seasons", "balloon-fields", "balloon-mountains", "balloon-sunrise", "balloon-village", "bee-garden", "bee-wildflowers", "caterpillar-to-butterfly", "caterpillar-yellow", "chick-basket", "chick-nest", "chick-sun", "day-night-house", "day-night-tree", "firefly-garden", "firefly-meadow", "jellyfish-coral", "jellyfish-deep", "kite-beach", "kite-sunset", "maple-four-seasons", "mushroom-forest", "mushroom-meadow", "octopus-reef", "octopus-swim", "penguin-belly", "penguin-hill", "penguin-pond", "penguin-spin", "rain-rainbow-garden", "rain-rainbow-hill", "rain-rainbow-house", "rocket-launch", "rocket-red", "rocket-sunset", "seed-daisy", "seed-rose", "seed-sunflower", "seed-tulip", "snail-garden", "snail-log", "snowflake-sky", "snowflake-village", "snowman-park", "snowman-yard", "tadpole-cycle", "tadpole-waterfall", "volcano-ash", "volcano-classic", "water-cycle-ocean", "water-cycle-puddle"];
+  const ok34 = (k) => {
+    const t = FIND34[k];
+    return VOICED34.includes(t[0]) && t[2].some((n) => GIFS34.includes(n));
+  };
+  const mov34 = (k) => pickOne(FIND34[k][2].filter((n) => GIFS34.includes(n)));
+  function findPool34(cat) {
+    return Object.keys(FIND34).filter((k) => ok34(k) && FIND34[k][3].includes(cat));
+  }
+  function qFind34(cat) {
+    const P2 = findPool34(cat);
+    if (!P2.length) return null;
+    const a = lvl(), n = a <= 3 ? 2 : 3, R = a <= 4 ? 3 : 4;
+    const all = Object.keys(FIND34).filter(ok34);
+    const rounds = [];
+    let last = null;
+    for (let i = 0; i < R; i++) {
+      const pool = P2.length > 1 ? P2.filter((k) => k !== last) : P2;
+      const t = pickOne(pool);
+      last = t;
+      const others = sh(all.filter((k) => k !== t && !(NOPAIR34[t] || []).includes(k))).slice(0, n - 1);
+      rounds.push({ t, opts: sh([t, ...others]).map((k) => ({ k, n: mov34(k) })) });
+    }
+    return { game: "find34", gid: "g:find34", cat, rounds, voice: ["w/PX_G_SPY"], factT: "Looking carefully helps us find things.", factV: [] };
+  }
+  const say34 = (k) => ["w/" + FIND34[k][0], ...FIND34[k][1] && VOICED34.includes(FIND34[k][1]) ? ["w/" + FIND34[k][1]] : []];
+  GAMES.find34 = (q) => {
+    let ri2 = 0, miss = 0;
+    gShow('<div class="game">'.concat(gHead("\u{1F50E}", "Find it!", "Listen, then tap the right movie"), '\n    <div class="v34-say"><button class="v34-ear" id="v34e" aria-label="Hear it again">\u{1F50A}</button></div><div class="v34-grid" id="v34g"></div></div>'));
+    let cur = null;
+    const round = (first) => {
+      cur = q.rounds[ri2++];
+      q._t = cur.t;
+      let tries = 0;
+      $("v34g").className = "v34-grid n" + cur.opts.length;
+      $("v34g").innerHTML = cur.opts.map((o, i) => '<button class="v34-m" data-i="'.concat(i, '">').concat(gifImg32(o.n, "v34-gif"), "</button>")).join("");
+      const bs = [...$("v34g").querySelectorAll(".v34-m")];
+      hush();
+      sayseq([...first ? q.voice : [], ...say34(cur.t)], () => {
+      });
+      bs.forEach((b) => b.onclick = () => {
+        if (q.done || b.classList.contains("no") || b.classList.contains("ok")) return;
+        hush();
+        const o = cur.opts[+b.dataset.i];
+        if (o.k === cur.t) {
+          sfx.good();
+          b.classList.add("ok");
+          burstAt(b, 14);
+          sayseq(say34(cur.t), () => {
+          });
+          setTimeout(() => {
+            if (q.done) return;
+            if (ri2 < q.rounds.length) round(false);
+            else gameWin(q, miss > 1 ? 1 : 0, b);
+          }, 1800);
+        } else {
+          sfx.oops();
+          miss++;
+          tries++;
+          b.classList.add("no");
+          bounce(b);
+          sayseq(say34(cur.t), () => {
+          });
+          if (tries >= 2) {
+            const r = bs[cur.opts.findIndex((x) => x.k === cur.t)];
+            r.classList.add("hint");
+          }
+        }
+      });
+    };
+    $("v34e").onclick = () => {
+      if (cur && !q.done) {
+        hush();
+        sayseq(say34(cur.t), () => {
+        });
+      }
+    };
+    round(true);
+    window.__gSolve = () => {
+      const go = () => {
+        if (q.done || !L || L.q !== q) return;
+        const i = cur.opts.findIndex((x) => x.k === cur.t);
+        const b = $("v34g").querySelectorAll(".v34-m")[i];
+        if (b && !b.classList.contains("ok")) b.click();
+        setTimeout(go, 900);
+      };
+      go();
+    };
+  };
+  const GQ34 = [
+    { g: ["caterpillar-to-butterfly", "caterpillar-yellow"], s: ["animals"], ids: ["a17", "px350", "px133"] },
+    { g: ["tadpole-waterfall", "tadpole-cycle"], s: ["animals"], ids: ["a04", "a22", "px369", "px121", "px116"] },
+    { g: ["chick-basket", "chick-nest", "chick-sun"], s: ["farm", "animals"], ids: ["a12", "f06", "px08", "px61", "px320", "px224"] },
+    { g: ["seed-daisy", "seed-rose", "seed-sunflower", "seed-tulip"], s: ["world"], ids: ["n01", "n06", "n02", "n10", "px176", "px470"] },
+    { g: ["day-night-house", "day-night-tree"], s: ["sky", "clock"], ids: ["s04", "s07", "px30", "px346", "e08", "p12", "px196"] },
+    { g: ["rain-rainbow-garden", "rain-rainbow-hill", "rain-rainbow-house"], s: ["sky"], ids: ["s01", "s03", "px78", "s10", "px199"] },
+    { g: ["volcano-ash", "volcano-classic"], s: ["world"], ids: ["e07", "px365", "px165"] },
+    { g: ["water-cycle-ocean", "water-cycle-puddle"], s: ["sky", "world"], ids: ["x05", "px364", "px182", "px199", "px201"] },
+    { g: ["snowman-park", "snowman-yard"], s: ["sky"], ids: ["s06", "n08", "px55"] },
+    { g: ["snowflake-sky", "snowflake-village"], s: ["sky"], ids: ["px29", "s06", "n07", "s12"] },
+    { g: ["rocket-launch", "rocket-red", "rocket-sunset"], s: ["sky"], ids: ["p01", "px104", "p06", "px175", "px194", "px195"] },
+    { g: ["apple-four-seasons", "maple-four-seasons"], s: ["clock", "world"], ids: ["n04", "n05", "n07", "px55", "px97", "s13"] },
+    { g: ["octopus-reef", "octopus-swim"], s: ["animals"], ids: ["px62", "a28", "px125"] },
+    { g: ["mushroom-forest", "mushroom-meadow"], s: ["world"], ids: ["n14", "px221"] },
+    { g: ["snail-garden", "snail-log"], s: ["animals"], ids: ["px60", "px10", "px455"] },
+    { g: ["kite-beach", "kite-sunset"], s: ["sky"], ids: ["s08", "px79"] },
+    { g: ["bee-garden", "bee-wildflowers"], s: ["animals", "farm"], ids: ["a05", "px73", "px12", "px326", "n09", "a24", "px211", "px127"] },
+    { g: ["penguin-pond", "penguin-spin", "penguin-belly", "penguin-hill"], s: ["animals"], ids: ["a20", "px345", "px113", "px459"] }
+  ];
+  const wqA34 = (id) => {
+    const w = WQ.find((x) => x.i === id);
+    return w ? w.a : null;
+  };
+  function gqFit34(G2) {
+    const a = S.age || 6;
+    const ids = G2.ids.filter((id) => {
+      const qa = wqA34(id);
+      return qa !== null && qa <= a;
+    });
+    const near2 = ids.filter((id) => wqA34(id) >= a - 4);
+    return near2.length ? near2 : ids;
+  }
+  function gqPool34(cat) {
+    return GQ34.filter((G2) => G2.s.includes(cat) && G2.g.some((n) => GIFS34.includes(n)) && gqFit34(G2).length);
+  }
+  function gqBuild34(id) {
+    const keep = S.age;
+    let r = null;
+    try {
+      r = window.__qcBuild ? window.__qcBuild("w", id) : null;
+    } catch (e) {
+      r = null;
+    }
+    S.age = keep;
+    const q = r && r[0];
+    if (!q || !q.opts || q.opts.length < 2 || !(q.ans >= 0) || !q.voice || !q.voice.length || q.opts.some((o) => !o.h)) return null;
+    return q;
+  }
+  function qGq34(cat) {
+    const P2 = gqPool34(cat);
+    if (!P2.length) return null;
+    const a = lvl(), n = a <= 5 ? 2 : 3, rounds = [];
+    for (const G2 of sh(P2)) {
+      if (rounds.length >= n) break;
+      const ids = sh(gqFit34(G2));
+      for (const id of ids) {
+        const q = gqBuild34(id);
+        if (q) {
+          rounds.push({ n: pickOne(G2.g.filter((x) => GIFS34.includes(x))), q, id });
+          break;
+        }
+      }
+    }
+    if (!rounds.length) return null;
+    return { game: "gq34", gid: "g:gq34", cat, rounds, voice: [G32("WATCH")], factT: "Watching carefully helps us learn how the world works.", factV: [] };
+  }
+  GAMES.gq34 = (q) => {
+    let ri2 = 0, miss = 0;
+    gShow('<div class="game">'.concat(gHead("\u{1F3AC}", "Movie quiz", "Watch the movie, then answer"), '\n    <div class="v32-play" id="v34w"></div><div class="v32-bar"><i id="v34t"></i></div><div class="q31" id="v34q"></div></div>'));
+    const round = (first) => {
+      const R = q.rounds[ri2++], Q = R.q;
+      let tries = 0;
+      $("v34q").innerHTML = "";
+      $("v34w").innerHTML = gifImg32(R.n);
+      const T = $("v34t");
+      T.style.transition = "none";
+      T.style.width = "0%";
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        T.style.transition = "width 6s linear";
+        T.style.width = "100%";
+      }));
+      hush();
+      if (first) sayseq(q.voice, () => {
+      });
+      setTimeout(() => {
+        if (q.done) return;
+        $("v34q").innerHTML = '<div class="q31-cap">'.concat(Q.cap || "", '</div><div class="q31-o').concat(Q.tf ? " yn" : "", '">').concat(Q.opts.map((o, i) => '<button class="opt q31-b" data-i="'.concat(i, '">').concat(o.h, "</button>")).join(""), "</div>");
+        if (typeof e3fix === "function") e3fix($("v34q"));
+        const bs = [...$("v34q").querySelectorAll(".q31-b")], ex = Q.why && Q.why.v && Q.why.v.length ? Q.why.v : Q.exp && Q.exp.v || [];
+        bs.forEach((b) => b.onclick = () => {
+          if (q.done || b.classList.contains("no") || b.classList.contains("ok")) return;
+          window.__optTok = {};
+          hush();
+          const i = +b.dataset.i;
+          if (i === Q.ans) {
+            sfx.good();
+            b.classList.add("ok");
+            burstAt(b, 12);
+            sayseq(ex, () => {
+            });
+            setTimeout(() => {
+              if (q.done) return;
+              if (ri2 < q.rounds.length) round(false);
+              else gameWin(q, miss > 1 ? 1 : 0, b);
+            }, ex.length ? 4200 : 1600);
+          } else {
+            sfx.oops();
+            miss++;
+            tries++;
+            b.classList.add("no");
+            bounce(b);
+            if (tries >= 2) bs[Q.ans].classList.add("hint");
+            toastHint("Look again!");
+          }
+        });
+        rd31(q, { voice: Q.voice, opts: Q.opts }, bs, null, () => {
+        });
+      }, 6300);
+    };
+    round(true);
+    window.__gSolve = () => {
+      const go = () => {
+        if (q.done || !L || L.q !== q) return;
+        const R = q.rounds[ri2 - 1];
+        const bs = $("v34q").querySelectorAll(".q31-b");
+        if (R && bs.length && !bs[R.q.ans].classList.contains("ok")) bs[R.q.ans].click();
+        setTimeout(go, 1200);
+      };
+      go();
+    };
+  };
+  if (typeof gReadOpts === "function") {
+    const _gro34 = gReadOpts;
+    gReadOpts = function(q) {
+      if (q && q.game === "find34") {
+        hush();
+        if (q._t) sayseq(say34(q._t), () => {
+        });
+        return true;
+      }
+      if (q && q.game === "gq34") {
+        hush();
+        sayseq(q.voice, () => {
+        });
+        return true;
+      }
+      return _gro34(q);
+    };
+  }
+  const B34 = { f_find34: qFind34, f_gq34: qGq34 };
+  Object.assign(FMIN, { f_find34: 3, f_gq34: 4 });
+  Object.assign(FMAX, { f_find34: 5 });
+  const _bf34 = buildFormat;
+  buildFormat = function(kind, cat) {
+    if (B34[kind]) return B34[kind](cat);
+    return _bf34(kind, cat);
+  };
+  const _ff34 = formatsFor0;
+  formatsFor0 = function(cat) {
+    const b = _ff34(cat), add = [];
+    if (findPool34(cat).length && ageOK("f_find34")) add.push("f_find34");
+    if (gqPool34(cat).length && ageOK("f_gq34")) add.push("f_gq34");
+    return [...b, ...add.filter((f) => !b.includes(f))];
+  };
+  Object.assign(GMAP, {
+    "g:find34": G("Find it!", ["lang", "vocab"], [["lang", "listen"]], "Lulu names a thing in Farsi and English (a butterfly, a rocket, a rainbow...); three little movies play and the child taps the one that shows it.", "Practice"),
+    "g:gq34": G("Movie quiz", ["cre", "science"], [["cog", "curiosity"]], "A short movie plays (a tadpole becoming a frog, a volcano, the water cycle...), then a question on the same topic that fits the child's age.", "Practice")
+  });
+  window.__g34 = (age) => {
+    const o = {};
+    if (age) {
+      const k = S.age;
+      S.age = age;
+      for (const c of ["animals", "farm", "world", "sky", "clock"]) o[c] = formatsFor0(c).filter((x) => /3[24]$/.test(x));
+      S.age = k;
+      return o;
+    }
+    const q = L && L.q;
+    return q && q.rounds ? q.rounds.map((r) => r.id ? r.id + ": " + r.q.cap : r.t + " / " + r.opts.map((x) => x.n).join(",")) : null;
+  };
   const clk = () => {
     const d = /* @__PURE__ */ new Date();
     $("clock").textContent = d.getHours() + ":" + String(d.getMinutes()).padStart(2, "0");
@@ -34550,7 +34906,7 @@ img.e3 {
   showMap();
   (function intro() {
     const ev = eventNow(), z = landIdx(), Z = ZONES[z], t0 = Date.now();
-    $("inEv").textContent = ev ? ev.e : "";
+    $("inEv").textContent = "";
     let gone = false;
     const go = () => {
       if (gone) return;
