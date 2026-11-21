@@ -96,7 +96,10 @@ const GQ34=[
  {g:["sink-float-glass","sink-float-lake"],s:["world"],ids:["x03"]},
  {g:["plant-sun-field"],s:["world","farm"],ids:["n01","px52","px328","n10","px176","px214"]},
  {g:["steam-mug","steam-window"],s:["world"],ids:["x05","px364","px182","px385","px401","px480"]},
- {g:["solar-system"],s:["sky"],ids:["p02","px351","p03","p05","p07","p09","p13","px363","px375","px383","px192"]}];
+ {g:["solar-system"],s:["sky"],ids:["p02","px351","p03","p05","p07","p09","p13","px363","px375","px383","px192"]},
+ {g:["leaf-food-garden","leaf-food-pot","leaf-food-tree"],s:["world","farm"],ids:["n03","n10","px538","px381","px176","px214","px306"]},
+ {g:["puddle-freeze-garden","puddle-freeze-sidewalk"],s:["world","sky"],ids:["n08","px539","px174","px385"]},
+ {g:["prism-reflect"],s:["sky","world"],ids:["px527","s10"]}];
 const wqA34=id=>{const w=WQ.find(x=>x.i===id);return w?w.a:null};
 /* the questions a child of this age can get: at most 4 years below, never above */
 function gqFit34(G){const a=S.age||6;const ids=G.ids.filter(id=>{const qa=wqA34(id);return qa!==null&&qa<=a&&VOICED.has(id)});  /* v35: only questions Lulu can read aloud */const near=ids.filter(id=>wqA34(id)>=a-4);return near.length?near:ids}
