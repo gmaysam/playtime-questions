@@ -95,7 +95,7 @@ const _gw32=gameWin;gameWin=function(q,...rest){const list=q&&WINGIF32[q.game];
 /* --- wiring --- */
 if(typeof gReadOpts==="function"){const _gro32=gReadOpts;gReadOpts=function(q){if(q&&(q.game==="seq32"||q.game==="watch32")){hush();sayseq(q.voice,()=>{});return true}return _gro32(q)}}
 const B32={f_seq32:qSeq32,f_watch32:qWatch32};
-Object.assign(FMIN,{f_seq32:4,f_watch32:3});Object.assign(FMAX,{f_seq32:8,f_watch32:7});
+Object.assign(FMIN,{f_seq32:4,f_watch32:3});Object.assign(FMAX,{f_seq32:9,f_watch32:9});
 const _bf32=buildFormat;buildFormat=function(kind,cat){if(B32[kind])return B32[kind](cat);return _bf32(kind,cat)};
 const _ff32=formatsFor0;formatsFor0=function(cat){const b=_ff32(cat),add=[];
   if(seqPool32(cat).length&&ageOK("f_seq32"))add.push("f_seq32");

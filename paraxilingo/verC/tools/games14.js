@@ -420,7 +420,7 @@ GAMES.match=q=>{const P=q.pairs,Ls=sh(P.map((p,i)=>i)),Rs=sh(P.map((p,i)=>i));
     else{miss++;busy=true;try{sfx.oops()}catch(e){}[a,b].forEach(x=>x.classList.add("no"));setTimeout(()=>{[a,b].forEach(x=>x.classList.remove("no"));busy=false},600)}};
   bs.forEach(b=>b.onclick=()=>tap(b));
   window.__gSolve=()=>{let k=0;const go=()=>{if(k>=P.length||q.done)return;const l=bs.find(b=>b.dataset.s==="L"&&+b.dataset.i===k),r=bs.find(b=>b.dataset.s==="R"&&+b.dataset.i===k);k++;tap(l);tap(r);setTimeout(go,450)};go()}};
-Object.assign(FMIN,{f_match:3});Object.assign(FMAX,{f_match:8});
+Object.assign(FMIN,{f_match:3});Object.assign(FMAX,{f_match:10});
 const _bf30=buildFormat;buildFormat=function(kind,cat){if(kind==="f_match")return qMatch(cat);return _bf30(kind,cat)};
 const _ff30=formatsFor0;formatsFor0=function(cat){const b=_ff30(cat);return mt30Kinds(cat).length&&!b.includes("f_match")?[...b,"f_match"]:b};
 Object.assign(GMAP,{"g:match":G("Match the pairs",["lang","read"],[["cog","memory"]],"Two columns of cards; the child taps one on each side that belong together (picture and word, animal and shadow or home, number and dots or word, big and small letter, flag and country, job and name, colour and word).","Practice")});

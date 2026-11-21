@@ -182,7 +182,7 @@ GAMES.gap=q=>{
 /* --- wiring --- */
 if(typeof gReadOpts==="function"){const _gro31=gReadOpts;gReadOpts=function(q){if(q&&["race","fish","qshow","beat","wtrain","gap"].includes(q.game)){hush();if(q.game==="wtrain"||q.game==="gap"){sayseq([...q.voice],()=>{})}else sayseq(q.voice,()=>{});return true}return _gro31(q)}}
 const B31={f_race:qRace,f_fish:qFish,f_qshow:qShow31,f_beat:qBeat,f_wtrain:qTrain,f_gap:qGap};
-Object.assign(FMIN,{f_race:4,f_fish:3,f_qshow:8,f_beat:6,f_wtrain:5,f_gap:5});Object.assign(FMAX,{f_race:12,f_fish:8,f_qshow:12,f_beat:12,f_wtrain:9,f_gap:7});
+Object.assign(FMIN,{f_race:4,f_fish:3,f_qshow:8,f_beat:6,f_wtrain:5,f_gap:5});Object.assign(FMAX,{f_race:12,f_fish:12,f_qshow:12,f_beat:12,f_wtrain:10,f_gap:9})  /* v38: older kids too */;
 const _bf31=buildFormat;buildFormat=function(kind,cat){if(B31[kind]||kind==="f_shuttle"){for(let t=0;t<4;t++){const q=B31[kind]?B31[kind](cat):_bf31(kind,cat);if(q)return q}return null}return _bf31(kind,cat)};
 const OK31={};
 const _ff31=formatsFor0;formatsFor0=function(cat){const b=_ff31(cat),add=[];
