@@ -55,8 +55,8 @@ GAMES.seq32=q=>{let ri=0,miss=0;
     $("v32c").hidden=false;
     $("v32c").querySelectorAll(".v32-card").forEach(b=>b.onclick=()=>{if(q.done||b.disabled)return;
       if(+b.dataset.i===step){sfx.good();b.disabled=true;b.classList.add("used");const sl=$("v32s").children[step];sl.innerHTML=`<img src="${b.querySelector("img").src}" alt=""><b>${step+1}</b>`;sl.classList.add("full");step++;
-        if(step>=N){setTimeout(()=>{if(q.done)return;$("v32c").hidden=true;$("v32p").hidden=false;$("v32p").innerHTML=gifImg32(R.n);hush();sayseq([G32("SEQOK")],()=>{});
-          setTimeout(()=>{if(q.done)return;if(ri<q.rounds.length)round(false);else gameWin(q,miss>2?1:0,$("v32p"))},6400)},500)}}
+        if(step>=N){setTimeout(()=>{if(q.done||!L||L.q!==q)return;$("v32c").hidden=true;$("v32p").hidden=false;$("v32p").innerHTML=gifImg32(R.n);hush();sayseq([G32("SEQOK")],()=>{});
+          setTimeout(()=>{if(q.done||!L||L.q!==q)return;if(ri<q.rounds.length)round(false);else gameWin(q,miss>2?1:0,$("v32p"))},6400)},500)}}
       else{sfx.oops();miss++;bounce(b);b.classList.add("no");setTimeout(()=>b.classList.remove("no"),500);if(miss%2===0){const h=[...$("v32c").querySelectorAll(".v32-card:not(.used)")].find(x=>+x.dataset.i===step);if(h){h.classList.add("hint");setTimeout(()=>h.classList.remove("hint"),1300)}}}});
     if(first){hush();sayseq(q.voice,()=>{})}};
   round(true);
@@ -73,12 +73,12 @@ GAMES.watch32=q=>{let ri=0,miss=0;
     $("v32w").innerHTML=gifImg32(R.n);const T=$("v32t");T.style.transition="none";T.style.width="0%";
     requestAnimationFrame(()=>requestAnimationFrame(()=>{T.style.transition="width 6s linear";T.style.width="100%"}));
     hush();if(first)sayseq(q.voice,()=>{});
-    setTimeout(()=>{if(q.done)return;const opts=sh(W.o.map((o,i)=>({o,i})));const cur={voice:W.q,opts:opts.map(x=>({say:optSay32(x.o)})),ans:opts.findIndex(x=>x.i===0)};
+    setTimeout(()=>{if(q.done||!L||L.q!==q)return;const opts=sh(W.o.map((o,i)=>({o,i})));const cur={voice:W.q,opts:opts.map(x=>({say:optSay32(x.o)})),ans:opts.findIndex(x=>x.i===0)};
       $("v32q").innerHTML=`<div class="q31-cap">${W.cap}</div><div class="q31-o">${opts.map((x,i)=>`<button class="opt q31-b" data-i="${i}"><span class="oe">${x.o.e}</span><small>${x.o.t}</small></button>`).join("")}</div>`;
       if(typeof e3fix==="function")e3fix($("v32q"));
       const bs=[...$("v32q").querySelectorAll(".q31-b")];
       bs.forEach(b=>b.onclick=()=>{if(q.done||b.classList.contains("no")||b.classList.contains("ok"))return;window.__optTok={};hush();const i=+b.dataset.i;
-        if(i===cur.ans){sfx.good();b.classList.add("ok");burstAt(b,12);sayseq(W.x,()=>{});setTimeout(()=>{if(q.done)return;if(ri<q.rounds.length)round(false);else gameWin(q,miss>1?1:0,b)},3600)}
+        if(i===cur.ans){sfx.good();b.classList.add("ok");burstAt(b,12);sayseq(W.x,()=>{});setTimeout(()=>{if(q.done||!L||L.q!==q)return;if(ri<q.rounds.length)round(false);else gameWin(q,miss>1?1:0,b)},3600)}
         else{sfx.oops();miss++;tries++;b.classList.add("no");bounce(b);if(tries>=2){bs[cur.ans].classList.add("hint")}toastHint("Look again!")}});
       rd31(q,cur,bs,null,()=>{});
     },6300)};
@@ -86,7 +86,7 @@ GAMES.watch32=q=>{let ri=0,miss=0;
   window.__gSolve=()=>{const go=()=>{if(q.done||!L||L.q!==q)return;const b=$("v32q").querySelector(".q31-b");if(b){const all=[...$("v32q").querySelectorAll(".q31-b")];const W=q.rounds[ri-1].w;const r=all.find(x=>x.querySelector("small").textContent===W.o[0].t);if(r&&!r.classList.contains("ok"))r.click()}setTimeout(go,1200)};go()}};
 
 /* ================= 3. the animations as a reward in four games we already have ================= */
-const WINGIF32={grow:["seed-daisy","seed-rose","seed-sunflower","seed-tulip"],seasons:["apple-four-seasons","maple-four-seasons"],volc:["volcano-ash","volcano-classic"],rocket:["rocket-launch","rocket-red","rocket-sunset"]};
+const WINGIF32={};  /* v35: no movie after other games; the movies live in their own games */
 const _gw32=gameWin;gameWin=function(q,...rest){const list=q&&WINGIF32[q.game];
   if(!list||q._gif32)return _gw32(q,...rest);q._gif32=1;
   const o=document.createElement("div");o.className="v32-over";o.innerHTML=`${gifImg32(pickOne(list),"v32-gif big")}<div class="v32-skip">Tap to continue</div>`;document.body.appendChild(o);

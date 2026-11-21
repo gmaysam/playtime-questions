@@ -15,12 +15,13 @@ const FIND34={
  snail:["PX_FA_SNAIL","PX_EN_SNAIL",["snail-garden","snail-log"],["animals"]],
  octopus:["PX_AW_OCTOPUS","",["octopus-reef","octopus-swim"],["animals"]],
  penguin:["PX_AW_PENGUIN","",["penguin-pond","penguin-spin","penguin-belly","penguin-hill"],["animals"]],
+ turtle:["PX_FA_TURTLE","PX_EN_TURTLE",["turtle-sand","turtle-seaweed"],["animals"]],
  volcano:["PX_SW_A_VOLCANO","",["volcano-ash","volcano-classic"],["world"]],
  mushroom:["PX_G32_O_MUSH","",["mushroom-forest","mushroom-meadow"],["world"]],
  rainbow:["LULU_FA_SKY5","LULU_WORD4",["rain-rainbow-garden","rain-rainbow-hill","rain-rainbow-house"],["sky"]],
  snowman:["PX_G8_O_SNOWMAN","PX_EW_SNOWMAN",["snowman-park","snowman-yard"],["sky"]],
  rocket:["LULU_FA_SKY8","PX_EN_ROCKET",["rocket-launch","rocket-red","rocket-sunset"],["sky"]]};
-const NOPAIR34={};   /* (the day-night movies start in daylight, so "moon" is left out) */
+const NOPAIR34={turtle:["octopus"],octopus:["turtle"]};  /* both swim on a reef */   /* (the day-night movies start in daylight, so "moon" is left out) */
 const VOICED34=__VOICED34__, GIFS34=__GIFS34__;
 const ok34=k=>{const t=FIND34[k];return VOICED34.includes(t[0])&&t[2].some(n=>GIFS34.includes(n))};
 const mov34=k=>pickOne(FIND34[k][2].filter(n=>GIFS34.includes(n)));
@@ -43,7 +44,7 @@ GAMES.find34=q=>{let ri=0,miss=0;
     hush();sayseq([...(first?q.voice:[]),...say34(cur.t)],()=>{});
     bs.forEach(b=>b.onclick=()=>{if(q.done||b.classList.contains("no")||b.classList.contains("ok"))return;hush();const o=cur.opts[+b.dataset.i];
       if(o.k===cur.t){sfx.good();b.classList.add("ok");burstAt(b,14);sayseq(say34(cur.t),()=>{});
-        setTimeout(()=>{if(q.done)return;if(ri<q.rounds.length)round(false);else gameWin(q,miss>1?1:0,b)},1800)}
+        setTimeout(()=>{if(q.done||!L||L.q!==q)return;if(ri<q.rounds.length)round(false);else gameWin(q,miss>1?1:0,b)},1800)}
       else{sfx.oops();miss++;tries++;b.classList.add("no");bounce(b);sayseq(say34(cur.t),()=>{});
         if(tries>=2){const r=bs[cur.opts.findIndex(x=>x.k===cur.t)];r.classList.add("hint")}}})};
   $("v34e").onclick=()=>{if(cur&&!q.done){hush();sayseq(say34(cur.t),()=>{})}};
@@ -69,13 +70,17 @@ const GQ34=[
  {g:["snail-garden","snail-log"],s:["animals"],ids:["px10"]},
  {g:["kite-beach","kite-sunset"],s:["sky"],ids:["s08","px79"]},
  {g:["bee-garden","bee-wildflowers"],s:["animals","farm"],ids:["a05","px73","px12","px326","n09","a24","px211","px127"]},
- {g:["penguin-pond","penguin-spin","penguin-belly","penguin-hill"],s:["animals"],ids:["a20","px345","px113","px459"]}];
+ {g:["penguin-pond","penguin-spin","penguin-belly","penguin-hill"],s:["animals"],ids:["a20","px345","px113","px459"]},
+ {g:["turtle-sand","turtle-seaweed"],s:["animals"],ids:["px60","px455"]}];
 const wqA34=id=>{const w=WQ.find(x=>x.i===id);return w?w.a:null};
 /* the questions a child of this age can get: at most 4 years below, never above */
-function gqFit34(G){const a=S.age||6;const ids=G.ids.filter(id=>{const qa=wqA34(id);return qa!==null&&qa<=a});const near=ids.filter(id=>wqA34(id)>=a-4);return near.length?near:ids}
+function gqFit34(G){const a=S.age||6;const ids=G.ids.filter(id=>{const qa=wqA34(id);return qa!==null&&qa<=a&&VOICED.has(id)});  /* v35: only questions Lulu can read aloud */const near=ids.filter(id=>wqA34(id)>=a-4);return near.length?near:ids}
 function gqPool34(cat){return GQ34.filter(G=>G.s.includes(cat)&&G.g.some(n=>GIFS34.includes(n))&&gqFit34(G).length)}
-function gqBuild34(id){const keep=S.age;let r=null;try{r=window.__qcBuild?window.__qcBuild("w",id):null}catch(e){r=null}S.age=keep;
-  const q=r&&r[0];if(!q||!q.opts||q.opts.length<2||!(q.ans>=0)||!q.voice||!q.voice.length||q.opts.some(o=>!o.h))return null;return q}
+function gqBuild34(id){const keep=S.age,w=WQ.find(x=>x.i===id);if(!w)return null;
+  for(let t=0;t<10;t++){let r=null;try{r=window.__qcBuild?window.__qcBuild("w",id):null}catch(e){r=null}S.age=keep;
+    const q=r&&r[0];  /* v35: it must be this very question, with its own recorded voice */
+    if(q&&q.cap===w.q&&q.opts&&q.opts.length>=2&&q.ans>=0&&q.voice&&String(q.voice[0]).startsWith("w/")&&!q.opts.some(o=>!o.h))return q}
+  return null}
 function qGq34(cat){const P=gqPool34(cat);if(!P.length)return null;const a=lvl(),n=a<=5?2:3,rounds=[];
   for(const G of sh(P)){if(rounds.length>=n)break;const ids=sh(gqFit34(G));for(const id of ids){const q=gqBuild34(id);if(q){rounds.push({n:pickOne(G.g.filter(x=>GIFS34.includes(x))),q,id});break}}}
   if(!rounds.length)return null;
@@ -87,12 +92,12 @@ GAMES.gq34=q=>{let ri=0,miss=0;
     $("v34w").innerHTML=gifImg32(R.n);const T=$("v34t");T.style.transition="none";T.style.width="0%";
     requestAnimationFrame(()=>requestAnimationFrame(()=>{T.style.transition="width 6s linear";T.style.width="100%"}));
     hush();if(first)sayseq(q.voice,()=>{});
-    setTimeout(()=>{if(q.done)return;
+    setTimeout(()=>{if(q.done||!L||L.q!==q||!$("v34q"))return;  /* the child may have left */
       $("v34q").innerHTML=`<div class="q31-cap">${Q.cap||""}</div><div class="q31-o${Q.tf?" yn":""}">${Q.opts.map((o,i)=>`<button class="opt q31-b" data-i="${i}">${o.h}</button>`).join("")}</div>`;
       if(typeof e3fix==="function")e3fix($("v34q"));
       const bs=[...$("v34q").querySelectorAll(".q31-b")],ex=(Q.why&&Q.why.v&&Q.why.v.length?Q.why.v:(Q.exp&&Q.exp.v)||[]);
       bs.forEach(b=>b.onclick=()=>{if(q.done||b.classList.contains("no")||b.classList.contains("ok"))return;window.__optTok={};hush();const i=+b.dataset.i;
-        if(i===Q.ans){sfx.good();b.classList.add("ok");burstAt(b,12);sayseq(ex,()=>{});setTimeout(()=>{if(q.done)return;if(ri<q.rounds.length)round(false);else gameWin(q,miss>1?1:0,b)},ex.length?4200:1600)}
+        if(i===Q.ans){sfx.good();b.classList.add("ok");burstAt(b,12);sayseq(ex,()=>{});setTimeout(()=>{if(q.done||!L||L.q!==q)return;if(ri<q.rounds.length)round(false);else gameWin(q,miss>1?1:0,b)},ex.length?4200:1600)}
         else{sfx.oops();miss++;tries++;b.classList.add("no");bounce(b);if(tries>=2)bs[Q.ans].classList.add("hint");toastHint("Look again!")}});
       rd31(q,{voice:Q.voice,opts:Q.opts},bs,null,()=>{});
     },6300)};

@@ -123,7 +123,7 @@ function silQ(q){let miss=0;gShow(`<div class="game">${gHead("🌑","Whose shado
 
 /* 13. Four seasons (age 4+) */
 const SEAS7={spring:"🌸",summer:"☀️",autumn:"🍂",winter:"⛄"};
-const SEAI=[["snowman","⛄","winter"],["sledge","🛷","winter"],["flowers","🌷","spring"],["baby birds","🐣","spring"],["beach","🏖️","summer"],["ice cream","🍦","summer"],["falling leaves","🍁","autumn"],["pumpkin","🎃","autumn"]];
+const SEAI=[["sledge","🛷","winter"],["very cold day","🥶","winter"],["Nowruz","🎎","spring"],["baby birds","🐣","spring"],["very hot day","🥵","summer"],["sunflowers","🌻","summer"],["falling leaves","🍁","autumn"],["pumpkin","🎃","autumn"]];  /* v35: only clues that belong to one season (no flowers, beach or ice cream) */
 function qSeasons(){const it=[];for(const s of sh(Object.keys(SEAS7)).slice(0,lvl()<=5?3:4))it.push(pickOne(SEAI.filter(x=>x[2]===s)));return {game:"seasons",items:it,voice:[G7("SEASONS")],gid:"g:seasons",factT:"A year has 4 seasons: spring, summer, autumn and winter."}}
 function seasonsQ(q){let k=0,miss=0;gShow(`<div class="game">${gHead("🍂","Four seasons","Which season is it?")}
   <div class="g7-rit" id="ssI"></div><div class="g7-seas">${Object.keys(SEAS7).map(s=>`<button class="g7-s" data-s="${s}"><span>${SEAS7[s]}</span><b>${cap1(s)}</b></button>`).join("")}</div></div>`);gAsk(q);

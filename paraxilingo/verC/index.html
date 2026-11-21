@@ -2471,6 +2471,12 @@ img.e3{width:1.18em;height:1.18em;vertical-align:-.22em;object-fit:contain;displ
 .beaver.g27bv:not(.moving) .g27s{animation:g27br 2.4s ease-in-out infinite;transform-origin:50% 100%}
 @keyframes g27br{0%,100%{transform:scaleX(var(--face,1)) scaleY(1)}50%{transform:scaleX(var(--face,1)) scaleY(1.025)}}
 .beaver.g27bv.popin .g27s{animation:none}
+/* v35: Go! over Domi at the next mound */
+.g35go{position:absolute;z-index:4;transform:translateX(-50%);border:0;border-radius:999px;padding:9px 18px;font:900 18px Nunito,system-ui,sans-serif;color:#fff;background:#58CC02;box-shadow:0 4px 0 #46A302;cursor:pointer;animation:g35b 1.2s ease-in-out infinite;white-space:nowrap}
+.g35go span{font-size:13px;margin-left:2px}
+.g35go:active{transform:translateX(-50%) translateY(3px);box-shadow:0 1px 0 #46A302}
+@keyframes g35b{0%,100%{margin-top:0}50%{margin-top:-6px}}
+
 .g27dbg{position:fixed;left:12px;right:12px;bottom:12px;z-index:9999;background:#fff;border-radius:14px;padding:10px 14px;box-shadow:0 4px 16px rgba(0,0,0,.2);display:flex;gap:10px;align-items:center}
 .g27dbg input{flex:1}.g27dbg b{font:800 14px/1 system-ui;min-width:52px;text-align:right}
 
@@ -5948,7 +5954,7 @@ function silQ(q){let miss=0;gShow(`<div class="game">${gHead("🌑","Whose shado
 
 /* 13. Four seasons (age 4+) */
 const SEAS7={spring:"🌸",summer:"☀️",autumn:"🍂",winter:"⛄"};
-const SEAI=[["snowman","⛄","winter"],["sledge","🛷","winter"],["flowers","🌷","spring"],["baby birds","🐣","spring"],["beach","🏖️","summer"],["ice cream","🍦","summer"],["falling leaves","🍁","autumn"],["pumpkin","🎃","autumn"]];
+const SEAI=[["sledge","🛷","winter"],["very cold day","🥶","winter"],["Nowruz","🎎","spring"],["baby birds","🐣","spring"],["very hot day","🥵","summer"],["sunflowers","🌻","summer"],["falling leaves","🍁","autumn"],["pumpkin","🎃","autumn"]];  /* v35: only clues that belong to one season (no flowers, beach or ice cream) */
 function qSeasons(){const it=[];for(const s of sh(Object.keys(SEAS7)).slice(0,lvl()<=5?3:4))it.push(pickOne(SEAI.filter(x=>x[2]===s)));return {game:"seasons",items:it,voice:[G7("SEASONS")],gid:"g:seasons",factT:"A year has 4 seasons: spring, summer, autumn and winter."}}
 function seasonsQ(q){let k=0,miss=0;gShow(`<div class="game">${gHead("🍂","Four seasons","Which season is it?")}
   <div class="g7-rit" id="ssI"></div><div class="g7-seas">${Object.keys(SEAS7).map(s=>`<button class="g7-s" data-s="${s}"><span>${SEAS7[s]}</span><b>${cap1(s)}</b></button>`).join("")}</div></div>`);gAsk(q);
@@ -7627,7 +7633,12 @@ function draw27(){if(!landEl||!beaver)return;if(beaver.parentNode!==landEl)landE
   const[x,y]=at27(R27.p);beaver.style.transition="none";beaver.style.left=x+"px";beaver.style.top=y+"px";
   beaver.style.setProperty("--face",R27.face);beaver.style.setProperty("--lean",R27.lean.toFixed(2)+"deg");
   const s=beaver.querySelector(".g27s");if(s){const f=R27.moving?1+Math.floor(R27.dist/9)%8:0;s.style.backgroundPositionX=(f*12.5)+"%"}
-  beaver.classList.toggle("walking",R27.moving);beaver.classList.toggle("moving",R27.moving)}
+  beaver.classList.toggle("walking",R27.moving);beaver.classList.toggle("moving",R27.moving);try{go35()}catch(e){}}
+/* v35: a Go! button over Domi when he is standing at the next mound; the child taps it to go inside */
+function go35(){if(!landEl)return;let g=document.getElementById("g35go");const n=HOLES[landIdx()].length,d=S.day.done;
+  if(!g){g=document.createElement("button");g.id="g35go";g.className="g35go";g.innerHTML="Go! <span>▶</span>";g.onclick=e=>{e.stopPropagation();try{sfx.tap()}catch(_){}try{closePop()}catch(_){}openMound(S.day.done)}}
+  if(g.parentNode!==landEl)landEl.appendChild(g);const show=!R27.moving&&d<n&&Math.abs(R27.p-ROAD27.stops[d])<.004;g.hidden=!show;
+  if(show){const[x,y]=at27(R27.p);g.style.left=x+"px";g.style.top=(y-122)+"px"}}
 /* aim the face and the lean from the road's direction; ease both so curves never snap */
 function steer27(dir,k){const[tx,ty]=tan27(R27.p,dir);if(tx>.22)R27.face=1;else if(tx<-.22)R27.face=-1;
   const head=Math.atan2(tx,-ty)*180/Math.PI;const want=Math.max(-15,Math.min(15,(Math.abs(head)>90?(head>0?180-head:-180-head):head)*.35));
@@ -7641,7 +7652,7 @@ function walk27(to,then){cancelAnimationFrame(R27.raf);to=Math.max(0,Math.min(1,
     if(R27.dist-stepAt>36){stepAt=R27.dist;try{sfx.step()}catch(_){}}
     draw27();if(u<1)R27.raf=requestAnimationFrame(tick);else{R27.moving=false;R27.lean*=.4;draw27();then&&then()}};
   R27.raf=requestAnimationFrame(tick)}
-const restP27=()=>{const n=HOLES[landIdx()].length,d=S.day.done;return d>=n?1:d===0?0:ROAD27.stops[d-1]};
+const restP27=()=>{const n=HOLES[landIdx()].length,d=S.day.done;return d>=n?1:ROAD27.stops[d]};  /* v35: after a mound, Domi walks on by himself and waits at the next one */
 placeBeaver=function(animate){if(!landEl)return;paint27();if(animate)walk27(restP27());else{R27.p=restP27();steer27(1,1);draw27()}};
 openMound=function(i){if(!landEl||i!==S.day.done)return _om26.apply(this,arguments);const args=arguments,self=this;
   walk27(ROAD27.stops[i],()=>{try{sfx.pop()}catch(_){}setTimeout(()=>_om26.apply(self,args),180)})};
@@ -7990,8 +8001,8 @@ GAMES.seq32=q=>{let ri=0,miss=0;
     $("v32c").hidden=false;
     $("v32c").querySelectorAll(".v32-card").forEach(b=>b.onclick=()=>{if(q.done||b.disabled)return;
       if(+b.dataset.i===step){sfx.good();b.disabled=true;b.classList.add("used");const sl=$("v32s").children[step];sl.innerHTML=`<img src="${b.querySelector("img").src}" alt=""><b>${step+1}</b>`;sl.classList.add("full");step++;
-        if(step>=N){setTimeout(()=>{if(q.done)return;$("v32c").hidden=true;$("v32p").hidden=false;$("v32p").innerHTML=gifImg32(R.n);hush();sayseq([G32("SEQOK")],()=>{});
-          setTimeout(()=>{if(q.done)return;if(ri<q.rounds.length)round(false);else gameWin(q,miss>2?1:0,$("v32p"))},6400)},500)}}
+        if(step>=N){setTimeout(()=>{if(q.done||!L||L.q!==q)return;$("v32c").hidden=true;$("v32p").hidden=false;$("v32p").innerHTML=gifImg32(R.n);hush();sayseq([G32("SEQOK")],()=>{});
+          setTimeout(()=>{if(q.done||!L||L.q!==q)return;if(ri<q.rounds.length)round(false);else gameWin(q,miss>2?1:0,$("v32p"))},6400)},500)}}
       else{sfx.oops();miss++;bounce(b);b.classList.add("no");setTimeout(()=>b.classList.remove("no"),500);if(miss%2===0){const h=[...$("v32c").querySelectorAll(".v32-card:not(.used)")].find(x=>+x.dataset.i===step);if(h){h.classList.add("hint");setTimeout(()=>h.classList.remove("hint"),1300)}}}});
     if(first){hush();sayseq(q.voice,()=>{})}};
   round(true);
@@ -8008,12 +8019,12 @@ GAMES.watch32=q=>{let ri=0,miss=0;
     $("v32w").innerHTML=gifImg32(R.n);const T=$("v32t");T.style.transition="none";T.style.width="0%";
     requestAnimationFrame(()=>requestAnimationFrame(()=>{T.style.transition="width 6s linear";T.style.width="100%"}));
     hush();if(first)sayseq(q.voice,()=>{});
-    setTimeout(()=>{if(q.done)return;const opts=sh(W.o.map((o,i)=>({o,i})));const cur={voice:W.q,opts:opts.map(x=>({say:optSay32(x.o)})),ans:opts.findIndex(x=>x.i===0)};
+    setTimeout(()=>{if(q.done||!L||L.q!==q)return;const opts=sh(W.o.map((o,i)=>({o,i})));const cur={voice:W.q,opts:opts.map(x=>({say:optSay32(x.o)})),ans:opts.findIndex(x=>x.i===0)};
       $("v32q").innerHTML=`<div class="q31-cap">${W.cap}</div><div class="q31-o">${opts.map((x,i)=>`<button class="opt q31-b" data-i="${i}"><span class="oe">${x.o.e}</span><small>${x.o.t}</small></button>`).join("")}</div>`;
       if(typeof e3fix==="function")e3fix($("v32q"));
       const bs=[...$("v32q").querySelectorAll(".q31-b")];
       bs.forEach(b=>b.onclick=()=>{if(q.done||b.classList.contains("no")||b.classList.contains("ok"))return;window.__optTok={};hush();const i=+b.dataset.i;
-        if(i===cur.ans){sfx.good();b.classList.add("ok");burstAt(b,12);sayseq(W.x,()=>{});setTimeout(()=>{if(q.done)return;if(ri<q.rounds.length)round(false);else gameWin(q,miss>1?1:0,b)},3600)}
+        if(i===cur.ans){sfx.good();b.classList.add("ok");burstAt(b,12);sayseq(W.x,()=>{});setTimeout(()=>{if(q.done||!L||L.q!==q)return;if(ri<q.rounds.length)round(false);else gameWin(q,miss>1?1:0,b)},3600)}
         else{sfx.oops();miss++;tries++;b.classList.add("no");bounce(b);if(tries>=2){bs[cur.ans].classList.add("hint")}toastHint("Look again!")}});
       rd31(q,cur,bs,null,()=>{});
     },6300)};
@@ -8021,7 +8032,7 @@ GAMES.watch32=q=>{let ri=0,miss=0;
   window.__gSolve=()=>{const go=()=>{if(q.done||!L||L.q!==q)return;const b=$("v32q").querySelector(".q31-b");if(b){const all=[...$("v32q").querySelectorAll(".q31-b")];const W=q.rounds[ri-1].w;const r=all.find(x=>x.querySelector("small").textContent===W.o[0].t);if(r&&!r.classList.contains("ok"))r.click()}setTimeout(go,1200)};go()}};
 
 /* ================= 3. the animations as a reward in four games we already have ================= */
-const WINGIF32={grow:["seed-daisy","seed-rose","seed-sunflower","seed-tulip"],seasons:["apple-four-seasons","maple-four-seasons"],volc:["volcano-ash","volcano-classic"],rocket:["rocket-launch","rocket-red","rocket-sunset"]};
+const WINGIF32={};  /* v35: no movie after other games; the movies live in their own games */
 const _gw32=gameWin;gameWin=function(q,...rest){const list=q&&WINGIF32[q.game];
   if(!list||q._gif32)return _gw32(q,...rest);q._gif32=1;
   const o=document.createElement("div");o.className="v32-over";o.innerHTML=`${gifImg32(pickOne(list),"v32-gif big")}<div class="v32-skip">Tap to continue</div>`;document.body.appendChild(o);
@@ -8058,13 +8069,14 @@ const FIND34={
  snail:["PX_FA_SNAIL","PX_EN_SNAIL",["snail-garden","snail-log"],["animals"]],
  octopus:["PX_AW_OCTOPUS","",["octopus-reef","octopus-swim"],["animals"]],
  penguin:["PX_AW_PENGUIN","",["penguin-pond","penguin-spin","penguin-belly","penguin-hill"],["animals"]],
+ turtle:["PX_FA_TURTLE","PX_EN_TURTLE",["turtle-sand","turtle-seaweed"],["animals"]],
  volcano:["PX_SW_A_VOLCANO","",["volcano-ash","volcano-classic"],["world"]],
  mushroom:["PX_G32_O_MUSH","",["mushroom-forest","mushroom-meadow"],["world"]],
  rainbow:["LULU_FA_SKY5","LULU_WORD4",["rain-rainbow-garden","rain-rainbow-hill","rain-rainbow-house"],["sky"]],
  snowman:["PX_G8_O_SNOWMAN","PX_EW_SNOWMAN",["snowman-park","snowman-yard"],["sky"]],
  rocket:["LULU_FA_SKY8","PX_EN_ROCKET",["rocket-launch","rocket-red","rocket-sunset"],["sky"]]};
-const NOPAIR34={};   /* (the day-night movies start in daylight, so "moon" is left out) */
-const VOICED34=["LULU_FA_AN8", "LULU_FA_AN9", "LULU_FA_SKY1", "LULU_FA_SKY5", "LULU_FA_SKY8", "LULU_WORD4", "LULU_WORD47", "LULU_WORD49", "PX_AW_OCTOPUS", "PX_AW_PENGUIN", "PX_EN_BUTTERFLY", "PX_EN_MOON", "PX_EN_ROCKET", "PX_EN_SNAIL", "PX_EW_SNOWMAN", "PX_FA_BUTTERFLY", "PX_FA_SNAIL", "PX_G32_O_CHICK", "PX_G32_O_MUSH", "PX_G8_O_SNOWMAN", "PX_SW_A_VOLCANO"], GIFS34=["apple-four-seasons", "balloon-fields", "balloon-mountains", "balloon-sunrise", "balloon-village", "bee-garden", "bee-wildflowers", "caterpillar-to-butterfly", "caterpillar-yellow", "chick-basket", "chick-nest", "chick-sun", "day-night-house", "day-night-tree", "firefly-garden", "firefly-meadow", "jellyfish-coral", "jellyfish-deep", "kite-beach", "kite-sunset", "maple-four-seasons", "mushroom-forest", "mushroom-meadow", "octopus-reef", "octopus-swim", "penguin-belly", "penguin-hill", "penguin-pond", "penguin-spin", "rain-rainbow-garden", "rain-rainbow-hill", "rain-rainbow-house", "rocket-launch", "rocket-red", "rocket-sunset", "seed-daisy", "seed-rose", "seed-sunflower", "seed-tulip", "snail-garden", "snail-log", "snowflake-sky", "snowflake-village", "snowman-park", "snowman-yard", "tadpole-cycle", "tadpole-waterfall", "volcano-ash", "volcano-classic", "water-cycle-ocean", "water-cycle-puddle"];
+const NOPAIR34={turtle:["octopus"],octopus:["turtle"]};  /* both swim on a reef */   /* (the day-night movies start in daylight, so "moon" is left out) */
+const VOICED34=["LULU_FA_AN8", "LULU_FA_AN9", "LULU_FA_SKY1", "LULU_FA_SKY5", "LULU_FA_SKY8", "LULU_WORD4", "LULU_WORD47", "LULU_WORD49", "PX_AW_OCTOPUS", "PX_AW_PENGUIN", "PX_EN_BUTTERFLY", "PX_EN_MOON", "PX_EN_ROCKET", "PX_EN_SNAIL", "PX_EN_TURTLE", "PX_EW_SNOWMAN", "PX_FA_BUTTERFLY", "PX_FA_SNAIL", "PX_FA_TURTLE", "PX_G32_O_CHICK", "PX_G32_O_MUSH", "PX_G8_O_SNOWMAN", "PX_SW_A_VOLCANO"], GIFS34=["apple-four-seasons", "balloon-fields", "balloon-mountains", "balloon-sunrise", "balloon-village", "bee-garden", "bee-wildflowers", "caterpillar-to-butterfly", "caterpillar-yellow", "chick-basket", "chick-nest", "chick-sun", "day-night-house", "day-night-tree", "firefly-garden", "firefly-meadow", "jellyfish-coral", "jellyfish-deep", "kite-beach", "kite-sunset", "maple-four-seasons", "mushroom-forest", "mushroom-meadow", "octopus-reef", "octopus-swim", "penguin-belly", "penguin-hill", "penguin-pond", "penguin-spin", "rain-rainbow-garden", "rain-rainbow-hill", "rain-rainbow-house", "rocket-launch", "rocket-red", "rocket-sunset", "seed-daisy", "seed-rose", "seed-sunflower", "seed-tulip", "snail-garden", "snail-log", "snowflake-sky", "snowflake-village", "snowman-park", "snowman-yard", "tadpole-cycle", "tadpole-waterfall", "turtle-sand", "turtle-seaweed", "volcano-ash", "volcano-classic", "water-cycle-ocean", "water-cycle-puddle"];
 const ok34=k=>{const t=FIND34[k];return VOICED34.includes(t[0])&&t[2].some(n=>GIFS34.includes(n))};
 const mov34=k=>pickOne(FIND34[k][2].filter(n=>GIFS34.includes(n)));
 function findPool34(cat){return Object.keys(FIND34).filter(k=>ok34(k)&&FIND34[k][3].includes(cat))}
@@ -8086,7 +8098,7 @@ GAMES.find34=q=>{let ri=0,miss=0;
     hush();sayseq([...(first?q.voice:[]),...say34(cur.t)],()=>{});
     bs.forEach(b=>b.onclick=()=>{if(q.done||b.classList.contains("no")||b.classList.contains("ok"))return;hush();const o=cur.opts[+b.dataset.i];
       if(o.k===cur.t){sfx.good();b.classList.add("ok");burstAt(b,14);sayseq(say34(cur.t),()=>{});
-        setTimeout(()=>{if(q.done)return;if(ri<q.rounds.length)round(false);else gameWin(q,miss>1?1:0,b)},1800)}
+        setTimeout(()=>{if(q.done||!L||L.q!==q)return;if(ri<q.rounds.length)round(false);else gameWin(q,miss>1?1:0,b)},1800)}
       else{sfx.oops();miss++;tries++;b.classList.add("no");bounce(b);sayseq(say34(cur.t),()=>{});
         if(tries>=2){const r=bs[cur.opts.findIndex(x=>x.k===cur.t)];r.classList.add("hint")}}})};
   $("v34e").onclick=()=>{if(cur&&!q.done){hush();sayseq(say34(cur.t),()=>{})}};
@@ -8112,13 +8124,17 @@ const GQ34=[
  {g:["snail-garden","snail-log"],s:["animals"],ids:["px10"]},
  {g:["kite-beach","kite-sunset"],s:["sky"],ids:["s08","px79"]},
  {g:["bee-garden","bee-wildflowers"],s:["animals","farm"],ids:["a05","px73","px12","px326","n09","a24","px211","px127"]},
- {g:["penguin-pond","penguin-spin","penguin-belly","penguin-hill"],s:["animals"],ids:["a20","px345","px113","px459"]}];
+ {g:["penguin-pond","penguin-spin","penguin-belly","penguin-hill"],s:["animals"],ids:["a20","px345","px113","px459"]},
+ {g:["turtle-sand","turtle-seaweed"],s:["animals"],ids:["px60","px455"]}];
 const wqA34=id=>{const w=WQ.find(x=>x.i===id);return w?w.a:null};
 /* the questions a child of this age can get: at most 4 years below, never above */
-function gqFit34(G){const a=S.age||6;const ids=G.ids.filter(id=>{const qa=wqA34(id);return qa!==null&&qa<=a});const near=ids.filter(id=>wqA34(id)>=a-4);return near.length?near:ids}
+function gqFit34(G){const a=S.age||6;const ids=G.ids.filter(id=>{const qa=wqA34(id);return qa!==null&&qa<=a&&VOICED.has(id)});  /* v35: only questions Lulu can read aloud */const near=ids.filter(id=>wqA34(id)>=a-4);return near.length?near:ids}
 function gqPool34(cat){return GQ34.filter(G=>G.s.includes(cat)&&G.g.some(n=>GIFS34.includes(n))&&gqFit34(G).length)}
-function gqBuild34(id){const keep=S.age;let r=null;try{r=window.__qcBuild?window.__qcBuild("w",id):null}catch(e){r=null}S.age=keep;
-  const q=r&&r[0];if(!q||!q.opts||q.opts.length<2||!(q.ans>=0)||!q.voice||!q.voice.length||q.opts.some(o=>!o.h))return null;return q}
+function gqBuild34(id){const keep=S.age,w=WQ.find(x=>x.i===id);if(!w)return null;
+  for(let t=0;t<10;t++){let r=null;try{r=window.__qcBuild?window.__qcBuild("w",id):null}catch(e){r=null}S.age=keep;
+    const q=r&&r[0];  /* v35: it must be this very question, with its own recorded voice */
+    if(q&&q.cap===w.q&&q.opts&&q.opts.length>=2&&q.ans>=0&&q.voice&&String(q.voice[0]).startsWith("w/")&&!q.opts.some(o=>!o.h))return q}
+  return null}
 function qGq34(cat){const P=gqPool34(cat);if(!P.length)return null;const a=lvl(),n=a<=5?2:3,rounds=[];
   for(const G of sh(P)){if(rounds.length>=n)break;const ids=sh(gqFit34(G));for(const id of ids){const q=gqBuild34(id);if(q){rounds.push({n:pickOne(G.g.filter(x=>GIFS34.includes(x))),q,id});break}}}
   if(!rounds.length)return null;
@@ -8130,12 +8146,12 @@ GAMES.gq34=q=>{let ri=0,miss=0;
     $("v34w").innerHTML=gifImg32(R.n);const T=$("v34t");T.style.transition="none";T.style.width="0%";
     requestAnimationFrame(()=>requestAnimationFrame(()=>{T.style.transition="width 6s linear";T.style.width="100%"}));
     hush();if(first)sayseq(q.voice,()=>{});
-    setTimeout(()=>{if(q.done)return;
+    setTimeout(()=>{if(q.done||!L||L.q!==q||!$("v34q"))return;  /* the child may have left */
       $("v34q").innerHTML=`<div class="q31-cap">${Q.cap||""}</div><div class="q31-o${Q.tf?" yn":""}">${Q.opts.map((o,i)=>`<button class="opt q31-b" data-i="${i}">${o.h}</button>`).join("")}</div>`;
       if(typeof e3fix==="function")e3fix($("v34q"));
       const bs=[...$("v34q").querySelectorAll(".q31-b")],ex=(Q.why&&Q.why.v&&Q.why.v.length?Q.why.v:(Q.exp&&Q.exp.v)||[]);
       bs.forEach(b=>b.onclick=()=>{if(q.done||b.classList.contains("no")||b.classList.contains("ok"))return;window.__optTok={};hush();const i=+b.dataset.i;
-        if(i===Q.ans){sfx.good();b.classList.add("ok");burstAt(b,12);sayseq(ex,()=>{});setTimeout(()=>{if(q.done)return;if(ri<q.rounds.length)round(false);else gameWin(q,miss>1?1:0,b)},ex.length?4200:1600)}
+        if(i===Q.ans){sfx.good();b.classList.add("ok");burstAt(b,12);sayseq(ex,()=>{});setTimeout(()=>{if(q.done||!L||L.q!==q)return;if(ri<q.rounds.length)round(false);else gameWin(q,miss>1?1:0,b)},ex.length?4200:1600)}
         else{sfx.oops();miss++;tries++;b.classList.add("no");bounce(b);if(tries>=2)bs[Q.ans].classList.add("hint");toastHint("Look again!")}});
       rd31(q,{voice:Q.voice,opts:Q.opts},bs,null,()=>{});
     },6300)};

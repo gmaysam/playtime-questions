@@ -313,7 +313,12 @@ function draw27(){if(!landEl||!beaver)return;if(beaver.parentNode!==landEl)landE
   const[x,y]=at27(R27.p);beaver.style.transition="none";beaver.style.left=x+"px";beaver.style.top=y+"px";
   beaver.style.setProperty("--face",R27.face);beaver.style.setProperty("--lean",R27.lean.toFixed(2)+"deg");
   const s=beaver.querySelector(".g27s");if(s){const f=R27.moving?1+Math.floor(R27.dist/9)%8:0;s.style.backgroundPositionX=(f*12.5)+"%"}
-  beaver.classList.toggle("walking",R27.moving);beaver.classList.toggle("moving",R27.moving)}
+  beaver.classList.toggle("walking",R27.moving);beaver.classList.toggle("moving",R27.moving);try{go35()}catch(e){}}
+/* v35: a Go! button over Domi when he is standing at the next mound; the child taps it to go inside */
+function go35(){if(!landEl)return;let g=document.getElementById("g35go");const n=HOLES[landIdx()].length,d=S.day.done;
+  if(!g){g=document.createElement("button");g.id="g35go";g.className="g35go";g.innerHTML="Go! <span>▶</span>";g.onclick=e=>{e.stopPropagation();try{sfx.tap()}catch(_){}try{closePop()}catch(_){}openMound(S.day.done)}}
+  if(g.parentNode!==landEl)landEl.appendChild(g);const show=!R27.moving&&d<n&&Math.abs(R27.p-ROAD27.stops[d])<.004;g.hidden=!show;
+  if(show){const[x,y]=at27(R27.p);g.style.left=x+"px";g.style.top=(y-122)+"px"}}
 /* aim the face and the lean from the road's direction; ease both so curves never snap */
 function steer27(dir,k){const[tx,ty]=tan27(R27.p,dir);if(tx>.22)R27.face=1;else if(tx<-.22)R27.face=-1;
   const head=Math.atan2(tx,-ty)*180/Math.PI;const want=Math.max(-15,Math.min(15,(Math.abs(head)>90?(head>0?180-head:-180-head):head)*.35));
@@ -327,7 +332,7 @@ function walk27(to,then){cancelAnimationFrame(R27.raf);to=Math.max(0,Math.min(1,
     if(R27.dist-stepAt>36){stepAt=R27.dist;try{sfx.step()}catch(_){}}
     draw27();if(u<1)R27.raf=requestAnimationFrame(tick);else{R27.moving=false;R27.lean*=.4;draw27();then&&then()}};
   R27.raf=requestAnimationFrame(tick)}
-const restP27=()=>{const n=HOLES[landIdx()].length,d=S.day.done;return d>=n?1:d===0?0:ROAD27.stops[d-1]};
+const restP27=()=>{const n=HOLES[landIdx()].length,d=S.day.done;return d>=n?1:ROAD27.stops[d]};  /* v35: after a mound, Domi walks on by himself and waits at the next one */
 placeBeaver=function(animate){if(!landEl)return;paint27();if(animate)walk27(restP27());else{R27.p=restP27();steer27(1,1);draw27()}};
 openMound=function(i){if(!landEl||i!==S.day.done)return _om26.apply(this,arguments);const args=arguments,self=this;
   walk27(ROAD27.stops[i],()=>{try{sfx.pop()}catch(_){}setTimeout(()=>_om26.apply(self,args),180)})};
