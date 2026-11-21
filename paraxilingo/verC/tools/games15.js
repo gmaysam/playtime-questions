@@ -24,6 +24,7 @@ function gate31(cat,used,maxH){const ks=sh(kindsFor(cat)),seen=used._g31||(used.
   for(let t=0;t<60;t++){const k=ks[t%ks.length];let q=null;try{q=buildQ(cat,k,used)}catch(e){q=null}
     if(!q||q.game||q.match||q.flash||!q.opts||q.opts.length<2||!(q.ans>=0)||q.layout==="match")continue;
     if(k==="w"&&!q.wid)continue;
+    if(q.visual&&String(q.visual).length>=8000)continue;  /* a big map does not fit these games */
     if(q.opts.some(o=>!o.say||!o.say.length||!o.h||o.h.length>(maxH||420)))continue;
     if(!q.voice||!q.voice.length)continue;
     const key=q.wid||q.cap;if(seen.has(key))continue;seen.add(key);q.kind=k;return q}
@@ -37,7 +38,7 @@ function rd31(q,cur,boxes,first,onDone){hush();const tok={};window.__optTok=tok;
   const lit=b=>boxes.forEach(x=>x&&x.classList.toggle("saying",x===b));
   const step=()=>{if(window.__optTok!==tok||!L||L.q!==q||q.done){lit(null);return}if(i>=list.length){lit(null);onDone&&onDone();return}const x=list[i++];lit(x.b||null);
     if(!x.c.length){step();return}sayseq(x.c,()=>setTimeout(step,x.b?150:250))};step()}
-const vis31=cur=>cur.visual&&cur.visual.length<1800&&cur.visual.replace(/<[^>]*>/g,"").replace(/\s/g,"").length<=4?`<div class="q31-vis">${cur.visual}</div>`:"";
+const vis31=cur=>cur.visual&&cur.visual.length<8000?`<div class="q31-vis">${cur.visual}</div>`:"";  /* v37: show the sum, the clock, the number line... (big maps are left out of these games) */
 const expSay31=cur=>cur.exp&&cur.exp.v&&cur.exp.v.length?cur.exp.v:(cur.opts[cur.ans].say||[]);
 
 /* ================= 1. QUIZ RACE: right answer = the car drives on; wrong = the snail creeps ================= */
@@ -102,7 +103,9 @@ GAMES.qshow=q=>{const N=q.qs.length;
   const next=()=>{if(q.done)return;if(qi>=N){upd();gameWin(q,miss>2?2:miss?1:0,$("s31st"));return}show(false)};
   const pick=(b,bs)=>{if(q.done||ans||b.disabled)return;ans=true;window.__optTok={};hush();const i=+b.dataset.i;
     if(i===cur.ans){sfx.good();b.classList.add("ok");step++;upd();burstAt(b,12);setTimeout(next,1100)}
-    else{sfx.oops();miss++;b.classList.add("no");bs[cur.ans].classList.add("ok");sayseq(expSay31(cur),()=>{});setTimeout(next,2800)}};
+    else{sfx.oops();miss++;b.classList.add("no");b.disabled=true;cur._t=(cur._t||0)+1;
+      if(cur._t<2){ans=false;toastHint("Not quite - try again!");sayseq(["w/LULU_TRY_ONCE"],()=>{});return}  /* v37: a second try before the answer is shown */
+      bs[cur.ans].classList.add("ok");sayseq(expSay31(cur),()=>{});setTimeout(next,2800)}};
   show(true);
   window.__gSolve=()=>{const go=()=>{if(q.done||!L||L.q!==q)return;if(!ans){const b=$("s31q").querySelector(`.q31-b[data-i="${cur.ans}"]`);if(b)b.click()}setTimeout(go,1300)};go()}};
 
@@ -124,7 +127,9 @@ GAMES.beat=q=>{
   const timeUp=()=>{if(ans)return;ans=true;miss++;sfx.oops();const r=$("b31q").querySelector(`.q31-b[data-i="${cur.ans}"]`);if(r)r.classList.add("ok");hush();sayseq([G31("TIMEUP")],()=>{});setTimeout(next,2600)};
   const pick=(b,bs)=>{if(q.done||ans)return;ans=true;stop();window.__optTok={};hush();const i=+b.dataset.i;
     if(i===cur.ans){sfx.good();b.classList.add("ok");score++;$("b31s").textContent=score;burstAt(b,12);setTimeout(next,1000)}
-    else{sfx.oops();miss++;b.classList.add("no");bs[cur.ans].classList.add("ok");sayseq(expSay31(cur),()=>{});setTimeout(next,2800)}};
+    else{sfx.oops();miss++;b.classList.add("no");b.disabled=true;cur._t=(cur._t||0)+1;
+      if(cur._t<2){ans=false;toastHint("Not quite - try again!");sayseq(["w/LULU_TRY_ONCE"],()=>{});raf=requestAnimationFrame(tick);return}  /* v37: a second try */
+      bs[cur.ans].classList.add("ok");sayseq(expSay31(cur),()=>{});setTimeout(next,2800)}};
   show(true);
   window.__gSolve=()=>{const go=()=>{if(q.done||!L||L.q!==q)return;if(!ans){const b=$("b31q").querySelector(`.q31-b[data-i="${cur.ans}"]`);if(b)b.click()}setTimeout(go,1200)};go()}};
 

@@ -2474,6 +2474,10 @@ img.e3{width:1.18em;height:1.18em;vertical-align:-.22em;object-fit:contain;displ
 /* v35: Go! over Domi at the next mound */
 .g35go{position:absolute;z-index:4;transform:translateX(-50%);border:0;border-radius:999px;padding:9px 18px;font:900 18px Nunito,system-ui,sans-serif;color:#fff;background:#58CC02;box-shadow:0 4px 0 #46A302;cursor:pointer;animation:g35b 1.2s ease-in-out infinite;white-space:nowrap}
 .g35go span{font-size:13px;margin-left:2px}
+/* v37: one Go on the map (the green button over Domi); no counting dots under the number once the answer is shown */
+.hole.current .tip{display:none}
+.qo.show .dots,.qo.right .dots,.q31-b.ok .dots,.q31-b.hint .dots,.g29ra .dots,.f31-f.hint .dots{display:none}
+
 .g35go:active{transform:translateX(-50%) translateY(3px);box-shadow:0 1px 0 #46A302}
 @keyframes g35b{0%,100%{margin-top:0}50%{margin-top:-6px}}
 
@@ -2527,6 +2531,13 @@ img.e3{width:1.18em;height:1.18em;vertical-align:-.22em;object-fit:contain;displ
 .q31{margin-top:12px;display:flex;flex-direction:column;gap:10px}
 .q31-cap{font-weight:800;font-size:19px;line-height:1.3;text-align:center;color:#3C3C3C}
 .q31-vis{display:flex;justify-content:center;font-size:40px}.q31-vis img.e3{height:56px!important;width:56px!important}
+.q31-vis{flex-wrap:wrap;max-width:100%;gap:8px;align-items:center}
+.q31-vis .eq{display:flex;flex-direction:row;align-items:flex-start;gap:8px;font-weight:800;font-size:40px;line-height:1;background:none;border:0;box-shadow:none;padding:0;width:auto}
+.q31-vis .eq>span{display:flex;flex-direction:column;align-items:center;gap:4px}
+.q31-vis .eq>b{color:#FF9600}
+.q31-vis .eq .q{color:#C3CCDB}
+.q31-vis .clk{width:130px;height:130px}
+
 .q31-o{display:grid;grid-template-columns:repeat(auto-fit,minmax(96px,1fr));gap:10px}
 .q31-o.col{grid-template-columns:1fr}
 .q31-b{min-height:70px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;transition:transform .12s,opacity .3s}
@@ -6002,7 +6013,7 @@ function cupsQ(q){let pos=[0,1,2],at=ri(0,2),ready=false,miss=0;gShow(`<div clas
   g7solve(()=>{ready=true;fire7(C[at])})}
 
 /* 18. My day (age 4+) - morning, afternoon or night? */
-const DAYI=[["wake up","🌅","morning"],["breakfast","🥣","morning"],["brush teeth","🪥","morning"],["lunch","🍽️","afternoon"],["play in the park","🛝","afternoon"],["moon and stars","🌙","night"],["go to bed","🛏️","night"],["pyjamas","👘","night"]];
+const DAYI=[["wake up","🌅","morning"],["breakfast","🥣","morning"],["lunch","🍽️","afternoon"],["play in the park","🛝","afternoon"],["moon and stars","🌙","night"],["go to bed","🛏️","night"],["pyjamas","👘","night"]];
 const DAYP={morning:"🌅",afternoon:"☀️",night:"🌙"};
 function qMyDay(){const it=[];for(const p of sh(Object.keys(DAYP)))it.push(pickOne(DAYI.filter(x=>x[2]===p)));return {game:"myday",items:it,voice:[G7("MYDAY"),"w/PX_G19_D_"+it[0][0].toUpperCase().replace(/[^A-Z]+/g,"_")],gid:"g:myday",factT:"We wake up in the morning and sleep at night."}}
 function mydayQ(q){let k=0,miss=0;gShow(`<div class="game">${gHead("🕰️","My day","When do we do this?")}
@@ -6531,6 +6542,7 @@ function shGate(cat,used){const ks=sh(kindsFor(cat));
     if(!q||q.game||q.match||q.flash||!q.opts||q.opts.length<2||!(q.ans>=0)||q.layout==="match")continue;
     if(q.opts.some(o=>!o.say||!o.say.length||!o.h||o.h.length>420))continue;
     if(!q.voice||!q.voice.length)continue;
+    if(q.visual&&String(q.visual).replace(/<[^>]*>/g,"").replace(/\s/g,"").length>4||/<svg|class="clk|clock/i.test(String(q.visual||"")))continue;  /* v37: the rocket shows no picture, so no clock or sum questions */
     const key=q.wid||q.cap;if(used.has(key))continue;used.add(key);q.kind=k;return q}
   return null}
 function qShuttle(cat){if(!G11_READY)return null;const a=lvl(),used=new Set(),n=a<=6?3:4,gates=[];
@@ -6549,9 +6561,9 @@ function shuttleQ(q){const N=q.lanes;
   F.style.touchAction="none";
   const laneX=i=>(i+.5)*100/N,myLane=()=>Math.max(0,Math.min(N-1,Math.floor(rx/100*N)));
   const setR=()=>{R.style.left=rx+"%";if(!R.classList.contains("away")){R.style.transition="none";R.style.bottom=ry+"%"}else{R.style.transition="";R.style.bottom=""};R.style.transform=`translateX(-50%) rotate(${Math.max(-18,Math.min(18,(ty-rx)*.6))}deg)`};
-  const mv=e=>{const r=F.getBoundingClientRect();ty=Math.max(6,Math.min(94,(e.clientX-r.left)/r.width*100));tyY=Math.max(4,Math.min(45,(1-(e.clientY-r.top)/r.height)*100-12))};  /* v34: drag up to meet the gate sooner */
+  const mv=e=>{const r=F.getBoundingClientRect();ty=Math.max(6,Math.min(94,(e.clientX-r.left)/r.width*100));tyY=Math.max(4,Math.min(70,(1-(e.clientY-r.top)/r.height)*100-12))};  /* v34: drag up to meet the gate sooner */
   F.onpointerdown=e=>{e.preventDefault();mv(e);tutOff();try{F.setPointerCapture(e.pointerId)}catch(_){}};F.onpointermove=e=>{if(e.buttons||e.pointerType==="touch")mv(e)};
-  const key=e=>{if(!L||L.q!==q||q.done){document.removeEventListener("keydown",key);return}if(e.key==="ArrowLeft")ty=laneX(Math.max(0,myLane()-1));if(e.key==="ArrowRight")ty=laneX(Math.min(N-1,myLane()+1));if(e.key==="ArrowUp")tyY=Math.min(45,tyY+10);if(e.key==="ArrowDown")tyY=Math.max(4,tyY-10)};
+  const key=e=>{if(!L||L.q!==q||q.done){document.removeEventListener("keydown",key);return}if(e.key==="ArrowLeft")ty=laneX(Math.max(0,myLane()-1));if(e.key==="ArrowRight")ty=laneX(Math.min(N-1,myLane()+1));if(e.key==="ArrowUp")tyY=Math.min(70,tyY+10);if(e.key==="ArrowDown")tyY=Math.max(4,tyY-10)};
   document.addEventListener("keydown",key);
   const upd=()=>{$("shG").textContent=q.gates.map((x,i)=>i<gi?"🟢":i===gi?"🟡":"⚪").join("")};
   /* show one gate: the question on top, its answers in the lanes */
@@ -6587,6 +6599,7 @@ function shuttleQ(q){const N=q.lanes;
       else{toastHint(l?"Not that gate - try again!":"Fly into a gate with an answer!");setTimeout(()=>{if(L&&L.q===q&&!q.done)showGate(true)},900)}}};
   const tick=t=>{if(!L||L.q!==q||q.done){cancelAnimationFrame(raf);return}const dt=Math.min(50,t-(lastT||t));lastT=t;
     rx+=(ty-rx)*Math.min(1,dt/90);ry+=(tyY-ry)*Math.min(1,dt/90);setR();const up=ry-4;
+    if(cur&&!moving&&up>=60)pass();  /* v37: the rocket can fly up to the answers itself */
     if(moving&&cur){gy+=dt/(q.travel*(gi===0?1.6:1))*76;GT.style.top=gy+"%";if(gy>=74-up)pass();
       if(q.rockEvery&&t-rockT>q.rockEvery&&gy<52){rockT=t;spawn("rock")}
       if(t-starT>1700){starT=t;spawn("star")}}
@@ -7771,6 +7784,7 @@ function gate31(cat,used,maxH){const ks=sh(kindsFor(cat)),seen=used._g31||(used.
   for(let t=0;t<60;t++){const k=ks[t%ks.length];let q=null;try{q=buildQ(cat,k,used)}catch(e){q=null}
     if(!q||q.game||q.match||q.flash||!q.opts||q.opts.length<2||!(q.ans>=0)||q.layout==="match")continue;
     if(k==="w"&&!q.wid)continue;
+    if(q.visual&&String(q.visual).length>=8000)continue;  /* a big map does not fit these games */
     if(q.opts.some(o=>!o.say||!o.say.length||!o.h||o.h.length>(maxH||420)))continue;
     if(!q.voice||!q.voice.length)continue;
     const key=q.wid||q.cap;if(seen.has(key))continue;seen.add(key);q.kind=k;return q}
@@ -7784,7 +7798,7 @@ function rd31(q,cur,boxes,first,onDone){hush();const tok={};window.__optTok=tok;
   const lit=b=>boxes.forEach(x=>x&&x.classList.toggle("saying",x===b));
   const step=()=>{if(window.__optTok!==tok||!L||L.q!==q||q.done){lit(null);return}if(i>=list.length){lit(null);onDone&&onDone();return}const x=list[i++];lit(x.b||null);
     if(!x.c.length){step();return}sayseq(x.c,()=>setTimeout(step,x.b?150:250))};step()}
-const vis31=cur=>cur.visual&&cur.visual.length<1800&&cur.visual.replace(/<[^>]*>/g,"").replace(/\s/g,"").length<=4?`<div class="q31-vis">${cur.visual}</div>`:"";
+const vis31=cur=>cur.visual&&cur.visual.length<8000?`<div class="q31-vis">${cur.visual}</div>`:"";  /* v37: show the sum, the clock, the number line... (big maps are left out of these games) */
 const expSay31=cur=>cur.exp&&cur.exp.v&&cur.exp.v.length?cur.exp.v:(cur.opts[cur.ans].say||[]);
 
 /* ================= 1. QUIZ RACE: right answer = the car drives on; wrong = the snail creeps ================= */
@@ -7849,7 +7863,9 @@ GAMES.qshow=q=>{const N=q.qs.length;
   const next=()=>{if(q.done)return;if(qi>=N){upd();gameWin(q,miss>2?2:miss?1:0,$("s31st"));return}show(false)};
   const pick=(b,bs)=>{if(q.done||ans||b.disabled)return;ans=true;window.__optTok={};hush();const i=+b.dataset.i;
     if(i===cur.ans){sfx.good();b.classList.add("ok");step++;upd();burstAt(b,12);setTimeout(next,1100)}
-    else{sfx.oops();miss++;b.classList.add("no");bs[cur.ans].classList.add("ok");sayseq(expSay31(cur),()=>{});setTimeout(next,2800)}};
+    else{sfx.oops();miss++;b.classList.add("no");b.disabled=true;cur._t=(cur._t||0)+1;
+      if(cur._t<2){ans=false;toastHint("Not quite - try again!");sayseq(["w/LULU_TRY_ONCE"],()=>{});return}  /* v37: a second try before the answer is shown */
+      bs[cur.ans].classList.add("ok");sayseq(expSay31(cur),()=>{});setTimeout(next,2800)}};
   show(true);
   window.__gSolve=()=>{const go=()=>{if(q.done||!L||L.q!==q)return;if(!ans){const b=$("s31q").querySelector(`.q31-b[data-i="${cur.ans}"]`);if(b)b.click()}setTimeout(go,1300)};go()}};
 
@@ -7871,7 +7887,9 @@ GAMES.beat=q=>{
   const timeUp=()=>{if(ans)return;ans=true;miss++;sfx.oops();const r=$("b31q").querySelector(`.q31-b[data-i="${cur.ans}"]`);if(r)r.classList.add("ok");hush();sayseq([G31("TIMEUP")],()=>{});setTimeout(next,2600)};
   const pick=(b,bs)=>{if(q.done||ans)return;ans=true;stop();window.__optTok={};hush();const i=+b.dataset.i;
     if(i===cur.ans){sfx.good();b.classList.add("ok");score++;$("b31s").textContent=score;burstAt(b,12);setTimeout(next,1000)}
-    else{sfx.oops();miss++;b.classList.add("no");bs[cur.ans].classList.add("ok");sayseq(expSay31(cur),()=>{});setTimeout(next,2800)}};
+    else{sfx.oops();miss++;b.classList.add("no");b.disabled=true;cur._t=(cur._t||0)+1;
+      if(cur._t<2){ans=false;toastHint("Not quite - try again!");sayseq(["w/LULU_TRY_ONCE"],()=>{});raf=requestAnimationFrame(tick);return}  /* v37: a second try */
+      bs[cur.ans].classList.add("ok");sayseq(expSay31(cur),()=>{});setTimeout(next,2800)}};
   show(true);
   window.__gSolve=()=>{const go=()=>{if(q.done||!L||L.q!==q)return;if(!ans){const b=$("b31q").querySelector(`.q31-b[data-i="${cur.ans}"]`);if(b)b.click()}setTimeout(go,1200)};go()}};
 
@@ -8070,13 +8088,19 @@ const FIND34={
  octopus:["PX_AW_OCTOPUS","",["octopus-reef","octopus-swim"],["animals"]],
  penguin:["PX_AW_PENGUIN","",["penguin-pond","penguin-spin","penguin-belly","penguin-hill"],["animals"]],
  turtle:["PX_FA_TURTLE","PX_EN_TURTLE",["turtle-sand","turtle-seaweed"],["animals"]],
+ ant:["PX_FA_ANT","PX_EN_ANT",["ant-stem"],["animals"]],
+ crab:["PX_FA_CRAB","PX_EN_CRAB",["crab-water"],["animals"]],
+ fish:["PX_OW2_GOLDFISH","PX_EN_FISH",["goldfish-plants","goldfish-window"],["animals"]],
+ bird:["LULU_FA_AN0","LULU_WORD0",["hummingbird-garden","hummingbird-yellow"],["animals"]],
+ magnet:["PX_OW3_MAGNET","",["magnet-chain","magnet-jar"],["world"]],
+ moon:["LULU_FA_SKY1","PX_EN_MOON",["moon-stars","moon-sun"],["sky"]],
  volcano:["PX_SW_A_VOLCANO","",["volcano-ash","volcano-classic"],["world"]],
  mushroom:["PX_G32_O_MUSH","",["mushroom-forest","mushroom-meadow"],["world"]],
  rainbow:["LULU_FA_SKY5","LULU_WORD4",["rain-rainbow-garden","rain-rainbow-hill","rain-rainbow-house"],["sky"]],
  snowman:["PX_G8_O_SNOWMAN","PX_EW_SNOWMAN",["snowman-park","snowman-yard"],["sky"]],
  rocket:["LULU_FA_SKY8","PX_EN_ROCKET",["rocket-launch","rocket-red","rocket-sunset"],["sky"]]};
-const NOPAIR34={turtle:["octopus"],octopus:["turtle"]};  /* both swim on a reef */   /* (the day-night movies start in daylight, so "moon" is left out) */
-const VOICED34=["LULU_FA_AN8", "LULU_FA_AN9", "LULU_FA_SKY1", "LULU_FA_SKY5", "LULU_FA_SKY8", "LULU_WORD4", "LULU_WORD47", "LULU_WORD49", "PX_AW_OCTOPUS", "PX_AW_PENGUIN", "PX_EN_BUTTERFLY", "PX_EN_MOON", "PX_EN_ROCKET", "PX_EN_SNAIL", "PX_EN_TURTLE", "PX_EW_SNOWMAN", "PX_FA_BUTTERFLY", "PX_FA_SNAIL", "PX_FA_TURTLE", "PX_G32_O_CHICK", "PX_G32_O_MUSH", "PX_G8_O_SNOWMAN", "PX_SW_A_VOLCANO"], GIFS34=["apple-four-seasons", "balloon-fields", "balloon-mountains", "balloon-sunrise", "balloon-village", "bee-garden", "bee-wildflowers", "caterpillar-to-butterfly", "caterpillar-yellow", "chick-basket", "chick-nest", "chick-sun", "day-night-house", "day-night-tree", "firefly-garden", "firefly-meadow", "jellyfish-coral", "jellyfish-deep", "kite-beach", "kite-sunset", "maple-four-seasons", "mushroom-forest", "mushroom-meadow", "octopus-reef", "octopus-swim", "penguin-belly", "penguin-hill", "penguin-pond", "penguin-spin", "rain-rainbow-garden", "rain-rainbow-hill", "rain-rainbow-house", "rocket-launch", "rocket-red", "rocket-sunset", "seed-daisy", "seed-rose", "seed-sunflower", "seed-tulip", "snail-garden", "snail-log", "snowflake-sky", "snowflake-village", "snowman-park", "snowman-yard", "tadpole-cycle", "tadpole-waterfall", "turtle-sand", "turtle-seaweed", "volcano-ash", "volcano-classic", "water-cycle-ocean", "water-cycle-puddle"];
+const NOPAIR34={turtle:["octopus","fish","crab"],octopus:["turtle","fish","crab"],fish:["octopus","turtle","bird"],crab:["octopus","turtle"],bird:["chick","penguin","fish"],chick:["bird"],penguin:["bird"],moon:["rocket"],rocket:["moon"]};  /* a movie that also shows the thing is never a wrong choice */   /* (the day-night movies start in daylight, so "moon" is left out) */
+const VOICED34=["LULU_FA_AN0", "LULU_FA_AN8", "LULU_FA_AN9", "LULU_FA_SKY1", "LULU_FA_SKY5", "LULU_FA_SKY8", "LULU_WORD0", "LULU_WORD4", "LULU_WORD47", "LULU_WORD49", "PX_AW_OCTOPUS", "PX_AW_PENGUIN", "PX_EN_ANT", "PX_EN_BUTTERFLY", "PX_EN_CRAB", "PX_EN_FISH", "PX_EN_MOON", "PX_EN_ROCKET", "PX_EN_SNAIL", "PX_EN_TURTLE", "PX_EW_SNOWMAN", "PX_FA_ANT", "PX_FA_BUTTERFLY", "PX_FA_CRAB", "PX_FA_SNAIL", "PX_FA_TURTLE", "PX_G32_O_CHICK", "PX_G32_O_MUSH", "PX_G8_O_SNOWMAN", "PX_OW2_GOLDFISH", "PX_OW3_MAGNET", "PX_SW_A_VOLCANO"], GIFS34=["ant-stem", "apple-four-seasons", "balloon-fields", "balloon-mountains", "balloon-sunrise", "balloon-village", "bee-garden", "bee-wildflowers", "caterpillar-to-butterfly", "caterpillar-yellow", "chick-basket", "chick-nest", "chick-sun", "crab-water", "dandelion-meadow", "dandelion-pond", "day-night-house", "day-night-tree", "firefly-garden", "firefly-meadow", "goldfish-plants", "goldfish-window", "hummingbird-garden", "hummingbird-yellow", "ice-rock", "ice-table", "jellyfish-coral", "jellyfish-deep", "kite-beach", "kite-sunset", "magnet-chain", "magnet-jar", "maple-four-seasons", "moon-stars", "moon-sun", "mushroom-forest", "mushroom-meadow", "octopus-reef", "octopus-swim", "penguin-belly", "penguin-hill", "penguin-pond", "penguin-spin", "rain-rainbow-garden", "rain-rainbow-hill", "rain-rainbow-house", "rocket-launch", "rocket-red", "rocket-sunset", "seahorse-bubbles", "seahorse-coral", "seed-daisy", "seed-rose", "seed-sunflower", "seed-tulip", "shadow-playground", "snail-garden", "snail-log", "snowflake-sky", "snowflake-village", "snowman-park", "snowman-yard", "star-forest", "star-mountains", "tadpole-cycle", "tadpole-waterfall", "turtle-sand", "turtle-seaweed", "volcano-ash", "volcano-classic", "water-cycle-ocean", "water-cycle-puddle"];
 const ok34=k=>{const t=FIND34[k];return VOICED34.includes(t[0])&&t[2].some(n=>GIFS34.includes(n))};
 const mov34=k=>pickOne(FIND34[k][2].filter(n=>GIFS34.includes(n)));
 function findPool34(cat){return Object.keys(FIND34).filter(k=>ok34(k)&&FIND34[k][3].includes(cat))}
@@ -8125,7 +8149,16 @@ const GQ34=[
  {g:["kite-beach","kite-sunset"],s:["sky"],ids:["s08","px79"]},
  {g:["bee-garden","bee-wildflowers"],s:["animals","farm"],ids:["a05","px73","px12","px326","n09","a24","px211","px127"]},
  {g:["penguin-pond","penguin-spin","penguin-belly","penguin-hill"],s:["animals"],ids:["a20","px345","px113","px459"]},
- {g:["turtle-sand","turtle-seaweed"],s:["animals"],ids:["px60","px455"]}];
+ {g:["turtle-sand","turtle-seaweed"],s:["animals"],ids:["px60","px455"]},
+ {g:["ice-rock","ice-table"],s:["world","sky"],ids:["n08","x02","px352","px174"]},
+ {g:["magnet-chain","magnet-jar"],s:["world"],ids:["x01","px359"]},
+ {g:["shadow-playground"],s:["world","sky"],ids:["x07"]},
+ {g:["moon-stars","moon-sun"],s:["sky"],ids:["p04","p12","px346","px196","px396"]},
+ {g:["star-forest","star-mountains"],s:["sky"],ids:["s04","px329","px339","px367","px193"]},
+ {g:["goldfish-plants","goldfish-window","seahorse-bubbles","seahorse-coral"],s:["animals"],ids:["a03","px95","px324","px119","px458"]},
+ {g:["hummingbird-garden","hummingbird-yellow"],s:["animals"],ids:["a02","px13","px338"]},
+ {g:["ant-stem"],s:["animals"],ids:["a27","px112"]},
+ {g:["dandelion-meadow","dandelion-pond"],s:["world"],ids:["n06","px54","px347","px219","px301"]}];
 const wqA34=id=>{const w=WQ.find(x=>x.i===id);return w?w.a:null};
 /* the questions a child of this age can get: at most 4 years below, never above */
 function gqFit34(G){const a=S.age||6;const ids=G.ids.filter(id=>{const qa=wqA34(id);return qa!==null&&qa<=a&&VOICED.has(id)});  /* v35: only questions Lulu can read aloud */const near=ids.filter(id=>wqA34(id)>=a-4);return near.length?near:ids}

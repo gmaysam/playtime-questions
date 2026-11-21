@@ -11,6 +11,7 @@ function shGate(cat,used){const ks=sh(kindsFor(cat));
     if(!q||q.game||q.match||q.flash||!q.opts||q.opts.length<2||!(q.ans>=0)||q.layout==="match")continue;
     if(q.opts.some(o=>!o.say||!o.say.length||!o.h||o.h.length>420))continue;
     if(!q.voice||!q.voice.length)continue;
+    if(q.visual&&String(q.visual).replace(/<[^>]*>/g,"").replace(/\s/g,"").length>4||/<svg|class="clk|clock/i.test(String(q.visual||"")))continue;  /* v37: the rocket shows no picture, so no clock or sum questions */
     const key=q.wid||q.cap;if(used.has(key))continue;used.add(key);q.kind=k;return q}
   return null}
 function qShuttle(cat){if(!G11_READY)return null;const a=lvl(),used=new Set(),n=a<=6?3:4,gates=[];
@@ -29,9 +30,9 @@ function shuttleQ(q){const N=q.lanes;
   F.style.touchAction="none";
   const laneX=i=>(i+.5)*100/N,myLane=()=>Math.max(0,Math.min(N-1,Math.floor(rx/100*N)));
   const setR=()=>{R.style.left=rx+"%";if(!R.classList.contains("away")){R.style.transition="none";R.style.bottom=ry+"%"}else{R.style.transition="";R.style.bottom=""};R.style.transform=`translateX(-50%) rotate(${Math.max(-18,Math.min(18,(ty-rx)*.6))}deg)`};
-  const mv=e=>{const r=F.getBoundingClientRect();ty=Math.max(6,Math.min(94,(e.clientX-r.left)/r.width*100));tyY=Math.max(4,Math.min(45,(1-(e.clientY-r.top)/r.height)*100-12))};  /* v34: drag up to meet the gate sooner */
+  const mv=e=>{const r=F.getBoundingClientRect();ty=Math.max(6,Math.min(94,(e.clientX-r.left)/r.width*100));tyY=Math.max(4,Math.min(70,(1-(e.clientY-r.top)/r.height)*100-12))};  /* v34: drag up to meet the gate sooner */
   F.onpointerdown=e=>{e.preventDefault();mv(e);tutOff();try{F.setPointerCapture(e.pointerId)}catch(_){}};F.onpointermove=e=>{if(e.buttons||e.pointerType==="touch")mv(e)};
-  const key=e=>{if(!L||L.q!==q||q.done){document.removeEventListener("keydown",key);return}if(e.key==="ArrowLeft")ty=laneX(Math.max(0,myLane()-1));if(e.key==="ArrowRight")ty=laneX(Math.min(N-1,myLane()+1));if(e.key==="ArrowUp")tyY=Math.min(45,tyY+10);if(e.key==="ArrowDown")tyY=Math.max(4,tyY-10)};
+  const key=e=>{if(!L||L.q!==q||q.done){document.removeEventListener("keydown",key);return}if(e.key==="ArrowLeft")ty=laneX(Math.max(0,myLane()-1));if(e.key==="ArrowRight")ty=laneX(Math.min(N-1,myLane()+1));if(e.key==="ArrowUp")tyY=Math.min(70,tyY+10);if(e.key==="ArrowDown")tyY=Math.max(4,tyY-10)};
   document.addEventListener("keydown",key);
   const upd=()=>{$("shG").textContent=q.gates.map((x,i)=>i<gi?"🟢":i===gi?"🟡":"⚪").join("")};
   /* show one gate: the question on top, its answers in the lanes */
@@ -67,6 +68,7 @@ function shuttleQ(q){const N=q.lanes;
       else{toastHint(l?"Not that gate - try again!":"Fly into a gate with an answer!");setTimeout(()=>{if(L&&L.q===q&&!q.done)showGate(true)},900)}}};
   const tick=t=>{if(!L||L.q!==q||q.done){cancelAnimationFrame(raf);return}const dt=Math.min(50,t-(lastT||t));lastT=t;
     rx+=(ty-rx)*Math.min(1,dt/90);ry+=(tyY-ry)*Math.min(1,dt/90);setR();const up=ry-4;
+    if(cur&&!moving&&up>=60)pass();  /* v37: the rocket can fly up to the answers itself */
     if(moving&&cur){gy+=dt/(q.travel*(gi===0?1.6:1))*76;GT.style.top=gy+"%";if(gy>=74-up)pass();
       if(q.rockEvery&&t-rockT>q.rockEvery&&gy<52){rockT=t;spawn("rock")}
       if(t-starT>1700){starT=t;spawn("star")}}

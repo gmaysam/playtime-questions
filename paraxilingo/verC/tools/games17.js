@@ -16,12 +16,18 @@ const FIND34={
  octopus:["PX_AW_OCTOPUS","",["octopus-reef","octopus-swim"],["animals"]],
  penguin:["PX_AW_PENGUIN","",["penguin-pond","penguin-spin","penguin-belly","penguin-hill"],["animals"]],
  turtle:["PX_FA_TURTLE","PX_EN_TURTLE",["turtle-sand","turtle-seaweed"],["animals"]],
+ ant:["PX_FA_ANT","PX_EN_ANT",["ant-stem"],["animals"]],
+ crab:["PX_FA_CRAB","PX_EN_CRAB",["crab-water"],["animals"]],
+ fish:["PX_OW2_GOLDFISH","PX_EN_FISH",["goldfish-plants","goldfish-window"],["animals"]],
+ bird:["LULU_FA_AN0","LULU_WORD0",["hummingbird-garden","hummingbird-yellow"],["animals"]],
+ magnet:["PX_OW3_MAGNET","",["magnet-chain","magnet-jar"],["world"]],
+ moon:["LULU_FA_SKY1","PX_EN_MOON",["moon-stars","moon-sun"],["sky"]],
  volcano:["PX_SW_A_VOLCANO","",["volcano-ash","volcano-classic"],["world"]],
  mushroom:["PX_G32_O_MUSH","",["mushroom-forest","mushroom-meadow"],["world"]],
  rainbow:["LULU_FA_SKY5","LULU_WORD4",["rain-rainbow-garden","rain-rainbow-hill","rain-rainbow-house"],["sky"]],
  snowman:["PX_G8_O_SNOWMAN","PX_EW_SNOWMAN",["snowman-park","snowman-yard"],["sky"]],
  rocket:["LULU_FA_SKY8","PX_EN_ROCKET",["rocket-launch","rocket-red","rocket-sunset"],["sky"]]};
-const NOPAIR34={turtle:["octopus"],octopus:["turtle"]};  /* both swim on a reef */   /* (the day-night movies start in daylight, so "moon" is left out) */
+const NOPAIR34={turtle:["octopus","fish","crab"],octopus:["turtle","fish","crab"],fish:["octopus","turtle","bird"],crab:["octopus","turtle"],bird:["chick","penguin","fish"],chick:["bird"],penguin:["bird"],moon:["rocket"],rocket:["moon"]};  /* a movie that also shows the thing is never a wrong choice */   /* (the day-night movies start in daylight, so "moon" is left out) */
 const VOICED34=__VOICED34__, GIFS34=__GIFS34__;
 const ok34=k=>{const t=FIND34[k];return VOICED34.includes(t[0])&&t[2].some(n=>GIFS34.includes(n))};
 const mov34=k=>pickOne(FIND34[k][2].filter(n=>GIFS34.includes(n)));
@@ -71,7 +77,16 @@ const GQ34=[
  {g:["kite-beach","kite-sunset"],s:["sky"],ids:["s08","px79"]},
  {g:["bee-garden","bee-wildflowers"],s:["animals","farm"],ids:["a05","px73","px12","px326","n09","a24","px211","px127"]},
  {g:["penguin-pond","penguin-spin","penguin-belly","penguin-hill"],s:["animals"],ids:["a20","px345","px113","px459"]},
- {g:["turtle-sand","turtle-seaweed"],s:["animals"],ids:["px60","px455"]}];
+ {g:["turtle-sand","turtle-seaweed"],s:["animals"],ids:["px60","px455"]},
+ {g:["ice-rock","ice-table"],s:["world","sky"],ids:["n08","x02","px352","px174"]},
+ {g:["magnet-chain","magnet-jar"],s:["world"],ids:["x01","px359"]},
+ {g:["shadow-playground"],s:["world","sky"],ids:["x07"]},
+ {g:["moon-stars","moon-sun"],s:["sky"],ids:["p04","p12","px346","px196","px396"]},
+ {g:["star-forest","star-mountains"],s:["sky"],ids:["s04","px329","px339","px367","px193"]},
+ {g:["goldfish-plants","goldfish-window","seahorse-bubbles","seahorse-coral"],s:["animals"],ids:["a03","px95","px324","px119","px458"]},
+ {g:["hummingbird-garden","hummingbird-yellow"],s:["animals"],ids:["a02","px13","px338"]},
+ {g:["ant-stem"],s:["animals"],ids:["a27","px112"]},
+ {g:["dandelion-meadow","dandelion-pond"],s:["world"],ids:["n06","px54","px347","px219","px301"]}];
 const wqA34=id=>{const w=WQ.find(x=>x.i===id);return w?w.a:null};
 /* the questions a child of this age can get: at most 4 years below, never above */
 function gqFit34(G){const a=S.age||6;const ids=G.ids.filter(id=>{const qa=wqA34(id);return qa!==null&&qa<=a&&VOICED.has(id)});  /* v35: only questions Lulu can read aloud */const near=ids.filter(id=>wqA34(id)>=a-4);return near.length?near:ids}
