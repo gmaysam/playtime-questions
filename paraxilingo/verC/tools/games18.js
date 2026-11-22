@@ -19,25 +19,25 @@ const tkFit38=t=>{const a=S.age||6;return a>=t.a[0]&&a<=t.a[1]};
 function tkPool38(cat){const P=TALK38.filter(t=>(cat==="story"||t.s===cat));const f=P.filter(tkFit38);return f}
 function qTalk38(cat){const P=tkPool38(cat);if(!P.length)return null;const n=Math.min(2,P.length);
   const rounds=sh(P).slice(0,n).map(t=>{const idx=sh(t.o.map((o,i)=>i));return {t,opts:idx.map(i=>({h:`<span>${t.o[i][0]}</span>${t.o[i][1]}`,say:["w/"+t.o[i][3]],i})),ans:idx.indexOf(t.n)}});
-  return {game:"talk38",gid:"g:talk38",cat,rounds,voice:rounds[0].t.l.map((_,j)=>"w/TK38_"+rounds[0].t.id+"_"+j),factT:"Listening carefully helps us understand our family and friends.",factV:[]}}
+  return {game:"talk38",gid:"g:talk38",cat,rounds,voice:rounds[0].t.l.map((_,j)=>"w/"+(rounds[0].t.p||"TK38")+"_"+rounds[0].t.id+"_"+j),factT:"Listening carefully helps us understand our family and friends.",factV:[]}}
 GAMES.talk38=q=>{let ri=0,miss=0;
   gShow(`<div class="game">${gHead("💬","Family talk","Listen to the family, then answer")}
     <div class="t38-stage" id="t38s"></div><div class="q31" id="t38q"></div></div>`);
   const alive=()=>!q.done&&L&&L.q===q&&$("t38s");
   const play=(R,done)=>{const rows=[...$("t38s").querySelectorAll(".t38-row")];let j=0;hush();
     const step=()=>{if(!alive())return;rows.forEach(r=>r.classList.remove("talk"));if(j>=rows.length){done&&done();return}
-      const r=rows[j];r.classList.add("on","talk");const c=["w/TK38_"+R.t.id+"_"+j];j++;let gone=false;const go=()=>{if(gone)return;gone=true;clearTimeout(to);setTimeout(step,250)};const to=setTimeout(()=>{if(alive()&&r.classList.contains("talk"))go()},S.voice?9000:1500);sayseq(c,go)};step()};  /* a clip that never ends must not stop the talk */
+      const r=rows[j];r.classList.add("on","talk");const c=["w/"+(R.t.p||"TK38")+"_"+R.t.id+"_"+j];j++;let gone=false;const go=()=>{if(gone)return;gone=true;clearTimeout(to);setTimeout(step,250)};const to=setTimeout(()=>{if(alive()&&r.classList.contains("talk"))go()},S.voice?9000:1500);sayseq(c,go)};step()};  /* a clip that never ends must not stop the talk */
   const ask=R=>{if(!alive())return;let tries=0;const t=R.t;
     $("t38q").innerHTML=`<button class="t38-again" id="t38a">🔁 Listen again</button><div class="q31-cap">${t.q}</div><div class="q31-o t38-o">${R.opts.map((o,i)=>`<button class="opt q31-b" data-i="${i}">${o.h}</button>`).join("")}</div>`;
     const bs=[...$("t38q").querySelectorAll(".q31-b")];
-    $("t38a").onclick=()=>{window.__optTok={};play(R,()=>rd31(q,{voice:["w/TK38_"+t.id+"_Q"],opts:R.opts},bs,null,()=>{}))};
+    $("t38a").onclick=()=>{window.__optTok={};play(R,()=>rd31(q,{voice:["w/"+(t.p||"TK38")+"_"+t.id+"_Q"],opts:R.opts},bs,null,()=>{}))};
     bs.forEach(b=>b.onclick=()=>{if(q.done||b.classList.contains("no")||b.classList.contains("ok"))return;window.__optTok={};hush();const i=+b.dataset.i;
-      if(i===R.ans){sfx.good();b.classList.add("ok");burstAt(b,12);sayseq(["w/TK38_"+t.id+"_E"],()=>{});
+      if(i===R.ans){sfx.good();b.classList.add("ok");burstAt(b,12);sayseq(["w/"+(t.p||"TK38")+"_"+t.id+"_E"],()=>{});
         setTimeout(()=>{if(!alive())return;if(ri<q.rounds.length)round();else gameWin(q,miss>1?1:0,b)},4600)}
       else{sfx.oops();miss++;tries++;b.classList.add("no");bounce(b);
         if(tries<2){toastHint("Not quite - try again!");sayseq(["w/LULU_TRY_ONCE"],()=>{})}  /* the answer is shown only after a second wrong try */
         else{bs[R.ans].classList.add("hint");toastHint("Look again!")}}});
-    rd31(q,{voice:["w/TK38_"+t.id+"_Q"],opts:R.opts},bs,null,()=>{})};
+    rd31(q,{voice:["w/"+(t.p||"TK38")+"_"+t.id+"_Q"],opts:R.opts},bs,null,()=>{})};
   const round=()=>{const R=q.rounds[ri++];q._r=R;$("t38q").innerHTML="";
     const first=R.t.l[0][0];
     $("t38s").innerHTML=R.t.l.map(([w,en])=>{const W=WHO38[w]||{e:"🙂",n:w};return `<div class="t38-row${w===first?"":" r"}"><div class="t38-av">${W.e}</div><div class="t38-bub"><b>${W.n}</b>${en}</div></div>`}).join("");

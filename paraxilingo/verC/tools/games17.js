@@ -49,7 +49,7 @@ GAMES.find34=q=>{let ri=0,miss=0;
     const bs=[...$("v34g").querySelectorAll(".v34-m")];
     hush();sayseq([...(first?q.voice:[]),...say34(cur.t)],()=>{});
     bs.forEach(b=>b.onclick=()=>{if(q.done||b.classList.contains("no")||b.classList.contains("ok"))return;hush();const o=cur.opts[+b.dataset.i];
-      if(o.k===cur.t){sfx.good();b.classList.add("ok");burstAt(b,14);sayseq(say34(cur.t),()=>{});
+      if(o.k===cur.t){sfx.good();window.movieFx39&&movieFx39(o.n);b.classList.add("ok");burstAt(b,14);sayseq(say34(cur.t),()=>{});
         setTimeout(()=>{if(q.done||!L||L.q!==q)return;if(ri<q.rounds.length)round(false);else gameWin(q,miss>1?1:0,b)},1800)}
       else{sfx.oops();miss++;tries++;b.classList.add("no");bounce(b);sayseq(say34(cur.t),()=>{});
         if(tries>=2){const r=bs[cur.opts.findIndex(x=>x.k===cur.t)];r.classList.add("hint")}}})};
@@ -117,7 +117,7 @@ GAMES.gq34=q=>{let ri=0,miss=0;
   gShow(`<div class="game">${gHead("🎬","Movie quiz","Watch the movie, then answer")}
     <div class="v32-play" id="v34w"></div><div class="v32-bar"><i id="v34t"></i></div><div class="q31" id="v34q"></div></div>`);
   const round=(first)=>{const R=q.rounds[ri++],Q=R.q;let tries=0;$("v34q").innerHTML="";
-    $("v34w").innerHTML=gifImg32(R.n);const T=$("v34t");T.style.transition="none";T.style.width="0%";
+    $("v34w").innerHTML=gifImg32(R.n);window.movieFx39&&movieFx39(R.n);const T=$("v34t");T.style.transition="none";T.style.width="0%";
     requestAnimationFrame(()=>requestAnimationFrame(()=>{T.style.transition="width 6s linear";T.style.width="100%"}));
     hush();if(first)sayseq(q.voice,()=>{});
     setTimeout(()=>{if(q.done||!L||L.q!==q||!$("v34q"))return;  /* the child may have left */

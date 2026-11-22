@@ -55,7 +55,7 @@ GAMES.seq32=q=>{let ri=0,miss=0;
     $("v32c").hidden=false;
     $("v32c").querySelectorAll(".v32-card").forEach(b=>b.onclick=()=>{if(q.done||b.disabled)return;
       if(+b.dataset.i===step){sfx.good();b.disabled=true;b.classList.add("used");const sl=$("v32s").children[step];sl.innerHTML=`<img src="${b.querySelector("img").src}" alt=""><b>${step+1}</b>`;sl.classList.add("full");step++;
-        if(step>=N){setTimeout(()=>{if(q.done||!L||L.q!==q)return;$("v32c").hidden=true;$("v32p").hidden=false;$("v32p").innerHTML=gifImg32(R.n);hush();sayseq([G32("SEQOK")],()=>{});
+        if(step>=N){setTimeout(()=>{if(q.done||!L||L.q!==q)return;$("v32c").hidden=true;$("v32p").hidden=false;$("v32p").innerHTML=gifImg32(R.n);window.movieFx39&&movieFx39(R.n);hush();sayseq([G32("SEQOK")],()=>{});
           setTimeout(()=>{if(q.done||!L||L.q!==q)return;if(ri<q.rounds.length)round(false);else gameWin(q,miss>2?1:0,$("v32p"))},6400)},500)}}
       else{sfx.oops();miss++;bounce(b);b.classList.add("no");setTimeout(()=>b.classList.remove("no"),500);if(miss%2===0){const h=[...$("v32c").querySelectorAll(".v32-card:not(.used)")].find(x=>+x.dataset.i===step);if(h){h.classList.add("hint");setTimeout(()=>h.classList.remove("hint"),1300)}}}});
     if(first){hush();sayseq(q.voice,()=>{})}};
@@ -70,7 +70,7 @@ GAMES.watch32=q=>{let ri=0,miss=0;
   gShow(`<div class="game">${gHead("👀","Watch and answer","Watch the movie, then answer")}
     <div class="v32-play" id="v32w"></div><div class="v32-bar"><i id="v32t"></i></div><div class="q31" id="v32q"></div></div>`);
   const round=(first)=>{const R=q.rounds[ri++],W=R.w;let tries=0;$("v32q").innerHTML="";
-    $("v32w").innerHTML=gifImg32(R.n);const T=$("v32t");T.style.transition="none";T.style.width="0%";
+    $("v32w").innerHTML=gifImg32(R.n);window.movieFx39&&movieFx39(R.n);const T=$("v32t");T.style.transition="none";T.style.width="0%";
     requestAnimationFrame(()=>requestAnimationFrame(()=>{T.style.transition="width 6s linear";T.style.width="100%"}));
     hush();if(first)sayseq(q.voice,()=>{});
     setTimeout(()=>{if(q.done||!L||L.q!==q)return;const opts=sh(W.o.map((o,i)=>({o,i})));const cur={voice:W.q,opts:opts.map(x=>({say:optSay32(x.o)})),ans:opts.findIndex(x=>x.i===0)};
