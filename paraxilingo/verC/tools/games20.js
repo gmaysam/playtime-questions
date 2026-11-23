@@ -87,6 +87,7 @@ const WQI40=Object.fromEntries(WQ.map(w=>[w.i,w]));const ENQ40=/^(wopp|wsyn|wplu
 function same40(q,k){try{if(!q||!q.opts||q.opts.length<2||q.tf||q.layout==="yn")return q;const S0=q.opts.map(o=>(o.say||[]).filter(Boolean));
   if(ENQ40.test(k||"")||(q.wid&&(WQI40[q.wid]||{}).t==="english")){const en=S0.map(x=>x.filter(isEN40));q.opts.forEach((o,i)=>o.say=en.every(x=>x.length)?en[i]:[]);return q}  /* never a Farsi word for an English spelling ("cates" is not "cat") */
   if(S0.some(x=>!x.length))return q;const fa=S0.map(x=>x.filter(c=>!isEN40(c)||/LULU_PL\d/.test(c))),hasFa=fa.every(x=>x.length),hasEn=S0.every(x=>x.some(isEN40));
+  const fk=fa.map(x=>x.join("|"));if(hasFa&&hasEn&&new Set(fk).size<fk.length){q.opts.forEach((o,i)=>o.say=S0[i].filter(isEN40));return q}  /* Farsi words collide (herd/flock = گله): read English only */
   if(hasFa&&!hasEn)q.opts.forEach((o,i)=>o.say=fa[i])}catch(e){}return q}
 const _qw40=qWatcher;qWatcher=function(cat,used){const q=_qw40(cat,used);if(q&&!q.game){pad40(q,cat,"w");same40(q,"w");voiceFact40(q)}return q};
 const _bq40=buildQ;buildQ=function(cat,k,used){const q=_bq40(cat,k,used);if(q&&!q.game){pad40(q,cat,k);same40(q,k);voiceFact40(q)}return q};
@@ -167,5 +168,19 @@ try{for(const k of Object.keys(MK39)){const f=MK39[k];MK39[k]=function(R,q,first
 if(P&&P.opts&&!P.yn)P.opts.forEach(o=>{const w=word40(o.h);if(!w||/^\d+$/.test(w))return;const b=both(w);if(b.length>=2&&faSay(w).length&&enSay(w).length)o.say=b});return P}}}catch(e){}
 /* English sections: a quiz game is offered only if it can be made from questions whose answers are all spoken */
 const FP40={};const _ff40=formatsFor0;formatsFor0=function(cat){let b=_ff40(cat);if(!/^(letters|read)$/.test(cat))return b;const key=cat+"|"+(S.age||6)+"|"+lvl();
-  if(!window.EN40_DONE)b=b.filter(k=>!/^f_(fish|shuttle)$/.test(k));  /* back when the missing English words are recorded */
   return b.filter(k=>{if(!/^f_(race|beat|show|wtrain)$/.test(k))return true;const kk=key+"|"+k;if(FP40[kk]===undefined){let n=0;for(let t=0;t<8;t++){try{if(buildFormat(k,cat))n++}catch(e){}}FP40[kk]=n>=8}return FP40[kk]})};
+/* v41 grown-up gate: the parents' page asks a sum that a grown-up reads in words (e.g. "seven times thirteen"), typed on the number pad.
+   A young child cannot pass it by tapping; once passed it stays open for 5 minutes. */
+const GG41={u:0},NW41=["zero","one","two","three","four","five","six","seven","eight","nine","ten","eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen","nineteen"];
+askParents=function(){if(Date.now()-GG41.u<300000){showParents();return}
+  const a=6+Math.floor(Math.random()*4),b=12+Math.floor(Math.random()*8),ans=String(a*b);let typed="";
+  $("mCard").innerHTML=`<div style="font-size:56px;line-height:1">👨‍👩‍👧</div><h3>Grown-ups only</h3><p>To open the parents' page, type the answer:</p>
+    <p style="font-size:22px;font-weight:700;margin:6px 0 2px">${NW41[a]} times ${NW41[b]}</p><div class="pindots" id="pinDots" aria-live="polite"></div>
+    <div class="pinpad">${[1,2,3,4,5,6,7,8,9].map(n=>`<button data-p="${n}">${n}</button>`).join("")}<span></span><button data-p="0">0</button><button data-p="del" aria-label="Delete">⌫</button></div>
+    <button class="btn ghost" id="pinCancel">Cancel</button>`;
+  const dots=()=>{$("pinDots").innerHTML=typed?`<b style="font-size:26px;letter-spacing:4px">${typed}</b>`:"<i></i>"};dots();
+  $("mCard").querySelectorAll("[data-p]").forEach(el=>el.onclick=()=>{sfx.tap();const k=el.dataset.p;typed=k==="del"?typed.slice(0,-1):typed+k;dots();
+    if(typed===ans){GG41.u=Date.now();$("modal").classList.remove("show");setTimeout(showParents,200)}
+    else if(typed.length>=ans.length){const c=$("pinDots");c.classList.remove("shake");void c.offsetWidth;c.classList.add("shake");sfx.bad();setTimeout(()=>{typed="";dots()},500)}});
+  $("pinCancel").onclick=()=>{sfx.tap();$("modal").classList.remove("show")};
+  $("modal").classList.add("show")};
