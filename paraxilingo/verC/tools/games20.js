@@ -5,8 +5,14 @@
 .qopts.o4{grid-template-columns:repeat(2,minmax(0,1fr))!important}
 .qopts.o4 .qo[data-j]{grid-column:auto!important;width:auto!important}
 .q31-o.o4{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important}
-.q31-o.o3:not(.col):not(.yn){display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important}
-.q31-o.o3:not(.col):not(.yn)>.q31-b:nth-child(3){grid-column:1 / 3;justify-self:center;width:calc(50% - 5px)}
+.q31-o.o3:not(.yn){display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important}  /* only 3 can exist (> < =): one row, never 2 + 1 */
+.q31-o.o3:not(.yn)>.q31-b{width:auto!important}
+.qopts.o3:not(.yn),#qBody .qopts.o3:not(.yn).st-cards,#qBody .qopts.o3:not(.yn).row3{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+.qopts.o3 .qo[data-j]{grid-column:auto!important;width:auto!important}
+.qopts.o4 .qo{min-height:104px}
+.sq-cards.o4{display:grid!important;grid-template-columns:repeat(2,auto);justify-content:center;gap:12px}
+.sq-cards.o4 .sq-c,.sq-cards.o3 .sq-c{width:clamp(110px,34vw,150px);font-size:clamp(48px,13vw,66px)}
+.sq-cards.o3{flex-wrap:nowrap}
 /* bigger pictures in the game answers (Beat the clock, Quiz race, the movie games...) */
 .q31-o:not(.col)>.q31-b{flex-direction:column!important;justify-content:center!important;align-items:center!important;text-align:center!important;gap:4px!important;min-height:112px;padding:8px 6px!important}
 .q31-o:not(.col)>.q31-b .oe{font-size:54px!important;line-height:1.05}
@@ -93,7 +99,7 @@ const _qw40=qWatcher;qWatcher=function(cat,used){const q=_qw40(cat,used);if(q&&!
 const _bq40=buildQ;buildQ=function(cat,k,used){const q=_bq40(cat,k,used);if(q&&!q.game){pad40(q,cat,k);same40(q,k);voiceFact40(q)}return q};
 
 /* ---------- 2. the screen helper: 4 answers = 2 x 2 (also on older iPads), and "x / y" counters become stars ---------- */
-function tidy40(root){(root||document).querySelectorAll(".qopts,.q31-o").forEach(g=>{const n=[...g.children].filter(b=>b.tagName==="BUTTON"&&!b.hidden).length;g.classList.toggle("o4",n===4);g.classList.toggle("o3",n===3)});
+function tidy40(root){(root||document).querySelectorAll(".qopts,.q31-o,.sq-cards").forEach(g=>{const n=[...g.children].filter(b=>(b.tagName==="BUTTON"||b.classList.contains("sq-c"))&&!b.hidden).length;g.classList.toggle("o4",n===4);g.classList.toggle("o3",n===3)});
   const pips=(x,y,old)=>Array.from({length:y},(z,i)=>`<i class="${i<x?"on":""}${i<x&&i>=old?" pop":""}"></i>`).join("");
   /* Beat the clock keeps its own number element: the stars go next to it */
   (root||document).querySelectorAll(".b31-sc").forEach(c=>{const m=/(\d+)\s*\/\s*(\d+)/.exec(c.textContent||"");if(!m)return;const x=+m[1],y=+m[2];if(y<2||y>12)return;
@@ -184,3 +190,85 @@ askParents=function(){if(Date.now()-GG41.u<300000){showParents();return}
     else if(typed.length>=ans.length){const c=$("pinDots");c.classList.remove("shake");void c.offsetWidth;c.classList.add("shake");sfx.bad();setTimeout(()=>{typed="";dots()},500)}});
   $("pinCancel").onclick=()=>{sfx.tap();$("modal").classList.remove("show")};
   $("modal").classList.add("show")};
+/* ================= v42 (parent, Nov 22 night) ================= */
+(function(){const st=document.createElement("style");st.textContent=`
+/* Space run: every answer fits in its gate; the word the question is about is shown big */
+.shu-gate{left:2%;right:2%;gap:6px}
+.shu-l{min-width:0;padding:3px}
+.shu-o{width:100%;padding:4px 4px;overflow:hidden}
+.shu-o .word,.shu-o b{font-size:clamp(13px,4.3vw,22px)!important;line-height:1.1;overflow-wrap:anywhere;text-align:center;white-space:normal}
+.shu-o small{font-size:12px;overflow-wrap:anywhere;text-align:center}
+/* number answers: just the number, no dots under it (parent) */
+button .dots,.opt .dots,.qo .dots,.q31-b .dots{display:none!important}
+.t31-pic{position:relative;align-items:center;gap:14px}
+.t31-say{width:58px;height:58px;border-radius:16px;border:0;background:#58A7FF;color:#fff;font-size:28px;box-shadow:0 4px 0 #2F7FD8;flex:0 0 auto;cursor:pointer}
+.t31-say:active{transform:translateY(3px);box-shadow:0 1px 0 #2F7FD8}
+.hp{background:#fff!important;border:3px solid #E5E5E5;box-shadow:0 4px 0 #E5E5E5}
+.shu-q{flex-wrap:wrap;row-gap:4px}
+.shu-cap{flex:1 1 150px;min-width:0}
+.shu-word{font:900 clamp(24px,7vw,34px)/1 "Nunito",sans-serif;color:#1A1446;background:#fff;border-radius:12px;padding:6px 12px;flex:0 0 auto}
+`;document.head.appendChild(st)})();
+/* v42 parents: (1) the first time, a hard sum; inside, the parent can set their own password, which the gate asks for from then on
+   ("Forgot it?" falls back to the sum). (2) "This week" - one sentence per pillar: what the child practised and how it went. */
+const askSum41=askParents;
+function askPw42(){let typed="";const pw=String(P.ppw);
+  $("mCard").innerHTML=`<div style="font-size:56px;line-height:1">🔒</div><h3>Grown-ups only</h3><p>Enter the parent password</p><div class="pindots" id="pinDots"></div>
+    <div class="pinpad">${[1,2,3,4,5,6,7,8,9].map(n=>`<button data-p="${n}">${n}</button>`).join("")}<span></span><button data-p="0">0</button><button data-p="del" aria-label="Delete">⌫</button></div>
+    <button class="btn ghost" id="pinForgot" style="margin-bottom:6px">Forgot it?</button><button class="btn ghost" id="pinCancel">Cancel</button>`;
+  const dots=()=>{$("pinDots").innerHTML="<i></i>".repeat(typed.length)||"&nbsp;"};dots();
+  $("mCard").querySelectorAll("[data-p]").forEach(el=>el.onclick=()=>{sfx.tap();const k=el.dataset.p;typed=k==="del"?typed.slice(0,-1):typed+k;dots();
+    if(typed===pw){GG41.u=Date.now();$("modal").classList.remove("show");setTimeout(showParents,200)}
+    else if(typed.length>=pw.length){const c=$("pinDots");c.classList.remove("shake");void c.offsetWidth;c.classList.add("shake");sfx.bad();setTimeout(()=>{typed="";dots()},500)}});
+  $("pinForgot").onclick=()=>{sfx.tap();askSum41()};
+  $("pinCancel").onclick=()=>{sfx.tap();$("modal").classList.remove("show")};
+  $("modal").classList.add("show")}
+askParents=function(){if(Date.now()-GG41.u<300000){showParents();return}if(P.ppw)askPw42();else askSum41()};
+function week42(pn){try{const from=evDay(weekStart()),ev=(S.ev||[]).filter(e=>e[0]>=from),by={};
+  for(const e of ev){const m=gameInfo(e[1],e[5]);if(!m||!m.p)continue;const [p,s]=m.p,r=by[p]||(by[p]={n:0,ok:0,sk:{}});r.n++;if(e[2]>0)r.ok++;r.sk[s]=(r.sk[s]||0)+1}
+  const due=Object.values(S.rev||{}).filter(r=>r.b===0).length;
+  const rows=PILLARS.map(P0=>{const r=by[P0.id];if(!r)return `<li><b>${P0.e} ${P0.name}:</b> not practised yet this week.</li>`;
+    const pct=Math.round(r.ok/r.n*100),top=Object.entries(r.sk).sort((a,b)=>b[1]-a[1])[0][0];
+    const how=pct>=85?"going really well":pct>=65?"doing well":pct>=45?"still learning":"finding it hard - a good one to practise together";
+    return `<li><b>${P0.e} ${P0.name}:</b> ${r.n} answer${r.n===1?"":"s"}, mostly <i>${skillName(P0.id,top)}</i> - ${how} (${pct}% right).</li>`}).join("");
+  return `<div class="wk42"><h3>📅 What did ${pn} learn this week?</h3><ul>${rows}</ul>${due?`<p>🔁 ${due} question${due===1?"":"s"} ${pn} got wrong will come back in the next few days to practise again.</p>`:""}</div>`}catch(e){return ""}}
+function pw42HTML(){return `<div class="psec"><span>🔒</span>Parent password</div><div class="pw42">${P.ppw?`<p>A password is set. The parents' page asks for it (or for a sum if you forget it).</p><div class="pw42r"><button class="btn ghost" id="pwChg">Change</button><button class="btn ghost" id="pwDel">Remove</button></div>`:""}
+  <div class="pw42r" id="pwNew" ${P.ppw?"hidden":""}><input id="pwIn" inputmode="numeric" pattern="[0-9]*" maxlength="6" placeholder="4 to 6 digits" aria-label="New parent password"><button class="btn green" id="pwSave">Save</button></div>
+  ${P.ppw?"":`<p class="pnote">Until you set one, the page asks a sum written in words.</p>`}</div>`}
+const _sp42=showParents;showParents=function(){const r=_sp42.apply(this,arguments);try{const root=$("pSettings");
+  const back=root.querySelector("#closeSettings");if(back&&!root.querySelector(".wk42"))back.insertAdjacentHTML("afterend",week42(curPlayer().name));
+  const snd=[...root.querySelectorAll(".psec")].find(x=>/Sound/.test(x.textContent));if(snd&&!root.querySelector(".pw42"))snd.insertAdjacentHTML("beforebegin",pw42HTML());
+  const y=()=>root.scrollTop,redraw=()=>{const s=y();showParents();root.scrollTop=s};
+  const sv=$("pwSave");if(sv)sv.onclick=()=>{const v=($("pwIn").value||"").replace(/\D/g,"");if(v.length<4){toast("Please use 4 to 6 digits");return}P.ppw=v;savePlayers();sfx.good();toast("Password saved 🔒");redraw()};
+  const ch=$("pwChg");if(ch)ch.onclick=()=>{sfx.tap();$("pwNew").hidden=false;$("pwIn").focus()};
+  const dl=$("pwDel");if(dl)dl.onclick=()=>{delete P.ppw;savePlayers();sfx.tap();toast("Password removed");redraw()};
+}catch(e){console.log(e)}return r};
+(function(){const st=document.createElement("style");st.textContent=`
+.wk42{background:#F3F8FF;border:2px solid #D6E6FF;border-radius:18px;padding:12px 14px;margin:8px 0 14px}
+.wk42 h3{margin:0 0 6px;font-size:18px}
+.wk42 ul{margin:0;padding-left:4px;list-style:none;display:grid;gap:6px;font-size:14px;line-height:1.35}
+.wk42 p{margin:8px 0 0;font-size:14px}
+.pw42{margin:0 0 10px}.pw42 p{font-size:14px;margin:4px 0 8px}
+.pw42r{display:flex;gap:8px;align-items:center}
+.pw42r input{flex:1;min-width:0;font-size:20px;padding:10px 12px;border-radius:14px;border:2px solid #E5E5E5;letter-spacing:4px}
+`;document.head.appendChild(st)})();
+/* v42 holiday map pictures (parent's Beaver_Land_Farsi set): big holidays (Thanksgiving, Christmas, New Year, Nowruz, Halloween) start
+   two weeks before the day, the others one week before; the nearest coming holiday wins; otherwise the usual picture.
+   Iranian dates are the usual Gregorian days (they can move by a day in some years). Christmas uses the winter picture. */
+const HOLI_FIX={chinese:{2026:"2-17",2027:"2-6",2028:"1-26",2029:"2-13",2030:"2-3",2031:"1-23",2032:"2-11"},diwali:{2026:"11-8",2027:"10-29",2028:"10-17",2029:"11-5",2030:"10-26",2031:"11-14",2032:"11-2"}};
+function holiList42(y){const D=(m,d)=>new Date(y,m-1,d),thx=(()=>{const f=new Date(y,10,1).getDay();return D(11,1+((4-f+7)%7)+21)})();
+  const lastTue=(()=>{const d=D(3,19);while(d.getDay()!==2)d.setDate(d.getDate()-1);return d})();
+  const fx=k=>{const s=(HOLI_FIX[k]||{})[y];if(!s)return null;const [m,d]=s.split("-").map(Number);return D(m,d)};
+  return [["thanksgiving",thx,14,0],["christmas",D(12,25),14,0],["newyear",D(1,1),14,0],["nowruz",D(3,20),14,5],["halloween",D(10,31),14,0],
+    ["yalda",D(12,21),7,0],["chsuri",lastTue,7,0],["bedar13",D(4,2),7,0],["chinese",fx("chinese"),7,0],["diwali",fx("diwali"),7,0],["valentine",D(2,14),7,0],
+    ["sepand",D(2,24),7,0],["mehregan",D(10,8),7,0],["tirgan",D(7,4),7,0],["khwarizmi",D(7,13),7,0],["ferdowsi",D(5,15),7,0],["khayyam",D(5,18),7,0],
+    ["ibnsina",D(8,23),7,0],["autumn",D(9,23),7,0]].filter(x=>x[1])}
+function holiday42(now=new Date()){const t=new Date(now.getFullYear(),now.getMonth(),now.getDate()),y=t.getFullYear();let best=null;
+  for(const yy of [y-1,y,y+1])for(const [id,day,before,after] of holiList42(yy)){const dd=Math.round((day-t)/864e5);
+    if(dd<=before&&dd>=-after){const k=Math.max(0,dd);if(!best||k<best.k||(k===best.k&&before>best.b))best={id,k,b:before}}}
+  return best&&best.id}
+function HOLI42(){try{if(S&&S.holiOff)return null;const id=window.__holi||holiday42();return id?"img/w/land_"+id+".webp":null}catch(e){return null}}
+/* v42: Space run - a long word shrinks to fit its gate instead of breaking in the middle */
+function fitShu42(){document.querySelectorAll(".shu-o:not([data-fit])").forEach(o=>{o.dataset.fit=1;const t=o.querySelector("b,small");if(!t)return;t.style.whiteSpace="nowrap";t.style.overflowWrap="normal";
+  let s=parseFloat(getComputedStyle(t).fontSize)||18;while(s>10&&o.scrollWidth>o.clientWidth+1){s-=1;t.style.setProperty("font-size",s+"px","important")}
+  if(o.scrollWidth>o.clientWidth+1){t.style.whiteSpace="normal"}})}
+try{new MutationObserver(()=>{if(document.querySelector(".shu-o:not([data-fit])"))requestAnimationFrame(fitShu42)}).observe(document.body,{childList:true,subtree:true})}catch(e){}

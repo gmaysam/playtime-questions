@@ -69,16 +69,16 @@ const G8GEN={
   [k,n,f,u1,u2]=pickOne(T),r=Math.round(n*f);const step=f<1?Math.round(1/f):f;
   return Object.assign({voice:[...NV(n),G8("CV_"+k)],cap:`${n} ${u1} = ? ${u2}`,visual:`<div class="eq"><span>${n} ${u1}</span><b>=</b><span class="q">?</span><span>${u2}</span></div>`,layout:"row3",hint:"elim",
    exp:{t:f<1?`${n} ÷ ${step} = ${r}`:`${n} × ${step} = ${r}`,v:f<1?[...NV(n),M2("DIV"),...NV(step),"w/LULU_EQUALS",...NV(r)]:[...NV(n),"w/PX_RC_TIMES",...NV(step),"w/LULU_EQUALS",...NV(r)]}},nOpts(r,[r+step,r-step,n,r*2,r+10].filter(x=>x>0)))},
- angle(){const t=pickOne(["A","R","O"]),a=t==="A"?ri(25,70):t==="R"?90:ri(110,160),L3=[["A","acute"],["R","right angle"],["O","obtuse"]];
-  return {voice:[G8("ANG_Q")],cap:"What kind of angle is this?",visual:ANG(a),layout:"col",hint:"elim",opts:L3.map(([k,l])=>({h:`<b class="word">${l}</b>`,say:[G8("ANG_"+k)]})),ans:L3.findIndex(x=>x[0]===t),why:{t:{A:"An acute angle is less than 90°.",R:"A right angle is exactly 90°.",O:"An obtuse angle is more than 90°."}[t],v:[G8("ANG_"+t+"E")]},_o3:true}},
+ angle(){const t=pickOne(["A","R","O"]),a=t==="A"?ri(25,70):t==="R"?90:ri(110,160),L3=sh([["A","acute"],["R","right angle"],["O","obtuse"],["S","straight angle"]]);
+  return {voice:[G8("ANG_Q")],cap:"What kind of angle is this?",visual:ANG(a),layout:"col",hint:"elim",opts:L3.map(([k,l])=>({h:`<b class="word">${l}</b>`,say:[G8("ANG_"+k)]})),ans:L3.findIndex(x=>x[0]===t),why:{t:{A:"An acute angle is less than 90°.",R:"A right angle is exactly 90°.",O:"An obtuse angle is more than 90°."}[t],v:[G8("ANG_"+t+"E")]}}},
  lines(){const t=pickOne(["P","X","I"]),L3=[["P","parallel"],["X","perpendicular"],["I","intersecting"]];
   return {voice:[G8("LN_Q")],cap:"How do these two lines go?",visual:SV(130,110,LNS[t]),layout:"col",hint:"elim",opts:L3.map(([k,l])=>({h:`<b class="word">${l}</b>`,say:[G8("LN_"+k)]})),ans:L3.findIndex(x=>x[0]===t),why:{t:{P:"Parallel lines never meet.",X:"Perpendicular lines meet at a right angle.",I:"Intersecting lines cross each other."}[t],v:[G8("LN_"+t+"E")]},_o3:true}},
  symm(){const s=pickOne(SYMS),r=s[1];
   return Object.assign({voice:[G8("SYM_Q")],cap:"How many lines of symmetry does this shape have?",visual:SV(130,116,`<g fill="#B2F2BB" stroke="#2B8A3E" stroke-width="4" stroke-linejoin="round">${s[2]}</g>`),layout:"row3",hint:"elim",exp:{t:`A ${s[0]} has ${r} line${r===1?"":"s"} of symmetry.`,v:[...NV(r),G8("SYM_E")]}},nOpts(r,[0,1,2,3,4,5,6].filter(x=>x!==r)))},
- aorder(){const W=AOW();let o=[];for(let t=0;t<40;t++){const a=pickOne(W),same=lvl()>=11&&Math.random()<.6,pool=W.filter(w=>w!==a&&(same?w[0]===a[0]&&w[1]!==a[1]:w[0]!==a[0]));if(pool.length<2)continue;o=[a,...sh(pool).slice(0,2)];if(new Set(o.map(w=>same?w[1]:w[0])).size===3)break;o=[]}
-  if(!o.length)o=["apple","banana","orange"];const r=[...o].sort()[0],oo=sh(o);
+ aorder(){const W=AOW();let o=[];for(let t=0;t<40;t++){const a=pickOne(W),same=lvl()>=11&&Math.random()<.6,pool=W.filter(w=>w!==a&&(same?w[0]===a[0]&&w[1]!==a[1]:w[0]!==a[0]));if(pool.length<3)continue;o=[a,...sh(pool).slice(0,3)];if(new Set(o.map(w=>same?w[1]:w[0])).size===4)break;o=[]}
+  if(!o.length)o=["apple","banana","orange","grape"];const r=[...o].sort()[0],oo=sh(o);
   return {voice:[G8("AO_Q")],cap:"Which word comes first in the dictionary?",layout:"col",hint:"elim",opts:oo.map(w=>({h:`<b class="word">${w}</b>`,say:EW(w)})),ans:oo.indexOf(r),why:{t:`${[...o].sort().join(", ")}`,v:[G8("AO_E")]}}},
- compound(){const r=pickOne(CPW),x=sh([...new Set(CPX)].filter(w=>enSay(w).length)).slice(0,2),o=sh([r,...x]);
+ compound(){const r=pickOne(CPW),x=sh([...new Set(CPX)].filter(w=>enSay(w).length)).slice(0,3),o=sh([r,...x]);
   return {voice:[G8("CP_Q")],cap:"Which word is made of two smaller words?",layout:"col",hint:"elim",opts:o.map(w=>({h:`<b class="word">${w}</b>`,say:EW(w)})),ans:o.indexOf(r),why:{t:`${r}: two words joined together`,v:[G8("CP_E")]}}}};
 const G8WIN={"count:factor":[10,12],"count:multiple":[9,12],"count:prime":[11,12],"clock:convert":[9,12],"shapes:angle":[9,12],"shapes:lines":[9,12],"shapes:symm":[10,12],"letters:aorder":[9,12],"read:aorder":[10,12],"letters:compound":[9,12]};
 /* fixed Grade 4-5 questions: their own sections */

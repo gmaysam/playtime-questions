@@ -310,7 +310,7 @@ const inP=p=>(["farm","ice"].includes(p)?"on the ":p==="house"?"in a ":"in the "
 var AF_READY=__AFVOICE__;
 const aVoiced=a=>both(a[0]).length>0;
 const aOpt=a=>({h:`<span class="oe">${a[1]}</span><small>${cap1(a[0])}</small>`,say:both(a[0])});
-const aPick=(good,bad,k)=>{const g=pickOne(good.filter(aVoiced)),b=sh(bad.filter(x=>aVoiced(x)&&x!==g)).slice(0,k-1);if(!g||b.length<k-1)return null;const o=sh([g,...b]);return {g,o}};
+const aPick=(good,bad,k)=>{if(k===3)k=4;const g=pickOne(good.filter(aVoiced));let b=sh(bad.filter(x=>aVoiced(x)&&x!==g)).slice(0,k-1);if(b.length<k-1)b=b.slice(0,2);if(!g||b.length<2)return null;const o=sh([g,...b]);return {g,o}};
 const AQ={
  aHome(){const ys=S.age<=3?["house","farm","sea","pond"]:Object.keys(APL);const p=pickOne(ys.filter(p=>AFT.some(a=>a[2].includes(p)&&aVoiced(a))));
   const GRP=[["sea","river","pond"],["forest","jungle"],["grassland","farm"]],near=GRP.find(g=>g.includes(p))||[p];const r=aPick(AFT.filter(a=>a[2].includes(p)),AFT.filter(a=>a[2].length&&!a[2].some(h=>near.includes(h))),3);if(!r)return null;
@@ -381,7 +381,7 @@ const M2GEN={
   return Object.assign({voice:[M2(per?"PERIM":"AREA")],cap:per?"Perimeter (all the way round)":"Area (how many squares?)",visual:`<div class="m2-grid" style="grid-template-columns:repeat(${w},22px)">${"<i></i>".repeat(w*h)}</div><div class="m2-dim">${w} × ${h}</div>`,layout:"row3",hint:"elim",exp:{t:per?`${w} + ${h} + ${w} + ${h} = ${r}`:`${w} × ${h} = ${r}`,v:per?[...NV(w),"w/LULU_PLUS",...NV(h),"w/LULU_PLUS",...NV(w),"w/LULU_PLUS",...NV(h),"w/LULU_EQUALS",...NV(r)]:[...NV(w),"w/PX_RC_TIMES",...NV(h),"w/LULU_EQUALS",...NV(r)]}},bOpts(r,per?[w*h,w+h,r+2,r-2]:[2*(w+h),w+h,r+w,r-h]))},
  elapsed(){const h=ri(1,11),m=pickOne([0,15,30,45,10,20,40,50]),d=pickOne(lvl()<=9?[15,30,45,60]:[15,25,35,45,50,75,90]),t=h*60+m+d,H=((Math.floor(t/60)-1)%12)+1,Mm=t%60;
   const tv=(hh,mm)=>["w/PX_RC_CLOCK",N(hh),...(mm?["w/PX_VA",...NV(mm),"w/PX_RC_MIN"]:[])],ts=(hh,mm)=>`${hh}:${String(mm).padStart(2,"0")}`;
-  const c=[[H,(Mm+15)%60],[((H)%12)+1,Mm],[h,(m+d)%60],[H,(Mm+45)%60]].filter(x=>!(x[0]===H&&x[1]===Mm));const seen=new Set([H+":"+Mm]),cu=sh(c).filter(x=>{const k=x[0]+":"+x[1];if(seen.has(k))return false;seen.add(k);return true});const o=[[H,Mm],...cu.slice(0,2)];
+  const c=[[H,(Mm+15)%60],[((H)%12)+1,Mm],[h,(m+d)%60],[H,(Mm+45)%60]].filter(x=>!(x[0]===H&&x[1]===Mm));const seen=new Set([H+":"+Mm]),cu=sh(c).filter(x=>{const k=x[0]+":"+x[1];if(seen.has(k))return false;seen.add(k);return true});const o=[[H,Mm],...cu.slice(0,3)];
   return {voice:[M2("NOW"),N(h),...(m?["w/PX_VA",...NV(m),"w/PX_RC_MIN"]:[]),...NV(d),M2("LATER")],cap:`It is ${ts(h,m)}. What time is it ${d} minutes later?`,visual:`<div class="eq"><span>${ts(h,m)}</span><b>+</b><span>${d} min</span><b>=</b><span class="q">?</span></div>`,layout:"row3",hint:"elim",
    opts:o.map(x=>({h:`<b class="num">${ts(x[0],x[1])}</b>`,say:tv(x[0],x[1])})),ans:0,why:{t:`${ts(h,m)} + ${d} minutes = ${ts(H,Mm)}`,v:tv(H,Mm)},_o:o}},
  change(){const big=lvl()>=11,paid=big?1000:100,p=ri(big?101:11,paid-1);const r=paid-p;
@@ -399,7 +399,7 @@ const M2GEN={
 const M2WIN={"add:times":[8,12],"add:divide":[8,12],"add:mul2":[10,12],"add:big3":[9,12],"add:fracof":[9,12],"add:fraccmp":[9,12],"add:story":[9,12],"add:change":[9,12],"add:neg":[10,12],"add:decimal":[10,12],"add:percent":[11,12],
  "count:place":[9,12],"count:round":[9,12],"shapes:area":[9,12],"clock:elapsed":[9,12]};
 const _kfM2=kindsFor;kindsFor=function(cat){const k=_kfM2(cat);if(!V15_READY)return k;const l=lvl();return [...k,...Object.keys(M2WIN).filter(x=>x.startsWith(cat+":")&&l>=M2WIN[x][0]&&l<=M2WIN[x][1]).map(x=>x.split(":")[1])]};
-const _bqM2=buildQ;buildQ=function(cat,k,used){if(M2GEN[k]){const q=M2GEN[k]();if(q._o){const o=q._o;delete q._o;const j=0,perm=sh([0,1,2]);q.opts=perm.map(i=>q.opts[i]);q.ans=perm.indexOf(0)}q.cat=cat;q.kind=k;if(!q.exp&&q.why)q.exp={t:q.why.t,v:q.why.v};if(!q.why&&q.exp)q.why={t:q.exp.t,v:q.exp.v||[]};return q}return _bqM2(cat,k,used)};
+const _bqM2=buildQ;buildQ=function(cat,k,used){if(M2GEN[k]){const q=M2GEN[k]();if(q._o){const o=q._o;delete q._o;const j=0,perm=sh([...q.opts.keys()]);q.opts=perm.map(i=>q.opts[i]);q.ans=perm.indexOf(0)}q.cat=cat;q.kind=k;if(!q.exp&&q.why)q.exp={t:q.why.t,v:q.why.v};if(!q.why&&q.exp)q.why={t:q.exp.t,v:q.exp.v||[]};return q}return _bqM2(cat,k,used)};
 Object.assign(GMAP,Object.fromEntries(Object.keys(M2WIN).map(x=>[x.replace(":","."),G({times:"Times tables",divide:"Division",mul2:"Multiplying big numbers",big3:"Big adding and taking away",fracof:"Fraction of a number",fraccmp:"Comparing fractions",story:"Two-step word problems",change:"Money and change",neg:"Negative numbers",decimal:"Decimals",percent:"Percent",place:"Place value",round:"Rounding",area:"Area and perimeter",elapsed:"Elapsed time"}[x.split(":")[1]],["cog","math"],[["cog","logic"]],"Maths for ages 9-12 (or children who are ahead).","Practice")])));
 
 /* ---------------- English for levels 8-12 (v15): opposites, plurals, past tense, synonyms ---------------- */
