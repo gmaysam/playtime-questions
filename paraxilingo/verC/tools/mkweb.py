@@ -33,21 +33,26 @@ def lower_inset(c):
 css = lower_inset(css)
 
 def esb(code, loader):
-    r = subprocess.run([ESB, '--loader=' + loader, '--target=safari12', '--log-level=error'], input=code.encode(), capture_output=True)
+    r = subprocess.run([ESB, '--loader=' + loader, '--target=safari12', '--log-level=error', '--minify', '--legal-comments=none'], input=code.encode(), capture_output=True)
     if r.returncode: sys.exit(r.stderr.decode())
     return r.stdout.decode()
 css2 = esb(css, 'css')
 js2 = esb(js, 'js')
 
 head = re.sub(r'<meta name="viewport"[^>]*>\n?', '', head)
+# v40: the app's code is its own file, loaded with defer: the first screen paints at once, the phone compiles the
+# code while it downloads, and keeps the compiled code for the next launch (it cannot do that for code inside the page)
+import hashlib
+APPJS = 'app.' + hashlib.sha1(js2.encode()).hexdigest()[:10] + '.js'
 page = ('<!doctype html>\n<html lang="en"><head><meta charset="utf-8">\n'
         '<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">\n'
         '<meta name="apple-mobile-web-app-capable" content="yes">\n'
-        + head + '<style>' + css2 + '</style>\n</head><body>' + body + '<script>' + js2 + '</script>\n</body></html>\n')
+        + head + '<style>' + css2 + '</style>\n</head><body>' + body + '<script src="' + APPJS + '" defer></script>\n</body></html>\n')
 if os.path.isdir(OUT):
     shutil.rmtree(OUT)
 os.makedirs(OUT)
 open(os.path.join(OUT, 'index.html'), 'w', encoding='utf-8').write(page)
+open(os.path.join(OUT, APPJS), 'w', encoding='utf-8').write(js2)
 for d in ('img', 'audio'):
     shutil.copytree(os.path.join(SRC, d), os.path.join(OUT, d))
 print('web ok', len(page))

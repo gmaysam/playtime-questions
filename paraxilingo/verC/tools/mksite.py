@@ -34,7 +34,7 @@ for f in files: h.update(open(os.path.join(SITE, f), 'rb').read())
 ver = h.hexdigest()[:10]
 sw = '''/* offline cache. A new version takes over in seconds (only the page itself is saved first);
    pictures and sounds are saved the first time they are used, and in the background after that. */
-const V="px-%s",FILES=%s,CORE=["./","index.html","manifest.json","icon180.png"];
+const V="px-%s",FILES=%s,CORE=["./","index.html","manifest.json","icon180.png",%s];
 self.addEventListener("install",e=>{e.waitUntil(caches.open(V).then(c=>Promise.all(CORE.map(u=>fetch(u,{cache:"no-store"}).then(r=>r.ok&&c.put(u,r)).catch(()=>{})))).then(()=>self.skipWaiting()))});
 self.addEventListener("activate",e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==V).map(k=>caches.delete(k)))).then(()=>self.clients.claim()).then(()=>{
   /* fill the rest of the offline copy slowly, without blocking anything */
@@ -42,10 +42,10 @@ self.addEventListener("activate",e=>{e.waitUntil(caches.keys().then(ks=>Promise.
 }))});
 self.addEventListener("fetch",e=>{
   const r=e.request;if(r.method!=="GET"||!r.url.startsWith(self.location.origin))return;
-  if(r.mode==="navigate"){e.respondWith(fetch(r,{cache:"no-store"}).then(n=>{const c=n.clone();caches.open(V).then(x=>x.put("./",c));return n}).catch(()=>caches.match("./")));return}
+  if(r.mode==="navigate"){e.respondWith(caches.match("./").then(m=>m||fetch(r,{cache:"no-store"}).then(n=>{const c=n.clone();caches.open(V).then(x=>x.put("./",c));return n})).catch(()=>fetch(r)));return}
   e.respondWith(caches.match(r,{ignoreSearch:true}).then(m=>m||fetch(r).then(n=>{if(n.ok&&n.status===200){const c=n.clone();caches.open(V).then(x=>x.put(r,c))}return n})).catch(()=>fetch(r)));
 });
-''' % (ver, json.dumps(files))
+''' % (ver, json.dumps(files), ','.join(json.dumps(f) for f in files if f.startswith('app.') and f.endswith('.js')) or '"index.html"')
 open(os.path.join(SITE, 'sw.js'), 'w').write(sw)
 p = os.path.join(SITE, 'index.html'); s = open(p, encoding='utf-8').read()
 s = s.replace('<meta name="apple-mobile-web-app-capable" content="yes">',

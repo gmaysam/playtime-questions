@@ -616,6 +616,9 @@ out=_rep(out,'/* ================= start: Domi tells what month or event it is =
 # ---- v39: ten more games, movie sounds (games19.js) ----
 g19=open(os.path.join(os.path.dirname(__file__),'games19.js')).read().replace('__G39__',open(os.path.join(os.path.dirname(__file__),'g39.json')).read())
 out=_rep(out,'/* ================= start: Domi tells what month or event it is ================= */',g19+'\n/* ================= start: Domi tells what month or event it is ================= */')
+# ---- v40: 2x2 answers, 4th answer, star counters, learning focus, Say it in English and Farsi (games20.js) ----
+g20=open(os.path.join(os.path.dirname(__file__),'games20.js')).read().replace('__FATXT__',open(os.path.join(os.path.dirname(__file__),'fa_txt.json')).read())
+out=_rep(out,'/* ================= start: Domi tells what month or event it is ================= */',g20+'\n/* ================= start: Domi tells what month or event it is ================= */')
 out=_rep(out,'<img class="talk" src="img/domi_1.svg" alt="Domi the beaver">','<img class="talk g17gif" src="data:image/gif;base64,'+__import__('base64').b64encode(open('appC/img/domi_dance.gif','rb').read()).decode()+'" alt="Domi dances hello"><img class="talk g14char" hidden alt=""><button class="g14tap" id="inTap" hidden>👋 Tap to hear Domi!</button>')
 out=_rep(out,'document.querySelectorAll("img.talk,.bv img").forEach(i=>i.src=domiSrc())','document.querySelectorAll(".bv img").forEach(i=>i.src=domiSrc())')
 out=_rep(out,'setTimeout(()=>sayseq([ev?ev.clip:"z"+Z.a,"w/LULU_BD_PRIZE"],later),400);','setTimeout(()=>{introList=[...G14("HELLO"),...(ev?[ev.clip]:G14("HELLO").length?[]:["z"+Z.a])];introHello(introList,later)},300);')

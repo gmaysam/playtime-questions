@@ -90,7 +90,7 @@ function qMach39(cat){const rounds=[];for(const G of sh(GQ39)){if(rounds.length>
   const ids=sh(gqFit34({ids:G.ids}));for(const id of ids){const Q=gqBuild34(id);if(Q){rounds.push({n:pickOne(g),q:Q,id});break}}}
   return q39("mach39","g:mach39",cat,rounds,["w/PX_G39_MACH"],"Levers, pulleys and gears are simple machines: they make work easier.")}
 /* 7. SOUND SAFARI (4-8) */
-MK39.snd39=(R,q,first)=>{const o=sh([R,...sh(D39.snd.filter(x=>x[0]!==R[0])).slice(0,age39()<=5?1:2)]);
+MK39.snd39=(R,q,first)=>{const o=sh([R,...sh(D39.snd.filter(x=>x[0]!==R[0])).slice(0,age39()<=5?1:3)]);
   return {stage:`<button class="g39-ear" id="g39e">🔊</button>`,pre:f=>{const go=()=>{const e=$("g39e");if(e)e.classList.add("on");fx39(R[0],()=>{const e=$("g39e");if(e)e.classList.remove("on");f()})};first?sayseq(["w/PX_G39_SND"],go):go()},again:1,
   cap:"What made this sound?",opts:o.map(x=>eo39(x[1],x[2],x[3])),ans:o.indexOf(R),ex:["w/"+R[3]],right:()=>{$("g39s").innerHTML=`<div class="g39-big">${R[1]}</div>`}}};
 function qSnd39(cat){return q39("snd39","g:snd39",cat,sh(D39.snd).slice(0,3),["w/PX_G39_SND"],"Our ears can tell us what is around us, even with our eyes closed.")}
