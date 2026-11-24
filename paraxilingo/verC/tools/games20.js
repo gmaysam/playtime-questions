@@ -300,3 +300,29 @@ const _qw44=qWatcher;qWatcher=function(){return tf44(_qw44.apply(this,arguments)
 const _ask44=ask;ask=function(q,done){tf44(q);return _ask44(q,done)};
 /* v44: the English words recorded for the reading questions (EN31) and the new ones count as English, so those questions read their answers again */
 try{Object.values(EN31).forEach(c=>EN40.add(c));Object.values(EN_SAY).forEach(c=>EN40.add("w/"+c));"ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").forEach(l=>EN40.add("w/LULU_LN_"+l))}catch(e){}
+/* v44.1 owner's rule: when there are only 2 answers (true/false, yes/no, kind/unkind, this or that) read the question, not the answers */
+const two44=q=>{try{if(q&&q.opts&&q.opts.length===2)q.opts.forEach(o=>o.say=[])}catch(e){}return q};
+const _ask441=ask;ask=function(q,done){two44(q);return _ask441(q,done)};
+const _grl441=gReadList;gReadList=function(q,lead,items){if(items&&items.length===2){sayseq(lead||q.voice||[],()=>{});return true}return _grl441(q,lead,items)};
+const _gro441=gReadOpts;gReadOpts=function(q){try{const sel=q&&OPTREAD[q.game];if(sel){const bs=[...$("qBody").querySelectorAll(sel)].filter(b=>!b.disabled&&!b.hidden);if(bs.length===2){sayseq(q.voice||[],()=>{});return true}}}catch(e){}return _gro441(q)};
+const _rd441=rd31;rd31=function(q,cur,boxes,first,onDone){const n=(boxes||[]).filter(b=>b&&!b.hidden).length;if(n===2&&cur&&cur.opts)cur={...cur,opts:cur.opts.map(o=>({...o,say:[]}))};return _rd441(q,cur,boxes,first,onDone)};
+/* v44.1 the thing each game asks about is read, not only the general instruction */
+Object.assign(FA_SAY,{"sledge":"PX_F441_SEA_SLEDGE","very cold day":"PX_F441_SEA_COLD","nowruz":"PX_F441_SEA_NOWRUZ","baby birds":"PX_F441_SEA_BIRDS","very hot day":"PX_F441_SEA_HOT","falling leaves":"PX_F441_SEA_LEAVES","pumpkin":"PX_F441_SEA_PUMPKIN","light blue":"PX_F441_LIGHT_BLUE"});
+Object.assign(EN_SAY,{"sledge":"PX_E441_SLEDGE","very cold day":"PX_E441_VERY_COLD_DAY","nowruz":"PX_E441_NOWRUZ","baby birds":"PX_E441_BABY_BIRDS","very hot day":"PX_E441_VERY_HOT_DAY","falling leaves":"PX_E441_FALLING_LEAVES","pumpkin":"PX_E441_PUMPKIN","light blue":"PX_E441_LIGHT_BLUE"});
+try{["PX_E441_SLEDGE","PX_E441_VERY_COLD_DAY","PX_E441_NOWRUZ","PX_E441_BABY_BIRDS","PX_E441_VERY_HOT_DAY","PX_E441_FALLING_LEAVES","PX_E441_PUMPKIN","PX_E441_LIGHT_BLUE"].forEach(c=>EN40.add("w/"+c))}catch(e){}
+const SEQV441={butterfly:"BUTTERFLY",chick:"CHICK",day:"DAY",life:"LIFE",months:"MONTHS",planets:"PLANETS",plant:"PLANT",week:"WEEK"};
+const ROBOV441={robot:"ROBOT",car:"CAR",bunny:"BUNNY",bee:"BEE"};
+Object.assign(FA_SAY,{"newspaper":"PX_F441_REC_NEWSPAPER","bottle":"PX_F441_REC_BOTTLE","jar":"PX_F441_REC_JAR","glass bottle":"PX_F441_REC_GLASS_BOTTLE"});
+Object.assign(EN_SAY,{"newspaper":"PX_E441_NEWSPAPER","bottle":"PX_E441_BOTTLE","jar":"PX_E441_JAR","glass bottle":"PX_E441_GLASS_BOTTLE"});
+try{["NEWSPAPER","BOTTLE","JAR","GLASS_BOTTLE"].forEach(c=>EN40.add("w/PX_E441_"+c))}catch(e){}
+Object.assign(ROBOV441,{rocket:"ROCKET",turtle:"TURTLE",dog:"DOG",bus:"BUS"});
+const fix441=q=>{try{if(!q||q._v441)return q;q._v441=1;const v=q.voice||[];
+  if(q.game==="swipe"&&q.deck!=="flag"&&q.cards&&q.cards[0]){const c=q.cards[0];q.voice=[...v,...(c[1]?sayIf(c[1].toLowerCase()):sayIf(String(c[0])))]}
+  else if((q.game==="seasons"||q.game==="recycle")&&q.items&&q.items[0])q.voice=[...v,...sayIf(q.items[0][0].toLowerCase())];
+  else if(q.game==="mix"&&q.m)q.voice=[...v,...sayIf(q.m[0])];
+  else if(q.game==="seq"&&q.s&&SEQV441[q.s.k])q.voice=["w/PX_F441_SEQ_"+SEQV441[q.s.k]];
+  else if(v[0]==="w/PX_BOTH"){const m=/that is (\w+) and a (\w+)/i.exec(q.cap||"");if(m)q.voice=["w/PX_BOTH",...sayIf(m[1].toLowerCase()),...sayIf(m[2].toLowerCase())]}
+  else if(v[0]==="w/LULU_SH_SIDES"){const m=/does an? ([\w ]+) have/i.exec(q.cap||"");if(m)q.voice=[...v,...sayIf(m[1].toLowerCase())]}
+  if(q.robot&&ROBOV441[q.robot.th])q.voice=["w/PX_F441_ROBO_"+ROBOV441[q.robot.th],"w/PX_TD_GOAL2"]}catch(e){}return q};
+const _bf441=buildFormat;buildFormat=function(){return fix441(_bf441.apply(this,arguments))};
+const _bq441=buildQ;buildQ=function(){return fix441(_bq441.apply(this,arguments))};
