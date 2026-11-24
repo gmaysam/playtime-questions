@@ -55,4 +55,5 @@ open(os.path.join(OUT, 'index.html'), 'w', encoding='utf-8').write(page)
 open(os.path.join(OUT, APPJS), 'w', encoding='utf-8').write(js2)
 for d in ('img', 'audio'):
     shutil.copytree(os.path.join(SRC, d), os.path.join(OUT, d))
+subprocess.run([sys.executable, os.path.join(os.path.dirname(os.path.abspath(__file__)), 'optaudio.py'), os.path.join(OUT, 'audio', 'w')], check=True)
 print('web ok', len(page))

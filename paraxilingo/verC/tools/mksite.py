@@ -26,26 +26,41 @@ files = []
 for d, _, ff in os.walk(SITE):
     for f in ff:
         rel = os.path.relpath(os.path.join(d, f), SITE)
-        if rel.startswith('.git') or rel in ('sw.js',): continue
+        if rel.startswith('.git') or rel in ('sw.js', '.nojekyll'): continue
         files.append(rel)
 files.sort()
-h = hashlib.sha1()
-for f in files: h.update(open(os.path.join(SITE, f), 'rb').read())
+h = hashlib.sha1(); FH = {}
+for f in files:
+    b = open(os.path.join(SITE, f), 'rb').read(); h.update(b)
+    FH[f] = [hashlib.sha1(b).hexdigest()[:10], len(b)]
 ver = h.hexdigest()[:10]
-sw = '''/* offline cache. A new version takes over in seconds (only the page itself is saved first);
-   pictures and sounds are saved the first time they are used, and in the background after that. */
-const V="px-%s",FILES=%s,CORE=["./","index.html","manifest.json","icon180.png",%s];
-self.addEventListener("install",e=>{e.waitUntil(caches.open(V).then(c=>Promise.all(CORE.map(u=>fetch(u,{cache:"no-store"}).then(r=>r.ok&&c.put(u,r)).catch(()=>{})))).then(()=>self.skipWaiting()))});
-self.addEventListener("activate",e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==V).map(k=>caches.delete(k)))).then(()=>self.clients.claim()).then(()=>{
+CORE = ['index.html', 'manifest.json', 'icon180.png'] + [f for f in files if f.startswith('app.') and f.endswith('.js')]
+MEDIA = {f: v for f, v in FH.items() if f not in CORE}
+sw = """/* offline copy.
+   The page and its script are saved per version. Pictures and sounds live in one lasting store, each under its own
+   content fingerprint: a new version only downloads the files that really changed, never the whole app again. */
+const V="px-core-%s",M="px-media",CORE=%s,F=%s;
+const key=p=>p+"?h="+F[p][0],rel=u=>decodeURIComponent(new URL(u).pathname.slice(new URL(self.registration.scope).pathname.length));
+self.addEventListener("install",e=>{e.waitUntil(caches.open(V).then(c=>Promise.all(["./",...CORE].map(u=>fetch(u,{cache:"no-store"}).then(r=>r.ok&&c.put(u,r)).catch(()=>{})))).then(()=>self.skipWaiting()))});
+async function tidy(){const ks=await caches.keys(),m=await caches.open(M);
+  for(const k of ks){if(k===V||k===M||!k.startsWith("px-"))continue;
+    if(!k.startsWith("px-core-")){const old=await caches.open(k);   /* the store of an older version: keep the files that did not change */
+      for(const q of await old.keys()){try{const p=rel(q.url);if(!F[p])continue;
+        if(await m.match(key(p)))continue;const r=await old.match(q);const n=+(r.headers.get("content-length")||0)||(await r.clone().blob()).size;if(n===F[p][1])await m.put(key(p),r)}catch(x){}}}
+    await caches.delete(k)}
+  for(const q of await m.keys()){const u=new URL(q.url),p=rel(q.url);if(!F[p]||u.searchParams.get("h")!==F[p][0])await m.delete(q)}}
+self.addEventListener("activate",e=>{e.waitUntil(tidy().catch(()=>{}).then(()=>self.clients.claim()).then(()=>{
   /* fill the rest of the offline copy slowly, without blocking anything */
-  caches.open(V).then(async c=>{for(const f of FILES){try{if(!(await c.match(f))){const r=await fetch(f);if(r.ok)await c.put(f,r)}}catch(x){}}});
+  caches.open(M).then(async c=>{for(const f in F){try{if(!(await c.match(key(f)))){const r=await fetch(f);if(r.ok&&r.status===200)await c.put(key(f),r)}}catch(x){}}});
 }))});
 self.addEventListener("fetch",e=>{
-  const r=e.request;if(r.method!=="GET"||!r.url.startsWith(self.location.origin))return;
-  if(r.mode==="navigate"){e.respondWith(caches.match("./").then(m=>m||fetch(r,{cache:"no-store"}).then(n=>{const c=n.clone();caches.open(V).then(x=>x.put("./",c));return n})).catch(()=>fetch(r)));return}
-  e.respondWith(caches.match(r,{ignoreSearch:true}).then(m=>m||fetch(r).then(n=>{if(n.ok&&n.status===200){const c=n.clone();caches.open(V).then(x=>x.put(r,c))}return n})).catch(()=>fetch(r)));
+  const r=e.request;if(r.method!=="GET"||!r.url.startsWith(self.registration.scope))return;
+  if(r.mode==="navigate"){e.respondWith(caches.open(V).then(c=>c.match("./")).then(m=>m||fetch(r,{cache:"no-store"})).catch(()=>fetch(r)));return}
+  const p=rel(r.url);
+  if(F[p]){e.respondWith(caches.open(M).then(c=>c.match(key(p)).then(m=>m||fetch(p).then(n=>{if(n.ok&&n.status===200)c.put(key(p),n.clone());return n}))).catch(()=>fetch(r)));return}
+  e.respondWith(caches.open(V).then(c=>c.match(r,{ignoreSearch:true})).then(m=>m||fetch(r)).catch(()=>fetch(r)));
 });
-''' % (ver, json.dumps(files), ','.join(json.dumps(f) for f in files if f.startswith('app.') and f.endswith('.js')) or '"index.html"')
+""" % (ver, json.dumps(CORE), json.dumps(MEDIA, separators=(',', ':')))
 open(os.path.join(SITE, 'sw.js'), 'w').write(sw)
 p = os.path.join(SITE, 'index.html'); s = open(p, encoding='utf-8').read()
 s = s.replace('<meta name="apple-mobile-web-app-capable" content="yes">',
