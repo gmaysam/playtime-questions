@@ -53,11 +53,18 @@ self.addEventListener("activate",e=>{e.waitUntil(tidy().catch(()=>{}).then(()=>s
   /* fill the rest of the offline copy slowly, without blocking anything */
   caches.open(M).then(async c=>{for(const f in F){try{if(!(await c.match(key(f)))){const r=await fetch(f);if(r.ok&&r.status===200)await c.put(key(f),r)}}catch(x){}}});
 }))});
+/* sounds and videos: iPhone/iPad Safari asks for them in byte ranges and only plays an answer of exactly that range (206) */
+async function media(r,p){const c=await caches.open(M);let res=await c.match(key(p));
+  if(!res){const n=await fetch(p);if(!(n.ok&&n.status===200))return fetch(r);await c.put(key(p),n.clone());res=n}
+  const rg=r.headers.get("range");if(!rg)return res;
+  const buf=await res.arrayBuffer(),L=buf.byteLength,m=/bytes=(\d*)-(\d*)/.exec(rg)||[];let s=m[1]?+m[1]:0,e=m[2]?+m[2]:L-1;if(!m[1]&&m[2]){s=Math.max(0,L-(+m[2]));e=L-1}e=Math.min(e,L-1);
+  if(s>=L)return new Response(null,{status:416,headers:{"Content-Range":"bytes */"+L}});
+  return new Response(buf.slice(s,e+1),{status:206,statusText:"Partial Content",headers:{"Content-Type":res.headers.get("Content-Type")||"audio/mpeg","Content-Range":"bytes "+s+"-"+e+"/"+L,"Content-Length":String(e-s+1),"Accept-Ranges":"bytes"}})}
 self.addEventListener("fetch",e=>{
   const r=e.request;if(r.method!=="GET"||!r.url.startsWith(self.registration.scope))return;
   if(r.mode==="navigate"){e.respondWith(caches.open(V).then(c=>c.match("./")).then(m=>m||fetch(r,{cache:"no-store"})).catch(()=>fetch(r)));return}
   const p=rel(r.url);
-  if(F[p]){e.respondWith(caches.open(M).then(c=>c.match(key(p)).then(m=>m||fetch(p).then(n=>{if(n.ok&&n.status===200)c.put(key(p),n.clone());return n}))).catch(()=>fetch(r)));return}
+  if(F[p]){e.respondWith(media(r,p).catch(()=>fetch(r)));return}
   e.respondWith(caches.open(V).then(c=>c.match(r,{ignoreSearch:true})).then(m=>m||fetch(r)).catch(()=>fetch(r)));
 });
 """ % (ver, json.dumps(CORE), json.dumps(MEDIA, separators=(',', ':')))
