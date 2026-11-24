@@ -326,3 +326,9 @@ const fix441=q=>{try{if(!q||q._v441)return q;q._v441=1;const v=q.voice||[];
   if(q.robot&&ROBOV441[q.robot.th])q.voice=["w/PX_F441_ROBO_"+ROBOV441[q.robot.th],"w/PX_TD_GOAL2"]}catch(e){}return q};
 const _bf441=buildFormat;buildFormat=function(){return fix441(_bf441.apply(this,arguments))};
 const _bq441=buildQ;buildQ=function(){return fix441(_bq441.apply(this,arguments))};
+
+/* v44.3 owner's note (a14): 31 older questions had the answers inside the question recording, then the answers were read again
+   (and the screen now has 4 answers, the recording 3). They now use a recording of the question only. */
+const Q443={"w/a01_q_lulu": "w/PX_Q443_A01", "w/a02_q_lulu": "w/PX_Q443_A02", "w/a05_q_lulu": "w/PX_Q443_A05", "w/a07_q_lulu": "w/PX_Q443_A07", "w/a08_q_lulu": "w/PX_Q443_A08", "w/a10_q_lulu": "w/PX_Q443_A10", "w/a12_q_lulu": "w/PX_Q443_A12", "w/a14_q_lulu": "w/PX_Q443_A14", "w/a15_q_lulu": "w/PX_Q443_A15", "w/a17_q_lulu": "w/PX_Q443_A17", "w/a19_q_lulu": "w/PX_Q443_A19", "w/a21_q_lulu": "w/PX_Q443_A21", "w/a23_q_lulu": "w/PX_Q443_A23", "w/a25_q_lulu": "w/PX_Q443_A25", "w/a27_q_lulu": "w/PX_Q443_A27", "w/b01_q_lulu": "w/PX_Q443_B01", "w/b02_q_lulu": "w/PX_Q443_B02", "w/b04_q_lulu": "w/PX_Q443_B04", "w/b06_q_lulu": "w/PX_Q443_B06", "w/b08_q_lulu": "w/PX_Q443_B08", "w/b10_q_lulu": "w/PX_Q443_B10", "w/b12_q_lulu": "w/PX_Q443_B12", "w/b14_q_lulu": "w/PX_Q443_B14", "w/n01_q_lulu": "w/PX_Q443_N01", "w/n03_q_lulu": "w/PX_Q443_N03", "w/n05_q_lulu": "w/PX_Q443_N05", "w/n07_q_lulu": "w/PX_Q443_N07", "w/n09_q_lulu": "w/PX_Q443_N09", "w/n11_q_lulu": "w/PX_Q443_N11", "w/n13_q_lulu": "w/PX_Q443_N13", "w/p01_q_lulu": "w/PX_Q443_P01"};
+const _sq443=sayseq;sayseq=function(list,onEnd){return _sq443((list||[]).map(c=>Q443[c]||c),onEnd)};
+const _qw443=qWatcher;qWatcher=function(){const q=_qw443.apply(this,arguments);try{if(q&&q.voice)q.voice=q.voice.map(c=>Q443[c]||c)}catch(e){}return q};

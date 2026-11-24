@@ -7030,7 +7030,8 @@ function buildMap(){
   sec.innerHTML=`<div class="zbg"><img src="${src}" alt="${Z.name}"><img class="gr" src="${src}" alt=""></div>`;
   holeEls=HOLES[z].map(([x,y],i)=>{const b=document.createElement("button");b.className="hole";b.style.left=x+"%";b.style.top=y+"%";b.onclick=e=>{e.stopPropagation();showPop(i)};sec.appendChild(b);return b});
   const ev=eventNow();
-  if(ev)for(let k=0;k<6;k++){const d=document.createElement("span");d.className="evdeco";d.textContent=ev.deco[k%ev.deco.length];d.style.left=(k%2?82:6)+"%";d.style.top=(8+k*15)+"%";d.style.animationDelay=(k*.6)+"s";sec.appendChild(d)}
+  /* v44.3 owner: no emoji stickers on the map pictures; the owner's own holiday picture is the decoration */
+  if(false&&ev)for(let k=0;k<6;k++){const d=document.createElement("span");d.className="evdeco";d.textContent=ev.deco[k%ev.deco.length];d.style.left=(k%2?82:6)+"%";d.style.top=(8+k*15)+"%";d.style.animationDelay=(k*.6)+"s";sec.appendChild(d)}
   sec.appendChild(beaver);journey.appendChild(sec);landEl=sec;
 }
 function renderMap(){
@@ -7447,7 +7448,7 @@ $("tbPrizes").onclick=()=>{sfx.tap();showPrizes()};
 const _ls14=loadState;loadState=function(){const r=_ls14.apply(this,arguments);try{S.mapMonth="auto";charMig()}catch(e){}return r};
 function charMig(){if(S.chars&&S.chars.includes("uni")){S.chars=S.chars.filter(x=>x!=="uni");S.wood=(S.wood||0)+40;save()}try{const p=curPlayer();if(p.domi==="uni"||[2,3,4,5].includes(p.domi)){p.domi=1;savePlayers()}}catch(e){}}
 try{S.mapMonth="auto";charMig()}catch(e){}
-function seasonKey(d=new Date()){const ev=eventNow(d);if(ev)return ev.id;const m=d.getMonth();return m===11||m<=1?"winter":m<=4?"spring":m<=7?"summer":"autumn"}
+function seasonKey(d=new Date()){/* v44.3 owner: no holiday drawings (turkey, pie...) on top of the owner's pictures */const m=d.getMonth();return m===11||m<=1?"winter":m<=4?"spring":m<=7?"summer":"autumn"}
 const SEAS14={
  winter:`<path d="M27 112 C30 64 62 33 100 33 C138 33 170 64 173 112 C160 98 150 106 138 94 C124 104 112 92 100 101 C88 92 76 104 62 94 C50 106 40 98 27 112Z" fill="#fff"/><ellipse cx="100" cy="152" rx="98" ry="14" fill="#fff"/><g fill="#fff"><circle cx="16" cy="40" r="3"/><circle cx="186" cy="30" r="3.5"/><circle cx="40" cy="12" r="2.5"/><circle cx="160" cy="8" r="2.5"/><circle cx="190" cy="80" r="2.5"/><circle cx="8" cy="90" r="2.5"/></g><g transform="translate(176 118)"><circle cy="20" r="13" fill="#fff" stroke="#D0EBFF" stroke-width="2"/><circle cy="0" r="9" fill="#fff" stroke="#D0EBFF" stroke-width="2"/><path d="M0 1 l7 2 -7 2z" fill="#FD7E14"/><circle cx="-3" cy="-2" r="1.3" fill="#343A40"/><circle cx="3" cy="-2" r="1.3" fill="#343A40"/></g>`,
  spring:`<ellipse cx="100" cy="152" rx="98" ry="14" fill="#8CE99A"/><g>${[[14,146,"#F783AC"],[34,152,"#FFD43B"],[58,150,"#B197FC"],[142,150,"#F783AC"],[166,152,"#FFD43B"],[188,146,"#74C0FC"]].map(([x,y,c])=>`<g transform="translate(${x} ${y})"><circle r="4" cx="-4" fill="${c}"/><circle r="4" cx="4" fill="${c}"/><circle r="4" cy="-4" fill="${c}"/><circle r="4" cy="4" fill="${c}"/><circle r="3" fill="#FFF3BF"/></g>`).join("")}</g><text x="168" y="40" font-size="22">🦋</text><path d="M60 52 Q70 40 82 46" stroke="#69DB7C" stroke-width="4" fill="none"/><circle cx="84" cy="45" r="5" fill="#FCC2D7"/>`,
@@ -8753,6 +8754,12 @@ const fix441=q=>{try{if(!q||q._v441)return q;q._v441=1;const v=q.voice||[];
   if(q.robot&&ROBOV441[q.robot.th])q.voice=["w/PX_F441_ROBO_"+ROBOV441[q.robot.th],"w/PX_TD_GOAL2"]}catch(e){}return q};
 const _bf441=buildFormat;buildFormat=function(){return fix441(_bf441.apply(this,arguments))};
 const _bq441=buildQ;buildQ=function(){return fix441(_bq441.apply(this,arguments))};
+
+/* v44.3 owner's note (a14): 31 older questions had the answers inside the question recording, then the answers were read again
+   (and the screen now has 4 answers, the recording 3). They now use a recording of the question only. */
+const Q443={"w/a01_q_lulu": "w/PX_Q443_A01", "w/a02_q_lulu": "w/PX_Q443_A02", "w/a05_q_lulu": "w/PX_Q443_A05", "w/a07_q_lulu": "w/PX_Q443_A07", "w/a08_q_lulu": "w/PX_Q443_A08", "w/a10_q_lulu": "w/PX_Q443_A10", "w/a12_q_lulu": "w/PX_Q443_A12", "w/a14_q_lulu": "w/PX_Q443_A14", "w/a15_q_lulu": "w/PX_Q443_A15", "w/a17_q_lulu": "w/PX_Q443_A17", "w/a19_q_lulu": "w/PX_Q443_A19", "w/a21_q_lulu": "w/PX_Q443_A21", "w/a23_q_lulu": "w/PX_Q443_A23", "w/a25_q_lulu": "w/PX_Q443_A25", "w/a27_q_lulu": "w/PX_Q443_A27", "w/b01_q_lulu": "w/PX_Q443_B01", "w/b02_q_lulu": "w/PX_Q443_B02", "w/b04_q_lulu": "w/PX_Q443_B04", "w/b06_q_lulu": "w/PX_Q443_B06", "w/b08_q_lulu": "w/PX_Q443_B08", "w/b10_q_lulu": "w/PX_Q443_B10", "w/b12_q_lulu": "w/PX_Q443_B12", "w/b14_q_lulu": "w/PX_Q443_B14", "w/n01_q_lulu": "w/PX_Q443_N01", "w/n03_q_lulu": "w/PX_Q443_N03", "w/n05_q_lulu": "w/PX_Q443_N05", "w/n07_q_lulu": "w/PX_Q443_N07", "w/n09_q_lulu": "w/PX_Q443_N09", "w/n11_q_lulu": "w/PX_Q443_N11", "w/n13_q_lulu": "w/PX_Q443_N13", "w/p01_q_lulu": "w/PX_Q443_P01"};
+const _sq443=sayseq;sayseq=function(list,onEnd){return _sq443((list||[]).map(c=>Q443[c]||c),onEnd)};
+const _qw443=qWatcher;qWatcher=function(){const q=_qw443.apply(this,arguments);try{if(q&&q.voice)q.voice=q.voice.map(c=>Q443[c]||c)}catch(e){}return q};
 
 /* ================= start: Domi tells what month or event it is ================= */
 const clk=()=>{const d=new Date();$("clock").textContent=d.getHours()+":"+String(d.getMinutes()).padStart(2,"0")};clk();setInterval(clk,30000);
