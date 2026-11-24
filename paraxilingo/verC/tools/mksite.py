@@ -57,7 +57,7 @@ self.addEventListener("activate",e=>{e.waitUntil(tidy().catch(()=>{}).then(()=>s
 async function media(r,p){const c=await caches.open(M);let res=await c.match(key(p));
   if(!res){const n=await fetch(p);if(!(n.ok&&n.status===200))return fetch(r);await c.put(key(p),n.clone());res=n}
   const rg=r.headers.get("range");if(!rg)return res;
-  const buf=await res.arrayBuffer(),L=buf.byteLength,m=/bytes=(\d*)-(\d*)/.exec(rg)||[];let s=m[1]?+m[1]:0,e=m[2]?+m[2]:L-1;if(!m[1]&&m[2]){s=Math.max(0,L-(+m[2]));e=L-1}e=Math.min(e,L-1);
+  const buf=await res.arrayBuffer(),L=buf.byteLength,m=/bytes=(\\d*)-(\\d*)/.exec(rg)||[];let s=m[1]?+m[1]:0,e=m[2]?+m[2]:L-1;if(!m[1]&&m[2]){s=Math.max(0,L-(+m[2]));e=L-1}e=Math.min(e,L-1);
   if(s>=L)return new Response(null,{status:416,headers:{"Content-Range":"bytes */"+L}});
   return new Response(buf.slice(s,e+1),{status:206,statusText:"Partial Content",headers:{"Content-Type":res.headers.get("Content-Type")||"audio/mpeg","Content-Range":"bytes "+s+"-"+e+"/"+L,"Content-Length":String(e-s+1),"Accept-Ranges":"bytes"}})}
 self.addEventListener("fetch",e=>{
