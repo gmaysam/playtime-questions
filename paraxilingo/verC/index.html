@@ -6780,7 +6780,7 @@ const ROW_SEED=`<div class="g13-row"><span>🫘</span><b>→</b><span>🌱</span
 /* per question: [new age, picture, delete, new question voice, new fact voice, new English text] */
 const WQFIX={a19:{a:5,pic:"🕷️"},a22:{a:5},b03:{a:3},n04:{a:3},b11:{a:8,pic:"🍼"},b04:{pic:"🖐️"},b10:{svg:SVG_LUNGS},n02:{svg:SVG_ROOTS},n06:{svg:ROW_SEED},n08:{pic:"🧊"},
   a18:{del:1},
-  a28:{qv:"PX_FIX_A28_Q"},b13:{ev:"PX_FIX_B13_E"},
+  a28:{qv:"PX_FIX_A28_Q"},/* b13 keeps its own fact clip (b13_e_lulu says the right fact; PX_FIX_B13_E was a mis-cut) */
   b05:{qv:"PX_FIX_B05_Q",ev:"PX_FIX_B05_E",q:"Sleep helps keep your body healthy.",x:"When you sleep, your body rests and gets stronger."}};
 for(const [id,f] of Object.entries(WQFIX)){const k=WQ.findIndex(w=>w.i===id);if(k<0)continue;
   if(f.del){WQ.splice(k,1);continue}
@@ -8760,6 +8760,76 @@ const _bq441=buildQ;buildQ=function(){return fix441(_bq441.apply(this,arguments)
 const Q443={"w/a01_q_lulu": "w/PX_Q443_A01", "w/a02_q_lulu": "w/PX_Q443_A02", "w/a05_q_lulu": "w/PX_Q443_A05", "w/a07_q_lulu": "w/PX_Q443_A07", "w/a08_q_lulu": "w/PX_Q443_A08", "w/a10_q_lulu": "w/PX_Q443_A10", "w/a12_q_lulu": "w/PX_Q443_A12", "w/a14_q_lulu": "w/PX_Q443_A14", "w/a15_q_lulu": "w/PX_Q443_A15", "w/a17_q_lulu": "w/PX_Q443_A17", "w/a19_q_lulu": "w/PX_Q443_A19", "w/a21_q_lulu": "w/PX_Q443_A21", "w/a23_q_lulu": "w/PX_Q443_A23", "w/a25_q_lulu": "w/PX_Q443_A25", "w/a27_q_lulu": "w/PX_Q443_A27", "w/b01_q_lulu": "w/PX_Q443_B01", "w/b02_q_lulu": "w/PX_Q443_B02", "w/b04_q_lulu": "w/PX_Q443_B04", "w/b06_q_lulu": "w/PX_Q443_B06", "w/b08_q_lulu": "w/PX_Q443_B08", "w/b10_q_lulu": "w/PX_Q443_B10", "w/b12_q_lulu": "w/PX_Q443_B12", "w/b14_q_lulu": "w/PX_Q443_B14", "w/n01_q_lulu": "w/PX_Q443_N01", "w/n03_q_lulu": "w/PX_Q443_N03", "w/n05_q_lulu": "w/PX_Q443_N05", "w/n07_q_lulu": "w/PX_Q443_N07", "w/n09_q_lulu": "w/PX_Q443_N09", "w/n11_q_lulu": "w/PX_Q443_N11", "w/n13_q_lulu": "w/PX_Q443_N13", "w/p01_q_lulu": "w/PX_Q443_P01"};
 const _sq443=sayseq;sayseq=function(list,onEnd){return _sq443((list||[]).map(c=>Q443[c]||c),onEnd)};
 const _qw443=qWatcher;qWatcher=function(){const q=_qw443.apply(this,arguments);try{if(q&&q.voice)q.voice=q.voice.map(c=>Q443[c]||c)}catch(e){}return q};
+
+/* ================= v45: re-recorded Farsi lines, removed questions, new wrong answers, units (metric / imperial) ================= */
+(function(){
+const R45={"LULU_FA_CTY11": "PX_R45_LULU_FA_CTY11", "LULU_FA_DAY6": "PX_R45_LULU_FA_DAY6", "LULU_FA_MON0": "PX_R45_LULU_FA_MON0", "LULU_FA_MON1": "PX_R45_LULU_FA_MON1", "LULU_FA_MON2": "PX_R45_LULU_FA_MON2", "LULU_FA_MON3": "PX_R45_LULU_FA_MON3", "LULU_FA_MON4": "PX_R45_LULU_FA_MON4", "LULU_FA_MON5": "PX_R45_LULU_FA_MON5", "LULU_FA_MON6": "PX_R45_LULU_FA_MON6", "LULU_FA_MON7": "PX_R45_LULU_FA_MON7", "PX_AW_CAMEL": "PX_R45_PX_AW_CAMEL", "PX_AW_EAGLE": "PX_R45_PX_AW_EAGLE", "PX_AW_GIRAFFE": "PX_R45_PX_AW_GIRAFFE", "PX_AW_GOAT": "PX_R45_PX_AW_GOAT", "PX_AW_KANGAROO": "PX_R45_PX_AW_KANGAROO", "PX_AW_MONKEY": "PX_R45_PX_AW_MONKEY", "PX_AW_OWL": "PX_R45_PX_AW_OWL", "PX_AW_PANDA": "PX_R45_PX_AW_PANDA", "PX_AW_PARROT": "PX_R45_PX_AW_PARROT", "PX_AW_RABBIT": "PX_R45_PX_AW_RABBIT", "PX_AW_TIGER": "PX_R45_PX_AW_TIGER", "PX_AW_WOLF": "PX_R45_PX_AW_WOLF", "PX_AW_ZEBRA": "PX_R45_PX_AW_ZEBRA", "PX_F44_BIG_BEN": "PX_R45_PX_F44_BIG_BEN", "PX_FA_BEAR": "PX_R45_PX_FA_BEAR", "PX_FA_W_RICE": "PX_R45_PX_FA_W_RICE", "PX_O38_FOG": "PX_R45_PX_O38_FOG", "PX_O40_BLAME_SOMEONE_ELSE": "PX_R45_PX_O40_BLAME_SOMEONE_ELSE", "PX_O40_DON_T_TELL_AND_TELL_A_GROWN_UP": "PX_R45_PX_O40_DON_T_TELL_AND_TELL_A_GROWN_UP", "PX_O40_HERD": "PX_R45_PX_O40_HERD", "PX_O40_KITTEN": "PX_R45_PX_O40_KITTEN", "PX_O41_FLOCK": "PX_R45_PX_O41_FLOCK", "PX_O41_OIL": "PX_R45_PX_O41_OIL", "PX_O41_ONE": "PX_R45_PX_O41_ONE", "PX_O41_SOME_POSTS_ARE_FALSE_OR_MADE_UP": "PX_R45_PX_O41_SOME_POSTS_ARE_FALSE_OR_MADE_UP", "PX_O41_THE_BIG_DIPPER": "PX_R45_PX_O41_THE_BIG_DIPPER", "PX_OW2_ASIA": "PX_R45_PX_OW2_ASIA", "PX_OW2_BABY_CAT": "PX_R45_PX_OW2_BABY_CAT", "PX_OW2_CARBON_DIOXIDE": "PX_R45_PX_OW2_CARBON_DIOXIDE", "PX_OW2_CHEESE": "PX_R45_PX_OW2_CHEESE", "PX_OW2_CLOUDS_MOVING": "PX_R45_PX_OW2_CLOUDS_MOVING", "PX_OW2_FEET": "PX_R45_PX_OW2_FEET", "PX_OW2_HOT_COLD_WARM": "PX_R45_PX_OW2_HOT_COLD_WARM", "PX_OW2_IT_MELTS": "PX_R45_PX_OW2_IT_MELTS", "PX_OW2_NAILS": "PX_R45_PX_OW2_NAILS", "PX_OW2_NIGHT": "PX_R45_PX_OW2_NIGHT", "PX_OW2_NILE": "PX_R45_PX_OW2_NILE", "PX_OW2_NOSE": "PX_R45_PX_OW2_NOSE", "PX_OW2_SHIRT": "PX_R45_PX_OW2_SHIRT", "PX_OW2_SKIN": "PX_R45_PX_OW2_SKIN", "PX_OW2_SKULL": "PX_R45_PX_OW2_SKULL", "PX_OW2_TELEPHONE": "PX_R45_PX_OW2_TELEPHONE", "PX_OW2_TOYS": "PX_R45_PX_OW2_TOYS", "PX_OW2_TO_SLEEP": "PX_R45_PX_OW2_TO_SLEEP", "PX_OW2_WATER": "PX_R45_PX_OW2_WATER", "PX_OW2_WIND": "PX_R45_PX_OW2_WIND", "PX_OW2_YOGURT": "PX_R45_PX_OW2_YOGURT", "PX_OW3_ALBERT_EINSTEIN": "PX_R45_PX_OW3_ALBERT_EINSTEIN", "PX_OW3_WITH_GILLS": "PX_R45_PX_OW3_WITH_GILLS", "PX_OW3_WITH_LUNGS": "PX_R45_PX_OW3_WITH_LUNGS", "PX_OW_AFTERNOON": "PX_R45_PX_OW_AFTERNOON", "PX_OW_AIR": "PX_R45_PX_OW_AIR", "PX_OW_BROCCOLI": "PX_R45_PX_OW_BROCCOLI", "PX_OW_CRAYON": "PX_R45_PX_OW_CRAYON", "PX_OW_CUCUMBER": "PX_R45_PX_OW_CUCUMBER", "PX_OW_LOLLIPOP": "PX_R45_PX_OW_LOLLIPOP", "PX_OW_MAKE_FUN_OF_THEM": "PX_R45_PX_OW_MAKE_FUN_OF_THEM", "PX_OW_PEAR": "PX_R45_PX_OW_PEAR", "PX_OW_SUNNY_WINDOW": "PX_R45_PX_OW_SUNNY_WINDOW", "PX_Q443_A17": "PX_R45_PX_Q443_A17", "PX_Q443_A21": "PX_R45_PX_Q443_A21", "a03_e_lulu": "PX_R45_a03_e_lulu", "a11_e_lulu": "PX_R45_a11_e_lulu", "a21_e_lulu": "PX_R45_a21_e_lulu", "a28_e_lulu": "PX_R45_a28_e_lulu", "PX_FIX_A28_Q": "PX_R45_PX_FIX_A28_Q", "b03_e_lulu": "PX_R45_b03_e_lulu", "d02_q_lulu": "PX_R45_d02_q_lulu", "d04_q_lulu": "PX_R45_d04_q_lulu", "d06_q_lulu": "PX_R45_d06_q_lulu", "e04_e_lulu": "PX_R45_e04_e_lulu", "l02_e_lulu": "PX_R45_l02_e_lulu", "l04_q_lulu": "PX_R45_l04_q_lulu", "l06_e_lulu": "PX_R45_l06_e_lulu", "m03_q_lulu": "PX_R45_m03_q_lulu", "m11_q_lulu": "PX_R45_m11_q_lulu", "n02_q_lulu": "PX_R45_n02_q_lulu", "n04_q_lulu": "PX_R45_n04_q_lulu", "n11_e_lulu": "PX_R45_n11_e_lulu", "n12_q_lulu": "PX_R45_n12_q_lulu", "px101_q_lulu": "PX_R45_px101_q_lulu", "px112_e_lulu": "PX_R45_px112_e_lulu", "px11_q_lulu": "PX_R45_px11_q_lulu", "px121_e_lulu": "PX_R45_px121_e_lulu", "px125_e_lulu": "PX_R45_px125_e_lulu", "px137_e_lulu": "PX_R45_px137_e_lulu", "px145_q_lulu": "PX_R45_px145_q_lulu", "px169_e_lulu": "PX_R45_px169_e_lulu", "px169_q_lulu": "PX_R45_px169_q_lulu", "px170_e_lulu": "PX_R45_px170_e_lulu", "px171_q_lulu": "PX_R45_px171_q_lulu", "px178_q_lulu": "PX_R45_px178_q_lulu", "px186_q_lulu": "PX_R45_px186_q_lulu", "px191_q_lulu": "PX_R45_px191_q_lulu", "px197_e_lulu": "PX_R45_px197_e_lulu", "px200_e_lulu": "PX_R45_px200_e_lulu", "px201_e_lulu": "PX_R45_px201_e_lulu", "px204_e_lulu": "PX_R45_px204_e_lulu", "px218_e_lulu": "PX_R45_px218_e_lulu", "px228_q_lulu": "PX_R45_px228_q_lulu", "px22_e_lulu": "PX_R45_px22_e_lulu", "px234_q_lulu": "PX_R45_px234_q_lulu", "px238_q_lulu": "PX_R45_px238_q_lulu", "px255_e_lulu": "PX_R45_px255_e_lulu", "px258_e_lulu": "PX_R45_px258_e_lulu", "px263_e_lulu": "PX_R45_px263_e_lulu", "px264_e_lulu": "PX_R45_px264_e_lulu", "px31_e_lulu": "PX_R45_px31_e_lulu", "px320_q_lulu": "PX_R45_px320_q_lulu", "px32_e_lulu": "PX_R45_px32_e_lulu", "px347_q_lulu": "PX_R45_px347_q_lulu", "px34_q_lulu": "PX_R45_px34_q_lulu", "px361_e_lulu": "PX_R45_px361_e_lulu", "px371_e_lulu": "PX_R45_px371_e_lulu", "px379_e_lulu": "PX_R45_px379_e_lulu", "px385_e_lulu": "PX_R45_px385_e_lulu", "px39_e_lulu": "PX_R45_px39_e_lulu", "px410_q_lulu": "PX_R45_px410_q_lulu", "px428_q_lulu": "PX_R45_px428_q_lulu", "px497_q_lulu": "PX_R45_px497_q_lulu", "px50_e_lulu": "PX_R45_px50_e_lulu", "px525_q_lulu": "PX_R45_px525_q_lulu", "px541_q_lulu": "PX_R45_px541_q_lulu", "px58_e_lulu": "PX_R45_px58_e_lulu", "px58_q_lulu": "PX_R45_px58_q_lulu", "px82_e_lulu": "PX_R45_px82_e_lulu"};
+/* clips of the imperial readings that are already in the app (the rest wait, and their question stays metric until then) */
+const U45_HAVE=new Set(["PX_U45_E_0", "PX_U45_E_100", "PX_U45_E_212", "PX_U45_E_32", "PX_U45_E_400", "PX_U45_E_50", "PX_U45_FY_293", "PX_U45_IF_COMPARE_10", "PX_U45_IF_COMPARE_7", "PX_U45_IF_COMPARE_8", "PX_U45_MX39_03", "PX_U45_MX39_03_E", "PX_U45_O_212", "PX_U45_O_32", "PX_U45_O_400", "PX_U45_PX148_E", "PX_U45_PX154_E", "PX_U45_PX155_E", "PX_U45_PX168_E", "PX_U45_PX174_E", "PX_U45_PX174_Q", "PX_U45_PX203_E", "PX_U45_PX204_E", "PX_U45_PX344_E", "PX_U45_PX393_E", "PX_U45_PX401_E", "PX_U45_PX401_Q", "PX_U45_PX413_E", "PX_U45_PX480_E", "PX_U45_PX480_Q"]);
+let U45_ON=false;const U45A={};
+const _A45=window.Audio;
+function remap45(src){try{const m=/^audio\/(w\/)?([^\/]+)\.mp3$/.exec(src);if(!m)return src;let n=m[2];if(U45_ON&&U45A[n])n=U45A[n];if(R45[n])n=R45[n];return "audio/"+(m[1]||"")+n+".mp3"}catch(e){return src}}
+function A45(src){return arguments.length?new _A45(remap45(String(src))):new _A45()}
+A45.prototype=_A45.prototype;try{window.Audio=A45}catch(e){}
+/* wording that follows the new Farsi recordings */
+const W=id=>WQ.find(w=>w.i===id);
+try{const n12=W("n12");if(n12)n12.q="A cactus needs lots of water.";const a11=W("a11");if(a11)a11.x="Ducks' feet work like paddles."}catch(e){}
+/* removed questions */
+["b05","px158","px163","px230","px256","px356","px442","px459","px494","px548","px584","px592","px596","x08"].forEach(id=>{const k=WQ.findIndex(w=>w.i===id);if(k>=0)WQ.splice(k,1)});
+/* silly wrong answers swapped for real ones */
+try{const a=W("px171");if(a){const j=a.o.indexOf("Cheese power");if(j>=0){a.o[j]="Coal";if(a.oe)a.oe[j]="⚫"}}
+  const b=W("px201");if(b){const j=b.o.indexOf("Water turns into candy");if(j>=0){b.o[j]="Water disappears forever";if(b.oe)b.oe[j]="💨"}}
+  Object.assign(FA_SAY,{"coal":"PX_F45_COAL","water disappears forever":"PX_F45_WATER_DISAPPEARS"});
+  Object.assign(EN_SAY,{"coal":"PX_E45_COAL","water disappears forever":"PX_E45_WATER_DISAPPEARS"});
+  Object.assign(FA_TXT40,{"coal":"زغال‌سنگ","water disappears forever":"آب برای همیشه ناپدید می‌شه"});
+  if(typeof EN40!=="undefined"&&EN40.add)["PX_E45_COAL","PX_E45_WATER_DISAPPEARS"].forEach(c=>EN40.add(c));}catch(e){}
+/* ---- units: parents pick metric (SI) or imperial ---- */
+Object.assign(FA_SAY,{"0°f":"PX_OW3_0C","32°f":"PX_U45_O_32","50°f":"PX_OW3_50C","212°f":"PX_U45_O_212","400°f":"PX_U45_O_400","100°f":"PX_OW3_100C"});
+Object.assign(EN_SAY,{"0°f":"PX_U45_E_0","32°f":"PX_U45_E_32","50°f":"PX_U45_E_50","212°f":"PX_U45_E_212","400°f":"PX_U45_E_400","100°f":"PX_U45_E_100"});
+try{if(typeof EN40!=="undefined"&&EN40.add)["0","32","50","100","212","400"].forEach(n=>EN40.add("PX_U45_E_"+n))}catch(e){}
+/* [question id, imperial changes, clips swapped: old -> new] */
+const UQ=[
+ ["px148",{x:"The small intestine is about 20 feet long, folded up inside you!"},{px148_e_lulu:"PX_U45_PX148_E"}],
+ ["px154",{x:"Mount Everest is in the Himalayas, about 29,000 feet high."},{px154_e_lulu:"PX_U45_PX154_E"}],
+ ["px155",{x:"Damavand is a volcano, about 18,400 feet high."},{px155_e_lulu:"PX_U45_PX155_E"}],
+ ["px168",{x:"A running tap can waste gallons of water every minute."},{px168_e_lulu:"PX_U45_PX168_E"}],
+ ["px174",{q:"At what temperature does water freeze, in Fahrenheit?",o:["0°F","32°F","50°F","212°F"],n:1,x:"Water freezes at 32 °F and boils at 212 °F."},{px174_q_lulu:"PX_U45_PX174_Q",px174_e_lulu:"PX_U45_PX174_E",PX_U45_O_32:"PX_U45_O_32",PX_U45_O_212:"PX_U45_O_212"}],
+ ["px203",{x:"One light-year is about 6 trillion miles."},{px203_e_lulu:"PX_U45_PX203_E"}],
+ ["px204",{x:"Tornado winds can spin faster than 180 miles an hour."},{px204_e_lulu:"PX_U45_PX204_E"}],
+ ["px344",{x:"Mountains can be thousands of feet tall."},{px344_e_lulu:"PX_U45_PX344_E"}],
+ ["px393",{x:"Everest is about 29,000 feet tall."},{px393_e_lulu:"PX_U45_PX393_E"}],
+ ["px401",{q:"Water boils at 212 degrees Fahrenheit at sea level.",x:"At sea level, water boils at 212 °F."},{px401_q_lulu:"PX_U45_PX401_Q",px401_e_lulu:"PX_U45_PX401_E"}],
+ ["px405",{x:"A light-year is a distance: about 6 trillion miles."},{}],
+ ["px413",{x:"Sunlight travels about 93 million miles in about 8 minutes."},{px413_e_lulu:"PX_U45_PX413_E"}],
+ ["px480",{q:"What is the boiling point of water at sea level, in Fahrenheit?",o:["400°F","100°F","32°F","212°F"],n:3,x:"Water boils at 212°F and freezes at 32°F."},{px480_q_lulu:"PX_U45_PX480_Q",px480_e_lulu:"PX_U45_PX480_E",PX_U45_O_32:"PX_U45_O_32",PX_U45_O_212:"PX_U45_O_212",PX_U45_O_400:"PX_U45_O_400"}]];
+const UF=[["COMPARE",0,"LULU_IF_COMPARE_7","اورست بلندترین کوهه، تقریباً بیست و نُه هزار فوت ارتفاع داره.","PX_U45_IF_COMPARE_7"],
+ ["COMPARE",0,"LULU_IF_COMPARE_8","دماوند، بلندترین کوهِ ایران، بیشتر از هیجده هزار فوت ارتفاع داره.","PX_U45_IF_COMPARE_8"],
+ ["COMPARE",0,"LULU_IF_COMPARE_10","یه پوند پَر با یه پوند سنگ هم‌وزنه!","PX_U45_IF_COMPARE_10"]];
+const ready=m=>Object.values(m).every(c=>U45_HAVE.has(c));
+const ORIG={};UQ.forEach(([id])=>{const w=W(id);if(w)ORIG[id]=JSON.parse(JSON.stringify({q:w.q,o:w.o,oe:w.oe,n:w.n,x:w.x}))});
+const IFO={};UF.forEach(([k,,c])=>{const L=IFACTS[k]||[];const r=L.find(x=>x[0]===c);if(r)IFO[c]=r[1]});
+const lion0="A lion's roar can be heard 8 km away.",lion1="A lion's roar can be heard 5 miles away.";
+const mx=()=>{try{return (D39.mix||[]).find(r=>r[0]==="MX39_03")}catch(e){return null}};let MXO=null;
+window.applyUnits45=function(){const imp=P.units==="imp";U45_ON=imp;for(const k in U45A)delete U45A[k];
+  UQ.forEach(([id,f,clips])=>{const w=W(id),o=ORIG[id];if(!w||!o)return;const on=imp&&ready(clips);
+    Object.assign(w,JSON.parse(JSON.stringify(o)));if(on){Object.assign(w,JSON.parse(JSON.stringify(f)));if(f.o&&w.oe){const E={0:"🥶",32:"🧊",50:"🌡️",100:"🌡️",212:"♨️",400:"🔥"};w.oe=f.o.map(x=>E[parseInt(x,10)]||"🌡️")}Object.assign(U45A,clips)}});
+  UF.forEach(([k,,c,t,nc])=>{const r=(IFACTS[k]||[]).find(x=>x[0]===c);if(!r)return;const on=imp&&U45_HAVE.has(nc);r[1]=on?t:IFO[c];if(on)U45A[c]=nc});
+  try{const on=imp&&U45_HAVE.has("PX_U45_FY_293");FACT_EN.lion=on?lion1:lion0;FACT_V[lion1]="PX_FY_293";if(on)U45A.PX_FY_293="PX_U45_FY_293"}catch(e){}
+  try{const r=mx();if(r&&!MXO)MXO=[r[2],r[3]];const on=imp&&U45_HAVE.has("PX_U45_MX39_03")&&U45_HAVE.has("PX_U45_MX39_03_E");if(r&&MXO){r[2]=on?"Water freezes at 32 degrees!":MXO[0];r[3]=on?"Right! Water freezes at 32 degrees Fahrenheit.":MXO[1]}if(on){U45A.MX39_03="PX_U45_MX39_03";U45A.MX39_03_E="PX_U45_MX39_03_E"}}catch(e){}};
+try{applyUnits45()}catch(e){console.log(e)}
+window.U45_PENDING=()=>{const all=new Set();UQ.forEach(x=>Object.values(x[2]).forEach(c=>all.add(c)));UF.forEach(x=>all.add(x[4]));["PX_U45_FY_293","PX_U45_MX39_03","PX_U45_MX39_03_E"].forEach(c=>all.add(c));return [...all].filter(c=>!U45_HAVE.has(c)).length};
+function unitsHTML(){const imp=P.units==="imp",pend=U45_PENDING();return `<div class="psec"><span>📏</span>Units</div><div class="u45">
+  <p>Lengths, distances and temperatures in the questions and facts.</p>
+  <div class="u45r"><button class="btn ${imp?"ghost":"green"}" id="u45si" aria-pressed="${!imp}">Metric (SI)<small>metres, km, °C</small></button><button class="btn ${imp?"green":"ghost"}" id="u45imp" aria-pressed="${imp}">Imperial<small>feet, miles, °F</small></button></div>
+  ${imp&&pend?`<p class="pnote">Lulu is still recording some imperial lines. Until they are in, those few stay in metric.</p>`:""}</div>`}
+const _sp45=showParents;showParents=function(){const r=_sp45.apply(this,arguments);try{const root=$("pSettings");
+  const snd=[...root.querySelectorAll(".psec")].find(x=>/Sound/.test(x.textContent));if(snd&&!root.querySelector(".u45"))snd.insertAdjacentHTML("beforebegin",unitsHTML());
+  const set=u=>{const s=root.scrollTop;P.units=u;savePlayers();applyUnits45();sfx.tap();toast(u==="imp"?"Imperial units 📏":"Metric units 📏");showParents();root.scrollTop=s};
+  const a=$("u45si"),b=$("u45imp");if(a)a.onclick=()=>set("si");if(b)b.onclick=()=>set("imp");
+}catch(e){console.log(e)}return r};
+(function(){const st=document.createElement("style");st.textContent=`.u45{margin:0 0 10px}.u45 p{font-size:14px;margin:4px 0 8px}
+.u45r{display:grid;grid-template-columns:1fr 1fr;gap:8px}.u45r .btn{display:flex;flex-direction:column;align-items:center;gap:2px}.u45r small{font-size:12px;font-weight:600;opacity:.8}`;document.head.appendChild(st)})();
+})();
 
 /* ================= start: Domi tells what month or event it is ================= */
 const clk=()=>{const d=new Date();$("clock").textContent=d.getHours()+":"+String(d.getMinutes()).padStart(2,"0")};clk();setInterval(clk,30000);
