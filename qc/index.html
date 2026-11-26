@@ -267,7 +267,7 @@ function counts(){const c={};ITEMS.forEach(i=>c[i.tab]=(c[i.tab]||0)+1);return c
 function secOpts(){const fa=tab==="fa";const cur=$("fSec").value;$("fSec").innerHTML=`<option value="">${fa?"All kinds of lines":"All sections"}</option>`+Object.entries(fa?FA_G:SEC).map(([k,v])=>`<option value="${k}">${v}</option>`).join("");if([...$("fSec").options].some(o=>o.value===cur))$("fSec").value=cur;$("faAll").hidden=!fa;$("fAge").hidden=fa;$("fMute").parentElement.hidden=fa}
 function renderTabs(){secOpts();const c=counts();$("tabs").innerHTML=TABS.map(([k,n])=>`<button class="tab" role="tab" aria-selected="${k===tab}" data-tab="${k}">${n}<span class="n">${c[k]||0}</span></button>`).join("")}
 function filtered(){const s=$("fSec").value,a=$("fAge").value,t=$("fQ").value.trim().toLowerCase(),m=$("fMute").checked,n=$("fNote").value;
-  return ITEMS.filter(i=>i.tab===tab&&(!s||i.cat===s||(i.cats&&i.cats.includes(s)))&&(!a||(i.ageHi?(+a>=i.age&&+a<=i.ageHi):i.age==+a))&&(!t||i.search.includes(t))&&(!m||i.mute)&&(!n||(n==="unheard"?(i.fa&&!heard45(i.id)):n==="edited"?(i.ed||i.tab==="ed"):n==="new"?isNew(i):n==="checked"?(NOTES[i.id]&&NOTES[i.id].status==="checked"):(NOTES[i.id]&&NOTES[i.id].status!=="checked"&&(n==="any"||(n==="done")===(NOTES[i.id].status==="done"))))))
+  return ITEMS.filter(i=>i.tab===tab&&(!s||i.cat===s||(i.cats&&i.cats.includes(s)))&&(!a||(i.ageHi?(+a>=i.age&&+a<=i.ageHi):i.age==+a))&&(!t||i.search.includes(t))&&(!m||i.mute)&&(!n||(n==="unheard"?(i.fa&&(!heard45(i.id)||SESS45.has(i.id))):n==="edited"?(i.ed||i.tab==="ed"):n==="new"?isNew(i):n==="checked"?(NOTES[i.id]&&NOTES[i.id].status==="checked"):(NOTES[i.id]&&NOTES[i.id].status!=="checked"&&(n==="any"||(n==="done")===(NOTES[i.id].status==="done"))))))
    .sort((x,y)=>(BASE.has(x.id)?0:1)-(BASE.has(y.id)?0:1))}
 const isNew=i=>!BASE.has(i.id)&&!NOTES[i.id];
 function render(){const L=filtered();const box=$("list");
@@ -317,18 +317,18 @@ async function faFrom(k0){const me=++faRun;faPaused=null;$("faAll").dataset.on=1
     document.querySelectorAll(".item.playing").forEach(x=>x.classList.remove("playing"));el.classList.add("playing");el.scrollIntoView({block:"center",behavior:"smooth"});
     faSetPos(k);try{mark45(L[k].id)}catch(_){}await playList([faClip(L[k].id.slice(3))],el.querySelector(".play"));if(me!==faRun)return;await wait(250)}
   if(me===faRun){faSetPos(-1);faStop()}}
-$("faAll").onclick=()=>{if($("faAll").dataset.on){faStop();return}if($("fNote").value==="unheard"){faFrom(0);return}const L=filtered();faFrom(faPos+1<L.length?faPos+1:0)};
+$("faAll").onclick=()=>{if($("faAll").dataset.on){faStop();return}if($("fNote").value==="unheard"){const L=filtered(),k=L.findIndex(i=>!heard45(i.id));faFrom(k<0?0:k);return}const L=filtered();faFrom(faPos+1<L.length?faPos+1:0)};
 $("faAll").insertAdjacentHTML("afterend",'<button class="btn ghost" id="faTop" hidden>↺ From the top</button><label id="faKeepL" title="After a line, go on to the next one"><input type="checkbox" id="faKeep" checked> keep going</label>');
 $("faTop").onclick=()=>{faStop();faSetPos(-1);faFrom(0)};
 /* ▶ on a Farsi line: play from here and keep going */
 document.addEventListener("click",e=>{const b=e.target.closest(".item.fa .play");if(!b||!faKeep())return;e.stopPropagation();e.preventDefault();
-  const id=b.closest(".item").dataset.id,k=filtered().findIndex(x=>x.id===id);if(k<0)return;faStop();faFrom(k)},true);
+  const id=b.closest(".item").dataset.id,k=filtered().findIndex(x=>x.id===id);faStop();if(k<0){playList([faClip(id.slice(3))],b);return}faFrom(k)},true);
 /* editing pauses; Save goes on with the next line */
 const faEditPause=el=>{const it=el.closest(".item.fa");if(!it||!$("faAll").dataset.on)return;const k=filtered().findIndex(x=>x.id===it.dataset.id);faStop();faPaused=k;faSetPos(k)};
 document.addEventListener("click",e=>{if(e.target.closest(".item.fa [data-fixopen]"))faEditPause(e.target)},true);
 document.addEventListener("focusin",e=>{if(e.target.closest(".item.fa .fa-edit"))faEditPause(e.target)});
 document.addEventListener("click",e=>{const b=e.target.closest(".item.fa [data-save]");if(!b)return;const it=b.closest(".item.fa"),k=filtered().findIndex(x=>x.id===it.dataset.id);
-  if(faPaused!==null&&faPaused===k)setTimeout(()=>faFrom($("fNote").value==="unheard"?0:k+1),400)});
+  if(faPaused!==null&&faPaused===k)setTimeout(()=>faFrom(k+1),400)});
 const _rt443=renderTabs;renderTabs=function(){const r=_rt443.apply(this,arguments);try{const fa=tab==="fa";$("faKeepL").hidden=!fa;if(!fa)$("faTop").hidden=true;else faLabel()}catch(e){}return r};
 /* ================= v45 =================
    - Reading speed 1× to 2×.
@@ -342,14 +342,14 @@ $("spd45").onchange=()=>{RATE=+$("spd45").value||1;try{localStorage.setItem("qc_
 let OFF45=false,ORDER45=null;const POS45=new Map();
 const ord45=()=>{if(!ORDER45){ORDER45=ITEMS.filter(i=>i.tab==="fa").sort((x,y)=>(BASE.has(x.id)?0:1)-(BASE.has(y.id)?0:1)).map(i=>i.id);ORDER45.forEach((x,k)=>POS45.set(x,k))}return ORDER45};
 const posOf=id=>{ord45();return POS45.has(id)?POS45.get(id):-1};
-let LAST45="fa:"+FA45.last;const ONE45=new Set();
+let LAST45="fa:"+FA45.last;const SESS45=new Set();const ONE45=new Set();
 try{const v=localStorage.getItem("qc_fa_last");if(v&&posOf(v)>posOf(LAST45))LAST45=v;JSON.parse(localStorage.getItem("qc_fa_one")||"[]").forEach(x=>ONE45.add(x))}catch(e){}
 const heard45=id=>{const p=posOf(id);return p>=0&&(p<=posOf(LAST45)||ONE45.has(id))};
 let sv45=0,svT45=null;
 function save45(now){try{localStorage.setItem("qc_fa_last",LAST45);localStorage.setItem("qc_fa_one",JSON.stringify([...ONE45].slice(-1500)))}catch(e){}
   if(!db)return;const go=()=>{svT45=null;sv45=Date.now();try{db.collection("qc").doc("_progress").set({kind:"progress",last:LAST45,one:[...ONE45].slice(-800),at:new Date().toISOString()})}catch(e){}};
   if(now){if(svT45)clearTimeout(svT45);go();return}if(!svT45)svT45=setTimeout(go,Math.max(0,20000-(Date.now()-sv45)))}
-function mark45(id){const p=posOf(id);if(p<0)return;const L=posOf(LAST45);
+function mark45(id){const p=posOf(id);if(p<0)return;SESS45.add(id);const L=posOf(LAST45);
   if(p===L+1){LAST45=id;let k=p+1;const O=ord45();while(k<O.length&&ONE45.has(O[k])){ONE45.delete(O[k]);LAST45=O[k];k++}}else if(p>L)ONE45.add(id);
   save45(false);const el=document.getElementById("it-"+id);if(el)paintOne45(el);bar45()}
 function prog45Load(snap){try{const d=snap.docs.find(d=>d.id==="_progress"||((d.data()||{}).kind==="progress"));if(!d)return;const v=d.data();
@@ -423,8 +423,10 @@ function importBar45(){if($("imp45")||OFF45||!db)return;$("dbst").insertAdjacent
       if(x.last&&posOf(x.last)>posOf(LAST45))LAST45=x.last;(x.one||[]).forEach(o=>{if(posOf(o)>posOf(LAST45))ONE45.add(o)});save45(true);paint45();$("impst45").textContent=`✓ ${ns.length} notes added`+(ns.length<Object.keys(x.notes||{}).length?" (the rest were already here)":"")}}}
 setTimeout(function w45(){if(db&&!OFF45)importBar45();else if(!OFF45)setTimeout(w45,1500)},1500);
 /* phone: the top bar scrolls away; a small bar at the bottom keeps Play / Stop and the speed at hand */
-document.body.insertAdjacentHTML("beforeend",'<div id="mini45" hidden><button class="btn" id="mPlay45">▶</button><button class="btn ghost" id="mSpd45">1×</button><span id="mTxt45"></span></div>');
+document.body.insertAdjacentHTML("beforeend",'<div id="mini45" hidden><button class="btn ghost" id="mBack45" aria-label="Back one line">⏮ Back</button><button class="btn" id="mPlay45">▶</button><button class="btn ghost" id="mSpd45">1×</button><span id="mTxt45"></span></div>');
 $("mPlay45").onclick=()=>$("faAll").click();
+/* ⏮ Back: hear the line before again and go on from there */
+$("mBack45").onclick=()=>{const L=filtered();let k=faPos;if($("faAll").dataset.on)k=faPos-1;else if(k<0){k=L.findIndex(i=>i.id===LAST45)}k=Math.max(0,Math.min(k,L.length-1));faStop();faFrom(k)};
 $("mSpd45").onclick=()=>{const S=["1","1.25","1.5","2"],i=(S.indexOf($("spd45").value)+1)%S.length;$("spd45").value=S[i];$("spd45").onchange()};
 setInterval(()=>{const m=$("mini45");m.hidden=tab!=="fa";if(m.hidden)return;const on=!!$("faAll").dataset.on;$("mPlay45").textContent=on?"■ Stop":"▶ Go on";$("mSpd45").textContent=$("spd45").value+"×";
   const O=ord45(),n=O.filter(heard45).length;$("mTxt45").textContent=`${n.toLocaleString()} / ${O.length.toLocaleString()} heard`},600);
