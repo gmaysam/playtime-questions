@@ -13,14 +13,14 @@ const posOf=id=>{ord45();return POS45.has(id)?POS45.get(id):-1};
 let LAST45="fa:"+FA45.last;const SESS45=new Set();const ONE45=new Set();
 try{const v=localStorage.getItem("qc_fa_last");if(v&&posOf(v)>posOf(LAST45))LAST45=v;JSON.parse(localStorage.getItem("qc_fa_one")||"[]").forEach(x=>ONE45.add(x))}catch(e){}
 const heard45=id=>{const p=posOf(id);return p>=0&&(p<=posOf(LAST45)||ONE45.has(id))};
-let sv45=0,svT45=null;
+let sv45=0,svT45=null,SNAP45=false;
 function save45(now){try{localStorage.setItem("qc_fa_last",LAST45);localStorage.setItem("qc_fa_one",JSON.stringify([...ONE45].slice(-1500)))}catch(e){}
-  if(!db)return;const go=()=>{svT45=null;sv45=Date.now();try{db.collection("qc").doc("_progress").set({kind:"progress",last:LAST45,one:[...ONE45].slice(-800),at:new Date().toISOString()})}catch(e){}};
+  if(!db||!SNAP45)return;/* never write before the stored place has been read, so an old device cannot move it back */const go=()=>{svT45=null;sv45=Date.now();try{db.collection("qc").doc("_progress").set({kind:"progress",last:LAST45,one:[...ONE45].slice(-800),at:new Date().toISOString()})}catch(e){}};
   if(now){if(svT45)clearTimeout(svT45);go();return}if(!svT45)svT45=setTimeout(go,Math.max(0,20000-(Date.now()-sv45)))}
 function mark45(id){const p=posOf(id);if(p<0)return;SESS45.add(id);const L=posOf(LAST45);
   if(p===L+1){LAST45=id;let k=p+1;const O=ord45();while(k<O.length&&ONE45.has(O[k])){ONE45.delete(O[k]);LAST45=O[k];k++}}else if(p>L)ONE45.add(id);
   save45(false);const el=document.getElementById("it-"+id);if(el)paintOne45(el);bar45()}
-function prog45Load(snap){try{const d=snap.docs.find(d=>d.id==="_progress"||((d.data()||{}).kind==="progress"));if(!d)return;const v=d.data();
+function prog45Load(snap){SNAP45=true;try{const d=snap.docs.find(d=>d.id==="_progress"||((d.data()||{}).kind==="progress"));if(!d)return;const v=d.data();
   let ch=false;if(v.last&&posOf(v.last)>posOf(LAST45)){LAST45=v.last;ch=true}(v.one||[]).forEach(x=>{if(!ONE45.has(x)&&posOf(x)>posOf(LAST45)){ONE45.add(x);ch=true}});
   if(ch){save45(false);paint45()}}catch(e){}}
 function paintOne45(el){const id=el.dataset.id;if(!el.classList.contains("fa")||el.closest('[data-tab45="ed"]'))return;const h=heard45(id);el.classList.toggle("heard",h);el.classList.toggle("lastheard",id===LAST45);
@@ -51,20 +51,20 @@ function noteLine45(c){const n=NOTES["fa:"+c]||NOTES[NOTE_OF[c]];if(!n)return ""
 const rv45=id=>`<div class="rv farv" data-id="${esc(id)}"><div class="fa-btns"><button class="btn ghost sm" data-ok>✓ Sounds right</button><button class="btn ghost sm" data-fixopen>✗ Fix it</button><button class="btn ghost sm" data-clear hidden>Clear</button><span class="saved" data-st></span></div>
    <div class="fa-edit" hidden><input data-f="fix" dir="rtl" placeholder="Write it the way Lulu should say it (Farsi)"><input data-f="note" placeholder="Note (optional)"><div><button class="btn sm" data-save>Save</button></div></div></div>`;
 const MOVE45=new Set(FA45.move||[]);
-for(const [c,[nc,nt]] of Object.entries(FA45.ed)){const id="fa:"+c,ot=FA_OLD[c]||"";if(!MOVE45.has(c))BASE.add(id);
+for(const [c,[nc,nt]] of Object.entries(FA45.ed)){if(FA45.show&&!FA45.show.includes(c))continue;const id="fa:"+c,ot=FA_OLD[c]||"";if(!MOVE45.has(c))BASE.add(id);
   ITEMS.push({id,tab:"ed",cat:"",age:0,ed:1,edcls:1,search:(c+" "+nt+" "+ot).toLowerCase(),mute:false,html:()=>`<div class="edmeta"><b>${esc(KIND45[GRP45[c]]||"Line")}</b> · ${esc(c)}${FA45.round&&FA45.round[c]?" · <b>"+FA45.round[c]+"</b>":""}</div>
    <div class="ed45"><span class="lab">Now</span><button class="play" data-play='${esc(JSON.stringify([nc]))}' aria-label="Play the new one">${PLAY}</button><div class="fa-t">${esc(nt)}</div>
    <span class="lab">Before</span><button class="play" data-play='${esc(JSON.stringify([c]))}' aria-label="Play the old one">${PLAY}</button><div class="fa-t was">${esc(ot)||"<span class='miss'>(no text on file)</span>"}</div></div>
    ${noteLine45(c)}<div class="edmeta">What I did: ${esc(FA45.reply["fa:"+c]||FA45.reply[NOTE_OF[c]]||"Re-recorded it.")}</div>${rv45(id)}`})}
-for(const c of FA45.del){const id="fa:"+c;BASE.add(id);
+for(const c of FA45.del){if(FA45.showDel&&!FA45.showDel.includes(c))continue;const id="fa:"+c;BASE.add(id);
   ITEMS.push({id,tab:"ed",cat:"",age:0,ed:1,edcls:1,search:(c+" "+(FA_OLD[c]||"")+" removed").toLowerCase(),mute:false,html:()=>`<div class="edmeta"><b>Removed</b> · ${esc(c)}${FA45.round&&FA45.round[c]?" · <b>"+FA45.round[c]+"</b>":""}</div>
    <div class="ed45"><span class="lab">Before</span><button class="play" data-play='${esc(JSON.stringify([c]))}' aria-label="Play the old one">${PLAY}</button><div class="fa-t was">${esc(FA_OLD[c])||"<span class='miss'>(no text on file)</span>"}</div><span class="lab">Now</span><span></span><div class="edmeta">Taken out of the app and off this list.</div></div>
    ${noteLine45(c)}<div class="edmeta">What I did: ${esc(FA45.reply["fa:"+c]||"Removed.")}</div>`})}
-for(const [c,t] of Object.entries(FA45.txt)){if(FA45.ed[c])continue;const id="fa:"+c;
+for(const [c,t] of Object.entries(FA45.txt)){if(FA45.ed[c]||FA45.show)continue;const id="fa:"+c;
   ITEMS.push({id,tab:"ed",cat:"",age:0,ed:1,edcls:1,search:(c+" "+t).toLowerCase(),mute:false,html:()=>`<div class="edmeta"><b>Words added</b> · ${esc(c)}${FA45.round&&FA45.round[c]?" · <b>"+FA45.round[c]+"</b>":""}</div>
    <div class="ed45"><span class="lab">Now</span><button class="play" data-play='${esc(JSON.stringify([c]))}' aria-label="Play">${PLAY}</button><div class="fa-t">${esc(t)}</div></div>
    ${noteLine45(c)}<div class="edmeta">What I did: ${esc(FA45.reply["fa:"+c]||"Wrote down the words Lulu says (her voice did not change).")}</div>${rv45(id)}`})}
-for(const x of FA45.qchg){ITEMS.push({id:"qchg:"+x.id,tab:"ed",cat:"",age:0,ed:1,edcls:1,search:(x.id+" "+x.what+" "+x.before+" "+x.after).toLowerCase(),mute:false,html:()=>`<div class="edmeta"><b>${esc(x.what)}</b> · question ${esc(x.id)}</div>
+for(const x of FA45.qchg){if(FA45.show&&!x.show)continue;ITEMS.push({id:"qchg:"+x.id,tab:"ed",cat:"",age:0,ed:1,edcls:1,search:(x.id+" "+x.what+" "+x.before+" "+x.after).toLowerCase(),mute:false,html:()=>`<div class="edmeta"><b>${esc(x.what)}</b> · question ${esc(x.id)}</div>
    <div class="ed45"><span class="lab">Now</span><span></span><div>${esc(x.after)}</div><span class="lab">Before</span><span></span><div class="was">${esc(x.before)}</div></div>`});BASE.add("qchg:"+x.id)}
 /* ---------- offline ---------- */
 function localDB45(){let L={};try{L=JSON.parse(localStorage.getItem("qc_local_notes")||"{}")}catch(e){}const fs=[];

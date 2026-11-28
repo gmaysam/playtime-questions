@@ -56,7 +56,7 @@ rep('''for(const [c,g,t] of FA){const id="fa:"+c;if(g!=="math")BASE.add(id);ITEM
   html:()=>`<button class="play" data-play='${esc(JSON.stringify([c]))}' aria-label="Play">${PLAY}</button><div class="fa-t">${t?esc(t):"<span class='miss'>(no text on file)</span>"}</div>''',
 '''const ADD45=new Set(FA45.add.map(r=>r[0]).concat(FA45.move||[]));
 for(const [c,g,t0] of FA){const id="fa:"+c,t=faText(c,t0),ed=!!FA45.ed[c];if(g!=="math"&&!ADD45.has(c))BASE.add(id);ITEMS.push({id,tab:"fa",cat:g,age:0,fa:1,ed,search:(c+" "+t+" "+(ed?FA_OLD[c]:"")).toLowerCase(),mute:false,
-  html:()=>`${ed?'<span class="edtag">✏️ Edited: new voice'+(FA_OLD[c]!==t?" and new words":"")+'</span>':""}<button class="play" data-play='${esc(JSON.stringify([faClip(c)]))}' aria-label="Play">${PLAY}</button><div class="fa-t">${t?esc(t):"<span class='miss'>(no text on file)</span>"}</div>''')
+  html:()=>`${ed&&(!FA45.show||FA45.show.includes(c))?'<span class="edtag">✏️ Edited: new voice'+(FA_OLD[c]!==t?" and new words":"")+'</span>':""}<button class="play" data-play='${esc(JSON.stringify([faClip(c)]))}' aria-label="Play">${PLAY}</button><div class="fa-t">${t?esc(t):"<span class='miss'>(no text on file)</span>"}</div>''')
 # Play all uses the new voice of an edited line
 rep('faSetPos(k);await playList([L[k].id.slice(3)],el.querySelector(".play"))','faSetPos(k);try{mark45(L[k].id)}catch(_){}await playList([faClip(L[k].id.slice(3))],el.querySelector(".play"))')
 rep('const L=filtered();faFrom(faPos+1<L.length?faPos+1:0)};','if($("fNote").value==="unheard"){const L=filtered(),k=L.findIndex(i=>!heard45(i.id));faFrom(k<0?0:k);return}const L=filtered();faFrom(faPos+1<L.length?faPos+1:0)};')

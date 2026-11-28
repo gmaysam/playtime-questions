@@ -429,3 +429,18 @@ function A47(src){return arguments.length?new _A47(rm47(String(src))):new _A47()
 A47.prototype=_A47.prototype;try{window.Audio=A47}catch(e){}
 try{for(const k in D47)if(FA_T[k]!==undefined)FA_T[k]=D47[k]}catch(e){}
 })();
+
+/* ================= v48: owner's notes on the edited lines (12 re-recorded), px34 removed ================= */
+(function(){
+const R48={"LULU_PRAISE2": "PX_R48_LULU_PRAISE2", "PX_FA_W_RICE": "PX_R48_PX_FA_W_RICE", "PX_FX_17": "PX_R48_PX_FX_17", "PX_OW3_WITH_GILLS": "PX_R48_PX_OW3_WITH_GILLS", "PX_Q443_A17": "PX_R48_PX_Q443_A17", "PX_TD_S_hen": "PX_R48_PX_TD_S_hen", "n02_q_lulu": "PX_R48_n02_q_lulu", "p06_q_lulu": "PX_R48_p06_q_lulu", "px137_e_lulu": "PX_R48_px137_e_lulu", "px371_e_lulu": "PX_R48_px371_e_lulu", "px58_e_lulu": "PX_R48_px58_e_lulu", "px58_q_lulu": "PX_R48_px58_q_lulu"};
+const D48={"LULU_PRAISE2": "عالیه!", "PX_FA_W_RICE": "بِرِنج", "PX_FX_17": "ماهی‌ها با آبشُش‌هاشون زیرِ آب نفس می‌کشن.", "PX_OW3_WITH_GILLS": "با آبشُش‌ها", "PX_Q443_A17": "کرمِ پروانه، بزرگ می‌شه و می‌شه چی؟", "PX_TD_S_hen": "مرغه، روی لونه‌ش نشست. ترق! یه جوجه‌ی زرد کوچولو اومد بیرون. جیک جیک!", "n02_q_lulu": "درخت‌ها ریشه، دارن. درسته یا غلط؟", "p06_q_lulu": "روی ماه، بدونِ کلاهِ فضایی می‌شه نفس کشید؟ درسته یا غلط؟", "px137_e_lulu": "معده غذا رو با شیره‌هایی قاطی می‌کنه تا غذا هضم بشه.", "px371_e_lulu": "نهنگ‌ها با صِداهایی که توی آب دور می‌رن، با هم حرف می‌زنن.", "px58_e_lulu": "میمون‌ها عاشقِ موز هستن و با دست و پا و دُمشون از دِرَخت بالا می‌رن.", "px58_q_lulu": "کدوم حیوون دُم دراز داره و عاشقِ موز هست؟"};
+const _A48=window.Audio;
+function rm48(src){try{const m=/^audio\/(w\/)?([^\/]+)\.mp3$/.exec(src);if(!m||!R48[m[2]])return src;return "audio/"+(m[1]||"")+R48[m[2]]+".mp3"}catch(e){return src}}
+function A48(src){return arguments.length?new _A48(rm48(String(src))):new _A48()}
+A48.prototype=_A48.prototype;try{window.Audio=A48}catch(e){}
+try{for(const k in D48)if(FA_T[k]!==undefined)FA_T[k]=D48[k]}catch(e){}
+/* owner: remove the question "What do we wear on our feet?" */
+try{const k=WQ.findIndex(w=>w.i==="px34");if(k>=0)WQ.splice(k,1)}catch(e){}
+/* px137: the fact now says the stomach mixes food with juices so it can be digested */
+try{const w=WQ.find(w=>w.i==="px137");if(w)w.x="The stomach mixes food with juices so it can be digested."}catch(e){}
+})();
