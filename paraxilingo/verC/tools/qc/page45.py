@@ -28,6 +28,7 @@ css='''
 .item.edit{display:block;padding:12px 14px}
 .item.edit .rv{margin-top:8px}
 #spd45{font:700 14px var(--font)}
+.empty45{background:var(--card);border:1px dashed var(--line);border-radius:14px;padding:18px;line-height:1.6}
 @media (max-width:700px){header{position:static}}
 #mini45{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;gap:8px;align-items:center;background:var(--card);border-top:1px solid var(--line);
   padding:8px max(12px,env(safe-area-inset-right,0px)) calc(8px + env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px));box-shadow:0 -4px 14px rgba(40,30,80,.08)}
@@ -62,7 +63,7 @@ rep('faSetPos(k);await playList([L[k].id.slice(3)],el.querySelector(".play"))','
 rep('const L=filtered();faFrom(faPos+1<L.length?faPos+1:0)};','if($("fNote").value==="unheard"){const L=filtered(),k=L.findIndex(i=>!heard45(i.id));faFrom(k<0?0:k);return}const L=filtered();faFrom(faPos+1<L.length?faPos+1:0)};')
 
 # tabs
-rep('["fa","Farsi voice"]];','["fa","Farsi voice"],["ed","Edited by Claude"]];')
+rep('["fa","Farsi voice"]];','["fa","Farsi voice"],["ed","New"]];')
 # filters for heard / edited
 rep('&&(!m||i.mute)&&(!n||(n==="new"?isNew(i)','&&(!m||i.mute)&&(!n||(n==="unheard"?(i.tab!=="fa"||(!heard45(i.id)||SESS45.has(i.id))):n==="edited"?(i.ed||i.tab==="ed"):n==="new"?isNew(i)')
 js=open('/home/claude/qc45/page45.js').read()
@@ -78,4 +79,5 @@ rep('if(ed&&n&&(n.fix||n.note))ed.hidden=false}','if(ed&&n&&(n.fix||n.note)&&n.s
 rep('.item.fa.playing{','.item.edit.done{opacity:1}.item.fa.playing{')
 rep('const id=b.closest(".item").dataset.id,k=filtered().findIndex(x=>x.id===id);if(k<0)return;faStop();faFrom(k)},true);','const id=b.closest(".item").dataset.id,k=filtered().findIndex(x=>x.id===id);faStop();if(k<0){playList([faClip(id.slice(3))],b);return}faFrom(k)},true);')
 rep('.sort((x,y)=>(BASE.has(x.id)?0:1)-(BASE.has(y.id)?0:1))}','.sort((x,y)=>tab==="ed"?0:(BASE.has(x.id)?0:1)-(BASE.has(y.id)?0:1))}')
+rep('box.innerHTML=L.length?','box.innerHTML=(!L.length&&tab==="ed")?`<div class="empty45"><b>Nothing new right now.</b><br>From now on every new or changed voice and every new game shows up here first, with what it was before. When you say it is fine, it moves into its usual tab.</div>`:L.length?')
 open(Q+'/index.html','w').write(s);print('ok',len(s))
