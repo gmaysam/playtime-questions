@@ -444,3 +444,15 @@ try{const k=WQ.findIndex(w=>w.i==="px34");if(k>=0)WQ.splice(k,1)}catch(e){}
 /* px137: the fact now says the stomach mixes food with juices so it can be digested */
 try{const w=WQ.find(w=>w.i==="px137");if(w)w.x="The stomach mixes food with juices so it can be digested."}catch(e){}
 })();
+
+/* ================= v49: owner's notes (5); آبشش: the usual model, new spelling (option B kept for the owner to compare) ================= */
+(function(){
+const R49={"n02_q_lulu": "PX_R49_n02_q_lulu", "px371_e_lulu": "PX_R49_px371_e_lulu", "px58_q_lulu": "PX_R49_px58_q_lulu", "PX_FX_17": "PX_R49A_PX_FX_17", "PX_OW3_WITH_GILLS": "PX_R49A_PX_OW3_WITH_GILLS"};
+const D49={"n02_q_lulu": "درخت‌ها ریشه دارن. درسته یا غلط؟", "px371_e_lulu": "نهنگ‌ها با هم آواز می‌خونن و صداشون توی آب خیلی دور می‌ره.", "px58_q_lulu": "کدوم حیوون دُمِ دراز داره و عاشقِ موز هست؟", "PX_FX_17": "ماهی‌ها با آبشُش زیرِ آب نفس می‌کشن.", "PX_OW3_WITH_GILLS": "با آبشُش"};
+const _A49=window.Audio;
+function rm49(src){try{const m=/^audio\/(w\/)?([^\/]+)\.mp3$/.exec(src);if(!m||!R49[m[2]])return src;return "audio/"+(m[1]||"")+R49[m[2]]+".mp3"}catch(e){return src}}
+function A49(src){return arguments.length?new _A49(rm49(String(src))):new _A49()}
+A49.prototype=_A49.prototype;try{window.Audio=A49}catch(e){}
+try{for(const k in D49)if(FA_T[k]!==undefined)FA_T[k]=D49[k]}catch(e){}
+try{const w=WQ.find(w=>w.i==="px371");if(w)w.x="Whales sing to each other, and their songs travel very far through water."}catch(e){}
+})();

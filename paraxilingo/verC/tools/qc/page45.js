@@ -55,6 +55,7 @@ for(const [c,[nc,nt]] of Object.entries(FA45.ed)){if(FA45.show&&!FA45.show.inclu
   ITEMS.push({id,tab:"ed",cat:"",age:0,ed:1,edcls:1,search:(c+" "+nt+" "+ot).toLowerCase(),mute:false,html:()=>`<div class="edmeta"><b>${esc(KIND45[GRP45[c]]||"Line")}</b> · ${esc(c)}${FA45.round&&FA45.round[c]?" · <b>"+FA45.round[c]+"</b>":""}</div>
    <div class="ed45"><span class="lab">Now</span><button class="play" data-play='${esc(JSON.stringify([nc]))}' aria-label="Play the new one">${PLAY}</button><div class="fa-t">${esc(nt)}</div>
    <span class="lab">Before</span><button class="play" data-play='${esc(JSON.stringify([c]))}' aria-label="Play the old one">${PLAY}</button><div class="fa-t was">${esc(ot)||"<span class='miss'>(no text on file)</span>"}</div></div>
+   ${FA45.alt&&FA45.alt[c]?`<div class="ed45"><span class="lab">Option B</span><button class="play" data-play='${esc(JSON.stringify([FA45.alt[c][0]]))}' aria-label="Play option B">${PLAY}</button><div class="fa-t">${esc(FA45.alt[c][1])}</div></div><div class="edmeta"><b>${esc(FA45.alt[c][2])}</b></div>`:""}
    ${noteLine45(c)}<div class="edmeta">What I did: ${esc(FA45.reply["fa:"+c]||FA45.reply[NOTE_OF[c]]||"Re-recorded it.")}</div>${rv45(id)}`})}
 for(const c of FA45.del){if(FA45.showDel&&!FA45.showDel.includes(c))continue;const id="fa:"+c;BASE.add(id);
   ITEMS.push({id,tab:"ed",cat:"",age:0,ed:1,edcls:1,search:(c+" "+(FA_OLD[c]||"")+" removed").toLowerCase(),mute:false,html:()=>`<div class="edmeta"><b>Removed</b> · ${esc(c)}${FA45.round&&FA45.round[c]?" · <b>"+FA45.round[c]+"</b>":""}</div>
