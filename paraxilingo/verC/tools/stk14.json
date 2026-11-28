@@ -1,0 +1,542 @@
+[
+{
+"cat": "unicorn",
+"i": 0,
+"e": "🦄",
+"n": "Unicorn",
+"f": "Unicorns are magic horses from stories. They have one horn.",
+"fa": "این تک‌شاخه! تک‌شاخ یه اسبِ جادوییِ توی قصه‌هاست که یه شاخ داره.",
+"clip": "PX_STK_UNICORN_00"
+},
+{
+"cat": "unicorn",
+"i": 1,
+"e": "🌈",
+"n": "Rainbow",
+"f": "A rainbow has seven colours. You can see it when the sun shines after rain.",
+"fa": "رنگین‌کمون! رنگین‌کمون هفت تا رنگ داره. وقتی بعد از بارون آفتاب بتابه، می‌بینیمش.",
+"clip": "PX_STK_UNICORN_01"
+},
+{
+"cat": "unicorn",
+"i": 2,
+"e": "🧁",
+"n": "Cupcake",
+"f": "A cupcake is a little cake just for one person.",
+"fa": "کاپ‌کیک! یه کیکِ کوچولو که فقط برای یه نفره.",
+"clip": "PX_STK_UNICORN_02"
+},
+{
+"cat": "unicorn",
+"i": 3,
+"e": "🎠",
+"n": "Carousel",
+"f": "A carousel goes round and round, and you can ride its horses.",
+"fa": "چرخ‌وفلکِ اسبی! دور و دور می‌چرخه و می‌شه سوارِ اسب‌هاش شد.",
+"clip": "PX_STK_UNICORN_03"
+},
+{
+"cat": "unicorn",
+"i": 4,
+"e": "💖",
+"n": "Sparkling heart",
+"f": "A heart is how we say: I love you!",
+"fa": "قلبِ براق! قلب یعنی دوستت دارم!",
+"clip": "PX_STK_UNICORN_04"
+},
+{
+"cat": "unicorn",
+"i": 5,
+"e": "🍭",
+"n": "Lollipop",
+"f": "A lollipop is a sweet candy on a stick.",
+"fa": "آبنبات‌چوبی! یه آبنباتِ شیرین روی یه چوب.",
+"clip": "PX_STK_UNICORN_05"
+},
+{
+"cat": "unicorn",
+"i": 6,
+"e": "🌟",
+"n": "Glowing star",
+"f": "Stars are giant balls of fire, very very far away.",
+"fa": "ستاره! ستاره‌ها توپ‌های خیلی بزرگِ آتیشن که خیلی خیلی دورن.",
+"clip": "PX_STK_UNICORN_06"
+},
+{
+"cat": "unicorn",
+"i": 7,
+"e": "🎀",
+"n": "Ribbon",
+"f": "A ribbon makes a present or your hair look pretty.",
+"fa": "روبان! روبان کادو یا مو رو قشنگ می‌کنه.",
+"clip": "PX_STK_UNICORN_07"
+},
+{
+"cat": "unicorn",
+"i": 8,
+"e": "🪄",
+"n": "Magic wand",
+"f": "Magicians wave a magic wand in stories. Abracadabra!",
+"fa": "چوبِ جادو! جادوگرهای توی قصه چوبشونو تکون می‌دن و می‌گن: اَجی مَجی!",
+"clip": "PX_STK_UNICORN_08"
+},
+{
+"cat": "unicorn",
+"i": 9,
+"e": "🌸",
+"n": "Blossom",
+"f": "Blossoms are flowers that open on trees in spring.",
+"fa": "شکوفه! شکوفه‌ها بهار روی درخت‌ها باز می‌شن.",
+"clip": "PX_STK_UNICORN_09"
+},
+{
+"cat": "unicorn",
+"i": 10,
+"e": "👑",
+"n": "Crown",
+"f": "Kings and queens wear a crown on their head.",
+"fa": "تاج! شاه‌ها و ملکه‌ها تاج سرشون می‌ذارن.",
+"clip": "PX_STK_UNICORN_10"
+},
+{
+"cat": "unicorn",
+"i": 11,
+"e": "✨",
+"n": "Sparkles",
+"f": "Sparkles twinkle and shine in the light.",
+"fa": "برق‌برق! زیرِ نور چشمک می‌زنن و می‌درخشن.",
+"clip": "PX_STK_UNICORN_11"
+},
+{
+"cat": "mermaid",
+"i": 0,
+"e": "🧜‍♀️",
+"n": "Mermaid",
+"f": "A mermaid is half girl and half fish. She lives in fairy tales.",
+"fa": "پری دریایی! نصفش دختره و نصفش ماهی. توی قصه‌ها زندگی می‌کنه.",
+"clip": "PX_STK_MERMAID_00"
+},
+{
+"cat": "mermaid",
+"i": 1,
+"e": "🐚",
+"n": "Seashell",
+"f": "A seashell was once the home of a small sea animal.",
+"fa": "صدف! صدف یه روزی خونه‌ی یه حیوونِ کوچولوی دریایی بوده.",
+"clip": "PX_STK_MERMAID_01"
+},
+{
+"cat": "mermaid",
+"i": 2,
+"e": "🐠",
+"n": "Tropical fish",
+"f": "Tropical fish live in warm seas and have bright colours.",
+"fa": "ماهیِ رنگی! این ماهی‌ها توی دریاهای گرم زندگی می‌کنن و رنگ‌های قشنگ دارن.",
+"clip": "PX_STK_MERMAID_02"
+},
+{
+"cat": "mermaid",
+"i": 3,
+"e": "🐬",
+"n": "Dolphin",
+"f": "Dolphins are very smart. They talk to each other with clicks and whistles.",
+"fa": "دلفین! دلفین‌ها خیلی باهوشن و با سوت زدن با هم حرف می‌زنن.",
+"clip": "PX_STK_MERMAID_03"
+},
+{
+"cat": "mermaid",
+"i": 4,
+"e": "🐙",
+"n": "Octopus",
+"f": "An octopus has eight arms.",
+"fa": "اختاپوس! اختاپوس هشت تا بازو داره.",
+"clip": "PX_STK_MERMAID_04"
+},
+{
+"cat": "mermaid",
+"i": 5,
+"e": "🦀",
+"n": "Crab",
+"f": "Crabs walk sideways.",
+"fa": "خرچنگ! خرچنگ‌ها یه‌وری راه می‌رن.",
+"clip": "PX_STK_MERMAID_05"
+},
+{
+"cat": "mermaid",
+"i": 6,
+"e": "🐳",
+"n": "Whale",
+"f": "The blue whale is the biggest animal in the world.",
+"fa": "نهنگ! نهنگِ آبی بزرگ‌ترین حیوونِ دنیاست.",
+"clip": "PX_STK_MERMAID_06"
+},
+{
+"cat": "mermaid",
+"i": 7,
+"e": "🫧",
+"n": "Bubbles",
+"f": "Bubbles are full of air.",
+"fa": "حباب! توی حباب پر از هواست.",
+"clip": "PX_STK_MERMAID_07"
+},
+{
+"cat": "mermaid",
+"i": 8,
+"e": "🪸",
+"n": "Coral",
+"f": "Coral looks like a plant, but it is made of tiny animals.",
+"fa": "مرجان! مرجان شبیهِ گیاهه، ولی از حیوون‌های خیلی ریز درست شده.",
+"clip": "PX_STK_MERMAID_08"
+},
+{
+"cat": "mermaid",
+"i": 9,
+"e": "🐡",
+"n": "Pufferfish",
+"f": "A pufferfish blows up like a ball when it is scared.",
+"fa": "بادکنک‌ماهی! وقتی می‌ترسه، مثلِ توپ باد می‌کنه.",
+"clip": "PX_STK_MERMAID_09"
+},
+{
+"cat": "mermaid",
+"i": 10,
+"e": "🌊",
+"n": "Wave",
+"f": "Waves are made by the wind blowing on the sea.",
+"fa": "موج! وقتی باد روی دریا بوزه، موج درست می‌شه.",
+"clip": "PX_STK_MERMAID_10"
+},
+{
+"cat": "mermaid",
+"i": 11,
+"e": "🦭",
+"n": "Seal",
+"f": "Seals swim in cold seas and rest on the ice.",
+"fa": "فُک! فُک‌ها توی دریاهای سرد شنا می‌کنن و روی یخ استراحت می‌کنن.",
+"clip": "PX_STK_MERMAID_11"
+},
+{
+"cat": "dino",
+"i": 0,
+"e": "🦕",
+"n": "Long-neck dinosaur",
+"f": "Long-neck dinosaurs ate leaves from the tops of tall trees.",
+"fa": "دایناسورِ گردن‌دراز! برگِ بالای درخت‌های بلند رو می‌خورد.",
+"clip": "PX_STK_DINO_00"
+},
+{
+"cat": "dino",
+"i": 1,
+"e": "🦖",
+"n": "T. rex",
+"f": "T. rex had big teeth and tiny arms.",
+"fa": "تی‌رِکس! دندون‌های بزرگ و دست‌های کوچولو داشت.",
+"clip": "PX_STK_DINO_01"
+},
+{
+"cat": "dino",
+"i": 2,
+"e": "🥚",
+"n": "Egg",
+"f": "Baby dinosaurs hatched from eggs.",
+"fa": "تخم! بچه‌دایناسورها از تخم بیرون می‌اومدن.",
+"clip": "PX_STK_DINO_02"
+},
+{
+"cat": "dino",
+"i": 3,
+"e": "🌋",
+"n": "Volcano",
+"f": "A volcano is a mountain that can spit out hot lava.",
+"fa": "آتشفشان! کوهیه که می‌تونه گدازه‌ی داغ بیرون بریزه.",
+"clip": "PX_STK_DINO_03"
+},
+{
+"cat": "dino",
+"i": 4,
+"e": "🦴",
+"n": "Bone",
+"f": "We learn about dinosaurs from their old bones, called fossils.",
+"fa": "استخون! ما از استخون‌های قدیمیِ دایناسورها، یعنی فسیل‌ها، درباره‌شون یاد می‌گیریم.",
+"clip": "PX_STK_DINO_04"
+},
+{
+"cat": "dino",
+"i": 5,
+"e": "🐊",
+"n": "Crocodile",
+"f": "Crocodiles lived at the same time as the dinosaurs.",
+"fa": "تمساح! تمساح‌ها از زمانِ دایناسورها روی زمین بودن.",
+"clip": "PX_STK_DINO_05"
+},
+{
+"cat": "dino",
+"i": 6,
+"e": "🦎",
+"n": "Lizard",
+"f": "Lizards love to sit in the warm sun.",
+"fa": "مارمولک! مارمولک‌ها دوست دارن زیرِ آفتابِ گرم بشینن.",
+"clip": "PX_STK_DINO_06"
+},
+{
+"cat": "dino",
+"i": 7,
+"e": "🐢",
+"n": "Turtle",
+"f": "A turtle carries its home on its back.",
+"fa": "لاک‌پشت! لاک‌پشت خونه‌ش رو روی پشتش می‌بره.",
+"clip": "PX_STK_DINO_07"
+},
+{
+"cat": "dino",
+"i": 8,
+"e": "🌴",
+"n": "Palm tree",
+"f": "Palm trees grow in hot places.",
+"fa": "درختِ نخل! نخل توی جاهای گرم رشد می‌کنه.",
+"clip": "PX_STK_DINO_08"
+},
+{
+"cat": "dino",
+"i": 9,
+"e": "🪨",
+"n": "Rock",
+"f": "Some rocks are millions of years old.",
+"fa": "سنگ! بعضی سنگ‌ها میلیون‌ها سال عمر دارن.",
+"clip": "PX_STK_DINO_09"
+},
+{
+"cat": "dino",
+"i": 10,
+"e": "🐉",
+"n": "Dragon",
+"f": "Dragons are not real. They live in stories.",
+"fa": "اژدها! اژدها واقعی نیست، فقط توی قصه‌هاست.",
+"clip": "PX_STK_DINO_10"
+},
+{
+"cat": "dino",
+"i": 11,
+"e": "🐲",
+"n": "Dragon face",
+"f": "In China, the dragon means good luck.",
+"fa": "سرِ اژدها! توی چین، اژدها نشونه‌ی خوش‌شانسیه.",
+"clip": "PX_STK_DINO_11"
+},
+{
+"cat": "vehicles",
+"i": 0,
+"e": "🚗",
+"n": "Car",
+"f": "A car has four wheels.",
+"fa": "ماشین! ماشین چهار تا چرخ داره.",
+"clip": "PX_STK_VEHICLES_00"
+},
+{
+"cat": "vehicles",
+"i": 1,
+"e": "🚌",
+"n": "Bus",
+"f": "A bus carries many people at once.",
+"fa": "اتوبوس! اتوبوس آدم‌های زیادی رو با هم می‌بره.",
+"clip": "PX_STK_VEHICLES_01"
+},
+{
+"cat": "vehicles",
+"i": 2,
+"e": "🚒",
+"n": "Fire engine",
+"f": "A fire engine brings water to put out fires.",
+"fa": "ماشینِ آتش‌نشانی! آب میاره تا آتیش رو خاموش کنه.",
+"clip": "PX_STK_VEHICLES_02"
+},
+{
+"cat": "vehicles",
+"i": 3,
+"e": "🚓",
+"n": "Police car",
+"f": "A police car has flashing lights and a siren.",
+"fa": "ماشینِ پلیس! چراغ‌های چشمک‌زن و آژیر داره.",
+"clip": "PX_STK_VEHICLES_03"
+},
+{
+"cat": "vehicles",
+"i": 4,
+"e": "🚑",
+"n": "Ambulance",
+"f": "An ambulance takes sick people to the hospital.",
+"fa": "آمبولانس! آدم‌های مریض رو به بیمارستان می‌بره.",
+"clip": "PX_STK_VEHICLES_04"
+},
+{
+"cat": "vehicles",
+"i": 5,
+"e": "🚜",
+"n": "Tractor",
+"f": "A tractor helps farmers on the farm.",
+"fa": "تراکتور! به کشاورزها توی مزرعه کمک می‌کنه.",
+"clip": "PX_STK_VEHICLES_05"
+},
+{
+"cat": "vehicles",
+"i": 6,
+"e": "🚂",
+"n": "Train",
+"f": "A train runs on rails.",
+"fa": "قطار! قطار روی ریل حرکت می‌کنه.",
+"clip": "PX_STK_VEHICLES_06"
+},
+{
+"cat": "vehicles",
+"i": 7,
+"e": "✈️",
+"n": "Airplane",
+"f": "An airplane can fly high above the clouds.",
+"fa": "هواپیما! می‌تونه بالای ابرها پرواز کنه.",
+"clip": "PX_STK_VEHICLES_07"
+},
+{
+"cat": "vehicles",
+"i": 8,
+"e": "🚁",
+"n": "Helicopter",
+"f": "A helicopter can fly straight up.",
+"fa": "هلیکوپتر! هلیکوپتر می‌تونه صاف بره بالا.",
+"clip": "PX_STK_VEHICLES_08"
+},
+{
+"cat": "vehicles",
+"i": 9,
+"e": "🚤",
+"n": "Speedboat",
+"f": "A speedboat goes very fast on the water.",
+"fa": "قایقِ تندرو! روی آب خیلی تند می‌ره.",
+"clip": "PX_STK_VEHICLES_09"
+},
+{
+"cat": "vehicles",
+"i": 10,
+"e": "🏍️",
+"n": "Motorcycle",
+"f": "A motorcycle has two wheels and an engine.",
+"fa": "موتورسیکلت! دو تا چرخ و یه موتور داره.",
+"clip": "PX_STK_VEHICLES_10"
+},
+{
+"cat": "vehicles",
+"i": 11,
+"e": "🚀",
+"n": "Rocket",
+"f": "Rockets carry astronauts into space.",
+"fa": "موشک! موشک فضانوردها رو به فضا می‌بره.",
+"clip": "PX_STK_VEHICLES_11"
+},
+{
+"cat": "robot",
+"i": 0,
+"e": "🤖",
+"n": "Robot",
+"f": "A robot is a machine that people teach to do jobs.",
+"fa": "ربات! ربات یه ماشینه که آدم‌ها بهش یاد می‌دن کار انجام بده.",
+"clip": "PX_STK_ROBOT_00"
+},
+{
+"cat": "robot",
+"i": 1,
+"e": "⚙️",
+"n": "Gear",
+"f": "Gears turn each other to make machines move.",
+"fa": "چرخ‌دنده! چرخ‌دنده‌ها همدیگه رو می‌چرخونن تا ماشین‌ها کار کنن.",
+"clip": "PX_STK_ROBOT_01"
+},
+{
+"cat": "robot",
+"i": 2,
+"e": "🔧",
+"n": "Wrench",
+"f": "A wrench turns nuts and bolts.",
+"fa": "آچار! آچار مهره‌ها رو می‌چرخونه.",
+"clip": "PX_STK_ROBOT_02"
+},
+{
+"cat": "robot",
+"i": 3,
+"e": "🔩",
+"n": "Nut and bolt",
+"f": "A nut and bolt hold things together.",
+"fa": "پیچ و مهره! چیزها رو محکم به هم وصل می‌کنن.",
+"clip": "PX_STK_ROBOT_03"
+},
+{
+"cat": "robot",
+"i": 4,
+"e": "🛸",
+"n": "Flying saucer",
+"f": "A flying saucer is a spaceship from stories.",
+"fa": "بشقاب‌پرنده! یه سفینه‌ی فضاییِ توی قصه‌هاست.",
+"clip": "PX_STK_ROBOT_04"
+},
+{
+"cat": "robot",
+"i": 5,
+"e": "🔋",
+"n": "Battery",
+"f": "A battery keeps energy for toys and phones.",
+"fa": "باتری! باتری انرژی رو برای اسباب‌بازی‌ها و گوشی نگه می‌داره.",
+"clip": "PX_STK_ROBOT_05"
+},
+{
+"cat": "robot",
+"i": 6,
+"e": "💡",
+"n": "Light bulb",
+"f": "A light bulb makes light with electricity.",
+"fa": "لامپ! لامپ با برق نور درست می‌کنه.",
+"clip": "PX_STK_ROBOT_06"
+},
+{
+"cat": "robot",
+"i": 7,
+"e": "🦾",
+"n": "Robot arm",
+"f": "Robot arms help build cars in factories.",
+"fa": "بازوی رباتی! توی کارخونه‌ها به ساختنِ ماشین کمک می‌کنه.",
+"clip": "PX_STK_ROBOT_07"
+},
+{
+"cat": "robot",
+"i": 8,
+"e": "🧲",
+"n": "Magnet",
+"f": "A magnet pulls things made of iron.",
+"fa": "آهن‌ربا! چیزهای آهنی رو به طرفِ خودش می‌کشه.",
+"clip": "PX_STK_ROBOT_08"
+},
+{
+"cat": "robot",
+"i": 9,
+"e": "📡",
+"n": "Satellite dish",
+"f": "A satellite dish catches signals from space.",
+"fa": "بشقابِ ماهواره! پیام‌ها رو از فضا می‌گیره.",
+"clip": "PX_STK_ROBOT_09"
+},
+{
+"cat": "robot",
+"i": 10,
+"e": "🕹️",
+"n": "Joystick",
+"f": "A joystick helps you play video games.",
+"fa": "دسته‌ی بازی! باهاش بازیِ کامپیوتری می‌کنیم.",
+"clip": "PX_STK_ROBOT_10"
+},
+{
+"cat": "robot",
+"i": 11,
+"e": "🛰️",
+"n": "Satellite",
+"f": "Satellites fly around the Earth.",
+"fa": "ماهواره! ماهواره دورِ زمین می‌چرخه.",
+"clip": "PX_STK_ROBOT_11"
+}
+]

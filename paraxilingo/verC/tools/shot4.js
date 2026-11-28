@@ -1,0 +1,11 @@
+const {chromium}=require('/opt/npm-tools/node_modules/playwright');const fs=require('fs'),path=require('path');const root=process.argv[2];
+(async()=>{const b=await chromium.launch();const p=await b.newPage({viewport:{width:390,height:844},hasTouch:true,isMobile:true,deviceScaleFactor:2});
+ await p.route('http://app.test/**',r=>{let f=decodeURIComponent(new URL(r.request().url()).pathname.slice(1));const fp=path.join(root,f);if(!fs.existsSync(fp))return r.fulfill({status:404,body:''});
+  let body=fs.readFileSync(fp);if(f==='index.html')body=body.toString().replace('let L=null;','let L=null;window.__px={buildQ:(c,k,u)=>buildQ(c,k,u),setAge:a=>{S.age=a;S.diff=1},story:(s,k)=>qStory(s,k)};window.__ans=()=>{document.querySelectorAll(".qo")[L.q.ans].click()};window.__go=(q,c)=>{q.cat=c;L={g:0,cat:c,correct:0,first:0,acorns:0,k:0,t0:Date.now(),queue:[q],total:1};$("lesson").classList.add("open");$("qDots").innerHTML="<i></i>";nextQ()};');r.fulfill({body,contentType:f.endsWith('.html')?'text/html; charset=utf-8':f.endsWith('.svg')?'image/svg+xml':undefined})});
+ await p.goto('http://app.test/index.html');await p.waitForTimeout(700);await p.click('#introC').catch(()=>{});await p.waitForTimeout(600);
+ const go=async(js,n,ans)=>{await p.evaluate(js);await p.waitForTimeout(1600);if(ans){await p.evaluate(()=>__ans());await p.waitForTimeout(900)}await p.screenshot({path:`shots/S_${n}.png`})};
+ await go(()=>{__px.setAge(6);__go(__px.story(2,1),'story')},'story',0);
+ await go(()=>{__px.setAge(6);let q;for(let i=0;i<200;i++){q=__px.buildQ('animals','w',new Set());if(!q.tf&&q.opts.length===4)break}__go(q,'animals')},'animals4',0);
+ await go(()=>{__px.setAge(6);let q;for(let i=0;i<300;i++){q=__px.buildQ('sky','w',new Set());if(q.tf)break}__go(q,'sky')},'tf_fact',1);
+ await go(()=>{__px.setAge(6);__go(__px.buildQ('farm','home',new Set()),'farm')},'farm_fact',1);
+ await b.close()})();

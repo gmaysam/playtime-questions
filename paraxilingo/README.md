@@ -1,0 +1,33 @@
+# Paraxilingo
+
+A Duolingo-style learning app for kids. Domi the beaver hops up a map from the forest to the Rainbow Castle; each sign on the map is a stop with a short lesson. Words on screen are English; Domi's voice is Farsi.
+
+## Versions
+
+- `verA/` – the Duolingo-style version (green, hearts, gems, streak flame, leagues).
+- `verB/` – Paraxilingo's own look: wooden island design, acorns, Domi's dam (days in a row), no hearts (Domi gives a hint and a second try, and a calm corner after two misses), Missions with Family Island and "Parax in the Wild", Teach the Beaver, age-up party, and a weekly recap with a dinner-table question for parents.
+- `verC/` – the big redesign. A white intro page where Domi says which month or event it is (Yalda, Nowruz, Halloween) and that a prize waits in his big house by the dam, with a Skip button. One land per month; each day's path is a row of mounds, and the parents' questions-per-day number is split across them. Mound signs are just topic symbols (➕ 🕒 🪙 🔎 📻), no locks. Reaching the big house at the end opens today's sticker with an animation. No streak, hearts, missions, leagues or bottom tab bar: the top bar holds the player, acorns 🌰, wood 🪵, Prizes 🏆 and Parents. Wrong once = second try; wrong twice = Domi explains and moves on. More praise, with a dance every 3 right in a row. New: "Discover the world" (142 picture questions from the Watcher Device, many as "Is Domi right?" ✅/❌) and Domi's Radio (a short story, then questions). Acorns reward each right answer, wood rewards finishing mounds and days; parents set what a book, clothes or a toy costs and see how many questions and days it takes. Question pages (Nov 4): every question is read aloud in Farsi using Lulu's clips from the Watcher Device library (`audio/w/`: numbers 0-20, plus/minus, word problems, 78 quiz questions with explanations, 16 sky true/false, 6 radio stories in 5 voices). Wrong once = a hint (count-along, fewer choices, number line, coin labels); wrong twice = Domi shows and explains the answer. A big yellow button repeats the question. No stars or scores, just cheering. Each mound is one category (Counting, Adding, Clock, Coins, Animals, Our world, Sky, Radio) and a round never repeats a question kind. Levels follow US Common Core K-2. `tools/buildC2.py` (with `qengine.js`/`qengine.css`) rebuilds verC from verB.
+
+## Open it
+
+Open `verA/index.html`, `verB/index.html` or `verC/index.html` in Chrome or Safari. Each folder has everything it needs (`img/`, `audio/`).
+The microphone exercises only listen when the page is opened directly in a browser (or later in the phone app).
+
+## What's inside
+
+- `index.html` (in each version folder) – the whole app (map, lessons, games, parents' settings).
+- `img/w/z00.webp … z11.webp` – the map, cut into 12 lands, bottom (Green Forest) to top (Rainbow Castle).
+- `img/beaver*.webp` – Domi.
+- `audio/` – Farsi narration (Lulu voice) plus 6 English sentences (`rep1–6`) for "Repeat after Domi".
+
+## Parents' area
+
+Top-left button → Parents (code: 1). Choose the course topics (Numbers & Math, Clock & Calendar, Money Market; more coming), the child's age, level, questions per day and the prize theme.
+
+## Data
+
+Progress is saved on the device (browser storage). No server is needed yet; one is only needed later to sync between phones or send parents a weekly recap.
+
+
+## Website for testing
+The latest verC runs at https://gmaysam.github.io/playtime-questions/ (from the `gh-pages` branch, built by `verC/tools/mksite.py`). On an iPad or iPhone: open it in Safari, Share → Add to Home Screen. It opens full screen and works offline; a new version arrives the next time it is opened online. The Xcode project for the App Store version is in `ipad/`.
